@@ -274,7 +274,7 @@
                         <RowDefinition/>
                         <RowDefinition Height="40" />
                         <RowDefinition/>
-                        <RowDefinition Height="40" />
+                        <RowDefinition Height="80" />
                     </Grid.RowDefinitions>
                     <Grid Margin="10,0,0,0">
                         <TextBlock x:Name="titCombat" Text="Combat" FontSize="16" />
@@ -328,12 +328,16 @@
                         <Image Source="Images/Deselect.png" Width="16" Height="16" />
                     </flat:FlatButton>
                     <flat:SelectPanel ColorScheme="{Binding ColorScheme, ElementName=window}" x:Name="selAcItem" PanelBorderThickness="0" Grid.Row="12" MultiSelect="True" />
-                    <TextBlock x:Name="lblTotal" Text="Total" Margin="93,13,285,13" Grid.Row="13"/>
-                    <TextBox x:Name="txtTotal" TextChanged="textbox_TextChanged" Margin="123,9,230,9" Grid.Row="13"/>
-                    <TextBlock x:Name="lblTouch" Text="Touch" Margin="183,13,189,13" Grid.Row="13"/>
-                    <TextBox x:Name="txtTouch" TextChanged="textbox_TextChanged" Margin="219,9,134,9" Grid.Row="13"/>
-                    <TextBlock x:Name="lblFlat" Text="Flat-footed" Margin="279,13,65,13" Grid.Row="13"/>
-                    <TextBox x:Name="txtFlat" TextChanged="textbox_TextChanged" Margin="343,9,10,9" Grid.Row="13"/>
+
+                    <TextBlock x:Name="lblAcItemTotals" Text="Armor/Shield Totals" Margin="15,12,0,0" Grid.Row="13" FontWeight="SemiBold" HorizontalAlignment="Left" VerticalAlignment="Top" />
+                    <TextBlock x:Name="lblAcBonus" Text="AC Bonus" Margin="164,11,0,0" Grid.Row="13" HorizontalAlignment="Left" VerticalAlignment="Top" />
+                    <TextBox x:Name="txtAcBonus" TextChanged="textbox_TextChanged" Margin="219,9,0,0" Grid.Row="13" HorizontalAlignment="Left" Width="50" Height="23" VerticalAlignment="Top"/>
+                    <TextBlock x:Name="lblAcWeight" Text="Weight" Margin="300,11,0,0" Grid.Row="13" HorizontalAlignment="Left" VerticalAlignment="Top" />
+                    <TextBox x:Name="txtAcWeight" TextChanged="textbox_TextChanged" Margin="343,9,0,0" Grid.Row="13" HorizontalAlignment="Left" Width="50" Height="23" VerticalAlignment="Top"/>
+                    <TextBlock x:Name="lblAcPenalty" Text="Check Penalty" Margin="141,46,0,0" Grid.Row="13" HorizontalAlignment="Left" VerticalAlignment="Top" />
+                    <TextBox x:Name="txtAcPenalty" TextChanged="textbox_TextChanged" Margin="219,44,0,0" Grid.Row="13" HorizontalAlignment="Left" Width="50" Height="23" VerticalAlignment="Top"/>
+                    <TextBlock x:Name="lblAcSpellFailure" Text="Spell Failure" Margin="276,46,0,0" Grid.Row="13" HorizontalAlignment="Left" VerticalAlignment="Top" />
+                    <TextBox x:Name="txtAcSpellFailure" TextChanged="textbox_TextChanged" Margin="343,44,0,0" Grid.Row="13" HorizontalAlignment="Left" Width="50" Height="23" VerticalAlignment="Top"/>
                 </Grid>
                 <Grid Margin="5,5,5,0" x:Name="grdSpells">
                     <Grid Margin="10,0,0,0">

@@ -965,6 +965,12 @@ namespace PathfinderJson
                 selAcItem.AddItem(ae);
             }
 
+            AcItem total = sheet.AC.ItemTotals;
+            txtAcBonus.Text = total.Bonus;
+            txtAcPenalty.Text = total.ArmorCheckPenalty;
+            txtAcSpellFailure.Text = total.SpellFailure;
+            txtAcWeight.Text = total.Weight;
+
             // Feats/Abilities tab
             selFeats.Clear();
             foreach (Feat item in sheet.Feats)
@@ -1254,6 +1260,13 @@ namespace PathfinderJson
             {
                 sheet.AC.Items.Add(item.GetAcItem());
             }
+
+            AcItem totals = new AcItem();
+            totals.Bonus = txtAcBonus.Text;
+            totals.ArmorCheckPenalty = txtAcPenalty.Text;
+            totals.SpellFailure = txtAcSpellFailure.Text;
+            totals.Weight = txtAcWeight.Text;
+            sheet.AC.ItemTotals = totals;
 
             sheet.Feats = new List<Feat>();
             foreach (FeatEditor item in selFeats.GetItemsAsType<FeatEditor>())
