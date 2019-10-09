@@ -1,5 +1,6 @@
 # PathfinderJson
 A sheet reader/writer for Pathfinder JSON character sheets from Motokrosh's website
+[Take a look at some screenshots!](https://github.com/JaykeBird/PathfinderJson/tree/master/Screenshots)
 
 ## How to build
 You must have Visual Studio 2019 version 16.3 or later to properly open the project and build it, as it is a .NET Core 3.0 WPF app. As a WPF app, that does mean this is Windows-only. I do wanna experiment with Avalonia later for a cross-platform UI.
