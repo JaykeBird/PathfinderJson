@@ -13,6 +13,13 @@ Once you have an account on [Mottokrosh's Pathfinder sheet website](charactershe
 
 This program supports all the features currently in Mottokrosh's website, and can display them all (and edit most of them) in a sheet editor view. There is also a JSON text editor view for basic raw text editing. (Note that if you want a more full text-editing experience, you may want to open the JSON file in your text editor of choice.)
 
+## To-do List
+- Implement Spells tab
+- Add "Find" dialog to text editor
+- Export functionality (HTML?)
+- More options for text editor (font size, no syntax highlighting)
+- Central Options dialog
+
 ## License
 **PathfinderJson is released under the MIT License.**
 
