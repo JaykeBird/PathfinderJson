@@ -308,6 +308,11 @@ namespace PathfinderJson
             Close();
         }
 
+        private void mnuGithub_Click(object sender, RoutedEventArgs e)
+        {
+            About.OpenBrowser("https://github.com/JaykeBird/PathfinderJson/");
+        }
+
         private void mnuAbout_Click(object sender, RoutedEventArgs e)
         {
             About a = new About();

@@ -122,6 +122,8 @@
                 <MenuItem Header="_Filename in Titlebar" x:Name="mnuFilename" Click="MnuFilename_Click" />
             </MenuItem>
             <MenuItem Header="_Help">
+                <MenuItem Header="_View on GitHub" x:Name="mnuGithub" Click="mnuGithub_Click" />
+                <Separator />
                 <MenuItem Header="_About..." x:Name="mnuAbout" Click="mnuAbout_Click" >
                     <MenuItem.Icon>
                         <Image Source="/PathfinderJson;component/Images/Info.png" />

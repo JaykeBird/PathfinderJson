@@ -50,6 +50,11 @@ namespace PathfinderJson
             OpenBrowser("https://paizo.com/");
         }
 
+        private void LinkTextBlock5_Click(object sender, EventArgs e)
+        {
+            OpenBrowser("https://github.com/JaykeBird/PathfinderJson/");
+        }
+
         /// <summary>
         /// Opens the user's default browser to a certain URL. Works on Windows, Linux, and OS X.
         /// </summary>

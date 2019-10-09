@@ -17,7 +17,7 @@
         <flat:LinkTextBlock HorizontalAlignment="Left" Margin="260,101,0,0" Text="twitter.com/jaykebird" VerticalAlignment="Top" Click="LinkTextBlock2_Click" Cursor="Hand" />
         <TextBlock HorizontalAlignment="Left" Margin="15,120,0,0" Text="Version 0.9.0" VerticalAlignment="Top"/>
         <TextBlock HorizontalAlignment="Left" Margin="15,139,0,0" Text="Open-source under MIT License" VerticalAlignment="Top"/>
-        <flat:LinkTextBlock HorizontalAlignment="Left" Margin="260,139,0,0" Text="github.com/jaykebird/pathfinderjson" VerticalAlignment="Top" Click="LinkTextBlock2_Click" Cursor="Hand" />
+        <flat:LinkTextBlock HorizontalAlignment="Left" Margin="260,139,0,0" Text="github.com/jaykebird/pathfinderjson" VerticalAlignment="Top" Click="LinkTextBlock5_Click" Cursor="Hand" />
         <Border BorderThickness="1" Margin="10,170,10,0" Height="1" BorderBrush="Black" x:Name="brdrDivider" VerticalAlignment="Top"/>
 
         <TextBlock HorizontalAlignment="Left" Margin="15,180,0,0" Text="Mottokrosh's Pathfinder Character Sheet site:" VerticalAlignment="Top"/>
