@@ -43,9 +43,8 @@ namespace PathfinderJson
 
                 file.BaseStream.Position = 0;
 
-                JsonSerializerSettings jss = new JsonSerializerSettings();
-                jss.ContractResolver = new CamelCasePropertyNamesContractResolver();
                 JsonSerializer serializer = new JsonSerializer();
+                serializer.ContractResolver = new CamelCasePropertyNamesContractResolver(); // apparently this isn't enough to actually make it write the property names in camelCase style
                 serializer.Error += Handler;
                 PathfinderSheet ps = (PathfinderSheet)serializer.Deserialize(file, typeof(PathfinderSheet));
                 ps.SetupSheet();
