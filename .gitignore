@@ -343,5 +343,5 @@ healthchecksdb
 # Windows shortcut
 *.lnk
 # Release folders
-Release-win-x64
-Release-win-x86
+Release-win-x64/
+Release-win-x86/

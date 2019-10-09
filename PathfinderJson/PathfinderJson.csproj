@@ -33,6 +33,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Release-win-x64\**" />
+    <Compile Remove="Release-win-x86\**" />
+    <EmbeddedResource Remove="Release-win-x64\**" />
+    <EmbeddedResource Remove="Release-win-x86\**" />
+    <None Remove="Release-win-x64\**" />
+    <None Remove="Release-win-x86\**" />
+    <Page Remove="Release-win-x64\**" />
+    <Page Remove="Release-win-x86\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="About.xaml" />
     <None Remove="appicon.ico" />
     <None Remove="CompoundEditor.xaml" />
