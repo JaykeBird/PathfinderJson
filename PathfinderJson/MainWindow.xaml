@@ -1,0 +1,476 @@
+﻿<flat:FlatWindow x:Class="PathfinderJson.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PathfinderJson"
+        xmlns:flat="clr-namespace:UiCore;assembly=UiCore"
+        xmlns:edit="http://icsharpcode.net/sharpdevelop/avalonedit"
+        mc:Ignorable="d" x:Name="window"
+        Title="Pathfinder JSON" Height="700" Width="550" MinWidth="550" MinHeight="450" Closed="FlatWindow_Closed" Activated="window_Activated" Deactivated="window_Deactivated" >
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="120" x:Name="colTabs"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <flat:Menu Grid.Row="0" x:Name="menu" IsMainMenu="True" Grid.ColumnSpan="2" >
+            <MenuItem Header="_File">
+                <MenuItem Header="_Open..." x:Name="mnuOpen" Click="mnuOpen_Click" >
+                    <MenuItem.Icon>
+                        <Image Source="/PathfinderJson;component/Images/Open.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="_Recent Files" x:Name="mnuRecent" >
+                    <MenuItem.Icon>
+                        <Image Source="/PathfinderJson;component/Images/RecentFile.png" />
+                    </MenuItem.Icon>
+                    <MenuItem Header="(list of recent files appear here)" IsEnabled="False" x:Name="mnuRecentEmpty" />
+                    <Separator />
+                    <MenuItem Header="_Clear Recent File List" x:Name="mnuRecentClear" Click="mnuRecentClear_Click" />
+                </MenuItem>
+                <MenuItem Header="_Close" x:Name="btnClose" Click="btnClose_Click" />
+                <Separator />
+                <MenuItem Header="_Save" x:Name="mnuSave" Click="mnuSave_Click" >
+                    <MenuItem.Icon>
+                        <Image Source="/PathfinderJson;component/Images/Save.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Save _as..." x:Name="mnuSaveAs" Click="mnuSaveAs_Click" >
+                    <MenuItem.Icon>
+                        <Image Source="/PathfinderJson;component/Images/SaveAs.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Re_vert to Last Saved" x:Name="mnuRevert" Click="mnuRevert_Click" />
+                <Separator/>
+                <MenuItem Header="_Indent JSON Data" x:Name="mnuIndent" Click="mnuIndent_Click" />
+                <Separator />
+                <MenuItem Header="_Exit" x:Name="btnExit" Click="btnExit_Click" >
+                    <MenuItem.Icon>
+                        <Image Source="/PathfinderJson;component/Images/Exit.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="_Edit" x:Name="mnuEdit" Visibility="Collapsed" >
+                <MenuItem Header="_Undo" x:Name="mnuUndo" Click="mnuUndo_Click" >
+                    <MenuItem.Icon>
+                        <Image Source="/PathfinderJson;component/Images/Undo.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="_Redo" x:Name="mnuRedo" Click="mnuRedo_Click" >
+                    <MenuItem.Icon>
+                        <Image Source="/PathfinderJson;component/Images/Redo.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <Separator />
+                <MenuItem Header="_Copy" x:Name="mnuCopy" Click="mnuCopy_Click" >
+                    <MenuItem.Icon>
+                        <Image Source="/PathfinderJson;component/Images/Copy.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="C_ut" x:Name="mnuCut" Click="mnuCut_Click" >
+                    <MenuItem.Icon>
+                        <Image Source="/PathfinderJson;component/Images/Cut.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="_Paste" x:Name="mnuPaste" Click="mnuPaste_Click" />
+                <Separator />
+                <MenuItem Header="_Select All" x:Name="mnuSelectAll" Click="mnuSelectAll_Click" />
+                <MenuItem Header="_Delete" x:Name="mnuDelete" Click="mnuDelete_Click" >
+                    <MenuItem.Icon>
+                        <Image Source="/PathfinderJson;component/Images/Cancel.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <Separator />
+                <MenuItem Header="_Word Wrap" x:Name="mnuWordWrap" Click="mnuWordWrap_Click" IsChecked="True" />
+            </MenuItem>
+            <MenuItem Header="_Sheet" x:Name="mnuEditSheet" >
+                <MenuItem Header="Update Calculations" x:Name="mnuUpdate" Click="mnuUpdate_Click" />
+                <MenuItem Header="Change Totals with Updates" IsChecked="True" x:Name="mnuUpdateTotals" IsCheckable="True" />
+                <Separator />
+                <MenuItem Header="Update Text Editor from Sheet" x:Name="mnuRefreshEditor" Click="mnuRefreshEditor_Click" />
+                <MenuItem Header="Update Sheet from Text Editor" x:Name="mnuRefresh" Click="mnuRefresh_Click" />
+            </MenuItem>
+            <MenuItem Header="_View">
+                <MenuItem Header="_Continuous Scroll View" x:Name="mnuScroll" Click="mnuScroll_Click" >
+                    <MenuItem.Icon>
+                        <Image Source="/PathfinderJson;component/Images/ContinuousScroll.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="_Tabbed Sheet View" x:Name="mnuTabs" Click="mnuTabs_Click" >
+                    <MenuItem.Icon>
+                        <Image Source="/PathfinderJson;component/Images/TabView.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="_Raw JSON View" x:Name="mnuRawJson" Click="mnuRawJson_Click" >
+                    <MenuItem.Icon>
+                        <Image Source="/PathfinderJson;component/Images/TextFile.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <Separator />
+                <MenuItem Header="_Color Scheme..." x:Name="mnuColors" Click="mnuColors_Click">
+                    <MenuItem.Icon>
+                        <Image Source="/PathfinderJson;component/Images/Colors.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <Separator />
+                <MenuItem Header="_Filename in Titlebar" x:Name="mnuFilename" Click="MnuFilename_Click" />
+            </MenuItem>
+            <MenuItem Header="_Help">
+                <MenuItem Header="_About..." x:Name="mnuAbout" Click="mnuAbout_Click" >
+                    <MenuItem.Icon>
+                        <Image Source="/PathfinderJson;component/Images/Info.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+        </flat:Menu>
+
+        <flat:Toolbar Grid.Row="1" Grid.ColumnSpan="2" x:Name="toolbar" Visibility="Collapsed">
+            <flat:ToolbarButton Header="Open" Icon="Images/Open.png" Background="Transparent" />
+        </flat:Toolbar>
+
+        <flat:SelectPanel Grid.Column="0" Grid.Row="2" x:Name="selTabs" MultiSelect="False" PanelBorderThickness="0,0,1,0" />
+        <ScrollViewer Grid.Column="1" Grid.Row="2" x:Name="scrSheet" >
+            <StackPanel x:Name="stkSheet" >
+                <Grid Margin="5,5,5,0" x:Name="grdGeneral" Visibility="Collapsed" >
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="25"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="110"/>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="180"/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition Height="150" />
+                    </Grid.RowDefinitions>
+                    <Grid Margin="10,0,0,0">
+                        <TextBlock x:Name="titGeneral" Text="General" FontSize="16" />
+                    </Grid>
+                    <Expander VerticalAlignment="Center" Margin="10,0,10,0" Grid.Row="1" x:Name="expUser" Header="Player Data (read only)" >
+                        <Grid Height="100" >
+                            <TextBox x:Name="txtPlayerName" HorizontalAlignment="Left" Height="23" Margin="70,24,0,0" VerticalAlignment="Top" Width="285" IsReadOnly="True" IsReadOnlyCaretVisible="True" />
+                            <TextBlock x:Name="lblPlayerName" HorizontalAlignment="Left" Margin="70,8,0,0" Text="Player Name" VerticalAlignment="Top"/>
+                            <TextBox x:Name="txtPlayerEmail" HorizontalAlignment="Left" Height="23" Margin="70,68,0,0" VerticalAlignment="Top" Width="285" IsReadOnly="True" IsReadOnlyCaretVisible="True" />
+                            <TextBlock x:Name="lblPlayerEmail" HorizontalAlignment="Left" Margin="70,52,0,0" Text="Player Email" VerticalAlignment="Top"/>
+                            <Image x:Name="imgPlayer" HorizontalAlignment="Left" Height="48" Margin="10,20,0,0" VerticalAlignment="Top" Width="48" Stretch="UniformToFill"/>
+                        </Grid>
+                    </Expander>
+
+                    <TextBox x:Name="txtCharacter" HorizontalAlignment="Left" Height="23" Margin="15,30,0,0" Grid.Row="2" VerticalAlignment="Top" Width="180" TextChanged="txtCharacter_TextChanged" />
+                    <TextBlock x:Name="lblCharacter" HorizontalAlignment="Left" Margin="15,12,0,0" Grid.Row="2" Text="Character name" VerticalAlignment="Top" />
+                    <TextBox x:Name="txtLevel" HorizontalAlignment="Left" Height="23" Margin="215,30,0,0" Grid.Row="2" VerticalAlignment="Top" Width="180" TextChanged="textbox_TextChanged" />
+                    <TextBlock x:Name="lblLevl" HorizontalAlignment="Left" Margin="215,12,0,0" Grid.Row="2" Text="Class/Level" VerticalAlignment="Top"/>
+                    <TextBox x:Name="txtAlignment" HorizontalAlignment="Left" Height="23" Margin="15,80,0,0" Grid.Row="2" VerticalAlignment="Top" Width="120" TextChanged="textbox_TextChanged"/>
+                    <TextBlock x:Name="lblAlignment" HorizontalAlignment="Left" Margin="15,62,0,0" Grid.Row="2" Text="Alignment" VerticalAlignment="Top"/>
+                    <TextBox x:Name="txtHomeland" HorizontalAlignment="Left" Height="23" Margin="145,80,0,0" Grid.Row="2" VerticalAlignment="Top" Width="120" TextChanged="textbox_TextChanged"/>
+                    <TextBlock x:Name="lblHomeland" HorizontalAlignment="Left" Margin="144,62,0,0" Grid.Row="2" Text="Homeland" VerticalAlignment="Top"/>
+                    <TextBox x:Name="txtDeity" HorizontalAlignment="Left" Height="23" Margin="275,80,0,0" Grid.Row="2" VerticalAlignment="Top" Width="120" TextChanged="textbox_TextChanged"/>
+                    <TextBlock x:Name="lblDeity" HorizontalAlignment="Left" Margin="275,62,0,0" Grid.Row="2" Text="Deity" VerticalAlignment="Top"/>
+
+                    <Expander VerticalAlignment="Center" Margin="10,0,10,10" Grid.Row="3" x:Name="expPhysical" Header="Physical Attributes" >
+                        <Grid Height="110" >
+                            <TextBox x:Name="txtPhyRace" HorizontalAlignment="Left" Height="23" Margin="10,24,0,0" VerticalAlignment="Top" Width="110" TextChanged="textbox_TextChanged"/>
+                            <TextBlock x:Name="lblPhyRace" HorizontalAlignment="Left" Margin="10,8,0,0" Text="Race" VerticalAlignment="Top"/>
+                            <TextBox x:Name="txtPhySize" HorizontalAlignment="Left" Height="23" Margin="130,24,0,0" VerticalAlignment="Top" Width="70" TextChanged="textbox_TextChanged"/>
+                            <TextBlock x:Name="lblPhySize" HorizontalAlignment="Left" Margin="130,8,0,0" Text="Size" VerticalAlignment="Top"/>
+                            <TextBox x:Name="txtPhyGender" HorizontalAlignment="Left" Height="23" Margin="210,24,0,0" VerticalAlignment="Top" Width="70" TextChanged="textbox_TextChanged"/>
+                            <TextBlock x:Name="lblPhyGender" HorizontalAlignment="Left" Margin="210,8,0,0" Text="Gender" VerticalAlignment="Top"/>
+                            <TextBox x:Name="txtPhyAge" HorizontalAlignment="Left" Height="23" Margin="290,24,0,0" VerticalAlignment="Top" Width="70" TextChanged="textbox_TextChanged"/>
+                            <TextBlock x:Name="lblPhyAge" HorizontalAlignment="Left" Margin="290,8,0,0" Text="Age" VerticalAlignment="Top"/>
+                            <TextBox x:Name="txtPhyHeight" HorizontalAlignment="Left" Height="23" Margin="10,74,0,0" VerticalAlignment="Top" Width="80" TextChanged="textbox_TextChanged"/>
+                            <TextBlock x:Name="lblPhyHeight" HorizontalAlignment="Left" Margin="10,58,0,0" Text="Height" VerticalAlignment="Top"/>
+                            <TextBox x:Name="txtPhyWeight" HorizontalAlignment="Left" Height="23" Margin="100,74,0,0" VerticalAlignment="Top" Width="80" TextChanged="textbox_TextChanged"/>
+                            <TextBlock x:Name="lblPhyWeight" HorizontalAlignment="Left" Margin="100,58,0,0" Text="Weight" VerticalAlignment="Top"/>
+                            <TextBox x:Name="txtPhyHair" HorizontalAlignment="Left" Height="23" Margin="190,74,0,0" VerticalAlignment="Top" Width="80" TextChanged="textbox_TextChanged"/>
+                            <TextBlock x:Name="lblPhyHair" HorizontalAlignment="Left" Margin="190,58,0,0" Text="Hair" VerticalAlignment="Top"/>
+                            <TextBox x:Name="txtPhyEyes" HorizontalAlignment="Left" Height="23" Margin="280,74,0,0" VerticalAlignment="Top" Width="80" TextChanged="textbox_TextChanged"/>
+                            <TextBlock x:Name="lblPhyEyes" HorizontalAlignment="Left" Margin="280,58,0,0" Text="Eyes" VerticalAlignment="Top"/>
+                        </Grid>
+                    </Expander>
+
+                    <TextBox x:Name="txtStr" HorizontalAlignment="Left" Height="23" Margin="132,5,0,0" Grid.Row="4" VerticalAlignment="Top" Width="50" TextChanged="txtStr_TextChanged" />
+                    <TextBox x:Name="txtDex" HorizontalAlignment="Left" Height="23" Margin="132,33,0,0" Grid.Row="4" VerticalAlignment="Top" Width="50" TextChanged="txtStr_TextChanged"/>
+                    <TextBox x:Name="txtCon" HorizontalAlignment="Left" Height="23" Margin="132,61,0,0" Grid.Row="4" VerticalAlignment="Top" Width="50" TextChanged="txtStr_TextChanged"/>
+                    <TextBox x:Name="txtInt" HorizontalAlignment="Left" Height="23" Margin="132,89,0,0" Grid.Row="4" VerticalAlignment="Top" Width="50" TextChanged="txtStr_TextChanged"/>
+                    <TextBox x:Name="txtWis" HorizontalAlignment="Left" Height="23" Margin="132,117,0,0" Grid.Row="4" VerticalAlignment="Top" Width="50" TextChanged="txtStr_TextChanged"/>
+                    <TextBox x:Name="txtCha" HorizontalAlignment="Left" Height="23" Margin="132,145,0,0" Grid.Row="4" VerticalAlignment="Top" Width="50" TextChanged="txtStr_TextChanged"/>
+                    <TextBlock x:Name="lblStr" HorizontalAlignment="Left" Margin="15,8,0,0" Grid.Row="4" Text="STR" FontWeight="Bold" VerticalAlignment="Top" />
+                    <TextBlock x:Name="lblDex" HorizontalAlignment="Left" Margin="15,38,0,0" Grid.Row="4" Text="DEX" FontWeight="Bold" VerticalAlignment="Top"/>
+                    <TextBlock x:Name="lblCon" HorizontalAlignment="Left" Margin="15,66,0,0" Grid.Row="4" Text="CON" FontWeight="Bold" VerticalAlignment="Top"/>
+                    <TextBlock x:Name="lblInt" HorizontalAlignment="Left" Margin="15,94,0,0" Grid.Row="4" Text="INT" FontWeight="Bold" VerticalAlignment="Top"/>
+                    <TextBlock x:Name="lblWis" HorizontalAlignment="Left" Margin="15,122,0,0" Grid.Row="4" Text="WIS" FontWeight="Bold" VerticalAlignment="Top"/>
+                    <TextBlock x:Name="lblCha" HorizontalAlignment="Left" Margin="15,150,0,0" Grid.Row="4" Text="CHA" FontWeight="Bold" VerticalAlignment="Top"/>
+                    <TextBlock x:Name="lblStr_Copy" HorizontalAlignment="Left" Margin="50,8,0,0" Grid.Row="4" Text="Strength" VerticalAlignment="Top"/>
+                    <TextBlock x:Name="lblDex_Copy" HorizontalAlignment="Left" Margin="50,38,0,0" Grid.Row="4" Text="Dexterity" VerticalAlignment="Top"/>
+                    <TextBlock x:Name="lblCon_Copy" HorizontalAlignment="Left" Margin="50,66,0,0" Grid.Row="4" Text="Constitution" VerticalAlignment="Top"/>
+                    <TextBlock x:Name="lblInt_Copy" HorizontalAlignment="Left" Margin="50,94,0,0" Grid.Row="4" Text="Intelligence" VerticalAlignment="Top"/>
+                    <TextBlock x:Name="lblWis_Copy" HorizontalAlignment="Left" Margin="50,122,0,0" Grid.Row="4" Text="Wisdom" VerticalAlignment="Top"/>
+                    <TextBlock x:Name="lblCha_Copy" HorizontalAlignment="Left" Margin="50,150,0,0" Grid.Row="4" Text="Charisma" VerticalAlignment="Top"/>
+                    <TextBox x:Name="txtStrm" HorizontalAlignment="Left" Height="23" Margin="187,5,0,0" Grid.Row="4" VerticalAlignment="Top" Width="40" IsEnabled="False"/>
+                    <TextBox x:Name="txtDexm" HorizontalAlignment="Left" Height="23" Margin="187,33,0,0" Grid.Row="4" VerticalAlignment="Top" Width="40" IsEnabled="False"/>
+                    <TextBox x:Name="txtConm" HorizontalAlignment="Left" Height="23" Margin="187,61,0,0" Grid.Row="4" VerticalAlignment="Top" Width="40" IsEnabled="False"/>
+                    <TextBox x:Name="txtIntm" HorizontalAlignment="Left" Height="23" Margin="187,89,0,0" Grid.Row="4" VerticalAlignment="Top" Width="40" IsEnabled="False"/>
+                    <TextBox x:Name="txtWism" HorizontalAlignment="Left" Height="23" Margin="187,117,0,0" Grid.Row="4" VerticalAlignment="Top" Width="40" IsEnabled="False"/>
+                    <TextBox x:Name="txtCham" HorizontalAlignment="Left" Height="23" Margin="187,145,0,0" Grid.Row="4" VerticalAlignment="Top" Width="40" IsEnabled="False"/>
+
+                    <local:CompoundEditor Grid.Row="5" Margin="5,5,0,0" x:Name="edtFort" Title="Fortitude Save (CON)" ModifierTitle="Con Mod" ContentChanged="editor_ContentChanged" />
+                    <local:CompoundEditor Grid.Row="6" Margin="5,5,0,0" x:Name="edtReflex" Title="Reflex Save (DEX)" ModifierTitle="Dex Mod" ContentChanged="editor_ContentChanged" />
+                    <local:CompoundEditor Grid.Row="7" Margin="5,5,0,0" x:Name="edtWill" Title="Will Save (WIS)" ModifierTitle="Wis Mod" ContentChanged="editor_ContentChanged" />
+
+                    <TextBlock x:Name="lblHP" HorizontalAlignment="Left" Margin="15,42,0,0" Grid.Row="8" Text="HP" FontWeight="Bold" VerticalAlignment="Top"/>
+                    <TextBlock x:Name="lblHealth" HorizontalAlignment="Left" Margin="50,42,0,0" Grid.Row="8" Text="Hit Points" VerticalAlignment="Top"/>
+                    <TextBox x:Name="txtHpWounds" HorizontalAlignment="Left" Height="22" Margin="128,39,0,0" Grid.Row="8" VerticalAlignment="Top" Width="88" TextChanged="textbox_TextChanged"/>
+                    <TextBox x:Name="txtHpTotal" HorizontalAlignment="Left" Height="23" Margin="231,39,0,0" Grid.Row="8" VerticalAlignment="Top" Width="50"  TextChanged="textbox_TextChanged"/>
+                    <TextBox x:Name="txtHpNl" Height="23" Margin="138,71,20,0" Grid.Row="8" VerticalAlignment="Top"  TextChanged="textbox_TextChanged"/>
+                    <TextBlock x:Name="lblHpTotal" HorizontalAlignment="Left" Margin="240,15,0,0" Grid.Row="8" Text="Total" VerticalAlignment="Top"/>
+                    <TextBlock x:Name="lblHpWounds" HorizontalAlignment="Left" Margin="128,15,0,0" Grid.Row="8" Text="Wounds/Current" VerticalAlignment="Top"/>
+                    <TextBlock x:Name="lblHpNl" HorizontalAlignment="Left" Margin="15,74,0,0" Grid.Row="8" Text="Non-Lethal Damage" VerticalAlignment="Top"/>
+                    <TextBlock x:Name="lblHpSlash" HorizontalAlignment="Left" Margin="221,41,0,0" Grid.Row="8" Text="/" FontWeight="Bold" VerticalAlignment="Top"/>
+
+                    <TextBox x:Name="txtLanguages" Height="23" Margin="138,117,20,0" Grid.Row="8" VerticalAlignment="Top"  TextChanged="textbox_TextChanged"/>
+                    <TextBlock x:Name="lblLanguages" HorizontalAlignment="Left" Margin="15,120,0,0" Grid.Row="8" Text="Known Languages" VerticalAlignment="Top"/>
+                </Grid>
+                <Grid Margin="5,5,5,0" x:Name="grdSkills" Visibility="Collapsed" >
+                    <Grid Margin="10,0,0,0">
+                        <TextBlock x:Name="titSkills" Text="Skills" FontSize="16" />
+                        <TextBox x:Name="txtSkillModifiers" Height="23" Margin="140,26,30,0" VerticalAlignment="Top"/>
+                        <TextBlock x:Name="lblSkillModifiers" HorizontalAlignment="Left" Margin="10,29,0,0" Text="Conditional Modifiers" VerticalAlignment="Top"/>
+                    </Grid>
+                    <Grid Margin="10,55,10,0" MaxWidth="700" >
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="170" />
+                            <ColumnDefinition Width="85" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="Skill" Margin="10,2" FontWeight="Bold" />
+                        <TextBlock Text="Total" Grid.Column="1" Margin="10,2,0,2" HorizontalAlignment="Left" FontWeight="Bold" />
+                        <TextBlock Text="Modifier" Grid.Column="1" Margin="55,2,0,2" HorizontalAlignment="Left" FontWeight="Bold" />
+                        <TextBlock Text="Ranks" Grid.Column="1" Margin="128,2,0,2" HorizontalAlignment="Left" FontWeight="Bold" />
+                    </Grid>
+                    <StackPanel x:Name="stkSkills" Margin="10,80,10,0" Orientation="Vertical" MaxWidth="700" >
+
+                    </StackPanel>
+                </Grid>
+                <Grid Margin="5,5,5,0" x:Name="grdCombat" >
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="25"/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition Height="37" />
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition Height="75" />
+                        <RowDefinition Height="40" />
+                        <RowDefinition/>
+                        <RowDefinition Height="40" />
+                        <RowDefinition/>
+                        <RowDefinition Height="40" />
+                        <RowDefinition/>
+                        <RowDefinition Height="40" />
+                    </Grid.RowDefinitions>
+                    <Grid Margin="10,0,0,0">
+                        <TextBlock x:Name="titCombat" Text="Combat" FontSize="16" />
+                    </Grid>
+                    <local:ArmorClassEditor Grid.Row="1" Margin="5,5,0,0" x:Name="edtAc" ContentChanged="editor_ContentChanged" />
+                    <local:CompoundEditor Grid.Row="2" Margin="5,5,0,0" x:Name="edtInit" Title="Initiative" ModifierTitle="Dex Mod" ContentChanged="editor_ContentChanged" />
+                    <TextBlock x:Name="lblBab" HorizontalAlignment="Left" Margin="15,0,0,0" Grid.Row="3" Text="Base Attack Bonus (BAB)" FontWeight="Bold" VerticalAlignment="Center"/>
+                    <TextBox x:Name="txtBab" HorizontalAlignment="Left" Height="23" Margin="170,9,0,0" Grid.Row="3" VerticalAlignment="Top" Width="60" TextChanged="textbox_TextChanged"/>
+                    <local:CompoundEditor Grid.Row="4" Margin="5,5,0,0" x:Name="edtCmb" Title="Combat Maneuver Bonus (CMB)" ModifierTitle="Str Mod" BaseTitle="BAB" CanEditBase="False" ContentChanged="editor_ContentChanged" />
+                    <local:CompoundEditor Grid.Row="5" Margin="5,5,0,0" x:Name="edtCmd" Title="Combat Maneuver Defense (CMD)" ModifierTitle="Str Mod" Modifier2Title="Dex Mod" BaseTitle="BAB" CanEditBase="False" ShowPlusTen="True" ContentChanged="editor_ContentChanged" />
+                    <TextBlock x:Name="lblDr" HorizontalAlignment="Left" Margin="15,18,0,0" Grid.Row="6" Text="Damage Reduction (DR)" VerticalAlignment="Top"/>
+                    <TextBox x:Name="txtDr" Height="24" Margin="159,15,10,0" Grid.Row="6" VerticalAlignment="Top" TextChanged="textbox_TextChanged"/>
+                    <TextBlock x:Name="lblResist" HorizontalAlignment="Left" Margin="15,48,0,0" Grid.Row="6" Text="Resistances" VerticalAlignment="Top"/>
+                    <TextBox x:Name="txtResist" Height="23" Margin="159,44,10,0" Grid.Row="6" VerticalAlignment="Top" TextChanged="textbox_TextChanged"/>
+
+                    <TextBlock x:Name="lblMelee" HorizontalAlignment="Left" Margin="15,12,0,0" Grid.Row="7" Text="Melee Weapons" FontWeight="SemiBold" VerticalAlignment="Top"/>
+                    <Expander VerticalAlignment="Center" Margin="120,0,0,0" HorizontalAlignment="Left" Grid.Row="7" x:Name="expMelee" Header="Show/Hide List" IsExpanded="True" Expanded="ExpMelee_Expanded" Collapsed="ExpMelee_Collapsed" />
+                    <flat:FlatButton ColorScheme="{Binding ColorScheme, ElementName=window}" Width="20" Height="24" HorizontalAlignment="Right" Margin="0,0,50,0" Grid.Row="7" Padding="0" TransparentBack="True" ToolTip="Add" x:Name="btnAddMelee" Click="BtnAddMelee_Click" >
+                        <Image Source="/Images/Add.png" Width="16" Height="16" />
+                    </flat:FlatButton>
+                    <flat:FlatButton ColorScheme="{Binding ColorScheme, ElementName=window}" Width="20" Height="24" HorizontalAlignment="Right" Margin="0,0,28,0" Grid.Row="7" Padding="0" TransparentBack="True" ToolTip="Delete" x:Name="btnDeleteMelee" Click="BtnDeleteMelee_Click" >
+                        <Image Source="/Images/Cancel.png" Width="16" Height="16" />
+                    </flat:FlatButton>
+                    <flat:FlatButton ColorScheme="{Binding ColorScheme, ElementName=window}" Width="20" Height="24" HorizontalAlignment="Right" Margin="0,0,6,0" Grid.Row="7" Padding="0" TransparentBack="True" ToolTip="Deselect All" x:Name="btnDeselectMelee" Click="BtnDeselectMelee_Click" >
+                        <Image Source="/Images/Deselect.png" Width="16" Height="16" />
+                    </flat:FlatButton>
+                    <flat:SelectPanel ColorScheme="{Binding ColorScheme, ElementName=window}" x:Name="selMelee" PanelBorderThickness="0" Grid.Row="8" MultiSelect="True" />
+
+                    <TextBlock x:Name="lblRanged" HorizontalAlignment="Left" Margin="15,12,0,0" Grid.Row="9" Text="Ranged Weapons" FontWeight="SemiBold" VerticalAlignment="Top"/>
+                    <Expander VerticalAlignment="Center" Margin="120,0,0,0" HorizontalAlignment="Left" Grid.Row="9" x:Name="expRanged" Header="Show/Hide List" IsExpanded="True" Expanded="ExpRanged_Expanded" Collapsed="ExpRanged_Collapsed" />
+                    <flat:FlatButton ColorScheme="{Binding ColorScheme, ElementName=window}" Width="20" Height="24" HorizontalAlignment="Right" Margin="0,0,50,0" Grid.Row="9" Padding="0" TransparentBack="True" ToolTip="Add" x:Name="btnAddRanged" Click="BtnAddRanged_Click" >
+                        <Image Source="/Images/Add.png" Width="16" Height="16" />
+                    </flat:FlatButton>
+                    <flat:FlatButton ColorScheme="{Binding ColorScheme, ElementName=window}" Width="20" Height="24" HorizontalAlignment="Right" Margin="0,0,28,0" Grid.Row="9" Padding="0" TransparentBack="True" ToolTip="Delete" x:Name="btnDeleteRanged" Click="BtnDeleteRanged_Click" >
+                        <Image Source="/Images/Cancel.png" Width="16" Height="16" />
+                    </flat:FlatButton>
+                    <flat:FlatButton ColorScheme="{Binding ColorScheme, ElementName=window}" Width="20" Height="24" HorizontalAlignment="Right" Margin="0,0,6,0" Grid.Row="9" Padding="0" TransparentBack="True" ToolTip="Deselect All" x:Name="btnDeselectRanged" Click="BtnDeselectRanged_Click" >
+                        <Image Source="/Images/Deselect.png" Width="16" Height="16" />
+                    </flat:FlatButton>
+                    <flat:SelectPanel ColorScheme="{Binding ColorScheme, ElementName=window}" x:Name="selRanged" PanelBorderThickness="0" Grid.Row="10" MultiSelect="True" />
+
+                    <TextBlock x:Name="lblAcItems" HorizontalAlignment="Left" Margin="15,0,0,0" Grid.Row="11" Text="Armor/Shields" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                    <Expander VerticalAlignment="Center" Margin="120,0,0,0" HorizontalAlignment="Left" Grid.Row="11" x:Name="expAcItem" Header="Show/Hide List" IsExpanded="True" Expanded="expAcItem_Expanded" Collapsed="expAcItem_Collapsed" />
+                    <flat:FlatButton ColorScheme="{Binding ColorScheme, ElementName=window}" Width="20" Height="24" HorizontalAlignment="Left" Margin="333,8,0,8" Grid.Row="11" Padding="0" TransparentBack="True" ToolTip="Add" x:Name="btnAddAcItem" Click="btnAddAcItem_Click" >
+                        <Image Source="Images/Add.png" Width="16" Height="16" />
+                    </flat:FlatButton>
+                    <flat:FlatButton ColorScheme="{Binding ColorScheme, ElementName=window}" Width="20" Height="24" HorizontalAlignment="Left" Margin="355,8,0,8" Grid.Row="11" Padding="0" TransparentBack="True" ToolTip="Delete" x:Name="btnDeleteAcItem" Click="btnDeleteAcItem_Click" >
+                        <Image Source="Images/Cancel.png" Width="16" Height="16" />
+                    </flat:FlatButton>
+                    <flat:FlatButton ColorScheme="{Binding ColorScheme, ElementName=window}" Width="20" Height="24" HorizontalAlignment="Left" Margin="377,8,0,8" Grid.Row="11" Padding="0" TransparentBack="True" ToolTip="Deselect All" x:Name="btnDeselectAcItem" Click="btnDeselectAcItem_Click" >
+                        <Image Source="Images/Deselect.png" Width="16" Height="16" />
+                    </flat:FlatButton>
+                    <flat:SelectPanel ColorScheme="{Binding ColorScheme, ElementName=window}" x:Name="selAcItem" PanelBorderThickness="0" Grid.Row="12" MultiSelect="True" />
+                    <TextBlock x:Name="lblTotal" Text="Total" Margin="93,13,285,13" Grid.Row="13"/>
+                    <TextBox x:Name="txtTotal" TextChanged="textbox_TextChanged" Margin="123,9,230,9" Grid.Row="13"/>
+                    <TextBlock x:Name="lblTouch" Text="Touch" Margin="183,13,189,13" Grid.Row="13"/>
+                    <TextBox x:Name="txtTouch" TextChanged="textbox_TextChanged" Margin="219,9,134,9" Grid.Row="13"/>
+                    <TextBlock x:Name="lblFlat" Text="Flat-footed" Margin="279,13,65,13" Grid.Row="13"/>
+                    <TextBox x:Name="txtFlat" TextChanged="textbox_TextChanged" Margin="343,9,10,9" Grid.Row="13"/>
+                </Grid>
+                <Grid Margin="5,5,5,0" x:Name="grdSpells">
+                    <Grid Margin="10,0,0,0">
+                        <TextBlock x:Name="titSpells" Text="Spells" FontSize="16" />
+                    </Grid>
+                </Grid>
+                <Grid Margin="5,5,5,0" x:Name="grdFeats">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="25" />
+                        <RowDefinition Height="40" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="40" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="40" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Grid Margin="10,0,0,0">
+                        <TextBlock x:Name="titFeats" Text="Feats/Abilities" FontSize="16" />
+                    </Grid>
+                    <TextBlock x:Name="lblFeats" HorizontalAlignment="Left" Margin="15,12,0,0" Grid.Row="1" Text="Feats" FontWeight="SemiBold" VerticalAlignment="Top"/>
+                    <Expander VerticalAlignment="Center" Margin="120,0,0,0" HorizontalAlignment="Left" Grid.Row="1" x:Name="expFeats" Header="Show/Hide List" IsExpanded="True" Expanded="expFeats_Expanded" Collapsed="expFeats_Collapsed" />
+                    <flat:FlatButton ColorScheme="{Binding ColorScheme, ElementName=window}" Width="20" Height="24" HorizontalAlignment="Right" Margin="0,0,50,0" Grid.Row="1" Padding="0" TransparentBack="True" ToolTip="Add" x:Name="btnAddFeat" Click="btnAddFeat_Click" >
+                        <Image Source="/Images/Add.png" Width="16" Height="16" />
+                    </flat:FlatButton>
+                    <flat:FlatButton ColorScheme="{Binding ColorScheme, ElementName=window}" Width="20" Height="24" HorizontalAlignment="Right" Margin="0,0,28,0" Grid.Row="1" Padding="0" TransparentBack="True" ToolTip="Delete" x:Name="btnDeleteFeat" Click="btnDeleteFeat_Click" >
+                        <Image Source="/Images/Cancel.png" Width="16" Height="16" />
+                    </flat:FlatButton>
+                    <flat:FlatButton ColorScheme="{Binding ColorScheme, ElementName=window}" Width="20" Height="24" HorizontalAlignment="Right" Margin="0,0,6,0" Grid.Row="1" Padding="0" TransparentBack="True" ToolTip="Deselect All" x:Name="btnDeselectFeat" Click="btnDeselectFeat_Click" >
+                        <Image Source="/Images/Deselect.png" Width="16" Height="16" />
+                    </flat:FlatButton>
+                    <flat:SelectPanel ColorScheme="{Binding ColorScheme, ElementName=window}" x:Name="selFeats" PanelBorderThickness="0" Grid.Row="2" MultiSelect="True" />
+
+                    <TextBlock x:Name="lblAbilities" HorizontalAlignment="Left" Margin="15,12,0,0" Grid.Row="3" Text="Special Abilities" FontWeight="SemiBold" VerticalAlignment="Top"/>
+                    <Expander VerticalAlignment="Center" Margin="120,0,0,0" HorizontalAlignment="Left" Grid.Row="3" x:Name="expabilities" Header="Show/Hide List" IsExpanded="True" Expanded="expabilities_Expanded" Collapsed="expabilities_Collapsed" />
+                    <flat:FlatButton ColorScheme="{Binding ColorScheme, ElementName=window}" Width="20" Height="24" HorizontalAlignment="Right" Margin="0,0,50,0" Grid.Row="3" Padding="0" TransparentBack="True" ToolTip="Add" x:Name="btnAddAbility" Click="btnAddAbility_Click" >
+                        <Image Source="/Images/Add.png" Width="16" Height="16" />
+                    </flat:FlatButton>
+                    <flat:FlatButton ColorScheme="{Binding ColorScheme, ElementName=window}" Width="20" Height="24" HorizontalAlignment="Right" Margin="0,0,28,0" Grid.Row="3" Padding="0" TransparentBack="True" ToolTip="Delete" x:Name="btnDeleteAbility" Click="btnDeleteAbility_Click" >
+                        <Image Source="/Images/Cancel.png" Width="16" Height="16" />
+                    </flat:FlatButton>
+                    <flat:FlatButton ColorScheme="{Binding ColorScheme, ElementName=window}" Width="20" Height="24" HorizontalAlignment="Right" Margin="0,0,6,0" Grid.Row="3" Padding="0" TransparentBack="True" ToolTip="Deselect All" x:Name="btnDeselectAbility" Click="btnDeselectAbility_Click" >
+                        <Image Source="/Images/Deselect.png" Width="16" Height="16" />
+                    </flat:FlatButton>
+                    <flat:SelectPanel ColorScheme="{Binding ColorScheme, ElementName=window}" x:Name="selAbilities" PanelBorderThickness="0" Grid.Row="4" MultiSelect="True" />
+
+                    <TextBlock x:Name="lblTraits" HorizontalAlignment="Left" Margin="15,12,0,0" Grid.Row="5" Text="Traits" FontWeight="SemiBold" VerticalAlignment="Top"/>
+                    <Expander VerticalAlignment="Center" Margin="120,0,0,0" HorizontalAlignment="Left" Grid.Row="5" x:Name="expTraits" Header="Show/Hide List" IsExpanded="True" Expanded="expTraits_Expanded" Collapsed="expTraits_Collapsed" />
+                    <flat:FlatButton ColorScheme="{Binding ColorScheme, ElementName=window}" Width="20" Height="24" HorizontalAlignment="Right" Margin="0,0,50,0" Grid.Row="5" Padding="0" TransparentBack="True" ToolTip="Add" x:Name="btnAddTrait" Click="btnAddTrait_Click" >
+                        <Image Source="/Images/Add.png" Width="16" Height="16" />
+                    </flat:FlatButton>
+                    <flat:FlatButton ColorScheme="{Binding ColorScheme, ElementName=window}" Width="20" Height="24" HorizontalAlignment="Right" Margin="0,0,28,0" Grid.Row="5" Padding="0" TransparentBack="True" ToolTip="Delete" x:Name="btnDeleteTrait" Click="btnDeleteTrait_Click" >
+                        <Image Source="/Images/Cancel.png" Width="16" Height="16" />
+                    </flat:FlatButton>
+                    <flat:FlatButton ColorScheme="{Binding ColorScheme, ElementName=window}" Width="20" Height="24" HorizontalAlignment="Right" Margin="0,0,6,0" Grid.Row="5" Padding="0" TransparentBack="True" ToolTip="Deselect All" x:Name="btnDeselectTrait" Click="btnDeselectTrait_Click" >
+                        <Image Source="/Images/Deselect.png" Width="16" Height="16" />
+                    </flat:FlatButton>
+                    <flat:SelectPanel ColorScheme="{Binding ColorScheme, ElementName=window}" x:Name="selTraits" PanelBorderThickness="0" Grid.Row="6" MultiSelect="True" />
+                </Grid>
+                <Grid Margin="5,5,5,0" x:Name="grdItems">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="55" />
+                        <RowDefinition Height="240"/>
+                        <RowDefinition Height="40" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Grid Margin="10,0,0,0">
+                        <TextBlock x:Name="titItems" Text="Items" FontSize="16" />
+                    </Grid>
+                    <TextBlock x:Name="lblMoreItems" HorizontalAlignment="Left" Margin="10,30,0,0" Text="For other items (weapons, armor, etc.), see the Combat section." VerticalAlignment="Top"/>
+
+                    <TextBlock HorizontalAlignment="Left" Margin="15,10,0,0" Grid.Row="1" Text="Money" FontWeight="SemiBold" VerticalAlignment="Top"/>
+                    <TextBox x:Name="txtMoneyPp" HorizontalAlignment="Left" Height="23" Margin="155,35,0,0" Grid.Row="1" VerticalAlignment="Top" Width="50" TextChanged="textbox_TextChanged"/>
+                    <TextBox x:Name="txtMoneyGp" HorizontalAlignment="Left" Height="22" Margin="155,64,0,0" Grid.Row="1" VerticalAlignment="Top" Width="50" TextChanged="textbox_TextChanged"/>
+                    <TextBox x:Name="txtMoneySp" HorizontalAlignment="Left" Height="23" Margin="155,91,0,0" Grid.Row="1" VerticalAlignment="Top" Width="50" TextChanged="textbox_TextChanged"/>
+                    <TextBox x:Name="txtMoneyCp" HorizontalAlignment="Left" Height="23" Margin="155,119,0,0" Grid.Row="1" VerticalAlignment="Top" Width="50" TextChanged="textbox_TextChanged"/>
+                    <TextBlock x:Name="lblMoneyPp" HorizontalAlignment="Left" Margin="30,38,0,0" Grid.Row="1" Text="PP" FontWeight="Bold" VerticalAlignment="Top"/>
+                    <TextBlock x:Name="lblMoneyGp" HorizontalAlignment="Left" Margin="30,67,0,0" Grid.Row="1" Text="GP" FontWeight="Bold" VerticalAlignment="Top"/>
+                    <TextBlock x:Name="lblMoneySp" HorizontalAlignment="Left" Margin="30,94,0,0" Grid.Row="1" Text="SP" FontWeight="Bold" VerticalAlignment="Top"/>
+                    <TextBlock x:Name="lblMoneyCp" HorizontalAlignment="Left" Margin="30,122,0,0" Grid.Row="1" Text="CP" FontWeight="Bold" VerticalAlignment="Top"/>
+                    <TextBlock x:Name="lblMoneyPp_Copy" HorizontalAlignment="Left" Margin="60,38,0,0" Grid.Row="1" Text="Platinum Pieces" VerticalAlignment="Top"/>
+                    <TextBlock x:Name="lblMoneyGp_Copy" HorizontalAlignment="Left" Margin="60,67,0,0" Grid.Row="1" Text="Gold Pieces" VerticalAlignment="Top"/>
+                    <TextBlock x:Name="lblMoneySp_Copy" HorizontalAlignment="Left" Margin="60,94,0,0" Grid.Row="1" Text="Silver Pieces" VerticalAlignment="Top"/>
+                    <TextBlock x:Name="lblMoneyCp_Copy" HorizontalAlignment="Left" Margin="60,122,0,0" Grid.Row="1" Text="Copper Pieces" VerticalAlignment="Top"/>
+
+                    <TextBox x:Name="txtGemsArt" Height="23" Margin="120,160,40,0" Grid.Row="1" VerticalAlignment="Top" TextChanged="textbox_TextChanged"/>
+                    <TextBox x:Name="txtOtherTreasure" Height="23" Margin="120,188,40,0" Grid.Row="1" VerticalAlignment="Top" TextChanged="textbox_TextChanged"/>
+                    <TextBlock x:Name="lblGemsArt" HorizontalAlignment="Left" Margin="30,163,0,0" Grid.Row="1" Text="Gems/Art" VerticalAlignment="Top"/>
+                    <TextBlock x:Name="lblOtherTreasure" HorizontalAlignment="Left" Margin="30,191,0,0" Grid.Row="1" Text="Other Treasure" VerticalAlignment="Top"/>
+
+                    <TextBlock x:Name="lblEquipment" HorizontalAlignment="Left" Margin="15,12,0,0" Grid.Row="2" Text="Equipment/Gear" FontWeight="SemiBold" VerticalAlignment="Top"/>
+                    <Expander VerticalAlignment="Center" Margin="120,0,0,0" HorizontalAlignment="Left" Grid.Row="2" x:Name="expEquipment" Header="Show/Hide List" IsExpanded="True" Expanded="expEquipment_Expanded" Collapsed="expEquipment_Collapsed" />
+                    <flat:FlatButton ColorScheme="{Binding ColorScheme, ElementName=window}" Width="20" Height="24" HorizontalAlignment="Right" Margin="0,0,50,0" Grid.Row="2" Padding="0" TransparentBack="True" ToolTip="Add" x:Name="btnAddEquipment" Click="btnAddEquipment_Click" >
+                        <Image Source="/Images/Add.png" Width="16" Height="16" />
+                    </flat:FlatButton>
+                    <flat:FlatButton ColorScheme="{Binding ColorScheme, ElementName=window}" Width="20" Height="24" HorizontalAlignment="Right" Margin="0,0,28,0" Grid.Row="2" Padding="0" TransparentBack="True" ToolTip="Delete" x:Name="btnDeleteEquipment" Click="btnDeleteEquipment_Click" >
+                        <Image Source="/Images/Cancel.png" Width="16" Height="16" />
+                    </flat:FlatButton>
+                    <flat:FlatButton ColorScheme="{Binding ColorScheme, ElementName=window}" Width="20" Height="24" HorizontalAlignment="Right" Margin="0,0,6,0" Grid.Row="2" Padding="0" TransparentBack="True" ToolTip="Deselect All" x:Name="btnDeselectEquipment" Click="btnDeselectEquipment_Click" >
+                        <Image Source="/Images/Deselect.png" Width="16" Height="16" />
+                    </flat:FlatButton>
+                    <flat:SelectPanel ColorScheme="{Binding ColorScheme, ElementName=window}" x:Name="selEquipment" PanelBorderThickness="0" Grid.Row="3" MultiSelect="True" />
+                </Grid>
+                <Grid Margin="5,5,5,0" x:Name="grdNotes">
+                    <TextBlock x:Name="titNotes" Text="Notes" FontSize="16" Margin="10,0,0,0" />
+                    <TextBox x:Name="txtNotes" AcceptsReturn="True" MinHeight="200" Height="Auto" Margin="10,25" SpellCheck.IsEnabled="True" TextChanged="textbox_TextChanged"/>
+                </Grid>
+            </StackPanel>
+
+        </ScrollViewer>
+
+        <edit:TextEditor Grid.Row="2" Grid.Column="1" FontFamily="Consolas" FontSize="12" x:Name="txtEditRaw" ShowLineNumbers="True" WordWrap="True" Visibility="Collapsed" TextChanged="txtEditRaw_TextChanged" >
+            <edit:TextEditor.ContextMenu>
+                <flat:ContextMenu FontFamily="Segoe UI">
+                    <MenuItem Header="_Copy" Click="mnuCopy_Click">
+                        <MenuItem.Icon>
+                            <Image Source="/PathfinderJson;component/Images/Copy.png" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="C_ut" Click="mnuCut_Click" >
+                        <MenuItem.Icon>
+                            <Image Source="/PathfinderJson;component/Images/Cut.png" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="_Paste" Click="mnuPaste_Click" />
+                    <Separator />
+                    <MenuItem Header="_Select All" Click="mnuSelectAll_Click" />
+                    <MenuItem Header="_Delete" Click="mnuDelete_Click" >
+                        <MenuItem.Icon>
+                            <Image Source="/PathfinderJson;component/Images/Cancel.png" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </flat:ContextMenu>
+            </edit:TextEditor.ContextMenu>
+        </edit:TextEditor>
+
+        <TextBlock x:Name="lblNoSheet" Grid.Column="1" HorizontalAlignment="Center" Grid.Row="2" TextWrapping="Wrap" VerticalAlignment="Center" TextAlignment="Center" Visibility="Collapsed" >
+            <Run Text="No sheet loaded" /><LineBreak /><Run FontSize="4" /><LineBreak/>
+            <Run Text="To load a sheet, select Open from the File menu."  />
+        </TextBlock>
+
+    </Grid>
+</flat:FlatWindow>

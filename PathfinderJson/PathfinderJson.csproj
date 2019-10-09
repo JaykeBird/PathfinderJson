@@ -1,0 +1,110 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <ApplicationIcon>appicon.ico</ApplicationIcon>
+    <ApplicationManifest>PathfinderJson.manifest</ApplicationManifest>
+    <PublishSingleFile>true</PublishSingleFile>
+    <PublishTrimmed>true</PublishTrimmed>
+    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <Version>0.9.0.0</Version>
+    <Authors>Jayke R. Huempfner</Authors>
+    <Company>Jayke R. Huempfner</Company>
+    <Product>Pathfinder 1e JSON Sheet Editor</Product>
+    <AssemblyVersion>0.9.0.0</AssemblyVersion>
+    <FileVersion>0.9.0.0</FileVersion>
+    <NeutralLanguage>en</NeutralLanguage>
+    <Description>Read and edit JSON Pathfinder sheet files from Motokrosh's website</Description>
+    <Copyright>© Jayke R. Huempfner 2019</Copyright>
+    <StartupObject>PathfinderJson.App</StartupObject>
+    <!--<PackageId>PackageId</PackageId>-->
+    <!--<PackageLicenseUrl>License URL</PackageLicenseUrl>
+    <PackageProjectUrl>Project URL</PackageProjectUrl>-->
+    <!--<PackageIconUrl>Icon URL</PackageIconUrl>
+    <RepositoryUrl>Repo URL</RepositoryUrl>-->
+    <!--<RepositoryType>Repo type</RepositoryType>-->
+    <!--<PackageTags>Tags</PackageTags>-->
+    <!--<PackageReleaseNotes>Release</PackageReleaseNotes>-->
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="About.xaml" />
+    <None Remove="appicon.ico" />
+    <None Remove="CompoundEditor.xaml" />
+    <None Remove="Images\Add.png" />
+    <None Remove="Images\Cancel.png" />
+    <None Remove="Images\Colors.png" />
+    <None Remove="Images\ContinuousScroll.png" />
+    <None Remove="Images\Copy.png" />
+    <None Remove="Images\Cut.png" />
+    <None Remove="Images\Deselect.png" />
+    <None Remove="Images\Edit.png" />
+    <None Remove="Images\Exit.png" />
+    <None Remove="Images\Info.png" />
+    <None Remove="Images\Open.png" />
+    <None Remove="Images\RecentFile.png" />
+    <None Remove="Images\Redo.png" />
+    <None Remove="Images\Refresh.png" />
+    <None Remove="Images\Save.png" />
+    <None Remove="Images\SaveAs.png" />
+    <None Remove="Images\TabView.png" />
+    <None Remove="Images\TextFile.png" />
+    <None Remove="Images\Undo.png" />
+    <None Remove="Json.xshd" />
+    <None Remove="SkillEditor.xaml" />
+    <None Remove="ThirdPartyCredits.xaml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AvalonEdit" Version="6.0.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="UiCore">
+      <HintPath>..\..\ShineCalendar\FlatWindow\bin\Release\netcoreapp3.0\UiCore.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="appicon.ico" />
+    <Resource Include="Images\Add.png" />
+    <Resource Include="Images\Cancel.png" />
+    <Resource Include="Images\Colors.png" />
+    <Resource Include="Images\ContinuousScroll.png" />
+    <Resource Include="Images\Copy.png" />
+    <Resource Include="Images\Cut.png" />
+    <Resource Include="Images\Deselect.png" />
+    <Resource Include="Images\Edit.png" />
+    <Resource Include="Images\Exit.png" />
+    <Resource Include="Images\Info.png" />
+    <Resource Include="Images\Open.png" />
+    <Resource Include="Images\RecentFile.png" />
+    <Resource Include="Images\Redo.png" />
+    <Resource Include="Images\Refresh.png" />
+    <Resource Include="Images\Save.png" />
+    <Resource Include="Images\SaveAs.png" />
+    <Resource Include="Images\TabView.png" />
+    <Resource Include="Images\TextFile.png" />
+    <Resource Include="Images\Undo.png" />
+    <EmbeddedResource Include="Json.xshd" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="PlatformInfo.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="PlatformInfo.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+
+</Project>

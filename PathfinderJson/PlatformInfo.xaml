@@ -1,0 +1,25 @@
+﻿<flat:FlatWindow x:Class="PathfinderJson.PlatformInfo"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PathfinderJson"
+        xmlns:flat="clr-namespace:UiCore;assembly=UiCore"
+        mc:Ignorable="d"
+        Title="Platform Info" Height="250" Width="340" ResizeMode="NoResize" CaptionDisplayType="Close" >
+    <Grid>
+        <flat:FlatButton x:Name="btnClose" Content="OK" HorizontalAlignment="Center" Margin="0,0,0,10" VerticalAlignment="Bottom" Width="80" Click="btnClose_Click"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,20,0,0" Text="Platform Information" VerticalAlignment="Top"/>
+
+        <TextBlock HorizontalAlignment="Left" Margin="10,44,0,0" Text="OS Platform:" VerticalAlignment="Top"/>
+        <TextBlock HorizontalAlignment="Left" Margin="120,44,0,0" Text="0" VerticalAlignment="Top" x:Name="txtPlatform" />
+        <TextBlock HorizontalAlignment="Left" Margin="10,60,0,0" Text="OS Version:" VerticalAlignment="Top"/>
+        <TextBlock HorizontalAlignment="Left" Margin="120,60,0,0" Text="a" VerticalAlignment="Top" x:Name="txtVersion" />
+        <TextBlock HorizontalAlignment="Left" Margin="10,77,0,0" Text="OS Architecture:" VerticalAlignment="Top"/>
+        <TextBlock HorizontalAlignment="Left" Margin="120,77,15,0" VerticalAlignment="Top" Text="b" x:Name="txtProcessor" />
+        <TextBlock HorizontalAlignment="Left" Margin="10,110,0,0" Text=".NET Core Target:" VerticalAlignment="Top"/>
+        <TextBlock HorizontalAlignment="Left" Margin="120,110,0,0" Text="c" VerticalAlignment="Top" x:Name="txtTarget" />
+        <TextBlock HorizontalAlignment="Left" Margin="10,127,0,0" Text=".NET Core Runtime:" VerticalAlignment="Top"/>
+        <TextBlock HorizontalAlignment="Left" Margin="120,127,0,0" Text="d" VerticalAlignment="Top" x:Name="txtRuntime" />
+    </Grid>
+</flat:FlatWindow>

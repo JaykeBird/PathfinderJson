@@ -1,0 +1,225 @@
+{
+    "_id": "5c2d73d608234f0004bc3201",
+    "user": {
+        "provider": "google",
+        "id": "116681070461099796125",
+        "displayName": "Jacob Huempfner (JaykeBird)",
+        "name": {
+            "familyName": "Huempfner",
+            "givenName": "Jacob"
+        },
+        "emails": [
+            {
+                "value": "jaykehuempfner@gmail.com",
+                "type": "account"
+            }
+        ],
+        "photos": [
+            {
+                "value": "https://lh5.googleusercontent.com/-r46iN6g3M9U/AAAAAAAAAAI/AAAAAAAAAIk/VSrtTminvXY/photo.jpg?sz=50"
+            }
+        ],
+        "gender": "male"
+    },
+    "spells": [
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {}
+    ],
+    "name": "Alana",
+    "modified": "2019-05-30T04:03:19.248Z",
+    "alignment": "TN",
+    "abilities": {
+        "str": "15",
+        "int": "11",
+        "cha": "12",
+        "con": "11",
+        "dex": "16",
+        "wis": "9"
+    },
+    "level": "Fighter 7",
+    "initiative": {
+        "miscModifier": "0",
+        "total": "3"
+    },
+    "homeland": "Geraldine Town",
+    "gender": "F",
+    "age": "20",
+    "height": "5'7\"",
+    "race": "Half-elf",
+    "size": "M",
+    "hair": "Red",
+    "eyes": "Brown",
+    "ac": {
+        "armorBonus": "0",
+        "total": "13",
+        "flatFooted": "10",
+        "touch": "13"
+    },
+    "bab": "7",
+    "cmb": {
+        "sizeModifier": "0",
+        "total": "10",
+        "miscModifiers": "1 (use dex instead of str)"
+    },
+    "deity": "Griana",
+    "cmd": {
+        "total": "22"
+    },
+    "melee": [
+        {
+            "weapon": "Sword",
+            "damage": "1d8",
+            "attackBonus": "6",
+            "critical": "19-20x2",
+            "notes": "+1 pt blank (30 ft)"
+        }
+    ],
+    "feats": [
+        {
+            "name": "Throw Anything",
+            "notes": "can throw anything, no penalty"
+        },
+        {
+            "name": "Agile Maneuvers"
+        },
+        {
+            "name": "Power Attack"
+        },
+        {
+            "name": "Point-Blank Shot",
+            "notes": "+1 on attack/damage rolls in range up to 30 ft"
+        },
+        {
+            "name": "Nimble Moves"
+        },
+        {
+            "name": "Animal Affinity"
+        },
+        {
+            "name": "Sharp Senses"
+        },
+        {
+            "name": "Skill Focus",
+            "type": "(Bonus)"
+        }
+    ],
+    "hp": {
+        "total": "42",
+        "wounds": "17"
+    },
+    "gear": [
+        {
+            "name": "Sunflower"
+        },
+        {
+            "name": "Trowel"
+        },
+        {
+            "name": "Bedroll"
+        },
+        {
+            "name": "Backpack"
+        },
+        {
+            "type": "Bologna Sandwich"
+        }
+    ],
+    "saves": {
+        "fort": {
+            "base": "5",
+            "total": "5"
+        },
+        "reflex": {
+            "base": "2",
+            "total": "5"
+        },
+        "will": {
+            "base": "2",
+            "total": "1",
+            "otherModifiers": "(+2 against fear)"
+        }
+    },
+    "skills": {
+        "climb": {
+            "classSkill": true
+        },
+        "craft1": {
+            "classSkill": true
+        },
+        "craft2": {
+            "classSkill": true
+        },
+        "craft3": {
+            "classSkill": true
+        },
+        "handleAnimal": {
+            "classSkill": true,
+            "ranks": "2",
+            "total": "6"
+        },
+        "intimidate": {
+            "classSkill": true
+        },
+        "knowledgeDungeoneering": {
+            "classSkill": true
+        },
+        "knowledgeEngineering": {
+            "classSkill": true
+        },
+        "profession1": {
+            "classSkill": true,
+            "total": "2",
+            "name": "Gardening"
+        },
+        "profession2": {
+            "classSkill": true,
+            "total": "2"
+        },
+        "ride": {
+            "classSkill": true,
+            "total": "6"
+        },
+        "survival": {
+            "classSkill": true,
+            "ranks": "1",
+            "total": "3"
+        },
+        "swim": {
+            "classSkill": true,
+            "total": "5"
+        },
+        "knowledgeNature": {
+            "ranks": "6",
+            "total": "6"
+        },
+        "acrobatics": {
+            "ranks": "2",
+            "total": "5"
+        },
+        "perception": {
+            "ranks": "3",
+            "total": "6",
+            "racial": "4"
+        }
+    },
+    "speed": {
+        "base": "30"
+    },
+    "notes": "Low-light vision",
+    "languages": "Kremic, Common",
+    "money": {
+        "gp": "3"
+    },
+    "xp": {
+        "toNextLevel": "51000",
+        "total": "41700"
+    }
+}

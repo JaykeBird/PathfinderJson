@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<!-- source: https://stackoverflow.com/questions/33293621/avalonedit-xshd-for-json-highlighting -->
+<SyntaxDefinition name="Json" extensions=".json" xmlns="http://icsharpcode.net/sharpdevelop/syntaxdefinition/2008">
+  <Color name="Digits" foreground="#5E00B2" exampleText="3.14" />
+  <Color name="Value" foreground="#000CFF" exampleText="var text = &quot;Hello, World!&quot;;" />
+  <Color name="ParamName" foreground="#046900"  exampleText="var text = &quot;Hello, World!&quot;;" />
+  <RuleSet ignoreCase="false">
+    <Keywords color="Digits" >
+      <Word>true</Word>
+      <Word>false</Word>
+    </Keywords>
+    <Span color="ParamName">
+      <Begin>"</Begin>
+      <End>"(?!\")</End>
+      <RuleSet>
+        <Rule color="Digits">(\b\d+[0-9]|\b[0-9])</Rule>
+      </RuleSet>
+    </Span>
+    <Span color="Value" multiline="true">
+      <Begin>
+        (?&lt;=:)\040"[^"]*
+      </Begin>
+      <End>"</End>
+      <RuleSet>
+        <Rule color="Digits">(\b\d+[0-9]|\b[0-9])</Rule>
+      </RuleSet>
+    </Span>
+    <Rule color="Digits">(\b\d+[0-9]|\b[0-9])</Rule>
+    <!--<Rule color="Digits">\b0[xX][0-9a-fA-F]+|(\b\d+(\.[0-9]+)?|\.[0-9]+)([eE][+-]?[0-9]+)?</Rule>-->
+  </RuleSet>
+</SyntaxDefinition>

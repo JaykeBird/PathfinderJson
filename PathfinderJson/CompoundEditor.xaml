@@ -1,0 +1,50 @@
+﻿<UserControl x:Class="PathfinderJson.CompoundEditor"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:PathfinderJson"
+             mc:Ignorable="d" Height="Auto" d:DesignWidth="430">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="10*"/>
+            <RowDefinition Height="0" x:Name="rowExtra" />
+        </Grid.RowDefinitions>
+
+        <StackPanel HorizontalAlignment="Left" Margin="0,5" Orientation="Horizontal" VerticalAlignment="Center">
+            <TextBlock x:Name="lblTitle" Margin="10,0,0,0" Text="Title" FontWeight="Bold" VerticalAlignment="Center"/>
+            <TextBlock x:Name="lblTotal" Margin="10,0,0,0" Text="Total" VerticalAlignment="Center"/>
+            <TextBox x:Name="txtTotal" Height="22" Margin="5,0" VerticalAlignment="Center" Width="50" TextChanged="textbox_TextChanged"/>
+            <Expander x:Name="expModifiers" Header="Modifiers" Margin="10,0,0,0" Collapsed="ExpModifiers_Collapsed" Expanded="ExpModifiers_Expanded" IsExpanded="False" />
+        </StackPanel>
+
+        <Border BorderThickness="1,0,1,1" BorderBrush="Black" Grid.Row="1" x:Name="brdrModifiers" />
+
+        <TextBox x:Name="txtBase" HorizontalAlignment="Left" Height="22" Margin="12,21,0,0" VerticalAlignment="Top" Width="50" Grid.Row="1" TextChanged="textbox_TextChanged"/>
+        <TextBlock x:Name="lblBase" HorizontalAlignment="Left" Margin="12,5,0,0" Text="Base" VerticalAlignment="Top" Grid.Row="1"/>
+        <TextBox x:Name="txtMagic" HorizontalAlignment="Left" Height="22" Margin="70,21,0,0" VerticalAlignment="Top" Width="50" Grid.Row="1" TextChanged="textbox_TextChanged"/>
+        <TextBlock x:Name="lblMagic" HorizontalAlignment="Left" Margin="70,5,0,0" Text="Magic" VerticalAlignment="Top" Grid.Row="1"/>
+        <TextBox x:Name="txtSize" HorizontalAlignment="Left" Height="22" Margin="130,21,0,0" VerticalAlignment="Top" Width="50" Grid.Row="1" TextChanged="textbox_TextChanged"/>
+        <TextBlock x:Name="lblSize" HorizontalAlignment="Left" Margin="130,5,0,0" Text="Size" VerticalAlignment="Top" Grid.Row="1"/>
+        <TextBox x:Name="txtModifier" IsEnabled="False" HorizontalAlignment="Left" Height="22" Margin="190,21,0,0" VerticalAlignment="Top" Width="50" Grid.Row="1"/>
+        <TextBlock x:Name="lblModifier" HorizontalAlignment="Left" Margin="190,5,0,0" Text="(modifier)" VerticalAlignment="Top" Grid.Row="1"/>
+        <TextBox x:Name="txtModifier2" IsEnabled="False" HorizontalAlignment="Left" Height="22" Margin="250,21,0,0" VerticalAlignment="Top" Width="50" Grid.Row="1" Visibility="Collapsed"/>
+        <TextBlock x:Name="lblModifier2" HorizontalAlignment="Left" Margin="250,5,0,0" Text="(modifier)" VerticalAlignment="Top" Grid.Row="1" Visibility="Collapsed"/>
+        <TextBox x:Name="txtMisc" HorizontalAlignment="Left" Height="22" Margin="310,21,0,0" VerticalAlignment="Top" Width="50" Grid.Row="1" TextChanged="textbox_TextChanged"/>
+        <TextBlock x:Name="lblMisc" HorizontalAlignment="Left" Margin="310,5,0,0" Text="Misc" VerticalAlignment="Top" Grid.Row="1"/>
+        <Grid Height="38" Margin="12,50,10,0" VerticalAlignment="Top" Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <TextBox x:Name="txtOther" Height="22" Margin="0,16,10,0" VerticalAlignment="Top" TextChanged="textbox_TextChanged"/>
+            <TextBlock x:Name="lblOther" HorizontalAlignment="Left" Text="Other" VerticalAlignment="Top"/>
+            <TextBox x:Name="txtTemp" Height="22" Margin="0,16,0,0" VerticalAlignment="Top" Grid.Column="1" TextChanged="textbox_TextChanged"/>
+            <TextBlock x:Name="lblTemp" HorizontalAlignment="Left" Margin="0,0,0,0" Text="Temporary" VerticalAlignment="Top" Grid.Column="1"/>
+            <GridSplitter x:Name="gridSplitter" Width="10" Background="#01000000" />
+
+        </Grid>
+        <TextBlock x:Name="lblPlusTen" HorizontalAlignment="Left" Margin="368,22,0,0" Text="+10" FontWeight="SemiBold" FontSize="14" VerticalAlignment="Top" Grid.Row="1" Visibility="Collapsed"  />
+
+    </Grid>
+</UserControl>

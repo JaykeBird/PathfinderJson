@@ -1,0 +1,453 @@
+{
+    "_id": "5b5bdf95870f280004196bc1",
+    "user": {
+        "provider": "google",
+        "id": "116681070461099796125",
+        "displayName": "Jacob Huempfner (JaykeBird)",
+        "name": {
+            "familyName": "Huempfner",
+            "givenName": "Jacob"
+        },
+        "emails": [
+            {
+                "value": "jaykehuempfner@gmail.com",
+                "type": "account"
+            }
+        ],
+        "photos": [
+            {
+                "value": "https://lh5.googleusercontent.com/-r46iN6g3M9U/AAAAAAAAAAI/AAAAAAAAAIk/VSrtTminvXY/photo.jpg?sz=50"
+            }
+        ],
+        "gender": "male"
+    },
+    "spells": [
+        {
+            "slotted": []
+        },
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {}
+    ],
+    "name": "Frederik the Bold",
+    "modified": "2019-09-14T05:41:48.915Z",
+    "alignment": "Lawful Good",
+    "level": "Knight (Adamant Ent.) 6",
+    "deity": "Desna",
+    "homeland": "Yes",
+    "race": "Suli (Mostly Human)",
+    "size": "Medium",
+    "gender": "M",
+    "age": "24",
+    "height": "6'",
+    "weight": "160",
+    "hair": "Dk Brown",
+    "eyes": "Hazel",
+    "abilities": {
+        "wis": "12",
+        "int": "7",
+        "cha": "20",
+        "str": "19",
+        "dex": "10",
+        "con": "14",
+        "tempStr": ""
+    },
+    "ac": {
+        "sizeModifier": "0",
+        "armorBonus": "6",
+        "total": "17",
+        "items": [
+            {
+                "name": "Chain mail",
+                "bonus": "6",
+                "type": "Medium",
+                "armorCheckPenalty": "5",
+                "spellFailure": "30%",
+                "weight": "40"
+            },
+            {
+                "name": "Light steel shield",
+                "bonus": "1",
+                "type": "Steel",
+                "armorCheckPenalty": "1",
+                "spellFailure": "5%"
+            }
+        ],
+        "itemTotals": {
+            "bonus": "7",
+            "armorCheckPenalty": "6",
+            "spellFailure": "35%",
+            "weight": "40"
+        },
+        "touch": "10",
+        "flatFooted": "16",
+        "shieldBonus": "1"
+    },
+    "saves": {
+        "fort": {
+            "magicModifier": "0",
+            "base": "5",
+            "total": "7",
+            "miscModifier": "0"
+        },
+        "reflex": {
+            "magicModifier": "0",
+            "base": "2",
+            "total": "2",
+            "miscModifier": "0"
+        },
+        "will": {
+            "magicModifier": "0",
+            "base": "5",
+            "miscModifier": "2",
+            "total": "8",
+            "tempModifier": "0",
+            "otherModifiers": ""
+        }
+    },
+    "feats": [
+        {
+            "name": "Exotic Weapon Proficiency"
+        },
+        {
+            "type": "",
+            "name": "Iron Will",
+            "notes": "You get a +2 bonus on all Will saving throws."
+        },
+        {
+            "name": "Mounted Combat",
+            "school": "Conjuration",
+            "subschool": "Summoning",
+            "notes": "Once per round when your mount is hit in combat, you may attempt a Ride check (as an immediate action) to negate the hit. The hit is negated if your Ride check result is greater than the opponent’s attack roll."
+        },
+        {
+            "name": "Endurance",
+            "notes": "You gain a +4 bonus on the following checks and saves: Swim checks made to resist nonlethal damage from exhaustion; Constitution checks made to continue running; Constitution checks made to avoid nonlethal damage from a forced march; Constitution checks made to hold your breath; Constitution checks made to avoid nonlethal damage from starvation or thirst; Fortitude saves made to avoid nonlethal damage from hot or cold environments; and Fortitude saves made to resist damage from suffocation.\n\nYou may sleep in light or medium armor without becoming fatigued."
+        }
+    ],
+    "bab": "5",
+    "speed": {
+        "base": "30",
+        "withArmor": "20"
+    },
+    "melee": [
+        {
+            "weapon": "Bastard Sword",
+            "damage": "1d10 (+6)",
+            "critical": "19/20x2",
+            "type": "S",
+            "attackBonus": "9",
+            "notes": "two-handed"
+        },
+        {
+            "weapon": "Mace",
+            "damage": "1d8 (+4)",
+            "critical": "20x2",
+            "type": "B",
+            "attackBonus": "9"
+        },
+        {
+            "weapon": "Iron Dagger (x2)",
+            "attackBonus": "9",
+            "damage": "1d4 (+4)",
+            "critical": "19/20x2",
+            "type": "P/S",
+            "notes": "range: 10 ft"
+        },
+        {
+            "weapon": "Spear",
+            "damage": "1d8 (+4)",
+            "critical": "20x3",
+            "attackBonus": "9",
+            "type": "P",
+            "notes": "brace, range 20 ft"
+        },
+        {
+            "weapon": "Sawtooth Sabre",
+            "attackBonus": "9",
+            "damage": "1d8(+4)",
+            "critical": "19/20x2",
+            "type": "S",
+            "notes": "light (1-handed)"
+        },
+        {
+            "weapon": "Shortsword",
+            "attackBonus": "9",
+            "damage": "1d6(+4)",
+            "critical": "19/20x2",
+            "type": "P",
+            "notes": "made of silver"
+        }
+    ],
+    "initiative": {
+        "total": "0"
+    },
+    "cmb": {
+        "total": "9",
+        "sizeModifier": "0"
+    },
+    "skills": {
+        "knowledgeNobility": {
+            "classSkill": true,
+            "total": "1"
+        },
+        "climb": {
+            "classSkill": true,
+            "total": "7"
+        },
+        "craft1": {
+            "classSkill": true,
+            "total": "1"
+        },
+        "craft2": {
+            "classSkill": true,
+            "total": "1"
+        },
+        "craft3": {
+            "classSkill": true,
+            "total": "1"
+        },
+        "diplomacy": {
+            "classSkill": true,
+            "racial": "2",
+            "total": "12",
+            "ranks": "2",
+            "trait": "james",
+            "misc": "bubuibu"
+        },
+        "handleAnimal": {
+            "classSkill": true,
+            "total": "8"
+        },
+        "senseMotive": {
+            "racial": "2",
+            "total": "4",
+            "ranks": "1"
+        },
+        "appraise": {
+            "total": "-2"
+        },
+        "knowledgeNature": {
+            "total": "-2"
+        },
+        "knowledgeLocal": {
+            "total": "-2"
+        },
+        "knowledgeHistory": {
+            "total": "-2"
+        },
+        "knowledgeGeography": {
+            "total": "-2"
+        },
+        "knowledgeEngineering": {
+            "total": "-2"
+        },
+        "knowledgeDungeoneering": {
+            "total": "-2"
+        },
+        "knowledgeArcana": {
+            "total": "-2"
+        },
+        "knowledgePlanes": {
+            "total": "-2"
+        },
+        "knowledgeReligion": {
+            "total": "-2"
+        },
+        "intimidate": {
+            "classSkill": true,
+            "total": "8"
+        },
+        "perform1": {
+            "classSkill": true,
+            "total": "9",
+            "ranks": "1",
+            "name": "Singing"
+        },
+        "perform2": {
+            "classSkill": true,
+            "total": "8"
+        },
+        "profession1": {
+            "classSkill": true,
+            "name": "Knight",
+            "total": "4"
+        },
+        "profession2": {
+            "classSkill": true,
+            "total": "4"
+        },
+        "ride": {
+            "classSkill": true,
+            "total": "4",
+            "ranks": "1"
+        },
+        "swim": {
+            "classSkill": true,
+            "total": "7"
+        },
+        "survival": {
+            "total": "1"
+        },
+        "spellcraft": {
+            "total": "-2"
+        },
+        "stealth": {
+            "total": "0"
+        },
+        "sleightOfHand": {
+            "total": "0"
+        },
+        "perception": {
+            "total": "6",
+            "ranks": "5"
+        },
+        "linguistics": {
+            "total": "-2"
+        },
+        "heal": {
+            "total": "1"
+        },
+        "fly": {
+            "total": "0"
+        },
+        "escapeArtist": {
+            "total": "0"
+        },
+        "disguise": {
+            "total": "5"
+        },
+        "disableDevice": {
+            "total": "0"
+        },
+        "bluff": {
+            "total": "5"
+        },
+        "acrobatics": {
+            "total": "0"
+        },
+        "useMagicDevice": {
+            "total": "5"
+        }
+    },
+    "languages": "Common",
+    "hp": {
+        "total": "43",
+        "wounds": "5"
+    },
+    "gear": [
+        {
+            "type": "Hooded",
+            "name": "Lantern",
+            "location": "Belt",
+            "quantity": "1",
+            "weight": "2"
+        },
+        {
+            "name": "Belt Pouch",
+            "location": "Belt?",
+            "quantity": "2",
+            "weight": "1"
+        },
+        {
+            "name": "Sack",
+            "location": "Over shoulder",
+            "quantity": "1",
+            "weight": "0.5"
+        },
+        {
+            "type": "",
+            "location": "Sack",
+            "quantity": "1",
+            "weight": "5",
+            "name": "Bedroll"
+        },
+        {
+            "name": "Rope",
+            "type": "Hemp",
+            "location": "",
+            "quantity": "1",
+            "weight": "10",
+            "notes": "50 ft"
+        },
+        {
+            "name": "Hourglass",
+            "location": "Belt",
+            "quantity": "1",
+            "weight": "1"
+        },
+        {
+            "type": "",
+            "quantity": "3",
+            "weight": "4.5",
+            "name": "Flask",
+            "notes": "1 - Cure Light Wounds",
+            "location": "Belt"
+        },
+        {
+            "name": "Bell",
+            "location": "Belt",
+            "quantity": "1",
+            "weight": "0"
+        },
+        {
+            "name": "Waterskin",
+            "location": "Belt",
+            "quantity": "1",
+            "weight": "4"
+        },
+        {
+            "name": "Rations",
+            "location": "Pouch",
+            "quantity": "10",
+            "weight": "1"
+        },
+        {
+            "type": "",
+            "name": "Hammer",
+            "location": "Belt",
+            "quantity": "1",
+            "weight": "2"
+        }
+    ],
+    "cmd": {
+        "total": "19",
+        "sizeModifier": "0"
+    },
+    "specialAbilities": [
+        {
+            "name": "Elemental Assault",
+            "type": "Su",
+            "notes": "nce per day as a swift action, a suli can shroud her arms in acid, cold, electricity, or fire. This lasts for one round per level, and can be dismissed as a free action. Unarmed strikes with her arms or hands (or attacks with weapons held in those hands) deal +1d6 points of damage of the appropriate energy type."
+        }
+    ],
+    "damageReduction": "",
+    "resistances": "Acid/Electricity/Cold/Fire 5",
+    "notes": "Low-Light Vision\n2 bullshits (WISm + 1)\nAdd STRm to damage, x1.5 for two-handed\nMounted Combat - +1 to melee atk/AC when mounted\nRallying Presence - +1 saves against fear, allies within 50 feet",
+    "money": {
+        "gp": "135",
+        "sp": "2"
+    },
+    "ranged": [
+        {
+            "weapon": "Flintlock Pistol",
+            "attackBonus": "5",
+            "damage": "1d8",
+            "critical": "20x2",
+            "type": "P"
+        }
+    ],
+    "traits": [
+        {
+            "type": "bv",
+            "name": "jh",
+            "notes": "jv"
+        }
+    ]
+}

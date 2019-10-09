@@ -1,0 +1,36 @@
+﻿<flat:FlatWindow x:Class="PathfinderJson.About"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PathfinderJson"
+        xmlns:flat="clr-namespace:UiCore;assembly=UiCore"
+        mc:Ignorable="d" x:Name="window"
+        Title="About" Height="400" Width="500" ResizeMode="NoResize" CaptionDisplayType="Close" >
+    <Grid>
+        <Image HorizontalAlignment="Left" Height="48" Margin="15,20,0,0" VerticalAlignment="Top" Width="48" Source="/appicon.ico"/>
+        <TextBlock HorizontalAlignment="Left" Margin="75,20,0,0" Text="Pathfinder JSON Character Sheet" FontSize="16" FontWeight="SemiBold" VerticalAlignment="Top"/>
+        <TextBlock Margin="75,50,40,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="34" 
+                    Text="Character sheet viewer for JSON files exported by Mottokrosh's Pathfinder character sheet website (for Pathfinder 1e)" />
+
+        <TextBlock HorizontalAlignment="Left" Margin="15,101,0,0" Text="Developed by Jayke R. Huempfner" VerticalAlignment="Top"/>
+        <flat:LinkTextBlock HorizontalAlignment="Left" Margin="260,101,0,0" Text="twitter.com/jaykebird" VerticalAlignment="Top" Click="LinkTextBlock2_Click" Cursor="Hand" />
+        <TextBlock HorizontalAlignment="Left" Margin="15,120,0,0" Text="Version 0.9.0" VerticalAlignment="Top"/>
+        <TextBlock HorizontalAlignment="Left" Margin="15,139,0,0" Text="Open-source under MIT License" VerticalAlignment="Top"/>
+        <flat:LinkTextBlock HorizontalAlignment="Left" Margin="260,139,0,0" Text="github.com/jaykebird/pathfinderjson" VerticalAlignment="Top" Click="LinkTextBlock2_Click" Cursor="Hand" />
+        <Border BorderThickness="1" Margin="10,170,10,0" Height="1" BorderBrush="Black" x:Name="brdrDivider" VerticalAlignment="Top"/>
+
+        <TextBlock HorizontalAlignment="Left" Margin="15,180,0,0" Text="Mottokrosh's Pathfinder Character Sheet site:" VerticalAlignment="Top"/>
+        <flat:LinkTextBlock HorizontalAlignment="Left" Margin="260,180,0,0" Text="charactersheet.co.uk/pathfinder/" VerticalAlignment="Top" Click="LinkTextBlock_Click" Cursor="Hand" />
+        <TextBlock Margin="15,212,10,0" VerticalAlignment="Top" TextWrapping="Wrap" Height="103">
+            <Run>This program uses trademarks and/or copyrights owned by Paizo Inc., which are used under Paizo's Community Use Policy. We are expressly prohibited from charging you to use or access this content.</Run>
+            <Run> This program is not published, endorsed, or specifically approved by Paizo Inc. For more information about Paizo's Community Use Policy, please visit</Run>
+            <Hyperlink RequestNavigate="Hyperlink_RequestNavigate" NavigateUri="https://paizo.com/communityuse" TextDecorations="" >paizo.com/communityuse</Hyperlink><Run>. For more information about Paizo Inc. and Paizo products, please visit</Run> 
+            <Hyperlink RequestNavigate="Hyperlink_RequestNavigate" NavigateUri="https://paizo.com/" TextDecorations="" >paizo.com</Hyperlink><Run>.</Run>
+        </TextBlock>
+        
+        <flat:FlatButton x:Name="btnPlatformInfo" ColorScheme="{Binding ColorScheme, ElementName=window}" Content="Platform Info" Margin="10,0,0,10" VerticalAlignment="Bottom" Click="BtnPlatformInfo_Click" HorizontalAlignment="Left" Width="95" />
+        <flat:FlatButton x:Name="btnThirdParty" Content="Third Party Credits" ColorScheme="{Binding ColorScheme, ElementName=window}" HorizontalAlignment="Left" Margin="110,0,0,10" VerticalAlignment="Bottom" Width="120" Click="BtnThirdParty_Click" />
+        <flat:FlatButton x:Name="btnClose" Content="OK" ColorScheme="{Binding ColorScheme, ElementName=window}" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="80" Click="btnClose_Click" />
+    </Grid>
+</flat:FlatWindow>
