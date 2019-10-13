@@ -6,15 +6,15 @@
         xmlns:local="clr-namespace:PathfinderJson"
         xmlns:flat="clr-namespace:UiCore;assembly=UiCore"
         mc:Ignorable="d"
-        Title="Third Party Credits" Height="480" Width="380" ResizeMode="NoResize" CaptionDisplayType="Close" >
+        Title="Third Party Credits" Height="480" Width="601" ResizeMode="NoResize" CaptionDisplayType="Close" >
     <Grid>
         <flat:FlatButton x:Name="btnClose" Content="OK" HorizontalAlignment="Center" Margin="0,0,0,10" VerticalAlignment="Bottom" Width="80" Click="btnClose_Click"/>
         <TextBlock HorizontalAlignment="Left" Margin="10,20,0,0" Text="Third Party Software Credits/Acknowledgements" VerticalAlignment="Top"/>
         <TextBlock HorizontalAlignment="Left" Margin="10,60,0,0" Text="Application UI built using UiCore library" VerticalAlignment="Top"/>
         <TextBlock HorizontalAlignment="Left" Margin="30,80,0,0" Text="Developed by Jayke R. Huempfner" VerticalAlignment="Top"/>
         <TextBlock HorizontalAlignment="Left" Margin="30,97,0,0" Text="https://dev.shinecalendar.com/uicore" VerticalAlignment="Top"/>
-        <TextBlock Margin="30,121,15,0" VerticalAlignment="Top" Height="54" TextWrapping="Wrap"
-                   Text="Contributing work by Manuel Schweigert, Pete Laker, Richard Moss (Cyotek Ltd.), Warren Galyen (Mechanika Design), Oleg V. Polikarpotchkin, Yassine (Stopbyte), and Hector Pulido." />
+        <TextBlock Margin="30,121,15,0" VerticalAlignment="Top" Height="50" TextWrapping="Wrap"
+                   Text="Contributing work by Manuel Schweigert, Pete Laker, Richard Moss (Cyotek Ltd.), Warren Galyen (Mechanika Design), Oleg V. Polikarpotchkin, Yassine (Stopbyte), Hector Pulido, Sebastien Lambla, and Nimgoble" />
         <TextBlock HorizontalAlignment="Left" Margin="30,180,0,0" Text="Licensed under MIT License" VerticalAlignment="Top"/>
         <TextBlock HorizontalAlignment="Left" Margin="30,196,0,0" Text="View website for more details." VerticalAlignment="Top"/>
         <TextBlock HorizontalAlignment="Left" Margin="10,235,0,0" Text="JSON handling done using Newtonsoft.Json library" VerticalAlignment="Top"/>
@@ -25,5 +25,13 @@
         <TextBlock HorizontalAlignment="Left" Margin="30,346,0,0" Text="Developed by icsharpcode" VerticalAlignment="Top"/>
         <TextBlock HorizontalAlignment="Left" Margin="30,362,0,0" Text="https://avalonedit.net" VerticalAlignment="Top"/>
         <TextBlock HorizontalAlignment="Left" Margin="30,378,0,0" Text="Licensed under MIT License" VerticalAlignment="Top"/>
+        <TextBlock HorizontalAlignment="Left" Margin="310,235,0,0" Text="Markdown handling done using MarkDig library" VerticalAlignment="Top"/>
+        <TextBlock HorizontalAlignment="Left" Margin="330,255,0,0" Text="Developed by Alexandre Mutel (xoofx)" VerticalAlignment="Top"/>
+        <TextBlock HorizontalAlignment="Left" Margin="330,271,0,0" Text="https://github.com/lunet-io/markdig" VerticalAlignment="Top"/>
+        <TextBlock HorizontalAlignment="Left" Margin="330,287,0,0" Text="Licensed under BSD License" VerticalAlignment="Top"/>
+        <TextBlock HorizontalAlignment="Left" Margin="310,326,0,0" Text="Markdown Display built using MarkDig.Wpf library" VerticalAlignment="Top"/>
+        <TextBlock HorizontalAlignment="Left" Margin="330,346,0,0" Text="Developed by Nicolas Musset (Kryptos-FR)" VerticalAlignment="Top"/>
+        <TextBlock HorizontalAlignment="Left" Margin="330,362,0,0" Text="https://github.com/Kryptos-FR/markdig.wpf" VerticalAlignment="Top"/>
+        <TextBlock HorizontalAlignment="Left" Margin="330,378,0,0" Text="Licensed under MIT License" VerticalAlignment="Top"/>
     </Grid>
 </flat:FlatWindow>
