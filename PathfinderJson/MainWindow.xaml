@@ -124,6 +124,9 @@
             <MenuItem Header="_Help">
                 <MenuItem Header="_View on GitHub" x:Name="mnuGithub" Click="mnuGithub_Click" />
                 <Separator />
+                <MenuItem Header="_Check for Updates" x:Name="mnuCheckUpdates" Click="mnuCheckUpdates_Click" />
+                <MenuItem Header="A_uto Check on Startup" x:Name="mnuAutoCheck" Click="mnuAutoCheck_Click" IsEnabled="False" />
+                <Separator />
                 <MenuItem Header="_About..." x:Name="mnuAbout" Click="mnuAbout_Click" >
                     <MenuItem.Icon>
                         <Image Source="/PathfinderJson;component/Images/Info.png" />

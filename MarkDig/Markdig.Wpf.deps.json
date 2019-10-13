@@ -1,0 +1,41 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v3.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v3.0": {
+      "Markdig.Wpf/0.3.0": {
+        "dependencies": {
+          "Markdig": "0.17.1"
+        },
+        "runtime": {
+          "Markdig.Wpf.dll": {}
+        }
+      },
+      "Markdig/0.17.1": {
+        "runtime": {
+          "lib/netcoreapp2.1/Markdig.dll": {
+            "assemblyVersion": "0.17.1.0",
+            "fileVersion": "0.17.1.0"
+          }
+        }
+      }
+    }
+  },
+  "libraries": {
+    "Markdig.Wpf/0.3.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Markdig/0.17.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-uvn440tOhY848t25oG+W/stua13m7Emju28ldMQsxHFhmAp2+PAucY/NxT2CEUo9I1ZinVPDm1KH4Pm+Fr1nXg==",
+      "path": "markdig/0.17.1",
+      "hashPath": "markdig.0.17.1.nupkg.sha512"
+    }
+  }
+}

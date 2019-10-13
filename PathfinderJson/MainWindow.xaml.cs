@@ -133,6 +133,28 @@ namespace PathfinderJson
                     }
                 }
             }
+
+            //if (App.Settings.UpdateAutoCheck)
+            //{
+            //    // I have it set to only auto-check for updates daily
+            //    // so as to not overload GitHub's servers in the suuuuuuper unlikely chance that this app really takes off
+            //    if (DateTime.Today.ToString("yyyy-MM-dd") != App.Settings.UpdateLastCheckDate)
+            //    {
+            //        // last checked before today
+            //        Task<UpdateData> t = UpdateChecker.CheckForUpdatesAsync();
+            //        t.Wait();
+            //        UpdateData ud = t.Result;
+
+            //        if (ud.HasUpdate)
+            //        {
+            //            UpdateDisplay uw = new UpdateDisplay(ud);
+            //            uw.ShowDialog();
+            //        }
+
+            //        App.Settings.UpdateLastCheckDate = DateTime.Today.ToString("yyyy-MM-dd");
+            //        SaveSettings();
+            //    }
+            //}
         }
 
         void SaveSettings()
@@ -311,6 +333,32 @@ namespace PathfinderJson
         private void mnuGithub_Click(object sender, RoutedEventArgs e)
         {
             About.OpenBrowser("https://github.com/JaykeBird/PathfinderJson/");
+        }
+
+        private void mnuAutoCheck_Click(object sender, RoutedEventArgs e)
+        {
+            if (mnuAutoCheck.IsChecked)
+            {
+                mnuAutoCheck.IsChecked = false;
+                App.Settings.UpdateAutoCheck = false;
+            }
+            else
+            {
+                mnuAutoCheck.IsChecked = true;
+                App.Settings.UpdateAutoCheck = false;
+            }
+
+            SaveSettings();
+        }
+
+        private async void mnuCheckUpdates_Click(object sender, RoutedEventArgs e)
+        {
+            UpdateData ud = await UpdateChecker.CheckForUpdatesAsync();
+            if (ud.HasUpdate)
+            {
+                UpdateDisplay uw = new UpdateDisplay(ud);
+                uw.ShowDialog();
+            }
         }
 
         private void mnuAbout_Click(object sender, RoutedEventArgs e)
@@ -1616,5 +1664,6 @@ namespace PathfinderJson
         }
 
         #endregion
+
     }
 }

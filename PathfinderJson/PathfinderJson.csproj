@@ -73,10 +73,14 @@
 
   <ItemGroup>
     <PackageReference Include="AvalonEdit" Version="6.0.0" />
+    <PackageReference Include="Markdig" Version="0.17.1" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
   </ItemGroup>
 
   <ItemGroup>
+    <Reference Include="Markdig.Wpf">
+      <HintPath>..\MarkDig\Markdig.Wpf.dll</HintPath>
+    </Reference>
     <Reference Include="UiCore">
       <HintPath>..\..\ShineCalendar\FlatWindow\bin\Release\netcoreapp3.0\UiCore.dll</HintPath>
     </Reference>
