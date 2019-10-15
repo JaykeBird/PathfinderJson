@@ -6,24 +6,19 @@
   "compilationOptions": {},
   "targets": {
     ".NETCoreApp,Version=v3.0": {
-      "UiCore/1.0.0": {
+      "UiCore/0.9.1": {
+        "dependencies": {
+          "Microsoft.CSharp": "4.6.0"
+        },
         "runtime": {
           "UiCore.dll": {}
         }
       },
-      "Microsoft.CSharp/4.6.0": {},
-      "Microsoft.Windows.Shell/3.0.1": {
-        "runtime": {
-          "lib/net40/Microsoft.Windows.Shell.dll": {
-            "assemblyVersion": "3.0.1.0",
-            "fileVersion": "3.0.1.0"
-          }
-        }
-      }
+      "Microsoft.CSharp/4.6.0": {}
     }
   },
   "libraries": {
-    "UiCore/1.0.0": {
+    "UiCore/0.9.1": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
@@ -34,13 +29,6 @@
       "sha512": "sha512-kxn3M2rnAGy5N5DgcIwcE8QTePWU/XiYcQVzn9HqTls2NKluVzVSmVWRjK7OUPWbljCXuZxHyhEz9kPRIQeXow==",
       "path": "microsoft.csharp/4.6.0",
       "hashPath": "microsoft.csharp.4.6.0.nupkg.sha512"
-    },
-    "Microsoft.Windows.Shell/3.0.1": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-Kv495vwGhlD8SjmSsf3bTs/Bl5ju0CL/c7aO6mQGWmpxeye9tfprBDrftqpAs1yBJU9OfA2hK3+rLApMg/dUUA==",
-      "path": "microsoft.windows.shell/3.0.1",
-      "hashPath": "microsoft.windows.shell.3.0.1.nupkg.sha512"
     }
   }
 }

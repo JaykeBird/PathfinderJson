@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Xml;
 using UiCore;
+using MenuItem = System.Windows.Controls.MenuItem;
 
 namespace PathfinderJson
 {
@@ -359,6 +360,11 @@ namespace PathfinderJson
                 UpdateDisplay uw = new UpdateDisplay(ud);
                 uw.ShowDialog();
             }
+            else
+            {
+                MessageDialog md = new MessageDialog(App.ColorScheme);
+                md.ShowDialog("There are no updates available. You're on the latest release!", "Check for Updates", false, UiCore.MessageBoxImage.None);
+            }
         }
 
         private void mnuAbout_Click(object sender, RoutedEventArgs e)
@@ -379,7 +385,7 @@ namespace PathfinderJson
                 return;
             }
 
-            UiCore.MenuItem mi = new UiCore.MenuItem();
+            MenuItem mi = new MenuItem();
             string name = Path.GetFileName(filename);
             mi.Header = "_" + name;
             mi.ToolTip = filename;
@@ -398,7 +404,7 @@ namespace PathfinderJson
 
         private async void miRecentFile_Click(object sender, RoutedEventArgs e)
         {
-            await LoadFile((sender as UiCore.MenuItem).Tag as string, false);
+            await LoadFile((sender as MenuItem).Tag as string, false);
         }
 
         private void mnuRecentClear_Click(object sender, RoutedEventArgs e)
@@ -411,7 +417,7 @@ namespace PathfinderJson
             foreach (FrameworkElement item in mnuRecent.Items)
             {
 
-                if (item is UiCore.MenuItem)
+                if (item is MenuItem)
                 {
                     if (item.Tag != null)
                     {
