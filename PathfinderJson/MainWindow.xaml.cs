@@ -11,6 +11,7 @@ using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Threading;
 using System.Xml;
 using UiCore;
 using MenuItem = System.Windows.Controls.MenuItem;
@@ -28,7 +29,7 @@ namespace PathfinderJson
         string filePath = "";
         /// <summary>Get or set if a file is currently open</summary>
         bool _sheetLoaded = false;
-        /// <summary>The name of the character. This MUST match sheet.Name when a PathfinderSheet is loaded</summary>
+        /// <summary>The name of the character. This MUST match txtCharacterName's text</summary>
         string fileTitle = "";
         /// <summary>Get or set if a file has unsaved changes</summary>
         bool isDirty = false;
@@ -49,6 +50,12 @@ namespace PathfinderJson
         /// <summary>Generic cancellation token, use for lengthy cancellable processes</summary>
         CancellationTokenSource cts = new CancellationTokenSource();
 
+        // functions for handling undo/redo
+        FixedSizeStack<PathfinderSheet> undoItems = new FixedSizeStack<PathfinderSheet>(20);
+        FixedSizeStack<PathfinderSheet> redoItems = new FixedSizeStack<PathfinderSheet>(20);
+        TextBox lastEditedBox = null;
+        DispatcherTimer undoSetTimer = new DispatcherTimer();
+
         // these are stored here as the program doesn't display these values to the user
         UserData ui;
         ArmorClass ac;
@@ -66,6 +73,9 @@ namespace PathfinderJson
                 Directory.CreateDirectory(appDataPath);
                 SaveSettings();
             }
+
+            undoSetTimer.Interval = new TimeSpan(0, 0, 3);
+            undoSetTimer.Tick += UndoSetTimer_Tick;
 
             InitializeComponent();
             App.ColorScheme = new ColorScheme(ColorsHelper.CreateFromHex(App.Settings.ThemeColor));
@@ -211,18 +221,25 @@ namespace PathfinderJson
 
         void SetIsDirty(bool isDirty = true, bool updateInternalValues = true)
         {
+            if (!_sheetLoaded)
+            {
+                isDirty = false;
+            }
+
+            bool update = isDirty != this.isDirty;
+
             if (isDirty)
             {
                 this.isDirty = true;
                 if (updateInternalValues) _isTabsDirty = true;
-                UpdateTitlebar();
             }
             else
             {
                 this.isDirty = false;
                 if (updateInternalValues) _isTabsDirty = false;
-                UpdateTitlebar();
             }
+
+            if (update) UpdateTitlebar();
         }
         #endregion
 
@@ -358,11 +375,13 @@ namespace PathfinderJson
             if (ud.HasUpdate)
             {
                 UpdateDisplay uw = new UpdateDisplay(ud);
+                uw.Owner = this;
                 uw.ShowDialog();
             }
             else
             {
                 MessageDialog md = new MessageDialog(App.ColorScheme);
+                md.Owner = this;
                 md.ShowDialog("There are no updates available. You're on the latest release!", "Check for Updates", false, UiCore.MessageBoxImage.None);
             }
         }
@@ -432,6 +451,37 @@ namespace PathfinderJson
             }
 
             mnuRecentEmpty.Visibility = Visibility.Visible;
+        }
+
+        #endregion
+
+        #region Undo/Redo
+
+        // relevant variables are declared at the top of the class
+
+        private void UndoSetTimer_Tick(object sender, EventArgs e)
+        {
+            CreateUndoItem();
+        }
+
+        void CreateUndoItem()
+        {
+
+        }
+
+        void PerformUndo()
+        {
+
+
+            if (redoItems.Count > 0)
+            {
+                redoItems.Clear();
+            }
+        }
+        
+        void PerformRedo()
+        {
+
         }
 
         #endregion
@@ -646,6 +696,11 @@ namespace PathfinderJson
             {
                 //await ChangeView(TABS_VIEW, updateSheet, displayEmptyMessage, saveSettings);
                 return;
+            }
+
+            if (!_sheetLoaded)
+            {
+                updateSheet = false;
             }
 
             currentView = view;
@@ -1146,6 +1201,14 @@ namespace PathfinderJson
 
         private void mnuUpdate_Click(object sender, RoutedEventArgs e)
         {
+            if (!_sheetLoaded)
+            {
+                MessageDialog md = new MessageDialog(App.ColorScheme);
+                md.Owner = this;
+                md.ShowDialog("Cannot run calculations when no sheet is opened.", "Update Calculations", false, UiCore.MessageBoxImage.Error);
+                return;
+            }
+
             _isUpdating = true;
 
             txtStrm.Text = AttemptCalculateModifier(txtStr.Text);
@@ -1165,6 +1228,7 @@ namespace PathfinderJson
             edtCmd.UpdateCoreModifier(txtStrm.Text, txtDexm.Text, txtBab.Text);
 
             bool updateTotals = mnuUpdateTotals.IsChecked;
+            bool updateAcItems = mnuUpdateAc.IsChecked;
 
             foreach (SkillEditor item in stkSkills.Children)
             {
@@ -1200,6 +1264,45 @@ namespace PathfinderJson
                 {
                     item.UpdateTotals();
                 }
+            }
+
+            if (updateAcItems)
+            {
+                // special calculations for AC items
+                int acShield = 0;
+                int acArmor = 0;
+
+                int tWeight = 0;
+                int tBonus = 0;
+                int tSpellcheck = 0;
+                int tPenalty = 0;
+
+                foreach (AcItemEditor acItem in selAcItem.GetItemsAsType<AcItemEditor>())
+                {
+                    AcItem ai = acItem.GetAcItem();
+                    if (ai.Name.ToLowerInvariant().Contains("shield") || ai.Type.ToLowerInvariant().Contains("shield"))
+                    {
+                        // this is a shield
+                        try { acShield += int.Parse(ai.Bonus); } catch (FormatException) { }
+                    }
+                    else
+                    {
+                        // probably not a shield? consider it armor
+                        try { acArmor += int.Parse(ai.Bonus); } catch (FormatException) { }
+                    }
+
+                    try { tBonus += int.Parse(ai.Bonus); } catch (FormatException) { }
+                    try { tSpellcheck += int.Parse(ai.SpellFailure.Replace("%", "")); } catch (FormatException) { }
+                    try { tPenalty += int.Parse(ai.ArmorCheckPenalty); } catch (FormatException) { }
+                    try { tWeight += int.Parse(ai.Weight); } catch (FormatException) { }
+                }
+
+                txtAcBonus.Text = tBonus.ToString();
+                txtAcPenalty.Text = tPenalty.ToString();
+                txtAcSpellFailure.Text = tSpellcheck.ToString() + "%";
+                txtAcWeight.Text = tWeight.ToString();
+
+                edtAc.UpdateAcItemBonuses(acShield.ToString(), acArmor.ToString());
             }
 
             if (updateTotals)
@@ -1382,6 +1485,8 @@ namespace PathfinderJson
             {
                 SetIsDirty();
             }
+
+            lastEditedBox = (sender as TextBox);
         }
 
         private void editor_ContentChanged(object sender, EventArgs e)

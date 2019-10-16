@@ -46,7 +46,7 @@
                         <Image Source="/PathfinderJson;component/Images/SaveAs.png" />
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem Header="Re_vert to Last Saved" x:Name="mnuRevert" Click="mnuRevert_Click" />
+                <MenuItem Header="Reloa_d File" x:Name="mnuRevert" Click="mnuRevert_Click" />
                 <Separator/>
                 <MenuItem Header="_Indent JSON Data" x:Name="mnuIndent" Click="mnuIndent_Click" />
                 <Separator />
@@ -92,6 +92,7 @@
             <MenuItem Header="_Sheet" x:Name="mnuEditSheet" >
                 <MenuItem Header="Update Calculations" x:Name="mnuUpdate" Click="mnuUpdate_Click" />
                 <MenuItem Header="Change Totals with Updates" IsChecked="True" x:Name="mnuUpdateTotals" IsCheckable="True" />
+                <MenuItem Header="Calculate Armor Class with Updates" IsChecked="True" x:Name="mnuUpdateAc" IsCheckable="True" />
                 <Separator />
                 <MenuItem Header="Update Text Editor from Sheet" x:Name="mnuRefreshEditor" Click="mnuRefreshEditor_Click" />
                 <MenuItem Header="Update Sheet from Text Editor" x:Name="mnuRefresh" Click="mnuRefresh_Click" />

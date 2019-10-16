@@ -62,6 +62,12 @@ namespace PathfinderJson
             txtModifier.Text = modValue;
         }
 
+        public void UpdateAcItemBonuses(string shield, string armor)
+        {
+            txtShield.Text = shield;
+            txtArmor.Text = armor;
+        }
+
         public void UpdateTotal()
         {
             int total = 0;
@@ -74,7 +80,15 @@ namespace PathfinderJson
 
             total += 10;
 
+            int flat = total;
+            try { flat -= int.Parse(txtModifier.Text); } catch (FormatException) { }
+            int touch = total;
+            try { touch -= int.Parse(txtArmor.Text); } catch (FormatException) { }
+            try { touch -= int.Parse(txtShield.Text); } catch (FormatException) { }
+
             txtTotal.Text = total.ToString();
+            txtFlat.Text = flat.ToString();
+            txtTouch.Text = touch.ToString();
         }
 
         // event just to update main window's "isDirty" value
