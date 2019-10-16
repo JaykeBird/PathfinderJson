@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
 using UiCore;
+using System.Runtime;
+using System.IO;
 
 namespace PathfinderJson
 {
@@ -15,6 +17,25 @@ namespace PathfinderJson
     /// </summary>
     public partial class App : Application
     {
+        public App()
+        {
+            string appDataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "PathfinderJson");
+
+            if (Directory.Exists(appDataPath))
+            {
+                App.Settings = Settings.LoadSettings(Path.Combine(appDataPath, "settings.json"));
+            }
+            else
+            {
+                Directory.CreateDirectory(appDataPath);
+                Directory.CreateDirectory(Path.Combine(appDataPath, "Optimization"));
+                App.Settings.Save(Path.Combine(appDataPath, "settings.json"));
+            }
+
+            ProfileOptimization.SetProfileRoot(Path.Combine(appDataPath, "Optimization"));
+            ProfileOptimization.StartProfile("Startup.profile");
+        }
+
         public static ColorScheme ColorScheme { get; set; } = new ColorScheme(Colors.Peru);
 
         public static Settings Settings { get; set; } = new Settings();

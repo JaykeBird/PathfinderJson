@@ -24,7 +24,7 @@ namespace PathfinderJson
             // no longer need the WebClient
             wc.Dispose();
 
-            if (VERSION == new Version(t.tag_name))
+            if (VERSION >= new Version(t.tag_name))
             {
                 return new UpdateData();
             }
