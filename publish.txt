@@ -1,1 +1,2 @@
-D:\Documents\Visual Studio 2017\Projects\PathfinderJson>dotnet publish -r win-x64 -c Release -o Release-win-x64 /p:PublishSingleFile=true /p:PublishTrimmed=true
+dotnet publish -r win-x64 -c Release -o Release-win-x64 /p:PublishSingleFile=true /p:PublishTrimmed=true
+dotnet publish -r win-x86 -c Release -o Release-win-x86 /p:PublishSingleFile=true /p:PublishTrimmed=true

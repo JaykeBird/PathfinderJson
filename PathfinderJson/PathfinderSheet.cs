@@ -177,9 +177,11 @@ namespace PathfinderJson
                 }
             }
 
-            foreach (Skill skill in Skills.Values)
+            foreach (KeyValuePair<string, Skill> item in Skills)
             {
-                if (skill.Name == "conditonalModifiers")
+                item.Value.Name = item.Key;
+
+                if (item.Key == "conditonalModifiers")
                 {
                     SkillConditionalModifiers = skill.Specialization;
                 }
