@@ -183,7 +183,7 @@ namespace PathfinderJson
 
                 if (item.Key == "conditonalModifiers")
                 {
-                    SkillConditionalModifiers = skill.Specialization;
+                    SkillConditionalModifiers = item.Value.Specialization;
                 }
             }
         }
