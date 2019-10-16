@@ -10,7 +10,7 @@ namespace PathfinderJson
     public static class UpdateChecker
     {
 
-        public static Version VERSION = new Version("0.9");
+        public static Version VERSION = new Version("0.9.1");
 
         public static async Task<UpdateData> CheckForUpdatesAsync()
         {
