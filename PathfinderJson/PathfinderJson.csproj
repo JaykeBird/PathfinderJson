@@ -8,8 +8,8 @@
     <ApplicationManifest>PathfinderJson.manifest</ApplicationManifest>
     <PublishSingleFile>true</PublishSingleFile>
     <PublishTrimmed>true</PublishTrimmed>
-    <PublishReadyToRun>true</PublishReadyToRun>
-    <PublishReadyToRunShowWarnings>true</PublishReadyToRunShowWarnings>
+    <!--<PublishReadyToRun>true</PublishReadyToRun>
+    <PublishReadyToRunShowWarnings>true</PublishReadyToRunShowWarnings>-->
     <RuntimeIdentifier>win-x64</RuntimeIdentifier>
   </PropertyGroup>
 
@@ -22,7 +22,7 @@
     <FileVersion>0.9.1.0</FileVersion>
     <NeutralLanguage>en</NeutralLanguage>
     <Description>Read and edit JSON Pathfinder sheet files from Motokrosh's website</Description>
-    <Copyright>©2019 Jayke R. Huempfner</Copyright>
+    <Copyright>© 2019 Jayke R. Huempfner</Copyright>
     <StartupObject>PathfinderJson.App</StartupObject>
     <!--<PackageId>PackageId</PackageId>-->
     <!--<PackageLicenseUrl>License URL</PackageLicenseUrl>
@@ -112,16 +112,12 @@
     <EmbeddedResource Include="Json.xshd" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Compile Update="PlatformInfo.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Page Update="PlatformInfo.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-  </ItemGroup>
+  <!-- Uncomment these lines if using PublishReadyToRun -->
+  <!--<ItemGroup>
+    <TrimmerRootAssembly Include="System.Collections.Immutable" />
+    <TrimmerRootAssembly Include="System.Dynamic.Runtime" />
+    <TrimmerRootAssembly Include="System.Linq.Expressions" />
+    <TrimmerRootAssembly Include="System.Runtime" />
+  </ItemGroup>-->
 
 </Project>
