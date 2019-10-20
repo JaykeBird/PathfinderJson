@@ -64,15 +64,15 @@ namespace PathfinderJson
         #region Window/basic functions
         public MainWindow()
         {
-            if (Directory.Exists(appDataPath))
-            {
-                App.Settings = Settings.LoadSettings(Path.Combine(appDataPath, "settings.json"));
-            }
-            else
-            {
-                Directory.CreateDirectory(appDataPath);
-                SaveSettings();
-            }
+            //if (Directory.Exists(appDataPath))
+            //{
+            //    App.Settings = Settings.LoadSettings(Path.Combine(appDataPath, "settings.json"));
+            //}
+            //else
+            //{
+            //    Directory.CreateDirectory(appDataPath);
+            //    SaveSettings();
+            //}
 
             undoSetTimer.Interval = new TimeSpan(0, 0, 3);
             undoSetTimer.Tick += UndoSetTimer_Tick;

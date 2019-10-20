@@ -23,13 +23,13 @@ namespace PathfinderJson
 
             if (Directory.Exists(appDataPath))
             {
-                App.Settings = Settings.LoadSettings(Path.Combine(appDataPath, "settings.json"));
+                Settings = Settings.LoadSettings(Path.Combine(appDataPath, "settings.json"));
             }
             else
             {
                 Directory.CreateDirectory(appDataPath);
                 Directory.CreateDirectory(Path.Combine(appDataPath, "Optimization"));
-                App.Settings.Save(Path.Combine(appDataPath, "settings.json"));
+                Settings.Save(Path.Combine(appDataPath, "settings.json"));
             }
 
             ProfileOptimization.SetProfileRoot(Path.Combine(appDataPath, "Optimization"));
