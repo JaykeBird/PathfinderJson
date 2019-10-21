@@ -88,6 +88,11 @@
                 </MenuItem>
                 <Separator />
                 <MenuItem Header="_Word Wrap" x:Name="mnuWordWrap" Click="mnuWordWrap_Click" IsChecked="True" />
+                <MenuItem Header="_Find" x:Name="mnuFind" Click="mnuFind_Click">
+                    <MenuItem.Icon>
+                        <Image Source="/PathfinderJson;component/Images/Find.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
             </MenuItem>
             <MenuItem Header="_Sheet" x:Name="mnuEditSheet" >
                 <MenuItem Header="Update Calculations" x:Name="mnuUpdate" Click="mnuUpdate_Click" />

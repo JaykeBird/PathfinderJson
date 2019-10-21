@@ -1,4 +1,5 @@
 ﻿using ICSharpCode.AvalonEdit.Highlighting;
+using ICSharpCode.AvalonEdit.Search;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -49,6 +50,8 @@ namespace PathfinderJson
         bool _isUpdating = false;
         /// <summary>Generic cancellation token, use for lengthy cancellable processes</summary>
         CancellationTokenSource cts = new CancellationTokenSource();
+        /// <summary>The search panel associated with the raw JSON editor</summary>
+        SearchPanel sp;
 
         // functions for handling undo/redo
         FixedSizeStack<PathfinderSheet> undoItems = new FixedSizeStack<PathfinderSheet>(20);
@@ -62,6 +65,8 @@ namespace PathfinderJson
         string sheetid;
 
         #region Window/basic functions
+
+        #region Constructor
         public MainWindow()
         {
             //if (Directory.Exists(appDataPath))
@@ -145,6 +150,10 @@ namespace PathfinderJson
                 }
             }
 
+            SearchPanel p = SearchPanel.Install(txtEditRaw);
+            p.FontFamily = SystemFonts.MessageFontFamily;
+            sp = p;
+
             //if (App.Settings.UpdateAutoCheck)
             //{
             //    // I have it set to only auto-check for updates daily
@@ -167,6 +176,10 @@ namespace PathfinderJson
             //    }
             //}
         }
+
+        #endregion
+
+        #region Other Base Functions
 
         void SaveSettings()
         {
@@ -241,6 +254,8 @@ namespace PathfinderJson
 
             if (update) UpdateTitlebar();
         }
+
+        #endregion
         #endregion
 
         #region File / Help menus
@@ -841,7 +856,10 @@ namespace PathfinderJson
 
         private void mnuPaste_Click(object sender, RoutedEventArgs e)
         {
-            txtEditRaw.Paste();
+            if (_sheetLoaded)
+            {
+                txtEditRaw.Paste();
+            }
         }
 
         private void mnuSelectAll_Click(object sender, RoutedEventArgs e)
@@ -865,6 +883,17 @@ namespace PathfinderJson
             {
                 mnuWordWrap.IsChecked = true;
                 txtEditRaw.WordWrap = true;
+            }
+        }
+
+        private void mnuFind_Click(object sender, RoutedEventArgs e)
+        {
+            if (_sheetLoaded)
+            {
+                sp.Open();
+                if (!(txtEditRaw.TextArea.Selection.IsEmpty || txtEditRaw.TextArea.Selection.IsMultiline))
+                    sp.SearchPattern = txtEditRaw.TextArea.Selection.GetText();
+                Dispatcher.CurrentDispatcher.BeginInvoke(DispatcherPriority.Input, (Action)delegate { sp.Reactivate(); });
             }
         }
 
@@ -1775,6 +1804,7 @@ namespace PathfinderJson
         }
 
         #endregion
+
 
     }
 }
