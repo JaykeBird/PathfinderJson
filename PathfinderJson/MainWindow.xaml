@@ -268,7 +268,7 @@
 
                     </StackPanel>
                 </Grid>
-                <Grid Margin="5,5,5,0" x:Name="grdCombat" Visibility="Collapsed" >
+                <Grid Margin="5,5,5,0" x:Name="grdCombat" >
                     <Grid.RowDefinitions>
                         <RowDefinition Height="25"/>
                         <RowDefinition/>
@@ -327,13 +327,13 @@
 
                     <TextBlock x:Name="lblAcItems" HorizontalAlignment="Left" Margin="15,0,0,0" Grid.Row="11" Text="Armor/Shields" FontWeight="SemiBold" VerticalAlignment="Center"/>
                     <Expander VerticalAlignment="Center" Margin="120,0,0,0" HorizontalAlignment="Left" Grid.Row="11" x:Name="expAcItem" Header="Show/Hide List" IsExpanded="True" Expanded="expAcItem_Expanded" Collapsed="expAcItem_Collapsed" />
-                    <flat:FlatButton ColorScheme="{Binding ColorScheme, ElementName=window}" Width="20" Height="24" HorizontalAlignment="Left" Margin="333,8,0,8" Grid.Row="11" Padding="0" TransparentBack="True" ToolTip="Add" x:Name="btnAddAcItem" Click="btnAddAcItem_Click" >
+                    <flat:FlatButton ColorScheme="{Binding ColorScheme, ElementName=window}" Width="20" Height="24" HorizontalAlignment="Right" Margin="0,8,50,8" Grid.Row="11" Padding="0" TransparentBack="True" ToolTip="Add" x:Name="btnAddAcItem" Click="btnAddAcItem_Click" >
                         <Image Source="Images/Add.png" Width="16" Height="16" />
                     </flat:FlatButton>
-                    <flat:FlatButton ColorScheme="{Binding ColorScheme, ElementName=window}" Width="20" Height="24" HorizontalAlignment="Left" Margin="355,8,0,8" Grid.Row="11" Padding="0" TransparentBack="True" ToolTip="Delete" x:Name="btnDeleteAcItem" Click="btnDeleteAcItem_Click" >
+                    <flat:FlatButton ColorScheme="{Binding ColorScheme, ElementName=window}" Width="20" Height="24" HorizontalAlignment="Right" Margin="0,8,28,8" Grid.Row="11" Padding="0" TransparentBack="True" ToolTip="Delete" x:Name="btnDeleteAcItem" Click="btnDeleteAcItem_Click" >
                         <Image Source="Images/Cancel.png" Width="16" Height="16" />
                     </flat:FlatButton>
-                    <flat:FlatButton ColorScheme="{Binding ColorScheme, ElementName=window}" Width="20" Height="24" HorizontalAlignment="Left" Margin="377,8,0,8" Grid.Row="11" Padding="0" TransparentBack="True" ToolTip="Deselect All" x:Name="btnDeselectAcItem" Click="btnDeselectAcItem_Click" >
+                    <flat:FlatButton ColorScheme="{Binding ColorScheme, ElementName=window}" Width="20" Height="24" HorizontalAlignment="Right" Margin="0,8,6,8" Grid.Row="11" Padding="0" TransparentBack="True" ToolTip="Deselect All" x:Name="btnDeselectAcItem" Click="btnDeselectAcItem_Click" >
                         <Image Source="Images/Deselect.png" Width="16" Height="16" />
                     </flat:FlatButton>
                     <flat:SelectPanel ColorScheme="{Binding ColorScheme, ElementName=window}" x:Name="selAcItem" PanelBorderThickness="1" MinHeight="3" Grid.Row="12" MultiSelect="True" />
