@@ -148,6 +148,12 @@ namespace PathfinderJson
 
         public HP HP { get; set; } = new HP();
 
+        public List<SpellLevel> Spells { get; set; } = new List<SpellLevel>();
+        public string SpellsConditionalModifiers { get; set; } = "";
+        public string SpellsSpeciality { get; set; } = "";
+        [JsonProperty("spellLikes")]
+        public List<Spell> SpellLikeAbilities { get; set; } = new List<Spell>();
+
         private void SetupSheet()
         {
             foreach (KeyValuePair<string, string> item in RawAbilities)
@@ -383,5 +389,29 @@ namespace PathfinderJson
         public string Total { get; set; } = "0";
         public string Wounds { get; set; } = "0";
         public string NonLethal { get; set; } = "0";
+    }
+
+    public class SpellLevel
+    {
+        public string TotalPerDay { get; set; } = "";
+        public string DC { get; set; } = "";
+        public string TotalKnown { get; set; } = "0";
+        public string BonusSpells { get; set; } = "";
+
+        [JsonProperty("slotted")]
+        public List<Spell> Spells { get; set; } = new List<Spell>();
+    }
+
+    public class Spell
+    {
+        public int Level { get; set; } = 0;
+        public int Prepared { get; set; } = 0;
+        public int Cast { get; set; } = 0;
+        public string Name { get; set; } = "";
+        public string School { get; set; } = "";
+        public string Subschool { get; set; } = "";
+        public string Notes { get; set; } = "";
+        public bool AtWill { get; set; } = false;
+        public bool Marked { get; set; } = false;
     }
 }

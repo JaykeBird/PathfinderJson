@@ -268,7 +268,7 @@
 
                     </StackPanel>
                 </Grid>
-                <Grid Margin="5,5,5,0" x:Name="grdCombat" >
+                <Grid Margin="5,5,5,0" x:Name="grdCombat" Visibility="Collapsed" >
                     <Grid.RowDefinitions>
                         <RowDefinition Height="25"/>
                         <RowDefinition/>
@@ -310,7 +310,7 @@
                     <flat:FlatButton ColorScheme="{Binding ColorScheme, ElementName=window}" Width="20" Height="24" HorizontalAlignment="Right" Margin="0,0,6,0" Grid.Row="7" Padding="0" TransparentBack="True" ToolTip="Deselect All" x:Name="btnDeselectMelee" Click="BtnDeselectMelee_Click" >
                         <Image Source="/Images/Deselect.png" Width="16" Height="16" />
                     </flat:FlatButton>
-                    <flat:SelectPanel ColorScheme="{Binding ColorScheme, ElementName=window}" x:Name="selMelee" PanelBorderThickness="0" Grid.Row="8" MultiSelect="True" />
+                    <flat:SelectPanel ColorScheme="{Binding ColorScheme, ElementName=window}" x:Name="selMelee" PanelBorderThickness="1" MinHeight="3" Grid.Row="8" MultiSelect="True" />
 
                     <TextBlock x:Name="lblRanged" HorizontalAlignment="Left" Margin="15,12,0,0" Grid.Row="9" Text="Ranged Weapons" FontWeight="SemiBold" VerticalAlignment="Top"/>
                     <Expander VerticalAlignment="Center" Margin="120,0,0,0" HorizontalAlignment="Left" Grid.Row="9" x:Name="expRanged" Header="Show/Hide List" IsExpanded="True" Expanded="ExpRanged_Expanded" Collapsed="ExpRanged_Collapsed" />
@@ -323,7 +323,7 @@
                     <flat:FlatButton ColorScheme="{Binding ColorScheme, ElementName=window}" Width="20" Height="24" HorizontalAlignment="Right" Margin="0,0,6,0" Grid.Row="9" Padding="0" TransparentBack="True" ToolTip="Deselect All" x:Name="btnDeselectRanged" Click="BtnDeselectRanged_Click" >
                         <Image Source="/Images/Deselect.png" Width="16" Height="16" />
                     </flat:FlatButton>
-                    <flat:SelectPanel ColorScheme="{Binding ColorScheme, ElementName=window}" x:Name="selRanged" PanelBorderThickness="0" Grid.Row="10" MultiSelect="True" />
+                    <flat:SelectPanel ColorScheme="{Binding ColorScheme, ElementName=window}" x:Name="selRanged" PanelBorderThickness="1" MinHeight="3" Grid.Row="10" MultiSelect="True" />
 
                     <TextBlock x:Name="lblAcItems" HorizontalAlignment="Left" Margin="15,0,0,0" Grid.Row="11" Text="Armor/Shields" FontWeight="SemiBold" VerticalAlignment="Center"/>
                     <Expander VerticalAlignment="Center" Margin="120,0,0,0" HorizontalAlignment="Left" Grid.Row="11" x:Name="expAcItem" Header="Show/Hide List" IsExpanded="True" Expanded="expAcItem_Expanded" Collapsed="expAcItem_Collapsed" />
@@ -336,7 +336,7 @@
                     <flat:FlatButton ColorScheme="{Binding ColorScheme, ElementName=window}" Width="20" Height="24" HorizontalAlignment="Left" Margin="377,8,0,8" Grid.Row="11" Padding="0" TransparentBack="True" ToolTip="Deselect All" x:Name="btnDeselectAcItem" Click="btnDeselectAcItem_Click" >
                         <Image Source="Images/Deselect.png" Width="16" Height="16" />
                     </flat:FlatButton>
-                    <flat:SelectPanel ColorScheme="{Binding ColorScheme, ElementName=window}" x:Name="selAcItem" PanelBorderThickness="0" Grid.Row="12" MultiSelect="True" />
+                    <flat:SelectPanel ColorScheme="{Binding ColorScheme, ElementName=window}" x:Name="selAcItem" PanelBorderThickness="1" MinHeight="3" Grid.Row="12" MultiSelect="True" />
 
                     <TextBlock x:Name="lblAcItemTotals" Text="Armor/Shield Totals" Margin="15,12,0,0" Grid.Row="13" FontWeight="SemiBold" HorizontalAlignment="Left" VerticalAlignment="Top" />
                     <TextBlock x:Name="lblAcBonus" Text="AC Bonus" Margin="164,11,0,0" Grid.Row="13" HorizontalAlignment="Left" VerticalAlignment="Top" />
@@ -377,7 +377,7 @@
                     <flat:FlatButton ColorScheme="{Binding ColorScheme, ElementName=window}" Width="20" Height="24" HorizontalAlignment="Right" Margin="0,0,6,0" Grid.Row="1" Padding="0" TransparentBack="True" ToolTip="Deselect All" x:Name="btnDeselectFeat" Click="btnDeselectFeat_Click" >
                         <Image Source="/Images/Deselect.png" Width="16" Height="16" />
                     </flat:FlatButton>
-                    <flat:SelectPanel ColorScheme="{Binding ColorScheme, ElementName=window}" x:Name="selFeats" PanelBorderThickness="0" Grid.Row="2" MultiSelect="True" />
+                    <flat:SelectPanel ColorScheme="{Binding ColorScheme, ElementName=window}" x:Name="selFeats" PanelBorderThickness="1" MinHeight="3" Grid.Row="2" MultiSelect="True" />
 
                     <TextBlock x:Name="lblAbilities" HorizontalAlignment="Left" Margin="15,12,0,0" Grid.Row="3" Text="Special Abilities" FontWeight="SemiBold" VerticalAlignment="Top"/>
                     <Expander VerticalAlignment="Center" Margin="120,0,0,0" HorizontalAlignment="Left" Grid.Row="3" x:Name="expabilities" Header="Show/Hide List" IsExpanded="True" Expanded="expabilities_Expanded" Collapsed="expabilities_Collapsed" />
@@ -390,7 +390,7 @@
                     <flat:FlatButton ColorScheme="{Binding ColorScheme, ElementName=window}" Width="20" Height="24" HorizontalAlignment="Right" Margin="0,0,6,0" Grid.Row="3" Padding="0" TransparentBack="True" ToolTip="Deselect All" x:Name="btnDeselectAbility" Click="btnDeselectAbility_Click" >
                         <Image Source="/Images/Deselect.png" Width="16" Height="16" />
                     </flat:FlatButton>
-                    <flat:SelectPanel ColorScheme="{Binding ColorScheme, ElementName=window}" x:Name="selAbilities" PanelBorderThickness="0" Grid.Row="4" MultiSelect="True" />
+                    <flat:SelectPanel ColorScheme="{Binding ColorScheme, ElementName=window}" x:Name="selAbilities" PanelBorderThickness="1" MinHeight="3" Grid.Row="4" MultiSelect="True" />
 
                     <TextBlock x:Name="lblTraits" HorizontalAlignment="Left" Margin="15,12,0,0" Grid.Row="5" Text="Traits" FontWeight="SemiBold" VerticalAlignment="Top"/>
                     <Expander VerticalAlignment="Center" Margin="120,0,0,0" HorizontalAlignment="Left" Grid.Row="5" x:Name="expTraits" Header="Show/Hide List" IsExpanded="True" Expanded="expTraits_Expanded" Collapsed="expTraits_Collapsed" />
@@ -403,12 +403,12 @@
                     <flat:FlatButton ColorScheme="{Binding ColorScheme, ElementName=window}" Width="20" Height="24" HorizontalAlignment="Right" Margin="0,0,6,0" Grid.Row="5" Padding="0" TransparentBack="True" ToolTip="Deselect All" x:Name="btnDeselectTrait" Click="btnDeselectTrait_Click" >
                         <Image Source="/Images/Deselect.png" Width="16" Height="16" />
                     </flat:FlatButton>
-                    <flat:SelectPanel ColorScheme="{Binding ColorScheme, ElementName=window}" x:Name="selTraits" PanelBorderThickness="0" Grid.Row="6" MultiSelect="True" />
+                    <flat:SelectPanel ColorScheme="{Binding ColorScheme, ElementName=window}" x:Name="selTraits" PanelBorderThickness="1" MinHeight="3" Grid.Row="6" MultiSelect="True" />
                 </Grid>
                 <Grid Margin="5,5,5,0" x:Name="grdItems">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="55" />
-                        <RowDefinition Height="240"/>
+                        <RowDefinition Height="230"/>
                         <RowDefinition Height="40" />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
@@ -447,7 +447,7 @@
                     <flat:FlatButton ColorScheme="{Binding ColorScheme, ElementName=window}" Width="20" Height="24" HorizontalAlignment="Right" Margin="0,0,6,0" Grid.Row="2" Padding="0" TransparentBack="True" ToolTip="Deselect All" x:Name="btnDeselectEquipment" Click="btnDeselectEquipment_Click" >
                         <Image Source="/Images/Deselect.png" Width="16" Height="16" />
                     </flat:FlatButton>
-                    <flat:SelectPanel ColorScheme="{Binding ColorScheme, ElementName=window}" x:Name="selEquipment" PanelBorderThickness="0" Grid.Row="3" MultiSelect="True" />
+                    <flat:SelectPanel ColorScheme="{Binding ColorScheme, ElementName=window}" x:Name="selEquipment" PanelBorderThickness="1" MinHeight="3" Grid.Row="3" MultiSelect="True" />
                 </Grid>
                 <Grid Margin="5,5,5,0" x:Name="grdNotes">
                     <TextBlock x:Name="titNotes" Text="Notes" FontSize="16" Margin="10,0,0,0" />

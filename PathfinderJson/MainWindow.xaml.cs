@@ -263,7 +263,7 @@ namespace PathfinderJson
         #endregion
         #endregion
 
-        #region File / Help menus
+        #region File / Help menusg
 
         private async void mnuOpen_Click(object sender, RoutedEventArgs e)
         {
@@ -1024,10 +1024,15 @@ namespace PathfinderJson
 
             try
             {
-                ImageSource iss = new BitmapImage(new Uri(sheet.Player.Photos[0].Value));
-                imgPlayer.Source = iss;
+                if (sheet.Player.Photos != null)
+                {
+                    ImageSource iss = new BitmapImage(new Uri(sheet.Player.Photos[0].Value));
+                    imgPlayer.Source = iss;
+                }
             }
             catch (IndexOutOfRangeException) { }
+            catch (NullReferenceException) { }
+            catch (System.Net.WebException) { }
 
             ui = sheet.Player;
             ac = sheet.AC;
