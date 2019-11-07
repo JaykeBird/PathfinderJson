@@ -209,11 +209,11 @@ namespace PathfinderJson
                 {
                     Title = "Pathfinder JSON - " + fileTitle;
                 }
+            }
 
-                if (isDirty)
-                {
-                    Title += " *";
-                }
+            if (isDirty)
+            {
+                Title += " *";
             }
         }
 
@@ -232,9 +232,14 @@ namespace PathfinderJson
             //Application.Current.Shutdown(0);
         }
 
+        /// <summary>
+        /// Set if the current sheet has unsaved changes. Also updates the title bar and by default sets the tabbed/continuous view as unsynced.
+        /// </summary>
+        /// <param name="isDirty">Set if the sheet is dirty (has unsaved changes).</param>
+        /// <param name="updateInternalValues">Set if the value for the tabbed/continuous view should be marked as unsynced with the text editor.</param>
         void SetIsDirty(bool isDirty = true, bool updateInternalValues = true)
         {
-            if (!_sheetLoaded)
+            if (!_sheetLoaded) // if no sheet is loaded, nothing is gonna happen lol
             {
                 isDirty = false;
             }
@@ -386,18 +391,27 @@ namespace PathfinderJson
 
         private async void mnuCheckUpdates_Click(object sender, RoutedEventArgs e)
         {
-            UpdateData ud = await UpdateChecker.CheckForUpdatesAsync();
-            if (ud.HasUpdate)
+            try
             {
-                UpdateDisplay uw = new UpdateDisplay(ud);
-                uw.Owner = this;
-                uw.ShowDialog();
+                UpdateData ud = await UpdateChecker.CheckForUpdatesAsync();
+                if (ud.HasUpdate)
+                {
+                    UpdateDisplay uw = new UpdateDisplay(ud);
+                    uw.Owner = this;
+                    uw.ShowDialog();
+                }
+                else
+                {
+                    MessageDialog md = new MessageDialog(App.ColorScheme);
+                    md.Owner = this;
+                    md.ShowDialog("There are no updates available. You're on the latest release!", "Check for Updates", false, UiCore.MessageBoxImage.None);
+                }
             }
-            else
+            catch (System.Net.WebException)
             {
                 MessageDialog md = new MessageDialog(App.ColorScheme);
                 md.Owner = this;
-                md.ShowDialog("There are no updates available. You're on the latest release!", "Check for Updates", false, UiCore.MessageBoxImage.None);
+                md.ShowDialog("Could not check for updates. Make sure you're connected to the Internet.", "Check for Updates", false, UiCore.MessageBoxImage.None);
             }
         }
 
@@ -587,13 +601,7 @@ namespace PathfinderJson
         {
             if (currentView == TABS_VIEW)
             {
-                grdGeneral.Visibility = Visibility.Collapsed;
-                grdSkills.Visibility = Visibility.Collapsed;
-                grdCombat.Visibility = Visibility.Collapsed;
-                grdSpells.Visibility = Visibility.Collapsed;
-                grdFeats.Visibility = Visibility.Collapsed;
-                grdItems.Visibility = Visibility.Collapsed;
-                grdNotes.Visibility = Visibility.Collapsed;
+                SetAllTabsVisibility(Visibility.Collapsed);
 
                 //txtLoc.Text = text;
                 switch (text)
@@ -707,17 +715,19 @@ namespace PathfinderJson
         {
             view = view.ToLowerInvariant();
 
+            // weed out unintended "view" strings
             if (view != CONTINUOUS_VIEW && view != TABS_VIEW && view != RAWJSON_VIEW)
             {
                 //await ChangeView(TABS_VIEW, updateSheet, displayEmptyMessage, saveSettings);
                 return;
             }
 
-            if (!_sheetLoaded)
+            if (!_sheetLoaded) // don't update sheet if there is no sheet lol
             {
                 updateSheet = false;
             }
 
+            // update back-end settings before actually changing views
             currentView = view;
 
             if (saveSettings)
