@@ -90,8 +90,6 @@ namespace PathfinderJson
             selTabs.IsEnabled = false;
             //LoadGeneralTab();
             // spells tab
-            selTabs[3].CanSelect = false;
-            selTabs[3].Foreground = Colors.Gray.ToBrush();
 
             //switch (App.Settings.StartView.ToLowerInvariant())
             //{
@@ -263,7 +261,7 @@ namespace PathfinderJson
         #endregion
         #endregion
 
-        #region File / Help menusg
+        #region File / Help menus
 
         private async void mnuOpen_Click(object sender, RoutedEventArgs e)
         {
@@ -1214,6 +1212,86 @@ namespace PathfinderJson
 
                 stkSkills.Children.Add(item);
                 item.UpdateAppearance();
+            }
+
+            // Spells tab
+            int currentLevel = 0;
+            List<Spell> allSpells = new List<Spell>();
+
+            foreach (SpellLevel item in sheet.Spells)
+            {
+                switch (currentLevel)
+                {
+                    case 0:
+                        txtSpellsBonus0.Text = item.BonusSpells;
+                        txtSpellsDC0.Text = item.DC;
+                        txtSpellsKnown0.Text = item.TotalKnown;
+                        txtSpellsPerDay0.Text = item.TotalPerDay;
+                        break;
+                    case 1:
+                        txtSpellsBonus1.Text = item.BonusSpells;
+                        txtSpellsDC1.Text = item.DC;
+                        txtSpellsKnown1.Text = item.TotalKnown;
+                        txtSpellsPerDay1.Text = item.TotalPerDay;
+                        break;
+                    case 2:
+                        txtSpellsBonus2.Text = item.BonusSpells;
+                        txtSpellsDC2.Text = item.DC;
+                        txtSpellsKnown2.Text = item.TotalKnown;
+                        txtSpellsPerDay2.Text = item.TotalPerDay;
+                        break;
+                    case 3:
+                        txtSpellsBonus3.Text = item.BonusSpells;
+                        txtSpellsDC3.Text = item.DC;
+                        txtSpellsKnown3.Text = item.TotalKnown;
+                        txtSpellsPerDay3.Text = item.TotalPerDay;
+                        break;
+                    case 4:
+                        txtSpellsBonus4.Text = item.BonusSpells;
+                        txtSpellsDC4.Text = item.DC;
+                        txtSpellsKnown4.Text = item.TotalKnown;
+                        txtSpellsPerDay4.Text = item.TotalPerDay;
+                        break;
+                    case 5:
+                        txtSpellsBonus5.Text = item.BonusSpells;
+                        txtSpellsDC5.Text = item.DC;
+                        txtSpellsKnown5.Text = item.TotalKnown;
+                        txtSpellsPerDay5.Text = item.TotalPerDay;
+                        break;
+                    case 6:
+                        txtSpellsBonus6.Text = item.BonusSpells;
+                        txtSpellsDC6.Text = item.DC;
+                        txtSpellsKnown6.Text = item.TotalKnown;
+                        txtSpellsPerDay6.Text = item.TotalPerDay;
+                        break;
+                    case 7:
+                        txtSpellsBonus7.Text = item.BonusSpells;
+                        txtSpellsDC7.Text = item.DC;
+                        txtSpellsKnown7.Text = item.TotalKnown;
+                        txtSpellsPerDay7.Text = item.TotalPerDay;
+                        break;
+                    case 8:
+                        txtSpellsBonus8.Text = item.BonusSpells;
+                        txtSpellsDC8.Text = item.DC;
+                        txtSpellsKnown8.Text = item.TotalKnown;
+                        txtSpellsPerDay8.Text = item.TotalPerDay;
+                        break;
+                    case 9:
+                        txtSpellsBonus9.Text = item.BonusSpells;
+                        txtSpellsDC9.Text = item.DC;
+                        txtSpellsKnown9.Text = item.TotalKnown;
+                        txtSpellsPerDay9.Text = item.TotalPerDay;
+                        break;
+                    default:
+                        break;
+                }
+
+                foreach (Spell sp in item.Spells)
+                {
+                    allSpells.Add(sp);
+                }
+
+                currentLevel++;
             }
 
             // Notes tab

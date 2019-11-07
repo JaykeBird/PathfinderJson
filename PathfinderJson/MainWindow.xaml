@@ -349,9 +349,71 @@
                     <TextBox x:Name="txtAcSpellFailure" TextChanged="textbox_TextChanged" Margin="343,44,0,0" Grid.Row="13" HorizontalAlignment="Left" Width="50" Height="23" VerticalAlignment="Top"/>
                 </Grid>
                 <Grid Margin="5,5,5,0" x:Name="grdSpells">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="55" />
+                        <RowDefinition Height="320"/>
+                        <RowDefinition Height="40" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
                     <Grid Margin="10,0,0,0">
                         <TextBlock x:Name="titSpells" Text="Spells" FontSize="16" />
                     </Grid>
+                    <TextBlock x:Name="lblMoreSpells" HorizontalAlignment="Left" Margin="10,30,0,0" Text="For spell-like abilities, see the Feats/Abilities section." VerticalAlignment="Top"/>
+
+                    <TextBlock x:Name="lblSpellLevel0" HorizontalAlignment="Left" Margin="36,34,0,0" Grid.Row="1" Text="0th level" VerticalAlignment="Top"/>
+                    <TextBlock x:Name="lblSpellLevel1" HorizontalAlignment="Left" Margin="36,63,0,0" Grid.Row="1" Text="1st level" VerticalAlignment="Top"/>
+                    <TextBlock x:Name="lblSpellLevel2" HorizontalAlignment="Left" Margin="36,92,0,0" Grid.Row="1" Text="2nd level" VerticalAlignment="Top"/>
+                    <TextBlock x:Name="lblSpellLevel3" HorizontalAlignment="Left" Margin="36,121,0,0" Grid.Row="1" Text="3rd level" VerticalAlignment="Top"/>
+                    <TextBlock x:Name="lblSpellLevel4" HorizontalAlignment="Left" Margin="37,150,0,0" Grid.Row="1" Text="4th level" VerticalAlignment="Top"/>
+                    <TextBlock x:Name="lblSpellLevel5" HorizontalAlignment="Left" Margin="36,179,0,0" Grid.Row="1" Text="5th level" VerticalAlignment="Top"/>
+                    <TextBlock x:Name="lblSpellLevel6" HorizontalAlignment="Left" Margin="36,208,0,0" Grid.Row="1" Text="6th level" VerticalAlignment="Top"/>
+                    <TextBlock x:Name="lblSpellLevel7" HorizontalAlignment="Left" Margin="36,237,0,0" Grid.Row="1" Text="7th level" VerticalAlignment="Top"/>
+                    <TextBlock x:Name="lblSpellLevel8" HorizontalAlignment="Left" Margin="35,266,0,0" Grid.Row="1" Text="8th level" VerticalAlignment="Top"/>
+                    <TextBlock x:Name="lblSpellLevel9" HorizontalAlignment="Left" Margin="36,295,0,0" Grid.Row="1" Text="9th level" VerticalAlignment="Top"/>
+                    <TextBox x:Name="txtSpellsKnown0" HorizontalAlignment="Left" Height="23" Margin="100,30,0,0" Grid.Row="1" VerticalAlignment="Top" Width="50" TextChanged="textbox_TextChanged" />
+                    <TextBox x:Name="txtSpellsKnown1" HorizontalAlignment="Left" Height="23" Margin="100,59,0,0" Grid.Row="1" VerticalAlignment="Top" Width="50" TextChanged="textbox_TextChanged"/>
+                    <TextBox x:Name="txtSpellsKnown2" HorizontalAlignment="Left" Height="23" Margin="100,88,0,0" Grid.Row="1" VerticalAlignment="Top" Width="50" TextChanged="textbox_TextChanged"/>
+                    <TextBox x:Name="txtSpellsKnown3" HorizontalAlignment="Left" Height="23" Margin="100,117,0,0" Grid.Row="1" VerticalAlignment="Top" Width="50" TextChanged="textbox_TextChanged"/>
+                    <TextBox x:Name="txtSpellsKnown4" HorizontalAlignment="Left" Height="23" Margin="100,146,0,0" Grid.Row="1" VerticalAlignment="Top" Width="50" TextChanged="textbox_TextChanged"/>
+                    <TextBox x:Name="txtSpellsKnown5" HorizontalAlignment="Left" Height="23" Margin="100,175,0,0" Grid.Row="1" VerticalAlignment="Top" Width="50" TextChanged="textbox_TextChanged"/>
+                    <TextBox x:Name="txtSpellsKnown6" HorizontalAlignment="Left" Height="23" Margin="100,204,0,0" Grid.Row="1" VerticalAlignment="Top" Width="50" TextChanged="textbox_TextChanged"/>
+                    <TextBox x:Name="txtSpellsKnown7" HorizontalAlignment="Left" Height="23" Margin="100,233,0,0" Grid.Row="1" VerticalAlignment="Top" Width="50" TextChanged="textbox_TextChanged"/>
+                    <TextBox x:Name="txtSpellsKnown8" HorizontalAlignment="Left" Height="23" Margin="100,262,0,0" Grid.Row="1" VerticalAlignment="Top" Width="50" TextChanged="textbox_TextChanged"/>
+                    <TextBox x:Name="txtSpellsKnown9" HorizontalAlignment="Left" Height="23" Margin="100,291,0,0" Grid.Row="1" VerticalAlignment="Top" Width="50" TextChanged="textbox_TextChanged"/>
+                    <TextBox x:Name="txtSpellsDC0" HorizontalAlignment="Left" Height="23" Margin="168,30,0,0" Grid.Row="1" VerticalAlignment="Top" Width="50" TextChanged="textbox_TextChanged" />
+                    <TextBox x:Name="txtSpellsDC1" HorizontalAlignment="Left" Height="23" Margin="168,59,0,0" Grid.Row="1" VerticalAlignment="Top" Width="50" TextChanged="textbox_TextChanged"/>
+                    <TextBox x:Name="txtSpellsDC2" HorizontalAlignment="Left" Height="23" Margin="168,88,0,0" Grid.Row="1" VerticalAlignment="Top" Width="50" TextChanged="textbox_TextChanged"/>
+                    <TextBox x:Name="txtSpellsDC3" HorizontalAlignment="Left" Height="23" Margin="168,117,0,0" Grid.Row="1" VerticalAlignment="Top" Width="50" TextChanged="textbox_TextChanged"/>
+                    <TextBox x:Name="txtSpellsDC4" HorizontalAlignment="Left" Height="23" Margin="168,146,0,0" Grid.Row="1" VerticalAlignment="Top" Width="50" TextChanged="textbox_TextChanged"/>
+                    <TextBox x:Name="txtSpellsDC5" HorizontalAlignment="Left" Height="23" Margin="168,175,0,0" Grid.Row="1" VerticalAlignment="Top" Width="50" TextChanged="textbox_TextChanged"/>
+                    <TextBox x:Name="txtSpellsDC6" HorizontalAlignment="Left" Height="23" Margin="168,204,0,0" Grid.Row="1" VerticalAlignment="Top" Width="50" TextChanged="textbox_TextChanged"/>
+                    <TextBox x:Name="txtSpellsDC7" HorizontalAlignment="Left" Height="23" Margin="168,233,0,0" Grid.Row="1" VerticalAlignment="Top" Width="50" TextChanged="textbox_TextChanged"/>
+                    <TextBox x:Name="txtSpellsDC8" HorizontalAlignment="Left" Height="23" Margin="168,262,0,0" Grid.Row="1" VerticalAlignment="Top" Width="50" TextChanged="textbox_TextChanged"/>
+                    <TextBox x:Name="txtSpellsDC9" HorizontalAlignment="Left" Height="23" Margin="168,291,0,0" Grid.Row="1" VerticalAlignment="Top" Width="50" TextChanged="textbox_TextChanged"/>
+                    <TextBox x:Name="txtSpellsPerDay0" HorizontalAlignment="Left" Height="23" Margin="236,30,0,0" Grid.Row="1" VerticalAlignment="Top" Width="50" TextChanged="textbox_TextChanged" />
+                    <TextBox x:Name="txtSpellsPerDay1" HorizontalAlignment="Left" Height="23" Margin="236,59,0,0" Grid.Row="1" VerticalAlignment="Top" Width="50" TextChanged="textbox_TextChanged"/>
+                    <TextBox x:Name="txtSpellsPerDay2" HorizontalAlignment="Left" Height="23" Margin="236,88,0,0" Grid.Row="1" VerticalAlignment="Top" Width="50" TextChanged="textbox_TextChanged"/>
+                    <TextBox x:Name="txtSpellsPerDay3" HorizontalAlignment="Left" Height="23" Margin="236,117,0,0" Grid.Row="1" VerticalAlignment="Top" Width="50" TextChanged="textbox_TextChanged"/>
+                    <TextBox x:Name="txtSpellsPerDay4" HorizontalAlignment="Left" Height="23" Margin="236,146,0,0" Grid.Row="1" VerticalAlignment="Top" Width="50" TextChanged="textbox_TextChanged"/>
+                    <TextBox x:Name="txtSpellsPerDay5" HorizontalAlignment="Left" Height="23" Margin="236,175,0,0" Grid.Row="1" VerticalAlignment="Top" Width="50" TextChanged="textbox_TextChanged"/>
+                    <TextBox x:Name="txtSpellsPerDay6" HorizontalAlignment="Left" Height="23" Margin="236,204,0,0" Grid.Row="1" VerticalAlignment="Top" Width="50" TextChanged="textbox_TextChanged"/>
+                    <TextBox x:Name="txtSpellsPerDay7" HorizontalAlignment="Left" Height="23" Margin="236,233,0,0" Grid.Row="1" VerticalAlignment="Top" Width="50" TextChanged="textbox_TextChanged"/>
+                    <TextBox x:Name="txtSpellsPerDay8" HorizontalAlignment="Left" Height="23" Margin="236,262,0,0" Grid.Row="1" VerticalAlignment="Top" Width="50" TextChanged="textbox_TextChanged"/>
+                    <TextBox x:Name="txtSpellsPerDay9" HorizontalAlignment="Left" Height="23" Margin="236,291,0,0" Grid.Row="1" VerticalAlignment="Top" Width="50" TextChanged="textbox_TextChanged"/>
+                    <TextBox x:Name="txtSpellsBonus0" HorizontalAlignment="Left" Height="23" Margin="307,30,0,0" Grid.Row="1" VerticalAlignment="Top" Width="50" TextChanged="textbox_TextChanged" />
+                    <TextBox x:Name="txtSpellsBonus1" HorizontalAlignment="Left" Height="23" Margin="307,59,0,0" Grid.Row="1" VerticalAlignment="Top" Width="50" TextChanged="textbox_TextChanged"/>
+                    <TextBox x:Name="txtSpellsBonus2" HorizontalAlignment="Left" Height="23" Margin="307,88,0,0" Grid.Row="1" VerticalAlignment="Top" Width="50" TextChanged="textbox_TextChanged"/>
+                    <TextBox x:Name="txtSpellsBonus3" HorizontalAlignment="Left" Height="23" Margin="307,117,0,0" Grid.Row="1" VerticalAlignment="Top" Width="50" TextChanged="textbox_TextChanged"/>
+                    <TextBox x:Name="txtSpellsBonus4" HorizontalAlignment="Left" Height="23" Margin="307,146,0,0" Grid.Row="1" VerticalAlignment="Top" Width="50" TextChanged="textbox_TextChanged"/>
+                    <TextBox x:Name="txtSpellsBonus5" HorizontalAlignment="Left" Height="23" Margin="307,175,0,0" Grid.Row="1" VerticalAlignment="Top" Width="50" TextChanged="textbox_TextChanged"/>
+                    <TextBox x:Name="txtSpellsBonus6" HorizontalAlignment="Left" Height="23" Margin="307,204,0,0" Grid.Row="1" VerticalAlignment="Top" Width="50" TextChanged="textbox_TextChanged"/>
+                    <TextBox x:Name="txtSpellsBonus7" HorizontalAlignment="Left" Height="23" Margin="307,233,0,0" Grid.Row="1" VerticalAlignment="Top" Width="50" TextChanged="textbox_TextChanged"/>
+                    <TextBox x:Name="txtSpellsBonus8" HorizontalAlignment="Left" Height="23" Margin="307,262,0,0" Grid.Row="1" VerticalAlignment="Top" Width="50" TextChanged="textbox_TextChanged"/>
+                    <TextBox x:Name="txtSpellsBonus9" HorizontalAlignment="Left" Height="23" Margin="307,291,0,0" Grid.Row="1" VerticalAlignment="Top" Width="50" TextChanged="textbox_TextChanged"/>
+                    <TextBlock x:Name="lblSpellCol1" HorizontalAlignment="Left" Margin="101,5,0,0" Grid.Row="1" Text="# Known" VerticalAlignment="Top"/>
+                    <TextBlock x:Name="lblSpellCol2" HorizontalAlignment="Left" Margin="171,5,0,0" Grid.Row="1" Text="Save DC" VerticalAlignment="Top"/>
+                    <TextBlock x:Name="lblSpellCol3" HorizontalAlignment="Left" Margin="235,5,0,0" Grid.Row="1" Text="# Per Day" VerticalAlignment="Top"/>
+                    <TextBlock x:Name="lblSpellCol4" HorizontalAlignment="Left" Margin="300,5,0,0" Grid.Row="1" Text="Bonus Spells" VerticalAlignment="Top"/>
                 </Grid>
                 <Grid Margin="5,5,5,0" x:Name="grdFeats">
                     <Grid.RowDefinitions>
