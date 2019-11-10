@@ -417,11 +417,25 @@
 
                     <TextBlock x:Name="lblSpells" HorizontalAlignment="Left" Margin="15,12,0,0" Grid.Row="2" Text="Spells" FontWeight="SemiBold" VerticalAlignment="Top"/>
                     <Expander VerticalAlignment="Center" Margin="120,0,0,0" HorizontalAlignment="Left" Grid.Row="2" x:Name="expSpells" Header="Show/Hide List" IsExpanded="True" Expanded="expFeats_Expanded" Collapsed="expFeats_Collapsed" />
-                    <flat:MenuButton ColorScheme="{Binding ColorScheme, ElementName=window}" Height="24" HorizontalAlignment="Right" Margin="0,0,80,0" Grid.Row="2" Padding="0" TransparentBack="True" ToolTip="Add" x:Name="btnFilterSpell" Click="btnAddFeat_Click" >
+                    <flat:MenuButton ColorScheme="{Binding ColorScheme, ElementName=window}" Height="24" HorizontalAlignment="Right" Margin="0,0,80,0" Grid.Row="2" Padding="0" TransparentBack="True" ToolTip="Add" x:Name="btnFilterSpell" StaysOpen="True" >
                         <StackPanel Orientation="Horizontal">
-                            <Image Source="/Images/Add.png" Width="16" Height="16" Margin="0,0,3,0" />
+                            <Image Source="/Images/Filter.png" Width="16" Height="16" Margin="0,0,3,0" />
                             <TextBlock Text="Filter" />
                         </StackPanel>
+                        <flat:MenuButton.Menu>
+                            <flat:ContextMenu StaysOpen="True" >
+                                <MenuItem Header="0th level" IsCheckable="True" IsChecked="True" />
+                                <MenuItem Header="1st level" IsCheckable="True" IsChecked="True" />
+                                <MenuItem Header="2nd level" IsCheckable="True" IsChecked="True" />
+                                <MenuItem Header="3rd level" IsCheckable="True" IsChecked="True" />
+                                <MenuItem Header="4th level" IsCheckable="True" IsChecked="True" />
+                                <MenuItem Header="5th level" IsCheckable="True" IsChecked="True" />
+                                <MenuItem Header="6th level" IsCheckable="True" IsChecked="True" />
+                                <MenuItem Header="7th level" IsCheckable="True" IsChecked="True" />
+                                <MenuItem Header="8th level" IsCheckable="True" IsChecked="True" />
+                                <MenuItem Header="9th level" IsCheckable="True" IsChecked="True" />
+                            </flat:ContextMenu>
+                        </flat:MenuButton.Menu>
                     </flat:MenuButton>
                     <flat:FlatButton ColorScheme="{Binding ColorScheme, ElementName=window}" Width="20" Height="24" HorizontalAlignment="Right" Margin="0,0,50,0" Grid.Row="2" Padding="0" TransparentBack="True" ToolTip="Add" x:Name="btnAddSpell" Click="btnAddFeat_Click" >
                         <Image Source="/Images/Add.png" Width="16" Height="16" />

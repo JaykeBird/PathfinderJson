@@ -58,6 +58,7 @@
     <None Remove="Images\Deselect.png" />
     <None Remove="Images\Edit.png" />
     <None Remove="Images\Exit.png" />
+    <None Remove="Images\Filter.png" />
     <None Remove="Images\Find.png" />
     <None Remove="Images\Info.png" />
     <None Remove="Images\Open.png" />
@@ -100,6 +101,7 @@
     <Resource Include="Images\Deselect.png" />
     <Resource Include="Images\Edit.png" />
     <Resource Include="Images\Exit.png" />
+    <Resource Include="Images\Filter.png" />
     <Resource Include="Images\Find.png" />
     <Resource Include="Images\Info.png" />
     <Resource Include="Images\Open.png" />
