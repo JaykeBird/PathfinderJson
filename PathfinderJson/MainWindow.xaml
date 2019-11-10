@@ -268,7 +268,7 @@
 
                     </StackPanel>
                 </Grid>
-                <Grid Margin="5,5,5,0" x:Name="grdCombat" >
+                <Grid Margin="5,5,5,0" x:Name="grdCombat" Visibility="Collapsed" >
                     <Grid.RowDefinitions>
                         <RowDefinition Height="25"/>
                         <RowDefinition/>
@@ -291,7 +291,7 @@
                     <local:ArmorClassEditor Grid.Row="1" Margin="5,5,0,0" x:Name="edtAc" ContentChanged="editor_ContentChanged" />
                     <local:CompoundEditor Grid.Row="2" Margin="5,5,0,0" x:Name="edtInit" Title="Initiative" ModifierTitle="Dex Mod" ContentChanged="editor_ContentChanged" />
                     <TextBlock x:Name="lblBab" HorizontalAlignment="Left" Margin="15,0,0,0" Grid.Row="3" Text="Base Attack Bonus (BAB)" FontWeight="Bold" VerticalAlignment="Center"/>
-                    <TextBox x:Name="txtBab" HorizontalAlignment="Left" Height="23" Margin="170,9,0,0" Grid.Row="3" VerticalAlignment="Top" Width="60" TextChanged="textbox_TextChanged"/>
+                    <TextBox x:Name="txtBab" HorizontalAlignment="Left" Height="23" Margin="170,0,0,0" Grid.Row="3" VerticalAlignment="Center" Width="60" TextChanged="textbox_TextChanged"/>
                     <local:CompoundEditor Grid.Row="4" Margin="5,5,0,0" x:Name="edtCmb" Title="Combat Maneuver Bonus (CMB)" ModifierTitle="Str Mod" BaseTitle="BAB" CanEditBase="False" ContentChanged="editor_ContentChanged" />
                     <local:CompoundEditor Grid.Row="5" Margin="5,5,0,0" x:Name="edtCmd" Title="Combat Maneuver Defense (CMD)" ModifierTitle="Str Mod" Modifier2Title="Dex Mod" BaseTitle="BAB" CanEditBase="False" ShowPlusTen="True" ContentChanged="editor_ContentChanged" />
                     <TextBlock x:Name="lblDr" HorizontalAlignment="Left" Margin="15,18,0,0" Grid.Row="6" Text="Damage Reduction (DR)" VerticalAlignment="Top"/>
@@ -414,6 +414,25 @@
                     <TextBlock x:Name="lblSpellCol2" HorizontalAlignment="Left" Margin="171,5,0,0" Grid.Row="1" Text="Save DC" VerticalAlignment="Top"/>
                     <TextBlock x:Name="lblSpellCol3" HorizontalAlignment="Left" Margin="235,5,0,0" Grid.Row="1" Text="# Per Day" VerticalAlignment="Top"/>
                     <TextBlock x:Name="lblSpellCol4" HorizontalAlignment="Left" Margin="300,5,0,0" Grid.Row="1" Text="Bonus Spells" VerticalAlignment="Top"/>
+
+                    <TextBlock x:Name="lblSpells" HorizontalAlignment="Left" Margin="15,12,0,0" Grid.Row="2" Text="Spells" FontWeight="SemiBold" VerticalAlignment="Top"/>
+                    <Expander VerticalAlignment="Center" Margin="120,0,0,0" HorizontalAlignment="Left" Grid.Row="2" x:Name="expSpells" Header="Show/Hide List" IsExpanded="True" Expanded="expFeats_Expanded" Collapsed="expFeats_Collapsed" />
+                    <flat:MenuButton ColorScheme="{Binding ColorScheme, ElementName=window}" Height="24" HorizontalAlignment="Right" Margin="0,0,80,0" Grid.Row="2" Padding="0" TransparentBack="True" ToolTip="Add" x:Name="btnFilterSpell" Click="btnAddFeat_Click" >
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="/Images/Add.png" Width="16" Height="16" Margin="0,0,3,0" />
+                            <TextBlock Text="Filter" />
+                        </StackPanel>
+                    </flat:MenuButton>
+                    <flat:FlatButton ColorScheme="{Binding ColorScheme, ElementName=window}" Width="20" Height="24" HorizontalAlignment="Right" Margin="0,0,50,0" Grid.Row="2" Padding="0" TransparentBack="True" ToolTip="Add" x:Name="btnAddSpell" Click="btnAddFeat_Click" >
+                        <Image Source="/Images/Add.png" Width="16" Height="16" />
+                    </flat:FlatButton>
+                    <flat:FlatButton ColorScheme="{Binding ColorScheme, ElementName=window}" Width="20" Height="24" HorizontalAlignment="Right" Margin="0,0,28,0" Grid.Row="2" Padding="0" TransparentBack="True" ToolTip="Delete" x:Name="btnDeleteSpell" Click="btnDeleteFeat_Click" >
+                        <Image Source="/Images/Cancel.png" Width="16" Height="16" />
+                    </flat:FlatButton>
+                    <flat:FlatButton ColorScheme="{Binding ColorScheme, ElementName=window}" Width="20" Height="24" HorizontalAlignment="Right" Margin="0,0,6,0" Grid.Row="2" Padding="0" TransparentBack="True" ToolTip="Deselect All" x:Name="btnDeselectSpell" Click="btnDeselectFeat_Click" >
+                        <Image Source="/Images/Deselect.png" Width="16" Height="16" />
+                    </flat:FlatButton>
+                    <flat:SelectPanel ColorScheme="{Binding ColorScheme, ElementName=window}" x:Name="selSpells" PanelBorderThickness="1" MinHeight="3" Grid.Row="3" MultiSelect="True" />
                 </Grid>
                 <Grid Margin="5,5,5,0" x:Name="grdFeats">
                     <Grid.RowDefinitions>
