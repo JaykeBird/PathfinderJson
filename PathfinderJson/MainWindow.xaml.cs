@@ -553,6 +553,11 @@ namespace PathfinderJson
             {
                 item.UpdateAppearance();
             }
+
+            //foreach (SpellEditor item in selSpells.GetItemsAsType<SpellEditor>())
+            //{
+            //    item.ApplyColorScheme(App.ColorScheme);
+            //}
         }
 
         void SetupTabs()
@@ -934,7 +939,7 @@ namespace PathfinderJson
             }
             catch (FileFormatException)
             {
-                MessageBox.Show("The file \"" + filename + "\" does not appear to be a JSON file. Check the file in Notepad or another text editor to make sure it's not corrupted.",
+                MessageBox.Show(this, "The file \"" + filename + "\" does not appear to be a JSON file. Check the file in Notepad or another text editor to make sure it's not corrupted.",
                     "File Format Error", MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
                 return;
             }
@@ -942,11 +947,16 @@ namespace PathfinderJson
             {
                 if (!e.Message.Contains("error context error is different to requested error"))
                 {
-                    MessageBox.Show("The file \"" + filename + "\" does not appear to be a JSON file. Check the file in Notepad or another text editor to make sure it's not corrupted.",
+                    MessageBox.Show(this, "The file \"" + filename + "\" does not appear to be a JSON file. Check the file in Notepad or another text editor to make sure it's not corrupted.",
                         "File Format Error", MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
                     return;
                 }
                 else { throw; }
+            }
+            catch (FileNotFoundException)
+            {
+                MessageBox.Show(this, "The file \"" + filename + "\" cannot be found. Make sure the file exists and then try again.",
+                    "File Not Found", MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
             }
 
             if (addToRecent) AddRecentFile(filename);
@@ -1177,7 +1187,6 @@ namespace PathfinderJson
             var ses = await Task<List<SkillEditor>>.Factory.StartNew(() => SkillEditorFactory.CreateEditors(sheet), cts.Token, TaskCreationOptions.None, scheduler);
 
             stkSkills.Children.Clear();
-
             foreach (SkillEditor item in ses)
             {
 
@@ -1292,6 +1301,16 @@ namespace PathfinderJson
                 }
 
                 currentLevel++;
+            } // end foreach
+
+            selSpells.Clear();
+            foreach (Spell spell in allSpells)
+            {
+                SpellEditor se = new SpellEditor();
+                se.ContentChanged += editor_ContentChanged;
+                se.ApplyColorScheme(App.ColorScheme);
+                se.LoadSpell(spell);
+                selSpells.AddItem(se);
             }
 
             // Notes tab
@@ -1896,8 +1915,75 @@ namespace PathfinderJson
             selAcItem.DeselectAll();
         }
 
+
         #endregion
 
+        #region Spell list editors
+
+        private void btnAddSpell_Click(object sender, EventArgs e)
+        {
+            SpellEditor se = new SpellEditor();
+            se.ContentChanged += editor_ContentChanged;
+            se.ApplyColorScheme(App.ColorScheme);
+            selSpells.AddItem(se);
+
+            expSpells.IsExpanded = true;
+            se.BringIntoView();
+            se.IsSelected = true;
+
+            SetIsDirty();
+        }
+
+        private void btnDeleteSpell_Click(object sender, EventArgs e)
+        {
+            selSpells.RemoveSelectedItems();
+            SetIsDirty();
+        }
+
+        private void btnDeselectSpell_Click(object sender, EventArgs e)
+        {
+            selSpells.DeselectAll();
+        }
+
+        private void expSpells_Expanded(object sender, RoutedEventArgs e)
+        {
+            if (selSpells != null) selSpells.Visibility = Visibility.Visible;
+        }
+
+        private void expSpells_Collapsed(object sender, RoutedEventArgs e)
+        {
+            if (selSpells != null) selSpells.Visibility = Visibility.Collapsed;
+        }
+
+        private void mnuSpellFilter_Click(object sender, RoutedEventArgs e)
+        {
+            List<int> AllowedLevels = new List<int>();
+
+            if (mnuSpellFilter0.IsChecked) AllowedLevels.Add(0);
+            if (mnuSpellFilter1.IsChecked) AllowedLevels.Add(1);
+            if (mnuSpellFilter2.IsChecked) AllowedLevels.Add(2);
+            if (mnuSpellFilter3.IsChecked) AllowedLevels.Add(3);
+            if (mnuSpellFilter4.IsChecked) AllowedLevels.Add(4);
+            if (mnuSpellFilter5.IsChecked) AllowedLevels.Add(5);
+            if (mnuSpellFilter6.IsChecked) AllowedLevels.Add(6);
+            if (mnuSpellFilter7.IsChecked) AllowedLevels.Add(7);
+            if (mnuSpellFilter8.IsChecked) AllowedLevels.Add(8);
+            if (mnuSpellFilter9.IsChecked) AllowedLevels.Add(9);
+
+            foreach (SpellEditor item in selSpells.GetItemsAsType<SpellEditor>())
+            {
+                if (AllowedLevels.Contains(item.Level))
+                {
+                    item.Visibility = Visibility.Visible;
+                }
+                else
+                {
+                    item.Visibility = Visibility.Collapsed;
+                    item.IsSelected = false; // don't have hidden items be selected
+                }
+            }
+        }
+        #endregion
 
     }
 }
