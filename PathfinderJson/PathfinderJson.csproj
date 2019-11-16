@@ -86,7 +86,7 @@
       <HintPath>..\MarkDig\Markdig.Wpf.dll</HintPath>
     </Reference>
     <Reference Include="UiCore">
-      <HintPath>..\..\ShineCalendar\FlatWindow\bin\Release\netcoreapp3.0\UiCore.dll</HintPath>
+      <HintPath>..\UiCore\UiCore.dll</HintPath>
     </Reference>
   </ItemGroup>
 
