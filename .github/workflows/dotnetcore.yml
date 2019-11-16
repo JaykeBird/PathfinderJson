@@ -16,5 +16,6 @@ jobs:
     - name: Build with dotnet
       run: dotnet build --configuration Release
     - name: Test run
-      run: PathfinderJson\bin\Release\netcoreapp3.0\win-x64\PathfinderJson.exe
-      working-directory: GITHUB_WORKSPACE
+      run: PathfinderJson.exe
+      working-directory: $GITHUB_WORKSPACE\PathfinderJson\bin\Release\netcoreapp3.0\win-x64\
+      shell: cmd
