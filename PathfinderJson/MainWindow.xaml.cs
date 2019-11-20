@@ -89,35 +89,6 @@ namespace PathfinderJson
             SetupTabs();
             selTabs.IsEnabled = false;
             //LoadGeneralTab();
-            // spells tab
-
-            //switch (App.Settings.StartView.ToLowerInvariant())
-            //{
-            //    case "tabs":
-            //        mnuTabs.IsChecked = true;
-            //        mnuScroll.IsChecked = false;
-            //        mnuRawJson.IsChecked = false;
-            //        _useTabs = true;
-            //        break;
-            //    case "continuous":
-            //        mnuTabs.IsChecked = false;
-            //        mnuScroll.IsChecked = true;
-            //        mnuRawJson.IsChecked = false;
-            //        _useTabs = false;
-            //        break;
-            //    case "rawjson":
-            //        mnuTabs.IsChecked = false;
-            //        mnuScroll.IsChecked = false;
-            //        mnuRawJson.IsChecked = true;
-            //        _useTabs = true;
-            //        break;
-            //    default:
-            //        mnuTabs.IsChecked = true;
-            //        mnuScroll.IsChecked = false;
-            //        mnuRawJson.IsChecked = false;
-            //        _useTabs = true;
-            //        break;
-            //}
 
             ChangeView(App.Settings.StartView, false, true, false).Wait();
 
@@ -149,7 +120,7 @@ namespace PathfinderJson
             }
 
             SearchPanel p = SearchPanel.Install(txtEditRaw);
-            p.FontFamily = SystemFonts.MessageFontFamily;
+            p.FontFamily = SystemFonts.MessageFontFamily; // so it isn't a fixed-width font lol
             sp = p;
 
             //if (App.Settings.UpdateAutoCheck)
