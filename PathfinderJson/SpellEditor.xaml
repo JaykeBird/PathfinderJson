@@ -6,7 +6,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:PathfinderJson"
              mc:Ignorable="d" 
-             d:DesignHeight="200" d:DesignWidth="500">
+             d:DesignHeight="200" d:DesignWidth="400">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="72"/>
@@ -26,12 +26,12 @@
         <TextBlock Text="Notes" Margin="10,37,0,0" HorizontalAlignment="Left"  VerticalAlignment="Top" Grid.Row="1" />
         <TextBox x:Name="txtNotes" Margin="55,35,20,23" AcceptsReturn="True" AcceptsTab="True" TextWrapping="Wrap" Grid.ColumnSpan="2" MinHeight="45" Grid.Row="1" TextChanged="textbox_TextChanged" />
         <CheckBox x:Name="chkMarked" Content="Marked" Grid.Column="1" HorizontalAlignment="Right" Margin="0,12,119,0" VerticalAlignment="Top"/>
-        <uicore:IntegerSpinner x:Name="nudLevel" MinValue="0" MaxValue="10" Height="23" Margin="55,39,0,0" VerticalAlignment="Top" ValueChanged="nudLevel_ValueChanged" HorizontalAlignment="Left" Width="70" />
+        <uicore:IntegerSpinner x:Name="nudLevel" MinValue="0" MaxValue="9" Height="23" Margin="55,39,0,0" VerticalAlignment="Top" ValueChanged="nudLevel_ValueChanged" Loaded="nudLevel_Loaded"  HorizontalAlignment="Left" Width="70" />
         <TextBlock Text="Level" Margin="10,42,0,0" HorizontalAlignment="Left"  VerticalAlignment="Top" />
-        <uicore:IntegerSpinner x:Name="nudCast" MinValue="0" MaxValue="100" Height="23" Margin="5,39,0,0" VerticalAlignment="Top" ValueChanged="nudLevel_ValueChanged" Grid.Column="1" HorizontalAlignment="Left" Width="70" />
-        <TextBlock Text="# Cast/Prepared" Margin="155,42,0,0" HorizontalAlignment="Left"  VerticalAlignment="Top" />
-        <uicore:IntegerSpinner x:Name="nudPrepared" MinValue="0" MaxValue="100" Height="23" Margin="90,39,0,0" VerticalAlignment="Top" ValueChanged="nudLevel_ValueChanged" Grid.Column="1" HorizontalAlignment="Left" Width="70" />
-        <TextBlock Text="/" Margin="80,42,0,0" HorizontalAlignment="Left"  VerticalAlignment="Top" Grid.Column="1" />
+        <uicore:IntegerSpinner x:Name="nudCast" MinValue="0" MaxValue="100" Height="23" Margin="0,38,105,0" VerticalAlignment="Top" ValueChanged="nudLevel_ValueChanged" Loaded="nudLevel_Loaded" Grid.Column="1" HorizontalAlignment="Right" Width="70" />
+        <TextBlock Text="# Cast/Prepared" Margin="0,42,182,0" HorizontalAlignment="Right"  VerticalAlignment="Top" Grid.ColumnSpan="2" />
+        <uicore:IntegerSpinner x:Name="nudPrepared" MinValue="0" MaxValue="100" Height="23" Margin="0,38,20,0" VerticalAlignment="Top" ValueChanged="nudLevel_ValueChanged" Loaded="nudLevel_Loaded" Grid.Column="1" HorizontalAlignment="Right" Width="70" />
+        <TextBlock Text="/" Margin="0,42,95,0" HorizontalAlignment="Right"  VerticalAlignment="Top" Grid.Column="1" />
         <CheckBox x:Name="chkAtWill" Content="At Will" HorizontalAlignment="Left" Margin="10,0,0,3" VerticalAlignment="Bottom" Grid.Row="1"/>
         <uicore:LinkTextBlock x:Name="lblSearch" Text="Search this spell on d20PFSRD" Grid.Column="1" HorizontalAlignment="Right" Margin="0,0,20,2" Grid.Row="1" VerticalAlignment="Bottom" Click="lblSearch_Click"/>
     </Grid>

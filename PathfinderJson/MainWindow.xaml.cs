@@ -964,48 +964,7 @@ namespace PathfinderJson
 
         async Task LoadPathfinderSheetAsync(PathfinderSheet sheet)
         {
-            //lblNoSheet.Visibility = Visibility.Collapsed;
-            //selTabs.IsEnabled = true;
-            //txtEditRaw.IsEnabled = true;
-
-            //switch (App.Settings.StartView.ToLowerInvariant())
-            //{
-            //    case "tabs":
-            //        mnuTabs.IsChecked = true;
-            //        mnuScroll.IsChecked = false;
-            //        mnuRawJson.IsChecked = false;
-            //        _useTabs = true;
-
-            //        LoadGeneralTab();
-            //        break;
-            //    case "continuous":
-            //        mnuTabs.IsChecked = false;
-            //        mnuScroll.IsChecked = true;
-            //        mnuRawJson.IsChecked = false;
-            //        _useTabs = false;
-
-            //        SetAllTabsVisibility();
-            //        break;
-            //    case "rawjson":
-            //        mnuTabs.IsChecked = false;
-            //        mnuScroll.IsChecked = false;
-            //        mnuRawJson.IsChecked = true;
-            //        _useTabs = true;
-
-            //        txtEditRaw.Visibility = Visibility.Visible;
-            //        mnuEdit.Visibility = Visibility.Visible;
-            //        colTabs.Width = new GridLength(0);
-            //        break;
-            //    default:
-            //        mnuTabs.IsChecked = true;
-            //        mnuScroll.IsChecked = false;
-            //        mnuRawJson.IsChecked = false;
-            //        _useTabs = true;
-
-            //        LoadGeneralTab();
-            //        break;
-            //}
-
+            // set this flag so that the program doesn't try to set the sheet as dirty while loading in the file
             _isUpdating = true;
 
             // General tab
@@ -1160,6 +1119,16 @@ namespace PathfinderJson
                 selTraits.AddItem(ae);
             }
 
+            selSpellLikes.Clear();
+            foreach (Spell item in sheet.SpellLikeAbilities)
+            {
+                SpellEditor se = new SpellEditor();
+                se.ContentChanged += editor_ContentChanged;
+                se.ApplyColorScheme(App.ColorScheme);
+                se.LoadSpell(item);
+                selSpellLikes.AddItem(se);
+            }
+
             // Equipment tab
 
             Dictionary<string, string> money = sheet.Money;
@@ -1233,61 +1202,61 @@ namespace PathfinderJson
                 {
                     case 0:
                         txtSpellsBonus0.Text = item.BonusSpells;
-                        txtSpellsDC0.Text = item.DC;
+                        txtSpellsDC0.Text = item.SaveDC;
                         txtSpellsKnown0.Text = item.TotalKnown;
                         txtSpellsPerDay0.Text = item.TotalPerDay;
                         break;
                     case 1:
                         txtSpellsBonus1.Text = item.BonusSpells;
-                        txtSpellsDC1.Text = item.DC;
+                        txtSpellsDC1.Text = item.SaveDC;
                         txtSpellsKnown1.Text = item.TotalKnown;
                         txtSpellsPerDay1.Text = item.TotalPerDay;
                         break;
                     case 2:
                         txtSpellsBonus2.Text = item.BonusSpells;
-                        txtSpellsDC2.Text = item.DC;
+                        txtSpellsDC2.Text = item.SaveDC;
                         txtSpellsKnown2.Text = item.TotalKnown;
                         txtSpellsPerDay2.Text = item.TotalPerDay;
                         break;
                     case 3:
                         txtSpellsBonus3.Text = item.BonusSpells;
-                        txtSpellsDC3.Text = item.DC;
+                        txtSpellsDC3.Text = item.SaveDC;
                         txtSpellsKnown3.Text = item.TotalKnown;
                         txtSpellsPerDay3.Text = item.TotalPerDay;
                         break;
                     case 4:
                         txtSpellsBonus4.Text = item.BonusSpells;
-                        txtSpellsDC4.Text = item.DC;
+                        txtSpellsDC4.Text = item.SaveDC;
                         txtSpellsKnown4.Text = item.TotalKnown;
                         txtSpellsPerDay4.Text = item.TotalPerDay;
                         break;
                     case 5:
                         txtSpellsBonus5.Text = item.BonusSpells;
-                        txtSpellsDC5.Text = item.DC;
+                        txtSpellsDC5.Text = item.SaveDC;
                         txtSpellsKnown5.Text = item.TotalKnown;
                         txtSpellsPerDay5.Text = item.TotalPerDay;
                         break;
                     case 6:
                         txtSpellsBonus6.Text = item.BonusSpells;
-                        txtSpellsDC6.Text = item.DC;
+                        txtSpellsDC6.Text = item.SaveDC;
                         txtSpellsKnown6.Text = item.TotalKnown;
                         txtSpellsPerDay6.Text = item.TotalPerDay;
                         break;
                     case 7:
                         txtSpellsBonus7.Text = item.BonusSpells;
-                        txtSpellsDC7.Text = item.DC;
+                        txtSpellsDC7.Text = item.SaveDC;
                         txtSpellsKnown7.Text = item.TotalKnown;
                         txtSpellsPerDay7.Text = item.TotalPerDay;
                         break;
                     case 8:
                         txtSpellsBonus8.Text = item.BonusSpells;
-                        txtSpellsDC8.Text = item.DC;
+                        txtSpellsDC8.Text = item.SaveDC;
                         txtSpellsKnown8.Text = item.TotalKnown;
                         txtSpellsPerDay8.Text = item.TotalPerDay;
                         break;
                     case 9:
                         txtSpellsBonus9.Text = item.BonusSpells;
-                        txtSpellsDC9.Text = item.DC;
+                        txtSpellsDC9.Text = item.SaveDC;
                         txtSpellsKnown9.Text = item.TotalKnown;
                         txtSpellsPerDay9.Text = item.TotalPerDay;
                         break;
@@ -1302,6 +1271,9 @@ namespace PathfinderJson
 
                 currentLevel++;
             } // end foreach
+
+            txtSpellSpecialty.Text = sheet.SpellsSpeciality;
+            txtSpellConditionalModifiers.Text = sheet.SpellsConditionalModifiers;
 
             selSpells.Clear();
             foreach (Spell spell in allSpells)
@@ -1566,6 +1538,7 @@ namespace PathfinderJson
             totals.Weight = txtAcWeight.Text;
             sheet.AC.ItemTotals = totals;
 
+            // feats/abilites
             sheet.Feats = new List<Feat>();
             foreach (FeatEditor item in selFeats.GetItemsAsType<FeatEditor>())
             {
@@ -1584,6 +1557,13 @@ namespace PathfinderJson
                 sheet.Traits.Add(item.GetAbility());
             }
 
+            sheet.SpellLikeAbilities = new List<Spell>();
+            foreach (SpellEditor item in selSpellLikes.GetItemsAsType<SpellEditor>())
+            {
+                sheet.SpellLikeAbilities.Add(item.GetSpell());
+            }
+
+            // equipment
             sheet.Money = new Dictionary<string, string>();
             sheet.Money.Add("cp", txtMoneyCp.Text);
             sheet.Money.Add("sp", txtMoneySp.Text);
@@ -1598,6 +1578,7 @@ namespace PathfinderJson
                 sheet.Equipment.Add(item.GetEquipment());
             }
 
+            // skills
             Dictionary<string, Skill> skills = new Dictionary<string, Skill>();
             foreach (SkillEditor item in stkSkills.Children)
             {
@@ -1611,6 +1592,38 @@ namespace PathfinderJson
             }
 
             sheet.Skills = skills;
+
+            // spells
+
+            List<Spell> allspells = new List<Spell>();
+            foreach (SpellEditor item in selSpells.GetItemsAsType<SpellEditor>())
+            {
+                allspells.Add(item.GetSpell());
+            }
+
+            sheet.Spells = new List<SpellLevel>(10);
+            for (int i = 0; i < 10; i++)
+            {
+                SpellLevel sl = new SpellLevel();
+
+                sl.TotalKnown = ((TextBox)grdSpells.FindName("txtSpellsKnown" + i)).Text;
+                sl.SaveDC = ((TextBox)grdSpells.FindName("txtSpellsDC" + i)).Text;
+                sl.TotalPerDay = ((TextBox)grdSpells.FindName("txtSpellsPerDay" + i)).Text;
+                sl.BonusSpells = ((TextBox)grdSpells.FindName("txtSpellsBonus" + i)).Text;
+
+                sl.Spells = new List<Spell>();
+
+                foreach (Spell item in allspells)
+                {
+                    if (item.Level == i) sl.Spells.Add(item);
+                }
+
+                if (sl.Spells.Count == 0) sl.Spells = null;
+
+                sheet.Spells.Add(sl);
+            }
+            sheet.SpellsConditionalModifiers = txtSpellConditionalModifiers.Text;
+            sheet.SpellsSpeciality = txtSpellSpecialty.Text;
 
             return sheet;
             //});
@@ -1729,12 +1742,12 @@ namespace PathfinderJson
             selAbilities.DeselectAll();
         }
 
-        private void expabilities_Expanded(object sender, RoutedEventArgs e)
+        private void expAbilities_Expanded(object sender, RoutedEventArgs e)
         {
             if (selAbilities != null) selAbilities.Visibility = Visibility.Visible;
         }
 
-        private void expabilities_Collapsed(object sender, RoutedEventArgs e)
+        private void expAbilities_Collapsed(object sender, RoutedEventArgs e)
         {
             if (selAbilities != null) selAbilities.Visibility = Visibility.Collapsed;
         }
@@ -1772,6 +1785,41 @@ namespace PathfinderJson
         private void expTraits_Collapsed(object sender, RoutedEventArgs e)
         {
             if (selTraits != null) selTraits.Visibility = Visibility.Collapsed;
+        }
+
+        private void expSpellLikes_Expanded(object sender, RoutedEventArgs e)
+        {
+            if (selSpellLikes != null) selSpellLikes.Visibility = Visibility.Visible;
+        }
+
+        private void expSpellLikes_Collapsed(object sender, RoutedEventArgs e)
+        {
+            if (selSpellLikes != null) selSpellLikes.Visibility = Visibility.Collapsed;
+        }
+
+        private void btnAddSpellLike_Click(object sender, EventArgs e)
+        {
+            SpellEditor se = new SpellEditor();
+            se.ContentChanged += editor_ContentChanged;
+            se.ApplyColorScheme(App.ColorScheme);
+            selSpellLikes.AddItem(se);
+
+            expSpellLikes.IsExpanded = true;
+            se.BringIntoView();
+            se.IsSelected = true;
+
+            SetIsDirty();
+        }
+
+        private void btnDeleteSpellLike_Click(object sender, EventArgs e)
+        {
+            selSpellLikes.RemoveSelectedItems();
+            SetIsDirty();
+        }
+
+        private void btnDeselectSpellLike_Click(object sender, EventArgs e)
+        {
+            selSpellLikes.DeselectAll();
         }
 
         #endregion
@@ -1984,6 +2032,5 @@ namespace PathfinderJson
             }
         }
         #endregion
-
     }
 }

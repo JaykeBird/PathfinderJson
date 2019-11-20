@@ -18,10 +18,6 @@ namespace PathfinderJson
     {
         public static PathfinderSheet LoadJsonFile(string filename)
         {
-            void Handler(object sender, Newtonsoft.Json.Serialization.ErrorEventArgs e)
-            {
-                throw new FileFormatException(new Uri(filename), "This file does not match the format for JSON. Check if it isn't corrupted by opening it in Notepad or another text editor.", e.ErrorContext.Error);
-            }
 
             string csc = "";
 
@@ -44,13 +40,18 @@ namespace PathfinderJson
                 file.BaseStream.Position = 0;
 
                 JsonSerializer serializer = new JsonSerializer();
-                serializer.ContractResolver = new CamelCasePropertyNamesContractResolver(); // apparently this isn't enough to actually make it write the property names in camelCase style
-                serializer.Error += Handler;
+                serializer.ContractResolver = new CamelCasePropertyNamesContractResolver();
+                serializer.Error += (object sender, Newtonsoft.Json.Serialization.ErrorEventArgs e) => ErrorHandler(sender, e, filename);
                 PathfinderSheet ps = (PathfinderSheet)serializer.Deserialize(file, typeof(PathfinderSheet));
                 ps.SetupSheet();
                 if (!string.IsNullOrEmpty(csc)) ps.SkillConditionalModifiers = csc;
                 return ps;
             }
+        }
+
+        private static void ErrorHandler(object sender, Newtonsoft.Json.Serialization.ErrorEventArgs e, string filename)
+        {
+            throw new FileFormatException(new Uri(filename), "This file does not match the format for JSON. Check if it isn't corrupted by opening it in Notepad or another text editor.", e.ErrorContext.Error);
         }
 
         public static PathfinderSheet LoadJsonText(string text)
@@ -60,20 +61,26 @@ namespace PathfinderJson
             return ps;
         }
 
-        public string SaveJsonText(bool indented = false)
+        public string SaveJsonText(bool indented = false, string file = "StoredText")
         {
-            return JsonConvert.SerializeObject(this, indented ? Formatting.Indented : Formatting.None);
+            JsonSerializerSettings jss = new JsonSerializerSettings();
+            jss.ContractResolver = new CamelCasePropertyNamesContractResolver();
+            jss.Error += (object sender, Newtonsoft.Json.Serialization.ErrorEventArgs e) => ErrorHandler(sender, e, file);
+            return JsonConvert.SerializeObject(this, indented ? Formatting.Indented : Formatting.None, jss);
         }
 
         public void SaveJsonFile(string file, bool indented = false)
         {
-            File.WriteAllText(file, SaveJsonText(indented));
+            File.WriteAllText(file, SaveJsonText(indented, file));
         }
 
-        [JsonProperty("_id")]
+        [JsonProperty("_id", Order = -6)]
         public string Id { get; set; }
+        [JsonProperty(Order = -2, DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore)]
+        public string Modified { get; set; } // ISO 8601 datetime (with UTC mark), future version of program will set this date
 
         // roleplaying characteristics
+        [JsonProperty(Order = -3)]
         public string Name { get; set; }
         public string Alignment { get; set; }
         public string Level { get; set; }
@@ -81,9 +88,10 @@ namespace PathfinderJson
         public string Deity { get; set; }
         public string Languages { get; set; }
 
-        [JsonProperty("user")]
+        [JsonProperty("user", Order = -5)]
         public UserData Player { get; set; }
 
+        [JsonProperty(Order = 27, NullValueHandling = NullValueHandling.Ignore, DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
         public string Notes { get; set; }
 
         // physical characteristics
@@ -125,7 +133,9 @@ namespace PathfinderJson
         public string Resistances { get; set; } = "";
 
         public List<Feat> Feats { get; set; } = new List<Feat>();
+        [JsonProperty(Order = 22)]
         public List<SpecialAbility> SpecialAbilities { get; set; } = new List<SpecialAbility>();
+        [JsonProperty(Order = 26)]
         public List<SpecialAbility> Traits { get; set; } = new List<SpecialAbility>();
 
         [JsonProperty("gear")]
@@ -139,8 +149,8 @@ namespace PathfinderJson
         // used to interface with JSON file
         [JsonProperty("abilities")]
         public Dictionary<string, string> RawAbilities { get; set; }
-        [JsonProperty(ItemConverterType = typeof(SkillConverter))]
-        public Dictionary<string, Skill> Skills { get; set; }
+        [JsonProperty(ItemConverterType = typeof(SkillConverter), Order = 21)]
+        public Dictionary<string, Skill> Skills { get; set; } = new Dictionary<string, Skill>();
         [JsonIgnore]
         public string SkillConditionalModifiers { get; set; }
         public Dictionary<string, CompoundModifier> Saves { get; set; } = new Dictionary<string, CompoundModifier>();
@@ -148,10 +158,13 @@ namespace PathfinderJson
 
         public HP HP { get; set; } = new HP();
 
-        public List<SpellLevel> Spells { get; set; } = new List<SpellLevel>();
+        [JsonProperty(Order = -4)]
+        public List<SpellLevel> Spells { get; set; } = new List<SpellLevel>(10);
+        [JsonProperty(Order = 23)]
         public string SpellsConditionalModifiers { get; set; } = "";
+        [JsonProperty(Order = 24)]
         public string SpellsSpeciality { get; set; } = "";
-        [JsonProperty("spellLikes")]
+        [JsonProperty("spellLikes", Order = 25)]
         public List<Spell> SpellLikeAbilities { get; set; } = new List<Spell>();
 
         private void SetupSheet()
@@ -394,7 +407,8 @@ namespace PathfinderJson
     public class SpellLevel
     {
         public string TotalPerDay { get; set; } = "";
-        public string DC { get; set; } = "";
+        [JsonProperty("dc")]
+        public string SaveDC { get; set; } = "";
         public string TotalKnown { get; set; } = "0";
         public string BonusSpells { get; set; } = "";
 

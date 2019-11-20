@@ -100,14 +100,19 @@ namespace PathfinderJson
             ContentChanged?.Invoke(this, e);
         }
 
-        private void nudLevel_ValueChanged(object sender, EventArgs e)
+        private void nudLevel_ValueChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            ContentChanged?.Invoke(this, e);
+            ContentChanged?.Invoke(this, EventArgs.Empty);
         }
 
         private void lblSearch_Click(object sender, EventArgs e)
         {
             About.OpenBrowser("https://cse.google.com/cse?cx=006680642033474972217%3A6zo0hx_wle8&q=" + txtName.Text);
+        }
+
+        private void nudLevel_Loaded(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
