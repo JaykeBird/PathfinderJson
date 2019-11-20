@@ -11,7 +11,7 @@
         <flat:FlatButton x:Name="btnClose" Content="OK" HorizontalAlignment="Center" Margin="0,0,0,10" VerticalAlignment="Bottom" Width="80" Click="btnClose_Click"/>
         <TextBlock HorizontalAlignment="Left" Margin="10,20,0,0" Text="Third Party Software Credits/Acknowledgements" VerticalAlignment="Top"/>
         <TextBlock HorizontalAlignment="Left" Margin="10,60,0,0" Text="Application UI built using UiCore library" VerticalAlignment="Top"/>
-        <TextBlock HorizontalAlignment="Left" Margin="30,80,0,0" Text="Developed by Jayke R. Huempfner" VerticalAlignment="Top"/>
+        <TextBlock HorizontalAlignment="Left" Margin="30,80,0,0" Text="Developed/compiled by Jayke R. Huempfner" VerticalAlignment="Top"/>
         <TextBlock HorizontalAlignment="Left" Margin="30,97,0,0" Text="https://dev.shinecalendar.com/uicore" VerticalAlignment="Top"/>
         <TextBlock Margin="30,121,15,0" VerticalAlignment="Top" Height="50" TextWrapping="Wrap"
                    Text="Contributing work by Manuel Schweigert, Pete Laker, Richard Moss (Cyotek Ltd.), Warren Galyen (Mechanika Design), Oleg V. Polikarpotchkin, Yassine (Stopbyte), Hector Pulido, Sebastien Lambla, and Nimgoble" />
