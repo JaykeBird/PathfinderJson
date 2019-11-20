@@ -450,7 +450,65 @@ namespace PathfinderJson
 
         private async void miRecentFile_Click(object sender, RoutedEventArgs e)
         {
-            await LoadFile((sender as MenuItem).Tag as string, false);
+            string file = (sender as MenuItem).Tag as string;
+
+            if (File.Exists(file))
+            {
+                await LoadFile((sender as MenuItem).Tag as string, false);
+            }
+            else
+            {
+                MessageDialog md = new MessageDialog(App.ColorScheme);
+                md.Owner = this;
+                md.OkButtonText = "Cancel";
+                md.ShowDialog("This file does not exist any more. Do you want to remove this file from the list or attempt to open anyway?", "File Not Found", false, UiCore.MessageBoxImage.Error, UiCore.MessageBoxResult.Cancel,
+                    "Remove file from list", "Attempt to open anyway");
+                switch (md.DialogResult)
+                {
+                    case UiCore.MessageBoxResult.OK:
+                        // do nothing
+                        break;
+                    case UiCore.MessageBoxResult.Cancel:
+                        // not reached?
+                        break;
+                    case UiCore.MessageBoxResult.Extra1:
+                        // remove file from list
+
+                        List<FrameworkElement> itemsToRemove = new List<FrameworkElement>();
+
+                        foreach (FrameworkElement item in mnuRecent.Items)
+                        {
+                            if (item == (sender as MenuItem))
+                            {
+                                itemsToRemove.Add(item);
+                            }
+                        }
+
+                        foreach (var item in itemsToRemove)
+                        {
+                            mnuRecent.Items.Remove(item);
+                        }
+
+                        App.Settings.RecentFiles.Remove(file);
+                        SaveSettings();
+
+                        if (App.Settings.RecentFiles.Count == 0)
+                        {
+                            mnuRecentEmpty.Visibility = Visibility.Visible;
+                        }
+
+                        break;
+                    case UiCore.MessageBoxResult.Extra2:
+                        // attempt to open anyway
+                        await LoadFile((sender as MenuItem).Tag as string, false);
+                        break;
+                    case UiCore.MessageBoxResult.Extra3:
+                        // not reached
+                        break;
+                    default:
+                        break;
+                }
+            }
         }
 
         private void mnuRecentClear_Click(object sender, RoutedEventArgs e)
