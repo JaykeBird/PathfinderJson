@@ -8,6 +8,7 @@
     <Keywords color="Digits" >
       <Word>true</Word>
       <Word>false</Word>
+      <Word>null</Word>
     </Keywords>
     <Span color="ParamName">
       <Begin>"</Begin>
