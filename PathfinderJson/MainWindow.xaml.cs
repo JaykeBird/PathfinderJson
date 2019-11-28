@@ -230,6 +230,7 @@ namespace PathfinderJson
         }
 
         #endregion
+
         #endregion
 
         #region File / Help menus
@@ -378,14 +379,14 @@ namespace PathfinderJson
                 {
                     MessageDialog md = new MessageDialog(App.ColorScheme);
                     md.Owner = this;
-                    md.ShowDialog("There are no updates available. You're on the latest release!", "Check for Updates", false, UiCore.MessageBoxImage.None);
+                    md.ShowDialog("There are no updates available. You're on the latest release!", App.ColorScheme, this, "Check for Updates", false, MessageDialogImage.Hand);
                 }
             }
             catch (System.Net.WebException)
             {
                 MessageDialog md = new MessageDialog(App.ColorScheme);
                 md.Owner = this;
-                md.ShowDialog("Could not check for updates. Make sure you're connected to the Internet.", "Check for Updates", false, UiCore.MessageBoxImage.None);
+                md.ShowDialog("Could not check for updates. Make sure you're connected to the Internet.", App.ColorScheme, this, "Check for Updates", false, MessageDialogImage.Error);
             }
         }
 
@@ -435,19 +436,18 @@ namespace PathfinderJson
             else
             {
                 MessageDialog md = new MessageDialog(App.ColorScheme);
-                md.Owner = this;
                 md.OkButtonText = "Cancel";
-                md.ShowDialog("This file does not exist any more. Do you want to remove this file from the list or attempt to open anyway?", "File Not Found", false, UiCore.MessageBoxImage.Error, UiCore.MessageBoxResult.Cancel,
-                    "Remove file from list", "Attempt to open anyway");
+                md.ShowDialog("This file does not exist any more. Do you want to remove this file from the list or attempt to open anyway?", App.ColorScheme, this,
+                    "File Not Found", false, MessageDialogImage.Error, MessageDialogResult.Cancel, "Remove file from list", "Attempt to open anyway");
                 switch (md.DialogResult)
                 {
-                    case UiCore.MessageBoxResult.OK:
+                    case MessageDialogResult.OK:
                         // do nothing
                         break;
-                    case UiCore.MessageBoxResult.Cancel:
+                    case MessageDialogResult.Cancel:
                         // not reached?
                         break;
-                    case UiCore.MessageBoxResult.Extra1:
+                    case MessageDialogResult.Extra1:
                         // remove file from list
 
                         List<FrameworkElement> itemsToRemove = new List<FrameworkElement>();
@@ -474,11 +474,11 @@ namespace PathfinderJson
                         }
 
                         break;
-                    case UiCore.MessageBoxResult.Extra2:
+                    case MessageDialogResult.Extra2:
                         // attempt to open anyway
                         await LoadFile((sender as MenuItem).Tag as string, false);
                         break;
-                    case UiCore.MessageBoxResult.Extra3:
+                    case MessageDialogResult.Extra3:
                         // not reached
                         break;
                     default:
@@ -974,23 +974,26 @@ namespace PathfinderJson
             catch (FileFormatException)
             {
                 MessageBox.Show(this, "The file \"" + filename + "\" does not appear to be a JSON file. Check the file in Notepad or another text editor to make sure it's not corrupted.",
-                    "File Format Error", MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
+                    "File Format Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
             catch (InvalidOperationException e)
             {
-                if (!e.Message.Contains("error context error is different to requested error"))
+                if (e.Message.Contains("error context error is different to requested error"))
                 {
-                    MessageBox.Show(this, "The file \"" + filename + "\" does not appear to be a JSON file. Check the file in Notepad or another text editor to make sure it's not corrupted.",
-                        "File Format Error", MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
+                    MessageBox.Show(this, "The file \"" + filename + "\" does not match the JSON format this program is looking for. Check the file in Notepad or another text editor to make sure it's not corrupted.",
+                        "File Format Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
                 }
-                else { throw; }
+                else {
+                    MessageBox.Show(this, "The file \"" + filename + "\" cannot be opened due to this error: \n\n" + e.Message + "\n\n" + 
+                        "Check the file in Notepad or another text editor, or report this issue via the \"Send Feedback\" option in the Help menu.");
+                }
             }
             catch (FileNotFoundException)
             {
                 MessageBox.Show(this, "The file \"" + filename + "\" cannot be found. Make sure the file exists and then try again.",
-                    "File Not Found", MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
+                    "File Not Found", MessageBoxButton.OK, MessageBoxImage.Error);
             }
 
             if (addToRecent) AddRecentFile(filename);
@@ -1355,8 +1358,7 @@ namespace PathfinderJson
             if (!_sheetLoaded)
             {
                 MessageDialog md = new MessageDialog(App.ColorScheme);
-                md.Owner = this;
-                md.ShowDialog("Cannot run calculations when no sheet is opened.", "Update Calculations", false, UiCore.MessageBoxImage.Error);
+                md.ShowDialog("Cannot run calculations when no sheet is opened.", App.ColorScheme, this, "Update Calculations", false, MessageDialogImage.Error);
                 return;
             }
 
@@ -1521,19 +1523,23 @@ namespace PathfinderJson
             sheet.Hair = txtPhyHair.Text;
             sheet.Eyes = txtPhyEyes.Text;
 
-            Dictionary<string, string> abilities = new Dictionary<string, string>();
-            abilities.Add("str", txtStr.Text);
-            abilities.Add("dex", txtDex.Text);
-            abilities.Add("cha", txtCha.Text);
-            abilities.Add("con", txtCon.Text);
-            abilities.Add("int", txtInt.Text);
-            abilities.Add("wis", txtWis.Text);
+            Dictionary<string, string> abilities = new Dictionary<string, string>
+            {
+                { "str", txtStr.Text },
+                { "dex", txtDex.Text },
+                { "cha", txtCha.Text },
+                { "con", txtCon.Text },
+                { "int", txtInt.Text },
+                { "wis", txtWis.Text }
+            };
             sheet.RawAbilities = abilities;
 
-            Dictionary<string, CompoundModifier> saves = new Dictionary<string, CompoundModifier>();
-            saves.Add("fort", edtFort.GetModifier());
-            saves.Add("reflex", edtReflex.GetModifier());
-            saves.Add("will", edtWill.GetModifier());
+            Dictionary<string, CompoundModifier> saves = new Dictionary<string, CompoundModifier>
+            {
+                { "fort", edtFort.GetModifier() },
+                { "reflex", edtReflex.GetModifier() },
+                { "will", edtWill.GetModifier() }
+            };
             sheet.Saves = saves;
 
             sheet.HP = new HP();
@@ -1602,13 +1608,15 @@ namespace PathfinderJson
             }
 
             // equipment
-            sheet.Money = new Dictionary<string, string>();
-            sheet.Money.Add("cp", txtMoneyCp.Text);
-            sheet.Money.Add("sp", txtMoneySp.Text);
-            sheet.Money.Add("gp", txtMoneyGp.Text);
-            sheet.Money.Add("pp", txtMoneyPp.Text);
-            sheet.Money.Add("gems", txtGemsArt.Text);
-            sheet.Money.Add("other", txtOtherTreasure.Text);
+            sheet.Money = new Dictionary<string, string>
+            {
+                { "cp", txtMoneyCp.Text },
+                { "sp", txtMoneySp.Text },
+                { "gp", txtMoneyGp.Text },
+                { "pp", txtMoneyPp.Text },
+                { "gems", txtGemsArt.Text },
+                { "other", txtOtherTreasure.Text }
+            };
 
             sheet.Equipment = new List<Equipment>();
             foreach (ItemEditor item in selEquipment.GetItemsAsType<ItemEditor>())

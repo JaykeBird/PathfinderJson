@@ -169,31 +169,45 @@ namespace PathfinderJson
 
         private void SetupSheet()
         {
-            foreach (KeyValuePair<string, string> item in RawAbilities)
+            if (RawAbilities != null)
             {
-                switch (item.Key)
+                foreach (KeyValuePair<string, string> item in RawAbilities)
                 {
-                    case "wis":
-                        try { Wisdom = int.Parse(item.Value); } catch (FormatException) { Wisdom = 0; }
-                        break;
-                    case "int":
-                        try { Intelligence = int.Parse(item.Value); } catch (FormatException) { Intelligence = 0; }
-                        break;
-                    case "cha":
-                        try { Charisma = int.Parse(item.Value); } catch (FormatException) { Charisma = 0; }
-                        break;
-                    case "str":
-                        try { Strength = int.Parse(item.Value); } catch (FormatException) { Strength = 0; }
-                        break;
-                    case "dex":
-                        try { Dexterity = int.Parse(item.Value); } catch (FormatException) { Dexterity = 0; }
-                        break;
-                    case "con":
-                        try { Constitution = int.Parse(item.Value); } catch (FormatException) { Constitution = 0; }
-                        break;
-                    default:
-                        break;
+                    switch (item.Key)
+                    {
+                        case "wis":
+                            try { Wisdom = int.Parse(item.Value); } catch (FormatException) { Wisdom = 0; }
+                            break;
+                        case "int":
+                            try { Intelligence = int.Parse(item.Value); } catch (FormatException) { Intelligence = 0; }
+                            break;
+                        case "cha":
+                            try { Charisma = int.Parse(item.Value); } catch (FormatException) { Charisma = 0; }
+                            break;
+                        case "str":
+                            try { Strength = int.Parse(item.Value); } catch (FormatException) { Strength = 0; }
+                            break;
+                        case "dex":
+                            try { Dexterity = int.Parse(item.Value); } catch (FormatException) { Dexterity = 0; }
+                            break;
+                        case "con":
+                            try { Constitution = int.Parse(item.Value); } catch (FormatException) { Constitution = 0; }
+                            break;
+                        default:
+                            break;
+                    }
                 }
+            }
+            else
+            {
+                // the user didn't fill in the base ability scores for the character at all
+                // so just set everything to 0
+                Wisdom = 0;
+                Intelligence = 0;
+                Charisma = 0;
+                Strength = 0;
+                Dexterity = 0;
+                Constitution = 0;
             }
 
             foreach (KeyValuePair<string, Skill> item in Skills)
@@ -215,10 +229,10 @@ namespace PathfinderJson
         public string DisplayName { get; set; }
         public string Gender { get; set; }
         public List<Email> Emails { get; set; }
-        public Name UserName { get; set; }
+        //public Name UserName { get; set; }
         public List<Photo> Photos { get; set; }
 
-        public class Name { public string FamilyName { get; set; } public string GivenName { get; set; } }
+        //public class Name { public string FamilyName { get; set; } public string GivenName { get; set; } }
         public class Email { public string Value { get; set; } public string Type { get; set; } }
         public class Photo { public string Value { get; set; } }
     }
