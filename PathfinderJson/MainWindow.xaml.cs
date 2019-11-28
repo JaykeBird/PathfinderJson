@@ -327,7 +327,7 @@ namespace PathfinderJson
             filePath = "";
             fileTitle = "";
             _sheetLoaded = false;
-            UpdateTitlebar();
+            SetIsDirty(false);
 
             await ChangeView(App.Settings.StartView, false, true, false);
         }
@@ -1161,6 +1161,10 @@ namespace PathfinderJson
             // Equipment tab
 
             Dictionary<string, string> money = sheet.Money;
+            if (sheet.Money == null) // in sheets where the player hasn't given their character money, Mottokrosh's site doesn't add a "money" object to the JSON output
+            {
+                money = new Dictionary<string, string>();
+            }
             txtMoneyCp.Text = money.ContainsKey("cp") ? money["cp"] : "0";
             txtMoneySp.Text = money.ContainsKey("sp") ? money["sp"] : "0";
             txtMoneyGp.Text = money.ContainsKey("gp") ? money["gp"] : "0";

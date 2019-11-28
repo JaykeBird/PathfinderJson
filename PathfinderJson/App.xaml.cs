@@ -39,5 +39,7 @@ namespace PathfinderJson
         public static ColorScheme ColorScheme { get; set; } = new ColorScheme(Colors.Peru);
 
         public static Settings Settings { get; set; } = new Settings();
+
+        public static Version AppVersion = new Version("0.9.2.1");
     }
 }

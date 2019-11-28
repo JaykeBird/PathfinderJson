@@ -26,6 +26,8 @@ namespace PathfinderJson
 
             ApplyColorScheme(App.ColorScheme);
             brdrDivider.BorderBrush = new SolidColorBrush(App.ColorScheme.BorderColor);
+
+            lblVersion.Text = "Version " + App.AppVersion.ToString();
             //btnClose.ApplyColorScheme(App.ColorScheme);
             //btnThirdParty.ApplyColorScheme(App.ColorScheme);
         }
