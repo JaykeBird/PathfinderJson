@@ -342,6 +342,11 @@ namespace PathfinderJson
             About.OpenBrowser("https://github.com/JaykeBird/PathfinderJson/");
         }
 
+        private void mnuFeedback_Click(object sender, RoutedEventArgs e)
+        {
+            About.OpenBrowser("https://github.com/JaykeBird/PathfinderJson/issues/new/choose");
+        }
+
         private void mnuAutoCheck_Click(object sender, RoutedEventArgs e)
         {
             if (mnuAutoCheck.IsChecked)
@@ -2065,5 +2070,6 @@ namespace PathfinderJson
             }
         }
         #endregion
+
     }
 }

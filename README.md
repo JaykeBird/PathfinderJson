@@ -13,7 +13,7 @@ For **64-bit** computers, use the x64 download. For **32-bit** computers, use th
 
 If it does not open or an error occurs (may take a few moments), you may need to install the Visual Studio C++ Redistributable package. I've included this for your convenience in the MSVC folder here, and in version 0.9.1 downloads and later. See [Microsoft's website](https://www.microsoft.com/en-us/download/details.aspx?id=52685) for more details. If there's still problems, make sure you have all updates installed; see the purple Note box on [this Microsoft webpage](https://docs.microsoft.com/en-us/dotnet/core/windows-prerequisites?tabs=netcore2x#net-core-dependencies) for more details.
 
-You can reach out to me if you have any questions by [finding me on Twitter](https://twitter.com/JaykeBird) or [opening an Issue report](https://github.com/JaykeBird/PathfinderJson/issues/new) here on GitHub.
+You can reach out to me if you have any questions by [finding me on Twitter](https://twitter.com/JaykeBird) or [opening an issue report](https://github.com/JaykeBird/PathfinderJson/issues/new/choose) here on GitHub.
 
 ## How to use
 This program is just a single EXE file which contains everything. No prerequisites to install, no installer process. Just click on the EXE file and that's it! Do note that it may take a few seconds to open.
@@ -23,11 +23,13 @@ Once you have an account on [Mottokrosh's Pathfinder sheet website](charactershe
 This program supports all the features currently in Mottokrosh's website, and can display them all (and edit most of them) in a sheet editor view. There is also a JSON text editor view for basic raw text editing. (Note that if you want a more full text-editing experience, you may want to open the JSON file in your text editor of choice.)
 
 ## To-do List
-- Implement Spells tab
-- Add "Find" dialog to text editor
-- Export functionality (HTML?)
+- Export/printing functionality (HTML?)
 - More options for text editor (font size, no syntax highlighting)
+- Auto-complete spell list
+- More connections to [D20PFSRD](https://d20pfsrd.com)
 - Central Options dialog
+- Dice roller tool
+- Import from other tools? (AwesomeSheet, Hero Lab)
 
 ## IntelliCode
 If you're using IntelliCode in Visual Studio 2019 (or Visual Studio 2017 15.8 or later), I have an IntelliCode model that I have been using. If you're looking to fork this project and want to utilize my IntelliCode model, I'll provide you the link to it below:
