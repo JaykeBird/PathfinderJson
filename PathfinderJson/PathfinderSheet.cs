@@ -61,6 +61,19 @@ namespace PathfinderJson
             return ps;
         }
 
+        public static PathfinderSheet CreateNewSheet(string name, string level, UserData userdata = null)
+        {
+            string newjson = "{\"_id\":\" - 1\"," +
+                "\"user\":{\"provider\":\"local\",\"id\":\"null\",\"displayName\":\"Not Defined\"," +
+                "\"username\":\"Local Account\",\"profileUrl\":\"https://127.0.0.1/\",\"emails\":[]},\"spells\":[{},{},{},{},{},{},{},{},{},{}]," +
+                "\"name\":\"" + name + "\",\"modified\":\"" + string.Concat(DateTime.UtcNow.ToString("s"), ".000Z") + "\",\"level\":\"" + level + "\"}";
+
+            PathfinderSheet ps = LoadJsonText(newjson);
+            if (userdata != null) ps.Player = userdata;
+
+            return ps;
+        }
+
         public string SaveJsonText(bool indented = false, string file = "StoredText")
         {
             JsonSerializerSettings jss = new JsonSerializerSettings();
@@ -71,19 +84,21 @@ namespace PathfinderJson
 
         public void SaveJsonFile(string file, bool indented = false)
         {
+            Modified = string.Concat(DateTime.UtcNow.ToString("s"), ".000Z");
+
             File.WriteAllText(file, SaveJsonText(indented, file));
         }
 
         [JsonProperty("_id", Order = -6)]
         public string Id { get; set; }
         [JsonProperty(Order = -2, DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore)]
-        public string Modified { get; set; } // ISO 8601 datetime (with UTC mark), future version of program will set this date
+        public string Modified { get; set; } // ISO 8601 datetime (with UTC mark)
 
         // roleplaying characteristics
         [JsonProperty(Order = -3)]
-        public string Name { get; set; }
+        public string Name { get; set; } = "";
         public string Alignment { get; set; }
-        public string Level { get; set; }
+        public string Level { get; set; } = "";
         public string Homeland { get; set; }
         public string Deity { get; set; }
         public string Languages { get; set; }
