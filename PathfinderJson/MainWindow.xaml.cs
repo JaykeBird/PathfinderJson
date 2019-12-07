@@ -60,7 +60,7 @@ namespace PathfinderJson
         DispatcherTimer undoSetTimer = new DispatcherTimer();
 
         // these are stored here as the program doesn't display these values to the user
-        UserData ui;
+        UserData ud;
         ArmorClass ac;
         string sheetid;
 
@@ -1038,7 +1038,7 @@ namespace PathfinderJson
             catch (NullReferenceException) { }
             catch (System.Net.WebException) { }
 
-            ui = sheet.Player;
+            ud = sheet.Player;
             ac = sheet.AC;
             sheetid = sheet.Id;
 
@@ -1503,7 +1503,7 @@ namespace PathfinderJson
             //return await Task.Run(() => {
             PathfinderSheet sheet = new PathfinderSheet();
 
-            sheet.Player = ui;
+            sheet.Player = ud;
             sheet.Id = sheetid;
 
             sheet.Notes = txtNotes.Text;
@@ -1722,6 +1722,19 @@ namespace PathfinderJson
                 }
 
                 SetIsDirty(); // <-- this includes updating the title bar
+            }
+        }
+
+        private void btnEditPlayerData_Click(object sender, EventArgs e)
+        {
+            UserdataEditor ude = new UserdataEditor();
+            ude.LoadUserData(ud);
+            ude.Owner = this;
+
+            ude.ShowDialog();
+            if (ude.DialogResult)
+            {
+                // update userdata
             }
         }
 
@@ -2078,6 +2091,5 @@ namespace PathfinderJson
             }
         }
         #endregion
-
     }
 }

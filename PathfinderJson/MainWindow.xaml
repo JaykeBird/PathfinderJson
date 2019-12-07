@@ -149,7 +149,7 @@
         <flat:SelectPanel Grid.Column="0" Grid.Row="2" x:Name="selTabs" MultiSelect="False" PanelBorderThickness="0,0,1,0" />
         <ScrollViewer Grid.Column="1" Grid.Row="2" x:Name="scrSheet" >
             <StackPanel x:Name="stkSheet" >
-                <Grid Margin="5,5,5,0" x:Name="grdGeneral" Visibility="Collapsed" >
+                <Grid Margin="5,5,5,0" x:Name="grdGeneral" >
                     <Grid.RowDefinitions>
                         <RowDefinition Height="25"/>
                         <RowDefinition Height="Auto"/>
@@ -164,13 +164,15 @@
                     <Grid Margin="10,0,0,0">
                         <TextBlock x:Name="titGeneral" Text="General" FontSize="16" />
                     </Grid>
-                    <Expander VerticalAlignment="Center" Margin="10,0,10,0" Grid.Row="1" x:Name="expUser" Header="Player Data (read only)" >
-                        <Grid Height="100" >
+                    <Expander VerticalAlignment="Center" Margin="10,0,10,0" Grid.Row="1" x:Name="expUser" Header="Player Data" >
+                        <Grid Height="140" >
                             <TextBox x:Name="txtPlayerName" HorizontalAlignment="Left" Height="23" Margin="70,24,0,0" VerticalAlignment="Top" Width="285" IsReadOnly="True" IsReadOnlyCaretVisible="True" />
                             <TextBlock x:Name="lblPlayerName" HorizontalAlignment="Left" Margin="70,8,0,0" Text="Player Name" VerticalAlignment="Top"/>
                             <TextBox x:Name="txtPlayerEmail" HorizontalAlignment="Left" Height="23" Margin="70,68,0,0" VerticalAlignment="Top" Width="285" IsReadOnly="True" IsReadOnlyCaretVisible="True" />
                             <TextBlock x:Name="lblPlayerEmail" HorizontalAlignment="Left" Margin="70,52,0,0" Text="Player Email" VerticalAlignment="Top"/>
                             <Image x:Name="imgPlayer" HorizontalAlignment="Left" Height="48" Margin="10,20,0,0" VerticalAlignment="Top" Width="48" Stretch="UniformToFill"/>
+
+                            <flat:FlatButton x:Name="btnEditPlayerData" ColorScheme="{Binding ColorScheme, ElementName=window}" Content="Edit Data..." HorizontalAlignment="Left" Margin="70,0,0,10" VerticalAlignment="Bottom" Width="100" Click="btnEditPlayerData_Click" />
                         </Grid>
                     </Expander>
 

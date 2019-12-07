@@ -14,6 +14,7 @@ namespace PathfinderJson
         public UserdataEditor()
         {
             InitializeComponent();
+            ApplyColorScheme(App.ColorScheme);
         }
 
         public new bool DialogResult { get; set; } = false;
@@ -44,6 +45,21 @@ namespace PathfinderJson
         private void btnClose_Click(object sender, EventArgs e)
         {
             Close();
+        }
+
+        private void btnImport_Click(object sender, EventArgs e)
+        {
+            Microsoft.Win32.OpenFileDialog ofd = new Microsoft.Win32.OpenFileDialog();
+            ofd.Title = "Import Data from File";
+            ofd.Filter = "Pathfinder Character Sheet|*.json|All Files|*.*";
+            
+            if (ofd.ShowDialog() ?? false == true)
+            {
+                string filename = ofd.FileName;
+                PathfinderSheet ps = PathfinderSheet.LoadJsonFile(filename);
+                LoadUserData(ps.Player);
+            }
+
         }
     }
 }
