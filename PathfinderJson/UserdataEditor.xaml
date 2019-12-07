@@ -10,30 +10,24 @@
         mc:Ignorable="d"
         Title="Player Data Editor" Height="480" Width="400">
     <Grid>
-
-
-        <flat:FlatButton x:Name="btnSave" ColorScheme="{Binding ColorScheme, ElementName=window}" Content="Save" Margin="0,0,105,14" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="80" Click="btnViewWebsite_Click" />
-        <flat:FlatButton x:Name="btnImport" Content="Import From File..." ColorScheme="{Binding ColorScheme, ElementName=window}" HorizontalAlignment="Left" Margin="20,0,0,14" VerticalAlignment="Bottom" Width="120" />
-        <flat:FlatButton x:Name="btnClose" Content="Cancel" ColorScheme="{Binding ColorScheme, ElementName=window}" HorizontalAlignment="Right" Margin="0,0,20,14" VerticalAlignment="Bottom" Width="80" Click="btnClose_Click" />
-
-
-        <TextBlock x:Name="lblTitle" HorizontalAlignment="Left" Margin="24,20,0,0" Text="Edit the player data below, or import from a different character sheet file." TextWrapping="Wrap" VerticalAlignment="Top"/>
+        <TextBlock x:Name="lblTitle" HorizontalAlignment="Left" Margin="24,20,0,0" Text="Edit the player data below, or import data from another file." TextWrapping="Wrap" VerticalAlignment="Top"/>
 
         <TextBlock x:Name="lblProvider" HorizontalAlignment="Left" Margin="24,58,0,0" Text="Provider:" TextWrapping="Wrap" VerticalAlignment="Top"/>
         <ComboBox x:Name="cbbProvider" HorizontalAlignment="Left" Margin="110,55,0,0" VerticalAlignment="Top" Width="120" SelectedIndex="0" >
-            <system:String>google</system:String>
-            <system:String>github</system:String>
-            <system:String>local</system:String>
+            <system:String>Google</system:String>
+            <system:String>Github</system:String>
+            <system:String>Local/Unknown</system:String>
         </ComboBox>
         <TextBlock x:Name="lblUserId" HorizontalAlignment="Left" Margin="25,82,0,0" Text="User ID:" VerticalAlignment="Top" Width="46"/>
         <TextBlock x:Name="txtUserId" HorizontalAlignment="Left" Margin="110,82,0,0" Text="User ID:" VerticalAlignment="Top" Width="46"/>
 
         <TextBox x:Name="txtName" HorizontalAlignment="Left" Margin="110,114,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="170" Height="20"/>
         <TextBlock x:Name="lblName" HorizontalAlignment="Left" Margin="24,116,0,0" Text="Player's Name:" TextWrapping="Wrap" VerticalAlignment="Top"/>
-        <TextBlock x:Name="lblName_Copy" HorizontalAlignment="Left" Margin="24,175,0,0" Text="Email addresses:" TextWrapping="Wrap" VerticalAlignment="Top"/>
-        <TextBlock x:Name="lblName_Copy1" HorizontalAlignment="Left" Margin="25,295,0,0" Text="Photos (URL to photo):" TextWrapping="Wrap" VerticalAlignment="Top"/>
         <TextBox x:Name="txtProfileUrl" HorizontalAlignment="Left" Margin="111,140,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="170" Height="20"/>
         <TextBlock x:Name="lblProfileUrl" HorizontalAlignment="Left" Margin="25,142,0,0" Text="Profile URL:" TextWrapping="Wrap" VerticalAlignment="Top"/>
+
+        <TextBlock x:Name="lblEmail" HorizontalAlignment="Left" Margin="24,175,0,0" Text="Email addresses:" TextWrapping="Wrap" VerticalAlignment="Top"/>
+        <TextBlock x:Name="lblPhoto" HorizontalAlignment="Left" Margin="25,295,0,0" Text="Profile photo URLs:" TextWrapping="Wrap" VerticalAlignment="Top"/>
 
         <flat:FlatButton ColorScheme="{Binding ColorScheme, ElementName=window}" Width="20" Height="24" HorizontalAlignment="Right" Margin="0,172,60,0" Padding="0" TransparentBack="True" ToolTip="Add Email" x:Name="btnAddEmail" VerticalAlignment="Top" >
             <Image Source="/Images/Add.png" Width="16" Height="16" />
@@ -56,5 +50,10 @@
             <Image Source="/Images/Deselect.png" Width="16" Height="16" />
         </flat:FlatButton>
         <flat:SelectPanel ColorScheme="{Binding ColorScheme, ElementName=window}" x:Name="selPhotos" PanelBorderThickness="1" UseLighterBorder="True" MinHeight="3" MultiSelect="True" Margin="20,320,20,0" Height="80" VerticalAlignment="Top" />
+
+        <flat:FlatButton x:Name="btnImport" Content="Import From File..." ColorScheme="{Binding ColorScheme, ElementName=window}" HorizontalAlignment="Left" Margin="20,0,0,14" VerticalAlignment="Bottom" Width="120" />
+
+        <flat:FlatButton x:Name="btnSave" ColorScheme="{Binding ColorScheme, ElementName=window}" Content="Save" Margin="0,0,105,14" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="80" />
+        <flat:FlatButton x:Name="btnClose" Content="Cancel" ColorScheme="{Binding ColorScheme, ElementName=window}" HorizontalAlignment="Right" Margin="0,0,20,14" VerticalAlignment="Bottom" Width="80" Click="btnClose_Click" />
     </Grid>
 </flat:FlatWindow>
