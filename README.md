@@ -36,7 +36,7 @@ This program supports all the features currently in Mottokrosh's website, and ca
 ## IntelliCode
 If you're using IntelliCode in Visual Studio 2019 (or Visual Studio 2017 15.8 or later), I have an IntelliCode model that I have been using. If you're looking to fork this project and want to utilize my IntelliCode model, I'll provide you the link to it below:
 
-IntelliCode model: [https://prod.intellicode.vsengsaas.visualstudio.com/get?m=B838C6B27CDD4AAD866B281724648E92](https://prod.intellicode.vsengsaas.visualstudio.com/get?m=B838C6B27CDD4AAD866B281724648E92)
+IntelliCode model: [https://prod.intellicode.vsengsaas.visualstudio.com/get?m=47F6BCD3BE9A4377AEE29C5DAA229CAD](https://prod.intellicode.vsengsaas.visualstudio.com/get?m=47F6BCD3BE9A4377AEE29C5DAA229CAD)
 
 How to add the model to your fork of the code: [View page on Microsoft Docs site](https://docs.microsoft.com/en-us/visualstudio/intellicode/share-models#add-a-custom-model)
 
