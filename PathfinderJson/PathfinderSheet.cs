@@ -237,21 +237,6 @@ namespace PathfinderJson
         }
     }
 
-    public class UserData
-    {
-        public string Provider { get; set; }
-        public string Id { get; set; }
-        public string DisplayName { get; set; }
-        public string Gender { get; set; }
-        public List<Email> Emails { get; set; }
-        //public Name UserName { get; set; }
-        public List<Photo> Photos { get; set; }
-
-        //public class Name { public string FamilyName { get; set; } public string GivenName { get; set; } }
-        public class Email { public string Value { get; set; } public string Type { get; set; } }
-        public class Photo { public string Value { get; set; } }
-    }
-
     public class SkillConverter : JsonConverter<Skill>
     {
         public override void WriteJson(JsonWriter writer, Skill value, JsonSerializer serializer)
@@ -326,6 +311,21 @@ namespace PathfinderJson
             Misc = "0";
             Specialization = s;
         }
+    }
+
+    public class UserData
+    {
+        public string Provider { get; set; }
+        public string Id { get; set; }
+        public string DisplayName { get; set; }
+        //public string Gender { get; set; }
+        public List<Email> Emails { get; set; }
+        //public Name UserName { get; set; }
+        public List<Photo> Photos { get; set; }
+
+        //public class Name { public string FamilyName { get; set; } public string GivenName { get; set; } }
+        public class Email { public string Value { get; set; } public string Type { get; set; } }
+        public class Photo { public string Value { get; set; } }
     }
 
     public class Feat

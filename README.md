@@ -1,4 +1,6 @@
 # PathfinderJson
+![Logo](Icon48.png?raw=true "Logo")
+
 A sheet reader/writer for Pathfinder JSON character sheets from Motokrosh's website
 
 [Take a look at some screenshots!](https://github.com/JaykeBird/PathfinderJson/tree/master/Screenshots)

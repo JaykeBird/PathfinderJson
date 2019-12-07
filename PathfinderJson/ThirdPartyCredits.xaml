@@ -7,6 +7,9 @@
         xmlns:flat="clr-namespace:UiCore;assembly=UiCore"
         mc:Ignorable="d"
         Title="Third Party Credits" Height="450" Width="500" ResizeMode="NoResize" CaptionDisplayType="Close" >
+    <flat:FlatWindow.Resources>
+        <flat:ColorToBrushConverter x:Key="ColorToBrushConverter"/>
+    </flat:FlatWindow.Resources>
     <Grid>
         <flat:FlatButton x:Name="btnClose" Content="OK" HorizontalAlignment="Center" Margin="0,0,0,10" VerticalAlignment="Bottom" Width="80" Click="btnClose_Click"/>
         <TextBlock HorizontalAlignment="Left" Margin="10,20,0,0" Text="Third Party Software Credits/Acknowledgements" VerticalAlignment="Top"/>
@@ -16,7 +19,7 @@
                     <Grid Margin="10,5">
                         <TextBlock HorizontalAlignment="Left" Margin="0,0,0,0" Text="Application UI designed using UiCore library" VerticalAlignment="Top"/>
                         <TextBlock HorizontalAlignment="Left" Margin="0,20,0,0" Text="Developed/compiled by Jayke R. Huempfner" VerticalAlignment="Top"/>
-                        <flat:LinkTextBlock HorizontalAlignment="Left" Margin="0,36,0,0" Text="https://dev.shinecalendar.com/uicore" VerticalAlignment="Top" AutoSetLinkFromText="True" Cursor="Hand" />
+                        <flat:LinkTextBlock HorizontalAlignment="Left" Margin="0,36,0,0" Text="https://dev.shinecalendar.com/uicore" VerticalAlignment="Top" AutoSetLinkFromText="True" Cursor="Hand" DisabledBrush="{Binding ColorScheme.LightDisabledColor, Converter={StaticResource ColorToBrushConverter}, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type flat:FlatWindow}}}" />
                         <TextBlock Margin="0,58,10,0" VerticalAlignment="Top" Height="50" TextWrapping="Wrap"
                    Text="Contributing work by Manuel Schweigert, Pete Laker, Richard Moss (Cyotek Ltd.), Warren Galyen (Mechanika Design), Oleg V. Polikarpotchkin, Yassine (Stopbyte), Hector Pulido, Sebastien Lambla, and Nimgoble" />
                         <TextBlock HorizontalAlignment="Left" Margin="0,110,0,0" Text="Licensed under MIT License" VerticalAlignment="Top"/>
