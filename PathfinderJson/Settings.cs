@@ -30,6 +30,9 @@ namespace PathfinderJson
         [JsonProperty("themeColor")]
         public string ThemeColor { get; set; } = "CD853F";
 
+        [JsonProperty("highContrast")]
+        public string HighContrastTheme { get; set; } = "0";
+
         [JsonProperty("pathTitleBar")]
         public bool PathInTitleBar { get; set; } = false;
 

@@ -83,7 +83,30 @@ namespace PathfinderJson
             undoSetTimer.Tick += UndoSetTimer_Tick;
 
             InitializeComponent();
-            App.ColorScheme = new ColorScheme(ColorsHelper.CreateFromHex(App.Settings.ThemeColor));
+            if (App.Settings.HighContrastTheme == "0")
+            {
+                App.ColorScheme = new ColorScheme(ColorsHelper.CreateFromHex(App.Settings.ThemeColor));
+            }
+            else
+            {
+                switch (App.Settings.HighContrastTheme)
+                {
+                    case "1":
+                        App.ColorScheme = ColorScheme.GetHighContrastScheme(HighContrastOption.WhiteOnBlack);
+                        break;
+                    case "2":
+                        App.ColorScheme = ColorScheme.GetHighContrastScheme(HighContrastOption.GreenOnBlack);
+                        break;
+                    case "3":
+                        App.ColorScheme = ColorScheme.GetHighContrastScheme(HighContrastOption.BlackOnWhite);
+                        break;
+                    default:
+                        App.Settings.HighContrastTheme = "0";
+                        App.ColorScheme = new ColorScheme(ColorsHelper.CreateFromHex(App.Settings.ThemeColor));
+                        SaveSettings();
+                        break;
+                }
+            }
             UpdateAppearance();
 
             SetupTabs();
@@ -731,6 +754,16 @@ namespace PathfinderJson
 
         private void mnuColors_Click(object sender, RoutedEventArgs e)
         {
+            if (App.Settings.HighContrastTheme != "0")
+            {
+                MessageDialog md = new MessageDialog(App.ColorScheme);
+                if (md.ShowDialog("A high-contrast theme is currently being used. Changing the color scheme will turn off the high-contrast theme. Do you want to continue?", null, this, "High Contrast Theme In Use", true,
+                    MessageDialogImage.Warning, MessageDialogResult.Cancel, "Continue", "Cancel") == MessageDialogResult.Cancel)
+                {
+                    return;
+                }
+            }
+
             ColorPickerDialog cpd = new ColorPickerDialog(App.ColorScheme, App.ColorScheme.MainColor);
             cpd.Owner = this;
             cpd.ShowDialog();
@@ -739,9 +772,71 @@ namespace PathfinderJson
             {
                 App.ColorScheme = new ColorScheme(cpd.SelectedColor);
                 App.Settings.ThemeColor = cpd.SelectedColor.GetHexString();
-                App.Settings.Save(Path.Combine(appDataPath, "settings.json"));
+                SaveSettings();
                 UpdateAppearance();
             }
+        }
+
+        private void mnuHighContrast_Click(object sender, RoutedEventArgs e)
+        {
+            MessageDialog md = new MessageDialog(App.ColorScheme);
+            md.ExtraButton1Text = "Use White on Black";
+            md.ExtraButton2Text = "Use Green on Black";
+            md.ExtraButton3Text = "Use Black on White";
+            md.OkButtonText = "Don't use";
+            md.CancelButtonText = "Don't use";
+            md.Message = "A high contrast theme is good for users who have vision-impairment or other issues. PathfinderJSON comes with 3 high-contrast options available.";
+            md.Title = "High Contrast Theme";
+
+            md.ShowDialog();
+
+            switch (md.DialogResult)
+            {
+                case MessageDialogResult.OK:
+                    App.Settings.HighContrastTheme = "0";
+                    break;
+                case MessageDialogResult.Cancel:
+                    App.Settings.HighContrastTheme = "0";
+                    break;
+                case MessageDialogResult.Extra1:
+                    App.Settings.HighContrastTheme = "1";
+                    break;
+                case MessageDialogResult.Extra2:
+                    App.Settings.HighContrastTheme = "2";
+                    break;
+                case MessageDialogResult.Extra3:
+                    App.Settings.HighContrastTheme = "3";
+                    break;
+                default:
+                    break;
+            }
+
+            if (App.Settings.HighContrastTheme == "0")
+            {
+                App.ColorScheme = new ColorScheme(ColorsHelper.CreateFromHex(App.Settings.ThemeColor));
+            }
+            else
+            {
+                switch (App.Settings.HighContrastTheme)
+                {
+                    case "1":
+                        App.ColorScheme = ColorScheme.GetHighContrastScheme(HighContrastOption.WhiteOnBlack);
+                        break;
+                    case "2":
+                        App.ColorScheme = ColorScheme.GetHighContrastScheme(HighContrastOption.GreenOnBlack);
+                        break;
+                    case "3":
+                        App.ColorScheme = ColorScheme.GetHighContrastScheme(HighContrastOption.BlackOnWhite);
+                        break;
+                    default:
+                        App.Settings.HighContrastTheme = "0";
+                        App.ColorScheme = new ColorScheme(ColorsHelper.CreateFromHex(App.Settings.ThemeColor));
+                        break;
+                }
+            }
+
+            SaveSettings();
+            UpdateAppearance();
         }
 
         #endregion
@@ -1725,7 +1820,7 @@ namespace PathfinderJson
             }
         }
 
-        private void btnEditPlayerData_Click(object sender, EventArgs e)
+        private void btnEditPlayerData_Click(object sender, RoutedEventArgs e)
         {
             UserdataEditor ude = new UserdataEditor();
             ude.LoadUserData(ud);
