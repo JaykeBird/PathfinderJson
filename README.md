@@ -11,7 +11,7 @@ You must have Visual Studio 2019 version 16.3 or later to properly open the proj
 ## How to install
 PathfinderJson requires Windows 7 with SP1, Windows 8.1, or Windows 10 with Anniversary Update or later. As long as you've installed all your updates, you should be good. You should be just able to double-click the EXE file in the zip folder you download and it'll open right up.
 
-For **64-bit** computers, use the x64 download. For **32-bit** computers, use the x86 download. If you're not sure what you have, you probably have a 64-bit computer, you can safely use the x86 download regardless; I'll post a guide later about how to find out what you have.
+For **64-bit** computers, use the x64 download. For **32-bit** computers, use the x86 download. If you're not sure what you have, you probably have a 64-bit computer, but you can go to [WhatsMyOS.com](http://whatsmyos.com/) to get an idea of what you have.
 
 If it does not open or an error occurs (may take a few moments), you may need to install the Visual Studio C++ Redistributable package. I've included this for your convenience in the MSVC folder here, and in version 0.9.1 downloads and later. See [Microsoft's website](https://www.microsoft.com/en-us/download/details.aspx?id=52685) for more details. If there's still problems, make sure you have all updates installed; see the purple Note box on [this Microsoft webpage](https://docs.microsoft.com/en-us/dotnet/core/windows-prerequisites?tabs=netcore2x#net-core-dependencies) for more details.
 

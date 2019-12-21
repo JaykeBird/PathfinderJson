@@ -134,7 +134,7 @@ namespace PathfinderJson
             txtTotal.Text = total.ToString();
         }
 
-        private void btnModifiers_Click(object sender, EventArgs e)
+        private void btnModifiers_Click(object sender, RoutedEventArgs e)
         {
             if (expander.IsExpanded)
             {
@@ -163,7 +163,7 @@ namespace PathfinderJson
             Background = new SolidColorBrush(Colors.Transparent);
         }
 
-        private void btnEdit_Click(object sender, EventArgs e)
+        private void btnEdit_Click(object sender, RoutedEventArgs e)
         {
             UiCore.StringInputDialog sid = new UiCore.StringInputDialog(App.ColorScheme, "Edit Skill", "Edit the specialization for this skill.", specialization);
             sid.SelectTextOnFocus = true;

@@ -20,7 +20,7 @@
                         <TextBlock HorizontalAlignment="Left" Margin="0,20,0,0" Text="Developed/compiled by Jayke R. Huempfner" VerticalAlignment="Top"/>
                         <flat:LinkTextBlock HorizontalAlignment="Left" Margin="0,36,0,0" Text="https://dev.shinecalendar.com/uicore" VerticalAlignment="Top" AutoSetLinkFromText="True" Cursor="Hand" DisabledBrush="{Binding ColorScheme.LightDisabledColor, Converter={StaticResource ColorToBrushConverter}, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type flat:FlatWindow}}}" />
                         <TextBlock Margin="0,58,10,0" VerticalAlignment="Top" Height="50" TextWrapping="Wrap"
-                   Text="Contributing work by Manuel Schweigert, Pete Laker, Richard Moss (Cyotek Ltd.), Warren Galyen (Mechanika Design), Oleg V. Polikarpotchkin, Yassine (Stopbyte), Hector Pulido, Sebastien Lambla, and Nimgoble" />
+                   Text="Contributing work by Manuel Schweigert, Pete Laker, Steve Lautenschlager, Richard Moss (Cyotek Ltd.), Warren Galyen (Mechanika Design), Oleg V. Polikarpotchkin, Yassine (Stopbyte), Hector Pulido, Sebastien Lambla, and Nimgoble" />
                         <TextBlock HorizontalAlignment="Left" Margin="0,110,0,0" Text="Licensed under MIT License" VerticalAlignment="Top"/>
                         <TextBlock HorizontalAlignment="Left" Margin="0,126,0,0" Text="View website for more details." VerticalAlignment="Top"/>
                     </Grid>

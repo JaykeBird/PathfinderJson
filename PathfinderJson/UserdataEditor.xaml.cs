@@ -42,12 +42,39 @@ namespace PathfinderJson
             txtUserId.Text = ud.Id;
         }
 
-        private void btnClose_Click(object sender, EventArgs e)
+        private UserData GetUserData()
+        {
+            UserData ud = new UserData();
+
+            switch (cbbProvider.SelectedIndex)
+            {
+                case 0:
+                    ud.Provider = "google";
+                    break;
+                case 1:
+                    ud.Provider = "github";
+                    break;
+                case 2:
+                    ud.Provider = "local";
+                    break;
+                default:
+                    ud.Provider = "local";
+                    break;
+            }
+
+            ud.DisplayName = txtName.Text;
+            ud.ProfileUrl = txtProfileUrl.Text;
+            ud.Id = txtUserId.Text;
+
+            return ud;
+        }
+
+        private void btnClose_Click(object sender, RoutedEventArgs e)
         {
             Close();
         }
 
-        private void btnImport_Click(object sender, EventArgs e)
+        private void btnImport_Click(object sender, RoutedEventArgs e)
         {
             Microsoft.Win32.OpenFileDialog ofd = new Microsoft.Win32.OpenFileDialog();
             ofd.Title = "Import Data from File";
@@ -60,6 +87,12 @@ namespace PathfinderJson
                 LoadUserData(ps.Player);
             }
 
+        }
+
+        private void btnSave_Click(object sender, RoutedEventArgs e)
+        {
+            DialogResult = true;
+            Close();
         }
     }
 }

@@ -87,12 +87,12 @@ namespace PathfinderJson
             return false;
         }
 
-        private void btnClose_Click(object sender, EventArgs e)
+        private void btnClose_Click(object sender, RoutedEventArgs e)
         {
             Close();
         }
 
-        private void BtnThirdParty_Click(object sender, EventArgs e)
+        private void BtnThirdParty_Click(object sender, RoutedEventArgs e)
         {
             ThirdPartyCredits tpc = new ThirdPartyCredits();
             tpc.Owner = this;
@@ -104,7 +104,7 @@ namespace PathfinderJson
             OpenBrowser(e.Uri.AbsoluteUri);
         }
 
-        private void BtnPlatformInfo_Click(object sender, EventArgs e)
+        private void BtnPlatformInfo_Click(object sender, RoutedEventArgs e)
         {
             PlatformInfo pi = new PlatformInfo();
             pi.Owner = this;

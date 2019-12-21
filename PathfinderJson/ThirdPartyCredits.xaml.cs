@@ -40,7 +40,7 @@ namespace PathfinderJson
             expMark2.BorderThickness = new Thickness(1);
         }
 
-        private void btnClose_Click(object sender, EventArgs e)
+        private void btnClose_Click(object sender, RoutedEventArgs e)
         {
             Close();
         }

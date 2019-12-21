@@ -38,12 +38,12 @@ namespace PathfinderJson
             url = ud.Url;
         }
 
-        private void btnClose_Click(object sender, EventArgs e)
+        private void btnClose_Click(object sender, RoutedEventArgs e)
         {
             Close();
         }
 
-        private void btnViewWebsite_Click(object sender, EventArgs e)
+        private void btnViewWebsite_Click(object sender, RoutedEventArgs e)
         {
             About.OpenBrowser(url);
             Close();
