@@ -9,13 +9,14 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using UiCore;
 
 namespace PathfinderJson
 {
     /// <summary>
     /// Interaction logic for NewSheet.xaml
     /// </summary>
-    public partial class NewSheet : Window
+    public partial class NewSheet : FlatWindow
     {
         public NewSheet()
         {
