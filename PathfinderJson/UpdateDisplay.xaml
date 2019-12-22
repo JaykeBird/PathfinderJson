@@ -13,7 +13,7 @@
         <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Margin="20,20,0,0" Text="An update is available to download!" VerticalAlignment="Top"/>
         <TextBlock x:Name="lblTitle" HorizontalAlignment="Left" Margin="20,50,0,0" Text="(Title)" FontSize="16" FontWeight="SemiBold" VerticalAlignment="Top"/>
         <TextBlock x:Name="lblTag" HorizontalAlignment="Left" Margin="20,75,0,0" Text="(tag) - (publish date)" VerticalAlignment="Top"/>
-        <Border Margin="20,100,20,70" BorderBrush="Black" BorderThickness="1" Background="White" >
+        <Border x:Name="brdrViewer" Margin="20,100,20,70" BorderBrush="Black" BorderThickness="1" Background="White" >
             <md:MarkdownViewer x:Name="lblMarkdown" Padding="3" />
         </Border>
         <TextBlock x:Name="textBlock_Copy" HorizontalAlignment="Left" Margin="20,0,0,45" Text="Select what option you would like to take." VerticalAlignment="Bottom"/>

@@ -2,6 +2,7 @@
 using ICSharpCode.AvalonEdit.Search;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -580,6 +581,12 @@ namespace PathfinderJson
             toolbar.SelectionBrush = App.ColorScheme.SelectionColor.ToBrush();
             toolbar.Background = App.ColorScheme.MainColor.ToBrush();
 
+            if (App.ColorScheme.IsHighContrast)
+            {
+                menu.Background = App.ColorScheme.BackgroundColor.ToBrush();
+                toolbar.Background = App.ColorScheme.BackgroundColor.ToBrush();
+            }
+
             selTabs.ApplyColorScheme(App.ColorScheme);
             (txtEditRaw.ContextMenu as UiCore.ContextMenu).ApplyColorScheme(App.ColorScheme);
 
@@ -772,6 +779,7 @@ namespace PathfinderJson
             {
                 App.ColorScheme = new ColorScheme(cpd.SelectedColor);
                 App.Settings.ThemeColor = cpd.SelectedColor.GetHexString();
+                App.Settings.HighContrastTheme = "0";
                 SaveSettings();
                 UpdateAppearance();
             }

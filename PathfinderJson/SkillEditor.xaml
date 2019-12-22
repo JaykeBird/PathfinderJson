@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="PathfinderJson.SkillEditor"
+﻿<UserControl x:Name="userControl" x:Class="PathfinderJson.SkillEditor"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -19,7 +19,7 @@
             <ColumnDefinition Width="1*" x:Name="colExtra" />-->
         </Grid.ColumnDefinitions>
         <CheckBox x:Name="chkSkill" Margin="5,0,0,0" VerticalAlignment="Center">
-            <TextBlock x:Name="txtName" Text="Knowledge (engineering)" TextTrimming="CharacterEllipsis" />
+            <TextBlock x:Name="txtName" Text="Knowledge (engineering)" TextTrimming="CharacterEllipsis" Foreground="{Binding Foreground, ElementName=userControl}" />
         </CheckBox>
         <uicore:FlatButton Width="20" Height="24" HorizontalAlignment="Right" Padding="0" TransparentBack="True" x:Name="btnEdit" Click="btnEdit_Click" >
             <Image Source="/Images/Edit.png" Width="16" Height="16" />

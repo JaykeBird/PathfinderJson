@@ -165,7 +165,7 @@
                     <Grid Margin="10,0,0,0">
                         <TextBlock x:Name="titGeneral" Text="General" FontSize="16" />
                     </Grid>
-                    <Expander VerticalAlignment="Center" Margin="10,0,10,0" Grid.Row="1" x:Name="expUser" Header="Player Data" >
+                    <Expander VerticalAlignment="Center" Margin="10,0,10,0" Grid.Row="1" x:Name="expUser" Header="Player Data" Foreground="{Binding Foreground, ElementName=window}" >
                         <Grid Height="140" >
                             <TextBox x:Name="txtPlayerName" HorizontalAlignment="Left" Height="23" Margin="70,24,0,0" VerticalAlignment="Top" Width="285" IsReadOnly="True" IsReadOnlyCaretVisible="True" />
                             <TextBlock x:Name="lblPlayerName" HorizontalAlignment="Left" Margin="70,8,0,0" Text="Player Name" VerticalAlignment="Top"/>
@@ -188,7 +188,7 @@
                     <TextBox x:Name="txtDeity" HorizontalAlignment="Left" Height="23" Margin="275,80,0,0" Grid.Row="2" VerticalAlignment="Top" Width="120" TextChanged="textbox_TextChanged"/>
                     <TextBlock x:Name="lblDeity" HorizontalAlignment="Left" Margin="275,62,0,0" Grid.Row="2" Text="Deity" VerticalAlignment="Top"/>
 
-                    <Expander VerticalAlignment="Center" Margin="10,0,10,10" Grid.Row="3" x:Name="expPhysical" Header="Physical Attributes" >
+                    <Expander VerticalAlignment="Center" Margin="10,0,10,10" Grid.Row="3" x:Name="expPhysical" Header="Physical Attributes" Foreground="{Binding Foreground, ElementName=window}" >
                         <Grid Height="110" >
                             <TextBox x:Name="txtPhyRace" HorizontalAlignment="Left" Height="23" Margin="10,24,0,0" VerticalAlignment="Top" Width="110" TextChanged="textbox_TextChanged"/>
                             <TextBlock x:Name="lblPhyRace" HorizontalAlignment="Left" Margin="10,8,0,0" Text="Race" VerticalAlignment="Top"/>
@@ -304,7 +304,7 @@
                     <TextBox x:Name="txtResist" Height="23" Margin="159,44,10,0" Grid.Row="6" VerticalAlignment="Top" TextChanged="textbox_TextChanged"/>
 
                     <TextBlock x:Name="lblMelee" HorizontalAlignment="Left" Margin="15,12,0,0" Grid.Row="7" Text="Melee Weapons" FontWeight="SemiBold" VerticalAlignment="Top"/>
-                    <Expander VerticalAlignment="Center" Margin="120,0,0,0" HorizontalAlignment="Left" Grid.Row="7" x:Name="expMelee" Header="Show/Hide List" IsExpanded="True" Expanded="ExpMelee_Expanded" Collapsed="ExpMelee_Collapsed" />
+                    <Expander VerticalAlignment="Center" Margin="120,0,0,0" HorizontalAlignment="Left" Grid.Row="7" x:Name="expMelee" Header="Show/Hide List" IsExpanded="True" Expanded="ExpMelee_Expanded" Collapsed="ExpMelee_Collapsed" Foreground="{Binding Foreground, ElementName=window}" />
                     <flat:FlatButton ColorScheme="{Binding ColorScheme, ElementName=window}" Width="20" Height="24" HorizontalAlignment="Right" Margin="0,0,50,0" Grid.Row="7" Padding="0" TransparentBack="True" ToolTip="Add" x:Name="btnAddMelee" Click="BtnAddMelee_Click" >
                         <Image Source="/Images/Add.png" Width="16" Height="16" />
                     </flat:FlatButton>
@@ -317,7 +317,7 @@
                     <flat:SelectPanel ColorScheme="{Binding ColorScheme, ElementName=window}" x:Name="selMelee" PanelBorderThickness="1" UseLighterBorder="True" MinHeight="3" Grid.Row="8" MultiSelect="True" />
 
                     <TextBlock x:Name="lblRanged" HorizontalAlignment="Left" Margin="15,12,0,0" Grid.Row="9" Text="Ranged Weapons" FontWeight="SemiBold" VerticalAlignment="Top"/>
-                    <Expander VerticalAlignment="Center" Margin="120,0,0,0" HorizontalAlignment="Left" Grid.Row="9" x:Name="expRanged" Header="Show/Hide List" IsExpanded="True" Expanded="ExpRanged_Expanded" Collapsed="ExpRanged_Collapsed" />
+                    <Expander VerticalAlignment="Center" Margin="120,0,0,0" HorizontalAlignment="Left" Grid.Row="9" x:Name="expRanged" Header="Show/Hide List" IsExpanded="True" Expanded="ExpRanged_Expanded" Collapsed="ExpRanged_Collapsed" Foreground="{Binding Foreground, ElementName=window}" />
                     <flat:FlatButton ColorScheme="{Binding ColorScheme, ElementName=window}" Width="20" Height="24" HorizontalAlignment="Right" Margin="0,0,50,0" Grid.Row="9" Padding="0" TransparentBack="True" ToolTip="Add" x:Name="btnAddRanged" Click="BtnAddRanged_Click" >
                         <Image Source="/Images/Add.png" Width="16" Height="16" />
                     </flat:FlatButton>
@@ -330,7 +330,7 @@
                     <flat:SelectPanel ColorScheme="{Binding ColorScheme, ElementName=window}" x:Name="selRanged" PanelBorderThickness="1" UseLighterBorder="True" MinHeight="3" Grid.Row="10" MultiSelect="True" />
 
                     <TextBlock x:Name="lblAcItems" HorizontalAlignment="Left" Margin="15,0,0,0" Grid.Row="11" Text="Armor/Shields" FontWeight="SemiBold" VerticalAlignment="Center"/>
-                    <Expander VerticalAlignment="Center" Margin="120,0,0,0" HorizontalAlignment="Left" Grid.Row="11" x:Name="expAcItem" Header="Show/Hide List" IsExpanded="True" Expanded="expAcItem_Expanded" Collapsed="expAcItem_Collapsed" />
+                    <Expander VerticalAlignment="Center" Margin="120,0,0,0" HorizontalAlignment="Left" Grid.Row="11" x:Name="expAcItem" Header="Show/Hide List" IsExpanded="True" Expanded="expAcItem_Expanded" Collapsed="expAcItem_Collapsed" Foreground="{Binding Foreground, ElementName=window}" />
                     <flat:FlatButton ColorScheme="{Binding ColorScheme, ElementName=window}" Width="20" Height="24" HorizontalAlignment="Right" Margin="0,8,50,8" Grid.Row="11" Padding="0" TransparentBack="True" ToolTip="Add" x:Name="btnAddAcItem" Click="btnAddAcItem_Click" >
                         <Image Source="Images/Add.png" Width="16" Height="16" />
                     </flat:FlatButton>
@@ -425,7 +425,7 @@
                     <TextBox x:Name="txtSpellSpecialty" Height="23" Margin="190,378,30,0" Grid.Row="1" VerticalAlignment="Top" TextChanged="textbox_TextChanged"/>
 
                     <TextBlock x:Name="lblSpells" HorizontalAlignment="Left" Margin="15,12,0,0" Grid.Row="2" Text="Spells" FontWeight="SemiBold" VerticalAlignment="Top"/>
-                    <Expander VerticalAlignment="Center" Margin="120,0,0,0" HorizontalAlignment="Left" Grid.Row="2" x:Name="expSpells" Header="Show/Hide List" IsExpanded="True" Expanded="expSpells_Expanded" Collapsed="expSpells_Collapsed" />
+                    <Expander VerticalAlignment="Center" Margin="120,0,0,0" HorizontalAlignment="Left" Grid.Row="2" x:Name="expSpells" Header="Show/Hide List" IsExpanded="True" Expanded="expSpells_Expanded" Collapsed="expSpells_Collapsed" Foreground="{Binding Foreground, ElementName=window}" />
                     <flat:MenuButton ColorScheme="{Binding ColorScheme, ElementName=window}" Height="24" HorizontalAlignment="Right" Margin="0,0,80,0" Grid.Row="2" Padding="0" TransparentBack="True" ToolTip="Add" x:Name="btnFilterSpell" StaysOpen="True" >
                         <StackPanel Orientation="Horizontal">
                             <Image Source="/Images/Filter.png" Width="16" Height="16" Margin="0,0,3,0" />
@@ -473,7 +473,7 @@
                         <TextBlock x:Name="titFeats" Text="Feats/Abilities" FontSize="16" />
                     </Grid>
                     <TextBlock x:Name="lblFeats" HorizontalAlignment="Left" Margin="15,12,0,0" Grid.Row="1" Text="Feats" FontWeight="SemiBold" VerticalAlignment="Top"/>
-                    <Expander VerticalAlignment="Center" Margin="120,0,0,0" HorizontalAlignment="Left" Grid.Row="1" x:Name="expFeats" Header="Show/Hide List" IsExpanded="True" Expanded="expFeats_Expanded" Collapsed="expFeats_Collapsed" />
+                    <Expander VerticalAlignment="Center" Margin="120,0,0,0" HorizontalAlignment="Left" Grid.Row="1" x:Name="expFeats" Header="Show/Hide List" IsExpanded="True" Expanded="expFeats_Expanded" Collapsed="expFeats_Collapsed" Foreground="{Binding Foreground, ElementName=window}" />
                     <flat:FlatButton ColorScheme="{Binding ColorScheme, ElementName=window}" Width="20" Height="24" HorizontalAlignment="Right" Margin="0,0,50,0" Grid.Row="1" Padding="0" TransparentBack="True" ToolTip="Add" x:Name="btnAddFeat" Click="btnAddFeat_Click" >
                         <Image Source="/Images/Add.png" Width="16" Height="16" />
                     </flat:FlatButton>
@@ -486,7 +486,7 @@
                     <flat:SelectPanel ColorScheme="{Binding ColorScheme, ElementName=window}" x:Name="selFeats" PanelBorderThickness="1" UseLighterBorder="True" MinHeight="3" Grid.Row="2" MultiSelect="True" />
 
                     <TextBlock x:Name="lblAbilities" HorizontalAlignment="Left" Margin="15,12,0,0" Grid.Row="3" Text="Special Abilities" FontWeight="SemiBold" VerticalAlignment="Top"/>
-                    <Expander VerticalAlignment="Center" Margin="120,0,0,0" HorizontalAlignment="Left" Grid.Row="3" x:Name="expabilities" Header="Show/Hide List" IsExpanded="True" Expanded="expAbilities_Expanded" Collapsed="expAbilities_Collapsed" />
+                    <Expander VerticalAlignment="Center" Margin="120,0,0,0" HorizontalAlignment="Left" Grid.Row="3" x:Name="expabilities" Header="Show/Hide List" IsExpanded="True" Expanded="expAbilities_Expanded" Collapsed="expAbilities_Collapsed" Foreground="{Binding Foreground, ElementName=window}" />
                     <flat:FlatButton ColorScheme="{Binding ColorScheme, ElementName=window}" Width="20" Height="24" HorizontalAlignment="Right" Margin="0,0,50,0" Grid.Row="3" Padding="0" TransparentBack="True" ToolTip="Add" x:Name="btnAddAbility" Click="btnAddAbility_Click" >
                         <Image Source="/Images/Add.png" Width="16" Height="16" />
                     </flat:FlatButton>
@@ -499,7 +499,7 @@
                     <flat:SelectPanel ColorScheme="{Binding ColorScheme, ElementName=window}" x:Name="selAbilities" PanelBorderThickness="1" UseLighterBorder="True" MinHeight="3" Grid.Row="4" MultiSelect="True" />
 
                     <TextBlock x:Name="lblTraits" HorizontalAlignment="Left" Margin="15,12,0,0" Grid.Row="5" Text="Traits" FontWeight="SemiBold" VerticalAlignment="Top"/>
-                    <Expander VerticalAlignment="Center" Margin="120,0,0,0" HorizontalAlignment="Left" Grid.Row="5" x:Name="expTraits" Header="Show/Hide List" IsExpanded="True" Expanded="expTraits_Expanded" Collapsed="expTraits_Collapsed" />
+                    <Expander VerticalAlignment="Center" Margin="120,0,0,0" HorizontalAlignment="Left" Grid.Row="5" x:Name="expTraits" Header="Show/Hide List" IsExpanded="True" Expanded="expTraits_Expanded" Collapsed="expTraits_Collapsed" Foreground="{Binding Foreground, ElementName=window}" />
                     <flat:FlatButton ColorScheme="{Binding ColorScheme, ElementName=window}" Width="20" Height="24" HorizontalAlignment="Right" Margin="0,0,50,0" Grid.Row="5" Padding="0" TransparentBack="True" ToolTip="Add" x:Name="btnAddTrait" Click="btnAddTrait_Click" >
                         <Image Source="/Images/Add.png" Width="16" Height="16" />
                     </flat:FlatButton>
@@ -512,7 +512,7 @@
                     <flat:SelectPanel ColorScheme="{Binding ColorScheme, ElementName=window}" x:Name="selTraits" PanelBorderThickness="1" UseLighterBorder="True" MinHeight="3" Grid.Row="6" MultiSelect="True" />
 
                     <TextBlock x:Name="lblSpellLikes" HorizontalAlignment="Left" Margin="15,12,0,0" Grid.Row="7" Text="Spell-like Abilities" FontWeight="SemiBold" VerticalAlignment="Top"/>
-                    <Expander VerticalAlignment="Center" Margin="120,0,0,0" HorizontalAlignment="Left" Grid.Row="7" x:Name="expSpellLikes" Header="Show/Hide List" IsExpanded="True" Expanded="expSpellLikes_Expanded" Collapsed="expSpellLikes_Collapsed" />
+                    <Expander VerticalAlignment="Center" Margin="120,0,0,0" HorizontalAlignment="Left" Grid.Row="7" x:Name="expSpellLikes" Header="Show/Hide List" IsExpanded="True" Expanded="expSpellLikes_Expanded" Collapsed="expSpellLikes_Collapsed" Foreground="{Binding Foreground, ElementName=window}" />
                     <flat:FlatButton ColorScheme="{Binding ColorScheme, ElementName=window}" Width="20" Height="24" HorizontalAlignment="Right" Margin="0,0,50,0" Grid.Row="7" Padding="0" TransparentBack="True" ToolTip="Add" x:Name="btnAddSpellLike" Click="btnAddSpellLike_Click" >
                         <Image Source="/Images/Add.png" Width="16" Height="16" />
                     </flat:FlatButton>
@@ -556,7 +556,7 @@
                     <TextBlock x:Name="lblOtherTreasure" HorizontalAlignment="Left" Margin="30,191,0,0" Grid.Row="1" Text="Other Treasure" VerticalAlignment="Top"/>
 
                     <TextBlock x:Name="lblEquipment" HorizontalAlignment="Left" Margin="15,12,0,0" Grid.Row="2" Text="Equipment/Gear" FontWeight="SemiBold" VerticalAlignment="Top"/>
-                    <Expander VerticalAlignment="Center" Margin="120,0,0,0" HorizontalAlignment="Left" Grid.Row="2" x:Name="expEquipment" Header="Show/Hide List" IsExpanded="True" Expanded="expEquipment_Expanded" Collapsed="expEquipment_Collapsed" />
+                    <Expander VerticalAlignment="Center" Margin="120,0,0,0" HorizontalAlignment="Left" Grid.Row="2" x:Name="expEquipment" Header="Show/Hide List" IsExpanded="True" Expanded="expEquipment_Expanded" Collapsed="expEquipment_Collapsed" Foreground="{Binding Foreground, ElementName=window}" />
                     <flat:FlatButton ColorScheme="{Binding ColorScheme, ElementName=window}" Width="20" Height="24" HorizontalAlignment="Right" Margin="0,0,50,0" Grid.Row="2" Padding="0" TransparentBack="True" ToolTip="Add" x:Name="btnAddEquipment" Click="btnAddEquipment_Click" >
                         <Image Source="/Images/Add.png" Width="16" Height="16" />
                     </flat:FlatButton>

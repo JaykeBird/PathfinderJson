@@ -30,6 +30,12 @@ namespace PathfinderJson
             InitializeComponent();
             ColorScheme = App.ColorScheme;
 
+            if (ColorScheme.IsHighContrast)
+            {
+                brdrViewer.Background = ColorScheme.BackgroundColor.ToBrush();
+                lblMarkdown.Foreground = ColorScheme.ForegroundColor.ToBrush();
+            }
+
             lblTitle.Text = ud.Name;
             lblTag.Text = ud.TagName + " - " + ud.PublishTime.ToString("D");
             lblMarkdown.Markdown = ud.Body;
