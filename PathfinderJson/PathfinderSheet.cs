@@ -65,7 +65,7 @@ namespace PathfinderJson
         {
             string newjson = "{\"_id\":\"-1\"," +
                 "\"user\":{\"provider\":\"local\",\"id\":\"null\",\"displayName\":\"-\"," +
-                "\"username\":\"-\",\"profileUrl\":\"https://127.0.0.1/\",\"emails\":[]},\"spells\":[{},{},{},{},{},{},{},{},{},{}]," +
+                "\"username\":\"-\",\"profileUrl\":\"\",\"emails\":[]},\"spells\":[{},{},{},{},{},{},{},{},{},{}]," +
                 "\"name\":\"" + name + "\",\"modified\":\"" + string.Concat(DateTime.UtcNow.ToString("s"), ".000Z") + "\",\"level\":\"" + level + "\"}";
 
             PathfinderSheet ps = LoadJsonText(newjson);
@@ -327,7 +327,26 @@ namespace PathfinderJson
         //public class Name { public string FamilyName { get; set; } public string GivenName { get; set; } }
         public class Email { public string Value { get; set; } public string Type { get; set; } }
         public class Photo { public string Value { get; set; } }
-        
+
+        public UserData()
+        {
+            Emails = new List<Email>();
+            Photos = new List<Photo>();
+        }
+
+        public UserData(bool preset)
+        {
+            if (preset)
+            {
+                Provider = "local";
+                Id = "null";
+                DisplayName = "-";
+                ProfileUrl = "";
+            }
+
+            Emails = new List<Email>();
+            Photos = new List<Photo>();
+        }
     }
 
     public class Feat

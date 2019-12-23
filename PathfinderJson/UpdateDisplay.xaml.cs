@@ -33,6 +33,7 @@ namespace PathfinderJson
             if (ColorScheme.IsHighContrast)
             {
                 brdrViewer.Background = ColorScheme.BackgroundColor.ToBrush();
+                brdrViewer.BorderBrush = ColorScheme.BorderColor.ToBrush();
                 lblMarkdown.Foreground = ColorScheme.ForegroundColor.ToBrush();
             }
 

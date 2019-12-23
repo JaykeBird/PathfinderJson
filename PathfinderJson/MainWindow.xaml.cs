@@ -792,7 +792,6 @@ namespace PathfinderJson
             md.ExtraButton2Text = "Use Green on Black";
             md.ExtraButton3Text = "Use Black on White";
             md.OkButtonText = "Don't use";
-            md.CancelButtonText = "Don't use";
             md.Message = "A high contrast theme is good for users who have vision-impairment or other issues. PathfinderJSON comes with 3 high-contrast options available.";
             md.Title = "High Contrast Theme";
 

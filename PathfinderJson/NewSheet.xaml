@@ -6,8 +6,26 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PathfinderJson"
         mc:Ignorable="d"
-        Title="NewSheet" Height="450" Width="800">
+        Title="New Character Sheet" Height="420" Width="320">
     <Grid>
-        
+        <TextBlock x:Name="lblCreate" HorizontalAlignment="Left" Margin="20,20,0,0" Text="Create a new Pathfinder character sheet" VerticalAlignment="Top"/>
+        <TextBlock x:Name="lblCharacterName" HorizontalAlignment="Left" Margin="20,60,0,0" Text="Character name" VerticalAlignment="Top"/>
+        <TextBox x:Name="txtCharacterName" Margin="20,76,0,0" Height="24" VerticalAlignment="Top" HorizontalAlignment="Left" Width="280"/>
+        <TextBlock x:Name="lblCharacterLevel" HorizontalAlignment="Left" Margin="20,110,0,0" Text="Class(es) / Level" VerticalAlignment="Top"/>
+        <TextBox x:Name="txtCharacterLevel" HorizontalAlignment="Left" Margin="20,126,0,0" Height="24" VerticalAlignment="Top" Width="280"/>
+
+        <TextBlock x:Name="lblPlayer" HorizontalAlignment="Left" Margin="20,170,0,0" Text="Player data" VerticalAlignment="Top"/>
+        <TextBlock x:Name="lblPlayerName" HorizontalAlignment="Left" Margin="40,195,0,0" Text="Player name:" TextWrapping="Wrap" VerticalAlignment="Top"/>
+        <TextBlock x:Name="txtPlayerName" HorizontalAlignment="Left" Margin="120,195,0,0" Text="(not set)" TextWrapping="Wrap" VerticalAlignment="Top"/>
+        <flat:FlatButton x:Name="btnEditData" ColorScheme="{Binding ColorScheme, ElementName=window}" Content="Edit Player Data..." Margin="40,220,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="120" />
+        <flat:FlatButton x:Name="btnImportData" Content="Import from File..." ColorScheme="{Binding ColorScheme, ElementName=window}" HorizontalAlignment="Left" Margin="165,220,0,0" VerticalAlignment="Top" Width="120" />
+
+        <TextBlock x:Name="lblFileloc" HorizontalAlignment="Left" Margin="20,265,0,0" Text="File name/location" VerticalAlignment="Top"/>
+        <TextBlock x:Name="txtFilename" Margin="40,290,145,0" Text="(not set)" TextWrapping="Wrap" VerticalAlignment="Top"/>
+        <flat:FlatButton x:Name="btnBrowse" ColorScheme="{Binding ColorScheme, ElementName=window}" Content="Browse Location..." Margin="0,286,20,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="120" Click="btnBrowse_Click" />
+        <CheckBox x:Name="chkNoLoc" Content="Don't set a file location right now" HorizontalAlignment="Left" Margin="40,318,0,0" VerticalAlignment="Top" Checked="chkNoLoc_Checked" />
+
+        <flat:FlatButton x:Name="btnCreate" ColorScheme="{Binding ColorScheme, ElementName=window}" Content="Create" Margin="0,0,105,10" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="80" Click="btnCreate_Click" />
+        <flat:FlatButton x:Name="btnClose" Content="Cancel" ColorScheme="{Binding ColorScheme, ElementName=window}" HorizontalAlignment="Right" Margin="0,0,20,10" VerticalAlignment="Bottom" Width="80" Click="btnClose_Click" />
     </Grid>
 </flat:FlatWindow>
