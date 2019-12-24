@@ -1855,7 +1855,7 @@ namespace PathfinderJson
                 {
                     try
                     {
-                        email = sheet.Player.Emails[0].Value;
+                        email = ud.Emails[0].Value;
                     }
                     catch (IndexOutOfRangeException) { }
                 }
