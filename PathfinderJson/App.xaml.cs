@@ -9,6 +9,7 @@ using System.Windows.Media;
 using UiCore;
 using System.Runtime;
 using System.IO;
+using System.Windows.Media.Imaging;
 
 namespace PathfinderJson
 {
@@ -41,5 +42,20 @@ namespace PathfinderJson
         public static Settings Settings { get; set; } = new Settings();
 
         public static Version AppVersion = new Version("0.9.2.1");
+
+        /// <summary>
+        /// Get a particular image from the internal Images folder.
+        /// </summary>
+        /// <exception cref="IOException">Thrown if there is no image with this name.</exception>
+        /// <param name="name">The name for the resource.</param>
+        public static BitmapImage GetResourcesImage(string name)
+        {
+            if (!name.EndsWith(".png"))
+            {
+                name += ".png";
+            }
+
+            return new BitmapImage(new Uri("pack://application:,,,/Images/" + name, UriKind.RelativeOrAbsolute));
+        }
     }
 }

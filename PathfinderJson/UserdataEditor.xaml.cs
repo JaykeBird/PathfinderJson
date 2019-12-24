@@ -40,9 +40,38 @@ namespace PathfinderJson
             txtName.Text = ud.DisplayName;
             txtProfileUrl.Text = ud.ProfileUrl;
             txtUserId.Text = ud.Id;
+
+            foreach (UserData.Email item in ud.Emails)
+            {
+                SelectableItem si = new SelectableItem(item.Value);
+                si.AllowTextEditing = true;
+
+                if (!ColorScheme.IsHighContrast)
+                {
+                    var img = App.GetResourcesImage("Email");
+                    si.ImageSource = img;
+                    si.ShowImage = true;
+                }
+
+                selEmails.AddItem(si);
+            }
+
+            foreach (UserData.Photo item in ud.Photos)
+            {
+                SelectableItem si = new SelectableItem(item.Value);
+                si.AllowTextEditing = true;
+
+                if (!ColorScheme.IsHighContrast)
+                {
+                    si.ImageSource = App.GetResourcesImage("Link");
+                    si.ShowImage = true;
+                }
+
+                selPhotos.AddItem(si);
+            }
         }
 
-        private UserData GetUserData()
+        public UserData GetUserData()
         {
             UserData ud = new UserData();
 
@@ -66,6 +95,16 @@ namespace PathfinderJson
             ud.ProfileUrl = txtProfileUrl.Text;
             ud.Id = txtUserId.Text;
 
+            foreach (SelectableItem item in selEmails.GetItemsAsType<SelectableItem>())
+            {
+                ud.Emails.Add(new UserData.Email { Value = item.Text });
+            }
+
+            foreach (SelectableItem item in selPhotos.GetItemsAsType<SelectableItem>())
+            {
+                ud.Photos.Add(new UserData.Photo { Value = item.Text });
+            }
+
             return ud;
         }
 
@@ -86,7 +125,6 @@ namespace PathfinderJson
                 PathfinderSheet ps = PathfinderSheet.LoadJsonFile(filename);
                 LoadUserData(ps.Player);
             }
-
         }
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
@@ -94,5 +132,57 @@ namespace PathfinderJson
             DialogResult = true;
             Close();
         }
+
+        #region Select Panel controls
+        private void btnAddEmail_Click(object sender, RoutedEventArgs e)
+        {
+            SelectableItem si = new SelectableItem();
+            si.AllowTextEditing = true;
+
+            if (!ColorScheme.IsHighContrast)
+            {
+                si.ImageSource = App.GetResourcesImage("Email");
+                si.ShowImage = true;
+            }
+
+            selEmails.AddItem(si);
+            si.DisplayEditText();
+        }
+
+        private void btnDeleteEmail_Click(object sender, RoutedEventArgs e)
+        {
+            selEmails.RemoveSelectedItems();
+        }
+
+        private void btnDeselectEmail_Click(object sender, RoutedEventArgs e)
+        {
+            selEmails.DeselectAll();
+        }
+
+        private void btnAddPhoto_Click(object sender, RoutedEventArgs e)
+        {
+            SelectableItem si = new SelectableItem();
+            si.AllowTextEditing = true;
+
+            if (!ColorScheme.IsHighContrast)
+            {
+                si.ImageSource = App.GetResourcesImage("Link");
+                si.ShowImage = true;
+            }
+
+            selPhotos.AddItem(si);
+            si.DisplayEditText();
+        }
+
+        private void btnDeletePhoto_Click(object sender, RoutedEventArgs e)
+        {
+            selPhotos.RemoveSelectedItems();
+        }
+
+        private void btnDeselectPhoto_Click(object sender, RoutedEventArgs e)
+        {
+            selPhotos.DeselectAll();
+        }
+        #endregion
     }
 }

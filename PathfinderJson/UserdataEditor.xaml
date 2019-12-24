@@ -29,24 +29,24 @@
         <TextBlock x:Name="lblEmail" HorizontalAlignment="Left" Margin="25,175,0,0" Text="Email addresses:" VerticalAlignment="Top"/>
         <TextBlock x:Name="lblPhoto" HorizontalAlignment="Left" Margin="25,295,0,0" Text="Profile photo URLs:" VerticalAlignment="Top"/>
 
-        <flat:FlatButton ColorScheme="{Binding ColorScheme, ElementName=window}" Width="20" Height="24" HorizontalAlignment="Right" Margin="0,172,60,0" Padding="0" TransparentBack="True" ToolTip="Add Email" x:Name="btnAddEmail" VerticalAlignment="Top" >
+        <flat:FlatButton ColorScheme="{Binding ColorScheme, ElementName=window}" Width="20" Height="24" HorizontalAlignment="Right" Margin="0,172,60,0" Padding="0" TransparentBack="True" ToolTip="Add Email" x:Name="btnAddEmail" VerticalAlignment="Top" Click="btnAddEmail_Click" >
             <Image Source="/Images/Add.png" Width="16" Height="16" />
         </flat:FlatButton>
-        <flat:FlatButton ColorScheme="{Binding ColorScheme, ElementName=window}" Width="20" Height="24" HorizontalAlignment="Right" Margin="0,172,40,0" Padding="0" TransparentBack="True" ToolTip="Delete Email" x:Name="btnDeleteEmail" VerticalAlignment="Top" >
+        <flat:FlatButton ColorScheme="{Binding ColorScheme, ElementName=window}" Width="20" Height="24" HorizontalAlignment="Right" Margin="0,172,40,0" Padding="0" TransparentBack="True" ToolTip="Delete Email" x:Name="btnDeleteEmail" VerticalAlignment="Top" Click="btnDeleteEmail_Click" >
             <Image Source="/Images/Cancel.png" Width="16" Height="16" />
         </flat:FlatButton>
-        <flat:FlatButton ColorScheme="{Binding ColorScheme, ElementName=window}" Width="20" Height="24" HorizontalAlignment="Right" Margin="0,172,20,0" Padding="0" TransparentBack="True" ToolTip="Deselect All" x:Name="btnDeselectEmail" VerticalAlignment="Top" >
+        <flat:FlatButton ColorScheme="{Binding ColorScheme, ElementName=window}" Width="20" Height="24" HorizontalAlignment="Right" Margin="0,172,20,0" Padding="0" TransparentBack="True" ToolTip="Deselect All" x:Name="btnDeselectEmail" VerticalAlignment="Top" Click="btnDeselectEmail_Click" >
             <Image Source="/Images/Deselect.png" Width="16" Height="16" />
         </flat:FlatButton>
         <flat:SelectPanel ColorScheme="{Binding ColorScheme, ElementName=window}" x:Name="selEmails" PanelBorderThickness="1" UseLighterBorder="True" MinHeight="3" MultiSelect="True" Margin="20,200,20,0" Height="80" VerticalAlignment="Top" />
 
-        <flat:FlatButton ColorScheme="{Binding ColorScheme, ElementName=window}" Width="20" Height="24" HorizontalAlignment="Right" Margin="0,292,60,0" Padding="0" TransparentBack="True" ToolTip="Add Photo URL" x:Name="btnAddPhoto" VerticalAlignment="Top" >
+        <flat:FlatButton ColorScheme="{Binding ColorScheme, ElementName=window}" Width="20" Height="24" HorizontalAlignment="Right" Margin="0,292,60,0" Padding="0" TransparentBack="True" ToolTip="Add Photo URL" x:Name="btnAddPhoto" VerticalAlignment="Top" Click="btnAddPhoto_Click" >
             <Image Source="/Images/Add.png" Width="16" Height="16" />
         </flat:FlatButton>
-        <flat:FlatButton ColorScheme="{Binding ColorScheme, ElementName=window}" Width="20" Height="24" HorizontalAlignment="Right" Margin="0,292,40,0" Padding="0" TransparentBack="True" ToolTip="Delete Photo URL" x:Name="btnDeletePhoto" VerticalAlignment="Top" >
+        <flat:FlatButton ColorScheme="{Binding ColorScheme, ElementName=window}" Width="20" Height="24" HorizontalAlignment="Right" Margin="0,292,40,0" Padding="0" TransparentBack="True" ToolTip="Delete Photo URL" x:Name="btnDeletePhoto" VerticalAlignment="Top" Click="btnDeletePhoto_Click" >
             <Image Source="/Images/Cancel.png" Width="16" Height="16" />
         </flat:FlatButton>
-        <flat:FlatButton ColorScheme="{Binding ColorScheme, ElementName=window}" Width="20" Height="24" HorizontalAlignment="Right" Margin="0,292,20,0" Padding="0" TransparentBack="True" ToolTip="Deselect All" x:Name="btnDeselectPhoto" VerticalAlignment="Top" >
+        <flat:FlatButton ColorScheme="{Binding ColorScheme, ElementName=window}" Width="20" Height="24" HorizontalAlignment="Right" Margin="0,292,20,0" Padding="0" TransparentBack="True" ToolTip="Deselect All" x:Name="btnDeselectPhoto" VerticalAlignment="Top" Click="btnDeselectPhoto_Click" >
             <Image Source="/Images/Deselect.png" Width="16" Height="16" />
         </flat:FlatButton>
         <flat:SelectPanel ColorScheme="{Binding ColorScheme, ElementName=window}" x:Name="selPhotos" PanelBorderThickness="1" UseLighterBorder="True" MinHeight="3" MultiSelect="True" Margin="20,320,20,0" Height="80" VerticalAlignment="Top" />

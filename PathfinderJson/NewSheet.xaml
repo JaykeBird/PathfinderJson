@@ -18,7 +18,7 @@
         <TextBlock x:Name="lblPlayerName" HorizontalAlignment="Left" Margin="40,195,0,0" Text="Player name:" TextWrapping="Wrap" VerticalAlignment="Top"/>
         <TextBlock x:Name="txtPlayerName" HorizontalAlignment="Left" Margin="120,195,0,0" Text="(not set)" TextWrapping="Wrap" VerticalAlignment="Top"/>
         <flat:FlatButton x:Name="btnEditData" ColorScheme="{Binding ColorScheme, ElementName=window}" Content="Edit Player Data..." Margin="40,220,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="120" />
-        <flat:FlatButton x:Name="btnImportData" Content="Import from File..." ColorScheme="{Binding ColorScheme, ElementName=window}" HorizontalAlignment="Left" Margin="165,220,0,0" VerticalAlignment="Top" Width="120" />
+        <flat:FlatButton x:Name="btnImportData" Content="Import from File..." ColorScheme="{Binding ColorScheme, ElementName=window}" HorizontalAlignment="Left" Margin="165,220,0,0" VerticalAlignment="Top" Width="120" Click="btnImportData_Click" />
 
         <TextBlock x:Name="lblFileloc" HorizontalAlignment="Left" Margin="20,265,0,0" Text="File name/location" VerticalAlignment="Top"/>
         <TextBlock x:Name="txtFilename" Margin="40,290,145,0" Text="(not set)" TextWrapping="Wrap" VerticalAlignment="Top"/>
