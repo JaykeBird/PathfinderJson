@@ -65,7 +65,7 @@ namespace PathfinderJson
         {
             string newjson = "{\"_id\":\"-1\"," +
                 "\"user\":{\"provider\":\"local\",\"id\":\"null\",\"displayName\":\"-\"," +
-                "\"username\":\"-\",\"profileUrl\":\"\",\"emails\":[]},\"spells\":[{},{},{},{},{},{},{},{},{},{}]," +
+                "\"username\":\"\",\"profileUrl\":\"\",\"emails\":[]},\"spells\":[{},{},{},{},{},{},{},{},{},{}]," +
                 "\"name\":\"" + name + "\",\"modified\":\"" + string.Concat(DateTime.UtcNow.ToString("s"), ".000Z") + "\",\"level\":\"" + level + "\"}";
 
             PathfinderSheet ps = LoadJsonText(newjson);
@@ -340,7 +340,7 @@ namespace PathfinderJson
             {
                 Provider = "local";
                 Id = "null";
-                DisplayName = "-";
+                DisplayName = "";
                 ProfileUrl = "";
             }
 

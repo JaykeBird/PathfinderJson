@@ -1837,6 +1837,31 @@ namespace PathfinderJson
             if (ude.DialogResult)
             {
                 // update userdata
+                ud = ude.GetUserData();
+
+                // update UI with new userdata
+                txtPlayerName.Text = ud.DisplayName;
+
+                string email = "";
+
+                foreach (UserData.Email item in ud.Emails)
+                {
+                    if (item.Type == "account")
+                    {
+                        email = item.Value;
+                    }
+                }
+                if (string.IsNullOrEmpty(email))
+                {
+                    try
+                    {
+                        email = sheet.Player.Emails[0].Value;
+                    }
+                    catch (IndexOutOfRangeException) { }
+                }
+                txtPlayerEmail.Text = email;
+
+                SetIsDirty();
             }
         }
 

@@ -77,5 +77,26 @@ namespace PathfinderJson
                 ud = ps.Player;
             }
         }
+
+        private void btnEditData_Click(object sender, RoutedEventArgs e)
+        {
+            UserdataEditor ude = new UserdataEditor();
+            ude.Owner = this;
+            ude.LoadUserData(ud);
+
+            ude.ShowDialog();
+            if (ude.DialogResult)
+            {
+                ud = ude.GetUserData();
+                if (!string.IsNullOrEmpty(ud.DisplayName))
+                {
+                    txtPlayerName.Text = ud.DisplayName;
+                }
+                else
+                {
+                    txtPlayerName.Text = "(not set)";
+                }
+            }
+        }
     }
 }
