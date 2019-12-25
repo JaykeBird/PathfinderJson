@@ -21,6 +21,11 @@
 
         <flat:Menu Grid.Row="0" x:Name="menu" IsMainMenu="True" Grid.ColumnSpan="2" >
             <MenuItem Header="_File">
+                <MenuItem Header="_New Sheet..." x:Name="mnuNew" Click="mnuNew_Click">
+                    <MenuItem.Icon>
+                        <Image Source="/PathfinderJson;component/Images/NewFile.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
                 <MenuItem Header="_Open..." x:Name="mnuOpen" Click="mnuOpen_Click" >
                     <MenuItem.Icon>
                         <Image Source="/PathfinderJson;component/Images/Open.png" />
@@ -209,12 +214,12 @@
                         </Grid>
                     </Expander>
 
-                    <TextBox x:Name="txtStr" HorizontalAlignment="Left" Height="23" Margin="132,5,0,0" Grid.Row="4" VerticalAlignment="Top" Width="50" TextChanged="txtStr_TextChanged" />
-                    <TextBox x:Name="txtDex" HorizontalAlignment="Left" Height="23" Margin="132,33,0,0" Grid.Row="4" VerticalAlignment="Top" Width="50" TextChanged="txtStr_TextChanged"/>
-                    <TextBox x:Name="txtCon" HorizontalAlignment="Left" Height="23" Margin="132,61,0,0" Grid.Row="4" VerticalAlignment="Top" Width="50" TextChanged="txtStr_TextChanged"/>
-                    <TextBox x:Name="txtInt" HorizontalAlignment="Left" Height="23" Margin="132,89,0,0" Grid.Row="4" VerticalAlignment="Top" Width="50" TextChanged="txtStr_TextChanged"/>
-                    <TextBox x:Name="txtWis" HorizontalAlignment="Left" Height="23" Margin="132,117,0,0" Grid.Row="4" VerticalAlignment="Top" Width="50" TextChanged="txtStr_TextChanged"/>
-                    <TextBox x:Name="txtCha" HorizontalAlignment="Left" Height="23" Margin="132,145,0,0" Grid.Row="4" VerticalAlignment="Top" Width="50" TextChanged="txtStr_TextChanged"/>
+                    <flat:IntegerSpinner x:Name="txtStr" HorizontalAlignment="Left" Height="23" Margin="132,5,0,0" Grid.Row="4" VerticalAlignment="Top"   Width="60" ValueChanged="txtStr_ValueChanged" MinValue="-99" MaxValue="999" AcceptExpressions="True" ColorScheme="{Binding ColorScheme, ElementName=window}" />
+                    <flat:IntegerSpinner x:Name="txtDex" HorizontalAlignment="Left" Height="23" Margin="132,33,0,0" Grid.Row="4" VerticalAlignment="Top"  Width="60" ValueChanged="txtStr_ValueChanged" MinValue="-99" MaxValue="999" AcceptExpressions="True" ColorScheme="{Binding ColorScheme, ElementName=window}" />
+                    <flat:IntegerSpinner x:Name="txtCon" HorizontalAlignment="Left" Height="23" Margin="132,61,0,0" Grid.Row="4" VerticalAlignment="Top"  Width="60" ValueChanged="txtStr_ValueChanged" MinValue="-99" MaxValue="999" AcceptExpressions="True" ColorScheme="{Binding ColorScheme, ElementName=window}" />
+                    <flat:IntegerSpinner x:Name="txtInt" HorizontalAlignment="Left" Height="23" Margin="132,89,0,0" Grid.Row="4" VerticalAlignment="Top"  Width="60" ValueChanged="txtStr_ValueChanged" MinValue="-99" MaxValue="999" AcceptExpressions="True" ColorScheme="{Binding ColorScheme, ElementName=window}" />
+                    <flat:IntegerSpinner x:Name="txtWis" HorizontalAlignment="Left" Height="23" Margin="132,117,0,0" Grid.Row="4" VerticalAlignment="Top" Width="60" ValueChanged="txtStr_ValueChanged" MinValue="-99" MaxValue="999" AcceptExpressions="True" ColorScheme="{Binding ColorScheme, ElementName=window}" />
+                    <flat:IntegerSpinner x:Name="txtCha" HorizontalAlignment="Left" Height="23" Margin="132,145,0,0" Grid.Row="4" VerticalAlignment="Top" Width="60" ValueChanged="txtStr_ValueChanged" MinValue="-99" MaxValue="999" AcceptExpressions="True" ColorScheme="{Binding ColorScheme, ElementName=window}" />
                     <TextBlock x:Name="lblStr" HorizontalAlignment="Left" Margin="15,8,0,0" Grid.Row="4" Text="STR" FontWeight="Bold" VerticalAlignment="Top" />
                     <TextBlock x:Name="lblDex" HorizontalAlignment="Left" Margin="15,38,0,0" Grid.Row="4" Text="DEX" FontWeight="Bold" VerticalAlignment="Top"/>
                     <TextBlock x:Name="lblCon" HorizontalAlignment="Left" Margin="15,66,0,0" Grid.Row="4" Text="CON" FontWeight="Bold" VerticalAlignment="Top"/>
@@ -227,12 +232,19 @@
                     <TextBlock x:Name="lblInt_Copy" HorizontalAlignment="Left" Margin="50,94,0,0" Grid.Row="4" Text="Intelligence" VerticalAlignment="Top"/>
                     <TextBlock x:Name="lblWis_Copy" HorizontalAlignment="Left" Margin="50,122,0,0" Grid.Row="4" Text="Wisdom" VerticalAlignment="Top"/>
                     <TextBlock x:Name="lblCha_Copy" HorizontalAlignment="Left" Margin="50,150,0,0" Grid.Row="4" Text="Charisma" VerticalAlignment="Top"/>
-                    <TextBox x:Name="txtStrm" HorizontalAlignment="Left" Height="23" Margin="187,5,0,0" Grid.Row="4" VerticalAlignment="Top" Width="40" IsEnabled="False"/>
-                    <TextBox x:Name="txtDexm" HorizontalAlignment="Left" Height="23" Margin="187,33,0,0" Grid.Row="4" VerticalAlignment="Top" Width="40" IsEnabled="False"/>
-                    <TextBox x:Name="txtConm" HorizontalAlignment="Left" Height="23" Margin="187,61,0,0" Grid.Row="4" VerticalAlignment="Top" Width="40" IsEnabled="False"/>
-                    <TextBox x:Name="txtIntm" HorizontalAlignment="Left" Height="23" Margin="187,89,0,0" Grid.Row="4" VerticalAlignment="Top" Width="40" IsEnabled="False"/>
-                    <TextBox x:Name="txtWism" HorizontalAlignment="Left" Height="23" Margin="187,117,0,0" Grid.Row="4" VerticalAlignment="Top" Width="40" IsEnabled="False"/>
-                    <TextBox x:Name="txtCham" HorizontalAlignment="Left" Height="23" Margin="187,145,0,0" Grid.Row="4" VerticalAlignment="Top" Width="40" IsEnabled="False"/>
+
+                    <TextBox x:Name="txtStrm" HorizontalAlignment="Left" Height="23" Margin="256,5,0,0" VerticalAlignment="Top" Width="40" IsEnabled="False" Grid.Row="4"/>
+                    <TextBox x:Name="txtDexm" HorizontalAlignment="Left" Height="23" Margin="256,33,0,0" VerticalAlignment="Top" Width="40" IsEnabled="False" Grid.Row="4"/>
+                    <TextBox x:Name="txtConm" HorizontalAlignment="Left" Height="23" Margin="256,61,0,0" VerticalAlignment="Top" Width="40" IsEnabled="False" Grid.Row="4"/>
+                    <TextBox x:Name="txtIntm" HorizontalAlignment="Left" Height="23" Margin="256,89,0,0" VerticalAlignment="Top" Width="40" IsEnabled="False" Grid.Row="4"/>
+                    <TextBox x:Name="txtWism" HorizontalAlignment="Left" Height="23" Margin="256,117,0,0" VerticalAlignment="Top" Width="40" IsEnabled="False" Grid.Row="4"/>
+                    <TextBox x:Name="txtCham" HorizontalAlignment="Left" Height="23" Margin="256,145,0,0" VerticalAlignment="Top" Width="40" IsEnabled="False" Grid.Row="4"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="207,8,0,0" Text="modifier" VerticalAlignment="Top" Grid.Row="4"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="207,38,0,0" Text="modifier" VerticalAlignment="Top" Grid.Row="4"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="207,66,0,0" Text="modifier" VerticalAlignment="Top" Grid.Row="4"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="207,94,0,0" Text="modifier" VerticalAlignment="Top" Grid.Row="4"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="207,122,0,0" Text="modifier" VerticalAlignment="Top" Grid.Row="4"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="207,150,0,0" Text="modifier" VerticalAlignment="Top" Grid.Row="4"/>
 
                     <local:CompoundEditor Grid.Row="5" Margin="5,5,0,0" x:Name="edtFort" Title="Fortitude Save (CON)" ModifierTitle="Con Mod" ContentChanged="editor_ContentChanged" />
                     <local:CompoundEditor Grid.Row="6" Margin="5,5,0,0" x:Name="edtReflex" Title="Reflex Save (DEX)" ModifierTitle="Dex Mod" ContentChanged="editor_ContentChanged" />
@@ -603,7 +615,7 @@
 
         <TextBlock x:Name="lblNoSheet" Grid.Column="1" HorizontalAlignment="Center" Grid.Row="2" TextWrapping="Wrap" VerticalAlignment="Center" TextAlignment="Center" Visibility="Collapsed" >
             <Run Text="No sheet loaded" /><LineBreak /><Run FontSize="4" /><LineBreak/>
-            <Run Text="To load a sheet, select Open from the File menu."  />
+            <Run Text="Create or open a sheet using the File menu."  />
         </TextBlock>
 
     </Grid>

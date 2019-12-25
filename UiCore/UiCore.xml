@@ -1,0 +1,646 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>UiCore</name>
+    </assembly>
+    <members>
+        <member name="T:UiCore.ArithmeticParser">
+            <summary>
+            Contains functionality to parse and evaluate math arithmetic expressions.
+            </summary>
+        </member>
+        <member name="M:UiCore.ArithmeticParser.Evaluate(System.String)">
+            <summary>
+            Evaluate an arithmetic expression and output the result (i.e. "2+5" will output "7"). See remarks for more info on supported functions.
+            </summary>
+            <param name="input">The arithmetic expression to evaluate.</param>
+            <exception cref="T:System.FormatException">Thrown if the expression is not valid (contains unrecognized characters or a mismatched number of parantheses).</exception>
+            <returns>The result of the expression.</returns>
+            <remarks>Supports addition, subtraction, multiplication, division, and exponents. Also supports parantheses (with implied multiplcation) and negative numbers.<para/>
+            Uses order of operations: exponents, division, multiplication, subtraction, addition.<para/>
+            Whitespace and new-line characters are removed prior to evaluation, and the literal characters ×, ⋅, and ÷ are replaced with their representations *, *, and /.</remarks>
+        </member>
+        <member name="M:UiCore.ArithmeticParser.IsValidString(System.String)">
+            <summary>
+            Check if a string can be parsed as an expression.
+            </summary>
+            <param name="input">The string to parse.</param>
+            <returns>True if it is a string that can be parsed. False if it contains invalid characters.</returns>
+        </member>
+        <member name="T:UiCore.AutoCompleteBehavior">
+            <summary>
+            Adds basic auto-complete behavior to text boxes via attached properties. Created by Nimgoble.
+            </summary>
+        </member>
+        <member name="F:UiCore.AutoCompleteBehavior.AutoCompleteItemsSource">
+            <summary>
+            The collection to search for matches from.
+            </summary>
+        </member>
+        <member name="F:UiCore.AutoCompleteBehavior.AutoCompleteStringComparison">
+            <summary>
+            Whether or not to ignore case when searching for matches.
+            </summary>
+        </member>
+        <member name="F:UiCore.AutoCompleteBehavior.AutoCompleteIndicator">
+            <summary>
+            What string should indicate that we should start giving auto-completion suggestions.  For example: @
+            If this is null or empty, auto-completion suggestions will begin at the beginning of the textbox's text.
+            </summary>
+        </member>
+        <member name="M:UiCore.AutoCompleteBehavior.OnPreviewKeyDown(System.Object,System.Windows.Input.KeyEventArgs)">
+            <summary>
+            Used for moving the caret to the end of the suggested auto-completion text.
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:UiCore.AutoCompleteBehavior.OnTextChanged(System.Object,System.Windows.Controls.TextChangedEventArgs)">
+            <summary>
+            Search for auto-completion suggestions.
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="T:UiCore.BrushFactory">
+            <summary>
+            A class that creates brushes to be used in coloring the user interface.
+            </summary>
+        </member>
+        <member name="M:UiCore.BrushFactory.Create(System.Windows.Media.Color)">
+            <summary>
+            Create a brush based upon a single color.
+            </summary>
+            <param name="color">The color to use.</param>
+            <returns>A SolidColorBrush that includes the color.</returns>
+        </member>
+        <member name="M:UiCore.BrushFactory.Create(System.String)">
+            <summary>
+            Create a brush based upon a single color.
+            </summary>
+            <param name="hex">The hex value of the color to use.</param>
+            <returns>A SolidColorBrush that includes the color.</returns>
+        </member>
+        <member name="M:UiCore.BrushFactory.Create(System.Windows.Media.Color,System.Windows.Media.Color,System.Double)">
+            <summary>
+            Create a brush based upon two colors, made into a linear gradient.
+            </summary>
+            <param name="col1">The first color.</param>
+            <param name="col2">The second color.</param>
+            <param name="angle">The angle of the gradient to be made.</param>
+            <returns>A LinearGradientBrush that includes the two colors.</returns>
+        </member>
+        <member name="M:UiCore.BrushFactory.CreateFromImage(System.Windows.Media.DrawingImage)">
+            <summary>
+            Create a brush based upon an image.
+            </summary>
+            <param name="image">The image to use.</param>
+            <returns>An ImageBrush containing this image.</returns>
+        </member>
+        <member name="M:UiCore.BrushFactory.CreateFromImage(System.Uri)">
+            <summary>
+            Create a brush based upon an image.
+            </summary>
+            <param name="location">The location, such as a web address or file location, of the image to use.</param>
+            <returns>An ImageBrush containing this image.</returns>
+        </member>
+        <member name="T:UiCore.HighContrastBrushes">
+            <summary>
+            Contains some <code>SolidColorBrush</code> fields for usage in High Contrast mode.
+            </summary>
+        </member>
+        <member name="T:UiCore.CheckBox">
+            <summary>
+            Interaction logic for NewCheckBox.xaml
+            </summary>
+        </member>
+        <member name="P:UiCore.CheckBox.ClickOnPress">
+            <summary>
+            Gets or sets whether the Click event should be raised when the checkbox is pressed, rather than when it is released.
+            </summary>
+        </member>
+        <member name="P:UiCore.CheckBox.TriStateClick">
+            <summary>
+            Gets or sets whether the checkbox should cycle through three states (rather than two) when clicked. The third state is the "Indeterminate" state, which can be checked via the IsIndeterminate property.
+            </summary>
+        </member>
+        <member name="M:UiCore.CheckBox.PerformPress(System.Boolean)">
+            <summary>
+            Sets up the button to be clicked. This must be run before PerformClick.
+            </summary>
+            <param name="rightClick">Determine whether this should be treated as a right click (which usually invokes a context menu).</param>
+        </member>
+        <member name="M:UiCore.CheckBox.PerformClick(System.Boolean)">
+            <summary>
+            If the button is prepared by PerformPress, perform the Click actions, including raising the Click event.
+            </summary>
+            <param name="rightClick">Determine whether this should be treated as a right click (which usually invokes a context menu).</param>
+        </member>
+        <member name="M:UiCore.CheckBox.DoClick">
+            <summary>
+            Perform a click programattically. The checkbox responds the same way as if it was clicked by the user.
+            </summary>
+        </member>
+        <member name="T:UiCore.ChromeButtons">
+            <summary>
+            Interaction logic for ChromeButtons.xaml
+            </summary>
+            <summary>
+            ChromeButtons
+            </summary>
+        </member>
+        <member name="F:UiCore.ChromeButtons._parent">
+            <summary>
+            The parent Window of the control.
+            </summary>
+        </member>
+        <member name="M:UiCore.ChromeButtons.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:UiCore.ChromeButtons"/> class.
+            </summary>
+        </member>
+        <member name="M:UiCore.ChromeButtons.CaptionButtonsLoaded(System.Object,System.Windows.RoutedEventArgs)">
+            <summary>
+            Event when the control is loaded.
+            </summary>
+            <param name="sender">The sender.</param>
+            <param name="e">The <see cref="T:System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
+        </member>
+        <member name="M:UiCore.ChromeButtons.CloseButtonClick(System.Object,System.Windows.RoutedEventArgs)">
+            <summary>
+            Action on the button to close the window.
+            </summary>
+            <param name="sender">The sender.</param>
+            <param name="e">The <see cref="T:System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
+        </member>
+        <member name="M:UiCore.ChromeButtons.RestoreButtonClick(System.Object,System.Windows.RoutedEventArgs)">
+            <summary>
+            Changes the view of the window (maximized or normal).
+            </summary>
+            <param name="sender">The sender.</param>
+            <param name="e">The <see cref="T:System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
+        </member>
+        <member name="M:UiCore.ChromeButtons.MinimizeButtonClick(System.Object,System.Windows.RoutedEventArgs)">
+            <summary>
+            Minimizes the Window.
+            </summary>
+            <param name="sender">The sender.</param>
+            <param name="e">The <see cref="T:System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
+        </member>
+        <member name="M:UiCore.ChromeButtons.GetTopParent">
+            <summary>
+            Gets the top parent (Window).
+            </summary>
+            <returns>The parent Window.</returns>
+        </member>
+        <member name="P:UiCore.ChromeButtons.MarginButton">
+            <summary>
+            Gets or sets the margin button.
+            </summary>
+            <value>The margin button.</value>
+        </member>
+        <member name="F:UiCore.ChromeButtons.MarginButtonProperty">
+            <summary>
+            The dependency property for the Margin between the buttons.
+            </summary>
+        </member>
+        <member name="T:UiCore.ChromeButtons.CaptionType">
+            <summary>
+            Determines which caption buttons will appear on a window.
+            </summary>
+        </member>
+        <member name="F:UiCore.ChromeButtons.CaptionType.Full">
+            <summary>
+            Display the close, maximize/restore, and minimize buttons.
+            </summary>
+        </member>
+        <member name="F:UiCore.ChromeButtons.CaptionType.Close">
+            <summary>
+            Display only the close button.
+            </summary>
+        </member>
+        <member name="F:UiCore.ChromeButtons.CaptionType.MinimizeClose">
+            <summary>
+            Display only the close and minimize buttons.
+            </summary>
+        </member>
+        <member name="F:UiCore.ChromeButtons.CaptionType.MaximizeClose">
+            <summary>
+            Display only the close and maximize/restore buttons.
+            </summary>
+        </member>
+        <member name="P:UiCore.ChromeButtons.DisplayType">
+            <summary>
+            Gets or sets the visibility of the buttons.
+            </summary>
+            <value>The visible buttons.</value>
+        </member>
+        <member name="F:UiCore.ChromeButtons.TypeProperty">
+            <summary>
+            The dependency property for the Margin between the buttons.
+            </summary>
+        </member>
+        <member name="M:UiCore.ChromeButtons.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:UiCore.ClickSelectTextBox">
+            <summary>
+            A TextBox where all the text is automatically selected when the text box gets focus (i.e. mouse click or keyboard focus).
+            </summary>
+        </member>
+        <member name="M:UiCore.ClickSelectTextBox.#ctor">
+            <summary>
+            Creates a new ClickSelectTextBox and defines the default event handlers.
+            </summary>
+        </member>
+        <member name="P:UiCore.ClickSelectTextBox.SelectOnFocus">
+            <summary>
+            Get or set whether all text will be selected when the text box receives focus.
+            </summary>
+        </member>
+        <member name="M:UiCore.ClickSelectTextBox.MouseButtonDown(System.Object,System.Windows.Input.MouseButtonEventArgs)">
+            <summary>
+            Handler for when the left mouse button is pressed.
+            </summary>
+            <param name="sender">The sender of the event.</param>
+            <param name="e">Event arguments representing the mouse button being pressed.</param>
+        </member>
+        <member name="M:UiCore.ClickSelectTextBox.SelectAllText(System.Object,System.Windows.RoutedEventArgs)">
+            <summary>
+            Locate the TextBox and have it select all text.
+            </summary>
+            <param name="sender">The sender of the event.</param>
+            <param name="e">Event arguments providing details about the event.</param>
+        </member>
+        <member name="T:UiCore.ColorListItem">
+            <summary>
+            Interaction logic for ColorListItem.xaml
+            </summary>
+            <summary>
+            ColorListItem
+            </summary>
+        </member>
+        <member name="M:UiCore.ColorListItem.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="M:UiCore.ColorPaletteLoad.ReadInt16(System.IO.Stream)">
+            <summary>
+            Reads a 16bit unsigned integer in big-endian format.
+            </summary>
+            <param name="stream">The stream to read the data from.</param>
+            <returns>The unsigned 16bit integer cast to an <c>Int32</c>.</returns>
+        </member>
+        <member name="M:UiCore.ColorPaletteLoad.ReadInt32(System.IO.Stream)">
+            <summary>
+            Reads a 32bit unsigned integer in big-endian format.
+            </summary>
+            <param name="stream">The stream to read the data from.</param>
+            <returns>The unsigned 32bit integer cast to an <c>Int32</c>.</returns>
+        </member>
+        <member name="M:UiCore.ColorPaletteLoad.ReadString(System.IO.Stream,System.Int32)">
+            <summary>
+            Reads a unicode string of the specified length.
+            </summary>
+            <param name="stream">The stream to read the data from.</param>
+            <param name="length">The number of characters in the string.</param>
+            <returns>The string read from the stream.</returns>
+        </member>
+        <member name="T:UiCore.ColorPickerDialog">
+            <summary>
+            Interaction logic for ColorPickerDialog.xaml
+            </summary>
+            <summary>
+            ColorPickerDialog
+            </summary>
+        </member>
+        <member name="M:UiCore.ColorPickerDialog.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:UiCore.ColorsHelper">
+            <summary>
+            Contains a collection of helper functions in relation to colors.
+            </summary>
+        </member>
+        <member name="M:UiCore.ColorsHelper.CreateFromRgb(System.Byte,System.Byte,System.Byte)">
+            <summary>
+            Create a color based upon RGB values.
+            </summary>
+            <param name="r">The red value of the color.</param>
+            <param name="g">The green value of the color.</param>
+            <param name="b">The blue value of the color.</param>
+            <returns></returns>
+        </member>
+        <member name="M:UiCore.ColorsHelper.CreateFromArgb(System.Byte,System.Byte,System.Byte,System.Byte)">
+            <summary>
+            Create a color based upon RGB values, with alpha transparency as well.
+            </summary>
+            <param name="a">The alpha value (transparency) of the color.</param>
+            <param name="r">The red value of the color.</param>
+            <param name="g">The green value of the color.</param>
+            <param name="b">The blue value of the color.</param>
+            <returns></returns>
+        </member>
+        <member name="M:UiCore.ColorsHelper.CreateFromHex(System.String)">
+            <summary>
+            Create a color based upon a hex string.
+            </summary>
+            <param name="hex">The hex string. Should have 3, 6, or 8 characters (i.e. "FFF", "FF00FF", or "FF00FF00"). The starting hash is allowed.</param>
+            <exception cref="T:System.FormatException">Thrown if the string is not a hex string, or incorrectly formatted (including if the string is not of the length 3, 6, or 8).</exception>
+        </member>
+        <member name="M:UiCore.ColorsHelper.ToHexString(System.Windows.Media.Color)">
+            <summary>
+            Returns an RGB hex triplet string that corresponds to this color. Note that A (alpha) is dropped.
+            </summary>
+            <param name="color">The color to convert to a hex string.</param>
+            <returns></returns>
+        </member>
+        <member name="M:UiCore.ColorsHelper.ToHSV(System.Windows.Media.Color,System.Double@,System.Double@,System.Double@)">
+            <summary>
+            Get the HSV values for a particular color.
+            </summary>
+            <param name="color">The color to convert to HSV.</param>
+            <param name="hue">The hue value of the color.</param>
+            <param name="saturation">The saturation value of the color.</param>
+            <param name="value">The value (also known as brightness) value of the color.</param>
+        </member>
+        <member name="M:UiCore.ColorsHelper.CreateFromHSV(System.Double,System.Double,System.Double)">
+            <summary>
+            Create a color based upon HSV values.
+            </summary>
+            <param name="hue">The hue of the color.</param>
+            <param name="saturation">The saturation of the color.</param>
+            <param name="value">The value of the color.</param>
+            <returns>Return a color that corresponds to these HSV values.</returns>
+        </member>
+        <member name="P:UiCore.ColorsHelper.DarkBlue">
+            <summary>A preselected color, good to use for a color scheme. Has hex string 0080E5.</summary>
+        </member>
+        <member name="P:UiCore.ColorsHelper.Blue">
+            <summary>A preselected color, good to use for a color scheme. Has hex string 00AEDB.</summary>
+        </member>
+        <member name="P:UiCore.ColorsHelper.Yellow">
+            <summary>A preselected color, good to use for a color scheme. Has hex string FFBE00.</summary>
+        </member>
+        <member name="P:UiCore.ColorsHelper.Orange">
+            <summary>A preselected color, good to use for a color scheme. Has hex string FF7000.</summary>
+        </member>
+        <member name="P:UiCore.ColorsHelper.Red">
+            <summary>A preselected color, good to use for a color scheme. Has hex string E34234.</summary>
+        </member>
+        <member name="P:UiCore.ColorsHelper.SkyBlue">
+            <summary>A preselected color, good to use for a color scheme. Has hex string 93D2FA.</summary>
+        </member>
+        <member name="P:UiCore.ColorsHelper.Pink">
+            <summary>A preselected color, good to use for a color scheme. Has hex string FDBCB9.</summary>
+        </member>
+        <member name="P:UiCore.ColorsHelper.Green">
+            <summary>A preselected color, good to use for a color scheme. Has hex string 228B22.</summary>
+        </member>
+        <member name="P:UiCore.ColorsHelper.Cyan">
+            <summary>A preselected color, good to use for a color scheme. Has hex string 21B17E.</summary>
+        </member>
+        <member name="P:UiCore.ColorsHelper.LightGreen">
+            <summary>A preselected color, good to use for a color scheme. Has hex string 74C365.</summary>
+        </member>
+        <member name="P:UiCore.ColorsHelper.GrayGreen">
+            <summary>A preselected color, good to use for a color scheme. Has hex string 6C7C59.</summary>
+        </member>
+        <member name="P:UiCore.ColorsHelper.LightViolet">
+            <summary>A preselected color, good to use for a color scheme. Has hex string 947CFB.</summary>
+        </member>
+        <member name="P:UiCore.ColorsHelper.Violet">
+            <summary>A preselected color, good to use for a color scheme. Has hex string 7F66AF.</summary>
+        </member>
+        <member name="P:UiCore.ColorsHelper.Purple">
+            <summary>A preselected color, good to use for a color scheme. Has hex string B571C7.</summary>
+        </member>
+        <member name="P:UiCore.ColorsHelper.Gray">
+            <summary>A preselected color, good to use for a color scheme. Has hex string 808080.</summary>
+        </member>
+        <member name="P:UiCore.ColorsHelper.RedBrown">
+            <summary>A preselected color, good to use for a color scheme. Has hex string 954535.</summary>
+        </member>
+        <member name="P:UiCore.ColorsHelper.Salmon">
+            <summary>A preselected color, good to use for a color scheme. Has hex string D95E40.</summary>
+        </member>
+        <member name="P:UiCore.ColorsHelper.Brown">
+            <summary>A preselected color, good to use for a color scheme. Has hex string B05010.</summary>
+        </member>
+        <member name="P:UiCore.ColorsHelper.White">
+            <summary>A preselected color. Has hex string FFFFFF.</summary>
+        </member>
+        <member name="P:UiCore.ColorsHelper.Black">
+            <summary>A preselected color. Has hex string 000000.</summary>
+        </member>
+        <member name="P:UiCore.ColorsHelper.LightGray">
+            <summary>A preselected color, good to use for a color scheme. Has hex string C0C0C0.</summary>
+        </member>
+        <member name="P:UiCore.ColorsHelper.Olive">
+            <summary>A preselected color. Has hex string 808000.</summary>
+        </member>
+        <member name="P:UiCore.ColorsHelper.DarkGray">
+            <summary>A preselected color, good to use for a color scheme. Has hex string 666666.</summary>
+        </member>
+        <member name="P:UiCore.ColorsHelper.HighContrastLightBlue">
+            <summary>A color used in high contrast color schemes, which mirrors Windows's high contrast themes. Has hex string 1AEBFF.</summary>
+        </member>
+        <member name="P:UiCore.ColorsHelper.HighContrastPurple">
+            <summary>A color used in high contrast color schemes, which mirrors Windows's high contrast themes. Has hex string 37006E.</summary>
+        </member>
+        <member name="P:UiCore.ColorsHelper.HighContrastLightPurple">
+            <summary>A color used in high contrast color schemes, which mirrors Windows's high contrast themes. Has hex string 9B7FB6.</summary>
+        </member>
+        <member name="P:UiCore.ColorsHelper.HighContrastGreen">
+            <summary>A color used in high contrast color schemes, which mirrors Windows's high contrast themes. Has hex string 00FF00.</summary>
+        </member>
+        <member name="P:UiCore.ColorsHelper.HighContrastLightGreen">
+            <summary>A color used in high contrast color schemes, which mirrors Windows's high contrast themes. Has hex string 81FF81.</summary>
+        </member>
+        <member name="P:UiCore.ColorsHelper.HighContrastBlue">
+            <summary>A color used in high contrast color schemes, which mirrors Windows's high contrast themes. Has hex string 0000FF.</summary>
+        </member>
+        <member name="P:UiCore.ColorsHelper.HighContrastGray">
+            <summary>A color used in high contrast color schemes, which mirrors Windows's high contrast themes. Has hex string C0C0C0.</summary>
+        </member>
+        <member name="P:UiCore.ColorsHelper.HighContrastRed">
+            <summary>A color used in high contrast color schemes, which mirrors Windows's high contrast themes. Has hex string 900000.</summary>
+        </member>
+        <member name="M:UiCore.ColorsHelper.GetX11Color(System.String)">
+            <summary>
+            Get a color from the X11 Color table (<c>System.Windows.Media.Colors</c>) with a particular name.
+            </summary>
+            <param name="colorName">The name of the color to get.</param>
+            <returns>A Color that corresponds to that name.</returns>
+            <exception cref="T:System.ArgumentException">Thrown if there is no X11 color with that name.</exception>
+            <remarks>Make sure to enter the name as it appears in the class <c>System.Windows.Media.Colors</c>, with no spaces or alternate spellings.</remarks>
+        </member>
+        <member name="M:UiCore.ColorsHelper.ToBrush(System.Windows.Media.Color)">
+            <summary>
+            Get a SolidColorBrush for this color.
+            </summary>
+        </member>
+        <member name="M:UiCore.ColorsHelper.GetHexString(System.Windows.Media.Color)">
+            <summary>
+            Get a hex triplet string for this color. Does not include the hash symbol.
+            </summary>
+        </member>
+        <member name="M:UiCore.ColorsHelper.GetInversion(System.Windows.Media.Color)">
+            <summary>
+            Get the color that is the invert of this color. The A (alpha) value of the color is also kept.
+            </summary>
+        </member>
+        <member name="P:UiCore.ColorScheme.IsHighContrast">
+            <summary>
+            Get or set whether this is a high-contrast color scheme.
+            </summary>
+        </member>
+        <member name="P:UiCore.ColorScheme.MainColor">
+            <summary>
+            Main interface color. With High Contrast color schemes, do not use except for window captions
+            </summary>
+        </member>
+        <member name="P:UiCore.ColorScheme.SecondaryColor">
+            <summary>
+            Secondary color. Do not use with High Contrast color schemes
+            </summary>
+        </member>
+        <member name="T:UiCore.DoubleSpinner">
+            <summary>
+            Interaction logic for DoubleSpinner.xaml
+            </summary>
+            <summary>
+            DoubleSpinner
+            </summary>
+        </member>
+        <member name="P:UiCore.DoubleSpinner.AcceptExpressions">
+            <summary>
+            Get or set if the spinner should evaluate arithmetic expressions (such as "2+5") to accept as a value.
+            </summary>
+            <remarks>
+            See the <see cref="T:UiCore.ArithmeticParser"/> class for more info about how expressions are parsed.
+            </remarks>
+        </member>
+        <member name="M:UiCore.DoubleSpinner.ValidateValue">
+            <summary>
+            Validate the value and update the UI if neede.
+            </summary>
+        </member>
+        <member name="M:UiCore.DoubleSpinner.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:UiCore.FileSelect">
+            <summary>
+            Interaction logic for FileSelect.xaml
+            </summary>
+            <summary>
+            FileSelect
+            </summary>
+        </member>
+        <member name="M:UiCore.FileSelect.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:UiCore.FlatButton">
+            <summary>
+            A button with a custom, flat style and additional funcionality. Use <c>SelectOnClick</c> to have the button act like a toggle button.
+            </summary>
+        </member>
+        <member name="M:UiCore.FlatButton.#ctor">
+            <summary>
+            Create a new FlatButton.
+            </summary>
+        </member>
+        <member name="E:UiCore.FlatButton.UnroutedClick">
+            <summary>
+            Raised when the user clicks on the button. Please use the new Click event instead.
+            </summary>
+        </member>
+        <member name="E:UiCore.FlatButton.SelectionChanged">
+            <summary>
+            Raised if the button's IsSelected value is changed. This can be used to have the button act as a ToggleButton.
+            </summary>
+        </member>
+        <member name="P:UiCore.FlatButton.ColorScheme">
+            <summary>
+            Get or set the color scheme to use with the button.
+            </summary>
+        </member>
+        <member name="P:UiCore.FlatButton.TransparentBack">
+            <summary>
+            Get or set whether the button should have a transparent background when the button is not focused.
+            </summary>
+        </member>
+        <member name="P:UiCore.FlatButton.UseAccentColors">
+            <summary>
+            Get or set if the button should use the accent colors of the color scheme, rather than the standard colors.
+            </summary>
+        </member>
+        <member name="P:UiCore.FlatButton.BorderThickness">
+            <summary>
+            Get or set the thickness of the border around the button.
+            </summary>
+        </member>
+        <member name="P:UiCore.FlatButton.BorderSelectionThickness">
+            <summary>
+            Get or set the thickness of the border around the button, while the button is in a selected (<c>IsSelected</c>) state.
+            </summary>
+        </member>
+        <member name="P:UiCore.FlatButton.CornerRadius">
+            <summary>
+            Get or set the corner radius (or radii) to use for the button and its border. Can be used to create a rounded button.
+            </summary>
+        </member>
+        <member name="E:UiCore.FlatButton.Click">
+            <summary>
+            Raised when the user clicks on the button, via a mouse click, touch, a stylus, or via the keyboard.
+            </summary>
+        </member>
+        <member name="E:UiCore.FlatButton.RightClick">
+            <summary>
+            Raised when the user right-clicks on the button, via a mouse click or via the keyboard.
+            </summary>
+        </member>
+        <member name="P:UiCore.FlatButton.IsSelected">
+            <summary>
+            Gets or sets whether this button is selected. This property (combined with <c>SelectOnClick</c>) allows the button to function like a ToggleButton.
+            </summary>
+        </member>
+        <member name="P:UiCore.FlatButton.SelectOnClick">
+            <summary>
+            Gets or sets whether the button should change its IsSelected property when a click is performed.
+            </summary>
+        </member>
+        <member name="P:UiCore.FlatButton.ClickOnPress">
+            <summary>
+            Gets or sets whether the Click event should be raised when the button is pressed, rather than when it is released.
+            </summary>
+        </member>
+        <member name="M:UiCore.FlatButton.PerformPress(System.Boolean)">
+            <summary>
+            Sets up the button to be clicked. This must be run before PerformClick.
+            </summary>
+            <param name="rightClick">Determine whether this should be treated as a right click (which usually invokes a context menu).</param>
+        </member>
+        <member name="M:UiCore.FlatButton.PerformClick(System.Boolean)">
+            <summary>
+            If the button is prepared by PerformPress, perform the Click actions, including raising the Click event.
+            </summary>
+            <param name="rightClick">Determine whether this should be treated as a right click (which usually invokes a context menu).</param>
+        </member>
+        <member name="M:UiCore.FlatButton.DoClick">
+            <summary>
+            Perform a click programattically. The button responds the same way as if it was clicked by the user.
+            </summary>
+        </member>
+        <member name="F:UiCore.FlatButton.IsDefaultedPropertyKey">
+            <summary>
+                The 

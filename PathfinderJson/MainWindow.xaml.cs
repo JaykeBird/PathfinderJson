@@ -259,6 +259,32 @@ namespace PathfinderJson
 
         #region File / Help menus
 
+        private async void mnuNew_Click(object sender, RoutedEventArgs e)
+        {
+            NewSheet ns = new NewSheet();
+            ns.Owner = this;
+            ns.ShowDialog();
+
+            if (ns.DialogResult)
+            {
+                PathfinderSheet ps = ns.Sheet;
+
+                filePath = ns.FileLocation;
+                fileTitle = ps.Name;
+                _sheetLoaded = true;
+
+                isDirty = false;
+                _isEditorDirty = false;
+                _isTabsDirty = false;
+
+                UpdateTitlebar();
+
+                txtEditRaw.Text = ps.SaveJsonText(App.Settings.IndentJsonData);
+                await ChangeView(App.Settings.StartView, false, false);
+                await LoadPathfinderSheetAsync(ps);
+            }
+        }
+
         private async void mnuOpen_Click(object sender, RoutedEventArgs e)
         {
             Microsoft.Win32.OpenFileDialog ofd = new Microsoft.Win32.OpenFileDialog();
@@ -1129,6 +1155,7 @@ namespace PathfinderJson
                     email = sheet.Player.Emails[0].Value;
                 }
                 catch (IndexOutOfRangeException) { }
+                catch (ArgumentOutOfRangeException) { }
             }
             txtPlayerEmail.Text = email;
 
@@ -1142,6 +1169,7 @@ namespace PathfinderJson
             }
             catch (IndexOutOfRangeException) { }
             catch (NullReferenceException) { }
+            catch (ArgumentOutOfRangeException) { }
             catch (System.Net.WebException) { }
 
             ud = sheet.Player;
@@ -1163,12 +1191,12 @@ namespace PathfinderJson
             txtPhyHair.Text = sheet.Hair;
             txtPhyEyes.Text = sheet.Eyes;
 
-            txtStr.Text = sheet.Strength.ToString();
-            txtDex.Text = sheet.Dexterity.ToString();
-            txtCha.Text = sheet.Charisma.ToString();
-            txtCon.Text = sheet.Constitution.ToString();
-            txtInt.Text = sheet.Intelligence.ToString();
-            txtWis.Text = sheet.Wisdom.ToString();
+            txtStr.Value = sheet.Strength;
+            txtDex.Value = sheet.Dexterity;
+            txtCha.Value = sheet.Charisma;
+            txtCon.Value = sheet.Constitution;
+            txtInt.Value = sheet.Intelligence;
+            txtWis.Value = sheet.Wisdom;
 
             txtStrm.Text = CalculateModifier(sheet.Strength);
             txtDexm.Text = CalculateModifier(sheet.Dexterity);
@@ -1470,12 +1498,12 @@ namespace PathfinderJson
 
             _isUpdating = true;
 
-            txtStrm.Text = AttemptCalculateModifier(txtStr.Text);
-            txtDexm.Text = AttemptCalculateModifier(txtDex.Text);
-            txtCham.Text = AttemptCalculateModifier(txtCha.Text);
-            txtConm.Text = AttemptCalculateModifier(txtCon.Text);
-            txtIntm.Text = AttemptCalculateModifier(txtInt.Text);
-            txtWism.Text = AttemptCalculateModifier(txtWis.Text);
+            txtStrm.Text = CalculateModifier(txtStr.Value);
+            txtDexm.Text = CalculateModifier(txtDex.Value);
+            txtCham.Text = CalculateModifier(txtCha.Value);
+            txtConm.Text = CalculateModifier(txtCon.Value);
+            txtIntm.Text = CalculateModifier(txtInt.Value);
+            txtWism.Text = CalculateModifier(txtWis.Value);
 
             edtFort.UpdateCoreModifier(txtConm.Text);
             edtReflex.UpdateCoreModifier(txtDexm.Text);
@@ -1631,12 +1659,12 @@ namespace PathfinderJson
 
             Dictionary<string, string> abilities = new Dictionary<string, string>
             {
-                { "str", txtStr.Text },
-                { "dex", txtDex.Text },
-                { "cha", txtCha.Text },
-                { "con", txtCon.Text },
-                { "int", txtInt.Text },
-                { "wis", txtWis.Text }
+                { "str", txtStr.Value.ToString() },
+                { "dex", txtDex.Value.ToString() },
+                { "cha", txtCha.Value.ToString() },
+                { "con", txtCon.Value.ToString() },
+                { "int", txtInt.Value.ToString() },
+                { "wis", txtWis.Value.ToString() }
             };
             sheet.RawAbilities = abilities;
 
@@ -1803,16 +1831,16 @@ namespace PathfinderJson
             }
         }
 
-        private void txtStr_TextChanged(object sender, TextChangedEventArgs e)
+        private void txtStr_ValueChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             if (!_isUpdating)
             {
-                txtStrm.Text = AttemptCalculateModifier(txtStr.Text);
-                txtDexm.Text = AttemptCalculateModifier(txtDex.Text);
-                txtCham.Text = AttemptCalculateModifier(txtCha.Text);
-                txtConm.Text = AttemptCalculateModifier(txtCon.Text);
-                txtIntm.Text = AttemptCalculateModifier(txtInt.Text);
-                txtWism.Text = AttemptCalculateModifier(txtWis.Text);
+                txtStrm.Text = CalculateModifier(txtStr.Value);
+                txtDexm.Text = CalculateModifier(txtDex.Value);
+                txtCham.Text = CalculateModifier(txtCha.Value);
+                txtConm.Text = CalculateModifier(txtCon.Value);
+                txtIntm.Text = CalculateModifier(txtInt.Value);
+                txtWism.Text = CalculateModifier(txtWis.Value);
 
                 SetIsDirty();
             }
