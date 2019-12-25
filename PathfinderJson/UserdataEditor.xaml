@@ -23,7 +23,7 @@
 
         <TextBox x:Name="txtName" HorizontalAlignment="Left" Margin="110,114,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="170" Height="20"/>
         <TextBlock x:Name="lblName" HorizontalAlignment="Left" Margin="25,116,0,0" Text="User Name:" VerticalAlignment="Top"/>
-        <TextBox x:Name="txtProfileUrl" HorizontalAlignment="Left" Margin="111,140,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="170" Height="20"/>
+        <TextBox x:Name="txtProfileUrl" HorizontalAlignment="Left" Margin="110,140,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="170" Height="20"/>
         <TextBlock x:Name="lblProfileUrl" HorizontalAlignment="Left" Margin="25,142,0,0" Text="Profile URL:" VerticalAlignment="Top"/>
 
         <TextBlock x:Name="lblEmail" HorizontalAlignment="Left" Margin="25,175,0,0" Text="Email addresses:" VerticalAlignment="Top"/>

@@ -435,7 +435,11 @@ namespace PathfinderJson
             MenuItem mi = new MenuItem();
             string name = Path.GetFileName(filename);
             mi.Header = "_" + name;
-            mi.ToolTip = filename;
+            ToolTip tt = new ToolTip();
+            tt.Content = filename;
+            tt.Placement = System.Windows.Controls.Primitives.PlacementMode.Right;
+            tt.PlacementTarget = mi;
+            mi.ToolTip = tt;
             mi.Tag = filename;
             mi.Click += miRecentFile_Click;
             mnuRecent.Items.Insert(0, mi);
