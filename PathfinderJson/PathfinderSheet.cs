@@ -286,9 +286,13 @@ namespace PathfinderJson
         public bool ClassSkill { get; set; } = false;
         [JsonProperty(DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
         public string Ranks { get; set; }
+        [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
         public string Total { get; set; }
+        [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
         public string Racial { get; set; }
+        [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
         public string Trait { get; set; }
+        [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
         public string Misc { get; set; }
         [JsonProperty("name", DefaultValueHandling = DefaultValueHandling.Ignore)]
         public string Specialization { get; set; }
@@ -322,10 +326,14 @@ namespace PathfinderJson
         public List<Email> Emails { get; set; }
         //public Name UserName { get; set; }
         public List<Photo> Photos { get; set; }
+        [JsonProperty("profileUrl", DefaultValueHandling = DefaultValueHandling.Ignore)]
         public string ProfileUrl { get; set; }
 
         //public class Name { public string FamilyName { get; set; } public string GivenName { get; set; } }
-        public class Email { public string Value { get; set; } public string Type { get; set; } }
+        public class Email { public string Value { get; set; } 
+            [JsonProperty("type", DefaultValueHandling = DefaultValueHandling.Ignore)]
+            public string Type { get; set; } }
+
         public class Photo { public string Value { get; set; } }
 
         public UserData()
@@ -364,19 +372,19 @@ namespace PathfinderJson
 
     public class CompoundModifier
     {
-        [JsonProperty(DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
+        [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
         public string Base { get; set; } = "0";
         public string Total { get; set; } = "0";
-        [JsonProperty(DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
+        [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
         public string MagicModifier { get; set; } = "0";
-        [JsonProperty(DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
+        [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
         public string MiscModifier { get; set; } = "0";
-        [JsonProperty(DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
+        [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
         public string OtherModifiers { get; set; } = "0";
-        [JsonProperty(DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
+        [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
         public string SizeModifier { get; set; } = "0";
 
-        [JsonProperty(DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
+        [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
         public string TempModifier { get; set; } = "0";
     }
 
@@ -386,15 +394,15 @@ namespace PathfinderJson
         public string Touch { get; set; } = "";
         public string FlatFooted { get; set; } = "";
 
-        [JsonProperty(DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
+        [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
         public string SizeModifier { get; set; }
-        [JsonProperty(DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
+        [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
         public string MiscModifier { get; set; } = "0";
-        [JsonProperty(DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
+        [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
         public string OtherModifiers { get; set; } = "0";
-        [JsonProperty(DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
+        [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
         public string NaturalArmor { get; set; } = "0";
-        [JsonProperty("deflectionModifier", DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
+        [JsonProperty("deflectionModifier", DefaultValueHandling = DefaultValueHandling.Ignore)]
         public string Deflection { get; set; } = "0";
         public string ArmorBonus { get; set; } = "0";
         public string ShieldBonus { get; set; } = "0";
