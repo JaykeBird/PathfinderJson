@@ -57,6 +57,25 @@ namespace PathfinderJson
             txtOther.Text = ac.OtherModifiers;
         }
 
+        public ArmorClass GetArmorClass()
+        {
+            ArmorClass ac = new ArmorClass()
+            {
+                ArmorBonus = txtArmor.Text,
+                NaturalArmor = txtNatural.Text,
+                Deflection = txtDeflection.Text,
+                FlatFooted = txtFlat.Text,
+                MiscModifier = txtMisc.Text,
+                OtherModifiers = txtOther.Text,
+                ShieldBonus = txtShield.Text,
+                SizeModifier = txtSize.Text,
+                Total = txtTotal.Text,
+                Touch = txtTouch.Text
+            };
+
+            return ac;
+        }
+
         public void UpdateCoreModifier(string modValue)
         {
             txtModifier.Text = modValue;

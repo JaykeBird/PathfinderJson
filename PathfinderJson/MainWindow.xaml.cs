@@ -62,7 +62,7 @@ namespace PathfinderJson
 
         // these are stored here as the program doesn't display these values to the user
         UserData ud;
-        ArmorClass ac;
+        //ArmorClass ac;
         string sheetid;
 
         #region Window/basic functions
@@ -1173,7 +1173,7 @@ namespace PathfinderJson
             catch (System.Net.WebException) { }
 
             ud = sheet.Player;
-            ac = sheet.AC;
+            //ac = sheet.AC;
             sheetid = sheet.Id;
 
             txtCharacter.Text = sheet.Name;
@@ -1439,9 +1439,12 @@ namespace PathfinderJson
                         break;
                 }
 
-                foreach (Spell sp in item.Spells)
+                if (item.Spells != null)
                 {
-                    allSpells.Add(sp);
+                    foreach (Spell sp in item.Spells)
+                    {
+                        allSpells.Add(sp);
+                    }
                 }
 
                 currentLevel++;
@@ -1683,7 +1686,23 @@ namespace PathfinderJson
 
             sheet.Languages = txtLanguages.Text;
 
+            // ArmorClass saving
+            ArmorClass ac = edtAc.GetArmorClass();
+
+            foreach (AcItemEditor itEd in selAcItem.GetItemsAsType<AcItemEditor>())
+            {
+                ac.Items.Add(itEd.GetAcItem());
+            }
+
+            AcItem totals = new AcItem();
+            totals.Bonus = txtAcBonus.Text;
+            totals.ArmorCheckPenalty = txtAcPenalty.Text;
+            totals.SpellFailure = txtAcSpellFailure.Text;
+            totals.Weight = txtAcWeight.Text;
+            ac.ItemTotals = totals;
+
             sheet.AC = ac;
+
             sheet.Initiative = edtInit.GetModifier();
             sheet.BaseAttackBonus = txtBab.Text;
             sheet.CombatManeuverBonus = edtCmb.GetModifier();
@@ -1702,19 +1721,6 @@ namespace PathfinderJson
             {
                 sheet.RangedWeapons.Add(item.GetWeapon());
             }
-
-            sheet.AC.Items = new List<AcItem>();
-            foreach (AcItemEditor item in selAcItem.GetItemsAsType<AcItemEditor>())
-            {
-                sheet.AC.Items.Add(item.GetAcItem());
-            }
-
-            AcItem totals = new AcItem();
-            totals.Bonus = txtAcBonus.Text;
-            totals.ArmorCheckPenalty = txtAcPenalty.Text;
-            totals.SpellFailure = txtAcSpellFailure.Text;
-            totals.Weight = txtAcWeight.Text;
-            sheet.AC.ItemTotals = totals;
 
             // feats/abilites
             sheet.Feats = new List<Feat>();
