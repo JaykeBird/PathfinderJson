@@ -77,8 +77,8 @@ namespace PathfinderJson
             }
         }
 
-        string title;
-        string specialization;
+        string title = "";
+        string? specialization = null;
 
         public void LoadSkillData(Skill skill)
         {
@@ -183,7 +183,7 @@ namespace PathfinderJson
         }
 
         // event just to update main window's "isDirty" value
-        public event EventHandler ContentChanged;
+        public event EventHandler? ContentChanged;
 
         private void textbox_TextChanged(object sender, TextChangedEventArgs e)
         {

@@ -2,7 +2,7 @@
 
 namespace PathfinderJson
 {
-
+#nullable disable
     public class GitHubReleaseData
     {
         public string url { get; set; }
@@ -63,5 +63,5 @@ namespace PathfinderJson
             public string browser_download_url { get; set; }
         }
     }
-
+#nullable restore
 }

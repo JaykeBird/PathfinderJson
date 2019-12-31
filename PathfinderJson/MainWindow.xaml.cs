@@ -18,8 +18,6 @@ using System.Xml;
 using UiCore;
 using MenuItem = System.Windows.Controls.MenuItem;
 
-#nullable enable
-
 namespace PathfinderJson
 {
     /// <summary>
@@ -57,8 +55,9 @@ namespace PathfinderJson
         SearchPanel sp;
 
         // functions for handling undo/redo
-        FixedSizeStack<PathfinderSheet> undoItems = new FixedSizeStack<PathfinderSheet>(20);
-        FixedSizeStack<PathfinderSheet> redoItems = new FixedSizeStack<PathfinderSheet>(20);
+        private const int undoLimit = 20;
+        Stack<PathfinderSheet> undoItems = new Stack<PathfinderSheet>(undoLimit);
+        Stack<PathfinderSheet> redoItems = new Stack<PathfinderSheet>(undoLimit);
         TextBox? lastEditedBox = null;
         DispatcherTimer undoSetTimer = new DispatcherTimer();
 
@@ -602,7 +601,7 @@ namespace PathfinderJson
 
         #endregion
 
-        #region Tab bar / visuals
+        #region Tab bar / visuals / appearance
 
         void UpdateAppearance()
         {
@@ -620,9 +619,7 @@ namespace PathfinderJson
 
             selTabs.ApplyColorScheme(App.ColorScheme);
 
-#nullable disable
-            (txtEditRaw.ContextMenu as UiCore.ContextMenu).ApplyColorScheme(App.ColorScheme);
-#nullable enable
+            (txtEditRaw.ContextMenu as UiCore.ContextMenu)!.ApplyColorScheme(App.ColorScheme);
 
             expUser.Background = App.ColorScheme.LightBackgroundColor.ToBrush();
             expUser.BorderBrush = App.ColorScheme.ThirdHighlightColor.ToBrush();
@@ -1178,7 +1175,7 @@ namespace PathfinderJson
                 {
                     if (sheet.Player.Photos != null)
                     {
-                        ImageSource iss = new BitmapImage(new Uri(sheet.Player.Photos[0].Value));
+                        ImageSource iss = new BitmapImage(new Uri(sheet.Player.Photos[0].Value ?? ""));
                         imgPlayer.Source = iss;
                     }
                 }
@@ -1194,7 +1191,7 @@ namespace PathfinderJson
 
             ud = sheet.Player;
             //ac = sheet.AC;
-            sheetid = sheet.Id;
+            sheetid = sheet.Id ?? "-1";
 
             txtCharacter.Text = sheet.Name;
             txtLevel.Text = sheet.Level;
@@ -1322,7 +1319,7 @@ namespace PathfinderJson
 
             // Equipment tab
 
-            Dictionary<string, string> money = sheet.Money;
+            Dictionary<string, string> money = sheet.Money ?? new Dictionary<string, string>();
             if (sheet.Money == null) // in sheets where the player hasn't given their character money, Mottokrosh's site doesn't add a "money" object to the JSON output
             {
                 money = new Dictionary<string, string>();

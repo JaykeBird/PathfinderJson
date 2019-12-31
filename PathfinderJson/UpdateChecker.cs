@@ -49,11 +49,11 @@ namespace PathfinderJson
     {
         public bool HasUpdate { get; set; } = false;
 
-        public string TagName { get; set; }
-        public string Name { get; set; }
-        public string Url { get; set; }
-        public DateTime PublishTime { get; set; }
-        public GitHubReleaseData.Asset[] Assets { get; set; }
-        public string Body { get; set; }
+        public string TagName { get; set; } = "";
+        public string Name { get; set; } = "";
+        public string Url { get; set; } = "https://github.com/JaykeBird/PathfinderJson/releases";
+        public DateTime PublishTime { get; set; } = DateTime.Today;
+        public GitHubReleaseData.Asset[]? Assets { get; set; }
+        public string Body { get; set; } = "";
     }
 }

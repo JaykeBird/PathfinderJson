@@ -34,7 +34,7 @@ namespace PathfinderJson
         UserData ud = new UserData(true);
 
         public new bool DialogResult { get; set; } = false;
-        public PathfinderSheet Sheet { get; private set; } = null;
+        public PathfinderSheet Sheet { get; private set; } = new PathfinderSheet();
 
         private void btnCreate_Click(object sender, RoutedEventArgs e)
         {

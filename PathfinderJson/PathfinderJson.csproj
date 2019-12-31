@@ -1,5 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
-
+  
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>netcoreapp3.0</TargetFramework>
@@ -24,6 +24,7 @@
     <Description>Read and edit JSON Pathfinder sheet files from Motokrosh's website</Description>
     <Copyright>© 2019 Jayke R. Huempfner</Copyright>
     <StartupObject>PathfinderJson.App</StartupObject>
+    <Nullable>enable</Nullable>
     <!--<PackageId>PackageId</PackageId>-->
     <!--<PackageLicenseUrl>License URL</PackageLicenseUrl>
     <PackageProjectUrl>Project URL</PackageProjectUrl>-->
