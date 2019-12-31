@@ -643,4 +643,725 @@
         </member>
         <member name="F:UiCore.FlatButton.IsDefaultedPropertyKey">
             <summary>
-                The 
+                The key needed set a read-only property.
+            </summary>
+        </member>
+        <member name="P:UiCore.FlatButton.IsDefaulted">
+            <summary>
+            Specifies whether or not this button is the button that would be invoked when Enter is pressed.
+            </summary>
+        </member>
+        <member name="M:UiCore.FlatButton.OnAccessKey(System.Windows.Input.AccessKeyEventArgs)">
+            <summary>
+            The Access key for this control was invoked.
+            </summary>
+        </member>
+        <member name="T:UiCore.FlatWindow">
+            <summary>
+            A WPF window that has a custom, flat style and additional functionality.
+            </summary>
+        </member>
+        <member name="P:UiCore.FlatWindow.HighContrastMode">
+            <summary>
+            Get if the window's color scheme is a high contrast theme (and thus, the window is displaying high-contrast colors).
+            </summary>
+        </member>
+        <member name="P:UiCore.FlatWindow.ColorScheme">
+            <summary>
+            Get or set the color scheme to apply to the window.
+            </summary>
+        </member>
+        <member name="P:UiCore.FlatWindow.CaptionDisplayType">
+            <summary>
+            Gets or sets the visibility of the caption buttons (close, maximize, minimize). The actions may still be available via other methods even if the buttons are hidden.
+            </summary>
+            <remarks>Use the <c>DisableMinimizeAction</c> and <c>DisableMaximizeAction</c> methods to further prevent the user from being able to minimize or maximize the window. The standard <c>ResizeMode</c> property works as well.</remarks>
+        </member>
+        <member name="P:UiCore.FlatWindow.CaptionHeight">
+            <summary>
+            Get or set the height of the caption (title bar) area of the window. Default is 29.
+            </summary>
+        </member>
+        <member name="P:UiCore.FlatWindow.TopRightElement">
+            <summary>
+            Gets or sets the UI element to place in the top of the window.
+            </summary>
+        </member>
+        <member name="P:UiCore.FlatWindow.Background">
+            <summary>
+            Get or set the background brush to use for the caption area (title bar). Use <c>ContentBackground</c> for the content area of the window.
+            </summary>
+        </member>
+        <member name="M:UiCore.FlatWindow.DisableMaximizeAction">
+            <summary>
+            Calls the native Windows method to disable the Maximize action (via the right-click menu and the like). Note that you'll want to update the CaptionDisplayType to remove the physical button.
+            </summary>
+        </member>
+        <member name="M:UiCore.FlatWindow.DisableMinimizeAction">
+            <summary>
+            Calls the native Windows method to disable the Minimize action (via the right-click menu and the like). Note that you'll want to update the CaptionDisplayType to remove the physical button.
+            </summary>
+        </member>
+        <member name="M:UiCore.FlatWindow.DisableMinimizeAndMaximizeActions">
+            <summary>
+            Calls the native Windows method to disable the Minimize and Maximize actions (via the right-click menu and the like). Note that you'll want to update the CaptionDisplayType to remove the physical buttons.
+            </summary>
+        </member>
+        <member name="T:UiCore.ImageColorPicker">
+            <summary>
+            Image element with the ability to pick out a pixel color value.
+            </summary>
+            <remarks>
+            <see cref="T:UiCore.ImageColorPicker"/> element adorns the <see cref="T:System.Windows.Controls.Image"/>
+            it's derived from with the facility to pick the image pixel color value at the position 
+            specified by the selector visual.
+            </remarks>
+        </member>
+        <member name="F:UiCore.ImageColorPicker.SelectedColorPropertyKey">
+            <summary>
+            SelectedColor property backing ReadOnly DependencyProperty.
+            </summary>
+        </member>
+        <member name="P:UiCore.ImageColorPicker.SelectedColor">
+            <summary>
+            Gets the color selected.
+            </summary>
+            <value>The color selected.</value>
+        </member>
+        <member name="F:UiCore.ImageColorPicker.SelectorProperty">
+            <summary>
+            Selector property backing DependencyProperty.
+            </summary>
+        </member>
+        <member name="M:UiCore.ImageColorPicker.ValidateSelector(System.Object)">
+            <summary>
+            Validates the suggested selector drawing value.
+            </summary>
+            <param name="value">The value.</param>
+            <returns><c>true</c> if suggested value isn't null; otherwise <c>false</c>.</returns>
+        </member>
+        <member name="P:UiCore.ImageColorPicker.Selector">
+            <summary>
+            Gets or sets the selector drawing.
+            </summary>
+            <value>The selector drawing. Must not be null</value>
+            <remarks>
+            The selector drawing is the <see cref="T:System.Windows.Media.Drawing"/> using
+            to mark the position where the color is selected.
+            <para>The <see cref="T:UiCore.ImageColorPicker"/> desn't pose any restrictions on the size of
+            this drawing. It's the user duty to choose it resonably.</para>
+            </remarks>
+        </member>
+        <member name="M:UiCore.ImageColorPicker.OnRender(System.Windows.Media.DrawingContext)">
+            <summary>
+            Renders the contents of an <see cref="T:System.Windows.Controls.Image"/> and 
+            the SelectorDrawing.
+            </summary>
+            <param name="dc">An instance of <see cref="T:System.Windows.Media.DrawingContext"/> 
+            used to render the control.</param>
+        </member>
+        <member name="M:UiCore.ImageColorPicker.OnRenderSizeChanged(System.Windows.SizeChangedInfo)">
+            <summary>
+            Raises the <see cref="E:System.Windows.FrameworkElement.SizeChanged"/> event, 
+            using the specified information as part of the eventual event data.
+            </summary>
+            <param name="sizeInfo">Details of the old and new size involved in the change.</param>
+        </member>
+        <member name="M:UiCore.ImageColorPicker.OnPropertyChanged(System.Windows.DependencyPropertyChangedEventArgs)">
+            <summary>
+            Invoked whenever the effective value of any dependency property on this 
+            <see cref="T:System.Windows.FrameworkElement"/> has been updated. 
+            The specific dependency property that changed is reported in the arguments parameter. 
+            Overrides <see cref="M:System.Windows.DependencyObject.OnPropertyChanged(System.Windows.DependencyPropertyChangedEventArgs)"/>.
+            </summary>
+            <param name="e">The event data that describes the property that changed, 
+            as well as old and new values.</param>
+        </member>
+        <member name="P:UiCore.ImageColorPicker.Position">
+            <summary>
+            Gets or sets the Selector Position.
+            </summary>
+            <value>The position.</value>
+        </member>
+        <member name="M:UiCore.ImageColorPicker.RestrictedPosition(System.Windows.Point)">
+            <summary>
+            Get the position restricted by the element bounds.
+            </summary>
+            <param name="point">The point.</param>
+            <returns></returns>
+        </member>
+        <member name="M:UiCore.ImageColorPicker.SetPositionIfInBounds(System.Windows.Point)">
+            <summary>
+            Sets the <paramref name="pt"/> as the new position if the point falls 
+            into the element bounds.
+            </summary>
+            <param name="pt">The point.</param>
+        </member>
+        <member name="P:UiCore.ImageColorPicker.TargetBitmap">
+            <summary>
+            Gets the target bitmap for the DrawingImage image Source.
+            </summary>
+            <value>The target bitmap.</value>
+        </member>
+        <member name="M:UiCore.ImageColorPicker.PickColor(System.Double,System.Double)">
+            <summary>
+            Picks the color at the position specified.
+            </summary>
+            <param name="x">The x coordinate in WPF pixels.</param>
+            <param name="y">The y coordinate in WPF pixels.</param>
+            <returns>The image pixel color at x,y position.</returns>
+            <remarks>
+            Input coordinates are scaled according to the underlying image resolution,
+            so this method doesn't expect exceptions thrown by the 
+            <see cref="M:System.Windows.Media.Imaging.BitmapSource.CopyPixels"/> method.
+            <para>Color can be picked not only from the 
+            <see cref="T:System.Windows.Media.Imaging.BitmapSource"/>, but also from the
+            <see cref="T:System.Windows.Media.DrawingImage"/>.</para>
+            </remarks>
+        </member>
+        <member name="T:UiCore.IntegerSpinner">
+            <summary>
+            Interaction logic for IntegerSpinner.xaml
+            </summary>
+            <summary>
+            IntegerSpinner
+            </summary>
+        </member>
+        <member name="P:UiCore.IntegerSpinner.AcceptExpressions">
+            <summary>
+            Get or set if the spinner should evaluate arithmetic expressions (such as "2+5") to accept as a value.
+            </summary>
+            <remarks>
+            See the <see cref="T:UiCore.ArithmeticParser"/> class for more info about how expressions are parsed.
+            </remarks>
+        </member>
+        <member name="M:UiCore.IntegerSpinner.ValidateValue">
+            <summary>
+            Validate the value and update the UI if needed.
+            </summary>
+        </member>
+        <member name="M:UiCore.IntegerSpinner.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="P:UiCore.LinkTextBlock.TextBrush">
+            <summary>
+            Get or set the standard foreground brush for the text. This overwrites the Foreground property.
+            </summary>
+        </member>
+        <member name="P:UiCore.LinkTextBlock.HighlightBrush">
+            <summary>
+            Get or set the brush for when the control has mouseover or keyboard focus.
+            </summary>
+        </member>
+        <member name="P:UiCore.LinkTextBlock.DisabledBrush">
+            <summary>
+            Get or set the brush for when the control is disabled.
+            </summary>
+        </member>
+        <member name="P:UiCore.LinkTextBlock.AutoSetLinkFromText">
+            <summary>
+            Get or set if the LinkTextBlock should automatically create a link based upon the Text property. See remarks for more details.
+            </summary>
+            <remarks>
+            When AutoSetLinkFromText is set to <c>true</c>, the LinkTextBlock attempts to open the link defined in the Text property when the user clicks on the control.
+            For example, if this property is set to <c>true</c> and the Text property is set to <c>"https://microsoft.com"</c>, the LinkTextBlock will open "https://microsoft.com" when the control is clicked,
+            even if a Click event handler is not attached. Note that for web links, the scheme/protocol should be present (i.e. "http", "https", "ftp", etc.).
+            <para />
+            Note that the Click event will still fire even if this property is set to <c>true</c>.
+            <para/>
+            If an error occurs while attempting to open the link, nothing happens. If a debugger is attached, the LinkTextBlock attempts to log a message to the debugger.
+            </remarks>
+        </member>
+        <member name="P:UiCore.LinkTextBlock.UnderlineOnHighlight">
+            <summary>
+            Get or set if the text should be underlined when the control has mouseover or keyboard focus.
+            </summary>
+        </member>
+        <member name="P:UiCore.LinkTextBlock.IsEnabled">
+            <summary>
+            Gets or sets a value indicating whether this element is enabled in the user interface (UI).
+            </summary>
+        </member>
+        <member name="P:UiCore.MenuButton.StaysOpen">
+            <summary>
+            Get or set if the menu should close automatically. Remember to set the <c>StaysOpenOnClick</c> property for child menu items as well.
+            </summary>
+        </member>
+        <member name="P:UiCore.MenuButton.ShowMenuArrow">
+            <summary>
+            Get or set if an arrow should be shown to the right of the button content to indicate the button as a menu button.
+            </summary>
+        </member>
+        <member name="T:UiCore.MessageDialog">
+            <summary>
+            Interaction logic for MessageBox.xaml
+            </summary>
+            <summary>
+            MessageDialog
+            </summary>
+        </member>
+        <member name="M:UiCore.MessageDialog.ShowDialog">
+            <summary>
+            Display this message dialog. Set <c>CancelButtonText</c> prior to showing dialog to display the Cancel button; else, only OK button is displayed.
+            </summary>
+        </member>
+        <member name="M:UiCore.MessageDialog.ShowDialog(System.String,UiCore.ColorScheme,System.Windows.Window,System.String,System.Boolean,UiCore.MessageDialogImage,UiCore.MessageDialogResult,System.String,System.String,System.String,System.String,System.String,System.String)">
+            <summary>
+            Display this message dialog.
+            </summary>
+            <param name="message">The message to display.</param>
+            <param name="colorScheme">The color scheme to use with the dialog. Use <c>null</c> if already set via property.</param>
+            <param name="owner">The owner window of this dialog. Use <c>null</c> if already set via property.</param>
+            <param name="title">The window title for this dialog. Use <c>null</c> if already set via property.</param>
+            <param name="showTwoBottomButtons">Determine if one or two buttons should be shown (either [OK], or [OK] and [Cancel]). If false, only OK button is displayed.</param>
+            <param name="image">The image to display with this dialog.</param>
+            <param name="defaultButton">The button to have selected by default when the dialog opens. (DOESN'T CURRENTLY WORK)</param>
+            <param name="customOkButtonText">The text to use in the OK button. Use <c>null</c> if already set via property.</param>
+            <param name="customCancelButtonText">The text to use in the Cancel button. Use <c>null</c> if already set via property.</param>
+            <param name="extraButton1Text">The text to use in the first extra button. If this is set to a null or empty string, this button will not be displayed.</param>
+            <param name="extraButton2Text">The text to use in the second extra button. If this is set to a null or empty string, this button will not be displayed.</param>
+            <param name="extraButton3Text">The text to use in the third extra button. If this is set to a null or empty string, this button will not be displayed.</param>
+            <param name="checkBoxText">The text to use in the check box. If this is set to a null or empty string, the check box will not be displayed.</param>
+        </member>
+        <member name="M:UiCore.MessageDialog.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:UiCore.NativeWindowMethods">
+            <summary>
+            A small collection of methods to interact with the native Windows library user32.dll, used to modify window behavior.
+            </summary>
+        </member>
+        <member name="M:UiCore.NativeWindowMethods.ShowWindow(System.IntPtr,System.Int32)">
+            <summary>
+            Displays the window of a specified handle.
+            </summary>
+            <param name="hWnd">The handle of the window to show.</param>
+            <param name="nCmdShow">A command associated with this action.</param>
+            <returns></returns>
+        </member>
+        <member name="M:UiCore.NativeWindowMethods.SetForegroundWindow(System.IntPtr)">
+            <summary>
+            Moves a specified window to the foreground.
+            </summary>
+            <param name="hWnd">The handle of the window.</param>
+            <returns></returns>
+        </member>
+        <member name="F:UiCore.NativeWindowMethods.GWL_STYLE">
+            <summary>
+            The standard style for a window.
+            </summary>
+        </member>
+        <member name="F:UiCore.NativeWindowMethods.WS_MAXIMIZEBOX">
+            <summary>
+            The integer value that points to the maximize button in a window.
+            </summary>
+        </member>
+        <member name="F:UiCore.NativeWindowMethods.WS_MINIMIZEBOX">
+            <summary>
+            The integer value that points to the minimize button in a window.
+            </summary>
+        </member>
+        <member name="M:UiCore.NativeWindowMethods.GetWindowLong(System.IntPtr,System.Int32)">
+            <summary>
+            Get this window's long value, which can be used for further modification.
+            </summary>
+            <param name="hWnd">The handle of the window.</param>
+            <param name="nIndex">The standard style of this window.</param>
+            <returns></returns>
+        </member>
+        <member name="M:UiCore.NativeWindowMethods.SetWindowLong(System.IntPtr,System.Int32,System.Int32)">
+            <summary>
+            Set this window's long value, which is used to modify features and abilities of this window.
+            </summary>
+            <param name="hWnd">The handle of the window.</param>
+            <param name="nIndex">The standard style of this window.</param>
+            <param name="dwNewLong">The long to set for this window.</param>
+            <returns></returns>
+        </member>
+        <member name="M:UiCore.NativeWindowMethods.HideMaximizeButton(System.Windows.Window)">
+            <summary>
+            Hide/disable the maximize button, so that the window cannot be maximized.
+            </summary>
+            <param name="w">The window to hide the button on.</param>
+        </member>
+        <member name="M:UiCore.NativeWindowMethods.HideMaximizeButton(System.IntPtr)">
+            <summary>
+            Hide/disable the maximize button, so that the window cannot be maximized.
+            </summary>
+            <param name="hwnd">The handle to the window.</param>
+        </member>
+        <member name="M:UiCore.NativeWindowMethods.HideMinimizeButton(System.Windows.Window)">
+            <summary>
+            Hide/disable the minimize button, so that the window cannot be minimized (hidden in taskbar).
+            </summary>
+            <param name="w">The window to hide the button on.</param>
+        </member>
+        <member name="M:UiCore.NativeWindowMethods.HideMinimizeButton(System.IntPtr)">
+            <summary>
+            Hide/disable the minimize button, so that the window cannot be minimized (hidden in taskbar).
+            </summary>
+            <param name="hwnd">The handle to the window.</param>
+        </member>
+        <member name="M:UiCore.NativeWindowMethods.HideMinimizeAndMaximizeButtons(System.Windows.Window)">
+            <summary>
+            Hide/disable the minimize and maximize buttons, so that the window cannot be maximized or minimized.
+            </summary>
+            <param name="w">The window to hide the buttons on.</param>
+        </member>
+        <member name="M:UiCore.NativeWindowMethods.HideMinimizeAndMaximizeButtons(System.IntPtr)">
+            <summary>
+            Hide/disable the minimize and maximize buttons, so that the window cannot be maximized or minimized.
+            </summary>
+            <param name="hwnd">The handle to the window.</param>
+        </member>
+        <member name="T:UiCore.SelectableItem">
+            <summary>
+            Interaction logic for SelectableItem.xaml
+            </summary>
+            <summary>
+            SelectableItem
+            </summary>
+        </member>
+        <member name="M:UiCore.SelectableItem.#ctor">
+            <summary>
+            Create a SelectableItem to use with a SelectPanel.
+            </summary>
+        </member>
+        <member name="M:UiCore.SelectableItem.#ctor(System.String)">
+            <summary>
+            Create a SelectableItem to use with a SelectPanel, with the text preset.
+            </summary>
+            <param name="text">The text to display in the item.</param>
+        </member>
+        <member name="M:UiCore.SelectableItem.#ctor(System.String,System.Windows.Media.ImageSource,System.Double)">
+            <summary>
+            Create a SelectableItem to use with a SelectPanel, with certain properties preset.
+            </summary>
+            <param name="text">The text to display in the item.</param>
+            <param name="image">The image to display in the item. (If the image is wider than 16 pixels, you may need to update the <c>ImageWidth</c> property.)</param>
+            <param name="indent">The left indent to apply to the item's content. The indent can be used to make an improvised tree view.</param>
+        </member>
+        <member name="E:UiCore.SelectableItem.TextChanged">
+            <summary>
+            Raised when the Text property is changed, either via updating the property or via the the user's text editing view.
+            </summary>
+        </member>
+        <member name="P:UiCore.SelectableItem.Indent">
+            <summary>
+            Get or set the left indent to apply to the item's content. This can be used to make an improvised tree view.
+            </summary>
+        </member>
+        <member name="P:UiCore.SelectableItem.ShowCheckbox">
+            <summary>
+            Get or set whether a checkbox should be displayed on the item. Checkboxes can make it easy to select mutliple items.
+            </summary>
+        </member>
+        <member name="P:UiCore.SelectableItem.ImageWidth">
+            <summary>
+            Get or set the width to afford to the image. By default, the width is set to 16, but larger images will require the width to be set higher.
+            </summary>
+        </member>
+        <member name="P:UiCore.SelectableItem.ShowImage">
+            <summary>
+            Get or set whether to display an image on the left side of the item. Set the image via the <c>ImageSource</c> property.
+            </summary>
+        </member>
+        <member name="P:UiCore.SelectableItem.ImageSource">
+            <summary>
+            Get or set the source for the image to show on the left side of the item. If set, the item automatically displays the image (unless <c>AutoShowImageOnSourceSet</c> is set to false).
+            </summary>
+        </member>
+        <member name="P:UiCore.SelectableItem.AutoShowImageOnSourceSet">
+            <summary>
+            Get or set whether the <c>ShowImage</c> property should be updated when the <c>ImageSource</c> property is set. Default is true.
+            </summary>
+        </member>
+        <member name="P:UiCore.SelectableItem.Text">
+            <summary>
+            Get or set the text to display within the item. This text can be edited by setting <c>AllowTextEditing</c> to true, or by calling <see cref="M:UiCore.SelectableItem.DisplayEditText"/>.
+            </summary>
+        </member>
+        <member name="P:UiCore.SelectableItem.RightText">
+            <summary>
+            Get or set the text to display on the far-right side of the item. This text cannot be edited directly by the user.
+            </summary>
+        </member>
+        <member name="P:UiCore.SelectableItem.TextTrimming">
+            <summary>
+            Get or set the text trimming behavior to use when the text overflows the visible area.
+            </summary>
+        </member>
+        <member name="P:UiCore.SelectableItem.TextUnderlineOnMouseOver">
+            <summary>
+            Get or set if the text should have an underline effect when the mouse is over the text. This is enabled by default when <c>AllowTextEditing</c> is set to "true", but otherwise is disabled.
+            </summary>
+        </member>
+        <member name="P:UiCore.SelectableItem.SelectOnFocusTextEdit">
+            <summary>
+            Get or set whether all of the text should be selected when the text-editing text box recieves focus.
+            </summary>
+        </member>
+        <member name="P:UiCore.SelectableItem.AllowTextEditing">
+            <summary>
+            Get or set whether the user should be allowed to edit the text in the Text property. If enabled, a text box will appear when the user clicks on the text.
+            </summary>
+            <remarks>While editing, pressing "Enter" will confirm the edit, while pressing "Escape" will cancel the operation.</remarks>
+        </member>
+        <member name="M:UiCore.SelectableItem.DisplayEditText">
+            <summary>
+            Display the text editing view to the user. This is the same as the user clicking on the text while <c>AllowTextEditing</c> is set to true.
+            </summary>
+            <remarks>This method will activate the text editing view even if <c>AllowTextEditing</c> is set to false.</remarks>
+        </member>
+        <member name="M:UiCore.SelectableItem.ConfirmEdit">
+            <summary>
+            Confirm the user's edit to the text, as changed via the text editing view. Also exits the text editing view. This can only be called when in the text editing view.
+            </summary>
+            <exception cref="T:System.InvalidOperationException">Thrown if this item is not in the text editing view.</exception>
+        </member>
+        <member name="M:UiCore.SelectableItem.CancelEdit">
+            <summary>
+            Cancel the user's edit to the text and exits the text editing view (if in the view). This can be called at any time.
+            </summary>
+        </member>
+        <member name="M:UiCore.SelectableItem.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="M:UiCore.SelectableUserControl.UpdateBrushes">
+            <summary>
+            Make sure the control's visuals match the set brush properties. Call this if the parent's ColorScheme was changed.
+            </summary>
+        </member>
+        <member name="M:UiCore.SelectableUserControl.ApplyColorScheme(UiCore.ColorScheme)">
+            <summary>
+            When overridden by a derived class, this method is automatically called each time the color scheme is updated by the parent SelectPanel. Use this to update child controls.
+            </summary>
+            <param name="cs">The new color scheme.</param>
+        </member>
+        <member name="T:UiCore.SelectPanel">
+            <summary>
+            Interaction logic for SelectPanel.xaml
+            </summary>
+            <summary>
+            SelectPanel
+            </summary>
+        </member>
+        <member name="P:UiCore.SelectPanel.SelectedItems">
+            <summary>
+            Get a collection of items that have been selected.
+            </summary>
+        </member>
+        <member name="M:UiCore.SelectPanel.GetSelectedItemsOfType``1">
+            <summary>
+            Get a collection of items that have been selected, returned as a certain type (that inherits from SelectableUserControl).
+            </summary>
+            <typeparam name="T">The type to return the selected items as. It must inherit from SelectableUserControl.</typeparam>
+            <returns></returns>
+        </member>
+        <member name="P:UiCore.SelectPanel.UseLighterBorder">
+            <summary>
+            Use a lighter border color when applying color schemes. Note that this does not apply in high-contrast mode.
+            </summary>
+        </member>
+        <member name="P:UiCore.SelectPanel.AllowParentScrolling">
+            <summary>
+            Set whether the SelectPanel should allow its parent to scroll if the SelectPanel doesn't need to scroll. Note that enabling this may disable any child items from scrolling.
+            </summary>
+        </member>
+        <member name="M:UiCore.SelectPanel.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:UiCore.SizeableStackPanel">
+            <summary>
+            SizeableStackPanel
+            </summary>
+        </member>
+        <member name="M:UiCore.SizeableStackPanel.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="M:UiCore.StreamExtensions.ReadAsciiString(System.IO.Stream,System.Int32)">
+            <summary>
+            Reads a ASCII string of the specified length.
+            </summary>
+            <param name="stream">The stream to read the data from.</param>
+            <param name="length">The number of characters in the string.</param>
+            <returns>The string read from the stream.</returns>
+        </member>
+        <member name="M:UiCore.StreamExtensions.ReadSingleBigEndian(System.IO.Stream)">
+            <summary>
+            Reads a 4-byte floating point value from the current stream using big-endian encoding and advances the position of the stream by four bytes.
+            </summary>
+            <param name="stream">The stream to read the data from.</param>
+            <returns>A 4-byte floating point value read from the source stream.</returns>
+        </member>
+        <member name="M:UiCore.StreamExtensions.ReadStringBigEndian(System.IO.Stream,System.Int32)">
+            <summary>
+            Reads a unicode string of the specified length in big-endian format.
+            </summary>
+            <param name="stream">The stream to read the data from.</param>
+            <param name="length">The number of characters in the string.</param>
+            <returns>The string read from the stream.</returns>
+        </member>
+        <member name="M:UiCore.StreamExtensions.ReadStringBigEndian(System.IO.Stream)">
+            <summary>
+            Reads a unicode string from the current stream in big-endian format. The string is prefixed with the length.
+            </summary>
+            <param name="stream">The stream to read the data from.</param>
+            <returns>The string read from the stream.</returns>
+        </member>
+        <member name="M:UiCore.StreamExtensions.ReadUInt16BigEndian(System.IO.Stream)">
+            <summary>
+            Reads a 2-byte unsigned integer from the current stream using big-endian encoding and advances the position of the stream by two bytes.
+            </summary>
+            <param name="stream">The stream to read the data from.</param>
+            <returns>A 2-byte unsigned integer read from the source stream.</returns>
+        </member>
+        <member name="M:UiCore.StreamExtensions.ReadUInt32BigEndian(System.IO.Stream)">
+            <summary>
+            Reads a 4-byte unsigned integer from the current stream using big-endian encoding and advances the position of the stream by four bytes.
+            </summary>
+            <param name="stream">The stream to read the data from.</param>
+            <returns>A 4-byte unsigned integer read from the source stream.</returns>
+        </member>
+        <member name="T:UiCore.StringInputDialog">
+            <summary>
+            Interaction logic for StringInputBox.xaml
+            </summary>
+            <summary>
+            StringInputDialog
+            </summary>
+        </member>
+        <member name="M:UiCore.StringInputDialog.#ctor">
+            <summary>
+            Create a StringInputDialog with nothing preset.
+            </summary>
+        </member>
+        <member name="M:UiCore.StringInputDialog.#ctor(UiCore.ColorScheme)">
+            <summary>
+            Create a StringInputDialog with a color scheme.
+            </summary>
+            <param name="cs">The color scheme to use for the window.</param>
+        </member>
+        <member name="M:UiCore.StringInputDialog.#ctor(UiCore.ColorScheme,System.String,System.String,System.String)">
+            <summary>
+            Create a StringInputBox with prefilled values.
+            </summary>
+            <param name="cs">The color scheme to use for the window.</param>
+            <param name="title">The title of the window.</param>
+            <param name="desc">The description to give to the user.</param>
+            <param name="value">The value to place in the text box. By default, the text box is empty.</param>
+        </member>
+        <member name="P:UiCore.StringInputDialog.Value">
+            <summary>
+            Get or set the text value of the input dialog's text box.
+            </summary>
+        </member>
+        <member name="P:UiCore.StringInputDialog.DialogResult">
+            <summary>
+            Get the result of the dialog when it is closed. "False" refers to the user cancelling the operation, while "True" refers to the user confirming, by clicking "OK" or pressing the Enter key.
+            </summary>
+        </member>
+        <member name="P:UiCore.StringInputDialog.EnterKeyConfirms">
+            <summary>
+            Get or set whether the Enter key can be used to confirm the dialog. If enabled, pressing down the Enter key will be treated as if the user pressed "OK".
+            </summary>
+        </member>
+        <member name="P:UiCore.StringInputDialog.EscapeKeyCancels">
+            <summary>
+            Get or set whether the Escape key can be used to cancel the dialog. If enabled, pressing down the Escape key will be treated as if the user pressed "Cancel".
+            </summary>
+        </member>
+        <member name="P:UiCore.StringInputDialog.SelectTextOnFocus">
+            <summary>
+            Get or set whether all of the text in the text box should be selected when the text box receives focus.
+            </summary>
+        </member>
+        <member name="P:UiCore.StringInputDialog.Description">
+            <summary>
+            Get or set the description text to display about the text box. This text should describe what the user should enter into the text box.
+            </summary>
+            <remarks>Try to keep the description to about a sentence long. 
+            Ideally, the overall design of the program should make it apparent what the user should enter into the text box without reading the description.</remarks>
+        </member>
+        <member name="M:UiCore.StringInputDialog.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:UiCore.TabControl">
+            <summary>
+            Interaction logic for TabControl.xaml
+            </summary>
+            <summary>
+            TabControl
+            </summary>
+        </member>
+        <member name="M:UiCore.TabControl.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:UiCore.TabDisplayItem">
+            <summary>
+            Interaction logic for TabDisplayItem.xaml
+            </summary>
+            <summary>
+            TabDisplayItem
+            </summary>
+        </member>
+        <member name="M:UiCore.TabDisplayItem.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:UiCore.Toolbar">
+            <summary>
+            Interaction logic for MenuBar.xaml
+            </summary>
+            <summary>
+            Toolbar
+            </summary>
+        </member>
+        <member name="M:UiCore.Toolbar.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:UiCore.ToolbarButton">
+            <summary>
+            Interaction logic for ToolbarButton.xaml
+            </summary>
+            <summary>
+            ToolbarButton
+            </summary>
+        </member>
+        <member name="M:UiCore.ToolbarButton.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:UiCore.ToolbarMenuButton">
+            <summary>
+            Interaction logic for MenuButton.xaml
+            </summary>
+            <summary>
+            ToolbarMenuButton
+            </summary>
+        </member>
+        <member name="M:UiCore.ToolbarMenuButton.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+    </members>
+</doc>

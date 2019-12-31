@@ -22,7 +22,7 @@
     <FileVersion>0.9.2.1</FileVersion>
     <NeutralLanguage>en</NeutralLanguage>
     <Description>Read and edit JSON Pathfinder sheet files from Motokrosh's website</Description>
-    <Copyright>© 2019 Jayke R. Huempfner</Copyright>
+    <Copyright>© 2019-2020 Jayke R. Huempfner</Copyright>
     <StartupObject>PathfinderJson.App</StartupObject>
     <Nullable>enable</Nullable>
     <!--<PackageId>PackageId</PackageId>-->
