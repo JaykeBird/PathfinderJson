@@ -1137,40 +1137,47 @@ namespace PathfinderJson
             _isUpdating = true;
 
             // General tab
-            txtPlayerName.Text = sheet.Player.DisplayName;
-
-            string email = "";
-
-            foreach (UserData.Email item in sheet.Player.Emails)
+            if (sheet.Player != null)
             {
-                if (item.Type == "account")
+                txtPlayerName.Text = sheet.Player.DisplayName;
+
+                string email = "";
+
+                foreach (UserData.Email item in sheet.Player.Emails)
                 {
-                    email = item.Value;
+                    if (item.Type == "account")
+                    {
+                        email = item.Value;
+                    }
                 }
-            }
-            if (string.IsNullOrEmpty(email))
-            {
+                if (string.IsNullOrEmpty(email))
+                {
+                    try
+                    {
+                        email = sheet.Player.Emails[0].Value;
+                    }
+                    catch (IndexOutOfRangeException) { }
+                    catch (ArgumentOutOfRangeException) { }
+                }
+                txtPlayerEmail.Text = email;
+
                 try
                 {
-                    email = sheet.Player.Emails[0].Value;
+                    if (sheet.Player.Photos != null)
+                    {
+                        ImageSource iss = new BitmapImage(new Uri(sheet.Player.Photos[0].Value));
+                        imgPlayer.Source = iss;
+                    }
                 }
                 catch (IndexOutOfRangeException) { }
+                catch (NullReferenceException) { }
                 catch (ArgumentOutOfRangeException) { }
+                catch (System.Net.WebException) { }
             }
-            txtPlayerEmail.Text = email;
-
-            try
+            else
             {
-                if (sheet.Player.Photos != null)
-                {
-                    ImageSource iss = new BitmapImage(new Uri(sheet.Player.Photos[0].Value));
-                    imgPlayer.Source = iss;
-                }
+                sheet.Player = new UserData(true);
             }
-            catch (IndexOutOfRangeException) { }
-            catch (NullReferenceException) { }
-            catch (ArgumentOutOfRangeException) { }
-            catch (System.Net.WebException) { }
 
             ud = sheet.Player;
             //ac = sheet.AC;

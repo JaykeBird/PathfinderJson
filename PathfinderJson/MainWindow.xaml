@@ -21,7 +21,7 @@
 
         <flat:Menu Grid.Row="0" x:Name="menu" IsMainMenu="True" Grid.ColumnSpan="2" >
             <MenuItem Header="_File">
-                <MenuItem Header="_New Sheet..." x:Name="mnuNew" Click="mnuNew_Click">
+                <MenuItem Header="_New Character..." x:Name="mnuNew" Click="mnuNew_Click">
                     <MenuItem.Icon>
                         <Image Source="/PathfinderJson;component/Images/NewFile.png" />
                     </MenuItem.Icon>
