@@ -18,6 +18,8 @@ using System.Xml;
 using UiCore;
 using MenuItem = System.Windows.Controls.MenuItem;
 
+#nullable enable
+
 namespace PathfinderJson
 {
     /// <summary>
@@ -57,7 +59,7 @@ namespace PathfinderJson
         // functions for handling undo/redo
         FixedSizeStack<PathfinderSheet> undoItems = new FixedSizeStack<PathfinderSheet>(20);
         FixedSizeStack<PathfinderSheet> redoItems = new FixedSizeStack<PathfinderSheet>(20);
-        TextBox lastEditedBox = null;
+        TextBox? lastEditedBox = null;
         DispatcherTimer undoSetTimer = new DispatcherTimer();
 
         // these are stored here as the program doesn't display these values to the user
@@ -67,18 +69,10 @@ namespace PathfinderJson
 
         #region Window/basic functions
 
-        #region Constructor
         public MainWindow()
         {
-            //if (Directory.Exists(appDataPath))
-            //{
-            //    App.Settings = Settings.LoadSettings(Path.Combine(appDataPath, "settings.json"));
-            //}
-            //else
-            //{
-            //    Directory.CreateDirectory(appDataPath);
-            //    SaveSettings();
-            //}
+            ud = new UserData(false);
+            sheetid = "-1";
 
             undoSetTimer.Interval = new TimeSpan(0, 0, 3);
             undoSetTimer.Tick += UndoSetTimer_Tick;
@@ -132,7 +126,7 @@ namespace PathfinderJson
                 AddRecentFile(file, false);
             }
 
-            using (Stream s = System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceStream("PathfinderJson.Json.xshd"))
+            using (Stream? s = System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceStream("PathfinderJson.Json.xshd"))
             {
                 if (s != null)
                 {
@@ -169,8 +163,6 @@ namespace PathfinderJson
             //    }
             //}
         }
-
-        #endregion
 
         #region Other Base Functions
 
@@ -481,62 +473,71 @@ namespace PathfinderJson
 
         private async void miRecentFile_Click(object sender, RoutedEventArgs e)
         {
-            string file = (sender as MenuItem).Tag as string;
-
-            if (File.Exists(file))
+            if (sender == null)
             {
-                await LoadFile((sender as MenuItem).Tag as string, false);
+                return;
             }
-            else
+
+            if (sender is MenuItem m)
             {
-                MessageDialog md = new MessageDialog(App.ColorScheme);
-                md.OkButtonText = "Cancel";
-                md.ShowDialog("This file does not exist any more. Do you want to remove this file from the list or attempt to open anyway?", App.ColorScheme, this,
-                    "File Not Found", false, MessageDialogImage.Error, MessageDialogResult.Cancel, "Remove file from list", "Attempt to open anyway");
-                switch (md.DialogResult)
+                if (m.Tag is string file)
                 {
-                    case MessageDialogResult.OK:
-                        // do nothing
-                        break;
-                    case MessageDialogResult.Cancel:
-                        // not reached?
-                        break;
-                    case MessageDialogResult.Extra1:
-                        // remove file from list
-
-                        List<FrameworkElement> itemsToRemove = new List<FrameworkElement>();
-
-                        foreach (FrameworkElement item in mnuRecent.Items)
+                    if (File.Exists(file))
+                    {
+                        await LoadFile(file, false);
+                    }
+                    else
+                    {
+                        MessageDialog md = new MessageDialog(App.ColorScheme);
+                        md.OkButtonText = "Cancel";
+                        md.ShowDialog("This file does not exist any more. Do you want to remove this file from the list or attempt to open anyway?", App.ColorScheme, this,
+                            "File Not Found", false, MessageDialogImage.Error, MessageDialogResult.Cancel, "Remove file from list", "Attempt to open anyway");
+                        switch (md.DialogResult)
                         {
-                            if (item == (sender as MenuItem))
-                            {
-                                itemsToRemove.Add(item);
-                            }
+                            case MessageDialogResult.OK:
+                                // do nothing
+                                break;
+                            case MessageDialogResult.Cancel:
+                                // not reached?
+                                break;
+                            case MessageDialogResult.Extra1:
+                                // remove file from list
+
+                                List<FrameworkElement> itemsToRemove = new List<FrameworkElement>();
+
+                                foreach (FrameworkElement? item in mnuRecent.Items)
+                                {
+                                    if (item != null && item == (sender as MenuItem))
+                                    {
+                                        itemsToRemove.Add(item);
+                                    }
+                                }
+
+                                foreach (var item in itemsToRemove)
+                                {
+                                    mnuRecent.Items.Remove(item);
+                                }
+
+                                App.Settings.RecentFiles.Remove(file);
+                                SaveSettings();
+
+                                if (App.Settings.RecentFiles.Count == 0)
+                                {
+                                    mnuRecentEmpty.Visibility = Visibility.Visible;
+                                }
+
+                                break;
+                            case MessageDialogResult.Extra2:
+                                // attempt to open anyway
+                                await LoadFile(file, false);
+                                break;
+                            case MessageDialogResult.Extra3:
+                                // not reached
+                                break;
+                            default:
+                                break;
                         }
-
-                        foreach (var item in itemsToRemove)
-                        {
-                            mnuRecent.Items.Remove(item);
-                        }
-
-                        App.Settings.RecentFiles.Remove(file);
-                        SaveSettings();
-
-                        if (App.Settings.RecentFiles.Count == 0)
-                        {
-                            mnuRecentEmpty.Visibility = Visibility.Visible;
-                        }
-
-                        break;
-                    case MessageDialogResult.Extra2:
-                        // attempt to open anyway
-                        await LoadFile((sender as MenuItem).Tag as string, false);
-                        break;
-                    case MessageDialogResult.Extra3:
-                        // not reached
-                        break;
-                    default:
-                        break;
+                    }
                 }
             }
         }
@@ -548,7 +549,7 @@ namespace PathfinderJson
 
             List<FrameworkElement> itemsToRemove = new List<FrameworkElement>();
 
-            foreach (FrameworkElement item in mnuRecent.Items)
+            foreach (FrameworkElement? item in mnuRecent.Items)
             {
 
                 if (item is MenuItem)
@@ -574,7 +575,7 @@ namespace PathfinderJson
 
         // relevant variables are declared at the top of the class
 
-        private void UndoSetTimer_Tick(object sender, EventArgs e)
+        private void UndoSetTimer_Tick(object? sender, EventArgs e)
         {
             CreateUndoItem();
         }
@@ -618,7 +619,10 @@ namespace PathfinderJson
             }
 
             selTabs.ApplyColorScheme(App.ColorScheme);
+
+#nullable disable
             (txtEditRaw.ContextMenu as UiCore.ContextMenu).ApplyColorScheme(App.ColorScheme);
+#nullable enable
 
             expUser.Background = App.ColorScheme.LightBackgroundColor.ToBrush();
             expUser.BorderBrush = App.ColorScheme.ThirdHighlightColor.ToBrush();
@@ -643,8 +647,9 @@ namespace PathfinderJson
             edtCmd.UpdateAppearance();
             edtInit.UpdateAppearance();
 
-            foreach (SkillEditor item in stkSkills.Children)
+            foreach (SkillEditor? item in stkSkills.Children)
             {
+                if (item == null) continue;
                 item.UpdateAppearance();
             }
 
@@ -667,7 +672,7 @@ namespace PathfinderJson
             SetAllTabsVisibility(Visibility.Collapsed);
         }
 
-        SelectableItem CreateTab(string name, ImageSource image = null)
+        SelectableItem CreateTab(string name, ImageSource? image = null)
         {
             SelectableItem si = new SelectableItem();
             si.Height = 36;
@@ -768,8 +773,9 @@ namespace PathfinderJson
             }
         }
 
-        private void tabItem_Click(object sender, EventArgs e)
+        private void tabItem_Click(object? sender, EventArgs e)
         {
+            if (sender == null) return;
             SelectableItem si = (SelectableItem)sender;
 
             if (si.CanSelect)
@@ -1084,8 +1090,15 @@ namespace PathfinderJson
         #endregion
 
         #region Load File
-        async Task LoadFile(string filename, bool addToRecent = true)
+        async Task LoadFile(string? filename, bool addToRecent = true)
         {
+            if (filename == null)
+            {
+                MessageBox.Show(this, "The filename provided is not valid. No file can be opened.",
+                    "Filename Null Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
             try
             {
                 PathfinderSheet ps = PathfinderSheet.LoadJsonFile(filename);
@@ -1527,8 +1540,12 @@ namespace PathfinderJson
             bool updateTotals = mnuUpdateTotals.IsChecked;
             bool updateAcItems = mnuUpdateAc.IsChecked;
 
-            foreach (SkillEditor item in stkSkills.Children)
+            foreach (SkillEditor? item in stkSkills.Children)
             {
+                if (item == null)
+                {
+                    continue;
+                }
 
                 string modifier = "";
 
@@ -1773,8 +1790,9 @@ namespace PathfinderJson
 
             // skills
             Dictionary<string, Skill> skills = new Dictionary<string, Skill>();
-            foreach (SkillEditor item in stkSkills.Children)
+            foreach (SkillEditor? item in stkSkills.Children)
             {
+                if (item == null) continue;
                 skills.Add(item.SkillInternalName, item.GetSkillData());
             }
 
@@ -1833,10 +1851,10 @@ namespace PathfinderJson
                 SetIsDirty();
             }
 
-            lastEditedBox = (sender as TextBox);
+            lastEditedBox = sender as TextBox;
         }
 
-        private void editor_ContentChanged(object sender, EventArgs e)
+        private void editor_ContentChanged(object? sender, EventArgs e)
         {
             if (!_isUpdating)
             {
