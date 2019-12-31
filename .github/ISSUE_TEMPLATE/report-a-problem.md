@@ -1,6 +1,6 @@
 ---
 name: Report a problem
-about: Click here to read what to do and write your thoughts
+about: Something not working right? Let me know!
 title: ''
 labels: ''
 assignees: ''
