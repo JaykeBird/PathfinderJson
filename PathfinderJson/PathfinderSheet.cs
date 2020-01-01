@@ -122,6 +122,8 @@ namespace PathfinderJson
         public string? Hair { get; set; }
         public string? Eyes { get; set; }
 
+        public Speed? Speed { get; set; }
+
         // base abilities
         [JsonIgnore]
         public int Strength { get; set; }
@@ -381,6 +383,18 @@ namespace PathfinderJson
         public string? MiscModifier { get; set; }
         public string? OtherModifiers { get; set; }
         public string? SizeModifier { get; set; }
+        public string? TempModifier { get; set; }
+    }
+
+    public class Speed
+    {
+        public string? Base { get; set; }
+        public string? WithArmor { get; set; }
+        public string? Fly { get; set; }
+        public string? Swim { get; set; }
+        public string? Climb { get; set; }
+        public string? Burrow { get; set; }
+        [JsonProperty("tempModifiers")]
         public string? TempModifier { get; set; }
     }
 

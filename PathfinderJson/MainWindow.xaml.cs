@@ -1206,6 +1206,18 @@ namespace PathfinderJson
             txtPhyHair.Text = sheet.Hair;
             txtPhyEyes.Text = sheet.Eyes;
 
+            Speed? spd = sheet.Speed;
+            if (spd != null)
+            {
+                txtSpeedBase.Text = spd.Base;
+                txtSpeedArmor.Text = spd.WithArmor;
+                txtSpeedBurrow.Text = spd.Burrow;
+                txtSpeedClimb.Text = spd.Climb;
+                txtSpeedFly.Text = spd.Fly;
+                txtSpeedSwim.Text = spd.Swim;
+                txtSpeedTemp.Text = spd.TempModifier;
+            }
+
             txtStr.Value = sheet.Strength;
             txtDex.Value = sheet.Dexterity;
             txtCha.Value = sheet.Charisma;
@@ -1680,6 +1692,23 @@ namespace PathfinderJson
             sheet.Weight = GetStringOrNull(txtPhyWeight.Text);
             sheet.Hair = GetStringOrNull(txtPhyHair.Text);
             sheet.Eyes = GetStringOrNull(txtPhyEyes.Text);
+
+            Speed? sp = new Speed();
+            sp.Base = GetStringOrNull(txtSpeedBase.Text, true);
+            sp.Burrow = GetStringOrNull(txtSpeedBase.Text, true);
+            sp.Climb = GetStringOrNull(txtSpeedBase.Text, true);
+            sp.Fly = GetStringOrNull(txtSpeedBase.Text, true);
+            sp.Swim = GetStringOrNull(txtSpeedBase.Text, true);
+            sp.WithArmor = GetStringOrNull(txtSpeedBase.Text, true);
+            sp.TempModifier = GetStringOrNull(txtSpeedTemp.Text);
+
+            if (sp.Base == null && sp.Burrow == null && sp.Climb == null &&
+                sp.Fly == null && sp.Swim == null && sp.WithArmor == null
+                && sp.TempModifier == null)
+            {
+                sp = null;
+            }
+            sheet.Speed = sp;
 
             Dictionary<string, string> abilities = new Dictionary<string, string>
             {
