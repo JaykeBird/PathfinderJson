@@ -4,6 +4,8 @@ using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using static PathfinderJson.CoreUtils;
+
 namespace PathfinderJson
 {
     /// <summary>
@@ -54,14 +56,15 @@ namespace PathfinderJson
         {
             ArmorClass ac = new ArmorClass()
             {
-                ArmorBonus = txtArmor.Text,
-                NaturalArmor = txtNatural.Text,
-                Deflection = txtDeflection.Text,
+                ArmorBonus = GetStringOrNull(txtArmor.Text, true),
+                NaturalArmor = GetStringOrNull(txtNatural.Text, true),
+                Deflection = GetStringOrNull(txtDeflection.Text, true),
+                MiscModifier = GetStringOrNull(txtMisc.Text, true),
+                OtherModifiers = GetStringOrNull(txtOther.Text, true),
+                ShieldBonus = GetStringOrNull(txtShield.Text, true),
+                SizeModifier = GetStringOrNull(txtSize.Text, true),
+
                 FlatFooted = txtFlat.Text,
-                MiscModifier = txtMisc.Text,
-                OtherModifiers = txtOther.Text,
-                ShieldBonus = txtShield.Text,
-                SizeModifier = txtSize.Text,
                 Total = txtTotal.Text,
                 Touch = txtTouch.Text
             };

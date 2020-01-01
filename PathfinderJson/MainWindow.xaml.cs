@@ -17,6 +17,7 @@ using System.Windows.Threading;
 using System.Xml;
 using UiCore;
 using MenuItem = System.Windows.Controls.MenuItem;
+using static PathfinderJson.CoreUtils;
 
 namespace PathfinderJson
 {
@@ -926,7 +927,6 @@ namespace PathfinderJson
                     {
                         // update sheet from editor
                         await SyncSheetFromEditorAsync();
-                        _isEditorDirty = false;
                     }
                     break;
                 case TABS_VIEW:
@@ -944,7 +944,6 @@ namespace PathfinderJson
                     {
                         // update sheet from editor
                         await SyncSheetFromEditorAsync();
-                        _isEditorDirty = false;
                     }
                     break;
                 case RAWJSON_VIEW:
@@ -959,7 +958,6 @@ namespace PathfinderJson
                     if (_isTabsDirty && updateSheet)
                     {
                         await SyncEditorFromSheetAsync();
-                        _isTabsDirty = false;
                     }
                     break;
                 default:
@@ -1319,10 +1317,10 @@ namespace PathfinderJson
 
             // Equipment tab
 
-            Dictionary<string, string> money = sheet.Money ?? new Dictionary<string, string>();
+            Dictionary<string, string?> money = sheet.Money ?? new Dictionary<string, string?>();
             if (sheet.Money == null) // in sheets where the player hasn't given their character money, Mottokrosh's site doesn't add a "money" object to the JSON output
             {
-                money = new Dictionary<string, string>();
+                money = new Dictionary<string, string?>();
             }
             txtMoneyCp.Text = money.ContainsKey("cp") ? money["cp"] : "0";
             txtMoneySp.Text = money.ContainsKey("sp") ? money["sp"] : "0";
@@ -1507,7 +1505,7 @@ namespace PathfinderJson
 
         #region Sync Editors / update sheet / CreatePathfinderSheetAsync
 
-        private void mnuUpdate_Click(object sender, RoutedEventArgs e)
+        private async void mnuUpdate_Click(object sender, RoutedEventArgs e)
         {
             if (!_sheetLoaded)
             {
@@ -1517,6 +1515,11 @@ namespace PathfinderJson
             }
 
             _isUpdating = true;
+
+            if (currentView == RAWJSON_VIEW && _isEditorDirty)
+            {
+                await SyncSheetFromEditorAsync();
+            }
 
             txtStrm.Text = CalculateModifier(txtStr.Value);
             txtDexm.Text = CalculateModifier(txtDex.Value);
@@ -1591,21 +1594,21 @@ namespace PathfinderJson
                 foreach (AcItemEditor acItem in selAcItem.GetItemsAsType<AcItemEditor>())
                 {
                     AcItem ai = acItem.GetAcItem();
-                    if (ai.Name.ToLowerInvariant().Contains("shield") || ai.Type.ToLowerInvariant().Contains("shield"))
+                    if ((ai.Name ?? "").ToLowerInvariant().Contains("shield") || (ai.Type ?? "").ToLowerInvariant().Contains("shield"))
                     {
                         // this is a shield
-                        try { acShield += int.Parse(ai.Bonus); } catch (FormatException) { }
+                        try { acShield += ParseStringAsInt(ai.Bonus); } catch (FormatException) { }
                     }
                     else
                     {
                         // probably not a shield? consider it armor
-                        try { acArmor += int.Parse(ai.Bonus); } catch (FormatException) { }
+                        try { acArmor += ParseStringAsInt(ai.Bonus); } catch (FormatException) { }
                     }
 
-                    try { tBonus += int.Parse(ai.Bonus); } catch (FormatException) { }
-                    try { tSpellcheck += int.Parse(ai.SpellFailure.Replace("%", "")); } catch (FormatException) { }
-                    try { tPenalty += int.Parse(ai.ArmorCheckPenalty); } catch (FormatException) { }
-                    try { tWeight += int.Parse(ai.Weight); } catch (FormatException) { }
+                    try { tBonus += ParseStringAsInt(ai.Bonus); } catch (FormatException) { }
+                    try { tSpellcheck += ParseStringAsInt((ai.SpellFailure ?? "").Replace("%", "")); } catch (FormatException) { }
+                    try { tPenalty += ParseStringAsInt(ai.ArmorCheckPenalty); } catch (FormatException) { }
+                    try { tWeight += ParseStringAsInt(ai.Weight); } catch (FormatException) { }
                 }
 
                 txtAcBonus.Text = tBonus.ToString();
@@ -1628,21 +1631,36 @@ namespace PathfinderJson
                 edtCmd.UpdateTotal();
             }
 
+            if (currentView == RAWJSON_VIEW)
+            {
+                await SyncEditorFromSheetAsync();
+            }
+
             _isUpdating = false;
 
             SetIsDirty();
         }
 
+        /// <summary>
+        /// Update the sheet views from data in the text editor. Also sets the editor as no longer dirty (out-of-sync).
+        /// </summary>
+        /// <returns></returns>
         async Task SyncSheetFromEditorAsync()
         {
             PathfinderSheet ps = PathfinderSheet.LoadJsonText(txtEditRaw.Text);
             await LoadPathfinderSheetAsync(ps);
+            _isEditorDirty = false;
         }
 
+        /// <summary>
+        /// Update the editor view from data in the sheet views. Also sets the sheet as no longer dirty (out-of-sync).
+        /// </summary>
+        /// <returns></returns>
         async Task SyncEditorFromSheetAsync()
         {
             PathfinderSheet ps = await CreatePathfinderSheetAsync();
             txtEditRaw.Text = ps.SaveJsonText(App.Settings.IndentJsonData);
+            _isTabsDirty = false;
         }
 
         private async void mnuRefresh_Click(object sender, RoutedEventArgs e)
@@ -1668,18 +1686,18 @@ namespace PathfinderJson
 
             sheet.Name = txtCharacter.Text;
             sheet.Level = txtLevel.Text;
-            sheet.Alignment = txtAlignment.Text;
-            sheet.Homeland = txtHomeland.Text;
-            sheet.Deity = txtDeity.Text;
+            sheet.Alignment = GetStringOrNull(txtAlignment.Text);
+            sheet.Homeland = GetStringOrNull(txtHomeland.Text);
+            sheet.Deity = GetStringOrNull(txtDeity.Text);
 
-            sheet.Race = txtPhyRace.Text;
-            sheet.Gender = txtPhyGender.Text;
-            sheet.Size = txtPhySize.Text;
-            sheet.Age = txtPhyAge.Text;
-            sheet.Height = txtPhyHeight.Text;
-            sheet.Weight = txtPhyWeight.Text;
-            sheet.Hair = txtPhyHair.Text;
-            sheet.Eyes = txtPhyEyes.Text;
+            sheet.Race = GetStringOrNull(txtPhyRace.Text);
+            sheet.Gender = GetStringOrNull(txtPhyGender.Text);
+            sheet.Size = GetStringOrNull(txtPhySize.Text);
+            sheet.Age = GetStringOrNull(txtPhyAge.Text);
+            sheet.Height = GetStringOrNull(txtPhyHeight.Text);
+            sheet.Weight = GetStringOrNull(txtPhyWeight.Text);
+            sheet.Hair = GetStringOrNull(txtPhyHair.Text);
+            sheet.Eyes = GetStringOrNull(txtPhyEyes.Text);
 
             Dictionary<string, string> abilities = new Dictionary<string, string>
             {
@@ -1701,9 +1719,9 @@ namespace PathfinderJson
             sheet.Saves = saves;
 
             sheet.HP = new HP();
-            sheet.HP.Total = txtHpTotal.Text;
-            sheet.HP.Wounds = txtHpWounds.Text;
-            sheet.HP.NonLethal = txtHpNl.Text;
+            sheet.HP.Total = GetStringOrNull(txtHpTotal.Text, true);
+            sheet.HP.Wounds = GetStringOrNull(txtHpWounds.Text, true);
+            sheet.HP.NonLethal = GetStringOrNull(txtHpNl.Text, true);
 
             sheet.Languages = txtLanguages.Text;
 
@@ -1716,10 +1734,10 @@ namespace PathfinderJson
             }
 
             AcItem totals = new AcItem();
-            totals.Bonus = txtAcBonus.Text;
-            totals.ArmorCheckPenalty = txtAcPenalty.Text;
-            totals.SpellFailure = txtAcSpellFailure.Text;
-            totals.Weight = txtAcWeight.Text;
+            totals.Bonus = GetStringOrNull(txtAcBonus.Text, true);
+            totals.ArmorCheckPenalty = GetStringOrNull(txtAcPenalty.Text, true);
+            totals.SpellFailure = GetStringOrNull(txtAcSpellFailure.Text, true);
+            totals.Weight = GetStringOrNull(txtAcWeight.Text, true);
             ac.ItemTotals = totals;
 
             sheet.AC = ac;
@@ -1728,8 +1746,8 @@ namespace PathfinderJson
             sheet.BaseAttackBonus = txtBab.Text;
             sheet.CombatManeuverBonus = edtCmb.GetModifier();
             sheet.CombatManeuverDefense = edtCmd.GetModifier();
-            sheet.DamageReduction = txtDr.Text;
-            sheet.Resistances = txtResist.Text;
+            sheet.DamageReduction = GetStringOrNull(txtDr.Text);
+            sheet.Resistances = GetStringOrNull(txtResist.Text);
 
             sheet.MeleeWeapons = new List<Weapon>();
             foreach (WeaponEditor item in selMelee.GetItemsAsType<WeaponEditor>())
@@ -1769,15 +1787,27 @@ namespace PathfinderJson
             }
 
             // equipment
-            sheet.Money = new Dictionary<string, string>
+            sheet.Money = new Dictionary<string, string?>
             {
-                { "cp", txtMoneyCp.Text },
-                { "sp", txtMoneySp.Text },
-                { "gp", txtMoneyGp.Text },
-                { "pp", txtMoneyPp.Text },
-                { "gems", txtGemsArt.Text },
-                { "other", txtOtherTreasure.Text }
+                { "cp", GetStringOrNull(txtMoneyCp.Text, true) },
+                { "sp", GetStringOrNull(txtMoneySp.Text, true) },
+                { "gp", GetStringOrNull(txtMoneyGp.Text, true) },
+                { "pp", GetStringOrNull(txtMoneyPp.Text, true) },
+                { "gems", GetStringOrNull(txtGemsArt.Text, true) },
+                { "other", GetStringOrNull(txtOtherTreasure.Text, true) }
             };
+
+            // if no money is set, then just set the whole value as null
+            bool allNull = true;
+            foreach (string? item in sheet.Money.Values)
+            {
+                if (item != null) allNull = false;
+            }
+
+            if (allNull)
+            {
+                sheet.Money = null;
+            }
 
             sheet.Equipment = new List<Equipment>();
             foreach (ItemEditor item in selEquipment.GetItemsAsType<ItemEditor>())
@@ -1814,10 +1844,10 @@ namespace PathfinderJson
             {
                 SpellLevel sl = new SpellLevel();
 
-                sl.TotalKnown = ((TextBox)grdSpells.FindName("txtSpellsKnown" + i)).Text;
-                sl.SaveDC = ((TextBox)grdSpells.FindName("txtSpellsDC" + i)).Text;
-                sl.TotalPerDay = ((TextBox)grdSpells.FindName("txtSpellsPerDay" + i)).Text;
-                sl.BonusSpells = ((TextBox)grdSpells.FindName("txtSpellsBonus" + i)).Text;
+                sl.TotalKnown = GetStringOrNull(((TextBox)grdSpells.FindName("txtSpellsKnown" + i)).Text, true);
+                sl.SaveDC = GetStringOrNull(((TextBox)grdSpells.FindName("txtSpellsDC" + i)).Text, true);
+                sl.TotalPerDay = GetStringOrNull(((TextBox)grdSpells.FindName("txtSpellsPerDay" + i)).Text, true);
+                sl.BonusSpells = GetStringOrNull(((TextBox)grdSpells.FindName("txtSpellsBonus" + i)).Text, true);
 
                 sl.Spells = new List<Spell>();
 
@@ -1830,8 +1860,8 @@ namespace PathfinderJson
 
                 sheet.Spells.Add(sl);
             }
-            sheet.SpellsConditionalModifiers = txtSpellConditionalModifiers.Text;
-            sheet.SpellsSpeciality = txtSpellSpecialty.Text;
+            sheet.SpellsConditionalModifiers = GetStringOrNull(txtSpellConditionalModifiers.Text);
+            sheet.SpellsSpeciality = GetStringOrNull(txtSpellSpecialty.Text);
 
             return sheet;
             //});

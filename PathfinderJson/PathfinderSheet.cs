@@ -40,6 +40,8 @@ namespace PathfinderJson
                 file.BaseStream.Position = 0;
 
                 JsonSerializer serializer = new JsonSerializer();
+                serializer.DefaultValueHandling = DefaultValueHandling.Ignore;
+                serializer.NullValueHandling = NullValueHandling.Ignore;
                 serializer.ContractResolver = new CamelCasePropertyNamesContractResolver();
                 serializer.Error += (object? sender, Newtonsoft.Json.Serialization.ErrorEventArgs e) => ErrorHandler(sender, e, filename);
                 PathfinderSheet ps = (PathfinderSheet)serializer.Deserialize(file, typeof(PathfinderSheet));
@@ -77,6 +79,8 @@ namespace PathfinderJson
         public string SaveJsonText(bool indented = false, string file = "StoredText")
         {
             JsonSerializerSettings jss = new JsonSerializerSettings();
+            jss.DefaultValueHandling = DefaultValueHandling.Ignore;
+            jss.NullValueHandling = NullValueHandling.Ignore;
             jss.ContractResolver = new CamelCasePropertyNamesContractResolver();
             jss.Error += (object? sender, Newtonsoft.Json.Serialization.ErrorEventArgs e) => ErrorHandler(sender, e, file);
             return JsonConvert.SerializeObject(this, indented ? Formatting.Indented : Formatting.None, jss);
@@ -106,18 +110,18 @@ namespace PathfinderJson
         [JsonProperty("user", Order = -5)]
         public UserData Player { get; set; } = new UserData(false);
 
-        [JsonProperty(Order = 27, NullValueHandling = NullValueHandling.Ignore, DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
+        [JsonProperty(Order = 50, DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
         public string Notes { get; set; } = "";
 
         // physical characteristics
-        public string Gender { get; set; } = "";
-        public string Age { get; set; } = "";
-        public string Height { get; set; } = "";
-        public string Weight { get; set; } = "";
-        public string Race { get; set; } = "";
-        public string Size { get; set; } = "M";
-        public string Hair { get; set; } = "";
-        public string Eyes { get; set; } = "";
+        public string? Gender { get; set; }
+        public string? Age { get; set; }
+        public string? Height { get; set; }
+        public string? Weight { get; set; }
+        public string? Race { get; set; }
+        public string? Size { get; set; }
+        public string? Hair { get; set; }
+        public string? Eyes { get; set; }
 
         // base abilities
         [JsonIgnore]
@@ -143,9 +147,12 @@ namespace PathfinderJson
         [JsonProperty("bab")]
         public string BaseAttackBonus { get; set; } = "0";
         public ArmorClass AC { get; set; } = new ArmorClass();
+        public Dictionary<string, CompoundModifier> Saves { get; set; } = new Dictionary<string, CompoundModifier>();
 
-        public string DamageReduction { get; set; } = "";
-        public string Resistances { get; set; } = "";
+        [JsonProperty(Order = 19)]
+        public string? DamageReduction { get; set; }
+        [JsonProperty(Order = 20)]
+        public string? Resistances { get; set; }
 
         public List<Feat> Feats { get; set; } = new List<Feat>();
         [JsonProperty(Order = 22)]
@@ -155,32 +162,38 @@ namespace PathfinderJson
 
         [JsonProperty("gear")]
         public List<Equipment> Equipment { get; set; } = new List<Equipment>();
+        [JsonProperty(Order = 21)]
+        public Dictionary<string, string?>? Money { get; set; }
 
         [JsonProperty("ranged")]
         public List<Weapon> RangedWeapons { get; set; } = new List<Weapon>();
         [JsonProperty("melee")]
         public List<Weapon> MeleeWeapons { get; set; } = new List<Weapon>();
 
-        // used to interface with JSON file
-        [JsonProperty("abilities")]
-        public Dictionary<string, string> RawAbilities { get; set; } = new Dictionary<string, string>();
-        [JsonProperty(ItemConverterType = typeof(SkillConverter), Order = 21)]
+        // skills
+
+        [JsonProperty(ItemConverterType = typeof(SkillConverter), Order = 15)]
         public Dictionary<string, Skill> Skills { get; set; } = new Dictionary<string, Skill>();
         [JsonIgnore]
         public string? SkillConditionalModifiers { get; set; }
-        public Dictionary<string, CompoundModifier> Saves { get; set; } = new Dictionary<string, CompoundModifier>();
-        public Dictionary<string, string>? Money { get; set; }
 
         public HP HP { get; set; } = new HP();
+
+        // spells
 
         [JsonProperty(Order = -4)]
         public List<SpellLevel> Spells { get; set; } = new List<SpellLevel>(10);
         [JsonProperty(Order = 23)]
-        public string SpellsConditionalModifiers { get; set; } = "";
+        public string? SpellsConditionalModifiers { get; set; }
         [JsonProperty(Order = 24)]
-        public string SpellsSpeciality { get; set; } = "";
+        public string? SpellsSpeciality { get; set; }
         [JsonProperty("spellLikes", Order = 25)]
         public List<Spell> SpellLikeAbilities { get; set; } = new List<Spell>();
+        
+        // raw data, used to interface with JSON file
+
+        [JsonProperty("abilities")]
+        public Dictionary<string, string> RawAbilities { get; set; } = new Dictionary<string, string>();
 
         private void SetupSheet()
         {
@@ -282,19 +295,14 @@ namespace PathfinderJson
 
     public class Skill
     {
-        [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
+        
         public bool ClassSkill { get; set; } = false;
-        [JsonProperty(DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
         public string? Ranks { get; set; }
-        [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
         public string? Total { get; set; }
-        [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
         public string? Racial { get; set; }
-        [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
         public string? Trait { get; set; }
-        [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
         public string? Misc { get; set; }
-        [JsonProperty("name", DefaultValueHandling = DefaultValueHandling.Ignore)]
+        [JsonProperty("name")]
         public string? Specialization { get; set; }
         [JsonIgnore]
         public string Name { get; set; } = "";
@@ -325,13 +333,13 @@ namespace PathfinderJson
         public List<Email> Emails { get; set; }
         //public Name UserName { get; set; }
         public List<Photo> Photos { get; set; }
-        [JsonProperty("profileUrl", DefaultValueHandling = DefaultValueHandling.Ignore)]
+        [JsonProperty("profileUrl")]
         public string? ProfileUrl { get; set; }
 
         //public class Name { public string FamilyName { get; set; } public string GivenName { get; set; } }
         public class Email {
             public string Value { get; set; } = "";
-            [JsonProperty("type", DefaultValueHandling = DefaultValueHandling.Ignore)]
+            [JsonProperty("type")]
             public string? Type { get; set; } }
 
         public class Photo { public string? Value { get; set; } }
@@ -360,30 +368,20 @@ namespace PathfinderJson
     public class Feat
     {
         public string Name { get; set; } = "";
-        [JsonProperty(DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
         public string? Type { get; set; }
-        [JsonProperty(DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
         public string? Notes { get; set; }
-        [JsonProperty(DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
         public string? School { get; set; }
-        [JsonProperty(DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
         public string? Subschool { get; set; }
     }
 
     public class CompoundModifier
     {
-        [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
         public string? Base { get; set; }
         public string? Total { get; set; }
-        [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
         public string? MagicModifier { get; set; }
-        [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
         public string? MiscModifier { get; set; }
-        [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
         public string? OtherModifiers { get; set; }
-        [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
         public string? SizeModifier { get; set; }
-        [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
         public string? TempModifier { get; set; }
     }
 
@@ -393,15 +391,11 @@ namespace PathfinderJson
         public string Touch { get; set; } = "";
         public string FlatFooted { get; set; } = "";
 
-        [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
         public string? SizeModifier { get; set; }
-        [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
         public string? MiscModifier { get; set; }
-        [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
         public string? OtherModifiers { get; set; }
-        [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
         public string? NaturalArmor { get; set; }
-        [JsonProperty("deflectionModifier", DefaultValueHandling = DefaultValueHandling.Ignore)]
+        [JsonProperty("deflectionModifier")]
         public string? Deflection { get; set; }
         public string? ArmorBonus { get; set; }
         public string? ShieldBonus { get; set; }
@@ -419,22 +413,20 @@ namespace PathfinderJson
         public string? CriticalRange { get; set; }
         public string? Type { get; set; }
         public string? AttackBonus { get; set; }
-        public string Notes { get; set; } = "";
-        [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
-        public string Range { get; set; } = "";
-        [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
+        public string? Notes { get; set; }
+        public string? Range { get; set; }
         public string? Ammunition { get; set; }
     }
 
     public class AcItem
     {
-        public string Name { get; set; } = "";
-        public string Bonus { get; set; } = "";
-        public string Type { get; set; } = "";
-        public string ArmorCheckPenalty { get; set; } = "";
-        public string SpellFailure { get; set; } = "";
-        public string Weight { get; set; } = "";
-        public string Properties { get; set; } = "";
+        public string? Name { get; set; } = "";
+        public string? Bonus { get; set; } = "";
+        public string? Type { get; set; } = "";
+        public string? ArmorCheckPenalty { get; set; } = "";
+        public string? SpellFailure { get; set; } = "";
+        public string? Weight { get; set; } = "";
+        public string? Properties { get; set; } = "";
     }
 
     public class Equipment
@@ -456,9 +448,9 @@ namespace PathfinderJson
 
     public class HP
     {
-        public string Total { get; set; } = "0";
-        public string Wounds { get; set; } = "0";
-        public string NonLethal { get; set; } = "0";
+        public string? Total { get; set; } = "0";
+        public string? Wounds { get; set; } = "0";
+        public string? NonLethal { get; set; }
     }
 
     public class SpellLevel
@@ -470,7 +462,7 @@ namespace PathfinderJson
         public string? BonusSpells { get; set; }
 
         [JsonProperty("slotted")]
-        public List<Spell>? Spells { get; set; } = new List<Spell>();
+        public List<Spell>? Spells { get; set; }
     }
 
     public class Spell
