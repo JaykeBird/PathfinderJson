@@ -26,7 +26,7 @@ namespace PathfinderJson
 
                 try
                 {
-                    JToken a = o["skills"]["conditionalModifiers"];
+                    JToken a = o["skills"]!["conditionalModifiers"]!;
                     if (a.Value<string>() != null)
                     {
                         Console.WriteLine(a.Value<string>());
@@ -43,7 +43,7 @@ namespace PathfinderJson
                 serializer.NullValueHandling = NullValueHandling.Ignore;
                 serializer.ContractResolver = new CamelCasePropertyNamesContractResolver();
                 serializer.Error += (object? sender, Newtonsoft.Json.Serialization.ErrorEventArgs e) => ErrorHandler(sender, e, filename);
-                PathfinderSheet ps = (PathfinderSheet)serializer.Deserialize(file, typeof(PathfinderSheet));
+                PathfinderSheet ps = (PathfinderSheet)serializer.Deserialize(file, typeof(PathfinderSheet))!;
                 ps.SetupSheet();
                 if (!string.IsNullOrEmpty(csc)) ps.SkillConditionalModifiers = csc;
                 return ps;
@@ -270,26 +270,35 @@ namespace PathfinderJson
         {
             if (reader.TokenType == JsonToken.PropertyName)
             {
-                string name = (string)reader.Value;
-                if (name == "conditionalModifiers")
+                object? o = reader.Value;
+                if (o is string name)
                 {
-                    reader.Read();
-                    return new Skill("conditionalModifiers", reader.Value.ToString());
+                    if (name == "conditionalModifiers")
+                    {
+                        reader.Read();
+                        return new Skill("conditionalModifiers", (reader.Value ?? "").ToString());
+                    }
+                    else
+                    {
+                        Skill s = serializer.Deserialize<Skill>(reader)!;
+                        s.Name = name;
+                        return s;
+                    }
                 }
                 else
                 {
-                    Skill s = serializer.Deserialize<Skill>(reader);
-                    s.Name = name;
+                    Skill s = serializer.Deserialize<Skill>(reader)!;
+                    s.Name = "null";
                     return s;
                 }
             }
             else if (reader.TokenType == JsonToken.String)
             {
-                return new Skill("conditionalModifiers", reader.Value.ToString());
+                return new Skill("conditionalModifiers", (reader.Value?.ToString() ?? ""));
             }
             else
             {
-                return serializer.Deserialize<Skill>(reader);
+                return serializer.Deserialize<Skill>(reader)!;
             }
         }
     }

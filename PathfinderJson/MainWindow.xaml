@@ -282,7 +282,7 @@
                 <Grid Margin="5,5,5,0" x:Name="grdSkills" Visibility="Collapsed" >
                     <Grid Margin="10,0,0,0">
                         <TextBlock x:Name="titSkills" Text="Skills" FontSize="16" />
-                        <TextBox x:Name="txtSkillModifiers" Height="23" Margin="140,26,30,0" VerticalAlignment="Top"/>
+                        <TextBox x:Name="txtSkillModifiers" Height="23" Margin="140,26,30,0" VerticalAlignment="Top" TextChanged="textbox_TextChanged" />
                         <TextBlock x:Name="lblSkillModifiers" HorizontalAlignment="Left" Margin="10,29,0,0" Text="Conditional Modifiers" VerticalAlignment="Top"/>
                     </Grid>
                     <Grid Margin="10,55,10,0" MaxWidth="700" >

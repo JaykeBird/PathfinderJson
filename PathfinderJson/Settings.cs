@@ -13,7 +13,8 @@ namespace PathfinderJson
             using (StreamReader file = File.OpenText(filename))
             {
                 JsonSerializer serializer = new JsonSerializer();
-                Settings ss = (Settings)serializer.Deserialize(file, typeof(Settings));
+                Settings? ss = (Settings?)serializer.Deserialize(file, typeof(Settings));
+                if (ss == null) ss = new Settings();
                 return ss;
             }
         }
