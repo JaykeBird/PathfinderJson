@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using UiCore;
+using static PathfinderJson.CoreUtils;
 
 namespace PathfinderJson
 {
@@ -38,14 +35,15 @@ namespace PathfinderJson
         {
             Weapon w = new Weapon()
             {
-                Ammunition = txtAmmunition.Text,
-                AttackBonus = txtAttack.Text,
-                CriticalRange = txtCritical.Text,
-                Damage = txtDamage.Text,
                 Name = txtName.Text,
-                Notes = txtNotes.Text,
-                Range = txtRange.Text,
-                Type = txtType.Text
+
+                Ammunition = GetStringOrNull(txtAmmunition.Text),
+                AttackBonus = GetStringOrNull(txtAttack.Text),
+                CriticalRange = GetStringOrNull(txtCritical.Text),
+                Damage = GetStringOrNull(txtDamage.Text),
+                Notes = GetStringOrNull(txtNotes.Text),
+                Range = GetStringOrNull(txtRange.Text),
+                Type = GetStringOrNull(txtType.Text)
             };
 
             return w;

@@ -1,16 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using UiCore;
+using static PathfinderJson.CoreUtils;
 
 namespace PathfinderJson
 {
@@ -107,7 +101,7 @@ namespace PathfinderJson
 
         private void lblSearch_Click(object sender, EventArgs e)
         {
-            About.OpenBrowser("https://cse.google.com/cse?cx=006680642033474972217%3A6zo0hx_wle8&q=" + txtName.Text);
+            OpenBrowser("https://cse.google.com/cse?cx=006680642033474972217%3A6zo0hx_wle8&q=" + txtName.Text);
         }
 
         private void nudLevel_Loaded(object sender, RoutedEventArgs e)

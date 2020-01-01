@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using static PathfinderJson.CoreUtils;
 
 namespace PathfinderJson
 {
     /// <summary>
-    /// Interaction logic for CompoundEditor.xaml
+    /// An editor for compound properties (i.e. properties that can be influenced by a variety of sources/modifiers).
     /// </summary>
     public partial class CompoundEditor : UserControl
     {
@@ -87,7 +87,9 @@ namespace PathfinderJson
             }
         }
 
+        /// <summary>Set if the user can edit the base value.</summary>
         bool editBase = true;
+        /// <summary>Set if the Magic Modifier box should be displayed.</summary>
         bool showMagic = true;
 
         public bool CanEditBase
@@ -104,6 +106,9 @@ namespace PathfinderJson
             }
         }
 
+        /// <summary>
+        /// Get or set if a "+10" should be displayed in the editor, and also added when the total is updated.
+        /// </summary>
         public bool ShowPlusTen
         {
             get
@@ -209,12 +214,12 @@ namespace PathfinderJson
         public CompoundModifier GetModifier()
         {
             CompoundModifier cm = new CompoundModifier();
-            cm.Total = txtTotal.Text;
-            cm.Base = editBase ? txtBase.Text : "0";
-            cm.MagicModifier = txtMagic.Text;
-            cm.MiscModifier = txtMisc.Text;
-            cm.OtherModifiers = txtOther.Text;
-            cm.SizeModifier = txtSize.Text;
+            cm.Total = GetStringOrNull(txtTotal.Text, true);
+            cm.Base = GetStringOrNull(editBase ? txtBase.Text : "0", true);
+            cm.MagicModifier = GetStringOrNull(txtMagic.Text, true);
+            cm.MiscModifier = GetStringOrNull(txtMisc.Text, true);
+            cm.OtherModifiers = GetStringOrNull(txtOther.Text, true);
+            cm.SizeModifier = GetStringOrNull(txtSize.Text, true);
 
             return cm;
         }

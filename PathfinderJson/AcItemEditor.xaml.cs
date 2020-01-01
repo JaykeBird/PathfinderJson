@@ -4,6 +4,7 @@ using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using UiCore;
+using static PathfinderJson.CoreUtils;
 
 namespace PathfinderJson
 {
@@ -32,13 +33,13 @@ namespace PathfinderJson
         {
             AcItem a = new AcItem()
             {
-                Bonus = txtBonus.Text,
-                ArmorCheckPenalty = txtPenalty.Text,
-                SpellFailure = txtSpellFailure.Text,
-                Name = txtName.Text,
-                Properties = txtNotes.Text,
-                Weight = txtWeight.Text,
-                Type = txtType.Text
+                Bonus = GetStringOrNull(txtBonus.Text),
+                ArmorCheckPenalty = GetStringOrNull(txtPenalty.Text),
+                SpellFailure = GetStringOrNull(txtSpellFailure.Text),
+                Name = GetStringOrNull(txtName.Text),
+                Properties = GetStringOrNull(txtNotes.Text),
+                Weight = GetStringOrNull(txtWeight.Text),
+                Type = GetStringOrNull(txtType.Text)
             };
 
             return a;

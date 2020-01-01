@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using UiCore;
+using static PathfinderJson.CoreUtils;
 
 namespace PathfinderJson
 {
@@ -91,9 +92,9 @@ namespace PathfinderJson
                     break;
             }
 
-            ud.DisplayName = txtName.Text;
-            ud.ProfileUrl = txtProfileUrl.Text;
-            ud.Id = txtUserId.Text;
+            ud.DisplayName = GetStringOrNull(txtName.Text);
+            ud.ProfileUrl = GetStringOrNull(txtProfileUrl.Text);
+            ud.Id = GetStringOrNull(txtUserId.Text);
 
             foreach (SelectableItem item in selEmails.GetItemsAsType<SelectableItem>())
             {

@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using UiCore;
+using static PathfinderJson.CoreUtils;
 
 namespace PathfinderJson
 {
@@ -33,12 +32,12 @@ namespace PathfinderJson
         {
             Equipment q = new Equipment
             {
-                Name = txtName.Text,
-                Notes = txtNotes.Text,
-                Location = txtLocation.Text,
-                Quantity = txtQuantity.Text,
-                Type = txtType.Text,
-                Weight = txtWeight.Text
+                Name = GetStringOrNull(txtName.Text),
+                Notes = GetStringOrNull(txtNotes.Text),
+                Location = GetStringOrNull(txtLocation.Text),
+                Quantity = GetStringOrNull(txtQuantity.Text),
+                Type = GetStringOrNull(txtType.Text),
+                Weight = GetStringOrNull(txtWeight.Text)
             };
 
             return q;

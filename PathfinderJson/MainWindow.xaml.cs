@@ -382,12 +382,12 @@ namespace PathfinderJson
 
         private void mnuGithub_Click(object sender, RoutedEventArgs e)
         {
-            About.OpenBrowser("https://github.com/JaykeBird/PathfinderJson/");
+            OpenBrowser("https://github.com/JaykeBird/PathfinderJson/");
         }
 
         private void mnuFeedback_Click(object sender, RoutedEventArgs e)
         {
-            About.OpenBrowser("https://github.com/JaykeBird/PathfinderJson/issues/new/choose");
+            OpenBrowser("https://github.com/JaykeBird/PathfinderJson/issues/new/choose");
         }
 
         private void mnuAutoCheck_Click(object sender, RoutedEventArgs e)
@@ -1343,7 +1343,7 @@ namespace PathfinderJson
 
             // trying to do this asynchronously... key word being "trying"
             var scheduler = TaskScheduler.FromCurrentSynchronizationContext();
-            var ses = await Task<List<SkillEditor>>.Factory.StartNew(() => SkillEditorFactory.CreateEditors(sheet), cts.Token, TaskCreationOptions.None, scheduler);
+            var ses = await Task<List<SkillEditor>>.Factory.StartNew(() => SkillEditorFactory.CreateEditors(sheet, this), cts.Token, TaskCreationOptions.None, scheduler);
 
             stkSkills.Children.Clear();
             foreach (SkillEditor item in ses)
@@ -1482,24 +1482,6 @@ namespace PathfinderJson
             txtNotes.Text = sheet.Notes;
 
             _isUpdating = false;
-        }
-
-        string AttemptCalculateModifier(string score)
-        {
-            try
-            {
-                return CalculateModifier(int.Parse(score));
-            }
-            catch (FormatException)
-            {
-                return "0";
-            }
-        }
-
-        string CalculateModifier(int score)
-        {
-            int r = (int)Math.Floor((score - 10) / 2d);
-            if (r >= 0) return "+" + r.ToString(); else return r.ToString();
         }
         #endregion
 

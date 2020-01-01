@@ -1,15 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using static PathfinderJson.CoreUtils;
 
 namespace PathfinderJson
 {
@@ -106,12 +101,12 @@ namespace PathfinderJson
             Skill s = new Skill
             {
                 ClassSkill = chkSkill.IsChecked == true,
-                Misc = txtMisc.Text,
-                Racial = txtRacial.Text,
-                Ranks = txtRanks.Text,
+                Misc = GetStringOrNull(txtMisc.Text, true),
+                Racial = GetStringOrNull(txtRacial.Text, true),
+                Ranks = GetStringOrNull(txtRanks.Text, true),
                 Specialization = specialization,
-                Total = txtTotal.Text,
-                Trait = txtTrait.Text
+                Total = GetStringOrNull(txtTotal.Text, true),
+                Trait = GetStringOrNull(txtTrait.Text, true)
             };
 
             return s;
@@ -163,10 +158,13 @@ namespace PathfinderJson
             Background = new SolidColorBrush(Colors.Transparent);
         }
 
+        public Window? OwnerWindow { get; set; } = null;
+
         private void btnEdit_Click(object sender, RoutedEventArgs e)
         {
             UiCore.StringInputDialog sid = new UiCore.StringInputDialog(App.ColorScheme, "Edit Skill", "Edit the specialization for this skill.", specialization);
             sid.SelectTextOnFocus = true;
+            if (OwnerWindow != null) sid.Owner = OwnerWindow;
             sid.ShowDialog();
             if (sid.DialogResult)
             {

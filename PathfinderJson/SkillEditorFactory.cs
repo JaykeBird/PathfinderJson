@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Windows;
 
 namespace PathfinderJson
 {
     public class SkillEditorFactory
     {
 
-        public static List<SkillEditor> CreateEditors(PathfinderSheet ps)
+        public static List<SkillEditor> CreateEditors(PathfinderSheet ps, Window? owner = null)
         {
             List<SkillEditor> eds = new List<SkillEditor>();
 
@@ -19,6 +19,8 @@ namespace PathfinderJson
                 se.SkillAbility = item.Value.modifier;
                 se.CanEditTitle = item.Value.canEdit;
                 se.SkillInternalName = item.Key;
+
+                se.OwnerWindow = owner;
 
                 if (ps.Skills != null)
                 {

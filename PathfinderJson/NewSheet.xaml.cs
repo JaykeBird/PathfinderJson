@@ -5,6 +5,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using UiCore;
+using static PathfinderJson.CoreUtils;
 
 namespace PathfinderJson
 {
@@ -171,12 +172,6 @@ namespace PathfinderJson
                 txtIntm.Text = CalculateModifier(txtInt.Value);
                 txtWism.Text = CalculateModifier(txtWis.Value);
             }
-        }
-
-        string CalculateModifier(int score)
-        {
-            int r = (int)Math.Floor((score - 10) / 2d);
-            if (r >= 0) return "+" + r.ToString(); else return r.ToString();
         }
         #endregion
     }
