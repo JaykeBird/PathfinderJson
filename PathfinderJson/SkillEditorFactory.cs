@@ -26,7 +26,7 @@ namespace PathfinderJson
                 {
                     try
                     {
-                        Skill s = ps.Skills[item.Key];
+                        Skill s = ps.Skills[item.Key] ?? new Skill();
                         se.LoadSkillData(s);
                     }
                     catch (KeyNotFoundException)

@@ -35,6 +35,11 @@ namespace PathfinderJson
 
             ProfileOptimization.SetProfileRoot(Path.Combine(appDataPath, "Optimization"));
             ProfileOptimization.StartProfile("Startup.profile");
+
+            Newtonsoft.Json.JsonConvert.DefaultSettings = () => new Newtonsoft.Json.JsonSerializerSettings { 
+                DefaultValueHandling = Newtonsoft.Json.DefaultValueHandling.Ignore,
+                NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore 
+            };
         }
 
         public static ColorScheme ColorScheme { get; set; } = new ColorScheme(Colors.Peru);

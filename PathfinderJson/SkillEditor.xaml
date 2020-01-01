@@ -18,7 +18,7 @@
             <ColumnDefinition Width="85" x:Name="colModifiers" />
             <ColumnDefinition Width="1*" x:Name="colExtra" />-->
         </Grid.ColumnDefinitions>
-        <CheckBox x:Name="chkSkill" Margin="5,0,0,0" VerticalAlignment="Center">
+        <CheckBox x:Name="chkSkill" Margin="5,0,0,0" VerticalAlignment="Center" Checked="chkSkill_Checked" Unchecked="chkSkill_Unchecked" >
             <TextBlock x:Name="txtName" Text="Knowledge (engineering)" TextTrimming="CharacterEllipsis" Foreground="{Binding Foreground, ElementName=userControl}" />
         </CheckBox>
         <uicore:FlatButton Width="20" Height="24" HorizontalAlignment="Right" Padding="0" TransparentBack="True" x:Name="btnEdit" Click="btnEdit_Click" >

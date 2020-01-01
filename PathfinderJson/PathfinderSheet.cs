@@ -173,7 +173,7 @@ namespace PathfinderJson
 
         // skills
 
-        [JsonProperty(ItemConverterType = typeof(SkillConverter), Order = 15)]
+        [JsonProperty(ItemConverterType = typeof(SkillConverter), NullValueHandling = NullValueHandling.Ignore, Order = 15)]
         public Dictionary<string, Skill> Skills { get; set; } = new Dictionary<string, Skill>();
         [JsonIgnore]
         public string? SkillConditionalModifiers { get; set; }
@@ -241,11 +241,12 @@ namespace PathfinderJson
 
             foreach (KeyValuePair<string, Skill> item in Skills)
             {
-                item.Value.Name = item.Key;
+                Skill s = item.Value ?? new Skill();
+                s.Name = item.Key;
 
                 if (item.Key == "conditonalModifiers")
                 {
-                    SkillConditionalModifiers = item.Value.Specialization;
+                    SkillConditionalModifiers = s.Specialization;
                 }
             }
         }
@@ -253,17 +254,41 @@ namespace PathfinderJson
 
     public class SkillConverter : JsonConverter<Skill>
     {
+        public override bool CanRead => true;
+        public override bool CanWrite => true;
+
         public override void WriteJson(JsonWriter writer, Skill value, JsonSerializer serializer)
         {
-            if (value.Name == "conditionalModifiers")
+            if (value == null)
             {
-                //writer.WritePropertyName("conditionalModifiers");
-                writer.WriteValue(value.Specialization);
+                if (serializer.DefaultValueHandling != DefaultValueHandling.Ignore || serializer.NullValueHandling != NullValueHandling.Ignore)
+                {
+                    writer.WriteNull();
+                }
             }
             else
             {
-                serializer.Serialize(writer, value, typeof(Skill));
+                if (value is Skill s)
+                {
+                    if (s == null)
+                    {
+                        //if (serializer.DefaultValueHandling != DefaultValueHandling.Ignore || serializer.NullValueHandling != NullValueHandling.Ignore)
+                        //{
+                        //    writer.WriteNull();
+                        //}
+                    }
+                    else if (s.Name == "conditionalModifiers")
+                    {
+                        //writer.WritePropertyName("conditionalModifiers");
+                        writer.WriteValue(s.Specialization);
+                    }
+                    else
+                    {
+                        serializer.Serialize(writer, value, typeof(Skill));
+                    }
+                }
             }
+
         }
 
         public override Skill ReadJson(JsonReader reader, Type objectType, Skill existingValue, bool hasExistingValue, JsonSerializer serializer)
@@ -288,13 +313,13 @@ namespace PathfinderJson
                 else
                 {
                     Skill s = serializer.Deserialize<Skill>(reader)!;
-                    s.Name = "null";
+                    s.Name = "";
                     return s;
                 }
             }
             else if (reader.TokenType == JsonToken.String)
             {
-                return new Skill("conditionalModifiers", (reader.Value?.ToString() ?? ""));
+                return new Skill("conditionalModifiers", reader.Value?.ToString() ?? "");
             }
             else
             {

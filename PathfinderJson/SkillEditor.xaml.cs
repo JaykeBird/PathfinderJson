@@ -187,5 +187,15 @@ namespace PathfinderJson
         {
             ContentChanged?.Invoke(this, e);
         }
+
+        private void chkSkill_Checked(object sender, RoutedEventArgs e)
+        {
+            ContentChanged?.Invoke(this, e);
+        }
+
+        private void chkSkill_Unchecked(object sender, RoutedEventArgs e)
+        {
+            ContentChanged?.Invoke(this, e);
+        }
     }
 }
