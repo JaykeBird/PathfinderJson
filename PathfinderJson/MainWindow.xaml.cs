@@ -34,6 +34,8 @@ namespace PathfinderJson
         bool _sheetLoaded = false;
         /// <summary>The name of the character. This MUST match txtCharacterName's text</summary>
         string fileTitle = "";
+        /// <summary>The title displayed in the title bar</summary>
+        string displayedTitle = "";
         /// <summary>Get or set if a file has unsaved changes</summary>
         bool isDirty = false;
 
@@ -173,26 +175,38 @@ namespace PathfinderJson
 
         void UpdateTitlebar()
         {
-            if (string.IsNullOrEmpty(filePath))
+            if (!_sheetLoaded)
             {
-                if (_sheetLoaded)
-                {
-                    Title = "Pathfinder JSON - New File";
-                }
-                else
-                {
-                    Title = "Pathfinder JSON";
-                }
+                Title = "Pathfinder JSON";
+                displayedTitle = "";
             }
             else
             {
                 if (App.Settings.PathInTitleBar)
                 {
-                    Title = "Pathfinder JSON - " + Path.GetFileName(filePath);
+                    if (string.IsNullOrEmpty(filePath))
+                    {
+                        Title = "Pathfinder JSON - New File";
+                        displayedTitle = "New File";
+                    }
+                    else
+                    {
+                        Title = "Pathfinder JSON - " + Path.GetFileName(filePath);
+                        displayedTitle = Path.GetFileName(filePath);
+                    }
                 }
                 else
                 {
-                    Title = "Pathfinder JSON - " + fileTitle;
+                    if (string.IsNullOrEmpty(fileTitle))
+                    {
+                        Title = "Pathfinder JSON - (unnamed character)";
+                        displayedTitle = fileTitle;
+                    }
+                    else
+                    {
+                        Title = "Pathfinder JSON - " + fileTitle;
+                        displayedTitle = fileTitle;
+                    }
                 }
             }
 
@@ -242,7 +256,7 @@ namespace PathfinderJson
                 if (updateInternalValues) _isTabsDirty = false;
             }
 
-            if (update) UpdateTitlebar();
+            if (update || fileTitle != displayedTitle) UpdateTitlebar();
         }
 
         #endregion
