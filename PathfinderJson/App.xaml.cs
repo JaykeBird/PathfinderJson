@@ -46,7 +46,7 @@ namespace PathfinderJson
 
         public static Settings Settings { get; set; } = new Settings();
 
-        public static Version AppVersion = new Version("0.9.2.1");
+        public static Version AppVersion = new Version("0.9.3");
 
         /// <summary>
         /// Get a particular image from the internal Images folder.
