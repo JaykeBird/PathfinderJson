@@ -195,22 +195,22 @@
 
                     <Expander VerticalAlignment="Center" Margin="10,0,10,10" Grid.Row="3" x:Name="expPhysical" Header="Physical Attributes / Speed" Foreground="{Binding Foreground, ElementName=window}" >
                         <Grid Height="240" >
-                            <TextBox x:Name="txtPhyRace" HorizontalAlignment="Left" Height="23" Margin="10,24,0,0" VerticalAlignment="Top" Width="110" TextChanged="textbox_TextChanged"/>
+                            <TextBox x:Name="txtPhyRace" HorizontalAlignment="Left" Height="23" Margin="10,24,0,0" VerticalAlignment="Top" Width="115" TextChanged="textbox_TextChanged"/>
                             <TextBlock x:Name="lblPhyRace" HorizontalAlignment="Left" Margin="10,8,0,0" Text="Race" VerticalAlignment="Top"/>
-                            <TextBox x:Name="txtPhySize" HorizontalAlignment="Left" Height="23" Margin="130,24,0,0" VerticalAlignment="Top" Width="70" TextChanged="textbox_TextChanged"/>
-                            <TextBlock x:Name="lblPhySize" HorizontalAlignment="Left" Margin="130,8,0,0" Text="Size" VerticalAlignment="Top"/>
-                            <TextBox x:Name="txtPhyGender" HorizontalAlignment="Left" Height="23" Margin="210,24,0,0" VerticalAlignment="Top" Width="70" TextChanged="textbox_TextChanged"/>
-                            <TextBlock x:Name="lblPhyGender" HorizontalAlignment="Left" Margin="210,8,0,0" Text="Gender" VerticalAlignment="Top"/>
-                            <TextBox x:Name="txtPhyAge" HorizontalAlignment="Left" Height="23" Margin="290,24,0,0" VerticalAlignment="Top" Width="70" TextChanged="textbox_TextChanged"/>
-                            <TextBlock x:Name="lblPhyAge" HorizontalAlignment="Left" Margin="290,8,0,0" Text="Age" VerticalAlignment="Top"/>
+                            <TextBox x:Name="txtPhySize" HorizontalAlignment="Left" Height="23" Margin="135,24,0,0" VerticalAlignment="Top" Width="70" TextChanged="textbox_TextChanged"/>
+                            <TextBlock x:Name="lblPhySize" HorizontalAlignment="Left" Margin="135,8,0,0" Text="Size" VerticalAlignment="Top"/>
+                            <TextBox x:Name="txtPhyGender" HorizontalAlignment="Left" Height="23" Margin="215,24,0,0" VerticalAlignment="Top" Width="70" TextChanged="textbox_TextChanged"/>
+                            <TextBlock x:Name="lblPhyGender" HorizontalAlignment="Left" Margin="215,8,0,0" Text="Gender" VerticalAlignment="Top"/>
+                            <TextBox x:Name="txtPhyAge" Height="23" Margin="295,24,0,0" VerticalAlignment="Top" TextChanged="textbox_TextChanged" HorizontalAlignment="Left" Width="70"/>
+                            <TextBlock x:Name="lblPhyAge" HorizontalAlignment="Left" Margin="295,8,0,0" Text="Age" VerticalAlignment="Top"/>
                             <TextBox x:Name="txtPhyHeight" HorizontalAlignment="Left" Height="23" Margin="10,74,0,0" VerticalAlignment="Top" Width="80" TextChanged="textbox_TextChanged"/>
                             <TextBlock x:Name="lblPhyHeight" HorizontalAlignment="Left" Margin="10,58,0,0" Text="Height" VerticalAlignment="Top"/>
-                            <TextBox x:Name="txtPhyWeight" HorizontalAlignment="Left" Height="23" Margin="100,74,0,0" VerticalAlignment="Top" Width="80" TextChanged="textbox_TextChanged"/>
-                            <TextBlock x:Name="lblPhyWeight" HorizontalAlignment="Left" Margin="100,58,0,0" Text="Weight" VerticalAlignment="Top"/>
-                            <TextBox x:Name="txtPhyHair" HorizontalAlignment="Left" Height="23" Margin="190,74,0,0" VerticalAlignment="Top" Width="80" TextChanged="textbox_TextChanged"/>
-                            <TextBlock x:Name="lblPhyHair" HorizontalAlignment="Left" Margin="190,58,0,0" Text="Hair" VerticalAlignment="Top"/>
-                            <TextBox x:Name="txtPhyEyes" HorizontalAlignment="Left" Height="23" Margin="280,74,0,0" VerticalAlignment="Top" Width="80" TextChanged="textbox_TextChanged"/>
-                            <TextBlock x:Name="lblPhyEyes" HorizontalAlignment="Left" Margin="280,58,0,0" Text="Eyes" VerticalAlignment="Top"/>
+                            <TextBox x:Name="txtPhyWeight" HorizontalAlignment="Left" Height="23" Margin="103,74,0,0" VerticalAlignment="Top" Width="80" TextChanged="textbox_TextChanged"/>
+                            <TextBlock x:Name="lblPhyWeight" HorizontalAlignment="Left" Margin="103,58,0,0" Text="Weight" VerticalAlignment="Top"/>
+                            <TextBox x:Name="txtPhyHair" HorizontalAlignment="Left" Height="23" Margin="194,74,0,0" VerticalAlignment="Top" Width="80" TextChanged="textbox_TextChanged"/>
+                            <TextBlock x:Name="lblPhyHair" HorizontalAlignment="Left" Margin="194,58,0,0" Text="Hair" VerticalAlignment="Top"/>
+                            <TextBox x:Name="txtPhyEyes" HorizontalAlignment="Left" Height="23" Margin="285,74,0,0" VerticalAlignment="Top" Width="80" TextChanged="textbox_TextChanged"/>
+                            <TextBlock x:Name="lblPhyEyes" HorizontalAlignment="Left" Margin="285,58,0,0" Text="Eyes" VerticalAlignment="Top"/>
 
                             <TextBlock x:Name="lblSpeed" HorizontalAlignment="Left" Margin="10,115,0,0" Text="Speed" VerticalAlignment="Top"/>
                             <TextBox x:Name="txtSpeedBase" HorizontalAlignment="Left" Height="23" Margin="10,151,0,0" VerticalAlignment="Top" Width="55" TextChanged="textbox_TextChanged"/>
@@ -223,9 +223,9 @@
                             <TextBlock x:Name="lblSpeedSwim" HorizontalAlignment="Left" Margin="190,135,0,0" Text="Swim" VerticalAlignment="Top"/>
                             <TextBox x:Name="txtSpeedClimb" HorizontalAlignment="Left" Height="23" Margin="250,151,0,0" VerticalAlignment="Top" Width="55" TextChanged="textbox_TextChanged"/>
                             <TextBlock x:Name="lblSpeedClimb" HorizontalAlignment="Left" Margin="250,135,0,0" Text="Climb" VerticalAlignment="Top"/>
-                            <TextBox x:Name="txtSpeedBurrow" HorizontalAlignment="Left" Height="23" Margin="310,151,0,0" VerticalAlignment="Top" Width="55" TextChanged="textbox_TextChanged"/>
+                            <TextBox x:Name="txtSpeedBurrow" Height="23" Margin="310,151,0,0" VerticalAlignment="Top" TextChanged="textbox_TextChanged" HorizontalAlignment="Left" Width="55"/>
                             <TextBlock x:Name="lblSpeedBurow" HorizontalAlignment="Left" Margin="310,135,0,0" Text="Burrow" VerticalAlignment="Top"/>
-                            <TextBox x:Name="txtSpeedTemp" Height="23" Margin="10,200,21,0" VerticalAlignment="Top" TextChanged="textbox_TextChanged"/>
+                            <TextBox x:Name="txtSpeedTemp" Height="23" Margin="10,200,16,0" VerticalAlignment="Top" TextChanged="textbox_TextChanged"/>
                             <TextBlock x:Name="lblSpeedTemp" HorizontalAlignment="Left" Margin="10,184,0,0" Text="Temporary Speed Modifiers" VerticalAlignment="Top"/>
                         </Grid>
                     </Expander>

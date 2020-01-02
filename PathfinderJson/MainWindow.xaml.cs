@@ -1655,9 +1655,17 @@ namespace PathfinderJson
         /// <returns></returns>
         async Task SyncSheetFromEditorAsync()
         {
-            PathfinderSheet ps = PathfinderSheet.LoadJsonText(txtEditRaw.Text);
-            await LoadPathfinderSheetAsync(ps);
-            _isEditorDirty = false;
+            if (!string.IsNullOrEmpty(txtEditRaw.Text))
+            {
+                PathfinderSheet ps = PathfinderSheet.LoadJsonText(txtEditRaw.Text);
+                await LoadPathfinderSheetAsync(ps);
+                _isEditorDirty = false;
+            }
+            else
+            {
+                _isEditorDirty = false;
+                _isTabsDirty = true;
+            }
         }
 
         /// <summary>
