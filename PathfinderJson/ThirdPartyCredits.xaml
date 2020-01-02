@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PathfinderJson"
         xmlns:flat="clr-namespace:UiCore;assembly=UiCore"
-        mc:Ignorable="d"
+        mc:Ignorable="d" x:Name="window"
         Title="Third Party Credits" Height="450" Width="500" ResizeMode="NoResize" CaptionDisplayType="Close" >
     <flat:FlatWindow.Resources>
         <flat:ColorToBrushConverter x:Key="ColorToBrushConverter"/>
@@ -14,7 +14,7 @@
         <TextBlock HorizontalAlignment="Left" Margin="10,20,0,0" Text="Third Party Software Credits/Acknowledgements" VerticalAlignment="Top"/>
         <ScrollViewer Margin="0,50,0,50">
             <StackPanel>
-                <Expander x:Name="expUiCore" Header="UiCore (Application UI)" Margin="3">
+                <Expander x:Name="expUiCore" Header="UiCore (Application UI)" Margin="3" Foreground="{Binding Foreground, ElementName=window}" >
                     <Grid Margin="10,5">
                         <TextBlock HorizontalAlignment="Left" Margin="0,0,0,0" Text="Application UI designed using UiCore library" VerticalAlignment="Top"/>
                         <TextBlock HorizontalAlignment="Left" Margin="0,20,0,0" Text="Developed/compiled by Jayke R. Huempfner" VerticalAlignment="Top"/>
@@ -25,7 +25,7 @@
                         <TextBlock HorizontalAlignment="Left" Margin="0,126,0,0" Text="View website for more details." VerticalAlignment="Top"/>
                     </Grid>
                 </Expander>
-                <Expander x:Name="expJson" Header="Newtonsoft.Json (JSON Handling)" Margin="3">
+                <Expander x:Name="expJson" Header="Newtonsoft.Json (JSON Handling)" Margin="3" Foreground="{Binding Foreground, ElementName=window}" >
                     <Grid Margin="10,5">
                         <TextBlock HorizontalAlignment="Left" Margin="0,0,0,0" Text="JSON handling done using Newtonsoft.Json library" VerticalAlignment="Top"/>
                         <TextBlock HorizontalAlignment="Left" Margin="0,20,0,0" Text="Developed by James Newton-King" VerticalAlignment="Top"/>
@@ -33,7 +33,7 @@
                         <TextBlock HorizontalAlignment="Left" Margin="0,52,0,0" Text="Licensed under MIT License" VerticalAlignment="Top"/>
                     </Grid>
                 </Expander>
-                <Expander x:Name="expAvalon" Header="AvalonEdit (JSON Text Editor)" Margin="3">
+                <Expander x:Name="expAvalon" Header="AvalonEdit (JSON Text Editor)" Margin="3" Foreground="{Binding Foreground, ElementName=window}" >
                     <Grid Margin="10,5">
                         <TextBlock HorizontalAlignment="Left" Margin="0,0,0,0" Text="Text Editor built using AvalonEdit library" VerticalAlignment="Top"/>
                         <TextBlock HorizontalAlignment="Left" Margin="0,20,0,0" Text="Developed by icsharpcode" VerticalAlignment="Top"/>
@@ -41,7 +41,7 @@
                         <TextBlock HorizontalAlignment="Left" Margin="0,52,0,0" Text="Licensed under MIT License" VerticalAlignment="Top"/>
                     </Grid>
                 </Expander>
-                <Expander x:Name="expMark1" Header="MarkDig (Markdown text parsing)" Margin="3">
+                <Expander x:Name="expMark1" Header="MarkDig (Markdown text parsing)" Margin="3" Foreground="{Binding Foreground, ElementName=window}" >
                     <Grid Margin="10,5">
                         <TextBlock HorizontalAlignment="Left" Margin="0,0,0,0" Text="Markdown handling done using MarkDig library" VerticalAlignment="Top"/>
                         <TextBlock HorizontalAlignment="Left" Margin="0,20,0,0" Text="Developed by Alexandre Mutel (xoofx)" VerticalAlignment="Top"/>
@@ -49,7 +49,7 @@
                         <TextBlock HorizontalAlignment="Left" Margin="0,52,0,0" Text="Licensed under BSD License" VerticalAlignment="Top"/>
                     </Grid>
                 </Expander>
-                <Expander x:Name="expMark2" Header="MarkDig.Wpf (Markdown text display)" Margin="3">
+                <Expander x:Name="expMark2" Header="MarkDig.Wpf (Markdown text display)" Margin="3" Foreground="{Binding Foreground, ElementName=window}" >
                     <Grid Margin="10,5">
                         <TextBlock HorizontalAlignment="Left" Margin="0,0,0,0" Text="Markdown Display built using MarkDig.Wpf library" VerticalAlignment="Top"/>
                         <TextBlock HorizontalAlignment="Left" Margin="0,20,0,0" Text="Developed by Nicolas Musset (Kryptos-FR)" VerticalAlignment="Top"/>
