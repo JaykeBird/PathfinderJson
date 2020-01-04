@@ -1515,6 +1515,11 @@ namespace PathfinderJson
 
         private async void mnuUpdate_Click(object sender, RoutedEventArgs e)
         {
+            await UpdateCalculations(true, mnuUpdateTotals.IsChecked, mnuUpdateAc.IsChecked);
+        }
+
+        async Task UpdateCalculations(bool skills = true, bool totals = true, bool ac = true)
+        {
             if (!_sheetLoaded)
             {
                 MessageDialog md = new MessageDialog(App.ColorScheme);
@@ -1545,50 +1550,50 @@ namespace PathfinderJson
             edtCmb.UpdateCoreModifier(txtStrm.Text, "", txtBab.Text);
             edtCmd.UpdateCoreModifier(txtStrm.Text, txtDexm.Text, txtBab.Text);
 
-            bool updateTotals = mnuUpdateTotals.IsChecked;
-            bool updateAcItems = mnuUpdateAc.IsChecked;
-
-            foreach (SkillEditor? item in stkSkills.Children)
+            if (skills)
             {
-                if (item == null)
+                foreach (SkillEditor? item in stkSkills.Children)
                 {
-                    continue;
-                }
+                    if (item == null)
+                    {
+                        continue;
+                    }
 
-                string modifier = "";
+                    string modifier = "";
 
-                switch (item.SkillAbility)
-                {
-                    case "DEX":
-                        modifier = txtDexm.Text;
-                        break;
-                    case "INT":
-                        modifier = txtIntm.Text;
-                        break;
-                    case "CHA":
-                        modifier = txtCham.Text;
-                        break;
-                    case "STR":
-                        modifier = txtStrm.Text;
-                        break;
-                    case "WIS":
-                        modifier = txtWism.Text;
-                        break;
-                    case "CON":
-                        modifier = txtConm.Text;
-                        break;
-                    default:
-                        break;
-                }
-                item.LoadModifier(modifier);
+                    switch (item.SkillAbility)
+                    {
+                        case "DEX":
+                            modifier = txtDexm.Text;
+                            break;
+                        case "INT":
+                            modifier = txtIntm.Text;
+                            break;
+                        case "CHA":
+                            modifier = txtCham.Text;
+                            break;
+                        case "STR":
+                            modifier = txtStrm.Text;
+                            break;
+                        case "WIS":
+                            modifier = txtWism.Text;
+                            break;
+                        case "CON":
+                            modifier = txtConm.Text;
+                            break;
+                        default:
+                            break;
+                    }
+                    item.LoadModifier(modifier);
 
-                if (updateTotals)
-                {
-                    item.UpdateTotals();
+                    if (totals)
+                    {
+                        item.UpdateTotals();
+                    }
                 }
             }
 
-            if (updateAcItems)
+            if (ac)
             {
                 // special calculations for AC items
                 int acShield = 0;
@@ -1627,7 +1632,7 @@ namespace PathfinderJson
                 edtAc.UpdateAcItemBonuses(acShield.ToString(), acArmor.ToString());
             }
 
-            if (updateTotals)
+            if (totals)
             {
                 edtFort.UpdateTotal();
                 edtReflex.UpdateTotal();
@@ -1922,7 +1927,7 @@ namespace PathfinderJson
             }
         }
 
-        private void txtStr_ValueChanged(object sender, DependencyPropertyChangedEventArgs e)
+        private async void txtStr_ValueChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             if (!_isUpdating)
             {
@@ -1934,6 +1939,11 @@ namespace PathfinderJson
                 txtWism.Text = CalculateModifier(txtWis.Value);
 
                 SetIsDirty();
+
+                if (mnuAutoUpdate.IsChecked)
+                {
+                    await UpdateCalculations(true, false, false);
+                }
             }
         }
 
@@ -2341,5 +2351,21 @@ namespace PathfinderJson
             }
         }
         #endregion
+
+        private async void txtStr_LostFocus(object sender, RoutedEventArgs e)
+        {
+            //if (mnuAutoUpdate.IsChecked)
+            //{
+            //    await UpdateCalculations(true, false, false);
+            //}
+        }
+
+        private async void txtBab_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (mnuAutoUpdate.IsChecked)
+            {
+                await UpdateCalculations(false, false, false);
+            }
+        }
     }
 }

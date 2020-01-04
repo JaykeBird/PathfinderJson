@@ -111,7 +111,12 @@
         </member>
         <member name="T:UiCore.CheckBox">
             <summary>
-            Interaction logic for NewCheckBox.xaml
+            A CheckBox control with more customization over the appearance.
+            </summary>
+        </member>
+        <member name="M:UiCore.CheckBox.#ctor">
+            <summary>
+            Create a new CheckBox control.
             </summary>
         </member>
         <member name="P:UiCore.CheckBox.ClickOnPress">
@@ -557,11 +562,6 @@
         <member name="M:UiCore.FlatButton.#ctor">
             <summary>
             Create a new FlatButton.
-            </summary>
-        </member>
-        <member name="E:UiCore.FlatButton.UnroutedClick">
-            <summary>
-            Raised when the user clicks on the button. Please use the new Click event instead.
             </summary>
         </member>
         <member name="E:UiCore.FlatButton.SelectionChanged">
@@ -1361,6 +1361,36 @@
         <member name="M:UiCore.ToolbarMenuButton.InitializeComponent">
             <summary>
             InitializeComponent
+            </summary>
+        </member>
+        <member name="T:XamlGeneratedNamespace.GeneratedInternalTypeHelper">
+            <summary>
+            GeneratedInternalTypeHelper
+            </summary>
+        </member>
+        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.CreateInstance(System.Type,System.Globalization.CultureInfo)">
+            <summary>
+            CreateInstance
+            </summary>
+        </member>
+        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.GetPropertyValue(System.Reflection.PropertyInfo,System.Object,System.Globalization.CultureInfo)">
+            <summary>
+            GetPropertyValue
+            </summary>
+        </member>
+        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.SetPropertyValue(System.Reflection.PropertyInfo,System.Object,System.Object,System.Globalization.CultureInfo)">
+            <summary>
+            SetPropertyValue
+            </summary>
+        </member>
+        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.CreateDelegate(System.Type,System.Object,System.String)">
+            <summary>
+            CreateDelegate
+            </summary>
+        </member>
+        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.AddEventHandler(System.Reflection.EventInfo,System.Object,System.Delegate)">
+            <summary>
+            AddEventHandler
             </summary>
         </member>
     </members>

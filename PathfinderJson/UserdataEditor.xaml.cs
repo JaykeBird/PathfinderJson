@@ -59,7 +59,7 @@ namespace PathfinderJson
 
             foreach (UserData.Photo item in ud.Photos)
             {
-                SelectableItem si = new SelectableItem(item.Value);
+                SelectableItem si = new SelectableItem(item.Value ?? "");
                 si.AllowTextEditing = true;
 
                 if (!ColorScheme.IsHighContrast)

@@ -104,6 +104,8 @@
                 <MenuItem Header="Change Totals with Updates" IsChecked="True" x:Name="mnuUpdateTotals" IsCheckable="True" />
                 <MenuItem Header="Calculate Armor Class with Updates" IsChecked="True" x:Name="mnuUpdateAc" IsCheckable="True" />
                 <Separator />
+                <MenuItem Header="Auto Update Modifiers" x:Name="mnuAutoUpdate" IsChecked="True" IsCheckable="True" />
+                <Separator />
                 <MenuItem Header="Update Text Editor from Sheet" x:Name="mnuRefreshEditor" Click="mnuRefreshEditor_Click" />
                 <MenuItem Header="Update Sheet from Text Editor" x:Name="mnuRefresh" Click="mnuRefresh_Click" />
             </MenuItem>
@@ -230,12 +232,12 @@
                         </Grid>
                     </Expander>
 
-                    <flat:IntegerSpinner x:Name="txtStr" HorizontalAlignment="Left" Height="23" Margin="132,5,0,0" Grid.Row="4" VerticalAlignment="Top"   Width="60" ValueChanged="txtStr_ValueChanged" MinValue="-99" MaxValue="999" AcceptExpressions="True" ColorScheme="{Binding ColorScheme, ElementName=window}" />
-                    <flat:IntegerSpinner x:Name="txtDex" HorizontalAlignment="Left" Height="23" Margin="132,33,0,0" Grid.Row="4" VerticalAlignment="Top"  Width="60" ValueChanged="txtStr_ValueChanged" MinValue="-99" MaxValue="999" AcceptExpressions="True" ColorScheme="{Binding ColorScheme, ElementName=window}" />
-                    <flat:IntegerSpinner x:Name="txtCon" HorizontalAlignment="Left" Height="23" Margin="132,61,0,0" Grid.Row="4" VerticalAlignment="Top"  Width="60" ValueChanged="txtStr_ValueChanged" MinValue="-99" MaxValue="999" AcceptExpressions="True" ColorScheme="{Binding ColorScheme, ElementName=window}" />
-                    <flat:IntegerSpinner x:Name="txtInt" HorizontalAlignment="Left" Height="23" Margin="132,89,0,0" Grid.Row="4" VerticalAlignment="Top"  Width="60" ValueChanged="txtStr_ValueChanged" MinValue="-99" MaxValue="999" AcceptExpressions="True" ColorScheme="{Binding ColorScheme, ElementName=window}" />
-                    <flat:IntegerSpinner x:Name="txtWis" HorizontalAlignment="Left" Height="23" Margin="132,117,0,0" Grid.Row="4" VerticalAlignment="Top" Width="60" ValueChanged="txtStr_ValueChanged" MinValue="-99" MaxValue="999" AcceptExpressions="True" ColorScheme="{Binding ColorScheme, ElementName=window}" />
-                    <flat:IntegerSpinner x:Name="txtCha" HorizontalAlignment="Left" Height="23" Margin="132,145,0,0" Grid.Row="4" VerticalAlignment="Top" Width="60" ValueChanged="txtStr_ValueChanged" MinValue="-99" MaxValue="999" AcceptExpressions="True" ColorScheme="{Binding ColorScheme, ElementName=window}" />
+                    <flat:IntegerSpinner x:Name="txtStr" HorizontalAlignment="Left" Height="23" Margin="132,5,0,0" Grid.Row="4" VerticalAlignment="Top"   Width="60" ValueChanged="txtStr_ValueChanged" LostFocus="txtStr_LostFocus" MinValue="-99" MaxValue="999" AcceptExpressions="True" ColorScheme="{Binding ColorScheme, ElementName=window}" />
+                    <flat:IntegerSpinner x:Name="txtDex" HorizontalAlignment="Left" Height="23" Margin="132,33,0,0" Grid.Row="4" VerticalAlignment="Top"  Width="60" ValueChanged="txtStr_ValueChanged" LostFocus="txtStr_LostFocus" MinValue="-99" MaxValue="999" AcceptExpressions="True" ColorScheme="{Binding ColorScheme, ElementName=window}" />
+                    <flat:IntegerSpinner x:Name="txtCon" HorizontalAlignment="Left" Height="23" Margin="132,61,0,0" Grid.Row="4" VerticalAlignment="Top"  Width="60" ValueChanged="txtStr_ValueChanged" LostFocus="txtStr_LostFocus" MinValue="-99" MaxValue="999" AcceptExpressions="True" ColorScheme="{Binding ColorScheme, ElementName=window}" />
+                    <flat:IntegerSpinner x:Name="txtInt" HorizontalAlignment="Left" Height="23" Margin="132,89,0,0" Grid.Row="4" VerticalAlignment="Top"  Width="60" ValueChanged="txtStr_ValueChanged" LostFocus="txtStr_LostFocus" MinValue="-99" MaxValue="999" AcceptExpressions="True" ColorScheme="{Binding ColorScheme, ElementName=window}" />
+                    <flat:IntegerSpinner x:Name="txtWis" HorizontalAlignment="Left" Height="23" Margin="132,117,0,0" Grid.Row="4" VerticalAlignment="Top" Width="60" ValueChanged="txtStr_ValueChanged" LostFocus="txtStr_LostFocus" MinValue="-99" MaxValue="999" AcceptExpressions="True" ColorScheme="{Binding ColorScheme, ElementName=window}" />
+                    <flat:IntegerSpinner x:Name="txtCha" HorizontalAlignment="Left" Height="23" Margin="132,145,0,0" Grid.Row="4" VerticalAlignment="Top" Width="60" ValueChanged="txtStr_ValueChanged" LostFocus="txtStr_LostFocus" MinValue="-99" MaxValue="999" AcceptExpressions="True" ColorScheme="{Binding ColorScheme, ElementName=window}" />
                     <TextBlock x:Name="lblStr" HorizontalAlignment="Left" Margin="15,8,0,0" Grid.Row="4" Text="STR" FontWeight="Bold" VerticalAlignment="Top" />
                     <TextBlock x:Name="lblDex" HorizontalAlignment="Left" Margin="15,38,0,0" Grid.Row="4" Text="DEX" FontWeight="Bold" VerticalAlignment="Top"/>
                     <TextBlock x:Name="lblCon" HorizontalAlignment="Left" Margin="15,66,0,0" Grid.Row="4" Text="CON" FontWeight="Bold" VerticalAlignment="Top"/>
@@ -323,7 +325,7 @@
                     <local:ArmorClassEditor Grid.Row="1" Margin="5,5,0,0" x:Name="edtAc" ContentChanged="editor_ContentChanged" />
                     <local:CompoundEditor Grid.Row="2" Margin="5,5,0,0" x:Name="edtInit" Title="Initiative" ModifierTitle="Dex Mod" ContentChanged="editor_ContentChanged" />
                     <TextBlock x:Name="lblBab" HorizontalAlignment="Left" Margin="15,0,0,0" Grid.Row="3" Text="Base Attack Bonus (BAB)" FontWeight="Bold" VerticalAlignment="Center"/>
-                    <TextBox x:Name="txtBab" HorizontalAlignment="Left" Height="23" Margin="170,0,0,0" Grid.Row="3" VerticalAlignment="Center" Width="60" TextChanged="textbox_TextChanged"/>
+                    <TextBox x:Name="txtBab" HorizontalAlignment="Left" Height="23" Margin="170,0,0,0" Grid.Row="3" VerticalAlignment="Center" Width="60" TextChanged="textbox_TextChanged" LostFocus="txtBab_LostFocus" />
                     <local:CompoundEditor Grid.Row="4" Margin="5,5,0,0" x:Name="edtCmb" Title="Combat Maneuver Bonus (CMB)" ModifierTitle="Str Mod" BaseTitle="BAB" CanEditBase="False" ContentChanged="editor_ContentChanged" />
                     <local:CompoundEditor Grid.Row="5" Margin="5,5,0,0" x:Name="edtCmd" Title="Combat Maneuver Defense (CMD)" ModifierTitle="Str Mod" Modifier2Title="Dex Mod" BaseTitle="BAB" CanEditBase="False" ShowPlusTen="True" ContentChanged="editor_ContentChanged" />
                     <TextBlock x:Name="lblDr" HorizontalAlignment="Left" Margin="15,18,0,0" Grid.Row="6" Text="Damage Reduction (DR)" VerticalAlignment="Top"/>
