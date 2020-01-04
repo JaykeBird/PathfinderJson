@@ -48,7 +48,6 @@
 
   <ItemGroup>
     <None Remove="About.xaml" />
-    <None Remove="appicon.ico" />
     <None Remove="CompoundEditor.xaml" />
     <None Remove="Images\**" />
     <None Remove="Json.xshd" />
@@ -73,7 +72,6 @@
 
   <ItemGroup>
     <Resource Include="Images\**" />
-    <Resource Include="appicon.ico" />
     <EmbeddedResource Include="Json.xshd" />
   </ItemGroup>
 
