@@ -150,6 +150,11 @@ namespace PathfinderJson
         public ArmorClass AC { get; set; } = new ArmorClass();
         public Dictionary<string, CompoundModifier> Saves { get; set; } = new Dictionary<string, CompoundModifier>();
 
+        [JsonProperty("ranged")]
+        public List<Weapon> RangedWeapons { get; set; } = new List<Weapon>();
+        [JsonProperty("melee")]
+        public List<Weapon> MeleeWeapons { get; set; } = new List<Weapon>();
+
         [JsonProperty(Order = 19)]
         public string? DamageReduction { get; set; }
         [JsonProperty(Order = 20)]
@@ -161,15 +166,13 @@ namespace PathfinderJson
         [JsonProperty(Order = 26)]
         public List<SpecialAbility> Traits { get; set; } = new List<SpecialAbility>();
 
+        // equipment
+
         [JsonProperty("gear")]
         public List<Equipment> Equipment { get; set; } = new List<Equipment>();
         [JsonProperty(Order = 21)]
         public Dictionary<string, string?>? Money { get; set; }
-
-        [JsonProperty("ranged")]
-        public List<Weapon> RangedWeapons { get; set; } = new List<Weapon>();
-        [JsonProperty("melee")]
-        public List<Weapon> MeleeWeapons { get; set; } = new List<Weapon>();
+        public Dictionary<string, string?>? Xp { get; set; }
 
         // skills
 

@@ -1361,6 +1361,10 @@ namespace PathfinderJson
             txtHpWounds.Text = sheet.HP.Wounds;
             txtHpNl.Text = sheet.HP.NonLethal;
 
+            Dictionary<string, string?> xp = sheet.Xp ?? new Dictionary<string, string?>();
+            txtXpNl.Text = xp.ContainsKey("toNextLevel") ? xp["toNextLevel"] : "";
+            txtXpTotal.Text = xp.ContainsKey("total") ? xp["total"] : "";
+
             txtLanguages.Text = sheet.Languages;
 
             // Combat tab
@@ -1862,6 +1866,13 @@ namespace PathfinderJson
             sheet.HP.Total = GetStringOrNull(txtHpTotal.Text, true);
             sheet.HP.Wounds = GetStringOrNull(txtHpWounds.Text, true);
             sheet.HP.NonLethal = GetStringOrNull(txtHpNl.Text, true);
+
+            Dictionary<string, string?> xp = new Dictionary<string, string?>
+            {
+                { "total", GetStringOrNull(txtXpTotal.Text, true) },
+                { "toNextLevel", GetStringOrNull(txtXpNl.Text, true) }
+            };
+            sheet.Xp = xp;
 
             sheet.Languages = txtLanguages.Text;
 
