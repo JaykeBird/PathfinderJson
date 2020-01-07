@@ -7,7 +7,8 @@
         xmlns:flat="clr-namespace:UiCore;assembly=UiCore"
         xmlns:edit="http://icsharpcode.net/sharpdevelop/avalonedit"
         mc:Ignorable="d" x:Name="window"
-        Title="Pathfinder JSON" Height="700" Width="550" MinWidth="550" MinHeight="450" Closed="FlatWindow_Closed" Activated="window_Activated" Deactivated="window_Deactivated" >
+        Title="Pathfinder JSON" Height="700" Width="550" MinWidth="550" MinHeight="450"
+        Closing="window_Closing" Closed="window_Closed" Activated="window_Activated" Deactivated="window_Deactivated" >
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="120" x:Name="colTabs"/>
@@ -155,7 +156,7 @@
         </flat:Toolbar>
 
         <flat:SelectPanel Grid.Column="0" Grid.Row="2" x:Name="selTabs" MultiSelect="False" PanelBorderThickness="0,0,1,0" />
-        <ScrollViewer Grid.Column="1" Grid.Row="2" x:Name="scrSheet" >
+        <ScrollViewer Grid.Column="1" Grid.Row="2" x:Name="scrSheet" AllowDrop="True" Drop="scrSheet_Drop" >
             <StackPanel x:Name="stkSheet" >
                 <Grid Margin="5,5,5,0" x:Name="grdGeneral" >
                     <Grid.RowDefinitions>

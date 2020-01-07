@@ -69,7 +69,7 @@ namespace PathfinderJson
         //ArmorClass ac;
         string sheetid;
 
-        #region Window/basic functions
+        #region Constructor/ window events/ basic functions
 
         public MainWindow()
         {
@@ -226,7 +226,15 @@ namespace PathfinderJson
             menu.Foreground = ColorsHelper.CreateFromHex("#404040").ToBrush();
         }
 
-        private void FlatWindow_Closed(object sender, EventArgs e)
+        private async void window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (!(await SaveDirtyChanges()))
+            {
+                e.Cancel = true;
+            }
+        }
+
+        private void window_Closed(object sender, EventArgs e)
         {
             //Application.Current.Shutdown(0);
         }
@@ -267,6 +275,11 @@ namespace PathfinderJson
 
         private async void mnuNew_Click(object sender, RoutedEventArgs e)
         {
+            if (!(await SaveDirtyChanges()))
+            {
+                return;
+            }
+
             NewSheet ns = new NewSheet();
             ns.Owner = this;
             ns.ShowDialog();
@@ -293,6 +306,11 @@ namespace PathfinderJson
 
         private async void mnuOpen_Click(object sender, RoutedEventArgs e)
         {
+            if (!(await SaveDirtyChanges()))
+            {
+                return;
+            }
+
             Microsoft.Win32.OpenFileDialog ofd = new Microsoft.Win32.OpenFileDialog();
             ofd.Title = "Open JSON";
             ofd.Filter = "JSON Sheet|*.json|All Files|*.*";
@@ -340,7 +358,7 @@ namespace PathfinderJson
             UpdateTitlebar();
         }
 
-        async Task SaveAsFile()
+        async Task<bool> SaveAsFile()
         {
             Microsoft.Win32.SaveFileDialog sfd = new Microsoft.Win32.SaveFileDialog();
             sfd.Title = "Save JSON Sheet As";
@@ -352,6 +370,81 @@ namespace PathfinderJson
                 filePath = sfd.FileName;
                 AddRecentFile(filePath, true);
                 UpdateTitlebar();
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        async Task CloseFile()
+        {
+            if (!(await SaveDirtyChanges()))
+            {
+                return;
+            }
+
+            filePath = "";
+            fileTitle = "";
+            _sheetLoaded = false;
+            SetIsDirty(false);
+            txtEditRaw.Text = "";
+
+            await ChangeView(App.Settings.StartView, false, true, false);
+        }
+
+        async Task<bool> SaveDirtyChanges()
+        {
+            if (isDirty)
+            {
+                MessageDialog md = new MessageDialog(App.ColorScheme);
+                md.ShowDialog("The file has some unsaved changes. Do you want to save them first?", App.ColorScheme, this, "Unsaved Changes", true, MessageDialogImage.Question, MessageDialogResult.Cancel,
+                    "Save", "Discard");
+
+                if (md.DialogResult == MessageDialogResult.OK)
+                {
+                    if (string.IsNullOrEmpty(filePath))
+                    {
+                        return await SaveAsFile();
+                    }
+                    else
+                    {
+                        await SaveFile(filePath);
+                        return true;
+                    }
+                }
+                else
+                {
+                    return true;
+                }
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+        bool AskDiscard()
+        {
+            if (isDirty)
+            {
+                MessageDialog md = new MessageDialog(App.ColorScheme);
+                md.ShowDialog("The file has some unsaved changes. Are you sure you want to discard them?", App.ColorScheme, this, "Unsaved Changes", true, MessageDialogImage.Question, MessageDialogResult.Cancel,
+                    "Discard", "Cancel");
+
+                if (md.DialogResult == MessageDialogResult.OK)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                return true;
             }
         }
 
@@ -359,7 +452,10 @@ namespace PathfinderJson
         {
             if (!string.IsNullOrEmpty(filePath))
             {
-                await LoadFile(filePath, false);
+                if (AskDiscard())
+                {
+                    await LoadFile(filePath, false);
+                }
             }
         }
 
@@ -381,12 +477,7 @@ namespace PathfinderJson
 
         private async void btnClose_Click(object sender, RoutedEventArgs e)
         {
-            filePath = "";
-            fileTitle = "";
-            _sheetLoaded = false;
-            SetIsDirty(false);
-
-            await ChangeView(App.Settings.StartView, false, true, false);
+            await CloseFile();
         }
 
         private void btnExit_Click(object sender, RoutedEventArgs e)
@@ -498,6 +589,11 @@ namespace PathfinderJson
                 {
                     if (File.Exists(file))
                     {
+                        if (!(await SaveDirtyChanges()))
+                        {
+                            return;
+                        }
+
                         await LoadFile(file, false);
                     }
                     else
@@ -543,6 +639,11 @@ namespace PathfinderJson
                                 break;
                             case MessageDialogResult.Extra2:
                                 // attempt to open anyway
+                                if (!(await SaveDirtyChanges()))
+                                {
+                                    return;
+                                }
+
                                 await LoadFile(file, false);
                                 break;
                             case MessageDialogResult.Extra3:
@@ -608,7 +709,7 @@ namespace PathfinderJson
                 redoItems.Clear();
             }
         }
-        
+
         void PerformRedo()
         {
 
@@ -1099,14 +1200,14 @@ namespace PathfinderJson
         #endregion
 
         #region Load File
-        async Task LoadFile(string? filename, bool addToRecent = true)
+        async Task LoadFile(string filename, bool addToRecent = true)
         {
-            if (filename == null)
-            {
-                MessageBox.Show(this, "The filename provided is not valid. No file can be opened.",
-                    "Filename Null Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
-            }
+            //if (filename == null)
+            //{
+            //    MessageBox.Show(this, "The filename provided is not valid. No file can be opened.",
+            //        "Filename Null Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            //    return;
+            //}
 
             try
             {
@@ -1139,8 +1240,9 @@ namespace PathfinderJson
                         "File Format Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
                 }
-                else {
-                    MessageBox.Show(this, "The file \"" + filename + "\" cannot be opened due to this error: \n\n" + e.Message + "\n\n" + 
+                else
+                {
+                    MessageBox.Show(this, "The file \"" + filename + "\" cannot be opened due to this error: \n\n" + e.Message + "\n\n" +
                         "Check the file in Notepad or another text editor, or report this issue via the \"Send Feedback\" option in the Help menu.");
                 }
             }
@@ -1909,6 +2011,21 @@ namespace PathfinderJson
 
         #region General sheet event handlers
 
+        private async void scrSheet_Drop(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                string[] files = (string[])e.Data.GetData(DataFormats.FileDrop)!;
+
+                if (!(await SaveDirtyChanges()))
+                {
+                    return;
+                }
+
+                await LoadFile(files[0]);
+            }
+        }
+
         private void textbox_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (!_isUpdating)
@@ -1995,6 +2112,22 @@ namespace PathfinderJson
                 txtPlayerEmail.Text = email;
 
                 SetIsDirty();
+            }
+        }
+
+        private void txtStr_LostFocus(object sender, RoutedEventArgs e)
+        {
+            //if (mnuAutoUpdate.IsChecked)
+            //{
+            //    await UpdateCalculations(true, false, false);
+            //}
+        }
+
+        private async void txtBab_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (mnuAutoUpdate.IsChecked)
+            {
+                await UpdateCalculations(false, false, false);
             }
         }
 
@@ -2351,21 +2484,5 @@ namespace PathfinderJson
             }
         }
         #endregion
-
-        private async void txtStr_LostFocus(object sender, RoutedEventArgs e)
-        {
-            //if (mnuAutoUpdate.IsChecked)
-            //{
-            //    await UpdateCalculations(true, false, false);
-            //}
-        }
-
-        private async void txtBab_LostFocus(object sender, RoutedEventArgs e)
-        {
-            if (mnuAutoUpdate.IsChecked)
-            {
-                await UpdateCalculations(false, false, false);
-            }
-        }
     }
 }
