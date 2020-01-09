@@ -565,7 +565,32 @@ namespace PathfinderJson
             mi.ToolTip = tt;
             mi.Tag = filename;
             mi.Click += miRecentFile_Click;
+            mi.ContextMenuOpening += miRecentContext_Opening;
             mnuRecent.Items.Insert(0, mi);
+
+            UiCore.ContextMenu cm = new UiCore.ContextMenu();
+            cm.PlacementTarget = mi;
+            cm.Width = 180;
+
+            MenuItem cm1 = new MenuItem();
+            cm1.Header = "Open";
+            cm1.Tag = mi;
+            cm1.Click += miRecentOpen_Click;
+            cm.Items.Add(cm1);
+
+            MenuItem cm2 = new MenuItem();
+            cm2.Header = "View in Explorer";
+            cm2.Tag = mi;
+            cm2.Click += miRecentView_Click;
+            cm.Items.Add(cm2);
+
+            MenuItem cm3 = new MenuItem();
+            cm3.Header = "Remove";
+            cm3.Tag = mi;
+            cm3.Click += miRecentRemove_Click;
+            cm.Items.Add(cm3);
+
+            mi.ContextMenu = cm;
 
             if (storeInSettings)
             {
@@ -574,6 +599,17 @@ namespace PathfinderJson
             }
 
             mnuRecentEmpty.Visibility = Visibility.Collapsed;
+        }
+
+        private void miRecentContext_Opening(object sender, ContextMenuEventArgs e)
+        {
+            if (sender is MenuItem m)
+            {
+                if (m.ContextMenu is UiCore.ContextMenu cm)
+                {
+                    cm.ApplyColorScheme(App.ColorScheme);
+                }
+            }
         }
 
         private async void miRecentFile_Click(object sender, RoutedEventArgs e)
@@ -682,6 +718,66 @@ namespace PathfinderJson
             }
 
             mnuRecentEmpty.Visibility = Visibility.Visible;
+        }
+
+        private void miRecentOpen_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is MenuItem mi)
+            {
+                if (mi.Tag is MenuItem parent)
+                {
+                    miRecentFile_Click(parent, e);
+                }
+            }
+        }
+
+        private void miRecentRemove_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is MenuItem mi)
+            {
+                if (mi.Tag is MenuItem parent)
+                {
+                    List<FrameworkElement> itemsToRemove = new List<FrameworkElement>();
+
+                    foreach (FrameworkElement? item in mnuRecent.Items)
+                    {
+                        if (item != null && item == parent)
+                        {
+                            itemsToRemove.Add(item);
+                        }
+                    }
+
+                    foreach (var item in itemsToRemove)
+                    {
+                        mnuRecent.Items.Remove(item);
+                    }
+
+                    if (parent.Tag is string file)
+                    {
+                        App.Settings.RecentFiles.Remove(file);
+                        SaveSettings();
+
+                        if (App.Settings.RecentFiles.Count == 0)
+                        {
+                            mnuRecentEmpty.Visibility = Visibility.Visible;
+                        }
+                    }
+                }
+            }
+        }
+
+        private void miRecentView_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is MenuItem mi)
+            {
+                if (mi.Tag is MenuItem parent)
+                {
+                    if (parent.Tag is string file)
+                    {
+                        Process.Start("explorer.exe", "/select,\"" + file + "\"");
+                    }
+                }
+            }
         }
 
         #endregion

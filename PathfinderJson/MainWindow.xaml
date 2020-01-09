@@ -641,7 +641,7 @@
 
         <TextBlock x:Name="lblNoSheet" Grid.Column="1" HorizontalAlignment="Center" Grid.Row="2" TextWrapping="Wrap" VerticalAlignment="Center" TextAlignment="Center" Visibility="Collapsed" >
             <Run Text="No sheet loaded" /><LineBreak /><Run FontSize="4" /><LineBreak/>
-            <Run Text="Create or open a sheet using the File menu."  />
+            <Run Text="Drop a file here, or use the File menu to create or open a sheet."  />
         </TextBlock>
 
     </Grid>

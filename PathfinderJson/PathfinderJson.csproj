@@ -50,6 +50,7 @@
     <None Remove="About.xaml" />
     <None Remove="CompoundEditor.xaml" />
     <None Remove="Images\**" />
+    <None Remove="dotnet" />
     <None Remove="Json.xshd" />
     <None Remove="SkillEditor.xaml" />
     <None Remove="ThirdPartyCredits.xaml" />
