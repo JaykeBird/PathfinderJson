@@ -269,21 +269,21 @@
                     <local:CompoundEditor Grid.Row="6" Margin="5,5,0,0" x:Name="edtReflex" Title="Reflex Save (DEX)" ModifierTitle="Dex Mod" ContentChanged="editor_ContentChanged" />
                     <local:CompoundEditor Grid.Row="7" Margin="5,5,0,0" x:Name="edtWill" Title="Will Save (WIS)" ModifierTitle="Wis Mod" ContentChanged="editor_ContentChanged" />
 
-                    <TextBlock x:Name="lblHP" HorizontalAlignment="Left" Margin="15,13,0,0" Grid.Row="8" Text="HP" FontWeight="Bold" VerticalAlignment="Top"/>
-                    <TextBlock x:Name="lblHealth" HorizontalAlignment="Left" Margin="50,13,0,0" Grid.Row="8" Text="Hit Points" VerticalAlignment="Top"/>
-                    <TextBox x:Name="txtHpWounds" HorizontalAlignment="Left" Height="22" Margin="212,11,0,0" Grid.Row="8" VerticalAlignment="Top" Width="64" TextChanged="textbox_TextChanged"/>
-                    <TextBox x:Name="txtHpTotal" HorizontalAlignment="Left" Height="23" Margin="333,11,0,0" Grid.Row="8" VerticalAlignment="Top" Width="50"  TextChanged="textbox_TextChanged"/>
-                    <TextBox x:Name="txtHpNl" Height="23" Margin="138,40,20,0" Grid.Row="8" VerticalAlignment="Top"  TextChanged="textbox_TextChanged"/>
-                    <TextBlock x:Name="lblHpTotal" HorizontalAlignment="Left" Margin="303,13,0,0" Grid.Row="8" Text="Total" VerticalAlignment="Top"/>
-                    <TextBlock x:Name="lblHpWounds" HorizontalAlignment="Left" Margin="119,13,0,0" Grid.Row="8" Text="Wounds/Current" VerticalAlignment="Top"/>
-                    <TextBlock x:Name="lblHpNl" HorizontalAlignment="Left" Margin="15,43,0,0" Grid.Row="8" Text="Non-Lethal Damage" VerticalAlignment="Top"/>
-                    <TextBlock x:Name="lblHpSlash" HorizontalAlignment="Left" Margin="290,13,0,0" Grid.Row="8" Text="/" FontWeight="Bold" VerticalAlignment="Top"/>
+                    <TextBlock x:Name="lblHP" HorizontalAlignment="Left" Margin="15,12,0,0" Grid.Row="8" Text="HP" FontWeight="Bold" VerticalAlignment="Top"/>
+                    <TextBlock x:Name="lblHealth" HorizontalAlignment="Left" Margin="50,12,0,0" Grid.Row="8" Text="Hit Points" VerticalAlignment="Top"/>
+                    <TextBox x:Name="txtHpWounds" HorizontalAlignment="Left" Height="22" Margin="212,10,0,0" Grid.Row="8" VerticalAlignment="Top" Width="64" TextChanged="textbox_TextChanged"/>
+                    <TextBox x:Name="txtHpTotal" HorizontalAlignment="Left" Height="23" Margin="333,10,0,0" Grid.Row="8" VerticalAlignment="Top" Width="50"  TextChanged="textbox_TextChanged"/>
+                    <TextBox x:Name="txtHpNl" Height="23" Margin="190,40,20,0" Grid.Row="8" VerticalAlignment="Top"  TextChanged="textbox_TextChanged"/>
+                    <TextBlock x:Name="lblHpTotal" HorizontalAlignment="Left" Margin="303,12,0,0" Grid.Row="8" Text="Total" VerticalAlignment="Top"/>
+                    <TextBlock x:Name="lblHpWounds" HorizontalAlignment="Left" Margin="119,12,0,0" Grid.Row="8" Text="Wounds/Current" VerticalAlignment="Top"/>
+                    <TextBlock x:Name="lblHpNl" HorizontalAlignment="Left" Margin="70,44,0,0" Grid.Row="8" Text="Non-Lethal Damage" VerticalAlignment="Top"/>
+                    <TextBlock x:Name="lblHpSlash" HorizontalAlignment="Left" Margin="290,12,0,0" Grid.Row="8" Text="/" FontWeight="Bold" VerticalAlignment="Top"/>
 
                     <TextBlock x:Name="lblXp" HorizontalAlignment="Left" Margin="15,83,0,0" Grid.Row="8" Text="XP" FontWeight="Bold" VerticalAlignment="Top"/>
                     <TextBlock x:Name="lblExperience" HorizontalAlignment="Left" Margin="50,83,0,0" Grid.Row="8" Text="Experience" VerticalAlignment="Top"/>
                     <TextBox x:Name="txtXpNl" HorizontalAlignment="Left" Height="22" Margin="212,80,0,0" Grid.Row="8" VerticalAlignment="Top" Width="64" TextChanged="textbox_TextChanged"/>
-                    <TextBox x:Name="txtXpTotal" HorizontalAlignment="Left" Height="23" Margin="333,80,0,0" Grid.Row="8" VerticalAlignment="Top" Width="50"  TextChanged="textbox_TextChanged"/>
-                    <TextBlock x:Name="lblXpTotal" HorizontalAlignment="Left" Margin="303,83,0,0" Grid.Row="8" Text="Total" VerticalAlignment="Top"/>
+                    <TextBox x:Name="txtXpTotal" HorizontalAlignment="Left" Height="23" Margin="320,80,0,0" Grid.Row="8" VerticalAlignment="Top" Width="60" TextChanged="textbox_TextChanged"/>
+                    <TextBlock x:Name="lblXpTotal" HorizontalAlignment="Left" Margin="290,83,0,0" Grid.Row="8" Text="Total" VerticalAlignment="Top"/>
                     <TextBlock x:Name="lblXpNl" HorizontalAlignment="Left" Margin="135,83,0,0" Grid.Row="8" Text="To Next Level" VerticalAlignment="Top"/>
 
                     <TextBox x:Name="txtLanguages" Height="23" Margin="138,117,20,0" Grid.Row="8" VerticalAlignment="Top"  TextChanged="textbox_TextChanged"/>

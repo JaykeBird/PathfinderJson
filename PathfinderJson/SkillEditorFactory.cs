@@ -22,6 +22,18 @@ namespace PathfinderJson
 
                 se.OwnerWindow = owner;
 
+                // set skill name to use with d20pfsrd.com
+                string snl = se.SkillName.ToLowerInvariant();
+
+                if (snl.Contains("knowledge"))
+                {
+                    se.SkillOnlineName = "knowledge";
+                }
+                else
+                {
+                    se.SkillOnlineName = snl.Replace(' ', '-');
+                }
+
                 if (ps.Skills != null)
                 {
                     try

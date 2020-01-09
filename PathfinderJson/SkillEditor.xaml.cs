@@ -21,6 +21,7 @@ namespace PathfinderJson
         public void UpdateAppearance()
         {
             btnEdit.ColorScheme = App.ColorScheme;
+            btnInfo.ColorScheme = App.ColorScheme;
             btnModifiers.ColorScheme = App.ColorScheme;
             txtModifier.Background = new SolidColorBrush(App.ColorScheme.SecondHighlightColor);
         }
@@ -46,6 +47,7 @@ namespace PathfinderJson
         }
 
         public string SkillInternalName { get; set; } = "";
+        public string SkillOnlineName { get; set; } = "";
 
         public string SkillAbility
         {
@@ -94,6 +96,10 @@ namespace PathfinderJson
             {
                 txtName.Text = title;
             }
+
+            ToolTip tt = new ToolTip();
+            tt.Content = "Racial: \"" + txtRacial.Text + "\" Trait: \"" + txtTrait.Text + "\" Misc: \"" + txtMisc.Text + "\"";
+            btnModifiers.ToolTip = tt;
         }
 
         public Skill GetSkillData()
@@ -147,6 +153,10 @@ namespace PathfinderJson
             colBase.Width = new GridLength(0);
             colExtra.Width = new GridLength(1, GridUnitType.Star);
             Background = new SolidColorBrush(App.ColorScheme.LightBackgroundColor);
+
+            ToolTip tt = new ToolTip();
+            tt.Content = SkillName;
+            btnModifiers.ToolTip = tt;
         }
 
         private void Expander_Collapsed(object sender, RoutedEventArgs e)
@@ -156,6 +166,10 @@ namespace PathfinderJson
             //colModifiers.Width = new GridLength(0);
             colExtra.Width = new GridLength(0);
             Background = new SolidColorBrush(Colors.Transparent);
+
+            ToolTip tt = new ToolTip();
+            tt.Content = "Racial: \"" + txtRacial.Text + "\" Trait: \"" + txtTrait.Text + "\" Misc: \"" + txtMisc.Text + "\"";
+            btnModifiers.ToolTip = tt;
         }
 
         public Window? OwnerWindow { get; set; } = null;
@@ -196,6 +210,11 @@ namespace PathfinderJson
         private void chkSkill_Unchecked(object sender, RoutedEventArgs e)
         {
             ContentChanged?.Invoke(this, e);
+        }
+
+        private void btnInfo_Click(object sender, RoutedEventArgs e)
+        {
+            OpenBrowser("https://www.d20pfsrd.com/skills/" + SkillOnlineName);
         }
     }
 }

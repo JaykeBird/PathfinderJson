@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:PathfinderJson"
-             xmlns:uicore="clr-namespace:UiCore;assembly=UiCore"
+             xmlns:flat="clr-namespace:UiCore;assembly=UiCore"
              mc:Ignorable="d" 
              d:DesignHeight="36" d:DesignWidth="450">
     <Grid Margin="0,2">
@@ -21,27 +21,30 @@
         <CheckBox x:Name="chkSkill" Margin="5,0,0,0" VerticalAlignment="Center" Checked="chkSkill_Checked" Unchecked="chkSkill_Unchecked" >
             <TextBlock x:Name="txtName" Text="Knowledge (engineering)" TextTrimming="CharacterEllipsis" Foreground="{Binding Foreground, ElementName=userControl}" />
         </CheckBox>
-        <uicore:FlatButton Width="20" Height="24" HorizontalAlignment="Right" Padding="0" TransparentBack="True" x:Name="btnEdit" Click="btnEdit_Click" >
+        <flat:FlatButton Width="20" Height="24" HorizontalAlignment="Right" Padding="0" TransparentBack="True" x:Name="btnEdit" Click="btnEdit_Click" ToolTip="Edit Specialization" >
             <Image Source="/Images/Edit.png" Width="16" Height="16" />
-        </uicore:FlatButton>
+        </flat:FlatButton>
 
         <TextBox x:Name="txtTotal" Height="22" Margin="5,0,0,0" VerticalAlignment="Center" Grid.Column="1" Width="38" HorizontalAlignment="Left" TextChanged="textbox_TextChanged"/>
         <TextBox x:Name="txtModifier" Height="22" Margin="85,0,0,0" VerticalAlignment="Center" Grid.Column="1" Width="38" HorizontalAlignment="Left" IsReadOnly="True" />
         <TextBox x:Name="txtRanks" Height="22" Margin="127,0,0,0" VerticalAlignment="Center" Grid.Column="1" Width="38" HorizontalAlignment="Left" TextChanged="textbox_TextChanged"/>
         <Grid Grid.Column="3" Height="22">
-            <TextBlock HorizontalAlignment="Left" Text="Racial" VerticalAlignment="Top" Margin="5,6,0,0" />
-            <TextBlock HorizontalAlignment="Left" Text="Trait" Height="16" VerticalAlignment="Top" Margin="94,6,0,0" />
+            <TextBlock HorizontalAlignment="Left" Text="Racial" VerticalAlignment="Top" Margin="5,4,0,0" />
+            <TextBlock HorizontalAlignment="Left" Text="Trait" Height="16" VerticalAlignment="Top" Margin="94,4,0,0" />
+            <TextBlock HorizontalAlignment="Left" Text="Misc" Height="16" VerticalAlignment="Top" Margin="175,4,0,0" />
             <TextBox x:Name="txtRacial" Height="22" Margin="41,0,0,0" VerticalAlignment="Center" Width="38" HorizontalAlignment="Left" TextChanged="textbox_TextChanged"/>
             <TextBox x:Name="txtTrait" Height="22" Margin="121,0,0,0" VerticalAlignment="Center" Width="38" HorizontalAlignment="Left" TextChanged="textbox_TextChanged"/>
-            <TextBox x:Name="txtMisc" Height="22" Margin="204,0,5,0" VerticalAlignment="Center" TextChanged="textbox_TextChanged"/>
-            <TextBlock HorizontalAlignment="Left" Text="Misc" Height="16" VerticalAlignment="Top" Margin="175,6,0,0" />
+            <TextBox x:Name="txtMisc" Height="22" Margin="204,0,28,0" VerticalAlignment="Center" TextChanged="textbox_TextChanged"/>
+            <flat:FlatButton Width="20" Height="22" HorizontalAlignment="Right" Padding="0" Margin="0,0,2,0" TransparentBack="True" x:Name="btnInfo" Click="btnInfo_Click" ToolTip="More info on D20PFSRD" >
+                <Image Source="/Images/Info.png" Width="16" Height="16" />
+            </flat:FlatButton>
         </Grid>
         <TextBlock x:Name="lblSkillAbility" Grid.Column="1" HorizontalAlignment="Left" Text="STR" VerticalAlignment="Center" Margin="53,0,0,0"/>
-        <uicore:FlatButton Grid.Column="2" VerticalAlignment="Stretch" Margin="0" TransparentBack="True" x:Name="btnModifiers" Click="btnModifiers_Click" Padding="0" HorizontalAlignment="Stretch" Width="85" >
+        <flat:FlatButton Grid.Column="2" VerticalAlignment="Stretch" Margin="0" TransparentBack="True" x:Name="btnModifiers" Click="btnModifiers_Click" Padding="0" HorizontalAlignment="Stretch" Width="85" >
             <Grid>
                 <Expander x:Name="expander" Grid.Column="2" Header="More" HorizontalAlignment="Left" Height="24" Margin="-2,0,0,0" ExpandDirection="Left" VerticalAlignment="Center" Width="23" Expanded="Expander_Expanded" Collapsed="Expander_Collapsed" />
                 <TextBlock x:Name="textBlock" Grid.Column="2" HorizontalAlignment="Left" Margin="22,2,0,0" Text="Modifiers" />
             </Grid>
-        </uicore:FlatButton>
+        </flat:FlatButton>
     </Grid>
 </UserControl>
