@@ -99,7 +99,7 @@ namespace PathfinderJson
             ContentChanged?.Invoke(this, EventArgs.Empty);
         }
 
-        private void lblSearch_Click(object sender, EventArgs e)
+        private void lblSearch_Click(object sender, RoutedEventArgs e)
         {
             OpenBrowser("https://cse.google.com/cse?cx=006680642033474972217%3A6zo0hx_wle8&q=" + txtName.Text);
         }

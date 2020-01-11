@@ -549,6 +549,12 @@
             FileSelect
             </summary>
         </member>
+        <member name="P:UiCore.FileSelect.FileFilter">
+            <summary>
+            Get or set the file filter to use when selecting files. Please use semicolons (;) to separate multiple extensions/filters (i.e. <c>"*.docx;*.xlsx;*.pptx"</c>).
+            </summary>
+            <remarks>Default value is <c>ALL_FILES_FILTER</c>, which is <c>"*.*"</c>.</remarks>
+        </member>
         <member name="M:UiCore.FileSelect.InitializeComponent">
             <summary>
             InitializeComponent
@@ -562,6 +568,11 @@
         <member name="M:UiCore.FlatButton.#ctor">
             <summary>
             Create a new FlatButton.
+            </summary>
+        </member>
+        <member name="E:UiCore.FlatButton.UnroutedClick">
+            <summary>
+            Raised when the user clicks on the button. Please use the new Click event instead.
             </summary>
         </member>
         <member name="E:UiCore.FlatButton.SelectionChanged">

@@ -25,27 +25,27 @@ namespace PathfinderJson
             //btnThirdParty.ApplyColorScheme(App.ColorScheme);
         }
 
-        private void LinkTextBlock_Click(object sender, EventArgs e)
+        private void LinkTextBlock_Click(object sender, RoutedEventArgs e)
         {
             OpenBrowser("http://charactersheet.co.uk/pathfinder/");
         }
 
-        private void LinkTextBlock2_Click(object sender, EventArgs e)
+        private void LinkTextBlock2_Click(object sender, RoutedEventArgs e)
         {
             OpenBrowser("https://twitter.com/JaykeBird/");
         }
 
-        private void LinkTextBlock3_Click(object sender, EventArgs e)
+        private void LinkTextBlock3_Click(object sender, RoutedEventArgs e)
         {
             OpenBrowser("https://paizo.com/communityuse");
         }
 
-        private void LinkTextBlock4_Click(object sender, EventArgs e)
+        private void LinkTextBlock4_Click(object sender, RoutedEventArgs e)
         {
             OpenBrowser("https://paizo.com/");
         }
 
-        private void LinkTextBlock5_Click(object sender, EventArgs e)
+        private void LinkTextBlock5_Click(object sender, RoutedEventArgs e)
         {
             OpenBrowser("https://github.com/JaykeBird/PathfinderJson/");
         }
