@@ -26,6 +26,10 @@ namespace PathfinderJson
             txtModifier.Background = new SolidColorBrush(App.ColorScheme.SecondHighlightColor);
         }
 
+        bool _modifiersOpened = false;
+        bool _wideState = false;
+        public const int WIDE_STATE_THRESHOLD = 610;
+
         public string SkillName
         {
             get
@@ -149,27 +153,35 @@ namespace PathfinderJson
 
         private void Expander_Expanded(object sender, RoutedEventArgs e)
         {
-            colName.Width = new GridLength(0);
-            colBase.Width = new GridLength(0);
-            colExtra.Width = new GridLength(1, GridUnitType.Star);
-            Background = new SolidColorBrush(App.ColorScheme.LightBackgroundColor);
+            if (!_wideState)
+            {
+                colName.Width = new GridLength(0);
+                colBase.Width = new GridLength(0);
+                colExtra.Width = new GridLength(1, GridUnitType.Star);
+                Background = new SolidColorBrush(App.ColorScheme.LightBackgroundColor);
 
-            ToolTip tt = new ToolTip();
-            tt.Content = SkillName;
-            btnModifiers.ToolTip = tt;
+                ToolTip tt = new ToolTip();
+                tt.Content = SkillName;
+                btnModifiers.ToolTip = tt;
+                _modifiersOpened = true;
+            }
         }
 
         private void Expander_Collapsed(object sender, RoutedEventArgs e)
         {
-            colName.Width = new GridLength(1, GridUnitType.Star);
-            colBase.Width = new GridLength(170);
-            //colModifiers.Width = new GridLength(0);
-            colExtra.Width = new GridLength(0);
-            Background = new SolidColorBrush(Colors.Transparent);
+            if (!_wideState)
+            {
+                colName.Width = new GridLength(2, GridUnitType.Star);
+                colBase.Width = new GridLength(170);
+                //colModifiers.Width = new GridLength(0);
+                colExtra.Width = new GridLength(0);
+                Background = new SolidColorBrush(Colors.Transparent);
 
-            ToolTip tt = new ToolTip();
-            tt.Content = "Racial: \"" + txtRacial.Text + "\" Trait: \"" + txtTrait.Text + "\" Misc: \"" + txtMisc.Text + "\"";
-            btnModifiers.ToolTip = tt;
+                ToolTip tt = new ToolTip();
+                tt.Content = "Racial: \"" + txtRacial.Text + "\" Trait: \"" + txtTrait.Text + "\" Misc: \"" + txtMisc.Text + "\"";
+                btnModifiers.ToolTip = tt;
+                _modifiersOpened = false;
+            }
         }
 
         public Window? OwnerWindow { get; set; } = null;
@@ -215,6 +227,57 @@ namespace PathfinderJson
         private void btnInfo_Click(object sender, RoutedEventArgs e)
         {
             OpenBrowser("https://www.d20pfsrd.com/skills/" + SkillOnlineName);
+        }
+
+        private void userControl_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            if (ActualWidth > WIDE_STATE_THRESHOLD)
+            {
+                _wideState = true;
+
+                colName.Width = new GridLength(2, GridUnitType.Star);
+                colBase.Width = new GridLength(170);
+                Background = new SolidColorBrush(Colors.Transparent);
+
+                colModifiers.Width = new GridLength(0);
+                expander.IsEnabled = false;
+                btnModifiers.IsEnabled = false;
+                colExtra.Width = new GridLength(3, GridUnitType.Star);
+                colExtra.MinWidth = 280;
+            }
+            else
+            {
+                colModifiers.Width = new GridLength(85);
+                expander.IsEnabled = true;
+                btnModifiers.IsEnabled = true;
+                colExtra.MinWidth = 0;
+
+                _wideState = false;
+
+                if (_modifiersOpened)
+                {
+                    colName.Width = new GridLength(0);
+                    colBase.Width = new GridLength(0);
+                    colExtra.Width = new GridLength(1, GridUnitType.Star);
+                    Background = new SolidColorBrush(App.ColorScheme.LightBackgroundColor);
+
+                    ToolTip tt = new ToolTip();
+                    tt.Content = SkillName;
+                    btnModifiers.ToolTip = tt;
+                }
+                else
+                {
+                    colName.Width = new GridLength(2, GridUnitType.Star);
+                    colBase.Width = new GridLength(170);
+                    //colModifiers.Width = new GridLength(0);
+                    colExtra.Width = new GridLength(0);
+                    Background = new SolidColorBrush(Colors.Transparent);
+
+                    ToolTip tt = new ToolTip();
+                    tt.Content = "Racial: \"" + txtRacial.Text + "\" Trait: \"" + txtTrait.Text + "\" Misc: \"" + txtMisc.Text + "\"";
+                    btnModifiers.ToolTip = tt;
+                }
+            }
         }
     }
 }

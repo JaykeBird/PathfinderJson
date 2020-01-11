@@ -2238,6 +2238,24 @@ namespace PathfinderJson
             }
         }
 
+        private void SkillHeaderGrid_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            if (grdSkillHeader.ActualWidth > SkillEditor.WIDE_STATE_THRESHOLD)
+            {
+                // activate wide state for the header grid
+                colSkillModifiers.Width = new GridLength(0);
+                colSkillExtra.Width = new GridLength(3, GridUnitType.Star);
+                colSkillExtra.MinWidth = 280;
+            }
+            else
+            {
+                // disable wide state for the header grid
+                colSkillModifiers.Width = new GridLength(85);
+                colSkillExtra.Width = new GridLength(0);
+                colSkillExtra.MinWidth = 0;
+            }
+        }
+
         #endregion
 
         #region Feats/Abilities editors

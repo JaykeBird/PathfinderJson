@@ -6,13 +6,13 @@
              xmlns:local="clr-namespace:PathfinderJson"
              xmlns:flat="clr-namespace:UiCore;assembly=UiCore"
              mc:Ignorable="d" 
-             d:DesignHeight="36" d:DesignWidth="450">
+             d:DesignHeight="36" d:DesignWidth="450" SizeChanged="userControl_SizeChanged" >
     <Grid Margin="0,2">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="1*" x:Name="colName" />
+            <ColumnDefinition Width="2*" x:Name="colName" />
             <ColumnDefinition Width="170" x:Name="colBase" />
             <ColumnDefinition Width="85" x:Name="colModifiers" />
-            <ColumnDefinition Width="0" x:Name="colExtra" />
+            <ColumnDefinition Width="0" MinWidth="0" x:Name="colExtra" />
             <!--<ColumnDefinition Width="0" x:Name="colName" />
             <ColumnDefinition Width="0" x:Name="colBase" />
             <ColumnDefinition Width="85" x:Name="colModifiers" />

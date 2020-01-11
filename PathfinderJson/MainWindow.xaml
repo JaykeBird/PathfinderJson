@@ -295,18 +295,19 @@
                         <TextBox x:Name="txtSkillModifiers" Height="23" Margin="140,26,30,0" VerticalAlignment="Top" TextChanged="textbox_TextChanged" />
                         <TextBlock x:Name="lblSkillModifiers" HorizontalAlignment="Left" Margin="10,29,0,0" Text="Conditional Modifiers" VerticalAlignment="Top"/>
                     </Grid>
-                    <Grid Margin="10,55,10,0" MaxWidth="700" >
+                    <Grid Margin="10,55,10,0" MaxWidth="900" x:Name="grdSkillHeader" SizeChanged="SkillHeaderGrid_SizeChanged" >
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="2*" />
                             <ColumnDefinition Width="170" />
-                            <ColumnDefinition Width="85" />
+                            <ColumnDefinition Width="85" x:Name="colSkillModifiers" />
+                            <ColumnDefinition Width="0" MinWidth="0" x:Name="colSkillExtra" />
                         </Grid.ColumnDefinitions>
                         <TextBlock Text="Skill" Margin="10,2" FontWeight="Bold" />
                         <TextBlock Text="Total" Grid.Column="1" Margin="10,2,0,2" HorizontalAlignment="Left" FontWeight="Bold" />
                         <TextBlock Text="Modifier" Grid.Column="1" Margin="55,2,0,2" HorizontalAlignment="Left" FontWeight="Bold" />
                         <TextBlock Text="Ranks" Grid.Column="1" Margin="128,2,0,2" HorizontalAlignment="Left" FontWeight="Bold" />
                     </Grid>
-                    <StackPanel x:Name="stkSkills" Margin="10,80,10,0" Orientation="Vertical" MaxWidth="700" >
+                    <StackPanel x:Name="stkSkills" Margin="10,80,10,0" Orientation="Vertical" MaxWidth="900" >
 
                     </StackPanel>
                 </Grid>
