@@ -1290,7 +1290,11 @@ namespace PathfinderJson
 
         private void txtEditRaw_TextChanged(object sender, EventArgs e)
         {
-            _isEditorDirty = true;
+            if (!_isUpdating)
+            {
+                _isEditorDirty = true;
+                SetIsDirty(true, false);
+            }
         }
 
         #endregion
@@ -1318,7 +1322,9 @@ namespace PathfinderJson
 
                 UpdateTitlebar();
 
+                _isUpdating = true;
                 txtEditRaw.Load(filename);
+                _isUpdating = false;
                 await ChangeView(App.Settings.StartView, false, false);
                 await LoadPathfinderSheetAsync(ps);
             }
@@ -1857,21 +1863,31 @@ namespace PathfinderJson
         }
 
         /// <summary>
-        /// Update the sheet views from data in the text editor. Also sets the editor as no longer dirty (out-of-sync).
+        /// Update the sheet views from data in the text editor. Also sets the editor as no longer dirty (out-of-sync), as long as the editor has valid JSON.
         /// </summary>
         /// <returns></returns>
         async Task SyncSheetFromEditorAsync()
         {
             if (!string.IsNullOrEmpty(txtEditRaw.Text))
             {
-                PathfinderSheet ps = PathfinderSheet.LoadJsonText(txtEditRaw.Text);
-                await LoadPathfinderSheetAsync(ps);
-                _isEditorDirty = false;
+                try
+                {
+                    PathfinderSheet ps = PathfinderSheet.LoadJsonText(txtEditRaw.Text);
+                    await LoadPathfinderSheetAsync(ps);
+                    _isEditorDirty = false;
+                }
+                catch (Newtonsoft.Json.JsonReaderException)
+                {
+                    _isEditorDirty = false;
+                    _isTabsDirty = true;
+                    SetIsDirty(true, false);
+                }
             }
             else
             {
                 _isEditorDirty = false;
                 _isTabsDirty = true;
+                SetIsDirty(true, false);
             }
         }
 
