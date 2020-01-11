@@ -695,29 +695,48 @@ namespace PathfinderJson
 
         private void mnuRecentClear_Click(object sender, RoutedEventArgs e)
         {
-            App.Settings.RecentFiles.Clear();
-            SaveSettings();
-
-            List<FrameworkElement> itemsToRemove = new List<FrameworkElement>();
-
-            foreach (FrameworkElement? item in mnuRecent.Items)
+            if (AskClearRecentList())
             {
+                App.Settings.RecentFiles.Clear();
+                SaveSettings();
 
-                if (item is MenuItem)
+                List<FrameworkElement> itemsToRemove = new List<FrameworkElement>();
+
+                foreach (FrameworkElement? item in mnuRecent.Items)
                 {
-                    if (item.Tag != null)
+
+                    if (item is MenuItem)
                     {
-                        itemsToRemove.Add(item);
+                        if (item.Tag != null)
+                        {
+                            itemsToRemove.Add(item);
+                        }
                     }
                 }
-            }
 
-            foreach (var item in itemsToRemove)
+                foreach (var item in itemsToRemove)
+                {
+                    mnuRecent.Items.Remove(item);
+                }
+
+                mnuRecentEmpty.Visibility = Visibility.Visible;
+            }
+        }
+
+        bool AskClearRecentList()
+        {
+            MessageDialog md = new MessageDialog(App.ColorScheme);
+            md.ShowDialog("Are you sure you want to remove all files from the Recent Files list?", App.ColorScheme, this, "Clear Recent Files List", true, MessageDialogImage.Question, MessageDialogResult.Cancel,
+                "Yes", "Cancel");
+
+            if (md.DialogResult == MessageDialogResult.OK)
             {
-                mnuRecent.Items.Remove(item);
+                return true;
             }
-
-            mnuRecentEmpty.Visibility = Visibility.Visible;
+            else
+            {
+                return false;
+            }
         }
 
         private void miRecentOpen_Click(object sender, RoutedEventArgs e)
