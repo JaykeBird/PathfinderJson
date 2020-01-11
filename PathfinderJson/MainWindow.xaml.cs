@@ -368,12 +368,14 @@ namespace PathfinderJson
                     }
                 }
 
+                txtEditRaw.Encoding = new System.Text.UTF8Encoding(false);
                 txtEditRaw.Save(file);
                 await SyncSheetFromEditorAsync();
             }
             else
             {
                 await SyncEditorFromSheetAsync();
+                txtEditRaw.Encoding = new System.Text.UTF8Encoding(false);
                 txtEditRaw.Save(file);
                 //PathfinderSheet ps = await CreatePathfinderSheetAsync();
                 //ps.SaveJsonFile(file, App.Settings.IndentJsonData);
