@@ -930,6 +930,53 @@
             InitializeComponent
             </summary>
         </member>
+        <member name="T:UiCore.MessageDialogImage">
+            <summary>
+            The image to use when displaying a message dialog.
+            </summary>
+        </member>
+        <member name="F:UiCore.MessageDialogImage.None">
+            <summary>No image is displayed. This may be good for generic messages, but is not recommended for situations where the user should pay attention to the message.</summary>
+        </member>
+        <member name="F:UiCore.MessageDialogImage.Error">
+            <summary>A white X on a red background is displayed. This is good for situations where an error or exception has occurred, or something isn't acting as intended.</summary>
+        </member>
+        <member name="F:UiCore.MessageDialogImage.Warning">
+            <summary>An exclamation point on a yellow triangle is displayed. This is good when informing the user about potential errors or unintended side effects.</summary>
+        </member>
+        <member name="F:UiCore.MessageDialogImage.Question">
+            <summary>A white question mark on a blue background is displayed. This is good when asking a question or when asking for confirmation for a routine task.</summary>
+        </member>
+        <member name="F:UiCore.MessageDialogImage.Hand">
+            <summary>A white exclamation point on a blue background is displayed. This is good for when wanting to alert the user about something that isn't considered a warning.</summary>
+        </member>
+        <member name="F:UiCore.MessageDialogImage.Info">
+            <summary>A white I on a blue background is displayed. This is good for informing the user about something, such as a task being completed or the response to a request.</summary>
+        </member>
+        <member name="F:UiCore.MessageDialogImage.Stop">
+            <summary>A red stop sign is displayed. This is good for informing the user that this action isn't valid in the current state, or that an unavoidable major issue has occurred.</summary>
+        </member>
+        <member name="F:UiCore.MessageDialogImage.Lock">
+            <summary>A yellow lock is displayed. This is good for situations where security or authentication are involved.</summary>
+        </member>
+        <member name="T:UiCore.MessageDialogImageConverter">
+            <summary>
+            A helper class that can retrieve a BitmapImage from a MessageDialogImage.
+            </summary>
+        </member>
+        <member name="M:UiCore.MessageDialogImageConverter.GetImage(UiCore.MessageDialogImage,UiCore.MessageDialogImageConverter.MessageDialogImageColor)">
+            <summary>
+            Return a 32x32 image to use with a message dialog. If the MessageDialogImage argument is "None", then <c>null</c> is returned.
+            </summary>
+            <param name="image">The image to display. If "None", then <c>null</c> is returned.</param>
+            <param name="color">The color to use for the image. Use black or white for high-contrast themes.</param>
+            <returns></returns>
+        </member>
+        <member name="T:UiCore.MessageDialogImageConverter.MessageDialogImageColor">
+            <summary>
+            The color to use with a message dialog image.
+            </summary>
+        </member>
         <member name="T:UiCore.NativeWindowMethods">
             <summary>
             A small collection of methods to interact with the native Windows library user32.dll, used to modify window behavior.
