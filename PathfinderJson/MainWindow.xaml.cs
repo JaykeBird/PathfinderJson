@@ -342,7 +342,34 @@ namespace PathfinderJson
         {
             if (currentView == RAWJSON_VIEW)
             {
+                // check if text is valid JSON first
+                bool validJson = false;
+
+                if (!string.IsNullOrEmpty(txtEditRaw.Text))
+                {
+                    try
+                    {
+                        PathfinderSheet ps = PathfinderSheet.LoadJsonText(txtEditRaw.Text);
+                        validJson = true;
+                    }
+                    catch (Newtonsoft.Json.JsonReaderException) { }
+                }
+
+                if (!validJson)
+                {
+                    MessageDialog md = new MessageDialog(App.ColorScheme);
+                    md.ShowDialog("The file's text doesn't seem to be valid JSON. Saving the file as it is may result in lost data or the file not being openable with this program in the future. Do you want to continue?", 
+                        App.ColorScheme, this, "Invalid JSON Detected", true, MessageDialogImage.Warning, MessageDialogResult.Cancel,
+                        "Save anyway", "Cancel");
+
+                    if (md.DialogResult == MessageDialogResult.Cancel)
+                    {
+                        return;
+                    }
+                }
+
                 txtEditRaw.Save(file);
+                await SyncSheetFromEditorAsync();
             }
             else
             {
