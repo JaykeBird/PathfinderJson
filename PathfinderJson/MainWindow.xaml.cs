@@ -389,6 +389,13 @@ namespace PathfinderJson
 
         async Task<bool> SaveAsFile()
         {
+            if (!_sheetLoaded)
+            {
+                MessageDialog md = new MessageDialog(App.ColorScheme);
+                md.ShowDialog("No sheet is currently open, so saving is not possible.", null, this, "No Sheet Open", false, MessageDialogImage.Error);
+                return false;
+            }
+
             Microsoft.Win32.SaveFileDialog sfd = new Microsoft.Win32.SaveFileDialog();
             sfd.Title = "Save JSON Sheet As";
             sfd.Filter = "JSON Sheet|*.json";
@@ -425,6 +432,12 @@ namespace PathfinderJson
 
         async Task<bool> SaveDirtyChanges()
         {
+            // if there's no sheet loaded, then there should be no dirty changes to save
+            if (!_sheetLoaded)
+            {
+                return true;
+            }
+
             if (isDirty)
             {
                 MessageDialog md = new MessageDialog(App.ColorScheme);
@@ -1918,6 +1931,11 @@ namespace PathfinderJson
         {
             if (!string.IsNullOrEmpty(txtEditRaw.Text))
             {
+                if (!_sheetLoaded)
+                {
+                    return;
+                }
+
                 try
                 {
                     PathfinderSheet ps = PathfinderSheet.LoadJsonText(txtEditRaw.Text);
@@ -1945,6 +1963,11 @@ namespace PathfinderJson
         /// <returns></returns>
         async Task SyncEditorFromSheetAsync()
         {
+            if (!_sheetLoaded)
+            {
+                return;
+            }
+
             PathfinderSheet ps = await CreatePathfinderSheetAsync();
             txtEditRaw.Text = ps.SaveJsonText(App.Settings.IndentJsonData);
             _isTabsDirty = false;
