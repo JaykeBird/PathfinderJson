@@ -1784,12 +1784,12 @@ namespace PathfinderJson
 
         #region Sync Editors / update sheet / CreatePathfinderSheetAsync
 
-        private void mnuUpdate_Click(object sender, RoutedEventArgs e)
+        private async void mnuUpdate_Click(object sender, RoutedEventArgs e)
         {
-            UpdateCalculations(true, mnuUpdateTotals.IsChecked, mnuUpdateAc.IsChecked);
+            await UpdateCalculations(true, mnuUpdateTotals.IsChecked, mnuUpdateAc.IsChecked);
         }
 
-        void UpdateCalculations(bool skills = true, bool totals = true, bool ac = true)
+        async Task UpdateCalculations(bool skills = true, bool totals = true, bool ac = true)
         {
             if (!_sheetLoaded)
             {
@@ -1859,7 +1859,7 @@ namespace PathfinderJson
 
                     if (totals)
                     {
-                        item.UpdateTotals();
+                        await item.UpdateTotals();
                     }
                 }
             }
@@ -1905,14 +1905,14 @@ namespace PathfinderJson
 
             if (totals)
             {
-                edtFort.UpdateTotal();
-                edtReflex.UpdateTotal();
-                edtWill.UpdateTotal();
+                await edtFort.UpdateTotal();
+                await edtReflex.UpdateTotal();
+                await edtWill.UpdateTotal();
 
                 edtAc.UpdateTotal();
-                edtInit.UpdateTotal();
-                edtCmb.UpdateTotal();
-                edtCmd.UpdateTotal();
+                await edtInit.UpdateTotal();
+                await edtCmb.UpdateTotal();
+                await edtCmd.UpdateTotal();
             }
 
             if (currentView == RAWJSON_VIEW)
@@ -2252,7 +2252,7 @@ namespace PathfinderJson
             }
         }
 
-        private void txtStr_ValueChanged(object sender, DependencyPropertyChangedEventArgs e)
+        private async void txtStr_ValueChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             if (!_isUpdating)
             {
@@ -2267,7 +2267,7 @@ namespace PathfinderJson
 
                 if (mnuAutoUpdate.IsChecked)
                 {
-                    UpdateCalculations(true, false, false);
+                    await UpdateCalculations(true, false, false);
                 }
             }
         }
@@ -2331,11 +2331,11 @@ namespace PathfinderJson
             //}
         }
 
-        private void txtBab_LostFocus(object sender, RoutedEventArgs e)
+        private async void txtBab_LostFocus(object sender, RoutedEventArgs e)
         {
             if (mnuAutoUpdate.IsChecked)
             {
-                UpdateCalculations(false, false, false);
+                await UpdateCalculations(false, false, false);
             }
         }
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -127,14 +128,24 @@ namespace PathfinderJson
             txtModifier.Text = modifier;
         }
 
-        public void UpdateTotals()
+        public async Task UpdateTotals()
         {
             int total = 0;
-            try { total += int.Parse(txtRanks.Text); } catch (FormatException) { }
-            try { total += int.Parse(txtMisc.Text); } catch (FormatException) { }
-            try { total += int.Parse(txtModifier.Text); } catch (FormatException) { }
-            try { total += int.Parse(txtRacial.Text); } catch (FormatException) { }
-            try { total += int.Parse(txtTrait.Text); } catch (FormatException) { }
+
+            string ranks = txtRanks.Text;
+            string misc = txtMisc.Text;
+            string mod = txtModifier.Text;
+            string racial = txtRacial.Text;
+            string trait = txtTrait.Text;
+
+            await Task.Run(() =>
+            {
+                try { total += int.Parse(ranks); } catch (FormatException) { }
+                try { total += int.Parse(misc); } catch (FormatException) { }
+                try { total += int.Parse(mod); } catch (FormatException) { }
+                try { total += int.Parse(racial); } catch (FormatException) { }
+                try { total += int.Parse(trait); } catch (FormatException) { }
+            });
 
             txtTotal.Text = total.ToString();
         }
