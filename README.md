@@ -24,14 +24,8 @@ Once you have an account on [Mottokrosh's Pathfinder sheet website](charactershe
 
 This program supports all the features currently in Mottokrosh's website, and can display them all (and edit most of them) in a sheet editor view. There is also a JSON text editor view for basic raw text editing. (Note that if you want a more full text-editing experience, you may want to open the JSON file in your text editor of choice.)
 
-## To-do List
-- Export/printing functionality (HTML?)
-- More options for text editor (font size, no syntax highlighting)
-- Auto-complete spell list
-- More connections to [D20PFSRD](https://d20pfsrd.com)
-- Central Options dialog
-- Dice roller tool
-- Import from other tools? (AwesomeSheet, Hero Lab)
+## Roadmap
+View this project's roadmap [on the GitHub wiki page](https://github.com/JaykeBird/PathfinderJson/wiki/Roadmap).
 
 ## IntelliCode
 If you're using IntelliCode in Visual Studio 2019 (or Visual Studio 2017 15.8 or later), I have an IntelliCode model that I have been using. If you're looking to fork this project and want to utilize my IntelliCode model, I'll provide you the link to it below:
