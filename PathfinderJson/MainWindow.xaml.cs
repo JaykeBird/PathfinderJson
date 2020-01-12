@@ -110,7 +110,7 @@ namespace PathfinderJson
             selTabs.IsEnabled = false;
             //LoadGeneralTab();
 
-            ChangeView(App.Settings.StartView, false, true, false).Wait();
+            ChangeView(App.Settings.StartView, false, true, false);
 
             if (App.Settings.RecentFiles.Count > 20)
             {
@@ -226,9 +226,9 @@ namespace PathfinderJson
             menu.Foreground = ColorsHelper.CreateFromHex("#404040").ToBrush();
         }
 
-        private async void window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        private void window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            if (!(await SaveDirtyChanges()))
+            if (!(SaveDirtyChanges()))
             {
                 e.Cancel = true;
             }
@@ -273,9 +273,9 @@ namespace PathfinderJson
 
         #region File / Help menus
 
-        private async void mnuNew_Click(object sender, RoutedEventArgs e)
+        private void mnuNew_Click(object sender, RoutedEventArgs e)
         {
-            if (!(await SaveDirtyChanges()))
+            if (!(SaveDirtyChanges()))
             {
                 return;
             }
@@ -299,14 +299,14 @@ namespace PathfinderJson
                 UpdateTitlebar();
 
                 txtEditRaw.Text = ps.SaveJsonText(App.Settings.IndentJsonData);
-                await ChangeView(App.Settings.StartView, false, false);
-                await LoadPathfinderSheetAsync(ps);
+                ChangeView(App.Settings.StartView, false, false);
+                LoadPathfinderSheet(ps);
             }
         }
 
-        private async void mnuOpen_Click(object sender, RoutedEventArgs e)
+        private void mnuOpen_Click(object sender, RoutedEventArgs e)
         {
-            if (!(await SaveDirtyChanges()))
+            if (!(SaveDirtyChanges()))
             {
                 return;
             }
@@ -317,28 +317,28 @@ namespace PathfinderJson
 
             if (ofd.ShowDialog() ?? false == true)
             {
-                await LoadFile(ofd.FileName);
+                LoadFile(ofd.FileName);
             }
         }
 
-        private async void mnuSave_Click(object sender, RoutedEventArgs e)
+        private void mnuSave_Click(object sender, RoutedEventArgs e)
         {
             if (string.IsNullOrEmpty(filePath))
             {
-                await SaveAsFile();
+                SaveAsFile();
             }
             else
             {
-                await SaveFile(filePath);
+                SaveFile(filePath);
             }
         }
 
-        private async void mnuSaveAs_Click(object sender, RoutedEventArgs e)
+        private void mnuSaveAs_Click(object sender, RoutedEventArgs e)
         {
-            await SaveAsFile();
+            SaveAsFile();
         }
 
-        async Task SaveFile(string file)
+        void SaveFile(string file)
         {
             if (currentView == RAWJSON_VIEW)
             {
@@ -370,11 +370,11 @@ namespace PathfinderJson
 
                 txtEditRaw.Encoding = new System.Text.UTF8Encoding(false);
                 txtEditRaw.Save(file);
-                await SyncSheetFromEditorAsync();
+                SyncSheetFromEditor();
             }
             else
             {
-                await SyncEditorFromSheetAsync();
+                SyncEditorFromSheet();
                 txtEditRaw.Encoding = new System.Text.UTF8Encoding(false);
                 txtEditRaw.Save(file);
                 //PathfinderSheet ps = await CreatePathfinderSheetAsync();
@@ -387,7 +387,7 @@ namespace PathfinderJson
             UpdateTitlebar();
         }
 
-        async Task<bool> SaveAsFile()
+        bool SaveAsFile()
         {
             if (!_sheetLoaded)
             {
@@ -402,7 +402,7 @@ namespace PathfinderJson
 
             if (sfd.ShowDialog() ?? false == true)
             {
-                await SaveFile(sfd.FileName);
+                SaveFile(sfd.FileName);
                 filePath = sfd.FileName;
                 AddRecentFile(filePath, true);
                 UpdateTitlebar();
@@ -414,9 +414,9 @@ namespace PathfinderJson
             }
         }
 
-        async Task CloseFile()
+        void CloseFile()
         {
-            if (!(await SaveDirtyChanges()))
+            if (!(SaveDirtyChanges()))
             {
                 return;
             }
@@ -427,10 +427,10 @@ namespace PathfinderJson
             SetIsDirty(false);
             txtEditRaw.Text = "";
 
-            await ChangeView(App.Settings.StartView, false, true, false);
+            ChangeView(App.Settings.StartView, false, true, false);
         }
 
-        async Task<bool> SaveDirtyChanges()
+        bool SaveDirtyChanges()
         {
             // if there's no sheet loaded, then there should be no dirty changes to save
             if (!_sheetLoaded)
@@ -448,11 +448,11 @@ namespace PathfinderJson
                 {
                     if (string.IsNullOrEmpty(filePath))
                     {
-                        return await SaveAsFile();
+                        return SaveAsFile();
                     }
                     else
                     {
-                        await SaveFile(filePath);
+                        SaveFile(filePath);
                         return true;
                     }
                 }
@@ -490,13 +490,13 @@ namespace PathfinderJson
             }
         }
 
-        private async void mnuRevert_Click(object sender, RoutedEventArgs e)
+        private void mnuRevert_Click(object sender, RoutedEventArgs e)
         {
             if (!string.IsNullOrEmpty(filePath))
             {
                 if (AskDiscard())
                 {
-                    await LoadFile(filePath, false);
+                    LoadFile(filePath, false);
                 }
             }
         }
@@ -517,9 +517,9 @@ namespace PathfinderJson
             SaveSettings();
         }
 
-        private async void btnClose_Click(object sender, RoutedEventArgs e)
+        private void btnClose_Click(object sender, RoutedEventArgs e)
         {
-            await CloseFile();
+            CloseFile();
         }
 
         private void btnExit_Click(object sender, RoutedEventArgs e)
@@ -654,7 +654,7 @@ namespace PathfinderJson
             }
         }
 
-        private async void miRecentFile_Click(object sender, RoutedEventArgs e)
+        private void miRecentFile_Click(object sender, RoutedEventArgs e)
         {
             if (sender == null)
             {
@@ -667,12 +667,12 @@ namespace PathfinderJson
                 {
                     if (File.Exists(file))
                     {
-                        if (!(await SaveDirtyChanges()))
+                        if (!(SaveDirtyChanges()))
                         {
                             return;
                         }
 
-                        await LoadFile(file, false);
+                        LoadFile(file, false);
                     }
                     else
                     {
@@ -717,12 +717,12 @@ namespace PathfinderJson
                                 break;
                             case MessageDialogResult.Extra2:
                                 // attempt to open anyway
-                                if (!(await SaveDirtyChanges()))
+                                if (!(SaveDirtyChanges()))
                                 {
                                     return;
                                 }
 
-                                await LoadFile(file, false);
+                                LoadFile(file, false);
                                 break;
                             case MessageDialogResult.Extra3:
                                 // not reached
@@ -1156,7 +1156,7 @@ namespace PathfinderJson
 
         #region View options
 
-        async Task ChangeView(string view, bool updateSheet = true, bool displayEmptyMessage = false, bool saveSettings = true)
+        void ChangeView(string view, bool updateSheet = true, bool displayEmptyMessage = false, bool saveSettings = true)
         {
             view = view.ToLowerInvariant();
 
@@ -1198,7 +1198,7 @@ namespace PathfinderJson
                     if (_isEditorDirty && updateSheet)
                     {
                         // update sheet from editor
-                        await SyncSheetFromEditorAsync();
+                        SyncSheetFromEditor();
                     }
                     break;
                 case TABS_VIEW:
@@ -1215,7 +1215,7 @@ namespace PathfinderJson
                     if (_isEditorDirty && updateSheet)
                     {
                         // update sheet from editor
-                        await SyncSheetFromEditorAsync();
+                        SyncSheetFromEditor();
                     }
                     break;
                 case RAWJSON_VIEW:
@@ -1229,11 +1229,11 @@ namespace PathfinderJson
 
                     if (_isTabsDirty && updateSheet)
                     {
-                        await SyncEditorFromSheetAsync();
+                        SyncEditorFromSheet();
                     }
                     break;
                 default:
-                    await ChangeView(TABS_VIEW, updateSheet, true, saveSettings);
+                    ChangeView(TABS_VIEW, updateSheet, true, saveSettings);
                     break;
             }
 
@@ -1252,19 +1252,19 @@ namespace PathfinderJson
             }
         }
 
-        private async void mnuScroll_Click(object sender, RoutedEventArgs e)
+        private void mnuScroll_Click(object sender, RoutedEventArgs e)
         {
-            await ChangeView(CONTINUOUS_VIEW, true, !_sheetLoaded);
+            ChangeView(CONTINUOUS_VIEW, true, !_sheetLoaded);
         }
 
-        private async void mnuTabs_Click(object sender, RoutedEventArgs e)
+        private void mnuTabs_Click(object sender, RoutedEventArgs e)
         {
-            await ChangeView(TABS_VIEW, true, !_sheetLoaded);
+            ChangeView(TABS_VIEW, true, !_sheetLoaded);
         }
 
-        private async void mnuRawJson_Click(object sender, RoutedEventArgs e)
+        private void mnuRawJson_Click(object sender, RoutedEventArgs e)
         {
-            await ChangeView(RAWJSON_VIEW, true, !_sheetLoaded);
+            ChangeView(RAWJSON_VIEW, true, !_sheetLoaded);
         }
 
         private void MnuFilename_Click(object sender, RoutedEventArgs e)
@@ -1361,7 +1361,7 @@ namespace PathfinderJson
         #endregion
 
         #region Load File
-        async Task LoadFile(string filename, bool addToRecent = true)
+        void LoadFile(string filename, bool addToRecent = true)
         {
             //if (filename == null)
             //{
@@ -1386,8 +1386,8 @@ namespace PathfinderJson
                 _isUpdating = true;
                 txtEditRaw.Load(filename);
                 _isUpdating = false;
-                await ChangeView(App.Settings.StartView, false, false);
-                await LoadPathfinderSheetAsync(ps);
+                ChangeView(App.Settings.StartView, false, false);
+                LoadPathfinderSheet(ps);
             }
             catch (FileFormatException)
             {
@@ -1418,7 +1418,7 @@ namespace PathfinderJson
             if (addToRecent) AddRecentFile(filename);
         }
 
-        async Task LoadPathfinderSheetAsync(PathfinderSheet sheet)
+        void LoadPathfinderSheet(PathfinderSheet sheet)
         {
             // set this flag so that the program doesn't try to set the sheet as dirty while loading in the file
             _isUpdating = true;
@@ -1637,13 +1637,15 @@ namespace PathfinderJson
             txtSkillModifiers.Text = sheet.SkillConditionalModifiers;
 
             // trying to do this asynchronously... key word being "trying"
-            var scheduler = TaskScheduler.FromCurrentSynchronizationContext();
-            var ses = await Task<List<SkillEditor>>.Factory.StartNew(() => SkillEditorFactory.CreateEditors(sheet, this), cts.Token, TaskCreationOptions.None, scheduler);
+            // (update: it didn't really do anything lol)
+            //var scheduler = TaskScheduler.FromCurrentSynchronizationContext();
+            //var ses = await Task<List<SkillEditor>>.Factory.StartNew(() => SkillEditorFactory.CreateEditors(sheet, this), cts.Token, TaskCreationOptions.None, scheduler);
+
+            var ses = SkillEditorFactory.CreateEditors(sheet, this);
 
             stkSkills.Children.Clear();
             foreach (SkillEditor item in ses)
             {
-
                 string modifier = "";
 
                 switch (item.SkillAbility)
@@ -1782,12 +1784,12 @@ namespace PathfinderJson
 
         #region Sync Editors / update sheet / CreatePathfinderSheetAsync
 
-        private async void mnuUpdate_Click(object sender, RoutedEventArgs e)
+        private void mnuUpdate_Click(object sender, RoutedEventArgs e)
         {
-            await UpdateCalculations(true, mnuUpdateTotals.IsChecked, mnuUpdateAc.IsChecked);
+            UpdateCalculations(true, mnuUpdateTotals.IsChecked, mnuUpdateAc.IsChecked);
         }
 
-        async Task UpdateCalculations(bool skills = true, bool totals = true, bool ac = true)
+        void UpdateCalculations(bool skills = true, bool totals = true, bool ac = true)
         {
             if (!_sheetLoaded)
             {
@@ -1800,7 +1802,7 @@ namespace PathfinderJson
 
             if (currentView == RAWJSON_VIEW && _isEditorDirty)
             {
-                await SyncSheetFromEditorAsync();
+                SyncSheetFromEditor();
             }
 
             txtStrm.Text = CalculateModifier(txtStr.Value);
@@ -1915,7 +1917,7 @@ namespace PathfinderJson
 
             if (currentView == RAWJSON_VIEW)
             {
-                await SyncEditorFromSheetAsync();
+                SyncEditorFromSheet();
             }
 
             _isUpdating = false;
@@ -1927,10 +1929,11 @@ namespace PathfinderJson
         /// Update the sheet views from data in the text editor. Also sets the editor as no longer dirty (out-of-sync), as long as the editor has valid JSON.
         /// </summary>
         /// <returns></returns>
-        async Task SyncSheetFromEditorAsync()
+        void SyncSheetFromEditor()
         {
             if (!string.IsNullOrEmpty(txtEditRaw.Text))
             {
+                // if no file is loaded, we don't want to write empty data into the raw JSON editor
                 if (!_sheetLoaded)
                 {
                     return;
@@ -1939,7 +1942,7 @@ namespace PathfinderJson
                 try
                 {
                     PathfinderSheet ps = PathfinderSheet.LoadJsonText(txtEditRaw.Text);
-                    await LoadPathfinderSheetAsync(ps);
+                    LoadPathfinderSheet(ps);
                     _isEditorDirty = false;
                 }
                 catch (Newtonsoft.Json.JsonReaderException)
@@ -1961,33 +1964,43 @@ namespace PathfinderJson
         /// Update the editor view from data in the sheet views. Also sets the sheet as no longer dirty (out-of-sync).
         /// </summary>
         /// <returns></returns>
-        async Task SyncEditorFromSheetAsync()
+        void SyncEditorFromSheet()
         {
+            // if no file is loaded, we don't want to write empty data into the raw JSON editor
             if (!_sheetLoaded)
             {
                 return;
             }
 
-            PathfinderSheet ps = await CreatePathfinderSheetAsync();
+            PathfinderSheet ps = CreatePathfinderSheet();
             txtEditRaw.Text = ps.SaveJsonText(App.Settings.IndentJsonData);
             _isTabsDirty = false;
         }
 
-        private async void mnuRefresh_Click(object sender, RoutedEventArgs e)
+        // these two menu commands are hidden
+        // hopefully, we shouldn't be needing these commands at all, as the program should automatically do the syncing as needed
+        // but we'll have to see if any bugs come up
+        private void mnuRefresh_Click(object sender, RoutedEventArgs e)
         {
-            await SyncSheetFromEditorAsync();
+            SyncSheetFromEditor();
         }
 
-        private async void mnuRefreshEditor_Click(object sender, RoutedEventArgs e)
+        private void mnuRefreshEditor_Click(object sender, RoutedEventArgs e)
         {
-            await SyncEditorFromSheetAsync();
+            SyncEditorFromSheet();
         }
 
-        private async Task<PathfinderSheet> CreatePathfinderSheetAsync()
+        /// <summary>
+        /// Create a PathfinderSheet object by loading in all the values from the sheet view.
+        /// </summary>
+        /// <returns></returns>
+        private PathfinderSheet CreatePathfinderSheet()
         {
-            await Task.Delay(10);
+            //await Task.Delay(10);
             //return await Task.Run(() => {
             PathfinderSheet sheet = new PathfinderSheet();
+
+            // just starting going through all the controls and writing their values into the sheet object lol
 
             sheet.Player = ud;
             sheet.Id = sheetid;
@@ -2132,13 +2145,14 @@ namespace PathfinderJson
             };
 
             // if no money is set, then just set the whole value as null
+            // (when the whole value is null, the money JSON element just won't be written at all)
             bool allNull = true;
             foreach (string? item in sheet.Money.Values)
             {
                 if (item != null) allNull = false;
             }
 
-            if (allNull)
+            if (allNull) // set the whole value to null
             {
                 sheet.Money = null;
             }
@@ -2205,18 +2219,18 @@ namespace PathfinderJson
 
         #region General sheet event handlers
 
-        private async void scrSheet_Drop(object sender, DragEventArgs e)
+        private void scrSheet_Drop(object sender, DragEventArgs e)
         {
             if (e.Data.GetDataPresent(DataFormats.FileDrop))
             {
                 string[] files = (string[])e.Data.GetData(DataFormats.FileDrop)!;
 
-                if (!(await SaveDirtyChanges()))
+                if (!(SaveDirtyChanges()))
                 {
                     return;
                 }
 
-                await LoadFile(files[0]);
+                LoadFile(files[0]);
             }
         }
 
@@ -2238,7 +2252,7 @@ namespace PathfinderJson
             }
         }
 
-        private async void txtStr_ValueChanged(object sender, DependencyPropertyChangedEventArgs e)
+        private void txtStr_ValueChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             if (!_isUpdating)
             {
@@ -2253,7 +2267,7 @@ namespace PathfinderJson
 
                 if (mnuAutoUpdate.IsChecked)
                 {
-                    await UpdateCalculations(true, false, false);
+                    UpdateCalculations(true, false, false);
                 }
             }
         }
@@ -2317,11 +2331,11 @@ namespace PathfinderJson
             //}
         }
 
-        private async void txtBab_LostFocus(object sender, RoutedEventArgs e)
+        private void txtBab_LostFocus(object sender, RoutedEventArgs e)
         {
             if (mnuAutoUpdate.IsChecked)
             {
-                await UpdateCalculations(false, false, false);
+                UpdateCalculations(false, false, false);
             }
         }
 
