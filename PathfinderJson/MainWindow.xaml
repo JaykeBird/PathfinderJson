@@ -9,6 +9,11 @@
         mc:Ignorable="d" x:Name="window"
         Title="Pathfinder JSON" Height="700" Width="550" MinWidth="550" MinHeight="450"
         Closing="window_Closing" Closed="window_Closed" Activated="window_Activated" Deactivated="window_Deactivated" >
+    <flat:FlatWindow.TopRightElement>
+        <Border x:Name="brdrCalculating" Margin="0,4" Visibility="Collapsed" BorderThickness="1" >
+            <TextBlock Text="Calculating..." Padding="4,0" VerticalAlignment="Center" />
+        </Border>
+    </flat:FlatWindow.TopRightElement>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="120" x:Name="colTabs"/>

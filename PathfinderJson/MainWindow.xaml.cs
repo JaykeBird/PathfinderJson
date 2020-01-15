@@ -56,6 +56,8 @@ namespace PathfinderJson
         CancellationTokenSource cts = new CancellationTokenSource();
         /// <summary>The search panel associated with the raw JSON editor</summary>
         SearchPanel sp;
+        /// <summary>Get or set if the sheet view is currently running calculations</summary>
+        bool _isCalculating = false;
 
         // functions for handling undo/redo
         private const int undoLimit = 20;
@@ -892,6 +894,9 @@ namespace PathfinderJson
 
             selTabs.ApplyColorScheme(App.ColorScheme);
 
+            brdrCalculating.Background = App.ColorScheme.SecondaryColor.ToBrush();
+            brdrCalculating.BorderBrush = App.ColorScheme.HighlightColor.ToBrush();
+
             (txtEditRaw.ContextMenu as UiCore.ContextMenu)!.ApplyColorScheme(App.ColorScheme);
 
             expUser.Background = App.ColorScheme.LightBackgroundColor.ToBrush();
@@ -916,6 +921,8 @@ namespace PathfinderJson
             edtCmb.UpdateAppearance();
             edtCmd.UpdateAppearance();
             edtInit.UpdateAppearance();
+
+            edtAc.UpdateAppearance();
 
             foreach (SkillEditor? item in stkSkills.Children)
             {
@@ -1805,6 +1812,9 @@ namespace PathfinderJson
                 SyncSheetFromEditor();
             }
 
+            _isCalculating = true;
+            brdrCalculating.Visibility = Visibility.Visible;
+
             txtStrm.Text = CalculateModifier(txtStr.Value);
             txtDexm.Text = CalculateModifier(txtDex.Value);
             txtCham.Text = CalculateModifier(txtCha.Value);
@@ -1919,6 +1929,9 @@ namespace PathfinderJson
             {
                 SyncEditorFromSheet();
             }
+
+            _isCalculating = false;
+            brdrCalculating.Visibility = Visibility.Collapsed;
 
             _isUpdating = false;
 
