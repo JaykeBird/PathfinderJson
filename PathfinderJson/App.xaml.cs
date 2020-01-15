@@ -62,5 +62,23 @@ namespace PathfinderJson
 
             return new BitmapImage(new Uri("pack://application:,,,/Images/" + name, UriKind.RelativeOrAbsolute));
         }
+
+        private void Application_Startup(object sender, StartupEventArgs e)
+        {
+            string file = "";
+
+            if (e.Args.Length > 0)
+            {
+                if (File.Exists(e.Args[0]))
+                {
+                    file = e.Args[0];
+                }
+            }
+
+            MainWindow mw = new MainWindow();
+            MainWindow = mw;
+            if (file != "") mw.OpenFile(file);
+            mw.Show();
+        }
     }
 }

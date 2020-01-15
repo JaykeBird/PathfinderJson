@@ -168,6 +168,11 @@ namespace PathfinderJson
             //}
         }
 
+        public void OpenFile(string filename)
+        {
+            LoadFile(filename, true);
+        }
+
         #region Other Base Functions
 
         void SaveSettings()
@@ -304,6 +309,11 @@ namespace PathfinderJson
                 ChangeView(App.Settings.StartView, false, false);
                 LoadPathfinderSheet(ps);
             }
+        }
+
+        private void mnuNewWindow_Click(object sender, RoutedEventArgs e)
+        {
+            Process.Start(Process.GetCurrentProcess().MainModule?.FileName);
         }
 
         private void mnuOpen_Click(object sender, RoutedEventArgs e)
@@ -622,6 +632,12 @@ namespace PathfinderJson
             cm1.Click += miRecentOpen_Click;
             cm.Items.Add(cm1);
 
+            MenuItem cm4 = new MenuItem();
+            cm4.Header = "Open in New Window";
+            cm4.Tag = mi;
+            cm4.Click += miRecentOpenNew_Click;
+            cm.Items.Add(cm4);
+
             MenuItem cm2 = new MenuItem();
             cm2.Header = "View in Explorer";
             cm2.Tag = mi;
@@ -790,6 +806,22 @@ namespace PathfinderJson
                 if (mi.Tag is MenuItem parent)
                 {
                     miRecentFile_Click(parent, e);
+                }
+            }
+        }
+
+        private void miRecentOpenNew_Click(object sender, RoutedEventArgs e)
+        {
+            // Process.GetCurrentProcess().MainModule?.FileName
+
+            if (sender is MenuItem mi)
+            {
+                if (mi.Tag is MenuItem parent)
+                {
+                    if (parent.Tag is string file)
+                    {
+                        Process.Start(Process.GetCurrentProcess().MainModule?.FileName, "\"" + file + "\"");
+                    }
                 }
             }
         }
