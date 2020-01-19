@@ -18,6 +18,7 @@ using System.Xml;
 using UiCore;
 using MenuItem = System.Windows.Controls.MenuItem;
 using static PathfinderJson.CoreUtils;
+using static PathfinderJson.App;
 
 namespace PathfinderJson
 {
@@ -42,10 +43,6 @@ namespace PathfinderJson
         /// <summary>Get or set the current view ("tabs", "continuous", or "rawjson")</summary>
         string currentView = TABS_VIEW;
 
-        const string TABS_VIEW = "tabs";
-        const string CONTINUOUS_VIEW = "continuous";
-        const string RAWJSON_VIEW = "rawjson";
-
         /// <summary>Get or set if the tabbed/continuous view has changes not synced with text editor</summary>
         bool _isTabsDirty = false;
         /// <summary>Get or set if the text editor has changes not synced with the tabbed/continuous view</summary>
@@ -58,6 +55,8 @@ namespace PathfinderJson
         SearchPanel sp;
         /// <summary>Get or set if the sheet view is currently running calculations</summary>
         bool _isCalculating = false;
+        /// <summary>Get or set the action to take after we're done running a calculation</summary>
+        string _postCalculateAction = "";
 
         // functions for handling undo/redo
         private const int undoLimit = 20;
@@ -82,7 +81,7 @@ namespace PathfinderJson
             undoSetTimer.Tick += UndoSetTimer_Tick;
 
             InitializeComponent();
-            if (App.Settings.HighContrastTheme == "0")
+            if (App.Settings.HighContrastTheme == NO_HIGH_CONTRAST)
             {
                 App.ColorScheme = new ColorScheme(ColorsHelper.CreateFromHex(App.Settings.ThemeColor));
             }
@@ -100,7 +99,7 @@ namespace PathfinderJson
                         App.ColorScheme = ColorScheme.GetHighContrastScheme(HighContrastOption.BlackOnWhite);
                         break;
                     default:
-                        App.Settings.HighContrastTheme = "0";
+                        App.Settings.HighContrastTheme = NO_HIGH_CONTRAST;
                         App.ColorScheme = new ColorScheme(ColorsHelper.CreateFromHex(App.Settings.ThemeColor));
                         SaveSettings();
                         break;
@@ -130,6 +129,7 @@ namespace PathfinderJson
                 AddRecentFile(file, false);
             }
 
+            // setup up raw JSON editor
             using (Stream? s = System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceStream("PathfinderJson.Json.xshd"))
             {
                 if (s != null)
@@ -144,6 +144,8 @@ namespace PathfinderJson
             SearchPanel p = SearchPanel.Install(txtEditRaw);
             p.FontFamily = SystemFonts.MessageFontFamily; // so it isn't a fixed-width font lol
             sp = p;
+
+            txtEditRaw.Encoding = new System.Text.UTF8Encoding(false);
 
             //if (App.Settings.UpdateAutoCheck)
             //{
@@ -168,12 +170,12 @@ namespace PathfinderJson
             //}
         }
 
+        #region Other Base Functions
+
         public void OpenFile(string filename)
         {
             LoadFile(filename, true);
         }
-
-        #region Other Base Functions
 
         void SaveSettings()
         {
@@ -230,7 +232,10 @@ namespace PathfinderJson
 
         private void window_Deactivated(object sender, EventArgs e)
         {
-            menu.Foreground = ColorsHelper.CreateFromHex("#404040").ToBrush();
+            if (App.Settings.HighContrastTheme == NO_HIGH_CONTRAST)
+            {
+                menu.Foreground = ColorsHelper.CreateFromHex("#404040").ToBrush();
+            }
         }
 
         private void window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -352,6 +357,12 @@ namespace PathfinderJson
 
         void SaveFile(string file)
         {
+            if (_isCalculating)
+            {
+                _postCalculateAction = "SaveFile";
+                return;
+            }
+
             if (currentView == RAWJSON_VIEW)
             {
                 // check if text is valid JSON first
@@ -379,15 +390,12 @@ namespace PathfinderJson
                         return;
                     }
                 }
-
-                txtEditRaw.Encoding = new System.Text.UTF8Encoding(false);
                 txtEditRaw.Save(file);
                 SyncSheetFromEditor();
             }
             else
             {
                 SyncEditorFromSheet();
-                txtEditRaw.Encoding = new System.Text.UTF8Encoding(false);
                 txtEditRaw.Save(file);
                 //PathfinderSheet ps = await CreatePathfinderSheetAsync();
                 //ps.SaveJsonFile(file, App.Settings.IndentJsonData);
@@ -983,10 +991,12 @@ namespace PathfinderJson
 
         SelectableItem CreateTab(string name, ImageSource? image = null)
         {
-            SelectableItem si = new SelectableItem();
-            si.Height = 36;
-            si.Text = name;
-            si.Indent = 6;
+            SelectableItem si = new SelectableItem
+            {
+                Height = 36,
+                Text = name,
+                Indent = 6
+            };
 
             if (image == null)
             {
@@ -1106,7 +1116,7 @@ namespace PathfinderJson
 
         private void mnuColors_Click(object sender, RoutedEventArgs e)
         {
-            if (App.Settings.HighContrastTheme != "0")
+            if (App.Settings.HighContrastTheme != NO_HIGH_CONTRAST)
             {
                 MessageDialog md = new MessageDialog(App.ColorScheme);
                 if (md.ShowDialog("A high-contrast theme is currently being used. Changing the color scheme will turn off the high-contrast theme. Do you want to continue?", null, this, "High Contrast Theme In Use", true,
@@ -1124,7 +1134,7 @@ namespace PathfinderJson
             {
                 App.ColorScheme = new ColorScheme(cpd.SelectedColor);
                 App.Settings.ThemeColor = cpd.SelectedColor.GetHexString();
-                App.Settings.HighContrastTheme = "0";
+                App.Settings.HighContrastTheme = NO_HIGH_CONTRAST;
                 SaveSettings();
                 UpdateAppearance();
             }
@@ -1132,23 +1142,25 @@ namespace PathfinderJson
 
         private void mnuHighContrast_Click(object sender, RoutedEventArgs e)
         {
-            MessageDialog md = new MessageDialog(App.ColorScheme);
-            md.ExtraButton1Text = "Use White on Black";
-            md.ExtraButton2Text = "Use Green on Black";
-            md.ExtraButton3Text = "Use Black on White";
-            md.OkButtonText = "Don't use";
-            md.Message = "A high contrast theme is good for users who have vision-impairment or other issues. PathfinderJSON comes with 3 high-contrast options available.";
-            md.Title = "High Contrast Theme";
+            MessageDialog md = new MessageDialog(App.ColorScheme)
+            {
+                ExtraButton1Text = "Use White on Black",
+                ExtraButton2Text = "Use Green on Black",
+                ExtraButton3Text = "Use Black on White",
+                OkButtonText = "Don't use",
+                Message = "A high contrast theme is good for users who have vision-impairment or other issues. PathfinderJSON comes with 3 high-contrast options available.",
+                Title = "High Contrast Theme"
+            };
 
             md.ShowDialog();
 
             switch (md.DialogResult)
             {
                 case MessageDialogResult.OK:
-                    App.Settings.HighContrastTheme = "0";
+                    App.Settings.HighContrastTheme = NO_HIGH_CONTRAST;
                     break;
                 case MessageDialogResult.Cancel:
-                    App.Settings.HighContrastTheme = "0";
+                    App.Settings.HighContrastTheme = NO_HIGH_CONTRAST;
                     break;
                 case MessageDialogResult.Extra1:
                     App.Settings.HighContrastTheme = "1";
@@ -1163,7 +1175,7 @@ namespace PathfinderJson
                     break;
             }
 
-            if (App.Settings.HighContrastTheme == "0")
+            if (App.Settings.HighContrastTheme == NO_HIGH_CONTRAST)
             {
                 App.ColorScheme = new ColorScheme(ColorsHelper.CreateFromHex(App.Settings.ThemeColor));
             }
@@ -1181,7 +1193,7 @@ namespace PathfinderJson
                         App.ColorScheme = ColorScheme.GetHighContrastScheme(HighContrastOption.BlackOnWhite);
                         break;
                     default:
-                        App.Settings.HighContrastTheme = "0";
+                        App.Settings.HighContrastTheme = NO_HIGH_CONTRAST;
                         App.ColorScheme = new ColorScheme(ColorsHelper.CreateFromHex(App.Settings.ThemeColor));
                         break;
                 }
@@ -1901,7 +1913,7 @@ namespace PathfinderJson
 
                     if (totals)
                     {
-                        await item.UpdateTotals();
+                        await item.UpdateTotals(cts.Token);
                     }
                 }
             }
@@ -1947,14 +1959,14 @@ namespace PathfinderJson
 
             if (totals)
             {
-                await edtFort.UpdateTotal();
-                await edtReflex.UpdateTotal();
-                await edtWill.UpdateTotal();
+                await edtFort.UpdateTotal(cts.Token);
+                await edtReflex.UpdateTotal(cts.Token);
+                await edtWill.UpdateTotal(cts.Token);
 
                 edtAc.UpdateTotal();
-                await edtInit.UpdateTotal();
-                await edtCmb.UpdateTotal();
-                await edtCmd.UpdateTotal();
+                await edtInit.UpdateTotal(cts.Token);
+                await edtCmb.UpdateTotal(cts.Token);
+                await edtCmd.UpdateTotal(cts.Token);
             }
 
             if (currentView == RAWJSON_VIEW)

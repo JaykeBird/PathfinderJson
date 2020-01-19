@@ -8,31 +8,28 @@ namespace PathfinderJson
 {
     public class Settings
     {
+
         public static Settings LoadSettings(string filename)
         {
-            using (StreamReader file = File.OpenText(filename))
-            {
-                JsonSerializer serializer = new JsonSerializer();
-                Settings? ss = (Settings?)serializer.Deserialize(file, typeof(Settings));
-                if (ss == null) ss = new Settings();
-                return ss;
-            }
+            using StreamReader file = File.OpenText(filename);
+            JsonSerializer serializer = new JsonSerializer();
+            Settings? ss = (Settings?)serializer.Deserialize(file, typeof(Settings));
+            if (ss == null) ss = new Settings();
+            return ss;
         }
 
         public void Save(string filename)
         {
-            using (StreamWriter file = new StreamWriter(filename))
-            {
-                JsonSerializer serializer = new JsonSerializer();
-                serializer.Serialize(file, this);
-            }
+            using StreamWriter file = new StreamWriter(filename);
+            JsonSerializer serializer = new JsonSerializer();
+            serializer.Serialize(file, this);
         }
 
         [JsonProperty("themeColor")]
         public string ThemeColor { get; set; } = "CD853F";
 
         [JsonProperty("highContrast")]
-        public string HighContrastTheme { get; set; } = "0";
+        public string HighContrastTheme { get; set; } = App.NO_HIGH_CONTRAST;
 
         [JsonProperty("pathTitleBar")]
         public bool PathInTitleBar { get; set; } = false;

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -128,7 +129,7 @@ namespace PathfinderJson
             txtModifier.Text = modifier;
         }
 
-        public async Task UpdateTotals()
+        public async Task UpdateTotals(CancellationToken ct)
         {
             int total = 0;
 
@@ -141,9 +142,13 @@ namespace PathfinderJson
             await Task.Run(() =>
             {
                 try { total += int.Parse(ranks); } catch (FormatException) { }
+                if (ct.IsCancellationRequested) return;
                 try { total += int.Parse(misc); } catch (FormatException) { }
+                if (ct.IsCancellationRequested) return;
                 try { total += int.Parse(mod); } catch (FormatException) { }
+                if (ct.IsCancellationRequested) return;
                 try { total += int.Parse(racial); } catch (FormatException) { }
+                if (ct.IsCancellationRequested) return;
                 try { total += int.Parse(trait); } catch (FormatException) { }
             });
 

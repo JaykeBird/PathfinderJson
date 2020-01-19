@@ -46,7 +46,15 @@ namespace PathfinderJson
 
         public static Settings Settings { get; set; } = new Settings();
 
+        #region Constants
         public static Version AppVersion = new Version("0.9.3");
+        
+        public const string NO_HIGH_CONTRAST = "0";
+
+        public const string TABS_VIEW = "tabs";
+        public const string CONTINUOUS_VIEW = "continuous";
+        public const string RAWJSON_VIEW = "rawjson";
+        #endregion
 
         /// <summary>
         /// Get a particular image from the internal Images folder.

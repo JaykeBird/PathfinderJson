@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -197,7 +198,7 @@ namespace PathfinderJson
             }
         }
 
-        public async Task UpdateTotal()
+        public async Task UpdateTotal(CancellationToken ct)
         {
             int total = 0;
 
@@ -211,10 +212,15 @@ namespace PathfinderJson
             await Task.Run(() =>
             {
                 try { total += int.Parse(magic); } catch (FormatException) { }
+                if (ct.IsCancellationRequested) return;
                 try { total += int.Parse(misc); } catch (FormatException) { }
+                if (ct.IsCancellationRequested) return;
                 try { total += int.Parse(size); } catch (FormatException) { }
+                if (ct.IsCancellationRequested) return;
                 try { total += int.Parse(mod); } catch (FormatException) { }
+                if (ct.IsCancellationRequested) return;
                 try { total += int.Parse(mod2); } catch (FormatException) { }
+                if (ct.IsCancellationRequested) return;
                 try { total += int.Parse(bas); } catch (FormatException) { }
             });
 
