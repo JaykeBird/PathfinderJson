@@ -9,7 +9,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -55,8 +54,6 @@ namespace PathfinderJson
         SearchPanel sp;
         /// <summary>Get or set if the sheet view is currently running calculations</summary>
         bool _isCalculating = false;
-        /// <summary>Get or set the action to take after we're done running a calculation</summary>
-        string _postCalculateAction = "";
 
         // functions for handling undo/redo
         private const int undoLimit = 20;
@@ -172,6 +169,10 @@ namespace PathfinderJson
 
         #region Other Base Functions
 
+        /// <summary>
+        /// Open a file into the editor. This is intended for when opening files from the command-line arguments.
+        /// </summary>
+        /// <param name="filename">The path to the file to open.</param>
         public void OpenFile(string filename)
         {
             LoadFile(filename, true);
@@ -240,7 +241,7 @@ namespace PathfinderJson
 
         private void window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            if (!(SaveDirtyChanges()))
+            if (!SaveDirtyChanges() || CheckCalculating())
             {
                 e.Cancel = true;
             }
@@ -287,7 +288,7 @@ namespace PathfinderJson
 
         private void mnuNew_Click(object sender, RoutedEventArgs e)
         {
-            if (!(SaveDirtyChanges()))
+            if (!SaveDirtyChanges() || CheckCalculating())
             {
                 return;
             }
@@ -323,7 +324,7 @@ namespace PathfinderJson
 
         private void mnuOpen_Click(object sender, RoutedEventArgs e)
         {
-            if (!(SaveDirtyChanges()))
+            if (!SaveDirtyChanges() || CheckCalculating())
             {
                 return;
             }
@@ -357,11 +358,7 @@ namespace PathfinderJson
 
         void SaveFile(string file)
         {
-            if (_isCalculating)
-            {
-                _postCalculateAction = "SaveFile";
-                return;
-            }
+            if (CheckCalculating()) return;
 
             if (currentView == RAWJSON_VIEW)
             {
@@ -436,7 +433,7 @@ namespace PathfinderJson
 
         void CloseFile()
         {
-            if (!(SaveDirtyChanges()))
+            if (!SaveDirtyChanges() || CheckCalculating())
             {
                 return;
             }
@@ -448,6 +445,20 @@ namespace PathfinderJson
             txtEditRaw.Text = "";
 
             ChangeView(App.Settings.StartView, false, true, false);
+        }
+
+        bool CheckCalculating()
+        {
+            if (_isCalculating)
+            {
+                MessageDialog md = new MessageDialog();
+                md.ShowDialog("Cannot perform this function while the sheet is calculating. Please try again in just a moment.", App.ColorScheme, this, "Currently Calculating", false, MessageDialogImage.Error);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         bool SaveDirtyChanges()
@@ -693,7 +704,7 @@ namespace PathfinderJson
                 {
                     if (File.Exists(file))
                     {
-                        if (!(SaveDirtyChanges()))
+                        if (!SaveDirtyChanges() || CheckCalculating())
                         {
                             return;
                         }
@@ -743,7 +754,7 @@ namespace PathfinderJson
                                 break;
                             case MessageDialogResult.Extra2:
                                 // attempt to open anyway
-                                if (!(SaveDirtyChanges()))
+                                if (!SaveDirtyChanges() || CheckCalculating())
                                 {
                                     return;
                                 }
@@ -1849,6 +1860,11 @@ namespace PathfinderJson
                 return;
             }
 
+            if (_isCalculating)
+            {
+                return;
+            }
+
             _isUpdating = true;
 
             if (currentView == RAWJSON_VIEW && _isEditorDirty)
@@ -2282,7 +2298,7 @@ namespace PathfinderJson
             {
                 string[] files = (string[])e.Data.GetData(DataFormats.FileDrop)!;
 
-                if (!(SaveDirtyChanges()))
+                if (!SaveDirtyChanges() || CheckCalculating())
                 {
                     return;
                 }
