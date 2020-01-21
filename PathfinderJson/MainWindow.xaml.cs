@@ -66,6 +66,7 @@ namespace PathfinderJson
         UserData ud;
         //ArmorClass ac;
         string sheetid;
+        Dictionary<string, string> abilities = new Dictionary<string, string>();
 
         #region Constructor/ window events/ basic functions
 
@@ -1559,6 +1560,8 @@ namespace PathfinderJson
                 txtSpeedTemp.Text = spd.TempModifier;
             }
 
+            abilities = sheet.RawAbilities;
+
             txtStr.Value = sheet.Strength;
             txtDex.Value = sheet.Dexterity;
             txtCha.Value = sheet.Charisma;
@@ -2112,15 +2115,21 @@ namespace PathfinderJson
             }
             sheet.Speed = sp;
 
-            Dictionary<string, string> abilities = new Dictionary<string, string>
-            {
-                { "str", txtStr.Value.ToString() },
-                { "dex", txtDex.Value.ToString() },
-                { "cha", txtCha.Value.ToString() },
-                { "con", txtCon.Value.ToString() },
-                { "int", txtInt.Value.ToString() },
-                { "wis", txtWis.Value.ToString() }
-            };
+            //Dictionary<string, string> abilities = new Dictionary<string, string>
+            //{
+            //    { "str", txtStr.Value.ToString() },
+            //    { "dex", txtDex.Value.ToString() },
+            //    { "cha", txtCha.Value.ToString() },
+            //    { "con", txtCon.Value.ToString() },
+            //    { "int", txtInt.Value.ToString() },
+            //    { "wis", txtWis.Value.ToString() }
+            //};
+            abilities["str"] = txtStr.Value.ToString();
+            abilities["dex"] = txtDex.Value.ToString();
+            abilities["cha"] = txtCha.Value.ToString();
+            abilities["con"] = txtCon.Value.ToString();
+            abilities["int"] = txtInt.Value.ToString();
+            abilities["wis"] = txtWis.Value.ToString();
             sheet.RawAbilities = abilities;
 
             Dictionary<string, CompoundModifier> saves = new Dictionary<string, CompoundModifier>
