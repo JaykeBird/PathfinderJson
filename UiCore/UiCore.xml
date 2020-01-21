@@ -609,6 +609,11 @@
             Create a new FlatButton.
             </summary>
         </member>
+        <member name="E:UiCore.FlatButton.UnroutedClick">
+            <summary>
+            Raised when the user clicks on the button. Please use the new Click event instead.
+            </summary>
+        </member>
         <member name="E:UiCore.FlatButton.SelectionChanged">
             <summary>
             Raised if the button's IsSelected value is changed. This can be used to have the button act as a ToggleButton.
