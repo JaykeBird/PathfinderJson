@@ -8,7 +8,7 @@
         mc:Ignorable="d" x:Name="window"
         Title="About" Height="400" Width="500" ResizeMode="NoResize" CaptionDisplayType="Close" >
     <Grid>
-        <Image HorizontalAlignment="Left" Height="48" Margin="15,20,0,0" VerticalAlignment="Top" Width="48" Source="/appicon.ico"/>
+        <Image HorizontalAlignment="Left" Height="48" Margin="15,20,0,0" VerticalAlignment="Top" Width="48" Source="/Icon48.png"/>
         <TextBlock HorizontalAlignment="Left" Margin="75,20,0,0" Text="Pathfinder JSON Character Sheet" FontSize="16" FontWeight="SemiBold" VerticalAlignment="Top"/>
         <TextBlock Margin="75,50,40,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="34" 
                     Text="Character sheet viewer for JSON files exported by Mottokrosh's Pathfinder character sheet website (for Pathfinder 1e)" />

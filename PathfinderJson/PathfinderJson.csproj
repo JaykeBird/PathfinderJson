@@ -4,7 +4,7 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UseWPF>true</UseWPF>
-    <ApplicationIcon>appicon.ico</ApplicationIcon>
+    <ApplicationIcon>..\appicon.ico</ApplicationIcon>
     <ApplicationManifest>PathfinderJson.manifest</ApplicationManifest>
     <PublishSingleFile>true</PublishSingleFile>
     <PublishTrimmed>true</PublishTrimmed>
@@ -73,6 +73,10 @@
 
   <ItemGroup>
     <Resource Include="Images\**" />
+    <Resource Include="..\appicon.ico" Link="appicon.ico">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="..\Icon48.png" Link="Icon48.png" />
     <EmbeddedResource Include="Json.xshd" />
   </ItemGroup>
 

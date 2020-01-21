@@ -3,7 +3,7 @@
 
 A sheet reader/writer for Pathfinder JSON character sheets from Mottokrosh's website
 
-[Take a look at some screenshots!](https://github.com/JaykeBird/PathfinderJson/tree/master/Screenshots)
+[Take a look at some screenshots!](https://github.com/JaykeBird/PathfinderJson/wiki/Screenshots)
 
 ## How to build
 You must have Visual Studio 2019 version 16.3 or later to properly open the project and build it, as it is a .NET Core 3.0 WPF app. As a WPF app, that does mean this is Windows-only. I do wanna experiment with Avalonia later for a cross-platform UI.
@@ -22,7 +22,7 @@ This program is just a single EXE file which contains everything. No prerequisit
 
 Once you have an account on [Mottokrosh's Pathfinder sheet website](http://charactersheet.co.uk/pathfinder/), you can create character sheets on there. You can download a sheet from the Home page on the website and this program can open, edit, and save the downloaded files! Note that Mottokrosh's website does not appear to have a way to upload sheets.
 
-This program supports all the features currently in Mottokrosh's website, and can display them all (and edit most of them) in a sheet editor view. There is also a JSON text editor view for basic raw text editing. (Note that if you want a more full text-editing experience, you may want to open the JSON file in your text editor of choice.)
+This program supports all the features currently in Mottokrosh's website, and can display and edit nearly all of them in a sheet editor view. There is also a JSON text editor view for basic raw text editing. (Note that if you want a more full text-editing experience, you may want to open the JSON file in your text editor of choice.)
 
 ## Roadmap
 View this project's roadmap [on the GitHub wiki page](https://github.com/JaykeBird/PathfinderJson/wiki/Roadmap).
@@ -38,5 +38,7 @@ How to add the model to your fork of the code: [View page on Microsoft Docs site
 **PathfinderJson is released under the [MIT License](License.md).**
 
 Do note that the UI library and icon set that PathfinderJson uses are not yet released as open source. The UI library will be released soon under the MIT License, and the full icon set will probably be released in 2020 under some form of Creative Commons license. The icons included in this repository are also released under the MIT license until the full icon set is released. I'll update this section as I go along.
+
+This program complies with the [Paizo Community Use Policy](https://paizo.com/community/communityuse). More detail can be found on the Paizo website or in the Help > About window.
 
 For more info about the third-party libraries used in this project, open the Help > About > Third-Party Credits window.
