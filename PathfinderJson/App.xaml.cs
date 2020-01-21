@@ -47,7 +47,7 @@ namespace PathfinderJson
         public static Settings Settings { get; set; } = new Settings();
 
         #region Constants
-        public static Version AppVersion = new Version("0.9.3");
+        public static Version AppVersion = new Version("0.9.4");
         
         public const string NO_HIGH_CONTRAST = "0";
 

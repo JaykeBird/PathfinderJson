@@ -6,7 +6,7 @@
   "compilationOptions": {},
   "targets": {
     ".NETCoreApp,Version=v3.1": {
-      "UiCore/1.5": {
+      "UiCore/1.6": {
         "dependencies": {
           "Microsoft.CSharp": "4.6.0"
         },
@@ -18,7 +18,7 @@
     }
   },
   "libraries": {
-    "UiCore/1.5": {
+    "UiCore/1.6": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
