@@ -20,9 +20,9 @@ You can reach out to me if you have any questions by [finding me on Twitter](htt
 ## How to use
 This program is just a single EXE file which contains everything. No prerequisites to install, no installer process. Just click on the EXE file and that's it! Do note that it may take a few seconds to open.
 
-Once you have an account on [Mottokrosh's Pathfinder sheet website](http://charactersheet.co.uk/pathfinder/), you can create character sheets on there. You can download a sheet from the Home page on the website and this program can open, edit, and save the downloaded files! Note that Mottokrosh's website does not appear to have a way to upload sheets.
+You can either create sheets within the app itself, or (if you have an account on [Mottokrosh's Pathfinder sheet website](http://charactersheet.co.uk/pathfinder/)) you can download character sheets from the Home page of Mottokrosh's website. This program can open, edit, and save files downloaded from the website, as well as the files created within the app itself. Note that Mottokrosh's website does not appear to have a way to upload sheets back to the site.
 
-This program supports all the features currently in Mottokrosh's website, and can display and edit nearly all of them in a sheet editor view. There is also a JSON text editor view for basic raw text editing. (Note that if you want a more full text-editing experience, you may want to open the JSON file in your text editor of choice.)
+This program supports all the features currently in Mottokrosh's website, and can display and edit nearly all of them in a sheet editor view. There is also a JSON text editor view for basic raw text editing.
 
 ## Roadmap
 View this project's roadmap [on the GitHub wiki page](https://github.com/JaykeBird/PathfinderJson/wiki/Roadmap).
@@ -30,7 +30,7 @@ View this project's roadmap [on the GitHub wiki page](https://github.com/JaykeBi
 ## IntelliCode
 If you're using IntelliCode in Visual Studio 2019 (or Visual Studio 2017 15.8 or later), I have an IntelliCode model that I have been using. If you're looking to fork this project and want to utilize my IntelliCode model, I'll provide you the link to it below:
 
-IntelliCode model: https://prod.intellicode.vsengsaas.visualstudio.com/get?m=EE624218283041248FCC4F9108367CB4
+IntelliCode model: https://prod.intellicode.vsengsaas.visualstudio.com/get?m=E2F62014F4014F18864B289BF71218D9
 
 How to add the model to your fork of the code: [View page on Microsoft Docs site](https://docs.microsoft.com/en-us/visualstudio/intellicode/share-models#add-a-custom-model)
 
