@@ -132,10 +132,8 @@ namespace PathfinderJson
             {
                 if (s != null)
                 {
-                    using (XmlReader reader = new XmlTextReader(s))
-                    {
-                        txtEditRaw.SyntaxHighlighting = ICSharpCode.AvalonEdit.Highlighting.Xshd.HighlightingLoader.Load(reader, HighlightingManager.Instance);
-                    }
+                    using XmlReader reader = new XmlTextReader(s);
+                    txtEditRaw.SyntaxHighlighting = ICSharpCode.AvalonEdit.Highlighting.Xshd.HighlightingLoader.Load(reader, HighlightingManager.Instance);
                 }
             }
 
@@ -599,14 +597,12 @@ namespace PathfinderJson
                 else
                 {
                     MessageDialog md = new MessageDialog(App.ColorScheme);
-                    md.Owner = this;
                     md.ShowDialog("There are no updates available. You're on the latest release!", App.ColorScheme, this, "Check for Updates", false, MessageDialogImage.Hand);
                 }
             }
             catch (System.Net.WebException)
             {
                 MessageDialog md = new MessageDialog(App.ColorScheme);
-                md.Owner = this;
                 md.ShowDialog("Could not check for updates. Make sure you're connected to the Internet.", App.ColorScheme, this, "Check for Updates", false, MessageDialogImage.Error);
             }
         }
@@ -632,10 +628,12 @@ namespace PathfinderJson
             MenuItem mi = new MenuItem();
             string name = Path.GetFileName(filename);
             mi.Header = "_" + name;
-            ToolTip tt = new ToolTip();
-            tt.Content = filename;
-            tt.Placement = System.Windows.Controls.Primitives.PlacementMode.Right;
-            tt.PlacementTarget = mi;
+            ToolTip tt = new ToolTip
+            {
+                Content = filename,
+                Placement = System.Windows.Controls.Primitives.PlacementMode.Right,
+                PlacementTarget = mi
+            };
             mi.ToolTip = tt;
             mi.Tag = filename;
             mi.Click += miRecentFile_Click;
@@ -934,8 +932,6 @@ namespace PathfinderJson
         {
             ApplyColorScheme(App.ColorScheme);
             menu.ApplyColorScheme(App.ColorScheme);
-            toolbar.HighlightBrush = App.ColorScheme.HighlightColor.ToBrush();
-            toolbar.SelectionBrush = App.ColorScheme.SelectionColor.ToBrush();
             toolbar.Background = App.ColorScheme.MainColor.ToBrush();
 
             if (App.ColorScheme.IsHighContrast)
@@ -945,6 +941,7 @@ namespace PathfinderJson
             }
 
             selTabs.ApplyColorScheme(App.ColorScheme);
+
 
             brdrCalculating.Background = App.ColorScheme.SecondaryColor.ToBrush();
             brdrCalculating.BorderBrush = App.ColorScheme.HighlightColor.ToBrush();
