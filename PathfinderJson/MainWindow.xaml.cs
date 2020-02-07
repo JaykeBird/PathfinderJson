@@ -378,8 +378,7 @@ namespace PathfinderJson
                 {
                     MessageDialog md = new MessageDialog(App.ColorScheme);
                     md.ShowDialog("The file's text doesn't seem to be valid JSON. Saving the file as it is may result in lost data or the file not being openable with this program in the future. Do you want to continue?", 
-                        App.ColorScheme, this, "Invalid JSON Detected", true, MessageDialogImage.Warning, MessageDialogResult.Cancel,
-                        "Save anyway", "Cancel");
+                        null, this, "Invalid JSON Detected", MessageDialogButtonDisplay.Auto, image: MessageDialogImage.Warning, customOkButtonText: "Save anyway", customCancelButtonText: "Cancel");
 
                     if (md.DialogResult == MessageDialogResult.Cancel)
                     {
@@ -408,7 +407,7 @@ namespace PathfinderJson
             if (!_sheetLoaded)
             {
                 MessageDialog md = new MessageDialog(App.ColorScheme);
-                md.ShowDialog("No sheet is currently open, so saving is not possible.", null, this, "No Sheet Open", false, MessageDialogImage.Error);
+                md.ShowDialog("No sheet is currently open, so saving is not possible.", null, this, "No Sheet Open", MessageDialogButtonDisplay.Auto, image: MessageDialogImage.Error);
                 return false;
             }
 
@@ -451,7 +450,7 @@ namespace PathfinderJson
             if (_isCalculating)
             {
                 MessageDialog md = new MessageDialog();
-                md.ShowDialog("Cannot perform this function while the sheet is calculating. Please try again in just a moment.", App.ColorScheme, this, "Currently Calculating", false, MessageDialogImage.Error);
+                md.ShowDialog("Cannot perform this function while the sheet is calculating. Please try again in just a moment.", App.ColorScheme, this, "Currently Calculating", MessageDialogButtonDisplay.Auto, image: MessageDialogImage.Error);
                 return true;
             }
             else
@@ -471,8 +470,8 @@ namespace PathfinderJson
             if (isDirty)
             {
                 MessageDialog md = new MessageDialog(App.ColorScheme);
-                md.ShowDialog("The file has some unsaved changes. Do you want to save them first?", App.ColorScheme, this, "Unsaved Changes", true, MessageDialogImage.Question, MessageDialogResult.Cancel,
-                    "Save", "Discard");
+                md.ShowDialog("The file has some unsaved changes. Do you want to save them first?", null, this, "Unsaved Changes", MessageDialogButtonDisplay.Three, MessageDialogImage.Question, MessageDialogResult.Cancel,
+                    "Save", "Cancel", "Discard");
 
                 if (md.DialogResult == MessageDialogResult.OK)
                 {
@@ -486,9 +485,13 @@ namespace PathfinderJson
                         return true;
                     }
                 }
-                else
+                else if (md.DialogResult == MessageDialogResult.Discard)
                 {
                     return true;
+                }
+                else
+                {
+                    return false;
                 }
             }
             else
@@ -502,15 +505,17 @@ namespace PathfinderJson
             if (isDirty)
             {
                 MessageDialog md = new MessageDialog(App.ColorScheme);
-                md.ShowDialog("The file has some unsaved changes. Are you sure you want to discard them?", App.ColorScheme, this, "Unsaved Changes", true, MessageDialogImage.Question, MessageDialogResult.Cancel,
-                    "Discard", "Cancel");
+                md.ShowDialog("The file has some unsaved changes. Are you sure you want to discard them?", App.ColorScheme, this, "Unsaved Changes", image: MessageDialogImage.Question,
+                    customOkButtonText: null, customDiscardButtonText: "Discard", customCancelButtonText: "Cancel");
 
-                if (md.DialogResult == MessageDialogResult.OK)
+                if (md.DialogResult == MessageDialogResult.OK || md.DialogResult == MessageDialogResult.Discard)
                 {
+                    // Discard and continue
                     return true;
                 }
                 else
                 {
+                    // Cancel the operation
                     return false;
                 }
             }
@@ -597,13 +602,13 @@ namespace PathfinderJson
                 else
                 {
                     MessageDialog md = new MessageDialog(App.ColorScheme);
-                    md.ShowDialog("There are no updates available. You're on the latest release!", App.ColorScheme, this, "Check for Updates", false, MessageDialogImage.Hand);
+                    md.ShowDialog("There are no updates available. You're on the latest release!", App.ColorScheme, this, "Check for Updates", MessageDialogButtonDisplay.Auto, image: MessageDialogImage.Hand);
                 }
             }
             catch (System.Net.WebException)
             {
                 MessageDialog md = new MessageDialog(App.ColorScheme);
-                md.ShowDialog("Could not check for updates. Make sure you're connected to the Internet.", App.ColorScheme, this, "Check for Updates", false, MessageDialogImage.Error);
+                md.ShowDialog("Could not check for updates. Make sure you're connected to the Internet.", App.ColorScheme, this, "Check for Updates", MessageDialogButtonDisplay.Auto, image: MessageDialogImage.Error);
             }
         }
 
@@ -715,7 +720,7 @@ namespace PathfinderJson
                         MessageDialog md = new MessageDialog(App.ColorScheme);
                         md.OkButtonText = "Cancel";
                         md.ShowDialog("This file does not exist any more. Do you want to remove this file from the list or attempt to open anyway?", App.ColorScheme, this,
-                            "File Not Found", false, MessageDialogImage.Error, MessageDialogResult.Cancel, "Remove file from list", "Attempt to open anyway");
+                            "File Not Found", MessageDialogButtonDisplay.Auto, MessageDialogImage.Error, MessageDialogResult.Cancel, "Remove file from list", "Attempt to open anyway");
                         switch (md.DialogResult)
                         {
                             case MessageDialogResult.OK:
@@ -804,7 +809,7 @@ namespace PathfinderJson
         bool AskClearRecentList()
         {
             MessageDialog md = new MessageDialog(App.ColorScheme);
-            md.ShowDialog("Are you sure you want to remove all files from the Recent Files list?", App.ColorScheme, this, "Clear Recent Files List", true, MessageDialogImage.Question, MessageDialogResult.Cancel,
+            md.ShowDialog("Are you sure you want to remove all files from the Recent Files list?", App.ColorScheme, this, "Clear Recent Files List", MessageDialogButtonDisplay.Two, MessageDialogImage.Question, MessageDialogResult.Cancel,
                 "Yes", "Cancel");
 
             if (md.DialogResult == MessageDialogResult.OK)
@@ -1128,7 +1133,7 @@ namespace PathfinderJson
             if (App.Settings.HighContrastTheme != NO_HIGH_CONTRAST)
             {
                 MessageDialog md = new MessageDialog(App.ColorScheme);
-                if (md.ShowDialog("A high-contrast theme is currently being used. Changing the color scheme will turn off the high-contrast theme. Do you want to continue?", null, this, "High Contrast Theme In Use", true,
+                if (md.ShowDialog("A high-contrast theme is currently being used. Changing the color scheme will turn off the high-contrast theme. Do you want to continue?", null, this, "High Contrast Theme In Use", MessageDialogButtonDisplay.Two,
                     MessageDialogImage.Warning, MessageDialogResult.Cancel, "Continue", "Cancel") == MessageDialogResult.Cancel)
                 {
                     return;
@@ -1856,7 +1861,7 @@ namespace PathfinderJson
             if (!_sheetLoaded)
             {
                 MessageDialog md = new MessageDialog(App.ColorScheme);
-                md.ShowDialog("Cannot run calculations when no sheet is opened.", App.ColorScheme, this, "Update Calculations", false, MessageDialogImage.Error);
+                md.ShowDialog("Cannot run calculations when no sheet is opened.", App.ColorScheme, this, "Update Calculations", MessageDialogButtonDisplay.Auto, image: MessageDialogImage.Error);
                 return;
             }
 

@@ -523,6 +523,11 @@
             DoubleSpinner
             </summary>
         </member>
+        <member name="P:UiCore.DoubleSpinner.RepeatDelay">
+            <summary>
+            Get or set the delay period before starting the repeatedly stepping up or down while the button is held, in milliseconds. Default is 300 milliseconds.
+            </summary>
+        </member>
         <member name="P:UiCore.DoubleSpinner.AcceptExpressions">
             <summary>
             Get or set if the spinner should evaluate arithmetic expressions (such as "2+5") to accept as a value.
@@ -872,6 +877,16 @@
             IntegerSpinner
             </summary>
         </member>
+        <member name="P:UiCore.IntegerSpinner.Value">
+            <summary>
+            Get or set the value of the spinner.
+            </summary>
+        </member>
+        <member name="P:UiCore.IntegerSpinner.RepeatDelay">
+            <summary>
+            Get or set the delay period before starting the repeatedly stepping up or down while the button is held, in milliseconds. Default is 300 milliseconds.
+            </summary>
+        </member>
         <member name="P:UiCore.IntegerSpinner.AcceptExpressions">
             <summary>
             Get or set if the spinner should evaluate arithmetic expressions (such as "2+5") to accept as a value.
@@ -947,14 +962,65 @@
             MessageDialog
             </summary>
         </member>
+        <member name="P:UiCore.MessageDialog.ColorScheme">
+            <summary>
+            The color scheme to use with the message dialog.
+            </summary>
+        </member>
+        <member name="P:UiCore.MessageDialog.OkButtonText">
+            <summary>Get or set the text to display in the OK button. If empty, the button will not be displayed (unless the other buttons are also not displayed, in which case this one will be).</summary>
+        </member>
+        <member name="P:UiCore.MessageDialog.CancelButtonText">
+            <summary>Get or set the text to display in the Cancel button. If empty, the button will not be displayed.</summary>
+        </member>
+        <member name="P:UiCore.MessageDialog.DiscardButtonText">
+            <summary>Get or set the text to display in the Discard button. If empty, the button will not be displayed.</summary>
+        </member>
+        <member name="P:UiCore.MessageDialog.ExtraButton1Text">
+            <summary>Get or set the text to display in the first extra button. If empty, the button will not be displayed.</summary>
+        </member>
+        <member name="P:UiCore.MessageDialog.ExtraButton2Text">
+            <summary>Get or set the text to display in the second extra button. If empty, the button will not be displayed.</summary>
+        </member>
+        <member name="P:UiCore.MessageDialog.ExtraButton3Text">
+            <summary>Get or set the text to display in the third extra button. If empty, the button will not be displayed.</summary>
+        </member>
+        <member name="P:UiCore.MessageDialog.DialogResult">
+            <summary>Get the result of the message dialog, indicating which button the user pressed.</summary>
+        </member>
+        <member name="P:UiCore.MessageDialog.Message">
+            <summary>Get or set the text to display for the message.</summary>
+        </member>
+        <member name="P:UiCore.MessageDialog.CheckBoxText">
+            <summary>Get or set the text to display with the checkbox. If empty, the checkbox will not be displayed.</summary>
+        </member>
+        <member name="P:UiCore.MessageDialog.CheckBoxValue">
+            <summary>Get or set the checked state of the checkbox. Use the checkbox to display a "Remember my choice"-style option.</summary>
+        </member>
+        <member name="P:UiCore.MessageDialog.Image">
+            <summary>Get or set the image to display with the message.</summary>
+        </member>
         <member name="M:UiCore.MessageDialog.ShowDialog">
             <summary>
-            Display this message dialog. Set <c>CancelButtonText</c> prior to showing dialog to display the Cancel button; else, only OK button is displayed.
+            Display this message dialog. Use the properties such as <c>OkButtonText</c> or <c>CancelButtonText</c> and <c>Message</c> to control the appearance of the message dialog.
             </summary>
+        </member>
+        <member name="M:UiCore.MessageDialog.ShowDialog(System.String,System.String,System.Boolean,UiCore.MessageDialogImage,UiCore.MessageDialogResult,System.String,System.String,System.String)">
+            <summary>
+            Display this message dialog. This is an obsolete method, please use one of the other ones.
+            </summary>
+            <param name="message">The message to display.</param>
+            <param name="title">The window title for this dialog. Use <c>null</c> if already set via property.</param>
+            <param name="showTwoBottomButtons">Determine if one or two buttons should be shown (either [OK], or [OK] and [Cancel]). If false, only OK button is displayed.</param>
+            <param name="image">The image to display with this dialog.</param>
+            <param name="defaultButton">The button to have selected by default when the dialog opens. (DOESN'T CURRENTLY WORK)</param>
+            <param name="extraButton1Text">The text to use in the first extra button. If this is set to a null or empty string, this button will not be displayed.</param>
+            <param name="extraButton2Text">The text to use in the second extra button. If this is set to a null or empty string, this button will not be displayed.</param>
+            <param name="extraButton3Text">The text to use in the third extra button. If this is set to a null or empty string, this button will not be displayed.</param>
         </member>
         <member name="M:UiCore.MessageDialog.ShowDialog(System.String,UiCore.ColorScheme,System.Windows.Window,System.String,System.Boolean,UiCore.MessageDialogImage,UiCore.MessageDialogResult,System.String,System.String,System.String,System.String,System.String,System.String)">
             <summary>
-            Display this message dialog.
+            Display this message dialog. This is an obsolete method, please use one of the other ones.
             </summary>
             <param name="message">The message to display.</param>
             <param name="colorScheme">The color scheme to use with the dialog. Use <c>null</c> if already set via property.</param>
@@ -965,6 +1031,25 @@
             <param name="defaultButton">The button to have selected by default when the dialog opens. (DOESN'T CURRENTLY WORK)</param>
             <param name="customOkButtonText">The text to use in the OK button. Use <c>null</c> if already set via property.</param>
             <param name="customCancelButtonText">The text to use in the Cancel button. Use <c>null</c> if already set via property.</param>
+            <param name="extraButton1Text">The text to use in the first extra button. If this is set to a null or empty string, this button will not be displayed.</param>
+            <param name="extraButton2Text">The text to use in the second extra button. If this is set to a null or empty string, this button will not be displayed.</param>
+            <param name="extraButton3Text">The text to use in the third extra button. If this is set to a null or empty string, this button will not be displayed.</param>
+            <param name="checkBoxText">The text to use in the check box. If this is set to a null or empty string, the check box will not be displayed.</param>
+        </member>
+        <member name="M:UiCore.MessageDialog.ShowDialog(System.String,UiCore.ColorScheme,System.Windows.Window,System.String,UiCore.MessageDialogButtonDisplay,UiCore.MessageDialogImage,UiCore.MessageDialogResult,System.String,System.String,System.String,System.String,System.String,System.String,System.String)">
+            <summary>
+            Display this message dialog.
+            </summary>
+            <param name="message">The message to display.</param>
+            <param name="colorScheme">The color scheme to use with the dialog. Use <c>null</c> if already set via property.</param>
+            <param name="owner">The owner window of this dialog. Use <c>null</c> if already set via property.</param>
+            <param name="title">The window title for this dialog. Use <c>null</c> if already set via property.</param>
+            <param name="buttonDisplay">Determine how many buttons should be displayed at the bottom of the dialog, either [OK], [OK] and [Cancel], or [OK] [Discard] and [Cancel].</param>
+            <param name="image">The image to display with this dialog.</param>
+            <param name="defaultButton">The button to have selected by default when the dialog opens. (DOESN'T CURRENTLY WORK)</param>
+            <param name="customOkButtonText">The text to use in the OK button. Use <c>null</c> if already set via property.</param>
+            <param name="customCancelButtonText">The text to use in the Cancel button. Use <c>null</c> if already set via property.</param>
+            <param name="customDiscardButtonText">The text to use in the Discard button. Use <c>null</c> if already set via property.</param>
             <param name="extraButton1Text">The text to use in the first extra button. If this is set to a null or empty string, this button will not be displayed.</param>
             <param name="extraButton2Text">The text to use in the second extra button. If this is set to a null or empty string, this button will not be displayed.</param>
             <param name="extraButton3Text">The text to use in the third extra button. If this is set to a null or empty string, this button will not be displayed.</param>
@@ -996,7 +1081,7 @@
             <summary>A white exclamation point on a blue background is displayed. This is good for when wanting to alert the user about something that isn't considered a warning.</summary>
         </member>
         <member name="F:UiCore.MessageDialogImage.Info">
-            <summary>A white I on a blue background is displayed. This is good for informing the user about something, such as a task being completed or the response to a request.</summary>
+            <summary>A white I on a blue background is displayed. This is good for generally informing the user about something, such as a task being completed or the response to a request.</summary>
         </member>
         <member name="F:UiCore.MessageDialogImage.Stop">
             <summary>A red stop sign is displayed. This is good for informing the user that this action isn't valid in the current state, or that an unavoidable major issue has occurred.</summary>
@@ -1020,6 +1105,26 @@
         <member name="T:UiCore.MessageDialogImageConverter.MessageDialogImageColor">
             <summary>
             The color to use with a message dialog image.
+            </summary>
+        </member>
+        <member name="F:UiCore.MessageDialogButtonDisplay.Auto">
+            <summary>
+            If set, uses the OkButtonText, CancelButtonText, and DiscardButtonText properties to determine which buttons should be displayed. If a property is null, then the corresponding button isn't displayed.
+            </summary>
+        </member>
+        <member name="F:UiCore.MessageDialogButtonDisplay.One">
+            <summary>
+            Display only one button, the OK button. Outputs as <c>MessageDialogResult.OK</c> when clicked.
+            </summary>
+        </member>
+        <member name="F:UiCore.MessageDialogButtonDisplay.Two">
+            <summary>
+            Display two buttons, the OK and Cancel buttons. Outputs as <c>MessageDialogResult.OK</c> or <c>MessageDialogResult.Cancel</c> when clicked.
+            </summary>
+        </member>
+        <member name="F:UiCore.MessageDialogButtonDisplay.Three">
+            <summary>
+            Display three buttons, the OK, Discard, and Cancel buttons. Outputs as <c>MessageDialogResult.OK</c>, <c>MessageDialogResult.Discard</c> or <c>MessageDialogResult.Cancel</c> when clicked. 
             </summary>
         </member>
         <member name="T:UiCore.NativeMethods">
@@ -1479,6 +1584,36 @@
         <member name="M:UiCore.ToolbarMenuButton.InitializeComponent">
             <summary>
             InitializeComponent
+            </summary>
+        </member>
+        <member name="T:XamlGeneratedNamespace.GeneratedInternalTypeHelper">
+            <summary>
+            GeneratedInternalTypeHelper
+            </summary>
+        </member>
+        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.CreateInstance(System.Type,System.Globalization.CultureInfo)">
+            <summary>
+            CreateInstance
+            </summary>
+        </member>
+        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.GetPropertyValue(System.Reflection.PropertyInfo,System.Object,System.Globalization.CultureInfo)">
+            <summary>
+            GetPropertyValue
+            </summary>
+        </member>
+        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.SetPropertyValue(System.Reflection.PropertyInfo,System.Object,System.Object,System.Globalization.CultureInfo)">
+            <summary>
+            SetPropertyValue
+            </summary>
+        </member>
+        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.CreateDelegate(System.Type,System.Object,System.String)">
+            <summary>
+            CreateDelegate
+            </summary>
+        </member>
+        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.AddEventHandler(System.Reflection.EventInfo,System.Object,System.Delegate)">
+            <summary>
+            AddEventHandler
             </summary>
         </member>
     </members>

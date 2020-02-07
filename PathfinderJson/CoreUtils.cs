@@ -47,6 +47,16 @@ namespace PathfinderJson
             return string.IsNullOrEmpty(value) ? null : value;
         }
 
+        public static string GetStringOrNull(string? value, string defaultValue, bool zeroAsNull = false)
+        {
+            if (zeroAsNull)
+            {
+                if (value == "0") value = null;
+            }
+
+            return string.IsNullOrEmpty(value) ? defaultValue : value;
+        }
+
         public static int ParseStringAsInt(string? value)
         {
             if (string.IsNullOrEmpty(value))
