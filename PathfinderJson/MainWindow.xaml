@@ -133,6 +133,7 @@
                     </MenuItem.Icon>
                 </MenuItem>
                 <Separator />
+                <MenuItem Header="Show T_oolbar" x:Name="mnuToolbar" Click="mnuToolbar_Click" Visibility="Collapsed" />
                 <MenuItem Header="Color _Scheme..." x:Name="mnuColors" Click="mnuColors_Click">
                     <MenuItem.Icon>
                         <Image Source="/PathfinderJson;component/Images/Colors.png" />
@@ -174,7 +175,7 @@
                 <Border Width="1" BorderBrush="Black" BorderThickness="1" Margin="1,2" />
                 <flat:FlatButton TransparentBack="True" x:Name="btnUpdate" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" Click="mnuUpdate_Click" Margin="0,2" Padding="3,2">
                     <StackPanel Orientation="Horizontal">
-                        <Image Source="/PathfinderJson;component/Images/Save.png" Height="16" Width="16" SnapsToDevicePixels="True" />
+                        <Image Source="/PathfinderJson;component/Images/TextFile.png" Height="16" Width="16" SnapsToDevicePixels="True" />
                         <TextBlock Text="Update Calculations" Margin="3,0" />
                     </StackPanel>
                 </flat:FlatButton>

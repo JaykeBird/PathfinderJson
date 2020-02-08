@@ -1352,6 +1352,20 @@ namespace PathfinderJson
             ChangeView(RAWJSON_VIEW, true, !_sheetLoaded);
         }
 
+        private void mnuToolbar_Click(object sender, RoutedEventArgs e)
+        {
+            if (rowToolbar.Height == new GridLength(0))
+            {
+                rowToolbar.Height = new GridLength(28);
+                mnuToolbar.IsChecked = true;
+            }
+            else
+            {
+                rowToolbar.Height = new GridLength(0);
+                mnuToolbar.IsChecked = false;
+            }
+        }
+
         private void MnuFilename_Click(object sender, RoutedEventArgs e)
         {
             if (mnuFilename.IsChecked)
