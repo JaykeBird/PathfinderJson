@@ -158,7 +158,7 @@
             </MenuItem>
         </flat:Menu>
 
-        <Border Grid.Row="1" Grid.ColumnSpan="2" x:Name="toolbar" >
+        <Border Grid.Row="1" Grid.ColumnSpan="2" x:Name="toolbar" IsEnabled="False" >
             <StackPanel Orientation="Horizontal" Margin="3,0,0,0" x:Name="stkToolbar" UseLayoutRounding="True" >
                 <flat:FlatButton TransparentBack="True" x:Name="btnNew" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" Click="mnuNew_Click" Margin="0,2" Padding="3,2" >
                     <Image Source="/PathfinderJson;component/Images/NewFile.png" Height="16" Width="16" />

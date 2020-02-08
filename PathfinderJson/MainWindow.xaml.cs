@@ -1357,11 +1357,13 @@ namespace PathfinderJson
             if (rowToolbar.Height == new GridLength(0))
             {
                 rowToolbar.Height = new GridLength(28);
+                toolbar.IsEnabled = true;
                 mnuToolbar.IsChecked = true;
             }
             else
             {
                 rowToolbar.Height = new GridLength(0);
+                toolbar.IsEnabled = false;
                 mnuToolbar.IsChecked = false;
             }
         }
@@ -2091,7 +2093,9 @@ namespace PathfinderJson
                 {
                     PathfinderSheet ps = PathfinderSheet.LoadJsonText(txtEditRaw.Text);
                     LoadPathfinderSheet(ps);
+                    fileTitle = ps.Name;
                     _isEditorDirty = false;
+                    if (fileTitle != displayedTitle) UpdateTitlebar();
                 }
                 catch (Newtonsoft.Json.JsonReaderException)
                 {
