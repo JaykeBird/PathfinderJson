@@ -22,31 +22,38 @@ namespace PathfinderJson
 
             using (StreamReader file = File.OpenText(filename))
             {
-                JObject o = (JObject)JToken.ReadFrom(new JsonTextReader(file));
-
                 try
                 {
-                    JToken a = o["skills"]!["conditionalModifiers"]!;
-                    if (a.Value<string>() != null)
+                    JObject o = (JObject)JToken.ReadFrom(new JsonTextReader(file));
+
+                    try
                     {
-                        Console.WriteLine(a.Value<string>());
-                        csc = a.Value<string>();
+                        JToken a = o["skills"]!["conditionalModifiers"]!;
+                        if (a.Value<string>() != null)
+                        {
+                            Console.WriteLine(a.Value<string>());
+                            csc = a.Value<string>();
+                        }
                     }
+                    catch (ArgumentNullException) { }
+                    catch (NullReferenceException) { }
+
+                    file.BaseStream.Position = 0;
+
+                    JsonSerializer serializer = new JsonSerializer();
+                    serializer.DefaultValueHandling = DefaultValueHandling.Ignore;
+                    serializer.NullValueHandling = NullValueHandling.Ignore;
+                    serializer.ContractResolver = new CamelCasePropertyNamesContractResolver();
+                    serializer.Error += (object? sender, Newtonsoft.Json.Serialization.ErrorEventArgs e) => ErrorHandler(sender, e, filename);
+                    PathfinderSheet ps = (PathfinderSheet)serializer.Deserialize(file, typeof(PathfinderSheet))!;
+                    ps.SetupSheet();
+                    if (!string.IsNullOrEmpty(csc)) ps.SkillConditionalModifiers = csc;
+                    return ps;
                 }
-                catch (ArgumentNullException) { }
-                catch (NullReferenceException) { }
-
-                file.BaseStream.Position = 0;
-
-                JsonSerializer serializer = new JsonSerializer();
-                serializer.DefaultValueHandling = DefaultValueHandling.Ignore;
-                serializer.NullValueHandling = NullValueHandling.Ignore;
-                serializer.ContractResolver = new CamelCasePropertyNamesContractResolver();
-                serializer.Error += (object? sender, Newtonsoft.Json.Serialization.ErrorEventArgs e) => ErrorHandler(sender, e, filename);
-                PathfinderSheet ps = (PathfinderSheet)serializer.Deserialize(file, typeof(PathfinderSheet))!;
-                ps.SetupSheet();
-                if (!string.IsNullOrEmpty(csc)) ps.SkillConditionalModifiers = csc;
-                return ps;
+                catch (JsonReaderException e)
+                {
+                    throw new FileFormatException(new Uri(filename), "This file does not match the format for JSON. Check if it isn't corrupted by opening it in Notepad or another text editor.", e);
+                }
             }
         }
 

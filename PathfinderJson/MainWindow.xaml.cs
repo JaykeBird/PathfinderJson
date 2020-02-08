@@ -1455,6 +1455,14 @@ namespace PathfinderJson
             //    return;
             //}
 
+            // Prepare message dialog in case an error occurs
+            MessageDialog md = new MessageDialog(App.ColorScheme)
+            {
+                Title = "File Format Error",
+                Image = MessageDialogImage.Error,
+                Owner = this,
+            };
+
             try
             {
                 PathfinderSheet ps = PathfinderSheet.LoadJsonFile(filename);
@@ -1476,28 +1484,31 @@ namespace PathfinderJson
             }
             catch (FileFormatException)
             {
-                MessageBox.Show(this, "The file \"" + filename + "\" does not appear to be a JSON file. Check the file in Notepad or another text editor to make sure it's not corrupted.",
-                    "File Format Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                md.Message = "The file \"" + filename + "\" does not appear to be a JSON file. Check the file in Notepad or another text editor to make sure it's not corrupted.";
+                md.ShowDialog();
                 return;
             }
             catch (InvalidOperationException e)
             {
                 if (e.Message.Contains("error context error is different to requested error"))
                 {
-                    MessageBox.Show(this, "The file \"" + filename + "\" does not match the JSON format this program is looking for. Check the file in Notepad or another text editor to make sure it's not corrupted.",
-                        "File Format Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    md.Message = "The file \"" + filename + "\" does not match the JSON format this program is looking for. Check the file in Notepad or another text editor to make sure it's not corrupted.";
+                    md.ShowDialog();
                     return;
                 }
                 else
                 {
-                    MessageBox.Show(this, "The file \"" + filename + "\" cannot be opened due to this error: \n\n" + e.Message + "\n\n" +
-                        "Check the file in Notepad or another text editor, or report this issue via the \"Send Feedback\" option in the Help menu.");
+                    md.Message = "The file \"" + filename + "\" cannot be opened due to this error: \n\n" + e.Message + "\n\n" +
+                        "Check the file in Notepad or another text editor, or report this issue via the \"Send Feedback\" option in the Help menu.";
+                    md.ShowDialog();
+                    return;
                 }
             }
             catch (FileNotFoundException)
             {
-                MessageBox.Show(this, "The file \"" + filename + "\" cannot be found. Make sure the file exists and then try again.",
-                    "File Not Found", MessageBoxButton.OK, MessageBoxImage.Error);
+                md.Message = "The file \"" + filename + "\" cannot be found. Make sure the file exists and then try again.";
+                md.ShowDialog();
+                return;
             }
 
             if (addToRecent) AddRecentFile(filename);
