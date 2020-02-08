@@ -1508,6 +1508,9 @@ namespace PathfinderJson
             // set this flag so that the program doesn't try to set the sheet as dirty while loading in the file
             _isUpdating = true;
 
+            // check if the userdata structure is present
+            bool _userDataCheck = false;
+
             // General tab
             if (sheet.Player != null)
             {
@@ -1545,9 +1548,12 @@ namespace PathfinderJson
                 catch (NullReferenceException) { }
                 catch (ArgumentOutOfRangeException) { }
                 catch (System.Net.WebException) { }
+
+                _userDataCheck = false;
             }
             else
             {
+                _userDataCheck = true;
                 sheet.Player = new UserData(true);
             }
 
@@ -1866,6 +1872,25 @@ namespace PathfinderJson
             txtNotes.Text = sheet.Notes;
 
             _isUpdating = false;
+
+            // this is a check to determine if this JSON file looks like a character sheet file or not
+            // the program will happily open and work with the file, but if the user saves the file the existing data in the file will be deleted
+            // thus, I'm most concerned about data loss for the user, in case the user accidentally opened the wrong file
+            // the check looks at two of three things being missing:
+            // 1. the character's name (name attribute)
+            // 2. the player's info (user data structure)
+            // 3. the character's base abilities structure (abilities structure)
+            // if two of them are missing, it displays a warning dialog but continues otherwise
+            if ((string.IsNullOrEmpty(sheet.Name) && (!sheet.AbilitiesPresent || _userDataCheck)) || (!sheet.AbilitiesPresent && _userDataCheck))
+            {
+                MessageDialog md = new MessageDialog(App.ColorScheme);
+                md.Message = "This JSON file doesn't seem to look like a character sheet file; it may have been that certain data was deleted, but this file could also not be a character sheet file at all. " +
+                    "It may be good to open the Raw JSON view to check that the file matches what you're expecting.\n\n" +
+                    "PathfinderJSON will continue, but if you save any changes, any non-character sheet data may be deleted.";
+                md.Title = "File Check Warning";
+                md.Image = MessageDialogImage.Hand;
+                md.ShowDialog();
+            }
         }
         #endregion
 

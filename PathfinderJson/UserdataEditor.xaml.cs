@@ -22,21 +22,13 @@ namespace PathfinderJson
 
         public void LoadUserData(UserData ud)
         {
-            switch (ud.Provider.ToLowerInvariant())
+            cbbProvider.SelectedIndex = (ud.Provider.ToLowerInvariant()) switch
             {
-                case "google":
-                    cbbProvider.SelectedIndex = 0;
-                    break;
-                case "github":
-                    cbbProvider.SelectedIndex = 1;
-                    break;
-                case "local":
-                    cbbProvider.SelectedIndex = 2;
-                    break;
-                default:
-                    cbbProvider.SelectedIndex = 2;
-                    break;
-            }
+                "google" => 0,
+                "github" => 1,
+                "local" => 2,
+                _ => 2,
+            };
 
             txtName.Text = ud.DisplayName;
             txtProfileUrl.Text = ud.ProfileUrl;
@@ -76,21 +68,13 @@ namespace PathfinderJson
         {
             UserData ud = new UserData();
 
-            switch (cbbProvider.SelectedIndex)
+            ud.Provider = cbbProvider.SelectedIndex switch
             {
-                case 0:
-                    ud.Provider = "google";
-                    break;
-                case 1:
-                    ud.Provider = "github";
-                    break;
-                case 2:
-                    ud.Provider = "local";
-                    break;
-                default:
-                    ud.Provider = "local";
-                    break;
-            }
+                0 => "google",
+                1 => "github",
+                2 => "local",
+                _ => "local",
+            };
 
             ud.DisplayName = GetStringOrNull(txtName.Text);
             ud.ProfileUrl = GetStringOrNull(txtProfileUrl.Text);
@@ -124,7 +108,7 @@ namespace PathfinderJson
             {
                 string filename = ofd.FileName;
                 PathfinderSheet ps = PathfinderSheet.LoadJsonFile(filename);
-                LoadUserData(ps.Player);
+                LoadUserData(ps.Player ?? new UserData(true));
             }
         }
 

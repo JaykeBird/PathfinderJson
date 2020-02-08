@@ -107,7 +107,7 @@ namespace PathfinderJson
         public string? Languages { get; set; }
 
         [JsonProperty("user", Order = -5)]
-        public UserData Player { get; set; } = new UserData(false);
+        public UserData? Player { get; set; }// = new UserData(false);
 
         [JsonProperty(Order = 50, DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
         public string Notes { get; set; } = "";
@@ -137,6 +137,9 @@ namespace PathfinderJson
         public int Dexterity { get; set; }
         [JsonIgnore]
         public int Wisdom { get; set; }
+        /// <summary>Used to determine if the abilities structure in JSON was present or not</summary>
+        [JsonIgnore]
+        public bool AbilitiesPresent { get; set; }
 
         // other numbers
 
@@ -203,34 +206,47 @@ namespace PathfinderJson
         {
             if (RawAbilities != null)
             {
-                foreach (KeyValuePair<string, string> item in RawAbilities)
+                if (RawAbilities.Count == 0)
                 {
-                    switch (item.Key)
+                    DefaultLoad();
+                }
+                else
+                {
+                    foreach (KeyValuePair<string, string> item in RawAbilities)
                     {
-                        case "wis":
-                            try { Wisdom = int.Parse(item.Value); } catch (FormatException) { Wisdom = 0; }
-                            break;
-                        case "int":
-                            try { Intelligence = int.Parse(item.Value); } catch (FormatException) { Intelligence = 0; }
-                            break;
-                        case "cha":
-                            try { Charisma = int.Parse(item.Value); } catch (FormatException) { Charisma = 0; }
-                            break;
-                        case "str":
-                            try { Strength = int.Parse(item.Value); } catch (FormatException) { Strength = 0; }
-                            break;
-                        case "dex":
-                            try { Dexterity = int.Parse(item.Value); } catch (FormatException) { Dexterity = 0; }
-                            break;
-                        case "con":
-                            try { Constitution = int.Parse(item.Value); } catch (FormatException) { Constitution = 0; }
-                            break;
-                        default:
-                            break;
+                        switch (item.Key)
+                        {
+                            case "wis":
+                                try { Wisdom = int.Parse(item.Value); } catch (FormatException) { Wisdom = 0; }
+                                break;
+                            case "int":
+                                try { Intelligence = int.Parse(item.Value); } catch (FormatException) { Intelligence = 0; }
+                                break;
+                            case "cha":
+                                try { Charisma = int.Parse(item.Value); } catch (FormatException) { Charisma = 0; }
+                                break;
+                            case "str":
+                                try { Strength = int.Parse(item.Value); } catch (FormatException) { Strength = 0; }
+                                break;
+                            case "dex":
+                                try { Dexterity = int.Parse(item.Value); } catch (FormatException) { Dexterity = 0; }
+                                break;
+                            case "con":
+                                try { Constitution = int.Parse(item.Value); } catch (FormatException) { Constitution = 0; }
+                                break;
+                            default:
+                                break;
+                        }
                     }
+                    AbilitiesPresent = true;
                 }
             }
             else
+            {
+                DefaultLoad();
+            }
+
+            void DefaultLoad()
             {
                 // the user didn't fill in the base ability scores for the character at all
                 // so just set everything to 0
@@ -240,6 +256,7 @@ namespace PathfinderJson
                 Strength = 0;
                 Dexterity = 0;
                 Constitution = 0;
+                AbilitiesPresent = false;
             }
 
             foreach (KeyValuePair<string, Skill> item in Skills)

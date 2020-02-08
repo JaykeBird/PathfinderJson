@@ -124,7 +124,7 @@ namespace PathfinderJson
             {
                 string filename = ofd.FileName;
                 PathfinderSheet ps = PathfinderSheet.LoadJsonFile(filename);
-                ud = ps.Player;
+                ud = ps.Player ?? new UserData(true);
                 if (!string.IsNullOrEmpty(ud.DisplayName))
                 {
                     txtPlayerName.Text = ud.DisplayName;
