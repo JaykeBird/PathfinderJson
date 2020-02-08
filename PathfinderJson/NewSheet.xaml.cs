@@ -163,7 +163,7 @@ namespace PathfinderJson
 
         private void txtStr_ValueChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            if (!_isUpdating)
+            if (!_isUpdating && (txtStrm != null))
             {
                 txtStrm.Text = CalculateModifier(txtStr.Value);
                 txtDexm.Text = CalculateModifier(txtDex.Value);

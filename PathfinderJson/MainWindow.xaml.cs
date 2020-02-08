@@ -505,8 +505,8 @@ namespace PathfinderJson
             if (isDirty)
             {
                 MessageDialog md = new MessageDialog(App.ColorScheme);
-                md.ShowDialog("The file has some unsaved changes. Are you sure you want to discard them?", App.ColorScheme, this, "Unsaved Changes", image: MessageDialogImage.Question,
-                    customOkButtonText: null, customDiscardButtonText: "Discard", customCancelButtonText: "Cancel");
+                md.ShowDialog("The file has some unsaved changes. Are you sure you want to discard them?", App.ColorScheme, this, "Unsaved Changes", MessageDialogButtonDisplay.Auto, image: MessageDialogImage.Question,
+                    customOkButtonText: "Discard", customCancelButtonText: "Cancel");
 
                 if (md.DialogResult == MessageDialogResult.OK || md.DialogResult == MessageDialogResult.Discard)
                 {
@@ -660,6 +660,12 @@ namespace PathfinderJson
             cm4.Tag = mi;
             cm4.Click += miRecentOpenNew_Click;
             cm.Items.Add(cm4);
+
+            MenuItem cm5 = new MenuItem();
+            cm5.Header = "Copy Path";
+            cm5.Tag = mi;
+            cm5.Click += miRecentCopy_Click;
+            cm.Items.Add(cm5);
 
             MenuItem cm2 = new MenuItem();
             cm2.Header = "View in Explorer";
@@ -844,6 +850,20 @@ namespace PathfinderJson
                     if (parent.Tag is string file)
                     {
                         Process.Start(Process.GetCurrentProcess().MainModule?.FileName, "\"" + file + "\"");
+                    }
+                }
+            }
+        }
+
+        private void miRecentCopy_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is MenuItem mi)
+            {
+                if (mi.Tag is MenuItem parent)
+                {
+                    if (parent.Tag is string file)
+                    {
+                        Clipboard.SetText(file);
                     }
                 }
             }

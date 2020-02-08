@@ -18,12 +18,12 @@
         <TextBlock x:Name="lblCharacterLevel" HorizontalAlignment="Left" Margin="15,110,0,0" Text="Class(es) / Level" VerticalAlignment="Top"/>
         <TextBox x:Name="txtCharacterLevel" Margin="15,126,20,0" Height="24" VerticalAlignment="Top"/>
 
-        <flat:IntegerSpinner x:Name="txtStr" HorizontalAlignment="Left" Height="23" Margin="157,187,0,0" VerticalAlignment="Top" Width="60" ValueChanged="txtStr_ValueChanged" MinValue="0" MaxValue="40" AcceptExpressions="True" ColorScheme="{Binding ColorScheme, ElementName=window}" />
-        <flat:IntegerSpinner x:Name="txtDex" HorizontalAlignment="Left" Height="23" Margin="157,215,0,0" VerticalAlignment="Top" Width="60" ValueChanged="txtStr_ValueChanged" MinValue="0" MaxValue="40" AcceptExpressions="True" ColorScheme="{Binding ColorScheme, ElementName=window}" />
-        <flat:IntegerSpinner x:Name="txtCon" HorizontalAlignment="Left" Height="23" Margin="157,243,0,0" VerticalAlignment="Top" Width="60" ValueChanged="txtStr_ValueChanged" MinValue="0" MaxValue="40" AcceptExpressions="True" ColorScheme="{Binding ColorScheme, ElementName=window}" />
-        <flat:IntegerSpinner x:Name="txtInt" HorizontalAlignment="Left" Height="23" Margin="157,271,0,0" VerticalAlignment="Top" Width="60" ValueChanged="txtStr_ValueChanged" MinValue="0" MaxValue="40" AcceptExpressions="True" ColorScheme="{Binding ColorScheme, ElementName=window}" />
-        <flat:IntegerSpinner x:Name="txtWis" HorizontalAlignment="Left" Height="23" Margin="157,299,0,0" VerticalAlignment="Top" Width="60" ValueChanged="txtStr_ValueChanged" MinValue="0" MaxValue="40" AcceptExpressions="True" ColorScheme="{Binding ColorScheme, ElementName=window}" />
-        <flat:IntegerSpinner x:Name="txtCha" HorizontalAlignment="Left" Height="23" Margin="157,327,0,0" VerticalAlignment="Top" Width="60" ValueChanged="txtStr_ValueChanged" MinValue="0" MaxValue="40" AcceptExpressions="True" ColorScheme="{Binding ColorScheme, ElementName=window}" />
+        <flat:IntegerSpinner x:Name="txtStr" HorizontalAlignment="Left" Height="23" Margin="157,187,0,0" VerticalAlignment="Top" Width="60" ValueChanged="txtStr_ValueChanged" MinValue="0" Value="10" MaxValue="40" AcceptExpressions="True" ColorScheme="{Binding ColorScheme, ElementName=window}" />
+        <flat:IntegerSpinner x:Name="txtDex" HorizontalAlignment="Left" Height="23" Margin="157,215,0,0" VerticalAlignment="Top" Width="60" ValueChanged="txtStr_ValueChanged" MinValue="0" Value="10" MaxValue="40" AcceptExpressions="True" ColorScheme="{Binding ColorScheme, ElementName=window}" />
+        <flat:IntegerSpinner x:Name="txtCon" HorizontalAlignment="Left" Height="23" Margin="157,243,0,0" VerticalAlignment="Top" Width="60" ValueChanged="txtStr_ValueChanged" MinValue="0" Value="10" MaxValue="40" AcceptExpressions="True" ColorScheme="{Binding ColorScheme, ElementName=window}" />
+        <flat:IntegerSpinner x:Name="txtInt" HorizontalAlignment="Left" Height="23" Margin="157,271,0,0" VerticalAlignment="Top" Width="60" ValueChanged="txtStr_ValueChanged" MinValue="0" Value="10" MaxValue="40" AcceptExpressions="True" ColorScheme="{Binding ColorScheme, ElementName=window}" />
+        <flat:IntegerSpinner x:Name="txtWis" HorizontalAlignment="Left" Height="23" Margin="157,299,0,0" VerticalAlignment="Top" Width="60" ValueChanged="txtStr_ValueChanged" MinValue="0" Value="10" MaxValue="40" AcceptExpressions="True" ColorScheme="{Binding ColorScheme, ElementName=window}" />
+        <flat:IntegerSpinner x:Name="txtCha" HorizontalAlignment="Left" Height="23" Margin="157,327,0,0" VerticalAlignment="Top" Width="60" ValueChanged="txtStr_ValueChanged" MinValue="0" Value="10" MaxValue="40" AcceptExpressions="True" ColorScheme="{Binding ColorScheme, ElementName=window}" />
         <TextBlock x:Name="lblStr" HorizontalAlignment="Left" Margin="40,190,0,0" Text="STR" FontWeight="Bold" VerticalAlignment="Top" />
         <TextBlock x:Name="lblDex" HorizontalAlignment="Left" Margin="40,220,0,0" Text="DEX" FontWeight="Bold" VerticalAlignment="Top"/>
         <TextBlock x:Name="lblCon" HorizontalAlignment="Left" Margin="40,248,0,0" Text="CON" FontWeight="Bold" VerticalAlignment="Top"/>
@@ -36,12 +36,12 @@
         <TextBlock x:Name="lblInt_Copy" HorizontalAlignment="Left" Margin="75,276,0,0" Text="Intelligence" VerticalAlignment="Top"/>
         <TextBlock x:Name="lblWis_Copy" HorizontalAlignment="Left" Margin="75,304,0,0" Text="Wisdom" VerticalAlignment="Top"/>
         <TextBlock x:Name="lblCha_Copy" HorizontalAlignment="Left" Margin="75,332,0,0" Text="Charisma" VerticalAlignment="Top"/>
-        <TextBox x:Name="txtStrm" HorizontalAlignment="Left" Height="23" Margin="280,187,0,0" VerticalAlignment="Top" Width="40" IsEnabled="False" Text="-5" />
-        <TextBox x:Name="txtDexm" HorizontalAlignment="Left" Height="23" Margin="280,215,0,0" VerticalAlignment="Top" Width="40" IsEnabled="False" Text="-5" />
-        <TextBox x:Name="txtConm" HorizontalAlignment="Left" Height="23" Margin="280,243,0,0" VerticalAlignment="Top" Width="40" IsEnabled="False" Text="-5" />
-        <TextBox x:Name="txtIntm" HorizontalAlignment="Left" Height="23" Margin="280,271,0,0" VerticalAlignment="Top" Width="40" IsEnabled="False" Text="-5" />
-        <TextBox x:Name="txtWism" HorizontalAlignment="Left" Height="23" Margin="280,299,0,0" VerticalAlignment="Top" Width="40" IsEnabled="False" Text="-5" />
-        <TextBox x:Name="txtCham" HorizontalAlignment="Left" Height="23" Margin="280,327,0,0" VerticalAlignment="Top" Width="40" IsEnabled="False" Text="-5" />
+        <TextBox x:Name="txtStrm" HorizontalAlignment="Left" Height="23" Margin="280,187,0,0" VerticalAlignment="Top" Width="40" IsEnabled="False" Text="+0" />
+        <TextBox x:Name="txtDexm" HorizontalAlignment="Left" Height="23" Margin="280,215,0,0" VerticalAlignment="Top" Width="40" IsEnabled="False" Text="+0" />
+        <TextBox x:Name="txtConm" HorizontalAlignment="Left" Height="23" Margin="280,243,0,0" VerticalAlignment="Top" Width="40" IsEnabled="False" Text="+0" />
+        <TextBox x:Name="txtIntm" HorizontalAlignment="Left" Height="23" Margin="280,271,0,0" VerticalAlignment="Top" Width="40" IsEnabled="False" Text="+0" />
+        <TextBox x:Name="txtWism" HorizontalAlignment="Left" Height="23" Margin="280,299,0,0" VerticalAlignment="Top" Width="40" IsEnabled="False" Text="+0" />
+        <TextBox x:Name="txtCham" HorizontalAlignment="Left" Height="23" Margin="280,327,0,0" VerticalAlignment="Top" Width="40" IsEnabled="False" Text="+0" />
         <TextBlock HorizontalAlignment="Left" Margin="231,190,0,0" Text="modifier" VerticalAlignment="Top"/>
         <TextBlock HorizontalAlignment="Left" Margin="231,220,0,0" Text="modifier" VerticalAlignment="Top"/>
         <TextBlock HorizontalAlignment="Left" Margin="231,248,0,0" Text="modifier" VerticalAlignment="Top"/>
