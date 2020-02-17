@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -15,7 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 using System.Xml;
 using UiCore;
-using MenuItem = System.Windows.Controls.MenuItem;
+
 using static PathfinderJson.CoreUtils;
 using static PathfinderJson.App;
 
@@ -56,15 +55,15 @@ namespace PathfinderJson
         bool _isCalculating = false;
 
         // functions for handling undo/redo
+        // these aren't actually used for anything at the current time as I've not properly introduced undo/redo yet
         private const int undoLimit = 20;
         Stack<PathfinderSheet> undoItems = new Stack<PathfinderSheet>(undoLimit);
         Stack<PathfinderSheet> redoItems = new Stack<PathfinderSheet>(undoLimit);
         TextBox? lastEditedBox = null;
         DispatcherTimer undoSetTimer = new DispatcherTimer();
 
-        // these are stored here as the program doesn't display these values to the user
+        // these are stored here as the program doesn't display these values to the user directly
         UserData ud;
-        //ArmorClass ac;
         string sheetid;
         Dictionary<string, string> abilities = new Dictionary<string, string>();
 
