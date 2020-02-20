@@ -1458,6 +1458,21 @@ namespace PathfinderJson
             }
         }
 
+        private void txtEditRaw_Drop(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                string[] files = (string[])e.Data.GetData(DataFormats.FileDrop)!;
+
+                if (!SaveDirtyChanges() || CheckCalculating())
+                {
+                    return;
+                }
+
+                LoadFile(files[0]);
+            }
+        }
+
         #endregion
 
         #region Load File
@@ -2867,5 +2882,7 @@ namespace PathfinderJson
             }
         }
         #endregion
+
+
     }
 }
