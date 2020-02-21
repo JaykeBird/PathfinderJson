@@ -62,6 +62,18 @@
             <param name="sender"></param>
             <param name="e"></param>
         </member>
+        <member name="T:UiCore.BindableHighContrast">
+            <summary>
+            When set up properly, allows a WPF control style to be triggered when the Windows High Contrast mode setting is changed. See remarks for details.
+            </summary>
+            <remarks>
+            For the control or style in question that you want to monitor changes to high contrast in, set the property 
+            <c>flat:BindableHighContrast.HighContrast = "{DynamicResource ResourceKey={x:Static Member=SystemParameters.HighContrastKey}}"</c> in the control or style.
+            Then you can use the trigger as such: <c>&lt;Trigger Property="flat:BindableHighContrast.HighContrast" Value="True"&gt; ... &lt;/Trigger&gt;</c>.
+            Visit https://stackoverflow.com/questions/18708794/how-can-i-fall-back-to-a-high-contrast-color-in-wpf for more information and source.
+            This class is identical to the "SystemParameterProperties" class in the accepted answer.
+            </remarks>
+        </member>
         <member name="T:UiCore.BrushFactory">
             <summary>
             A class that creates brushes to be used in coloring the user interface.
