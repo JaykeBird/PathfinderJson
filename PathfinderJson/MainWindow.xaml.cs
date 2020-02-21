@@ -1535,8 +1535,12 @@ namespace PathfinderJson
             {
                 Title = "File Format Error",
                 Image = MessageDialogImage.Error,
-                Owner = this,
             };
+
+            if (IsVisible)
+            {
+                md.Owner = this;
+            }
 
             try
             {
