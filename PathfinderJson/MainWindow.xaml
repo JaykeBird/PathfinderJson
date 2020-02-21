@@ -655,7 +655,7 @@
 
         </ScrollViewer>
 
-        <edit:TextEditor Grid.Row="2" Grid.Column="1" FontFamily="Consolas" FontSize="12" x:Name="txtEditRaw" ShowLineNumbers="True" WordWrap="True" Visibility="Collapsed" TextChanged="txtEditRaw_TextChanged" AllowDrop="True" Drop="txtEditRaw_Drop" >
+        <edit:TextEditor Grid.Row="2" Grid.Column="1" FontFamily="Consolas" FontSize="12" x:Name="txtEditRaw" ShowLineNumbers="True" WordWrap="True" Visibility="Collapsed" TextChanged="txtEditRaw_TextChanged" AllowDrop="True" Drop="txtEditRaw_Drop" Background="White" Foreground="Black" >
             <edit:TextEditor.ContextMenu>
                 <flat:ContextMenu FontFamily="Segoe UI">
                     <MenuItem Header="_Copy" Click="mnuCopy_Click">
