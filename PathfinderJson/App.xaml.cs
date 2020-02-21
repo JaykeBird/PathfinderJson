@@ -73,6 +73,8 @@ namespace PathfinderJson
 
         private void Application_Startup(object sender, StartupEventArgs e)
         {
+            string appDataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "PathfinderJson");
+
             string file = "";
 
             if (e.Args.Length > 0)
@@ -80,6 +82,58 @@ namespace PathfinderJson
                 if (File.Exists(e.Args[0]))
                 {
                     file = e.Args[0];
+                }
+            }
+
+            if (SystemParameters.HighContrast)
+            {
+                if (Settings.HighContrastTheme == NO_HIGH_CONTRAST)
+                {
+                    ColorScheme ncs;
+                    MessageDialog md = new MessageDialog();
+                    md.Message = "It appears that you have Windows High Contrast mode activated. Did you want to activate High Contrast mode in PathfinderJSON as well?";
+                    md.OkButtonText = "Yes";
+                    md.CancelButtonText = "No";
+                    md.Image = MessageDialogImage.Question;
+                    md.Title = "PathfinderJSON - High Contrast Mode";
+
+                    // check the control color
+                    if (SystemColors.ControlColor == Colors.Black)
+                    {
+                        // black color scheme?
+                        if (SystemColors.WindowTextColor == Colors.White)
+                        {
+                            ncs = ColorScheme.GetHighContrastScheme(HighContrastOption.WhiteOnBlack);
+                            md.ColorScheme = ncs;
+
+                            if (md.ShowDialog() == MessageDialogResult.OK)
+                            {
+                                Settings.HighContrastTheme = "1";
+                            }
+                        }
+                        else
+                        {
+                            ncs = ColorScheme.GetHighContrastScheme(HighContrastOption.GreenOnBlack);
+                            md.ColorScheme = ncs;
+
+                            if (md.ShowDialog() == MessageDialogResult.OK)
+                            {
+                                Settings.HighContrastTheme = "2";
+                            }
+                        }
+                    }
+                    else
+                    {
+                        ncs = ColorScheme.GetHighContrastScheme(HighContrastOption.BlackOnWhite);
+                        md.ColorScheme = ncs;
+
+                        if (md.ShowDialog() == MessageDialogResult.OK)
+                        {
+                            Settings.HighContrastTheme = "3";
+                        }
+                    }
+
+                    Settings.Save(Path.Combine(appDataPath, "settings.json"));
                 }
             }
 

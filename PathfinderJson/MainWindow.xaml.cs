@@ -102,11 +102,15 @@ namespace PathfinderJson
                         break;
                 }
             }
-            UpdateAppearance();
 
             SetupTabs();
             selTabs.IsEnabled = false;
-            //LoadGeneralTab();
+            foreach (SelectableItem item in selTabs.GetSelectedItemsOfType<SelectableItem>())
+            {
+                item.IsEnabled = false;
+            }
+
+            UpdateAppearance();
 
             ChangeView(App.Settings.StartView, false, true, false);
 
@@ -247,7 +251,7 @@ namespace PathfinderJson
 
         private void window_Closed(object sender, EventArgs e)
         {
-            //Application.Current.Shutdown(0);
+            Application.Current.Shutdown(0);
         }
 
         /// <summary>
@@ -967,9 +971,34 @@ namespace PathfinderJson
             selTabs.ApplyColorScheme(App.ColorScheme);
 
             // quick fix until I make a better system post-1.0
-            foreach (SelectableItem item in selTabs.GetItemsAsType<SelectableItem>())
+            if (App.ColorScheme.IsHighContrast)
             {
-                item.Foreground = App.ColorScheme.ForegroundColor.ToBrush();
+                //foreach (SelectableItem item in selTabs.GetItemsAsType<SelectableItem>())
+                //{
+                //    item.ApplyColorScheme(App.ColorScheme);
+                //    //if (selTabs.IsEnabled)
+                //    //{
+                //    //    item.ApplyColorScheme(App.ColorScheme);
+                //    //}
+                //    //else
+                //    //{
+                //    //    item.Foreground = App.ColorScheme.ForegroundColor.ToBrush();
+                //    //}
+                //}
+            }
+            else
+            {
+                foreach (SelectableItem item in selTabs.GetItemsAsType<SelectableItem>())
+                {
+                    if (item.IsEnabled)
+                    {
+                        item.ApplyColorScheme(App.ColorScheme);
+                    }
+                    else
+                    {
+                        item.Foreground = App.ColorScheme.DarkDisabledColor.ToBrush();
+                    }
+                }
             }
 
             brdrCalculating.Background = App.ColorScheme.SecondaryColor.ToBrush();
@@ -1201,13 +1230,13 @@ namespace PathfinderJson
                     App.Settings.HighContrastTheme = NO_HIGH_CONTRAST;
                     break;
                 case MessageDialogResult.Extra1:
-                    App.Settings.HighContrastTheme = "1";
+                    App.Settings.HighContrastTheme = "1"; // white on black
                     break;
                 case MessageDialogResult.Extra2:
-                    App.Settings.HighContrastTheme = "2";
+                    App.Settings.HighContrastTheme = "2"; // green on black
                     break;
                 case MessageDialogResult.Extra3:
-                    App.Settings.HighContrastTheme = "3";
+                    App.Settings.HighContrastTheme = "3"; // black on white
                     break;
                 default:
                     break;
@@ -1326,18 +1355,29 @@ namespace PathfinderJson
                     break;
             }
 
+            Visibility v = lblNoSheet.Visibility;
+
             if (displayEmptyMessage)
             {
                 lblNoSheet.Visibility = Visibility.Visible;
                 selTabs.IsEnabled = false;
                 txtEditRaw.IsEnabled = false;
                 SetAllTabsVisibility(Visibility.Collapsed);
+                UpdateAppearance();
+                foreach (SelectableItem item in selTabs.GetSelectedItemsOfType<SelectableItem>())
+                {
+                    item.IsSelected = false;
+                }
             }
             else
             {
                 lblNoSheet.Visibility = Visibility.Collapsed;
                 selTabs.IsEnabled = true;
                 txtEditRaw.IsEnabled = true;
+                if (lblNoSheet.Visibility != v)
+                {
+                    UpdateAppearance();
+                }
             }
         }
 
