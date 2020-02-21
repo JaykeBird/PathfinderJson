@@ -966,6 +966,11 @@ namespace PathfinderJson
 
             selTabs.ApplyColorScheme(App.ColorScheme);
 
+            // quick fix until I make a better system post-1.0
+            foreach (SelectableItem item in selTabs.GetItemsAsType<SelectableItem>())
+            {
+                item.Foreground = App.ColorScheme.ForegroundColor.ToBrush();
+            }
 
             brdrCalculating.Background = App.ColorScheme.SecondaryColor.ToBrush();
             brdrCalculating.BorderBrush = App.ColorScheme.HighlightColor.ToBrush();

@@ -134,7 +134,8 @@ namespace PathfinderJson
             
             if (editBase)
             {
-                txtBase.Background = new SolidColorBrush(Colors.White);
+                txtBase.Background = new SolidColorBrush(SystemColors.ControlColor);
+                //txtBase.Background = new SolidColorBrush(Colors.White);
             }
             else
             {

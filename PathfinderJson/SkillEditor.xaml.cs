@@ -25,7 +25,16 @@ namespace PathfinderJson
             btnEdit.ColorScheme = App.ColorScheme;
             btnInfo.ColorScheme = App.ColorScheme;
             btnModifiers.ColorScheme = App.ColorScheme;
-            txtModifier.Background = new SolidColorBrush(App.ColorScheme.SecondHighlightColor);
+            if (App.ColorScheme.IsHighContrast)
+            {
+                txtModifier.BorderBrush = new SolidColorBrush(App.ColorScheme.LightDisabledColor);
+                txtModifier.Background = new SolidColorBrush(SystemColors.ControlColor);
+            }
+            else
+            {
+                txtModifier.BorderBrush = new SolidColorBrush(SystemColors.ControlDarkColor);
+                txtModifier.Background = new SolidColorBrush(App.ColorScheme.SecondHighlightColor);
+            }
         }
 
         bool _modifiersOpened = false;
