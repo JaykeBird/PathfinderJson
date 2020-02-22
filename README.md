@@ -29,6 +29,8 @@ This program supports all the features currently in Mottokrosh's website, and ca
 ## How to build
 You must have Visual Studio 2019 version 16.3 or later to properly open the project and build it, as it is a .NET Core 3.0 WPF app. As a WPF app, that does mean this is Windows-only. I do wanna experiment with Avalonia later for a cross-platform UI.
 
+Fun note: the main window seems to lag Visual Studio pretty bad, due to how many controls that's in it (especially after I added in the Spells tab and its 20+ text boxes). Although it is annoying, it hasn't bothered me to the point that I've done much about it though. This may be more of an issue for a computer that isn't the most powerful; my machine is about a mid-tier build.
+
 ## Roadmap
 View this project's roadmap [on the GitHub wiki page](https://github.com/JaykeBird/PathfinderJson/wiki/Roadmap).
 
