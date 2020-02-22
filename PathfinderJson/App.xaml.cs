@@ -30,7 +30,19 @@ namespace PathfinderJson
                 }
                 catch (UnauthorizedAccessException)
                 {
-                    MessageBox.Show("The settings file for PathfinderJson could not be opened or accessed. PathfinderJson will continue with default settings. Please check the permissions for your AppData folder.", 
+                    MessageBox.Show("The settings file for PathfinderJson could not be found or accessed. PathfinderJson will continue with default settings. Please check the permissions for your AppData folder.", 
+                        "Settings Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    Settings = new Settings();
+                }
+                catch (System.Security.SecurityException)
+                {
+                    MessageBox.Show("The settings file for PathfinderJson could not be found or accessed. PathfinderJson will continue with default settings. Please check the permissions for your AppData folder.",
+                        "Settings Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    Settings = new Settings();
+                }
+                catch (IOException)
+                {
+                    MessageBox.Show("The settings file for PathfinderJson could not be found or accessed. PathfinderJson will continue with default settings. Please check the permissions for your AppData folder.",
                         "Settings Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     Settings = new Settings();
                 }
