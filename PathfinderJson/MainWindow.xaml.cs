@@ -182,7 +182,25 @@ namespace PathfinderJson
 
         void SaveSettings()
         {
-            App.Settings.Save(Path.Combine(appDataPath, "settings.json"));
+            try
+            {
+                App.Settings.Save(Path.Combine(appDataPath, "settings.json"));
+            }
+            catch (UnauthorizedAccessException)
+            {
+                MessageBox.Show("The settings file for PathfinderJson could not be saved. Please check the permissions for your AppData folder.",
+                    "Settings Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            catch (System.Security.SecurityException)
+            {
+                MessageBox.Show("The settings file for PathfinderJson could not be saved. Please check the permissions for your AppData folder.",
+                    "Settings Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            catch (IOException)
+            {
+                MessageBox.Show("The settings file for PathfinderJson could not be saved. Please check the permissions for your AppData folder.",
+                    "Settings Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         void UpdateTitlebar()

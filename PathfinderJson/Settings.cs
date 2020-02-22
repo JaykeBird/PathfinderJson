@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using System.Windows;
 using Newtonsoft.Json;
 
 namespace PathfinderJson
@@ -11,16 +12,41 @@ namespace PathfinderJson
 
         public static Settings LoadSettings(string filename)
         {
-            using StreamReader file = File.OpenText(filename);
-            JsonSerializer serializer = new JsonSerializer();
-            Settings? ss = (Settings?)serializer.Deserialize(file, typeof(Settings));
-            if (ss == null) ss = new Settings();
-            return ss;
+            try
+            {
+                using StreamReader file = File.OpenText(filename);
+                JsonSerializer serializer = new JsonSerializer();
+
+                Settings? ss = (Settings?)serializer.Deserialize(file, typeof(Settings));
+                if (ss == null) ss = new Settings();
+                return ss;
+            }
+            catch (JsonReaderException)
+            {
+                MessageBox.Show("The settings file for PathfinderJson was corrupted. PathfinderJson will continue with default settings.",
+                    "Settings Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                Settings sn = new Settings();
+                sn.Save(filename); // exception handling not needed for these as calling function handles exceptions
+                return sn;
+            }
+            catch (FileNotFoundException)
+            {
+                Settings sn = new Settings();
+                sn.Save(filename); // exception handling not needed for these as calling function handles exceptions
+                return sn;
+            }
         }
 
         public void Save(string filename)
         {
-            using StreamWriter file = new StreamWriter(filename);
+            DirectoryInfo di = Directory.GetParent(filename);
+
+            if (!di.Exists)
+            {
+                di.Create();
+            }
+
+            using StreamWriter file = new StreamWriter(filename, false, new UTF8Encoding(false));
             JsonSerializer serializer = new JsonSerializer();
             serializer.Serialize(file, this);
         }

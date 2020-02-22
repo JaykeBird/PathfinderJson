@@ -24,13 +24,40 @@ namespace PathfinderJson
 
             if (Directory.Exists(appDataPath))
             {
-                Settings = Settings.LoadSettings(Path.Combine(appDataPath, "settings.json"));
+                try
+                {
+                    Settings = Settings.LoadSettings(Path.Combine(appDataPath, "settings.json"));
+                }
+                catch (UnauthorizedAccessException)
+                {
+                    MessageBox.Show("The settings file for PathfinderJson could not be opened or accessed. PathfinderJson will continue with default settings. Please check the permissions for your AppData folder.", 
+                        "Settings Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    Settings = new Settings();
+                }
             }
             else
             {
-                Directory.CreateDirectory(appDataPath);
-                Directory.CreateDirectory(Path.Combine(appDataPath, "Optimization"));
-                Settings.Save(Path.Combine(appDataPath, "settings.json"));
+                try
+                {
+                    Directory.CreateDirectory(appDataPath);
+                    Directory.CreateDirectory(Path.Combine(appDataPath, "Optimization"));
+                    Settings.Save(Path.Combine(appDataPath, "settings.json"));
+                }
+                catch (UnauthorizedAccessException)
+                {
+                    MessageBox.Show("The settings file could not be created for PathfinderJson. Please check the permissions for your AppData folder.",
+                        "Settings Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+                catch (System.Security.SecurityException)
+                {
+                    MessageBox.Show("The settings file could not be created for PathfinderJson. Please check the permissions for your AppData folder.",
+                        "Settings Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+                catch (IOException)
+                {
+                    MessageBox.Show("The settings file could not be created for PathfinderJson. Please check the permissions for your AppData folder.",
+                        "Settings Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
             }
 
             ProfileOptimization.SetProfileRoot(Path.Combine(appDataPath, "Optimization"));
@@ -133,7 +160,25 @@ namespace PathfinderJson
                         }
                     }
 
-                    Settings.Save(Path.Combine(appDataPath, "settings.json"));
+                    try
+                    {
+                        Settings.Save(Path.Combine(appDataPath, "settings.json"));
+                    }
+                    catch (UnauthorizedAccessException)
+                    {
+                        MessageBox.Show("The settings file for PathfinderJson could not be saved. Please check the permissions for your AppData folder.",
+                            "Settings Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                    catch (System.Security.SecurityException)
+                    {
+                        MessageBox.Show("The settings file for PathfinderJson could not be saved. Please check the permissions for your AppData folder.",
+                            "Settings Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                    catch (IOException)
+                    {
+                        MessageBox.Show("The settings file for PathfinderJson could not be saved. Please check the permissions for your AppData folder.",
+                            "Settings Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
                 }
             }
 
