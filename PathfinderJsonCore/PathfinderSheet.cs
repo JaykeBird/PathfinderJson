@@ -52,14 +52,15 @@ namespace PathfinderJson
                 }
                 catch (JsonReaderException e)
                 {
-                    throw new FileFormatException(new Uri(filename), "This file does not match the format for JSON. Check if it isn't corrupted by opening it in Notepad or another text editor.", e);
+                    throw new InvalidDataException("This file does not match the format for JSON. Check if it isn't corrupted by opening it in Notepad or another text editor.", e);
+                    //throw new FileFormatException(new Uri(filename), , e);
                 }
             }
         }
 
         private static void ErrorHandler(object? _, Newtonsoft.Json.Serialization.ErrorEventArgs e, string filename)
         {
-            throw new FileFormatException(new Uri(filename), "This file does not match the format for JSON. Check if it isn't corrupted by opening it in Notepad or another text editor.", e.ErrorContext.Error);
+            throw new InvalidDataException("This file \"" + filename + "\" does not match the format for JSON. Check if it isn't corrupted by opening it in Notepad or another text editor.", e.ErrorContext.Error);
         }
 
         public static PathfinderSheet LoadJsonText(string text)
@@ -82,8 +83,10 @@ namespace PathfinderJson
             return ps;
         }
 
-        public string SaveJsonText(bool indented = false, string file = "StoredText")
+        public string SaveJsonText(bool indented = false, string file = "StoredText", bool updateModified = false)
         {
+            if (updateModified) Modified = string.Concat(DateTime.UtcNow.ToString("s"), ".000Z");
+
             JsonSerializerSettings jss = new JsonSerializerSettings();
             jss.DefaultValueHandling = DefaultValueHandling.Ignore;
             jss.NullValueHandling = NullValueHandling.Ignore;
@@ -94,9 +97,7 @@ namespace PathfinderJson
 
         public void SaveJsonFile(string file, bool indented = false)
         {
-            Modified = string.Concat(DateTime.UtcNow.ToString("s"), ".000Z");
-
-            File.WriteAllText(file, SaveJsonText(indented, file));
+            File.WriteAllText(file, SaveJsonText(indented, file, true));
         }
 
         [JsonProperty("_id", Order = -6)]
@@ -203,7 +204,7 @@ namespace PathfinderJson
         public string? SpellsSpeciality { get; set; }
         [JsonProperty("spellLikes", Order = 25)]
         public List<Spell> SpellLikeAbilities { get; set; } = new List<Spell>();
-        
+
         // raw data, used to interface with JSON file
 
         [JsonProperty("abilities")]
@@ -357,7 +358,7 @@ namespace PathfinderJson
 
     public class Skill
     {
-        
+
         public bool ClassSkill { get; set; } = false;
         public string? Ranks { get; set; }
         public string? Total { get; set; }
@@ -399,10 +400,12 @@ namespace PathfinderJson
         public string? ProfileUrl { get; set; }
 
         //public class Name { public string FamilyName { get; set; } public string GivenName { get; set; } }
-        public class Email {
+        public class Email
+        {
             public string Value { get; set; } = "";
             [JsonProperty("type")]
-            public string? Type { get; set; } }
+            public string? Type { get; set; }
+        }
 
         public class Photo { public string? Value { get; set; } }
 

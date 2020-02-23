@@ -1585,6 +1585,12 @@ namespace PathfinderJson
                 md.ShowDialog();
                 return;
             }
+            catch (InvalidDataException)
+            {
+                md.Message = "The file \"" + filename + "\" does not appear to be a JSON file. Check the file in Notepad or another text editor to make sure it's not corrupted.";
+                md.ShowDialog();
+                return;
+            }
             catch (InvalidOperationException e)
             {
                 if (e.Message.Contains("error context error is different to requested error"))

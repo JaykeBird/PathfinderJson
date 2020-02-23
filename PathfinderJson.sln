@@ -11,6 +11,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PathfinderJsonCore", "PathfinderJsonCore\PathfinderJsonCore.csproj", "{627CE462-B9F4-4BBD-AAAC-AD4DEFC2F6EA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{BE6CA3CF-3665-49B7-B22D-68DC8AC4FD7F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BE6CA3CF-3665-49B7-B22D-68DC8AC4FD7F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BE6CA3CF-3665-49B7-B22D-68DC8AC4FD7F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{627CE462-B9F4-4BBD-AAAC-AD4DEFC2F6EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{627CE462-B9F4-4BBD-AAAC-AD4DEFC2F6EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{627CE462-B9F4-4BBD-AAAC-AD4DEFC2F6EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{627CE462-B9F4-4BBD-AAAC-AD4DEFC2F6EA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -80,6 +80,10 @@
     <EmbeddedResource Include="Json.xshd" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\PathfinderJsonCore\PathfinderJsonCore.csproj" />
+  </ItemGroup>
+
   <!-- Uncomment these lines if using PublishReadyToRun -->
   <!--<ItemGroup>
     <TrimmerRootAssembly Include="System.Collections.Immutable" />
