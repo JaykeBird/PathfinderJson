@@ -548,6 +548,11 @@
             See the <see cref="T:UiCore.ArithmeticParser"/> class for more info about how expressions are parsed.
             </remarks>
         </member>
+        <member name="P:UiCore.DoubleSpinner.ShowArrows">
+            <summary>
+            Get or set the delay period before starting the repeatedly stepping up or down while the button is held, in milliseconds. Default is 300 milliseconds.
+            </summary>
+        </member>
         <member name="M:UiCore.DoubleSpinner.ValidateValue">
             <summary>
             Validate the value and update the UI if neede.
@@ -769,6 +774,19 @@
             Calls the native Windows method to disable the Minimize and Maximize actions (via the right-click menu and the like). Note that you'll want to update the CaptionDisplayType to remove the physical buttons.
             </summary>
         </member>
+        <member name="T:UiCore.FontSelectDialog">
+            <summary>
+            Interaction logic for FontPickerDialog.xaml
+            </summary>
+            <summary>
+            FontSelectDialog
+            </summary>
+        </member>
+        <member name="M:UiCore.FontSelectDialog.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
         <member name="T:UiCore.ImageColorPicker">
             <summary>
             Image element with the ability to pick out a pixel color value.
@@ -906,6 +924,11 @@
             <remarks>
             See the <see cref="T:UiCore.ArithmeticParser"/> class for more info about how expressions are parsed.
             </remarks>
+        </member>
+        <member name="P:UiCore.IntegerSpinner.ShowArrows">
+            <summary>
+            Get or set the delay period before starting the repeatedly stepping up or down while the button is held, in milliseconds. Default is 300 milliseconds.
+            </summary>
         </member>
         <member name="M:UiCore.IntegerSpinner.ValidateValue">
             <summary>
