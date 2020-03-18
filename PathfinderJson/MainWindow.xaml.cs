@@ -130,6 +130,8 @@ namespace PathfinderJson
                 AddRecentFile(file, false);
             }
 
+            ShowHideToolbar(App.Settings.ShowToolbar);
+
             // setup up raw JSON editor
             using (Stream? s = System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceStream("PathfinderJson.Json.xshd"))
             {
@@ -1288,6 +1290,22 @@ namespace PathfinderJson
             UpdateAppearance();
         }
 
+        void ShowHideToolbar(bool show)
+        {
+            if (show)
+            {
+                rowToolbar.Height = new GridLength(28);
+                toolbar.IsEnabled = true;
+                mnuToolbar.IsChecked = true;
+            }
+            else
+            {
+                rowToolbar.Height = new GridLength(0);
+                toolbar.IsEnabled = false;
+                mnuToolbar.IsChecked = false;
+            }
+        }
+
         #endregion
 
         #region View options
@@ -1326,6 +1344,7 @@ namespace PathfinderJson
                     txtEditRaw.Visibility = Visibility.Collapsed;
                     mnuEdit.Visibility = Visibility.Collapsed;
                     colTabs.Width = new GridLength(120);
+                    stkEditToolbar.Visibility = Visibility.Collapsed;
 
                     mnuTabs.IsChecked = false;
                     mnuScroll.IsChecked = true;
@@ -1343,6 +1362,7 @@ namespace PathfinderJson
                     txtEditRaw.Visibility = Visibility.Collapsed;
                     mnuEdit.Visibility = Visibility.Collapsed;
                     colTabs.Width = new GridLength(120);
+                    stkEditToolbar.Visibility = Visibility.Collapsed;
 
                     mnuTabs.IsChecked = true;
                     mnuScroll.IsChecked = false;
@@ -1358,6 +1378,7 @@ namespace PathfinderJson
                     txtEditRaw.Visibility = Visibility.Visible;
                     mnuEdit.Visibility = Visibility.Visible;
                     colTabs.Width = new GridLength(0);
+                    stkEditToolbar.Visibility = Visibility.Visible;
 
                     mnuTabs.IsChecked = false;
                     mnuScroll.IsChecked = false;
@@ -1418,16 +1439,15 @@ namespace PathfinderJson
         {
             if (rowToolbar.Height == new GridLength(0))
             {
-                rowToolbar.Height = new GridLength(28);
-                toolbar.IsEnabled = true;
-                mnuToolbar.IsChecked = true;
+                ShowHideToolbar(true);
             }
             else
             {
-                rowToolbar.Height = new GridLength(0);
-                toolbar.IsEnabled = false;
-                mnuToolbar.IsChecked = false;
+                ShowHideToolbar(false);
             }
+
+            App.Settings.ShowToolbar = toolbar.IsEnabled;
+            SaveSettings();
         }
 
         private void MnuFilename_Click(object sender, RoutedEventArgs e)
@@ -1442,6 +1462,7 @@ namespace PathfinderJson
             }
 
             App.Settings.PathInTitleBar = mnuFilename.IsChecked;
+            SaveSettings();
             UpdateTitlebar();
         }
 

@@ -133,7 +133,7 @@
                     </MenuItem.Icon>
                 </MenuItem>
                 <Separator />
-                <MenuItem Header="Show T_oolbar" x:Name="mnuToolbar" Click="mnuToolbar_Click" Visibility="Collapsed" />
+                <MenuItem Header="Show T_oolbar" x:Name="mnuToolbar" Click="mnuToolbar_Click" />
                 <MenuItem Header="Color _Scheme..." x:Name="mnuColors" Click="mnuColors_Click">
                     <MenuItem.Icon>
                         <Image Source="/PathfinderJson;component/Images/Colors.png" />
@@ -179,19 +179,21 @@
                         <TextBlock Text="Update Calculations" Margin="3,0" />
                     </StackPanel>
                 </flat:FlatButton>
-                <Border Width="1" BorderBrush="Black" BorderThickness="1" Margin="1,2" />
-                <flat:FlatButton TransparentBack="True" x:Name="btnUndo" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" Click="mnuUndo_Click" Margin="0,2" Padding="3,2" >
-                    <Image Source="/PathfinderJson;component/Images/Undo.png" Height="16" Width="16" />
-                </flat:FlatButton>
-                <flat:FlatButton TransparentBack="True" x:Name="btnRedo" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" Click="mnuRedo_Click" Margin="0,2" Padding="3,2">
-                    <Image Source="/PathfinderJson;component/Images/Redo.png" Height="16" Width="16" />
-                </flat:FlatButton>
-                <flat:FlatButton TransparentBack="True" x:Name="btnFind" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" Click="mnuFind_Click" Margin="0,2" Padding="3,2">
-                    <StackPanel Orientation="Horizontal">
-                        <Image Source="/PathfinderJson;component/Images/Find.png" Height="16" Width="16" />
-                        <TextBlock Text="Find" Margin="3,0" />
-                    </StackPanel>
-                </flat:FlatButton>
+                <StackPanel Orientation="Horizontal" x:Name="stkEditToolbar" >
+                    <Border Width="1" BorderBrush="Black" BorderThickness="1" Margin="1,2" />
+                    <flat:FlatButton TransparentBack="True" x:Name="btnUndo" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" Click="mnuUndo_Click" Margin="0,2" Padding="3,2" >
+                        <Image Source="/PathfinderJson;component/Images/Undo.png" Height="16" Width="16" />
+                    </flat:FlatButton>
+                    <flat:FlatButton TransparentBack="True" x:Name="btnRedo" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" Click="mnuRedo_Click" Margin="0,2" Padding="3,2">
+                        <Image Source="/PathfinderJson;component/Images/Redo.png" Height="16" Width="16" />
+                    </flat:FlatButton>
+                    <flat:FlatButton TransparentBack="True" x:Name="btnFind" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" Click="mnuFind_Click" Margin="0,2" Padding="3,2">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="/PathfinderJson;component/Images/Find.png" Height="16" Width="16" />
+                            <TextBlock Text="Find" Margin="3,0" />
+                        </StackPanel>
+                    </flat:FlatButton>
+                </StackPanel>
             </StackPanel>
         </Border>
 
