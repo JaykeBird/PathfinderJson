@@ -143,6 +143,12 @@
                 <Separator />
                 <MenuItem Header="_Filename in Titlebar" x:Name="mnuFilename" Click="MnuFilename_Click" />
             </MenuItem>
+            <MenuItem Header="_Tools">
+                <MenuItem Header="_Dice Roller" IsEnabled="False" />
+                <Separator />
+                <MenuItem Header="_Text Editor Font..." x:Name="mnuEditorFont" Click="mnuEditorFont_Click" />
+                <MenuItem Header="_Options..." x:Name="mnuOptions" IsEnabled="False" />
+            </MenuItem>
             <MenuItem Header="_Help">
                 <MenuItem Header="_View on GitHub" x:Name="mnuGithub" Click="mnuGithub_Click" />
                 <MenuItem Header="_Give Feedback" x:Name="mnuFeedback" Click="mnuFeedback_Click" />

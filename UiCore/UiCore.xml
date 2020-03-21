@@ -563,6 +563,28 @@
             InitializeComponent
             </summary>
         </member>
+        <member name="T:UiCore.EnumComboBox">
+            <summary>
+            A ComboBox where the items are populated from an inputted Enum.
+            </summary>
+        </member>
+        <member name="P:UiCore.EnumComboBox.Enum">
+            <summary>
+            The enum to use with this EnumComboBox. When the Enum value is set, the ComboBox's items are changed to match the different values of the enum. 
+            </summary>
+        </member>
+        <member name="P:UiCore.EnumComboBox.SelectedEnumValue">
+            <summary>
+            Get or set the selected item of the EnumComboBox. To avoid casting, use the SelectedEnumValueAsEnum function.
+            </summary>
+        </member>
+        <member name="M:UiCore.EnumComboBox.SelectedEnumValueAsEnum``1">
+            <summary>
+            Get the selected item of the EnumComboBox, returned as a value of that enum.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <returns></returns>
+        </member>
         <member name="T:UiCore.FileSelect">
             <summary>
             Interaction logic for FileSelect.xaml

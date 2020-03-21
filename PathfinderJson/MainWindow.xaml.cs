@@ -1468,6 +1468,32 @@ namespace PathfinderJson
 
         #endregion
 
+        #region Tools menu
+
+        private void mnuEditorFont_Click(object sender, RoutedEventArgs e)
+        {
+            FontSelectDialog fds = new FontSelectDialog();
+            fds.ShowDecorations = false;
+            fds.ColorScheme = App.ColorScheme;
+
+            fds.SelectedFontFamily = txtEditRaw.FontFamily;
+            fds.SelectedFontSize = txtEditRaw.FontSize;
+            fds.SelectedFontStyle = txtEditRaw.FontStyle;
+            fds.SelectedFontWeight = txtEditRaw.FontWeight;
+
+            fds.ShowDialog();
+
+            if (fds.DialogResult)
+            {
+                txtEditRaw.FontFamily = fds.SelectedFontFamily;
+                txtEditRaw.FontSize = fds.SelectedFontSize;
+                txtEditRaw.FontStyle = fds.SelectedFontStyle;
+                txtEditRaw.FontWeight = fds.SelectedFontWeight;
+            }
+        }
+
+        #endregion
+
         #region JSON Editor
 
         private void mnuUndo_Click(object sender, RoutedEventArgs e)
@@ -2976,6 +3002,7 @@ namespace PathfinderJson
                 }
             }
         }
+
         #endregion
 
 
