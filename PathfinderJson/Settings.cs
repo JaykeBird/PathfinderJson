@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Text;
 using System.Windows;
@@ -60,13 +61,13 @@ namespace PathfinderJson
         [JsonProperty("pathTitleBar")]
         public bool PathInTitleBar { get; set; } = false;
 
-        [JsonProperty("recentFiles")]
+        [JsonProperty("recentFiles", Order = 50)]
         public List<string> RecentFiles { get; set; } = new List<string>();
 
         [JsonProperty("startView")]
         public string StartView { get; set; } = "tabs";
 
-        [JsonProperty("showToolbar")]
+        [JsonProperty("showToolbar", DefaultValueHandling = DefaultValueHandling.Ignore), DefaultValue(false)]
         public bool ShowToolbar { get; set; } = false;
 
         [JsonProperty("indentJsonData")]
@@ -77,5 +78,17 @@ namespace PathfinderJson
 
         [JsonProperty("updateLastCheckDate")]
         public string UpdateLastCheckDate { get; set; } = "2019-10-12";
+
+        [JsonProperty("editor.fontFamily", DefaultValueHandling = DefaultValueHandling.Ignore), DefaultValue("Consolas")]
+        public string EditorFontFamily { get; set; } = "Consolas";
+
+        [JsonProperty("editor.fontSize", DefaultValueHandling = DefaultValueHandling.Ignore), DefaultValue("12")]
+        public string EditorFontSize { get; set; } = "12";
+
+        [JsonProperty("editor.fontWeight", DefaultValueHandling = DefaultValueHandling.Ignore), DefaultValue("400")]
+        public string EditorFontWeight { get; set; } = "400";
+
+        [JsonProperty("editor.fontStyle", DefaultValueHandling = DefaultValueHandling.Ignore), DefaultValue("Normal")]
+        public string EditorFontStyle { get; set; } = "Normal";
     }
 }
