@@ -212,7 +212,7 @@ namespace PathfinderJson
             mw.Show();
         }
 
-        private void Application_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
+        private async void Application_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
         {
             // save this to the crash logs
             string appDataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "PathfinderJson");
@@ -239,7 +239,7 @@ namespace PathfinderJson
 
             sb.AppendLine("END FILE");
 
-            File.WriteAllTextAsync(Path.Combine(errorLogPath, DateTime.UtcNow.ToString("yyyyMMddTHHmmssZ")), sb.ToString(), Encoding.UTF8);
+            await File.WriteAllTextAsync(Path.Combine(errorLogPath, DateTime.UtcNow.ToString("yyyyMMddTHHmmssZ")), sb.ToString(), Encoding.UTF8);
 
             MessageBox.Show("An error has occurred and PathfinderJSON may not be able to continue.\n\n" +
                 "An error log file was created.\n\n" +
