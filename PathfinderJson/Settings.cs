@@ -66,6 +66,9 @@ namespace PathfinderJson
         [JsonProperty("startView")]
         public string StartView { get; set; } = "tabs";
 
+        [JsonProperty("showToolbar")]
+        public bool ShowToolbar { get; set; } = false;
+
         [JsonProperty("indentJsonData")]
         public bool IndentJsonData { get; set; } = false;
 
