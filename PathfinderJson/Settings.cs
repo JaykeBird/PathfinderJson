@@ -90,5 +90,8 @@ namespace PathfinderJson
 
         [JsonProperty("editor.fontStyle")]
         public string EditorFontStyle { get; set; } = "Normal";
+
+        [JsonProperty("editor.syntaxHighlight")]
+        public bool EditorSyntaxHighlighting { get; set; } = true;
     }
 }

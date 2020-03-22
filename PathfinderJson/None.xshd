@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<SyntaxDefinition name="Json" extensions=".json" xmlns="http://icsharpcode.net/sharpdevelop/syntaxdefinition/2008">
+  <Color name="Digits" foreground="#5E00B2" exampleText="3.14" />
+  <RuleSet ignoreCase="false">
+  </RuleSet>
+</SyntaxDefinition>

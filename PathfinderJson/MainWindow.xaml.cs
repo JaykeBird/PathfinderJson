@@ -133,12 +133,26 @@ namespace PathfinderJson
             ShowHideToolbar(App.Settings.ShowToolbar);
 
             // setup up raw JSON editor
-            using (Stream? s = System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceStream("PathfinderJson.Json.xshd"))
+            if (App.Settings.EditorSyntaxHighlighting)
             {
-                if (s != null)
+                using (Stream? s = System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceStream("PathfinderJson.Json.xshd"))
                 {
-                    using XmlReader reader = new XmlTextReader(s);
-                    txtEditRaw.SyntaxHighlighting = ICSharpCode.AvalonEdit.Highlighting.Xshd.HighlightingLoader.Load(reader, HighlightingManager.Instance);
+                    if (s != null)
+                    {
+                        using XmlReader reader = new XmlTextReader(s);
+                        txtEditRaw.SyntaxHighlighting = ICSharpCode.AvalonEdit.Highlighting.Xshd.HighlightingLoader.Load(reader, HighlightingManager.Instance);
+                    }
+                }
+            }
+            else
+            {
+                using (Stream? s = System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceStream("PathfinderJson.None.xshd"))
+                {
+                    if (s != null)
+                    {
+                        using XmlReader reader = new XmlTextReader(s);
+                        txtEditRaw.SyntaxHighlighting = ICSharpCode.AvalonEdit.Highlighting.Xshd.HighlightingLoader.Load(reader, HighlightingManager.Instance);
+                    }
                 }
             }
 
@@ -1594,6 +1608,35 @@ namespace PathfinderJson
 
                 LoadFile(files[0]);
             }
+        }
+
+        void SetSyntaxHighlighting(bool value)
+        {
+            if (value)
+            {
+                using (Stream? s = System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceStream("PathfinderJson.Json.xshd"))
+                {
+                    if (s != null)
+                    {
+                        using XmlReader reader = new XmlTextReader(s);
+                        txtEditRaw.SyntaxHighlighting = ICSharpCode.AvalonEdit.Highlighting.Xshd.HighlightingLoader.Load(reader, HighlightingManager.Instance);
+                    }
+                }
+            }
+            else
+            {
+                using (Stream? s = System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceStream("PathfinderJson.None.xshd"))
+                {
+                    if (s != null)
+                    {
+                        using XmlReader reader = new XmlTextReader(s);
+                        txtEditRaw.SyntaxHighlighting = ICSharpCode.AvalonEdit.Highlighting.Xshd.HighlightingLoader.Load(reader, HighlightingManager.Instance);
+                    }
+                }
+            }
+
+            App.Settings.EditorSyntaxHighlighting = value;
+            SaveSettings();
         }
 
         #region Font Settings
@@ -3157,8 +3200,7 @@ namespace PathfinderJson
             }
         }
 
+
         #endregion
-
-
     }
 }
