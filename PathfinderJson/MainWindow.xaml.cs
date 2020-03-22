@@ -142,6 +142,8 @@ namespace PathfinderJson
                 }
             }
 
+            LoadEditorFontSettings();
+
             SearchPanel p = SearchPanel.Install(txtEditRaw);
             p.FontFamily = SystemFonts.MessageFontFamily; // so it isn't a fixed-width font lol
             sp = p;
@@ -182,8 +184,17 @@ namespace PathfinderJson
             LoadFile(filename, true);
         }
 
-        void SaveSettings()
+        /// <summary>
+        /// Save the currently used settings to the settings.json file.
+        /// </summary>
+        /// <param name="updateFonts">If true, will also save the current editor font settings. This takes additional processing which may not be always needed.</param>
+        void SaveSettings(bool updateFonts = false)
         {
+            if (updateFonts)
+            {
+                SaveEditorFontSettings();
+            }
+
             try
             {
                 App.Settings.Save(Path.Combine(appDataPath, "settings.json"));
@@ -400,7 +411,7 @@ namespace PathfinderJson
                 if (!validJson)
                 {
                     MessageDialog md = new MessageDialog(App.ColorScheme);
-                    md.ShowDialog("The file's text doesn't seem to be valid JSON. Saving the file as it is may result in lost data or the file not being openable with this program in the future. Do you want to continue?", 
+                    md.ShowDialog("The file's text doesn't seem to be valid JSON. Saving the file as it is may result in lost data or the file not being openable with this program in the future. Do you want to continue?",
                         null, this, "Invalid JSON Detected", MessageDialogButtonDisplay.Auto, image: MessageDialogImage.Warning, customOkButtonText: "Save anyway", customCancelButtonText: "Cancel");
 
                     if (md.DialogResult == MessageDialogResult.Cancel)
@@ -1490,6 +1501,8 @@ namespace PathfinderJson
                 txtEditRaw.FontStyle = fds.SelectedFontStyle;
                 txtEditRaw.FontWeight = fds.SelectedFontWeight;
             }
+
+            SaveSettings(true);
         }
 
         #endregion
@@ -1582,6 +1595,147 @@ namespace PathfinderJson
                 LoadFile(files[0]);
             }
         }
+
+        #region Font Settings
+        void LoadEditorFontSettings()
+        {
+            string family = App.Settings.EditorFontFamily;
+            string size = App.Settings.EditorFontSize;
+            string style = App.Settings.EditorFontStyle;
+            string weight = App.Settings.EditorFontWeight.Replace("w", "").Replace(".", "");
+
+            // sanitizing user input
+            if (string.IsNullOrEmpty(family))
+            {
+                family = "Consolas";
+            }
+            if (string.IsNullOrEmpty(size))
+            {
+                size = "12";
+            }
+            if (string.IsNullOrEmpty(style))
+            {
+                style = "Normal";
+            }
+            if (string.IsNullOrEmpty(weight))
+            {
+                weight = "400";
+            }
+
+            if (style == "None")
+            {
+                style = "Normal";
+            }
+
+            // check if weight is an integer value or not; if not, try to convert it
+            if (!int.TryParse(weight, out _))
+            {
+                // converter of common fontweight values
+                // taken from https://docs.microsoft.com/en-us/dotnet/api/system.windows.fontweights
+                if (weight.ToLowerInvariant() == "thin")
+                {
+                    weight = "100";
+                }
+                else if (weight.ToLowerInvariant() == "extralight" || weight.ToLowerInvariant() == "ultralight")
+                {
+                    weight = "200";
+                }
+                else if (weight.ToLowerInvariant() == "light")
+                {
+                    weight = "300";
+                }
+                else if (weight.ToLowerInvariant() == "normal" || weight.ToLowerInvariant() == "regular")
+                {
+                    weight = "400";
+                }
+                else if (weight.ToLowerInvariant() == "medium")
+                {
+                    weight = "500";
+                }
+                else if (weight.ToLowerInvariant() == "demibold" || weight.ToLowerInvariant() == "semibold")
+                {
+                    weight = "600";
+                }
+                else if (weight.ToLowerInvariant() == "bold")
+                {
+                    weight = "700";
+                }
+                else if (weight.ToLowerInvariant() == "extrabold" || weight.ToLowerInvariant() == "ultrabold")
+                {
+                    weight = "800";
+                }
+                else if (weight.ToLowerInvariant() == "black" || weight.ToLowerInvariant() == "heavy")
+                {
+                    weight = "900";
+                }
+                else if (weight.ToLowerInvariant() == "extrablack" || weight.ToLowerInvariant() == "ultrablack")
+                {
+                    weight = "950";
+                }
+                else
+                {
+                    // don't know what the heck they put in there, but it's not a font weight; set it to normal
+                    weight = "400";
+                }
+            }
+
+            FontFamily ff = new FontFamily(family + ", Consolas"); // use Consolas as fallback in case that font doesn't exist or the font doesn't contain proper glyphs
+
+            double dsz = 12;
+
+            try
+            {
+                dsz = double.Parse(size.Replace("p", "").Replace("d", "").Replace("x", "").Replace("t", ""));
+            }
+            catch (FormatException) { } // if "size" is a string that isn't actually a double, just keep it as 12
+
+            FontStyle fs = FontStyles.Normal;
+            try
+            {
+                fs = (FontStyle)new FontStyleConverter().ConvertFromInvariantString(style);
+            }
+            catch (NotSupportedException) { } // if "style" is a string that isn't actually a FontStyle, just keep it as normal
+            catch (FormatException) { }
+
+            int w = int.Parse(weight);
+            if (w > 999)
+            {
+                w = 999;
+            }
+            else if (w < 1)
+            {
+                w = 1;
+            }
+            FontWeight fw = FontWeight.FromOpenTypeWeight(w);
+
+            txtEditRaw.FontFamily = ff;
+            txtEditRaw.FontSize = dsz;
+            txtEditRaw.FontStyle = fs;
+            txtEditRaw.FontWeight = fw;
+        }
+
+        void SaveEditorFontSettings()
+        {
+            string ff = (txtEditRaw.FontFamily.Source).Replace(", Consolas", "");
+
+            App.Settings.EditorFontFamily = ff;
+            App.Settings.EditorFontSize = txtEditRaw.FontSize.ToString();
+
+            // because the ToString() method for FontStyle uses CurrentCulture rather than InvariantCulture, I need to convert it to string myself.
+            if (txtEditRaw.FontStyle == FontStyles.Italic)
+            {
+                App.Settings.EditorFontStyle = "Italic";
+            }
+            else if (txtEditRaw.FontStyle == FontStyles.Oblique)
+            {
+                App.Settings.EditorFontStyle = "Oblique";
+            }
+            else
+            {
+                App.Settings.EditorFontStyle = "Normal";
+            }
+        }
+        #endregion
 
         #endregion
 

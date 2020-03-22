@@ -804,6 +804,11 @@
             FontSelectDialog
             </summary>
         </member>
+        <member name="P:UiCore.FontSelectDialog.PreserveFontFallback">
+            <summary>
+            If a font fallback sequence is defined in the FontFamily, preserve it even if the user changes the font. If preserved, only the first found font will be changed and the remaining values will be preserved.
+            </summary>
+        </member>
         <member name="M:UiCore.FontSelectDialog.InitializeComponent">
             <summary>
             InitializeComponent

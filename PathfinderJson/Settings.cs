@@ -60,7 +60,7 @@ namespace PathfinderJson
         [JsonProperty("pathTitleBar")]
         public bool PathInTitleBar { get; set; } = false;
 
-        [JsonProperty("recentFiles")]
+        [JsonProperty("recentFiles", Order = 50)]
         public List<string> RecentFiles { get; set; } = new List<string>();
 
         [JsonProperty("startView")]
@@ -77,5 +77,17 @@ namespace PathfinderJson
 
         [JsonProperty("updateLastCheckDate")]
         public string UpdateLastCheckDate { get; set; } = "2019-10-12";
+
+        [JsonProperty("editor.fontFamily")]
+        public string EditorFontFamily { get; set; } = "Consolas";
+
+        [JsonProperty("editor.fontSize")]
+        public string EditorFontSize { get; set; } = "12";
+        
+        [JsonProperty("editor.fontWeight")]
+        public string EditorFontWeight { get; set; } = "400";
+
+        [JsonProperty("editor.fontStyle")]
+        public string EditorFontStyle { get; set; } = "Normal";
     }
 }
