@@ -10,6 +10,7 @@ using UiCore;
 using System.Runtime;
 using System.IO;
 using System.Windows.Media.Imaging;
+using System.Text;
 
 namespace PathfinderJson
 {
@@ -24,6 +25,16 @@ namespace PathfinderJson
 
             if (Directory.Exists(appDataPath))
             {
+                if (!Directory.Exists(Path.Combine(appDataPath, "Optimization")))
+                {
+                    Directory.CreateDirectory(Path.Combine(appDataPath, "Optimization"));
+                }
+
+                if (!Directory.Exists(Path.Combine(appDataPath, "ErrorLogs")))
+                {
+                    Directory.CreateDirectory(Path.Combine(appDataPath, "ErrorLogs"));
+                }
+
                 try
                 {
                     Settings = Settings.LoadSettings(Path.Combine(appDataPath, "settings.json"));
@@ -53,6 +64,7 @@ namespace PathfinderJson
                 {
                     Directory.CreateDirectory(appDataPath);
                     Directory.CreateDirectory(Path.Combine(appDataPath, "Optimization"));
+                    Directory.CreateDirectory(Path.Combine(appDataPath, "ErrorLogs"));
                     Settings.Save(Path.Combine(appDataPath, "settings.json"));
                 }
                 catch (UnauthorizedAccessException)
@@ -198,6 +210,41 @@ namespace PathfinderJson
             MainWindow = mw;
             if (file != "") mw.OpenFile(file);
             mw.Show();
+        }
+
+        private void Application_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
+        {
+            // save this to the crash logs
+            string appDataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "PathfinderJson");
+            string errorLogPath = Path.Combine(appDataPath, "ErrorLogs");
+
+            Exception ex = e.Exception;
+
+            StringBuilder sb = new StringBuilder();
+
+            sb.AppendLine(DateTime.UtcNow.ToString("yyyyMMddTHH:mm:ssZ"));
+            sb.AppendLine("VERSION " + AppVersion.ToString());
+            sb.AppendLine("--------------------------------------");
+            sb.AppendLine(ex.GetType().FullName);
+            sb.AppendLine(ex.Message);
+            sb.AppendLine(ex.ToString());
+
+            if (ex.InnerException != null)
+            {
+                sb.AppendLine("INNER EXCEPTION:");
+                sb.AppendLine(ex.InnerException.GetType().FullName);
+                sb.AppendLine(ex.InnerException.Message);
+                sb.AppendLine(ex.InnerException.ToString());
+            }
+
+            sb.AppendLine("END FILE");
+
+            File.WriteAllTextAsync(Path.Combine(errorLogPath, DateTime.UtcNow.ToString("yyyyMMddTHHmmssZ")), sb.ToString(), Encoding.UTF8);
+
+            MessageBox.Show("An error has occurred and PathfinderJSON may not be able to continue.\n\n" +
+                "An error log file was created.\n\n" +
+                "Please go to PathfinderJson GitHub website to report the error.",
+                "PathfinderJSON Error Occurred", MessageBoxButton.OK, MessageBoxImage.Error);
         }
     }
 }
