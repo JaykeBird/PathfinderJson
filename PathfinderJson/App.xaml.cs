@@ -98,7 +98,7 @@ namespace PathfinderJson
         public static Settings Settings { get; set; } = new Settings();
 
         #region Constants
-        public static Version AppVersion = new Version("1.0.0");
+        public static Version AppVersion = new Version("1.0.1");
         
         public const string NO_HIGH_CONTRAST = "0";
 
@@ -239,7 +239,7 @@ namespace PathfinderJson
 
             sb.AppendLine("END FILE");
 
-            await File.WriteAllTextAsync(Path.Combine(errorLogPath, DateTime.UtcNow.ToString("yyyyMMddTHHmmssZ")), sb.ToString(), Encoding.UTF8);
+            await File.WriteAllTextAsync(Path.Combine(errorLogPath, DateTime.UtcNow.ToString("yyyyMMddTHHmmss") + ".txt"), sb.ToString(), Encoding.UTF8);
 
             MessageBox.Show("An error has occurred and PathfinderJSON may not be able to continue.\n\n" +
                 "An error log file was created.\n\n" +
