@@ -37,6 +37,10 @@ namespace PathfinderJson
         string displayedTitle = "";
         /// <summary>Get or set if a file has unsaved changes</summary>
         bool isDirty = false;
+        /// <summary>Get or set if the app should automatically check for updates when you open it</summary>
+        bool autoCheckUpdates = true;
+        /// <summary>Get or set the date the app last auto checked for updates; only auto check once per day</summary>
+        string lastAutoCheckDate = "2020-03-26";
 
         /// <summary>Get or set the current view ("tabs", "continuous", or "rawjson")</summary>
         string currentView = TABS_VIEW;
@@ -74,10 +78,29 @@ namespace PathfinderJson
             ud = new UserData(false);
             sheetid = "-1";
 
+            // if true, run SaveSettings at the end of this function, to avoid calling SaveSettings like 5 times at once
+            bool updateSettings = false;
+
             undoSetTimer.Interval = new TimeSpan(0, 0, 3);
             undoSetTimer.Tick += UndoSetTimer_Tick;
 
+            autoCheckUpdates = App.Settings.UpdateAutoCheck;
+            lastAutoCheckDate = App.Settings.UpdateLastCheckDate;
+            DateTime today = DateTime.Today;
+
+            if (autoCheckUpdates && lastAutoCheckDate != today.Year + "-" + today.Month + "-" + today.Day)
+            {
+                lastAutoCheckDate = today.Year + "-" + today.Month + "-" + today.Day;
+                App.Settings.UpdateLastCheckDate = lastAutoCheckDate;
+                updateSettings = true;
+            }
+            else
+            {
+                autoCheckUpdates = false;
+            }
+
             InitializeComponent();
+
             if (App.Settings.HighContrastTheme == NO_HIGH_CONTRAST)
             {
                 App.ColorScheme = new ColorScheme(ColorsHelper.CreateFromHex(App.Settings.ThemeColor));
@@ -98,7 +121,7 @@ namespace PathfinderJson
                     default:
                         App.Settings.HighContrastTheme = NO_HIGH_CONTRAST;
                         App.ColorScheme = new ColorScheme(ColorsHelper.CreateFromHex(App.Settings.ThemeColor));
-                        SaveSettings();
+                        updateSettings = true;
                         break;
                 }
             }
@@ -120,7 +143,7 @@ namespace PathfinderJson
                 App.Settings.RecentFiles.Reverse();
                 App.Settings.RecentFiles.RemoveRange(20, App.Settings.RecentFiles.Count - 20);
                 App.Settings.RecentFiles.Reverse();
-                SaveSettings();
+                updateSettings = true;
             }
 
             mnuIndent.IsChecked = App.Settings.IndentJsonData;
@@ -146,27 +169,10 @@ namespace PathfinderJson
 
             txtEditRaw.Encoding = new System.Text.UTF8Encoding(false);
 
-            //if (App.Settings.UpdateAutoCheck)
-            //{
-            //    // I have it set to only auto-check for updates daily
-            //    // so as to not overload GitHub's servers in the suuuuuuper unlikely chance that this app really takes off
-            //    if (DateTime.Today.ToString("yyyy-MM-dd") != App.Settings.UpdateLastCheckDate)
-            //    {
-            //        // last checked before today
-            //        Task<UpdateData> t = UpdateChecker.CheckForUpdatesAsync();
-            //        t.Wait();
-            //        UpdateData ud = t.Result;
-
-            //        if (ud.HasUpdate)
-            //        {
-            //            UpdateDisplay uw = new UpdateDisplay(ud);
-            //            uw.ShowDialog();
-            //        }
-
-            //        App.Settings.UpdateLastCheckDate = DateTime.Today.ToString("yyyy-MM-dd");
-            //        SaveSettings();
-            //    }
-            //}
+            if (updateSettings)
+            {
+                SaveSettings();
+            }
         }
 
         #region Other Base Functions
@@ -243,6 +249,14 @@ namespace PathfinderJson
             if (isDirty)
             {
                 Title += " *";
+            }
+        }
+
+        private async void window_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (autoCheckUpdates)
+            {
+                await CheckForUpdates(false);
             }
         }
 
@@ -546,6 +560,36 @@ namespace PathfinderJson
             }
         }
 
+        async Task CheckForUpdates(bool dialogIfNone = true)
+        {
+            try
+            {
+                UpdateData ud = await UpdateChecker.CheckForUpdatesAsync();
+                if (ud.HasUpdate)
+                {
+                    UpdateDisplay uw = new UpdateDisplay(ud);
+                    uw.Owner = this;
+                    uw.ShowDialog();
+                }
+                else
+                {
+                    if (dialogIfNone)
+                    {
+                        MessageDialog md = new MessageDialog(App.ColorScheme);
+                        md.ShowDialog("There are no updates available. You're on the latest release!", App.ColorScheme, this, "Check for Updates", MessageDialogButtonDisplay.Auto, image: MessageDialogImage.Hand);
+                    }
+                }
+            }
+            catch (System.Net.WebException)
+            {
+                if (dialogIfNone)
+                {
+                    MessageDialog md = new MessageDialog(App.ColorScheme);
+                    md.ShowDialog("Could not check for updates. Make sure you're connected to the Internet.", App.ColorScheme, this, "Check for Updates", MessageDialogButtonDisplay.Auto, image: MessageDialogImage.Error);
+                }
+            }
+        }
+
         private void mnuRevert_Click(object sender, RoutedEventArgs e)
         {
             if (!string.IsNullOrEmpty(filePath))
@@ -611,26 +655,7 @@ namespace PathfinderJson
 
         private async void mnuCheckUpdates_Click(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                UpdateData ud = await UpdateChecker.CheckForUpdatesAsync();
-                if (ud.HasUpdate)
-                {
-                    UpdateDisplay uw = new UpdateDisplay(ud);
-                    uw.Owner = this;
-                    uw.ShowDialog();
-                }
-                else
-                {
-                    MessageDialog md = new MessageDialog(App.ColorScheme);
-                    md.ShowDialog("There are no updates available. You're on the latest release!", App.ColorScheme, this, "Check for Updates", MessageDialogButtonDisplay.Auto, image: MessageDialogImage.Hand);
-                }
-            }
-            catch (System.Net.WebException)
-            {
-                MessageDialog md = new MessageDialog(App.ColorScheme);
-                md.ShowDialog("Could not check for updates. Make sure you're connected to the Internet.", App.ColorScheme, this, "Check for Updates", MessageDialogButtonDisplay.Auto, image: MessageDialogImage.Error);
-            }
+            await CheckForUpdates();
         }
 
         private void mnuAbout_Click(object sender, RoutedEventArgs e)

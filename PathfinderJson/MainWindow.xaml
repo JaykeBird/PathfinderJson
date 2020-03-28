@@ -8,7 +8,7 @@
         xmlns:edit="http://icsharpcode.net/sharpdevelop/avalonedit"
         mc:Ignorable="d" x:Name="window"
         Title="Pathfinder JSON" Height="700" Width="550" MinWidth="550" MinHeight="450"
-        Closing="window_Closing" Closed="window_Closed" Activated="window_Activated" Deactivated="window_Deactivated" >
+        Loaded="window_Loaded" Closing="window_Closing" Closed="window_Closed" Activated="window_Activated" Deactivated="window_Deactivated" >
     <flat:FlatWindow.TopRightElement>
         <Border x:Name="brdrCalculating" Margin="0,4" Visibility="Collapsed" BorderThickness="1" >
             <TextBlock Text="Calculating..." Padding="4,0" VerticalAlignment="Center" />
@@ -145,10 +145,10 @@
             </MenuItem>
             <MenuItem Header="_Help">
                 <MenuItem Header="_View on GitHub" x:Name="mnuGithub" Click="mnuGithub_Click" />
-                <MenuItem Header="_Give Feedback" x:Name="mnuFeedback" Click="mnuFeedback_Click" />
+                <MenuItem Header="_Feedback/Issues..." x:Name="mnuFeedback" Click="mnuFeedback_Click" />
                 <Separator />
                 <MenuItem Header="_Check for Updates" x:Name="mnuCheckUpdates" Click="mnuCheckUpdates_Click" />
-                <MenuItem Header="A_uto Check on Startup" x:Name="mnuAutoCheck" Click="mnuAutoCheck_Click" IsEnabled="False" Visibility="Collapsed" />
+                <MenuItem Header="A_uto Check on Startup" x:Name="mnuAutoCheck" Click="mnuAutoCheck_Click" />
                 <Separator />
                 <MenuItem Header="_About..." x:Name="mnuAbout" Click="mnuAbout_Click" >
                     <MenuItem.Icon>

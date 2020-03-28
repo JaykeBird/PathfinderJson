@@ -74,7 +74,7 @@ namespace PathfinderJson
         public bool IndentJsonData { get; set; } = false;
 
         [JsonProperty("updateAutoCheck")]
-        public bool UpdateAutoCheck { get; set; } = false;
+        public bool UpdateAutoCheck { get; set; } = true;
 
         [JsonProperty("updateLastCheckDate")]
         public string UpdateLastCheckDate { get; set; } = "2019-10-12";
