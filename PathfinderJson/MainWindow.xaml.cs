@@ -647,7 +647,7 @@ namespace PathfinderJson
             else
             {
                 mnuAutoCheck.IsChecked = true;
-                App.Settings.UpdateAutoCheck = false;
+                App.Settings.UpdateAutoCheck = true;
             }
 
             SaveSettings();
