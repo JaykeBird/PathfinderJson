@@ -773,8 +773,31 @@
         </member>
         <member name="P:UiCore.FlatWindow.TopRightElement">
             <summary>
-            Gets or sets the UI element to place in the top of the window.
+            Gets or sets the UI element to place in the top-right of the window, to the left of the caption buttons.
             </summary>
+        </member>
+        <member name="P:UiCore.FlatWindow.TopLeftElement">
+            <summary>
+            Gets or sets the UI element to place in the top-left corner of the window.
+            </summary>
+        </member>
+        <member name="P:UiCore.FlatWindow.ExcludeTopLeftElementFromChrome">
+            <summary>
+            Get or set if the top-left element should be considered part of the window chrome or not. Set to <c>true</c> to exclude it from the window chrome.
+            </summary>
+            <remarks>
+            This changes the IsHitTestVisibleInChrome property for the top-left element. If set to true, the element can be interacted with.
+            If set to false, the element cannot be interacted with, and clicking, dragging, etc. acts as if you're clicking on the window's title bar.
+            </remarks>
+        </member>
+        <member name="P:UiCore.FlatWindow.ExcludeTopRightElementFromChrome">
+            <summary>
+            Get or set if the top-right element should be considered part of the window chrome or not. Set to <c>true</c> to exclude it from the window chrome.
+            </summary>
+            <remarks>
+            This changes the IsHitTestVisibleInChrome property for the top-right element. If set to true, the element can be interacted with.
+            If set to false, the element cannot be interacted with, and clicking, dragging, etc. acts as if you're clicking on the window's title bar.
+            </remarks>
         </member>
         <member name="P:UiCore.FlatWindow.Background">
             <summary>
@@ -1464,16 +1487,6 @@
             InitializeComponent
             </summary>
         </member>
-        <member name="T:UiCore.SizeableStackPanel">
-            <summary>
-            SizeableStackPanel
-            </summary>
-        </member>
-        <member name="M:UiCore.SizeableStackPanel.InitializeComponent">
-            <summary>
-            InitializeComponent
-            </summary>
-        </member>
         <member name="M:UiCore.StreamExtensions.ReadAsciiString(System.IO.Stream,System.Int32)">
             <summary>
             Reads a ASCII string of the specified length.
@@ -1607,75 +1620,6 @@
         <member name="M:UiCore.TabDisplayItem.InitializeComponent">
             <summary>
             InitializeComponent
-            </summary>
-        </member>
-        <member name="T:UiCore.Toolbar">
-            <summary>
-            Interaction logic for MenuBar.xaml
-            </summary>
-            <summary>
-            Toolbar
-            </summary>
-        </member>
-        <member name="M:UiCore.Toolbar.InitializeComponent">
-            <summary>
-            InitializeComponent
-            </summary>
-        </member>
-        <member name="T:UiCore.ToolbarButton">
-            <summary>
-            Interaction logic for ToolbarButton.xaml
-            </summary>
-            <summary>
-            ToolbarButton
-            </summary>
-        </member>
-        <member name="M:UiCore.ToolbarButton.InitializeComponent">
-            <summary>
-            InitializeComponent
-            </summary>
-        </member>
-        <member name="T:UiCore.ToolbarMenuButton">
-            <summary>
-            Interaction logic for MenuButton.xaml
-            </summary>
-            <summary>
-            ToolbarMenuButton
-            </summary>
-        </member>
-        <member name="M:UiCore.ToolbarMenuButton.InitializeComponent">
-            <summary>
-            InitializeComponent
-            </summary>
-        </member>
-        <member name="T:XamlGeneratedNamespace.GeneratedInternalTypeHelper">
-            <summary>
-            GeneratedInternalTypeHelper
-            </summary>
-        </member>
-        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.CreateInstance(System.Type,System.Globalization.CultureInfo)">
-            <summary>
-            CreateInstance
-            </summary>
-        </member>
-        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.GetPropertyValue(System.Reflection.PropertyInfo,System.Object,System.Globalization.CultureInfo)">
-            <summary>
-            GetPropertyValue
-            </summary>
-        </member>
-        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.SetPropertyValue(System.Reflection.PropertyInfo,System.Object,System.Object,System.Globalization.CultureInfo)">
-            <summary>
-            SetPropertyValue
-            </summary>
-        </member>
-        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.CreateDelegate(System.Type,System.Object,System.String)">
-            <summary>
-            CreateDelegate
-            </summary>
-        </member>
-        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.AddEventHandler(System.Reflection.EventInfo,System.Object,System.Delegate)">
-            <summary>
-            AddEventHandler
             </summary>
         </member>
     </members>
