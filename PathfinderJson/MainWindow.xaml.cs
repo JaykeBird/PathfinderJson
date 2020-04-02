@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 using System.Xml;
 using UiCore;
+using UiCore.Keyboard;
 
 using static PathfinderJson.CoreUtils;
 using static PathfinderJson.App;
@@ -71,6 +72,10 @@ namespace PathfinderJson
         string sheetid;
         Dictionary<string, string> abilities = new Dictionary<string, string>();
 
+        // keyboard/method data
+        MethodRegistry mr = new MethodRegistry();
+        KeyRegistry kr = new KeyRegistry();
+
         #region Constructor/ window events/ basic functions
 
         public MainWindow()
@@ -100,6 +105,19 @@ namespace PathfinderJson
             }
 
             InitializeComponent();
+            mr.FillFromMenu(menu);
+            try
+            {
+                var list = KeyboardShortcutsIo.LoadFromFile("", mr);
+                foreach (KeyboardShortcut item in list)
+                {
+                    kr.RegisterKeyShortcut()
+                }
+            }
+            catch (ArgumentException)
+            {
+
+            }
 
             if (App.Settings.HighContrastTheme == NO_HIGH_CONTRAST)
             {
