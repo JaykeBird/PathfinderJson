@@ -111,12 +111,12 @@ namespace PathfinderJson
                 var list = KeyboardShortcutsIo.LoadFromFile("", mr);
                 foreach (KeyboardShortcut item in list)
                 {
-                    kr.RegisterKeyShortcut()
+                    kr.RegisterKeyShortcut(item);
                 }
             }
             catch (ArgumentException)
             {
-
+                // creat generic keyboard shortcut list
             }
 
             if (App.Settings.HighContrastTheme == NO_HIGH_CONTRAST)

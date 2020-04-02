@@ -118,7 +118,7 @@ namespace PathfinderJson
                 input = input.Replace(")", "");
             }
 
-            List<string> ParsedOperations = ParseOperations(input);
+            List<string>? ParsedOperations = ParseOperations(input);
             if (ParsedOperations != null)
             {
                 return PerformOperations(ref ParsedOperations);
@@ -218,7 +218,7 @@ namespace PathfinderJson
             return double.Parse(OperationList[0]);
         }
 
-        static List<string> ParseOperations(string input)
+        static List<string>? ParseOperations(string input)
         {
             List<string> Operations = new List<string>(); // organized list of operations to do
             int index = 0; // current char looked at
