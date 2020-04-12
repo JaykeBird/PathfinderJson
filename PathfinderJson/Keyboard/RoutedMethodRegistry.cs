@@ -9,7 +9,10 @@ using System.Linq;
 
 namespace UiCore.Keyboard
 {
-    public class MethodRegistry
+    /// <summary>
+    /// A class to list and manage methods available to use with keyboard shortcuts. 
+    /// </summary>
+    public class RoutedMethodRegistry
     {
         public Dictionary<string, (string, RoutedEventHandler, MenuItem?)> RegisteredMethods { get; } = new Dictionary<string, (string, RoutedEventHandler, MenuItem?)>();
 
@@ -37,6 +40,7 @@ namespace UiCore.Keyboard
                 {
                     if (item != null)
                     {
+                        // source: https://stackoverflow.com/questions/982709/removing-routed-event-handlers-through-reflection
                         var eventInfo = item.GetType().GetEvent("Click", BindingFlags.Public | BindingFlags.FlattenHierarchy);
                         TypeInfo t = item.GetType().GetTypeInfo();
                         var clickEvent = t.DeclaredFields.Where((ei) => { return ei.Name == "ClickEvent"; }).First();
@@ -51,6 +55,7 @@ namespace UiCore.Keyboard
                             {
                                 if (delegates.Length > 0)
                                 {
+                                    var dele = (delegates[0]).Handler;
                                     var handler = (RoutedEventHandler)(delegates[0]).Handler;
                                     Add(item.Name, handler, item);
                                 }

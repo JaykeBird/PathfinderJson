@@ -30,7 +30,7 @@ namespace UiCore.Keyboard
             Key.F14, Key.F15, Key.F16, Key.F17, Key.F18, Key.F19, Key.F20, Key.F21, Key.F22, Key.F23, Key.F24, Key.Delete, Key.Home, Key.PageDown,
             Key.PageUp, Key.End, Key.Insert, Key.Next, Key.Prior, Key.BrowserBack, Key.BrowserFavorites, Key.BrowserForward, Key.BrowserHome,
             Key.BrowserRefresh, Key.BrowserSearch, Key.BrowserStop, Key.MediaNextTrack, Key.MediaPlayPause, Key.MediaPreviousTrack, Key.MediaStop,
-            Key.Pause, Key.Play, Key.Print, Key.Help, Key.LaunchApplication1, Key.LaunchApplication2, Key.LaunchMail, Key.Zoom };
+            Key.Pause, Key.Play, Key.Print, Key.Help, Key.LaunchApplication1, Key.LaunchApplication2, Key.LaunchMail, Key.Zoom, };
 
     }
 
@@ -55,7 +55,7 @@ namespace UiCore.Keyboard
 
     public static class KeyboardShortcutsIo
     {
-        public static List<KeyboardShortcut> LoadFromFile(string file, MethodRegistry? methodList)
+        public static List<KeyboardShortcut> LoadFromFile(string file, RoutedMethodRegistry? methodList)
         {
             if (!File.Exists(file))
             {
@@ -70,38 +70,78 @@ namespace UiCore.Keyboard
 
             while (xr.Read())
             {
-                xr.ReadStartElement("ks");
-
-                string c = xr.GetAttribute("comb");
-                string k = xr.GetAttribute("keyid");
-                string m = xr.GetAttribute("methodid");
-
-                if (string.IsNullOrEmpty(c) || string.IsNullOrEmpty(k) || string.IsNullOrEmpty(m))
+                if (xr.NodeType == XmlNodeType.Element)
                 {
-                    // skip item
-                }
-                else if (Enum.TryParse(c, out KeyboardCombination kc))
-                {
-                    if ((int.TryParse(k, out int kv)))
+                    //xr.ReadStartElement("ks");
+
+                    string c = xr.GetAttribute("comb");
+                    string k = xr.GetAttribute("keyid");
+                    string m = xr.GetAttribute("methodid");
+
+                    if (string.IsNullOrEmpty(c) || string.IsNullOrEmpty(k) || string.IsNullOrEmpty(m))
                     {
-                        RoutedEventHandler? reh = null;
-                        MenuItem? mi = null;
-
-                        if (methodList != null)
+                        // skip item
+                    }
+                    else if (Enum.TryParse(c, out KeyboardCombination kc))
+                    {
+                        if (int.TryParse(k, out int kv))
                         {
-                            if (methodList.Contains(m))
+                            RoutedEventHandler? reh = null;
+                            MenuItem? mi = null;
+
+                            if (methodList != null)
                             {
-                                var v = methodList[m];
-                                reh = v.handler;
-                                mi = v.menuItem;
+                                if (methodList.Contains(m))
+                                {
+                                    var v = methodList[m];
+                                    reh = v.handler;
+                                    mi = v.menuItem;
+                                }
+                                else if (methodList.Contains("mnu" + m))
+                                {
+                                    m = "mnu" + m;
+
+                                    var v = methodList[m];
+                                    reh = v.handler;
+                                    mi = v.menuItem;
+                                }
+                            }
+                            KeyboardShortcut ke = new KeyboardShortcut(kc, (Key)kv, reh, m, mi);
+                            entries.Add(ke);
+                        }
+                        else
+                        {
+                            if (Enum.TryParse(k, out Key kz))
+                            {
+                                RoutedEventHandler? reh = null;
+                                MenuItem? mi = null;
+
+                                if (methodList != null)
+                                {
+                                    if (methodList.Contains(m))
+                                    {
+                                        var v = methodList[m];
+                                        reh = v.handler;
+                                        mi = v.menuItem;
+                                    }
+                                    else if (methodList.Contains("mnu" + m))
+                                    {
+                                        m = "mnu" + m;
+
+                                        var v = methodList[m];
+                                        reh = v.handler;
+                                        mi = v.menuItem;
+                                    }
+                                }
+                                KeyboardShortcut ke = new KeyboardShortcut(kc, kz, reh, m, mi);
+                                entries.Add(ke);
                             }
                         }
-                        KeyboardShortcut ke = new KeyboardShortcut(kc, (Key)kv, reh, m, mi);
-                        entries.Add(ke);
                     }
+
+                    //xr.ReadEndElement();
                 }
 
-                xr.ReadEndElement();
             }
 
             xr.Close();
@@ -119,6 +159,8 @@ namespace UiCore.Keyboard
 
             await w.WriteStartDocumentAsync();
 
+            await w.WriteStartElementAsync("", "shortcuts", "");
+
             foreach (KeyboardShortcut item in registry.Ksr_All)
             {
                 await w.WriteStartElementAsync("", "ks", "");
@@ -128,6 +170,7 @@ namespace UiCore.Keyboard
                 await w.WriteEndElementAsync();
             }
 
+            await w.WriteEndElementAsync();
             await w.WriteEndDocumentAsync();
 
             await w.FlushAsync();

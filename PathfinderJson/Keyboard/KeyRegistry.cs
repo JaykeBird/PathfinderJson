@@ -36,21 +36,6 @@ namespace UiCore.Keyboard
         public Dictionary<Key, KeyboardShortcut> Ksr_CtrlShift = new Dictionary<Key, KeyboardShortcut>();
         public Dictionary<Key, KeyboardShortcut> Ksr_CtrlAltShift = new Dictionary<Key, KeyboardShortcut>();
 
-        //public void RegisterKeyShortcut(KeyEntry entry, RoutedEventHandler method, MenuItem menuItem)
-        //{
-        //    RegisterKeyShortcut(entry.KeyboardCombination, entry.Key, method, entry.MethodId, menuItem);
-        //}
-
-        //internal void RegisterKeyShortcut(KeyEntry entry)
-        //{
-        //    RegisterKeyShortcut(entry.KeyboardCombination, entry.Key, entry.MethodId);
-        //}
-
-        //internal void RegisterKeyShortcut(KeyboardCombination combination, Key key, string methodId)
-        //{
-        //    RegisterKeyShortcut(combination, key, null, methodId, null);
-        //}
-
         public void RegisterKeyShortcut(KeyboardShortcut kc)
         {
             Ksr_All.Add(kc);
@@ -98,6 +83,12 @@ namespace UiCore.Keyboard
         public void RegisterKeyShortcut(KeyboardCombination combination, Key key, RoutedEventHandler method, string methodId, MenuItem? menuItem)
         {
             KeyboardShortcut kc = new KeyboardShortcut(combination, key, method, methodId, menuItem);
+            RegisterKeyShortcut(kc);
+        }
+
+        public void RegisterKeyShortcut(KeyboardCombination combination, Key key, (string methodId, RoutedEventHandler method, MenuItem? menuItem) methodRegistryItem)
+        {
+            KeyboardShortcut kc = new KeyboardShortcut(combination, key, methodRegistryItem.method, methodRegistryItem.methodId, methodRegistryItem.menuItem);
             RegisterKeyShortcut(kc);
         }
 
@@ -208,6 +199,10 @@ namespace UiCore.Keyboard
             return success;
         }
 
+        /// <summary>
+        /// Set if menu items should display the keyboard shortcut combinations directly in the user interface. 
+        /// </summary>
+        /// <param name="display">True to display keyboard shortcut combinations, false to not have them displayed.</param>
         public void ApplyDisplaySettings(bool display)
         {
             foreach (KeyboardShortcut item in Ksr_All)
@@ -216,11 +211,32 @@ namespace UiCore.Keyboard
             }
         }
 
+        /// <summary>
+        /// Get a list of keyboard shortcuts registered to a certain method.
+        /// </summary>
+        /// <param name="methodId">The name of the method. If you used the RoutedMethodRegistry to fill from a menu, the name will be the name of the MenuItem itself.</param>
+        /// <returns></returns>
         public IEnumerable<KeyboardShortcut> GetShortcutsForMethod(string methodId)
         {
-            return (from KeyboardShortcut kc in Ksr_All where kc.MethodId == methodId select kc);
+            return from KeyboardShortcut kc in Ksr_All where kc.MethodId == methodId select kc;
         }
 
+        /// <summary>
+        /// Get a list of keyboard shortcuts registered with a certain RoutedEventHandler.
+        /// </summary>
+        public IEnumerable<KeyboardShortcut> GetShortcutsForMethod(RoutedEventHandler method)
+        {
+            return from KeyboardShortcut kc in Ksr_All where kc.Method == method select kc;
+        }
+
+        /// <summary>
+        /// Get the RoutedEventHandler associated with a certain keyboard shortcut.
+        /// </summary>
+        /// <param name="key">The key for this shortcut.</param>
+        /// <param name="shift">Set if the Shift key is part of this shortcut.</param>
+        /// <param name="alt">Set if the Alt key is part of this shortcut.</param>
+        /// <param name="ctrl">Set if the Ctrl key is part of this shortcut.</param>
+        /// <returns></returns>
         public (RoutedEventHandler?, string) GetMethodForKey(Key key, bool shift, bool alt, bool ctrl)
         {
             if (ctrl)

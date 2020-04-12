@@ -73,7 +73,8 @@ namespace PathfinderJson
         Dictionary<string, string> abilities = new Dictionary<string, string>();
 
         // keyboard/method data
-        MethodRegistry mr = new MethodRegistry();
+        RoutedMethodRegistry mr = new RoutedMethodRegistry();
+        KeyboardShortcutHandler ksh;
         KeyRegistry kr = new KeyRegistry();
 
         #region Constructor/ window events/ basic functions
@@ -105,18 +106,16 @@ namespace PathfinderJson
             }
 
             InitializeComponent();
+            ksh = new KeyboardShortcutHandler(this);
             mr.FillFromMenu(menu);
+
             try
             {
-                var list = KeyboardShortcutsIo.LoadFromFile("", mr);
-                foreach (KeyboardShortcut item in list)
-                {
-                    kr.RegisterKeyShortcut(item);
-                }
+                ksh.LoadShortcutsFromFile(Path.Combine(appDataPath, "keyboard.xml"), mr);
             }
             catch (ArgumentException)
             {
-                // creat generic keyboard shortcut list
+                ksh.LoadShortcutsFromList(DefaultKeySettings.CreateDefaultShortcuts(mr));
             }
 
             if (App.Settings.HighContrastTheme == NO_HIGH_CONTRAST)
