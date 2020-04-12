@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -48,7 +49,7 @@ namespace UiCore.Keyboard
             }
         }
 
-        public async void WriteShortcutsToFileAsync(string file)
+        public async Task WriteShortcutsToFileAsync(string file)
         {
             await KeyboardShortcutsIo.WriteToFile(KeyRegistry, file);
         }

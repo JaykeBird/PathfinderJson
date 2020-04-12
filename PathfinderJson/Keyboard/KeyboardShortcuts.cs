@@ -105,6 +105,14 @@ namespace UiCore.Keyboard
                                     reh = v.handler;
                                     mi = v.menuItem;
                                 }
+                                else if (methodList.Contains("btn" + m))
+                                {
+                                    m = "btn" + m;
+
+                                    var v = methodList[m];
+                                    reh = v.handler;
+                                    mi = v.menuItem;
+                                }
                             }
                             KeyboardShortcut ke = new KeyboardShortcut(kc, (Key)kv, reh, m, mi);
                             entries.Add(ke);
@@ -132,6 +140,14 @@ namespace UiCore.Keyboard
                                         reh = v.handler;
                                         mi = v.menuItem;
                                     }
+                                    else if (methodList.Contains("btn" + m))
+                                    {
+                                        m = "btn" + m;
+
+                                        var v = methodList[m];
+                                        reh = v.handler;
+                                        mi = v.menuItem;
+                                    }
                                 }
                                 KeyboardShortcut ke = new KeyboardShortcut(kc, kz, reh, m, mi);
                                 entries.Add(ke);
@@ -154,6 +170,7 @@ namespace UiCore.Keyboard
             XmlWriter w = XmlWriter.Create(file, new XmlWriterSettings
             {
                 Encoding = new UTF8Encoding(false),
+                Async = true,
                 Indent = true
             });
 
