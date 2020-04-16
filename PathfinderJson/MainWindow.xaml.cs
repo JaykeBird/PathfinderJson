@@ -1562,6 +1562,15 @@ namespace PathfinderJson
             SaveSettings(true);
         }
 
+
+        private void mnuOptions_Click(object sender, RoutedEventArgs e)
+        {
+            Options o = new Options();
+            o.ColorScheme = App.ColorScheme;
+
+            o.ShowDialog();
+        }
+
         #endregion
 
         #region JSON Editor
