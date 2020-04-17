@@ -5,8 +5,11 @@
         xmlns:flat="clr-namespace:UiCore;assembly=UiCore"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PathfinderJson"
-        mc:Ignorable="d" Title="PathfinderJson Options" x:Name="window" BorderBrush="DarkGreen"
-        Height="450" Width="800" CaptionDisplayType="Close" ResizeMode="NoResize" >
+        mc:Ignorable="d" Title="Pathfinder JSON Options" x:Name="window" BorderBrush="DarkGreen"
+        Height="450" Width="700" CaptionDisplayType="Close" ResizeMode="NoResize" >
+    <flat:FlatWindow.Resources>
+        <flat:ColorToBrushConverter x:Key="ctb" />
+    </flat:FlatWindow.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="120"/>
@@ -19,21 +22,63 @@
 
         <flat:SelectPanel x:Name="selTabs" Grid.Row="0" Grid.Column="0" PanelBorderThickness="0,0,1,0" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" />
 
-        <Grid Grid.Row="0" Grid.Column="1" x:Name="grdHolder" >
+        <Grid Grid.Row="0" Grid.Column="1" x:Name="grdHolder" Margin="10,5,0,5" >
             <Grid x:Name="tabGeneral">
-                <TextBlock Text="General" />
+                <TextBlock Text="General Options" FontSize="16" VerticalAlignment="Top" />
+                <TextBlock Text="Check for Updates" FontWeight="Bold" Margin="0,30,0,0" VerticalAlignment="Top" />
+                <flat:FlatButton x:Name="btnUpdateNow" Content="Check for Updates Now" Margin="10,55,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="160" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" Click="btnUpdateNow_Click" />
+                <flat:CheckBox x:Name="chkAutoUpdate" Content="Automatically check for updates when Pathfinder JSON starts" VerticalAlignment="Top" Margin="10,85,0,0" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" />
+                <TextBlock Text="Recent Files" FontWeight="Bold" Margin="0,120,0,0" VerticalAlignment="Top" />
+                <flat:FlatButton x:Name="btnClearList" Content="Clear Recent File List" Margin="10,145,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="150" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" Click="btnClearList_Click" />
+                <TextBlock x:Name="lblRecentFiles" Text="The recent files list will be cleared when you click OK." Margin="10,175,0,0" VerticalAlignment="Top" Visibility="Collapsed" />
             </Grid>
             <Grid x:Name="tabSaving">
-                <TextBlock Text="Saving" />
+                <TextBlock Text="Saving Options" FontSize="16" VerticalAlignment="Top" />
+                <TextBlock Text="Indent JSON Data" FontWeight="Bold" Margin="0,30,0,0" VerticalAlignment="Top" />
+                <flat:CheckBox x:Name="chkIndentSaving" Content="Indent/pretty format JSON when saving files" VerticalAlignment="Top" Margin="10,55,0,0" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" />
             </Grid>
             <Grid x:Name="tabInterface">
-                <TextBlock Text="Interface" />
+                <TextBlock Text="Interface Options" FontSize="16" VerticalAlignment="Top" />
             </Grid>
-            <Grid x:Name="tabTextEditor">
-                <TextBlock Text="Text Editor" />
+            <Grid x:Name="tabJsonEditor">
+                <TextBlock Text="JSON Editor Options" FontSize="16" VerticalAlignment="Top" />
+                <TextBlock Text="Font/Text Display" FontWeight="Bold" Margin="0,30,0,0" VerticalAlignment="Top" />
+                <Border x:Name="brdrFont" BorderBrush="{Binding ElementName=window, Path=BorderBrush}" BorderThickness="1" Background="{Binding ElementName=window, Path=ColorScheme.LightBackgroundColor, Converter={StaticResource ctb}}" 
+                        Width="350" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10,55,0,0" Height="60">
+                    <Grid x:Name="grdFont" Margin="3,0,0,0">
+                        <TextBlock x:Name="txtFont">
+                            This is how text will appear in the JSON editor.<LineBreak />
+                            This is a line that is very long, and doesn't all fit unless you enable word wrap. <LineBreak />
+                            Here is some more text.
+                        </TextBlock>
+                    </Grid>
+                    
+                </Border>
+                <flat:FlatButton x:Name="btnFontOptions" Content="Change Font..." Margin="10,125,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="110" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" Click="btnFontOptions_Click" />
+                <flat:CheckBox x:Name="chkWordWrap" Content="Use word wrap for long lines" VerticalAlignment="Top" Margin="10,160,0,0" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" CheckChanged="chkWordWrap_CheckChanged" />
+
+                <TextBlock Text="Indent JSON while Editing" FontWeight="Bold" Margin="0,190,0,0" VerticalAlignment="Top" />
+                <flat:CheckBox x:Name="chkIndentEditor" Content="Indent/pretty format JSON while using the raw JSON editor" VerticalAlignment="Top" Margin="10,215,0,0" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" />
+
+                <TextBlock Text="Color Highlights" FontWeight="Bold" Margin="0,250,0,0" VerticalAlignment="Top" />
+                <TextBlock Margin="10,275,10,0" VerticalAlignment="Top" TextWrapping="Wrap"
+                    Text="Color highlights adds color to the text, and helps you easily navigate and edit your JSON files. In most cases, it's beneficial to keep it on. However, in High Contrast mode, color highlights is always disabled." />
+                <flat:CheckBox x:Name="chkSyntaxHighlight" Content="Use color highlights in the raw JSON editor" VerticalAlignment="Top" Margin="10,315,0,0" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" />
             </Grid>
-            <Grid x:Name="tabAdvanced">
-                <TextBlock Text="Advanced" />
+            <Grid x:Name="tabFeedback">
+                <TextBlock Text="Feedback Options" FontSize="16" VerticalAlignment="Top" />
+                <TextBlock Text="Send Feedback or Report an Issue" FontWeight="Bold" Margin="0,30,0,0" VerticalAlignment="Top" />
+                <TextBlock Margin="10,55,10,0" TextWrapping="Wrap" VerticalAlignment="Top" 
+                           Text="If you encounter a bug or issue in the program, or you have some feedback about how to make it better, please share it by clicking the button below! (You'll need a GitHub account.)" />
+                <flat:FlatButton x:Name="btnFeedback" Content="Send Feedback" Margin="10,100,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="120" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" Click="btnFeedback_Click" />
+                <TextBlock Text="Crash Logs" FontWeight="Bold" Margin="0,140,0,0" VerticalAlignment="Top" />
+                <TextBlock Margin="10,165,10,0" TextWrapping="Wrap" VerticalAlignment="Top" 
+                           Text="Crash logs are automatically created when PathfinderJson crashes. Please share them with the developer to help fix issues and prevent future crashes!" />
+                <flat:FlatButton x:Name="btnCrashLogs" Content="Open Crash Logs Folder" Margin="10,210,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="160" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" Click="btnCrashLogs_Click" />
+                <TextBlock Text="Platform Info" FontWeight="Bold" Margin="0,250,0,0" VerticalAlignment="Top" />
+                <TextBlock Margin="10,275,10,0" TextWrapping="Wrap" VerticalAlignment="Top" 
+                           Text="This window will display information about the computer you're using right now. Please share this info with the developer if they ask for it! It helps narrow down what could cause a bug or issue." />
+                <flat:FlatButton x:Name="btnPlatformInfo" Content="Platform Info" Margin="10,320,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="110" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" Click="btnPlatformInfo_Click" />
             </Grid>
         </Grid>
 
