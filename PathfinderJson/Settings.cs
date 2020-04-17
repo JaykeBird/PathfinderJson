@@ -93,5 +93,11 @@ namespace PathfinderJson
 
         [JsonProperty("editor.syntaxHighlight")]
         public bool EditorSyntaxHighlighting { get; set; } = true;
+
+        [JsonProperty("editor.wordWrap")]
+        public bool EditorWordWrap { get; set; } = true;
+
+        [JsonProperty("editor.indent")]
+        public bool EditorIndent { get; set; } = true;
     }
 }

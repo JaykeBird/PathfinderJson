@@ -147,7 +147,11 @@
                 <MenuItem Header="_Dice Roller" IsEnabled="False" />
                 <Separator />
                 <MenuItem Header="_Text Editor Font..." x:Name="mnuEditorFont" Click="mnuEditorFont_Click" />
-                <MenuItem Header="_Options..." x:Name="mnuOptions" Click="mnuOptions_Click" />
+                <MenuItem Header="_Options..." x:Name="mnuOptions" Click="mnuOptions_Click">
+                    <MenuItem.Icon>
+                        <Image Source="/PathfinderJson;component/Images/Options.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
             </MenuItem>
             <MenuItem Header="_Help">
                 <MenuItem Header="_View on GitHub" x:Name="mnuGithub" Click="mnuGithub_Click" />

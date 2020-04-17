@@ -1566,6 +1566,7 @@ namespace PathfinderJson
         private void mnuOptions_Click(object sender, RoutedEventArgs e)
         {
             Options o = new Options();
+            o.Owner = this;
             o.ColorScheme = App.ColorScheme;
 
             o.ShowDialog();
