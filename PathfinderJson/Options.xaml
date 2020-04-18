@@ -17,7 +17,7 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition/>
-            <RowDefinition Height="48"/>
+            <RowDefinition Height="42"/>
         </Grid.RowDefinitions>
 
         <flat:SelectPanel x:Name="selTabs" Grid.Row="0" Grid.Column="0" PanelBorderThickness="0,0,1,0" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" />
@@ -52,7 +52,7 @@
                             Here is some more text.
                         </TextBlock>
                     </Grid>
-                    
+
                 </Border>
                 <flat:FlatButton x:Name="btnFontOptions" Content="Change Font..." Margin="10,125,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="110" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" Click="btnFontOptions_Click" />
                 <flat:CheckBox x:Name="chkWordWrap" Content="Use word wrap for long lines" VerticalAlignment="Top" Margin="10,160,0,0" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" CheckChanged="chkWordWrap_CheckChanged" />
@@ -60,10 +60,10 @@
                 <TextBlock Text="Indent JSON while Editing" FontWeight="Bold" Margin="0,190,0,0" VerticalAlignment="Top" />
                 <flat:CheckBox x:Name="chkIndentEditor" Content="Indent/pretty format JSON while using the raw JSON editor" VerticalAlignment="Top" Margin="10,215,0,0" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" />
 
-                <TextBlock Text="Color Highlights" FontWeight="Bold" Margin="0,250,0,0" VerticalAlignment="Top" />
+                <TextBlock Text="Syntax Coloring" FontWeight="Bold" Margin="0,250,0,0" VerticalAlignment="Top" />
                 <TextBlock Margin="10,275,10,0" VerticalAlignment="Top" TextWrapping="Wrap"
-                    Text="Color highlights adds color to the text, and helps you easily navigate and edit your JSON files. In most cases, it's beneficial to keep it on. However, in High Contrast mode, color highlights is always disabled." />
-                <flat:CheckBox x:Name="chkSyntaxHighlight" Content="Use color highlights in the raw JSON editor" VerticalAlignment="Top" Margin="10,315,0,0" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" />
+                    Text="Syntax coloring adds color to the text, and helps you easily navigate and edit your JSON files. In most cases, it's beneficial to keep it on. However, in High Contrast mode, coloring is always disabled." />
+                <flat:CheckBox x:Name="chkSyntaxHighlight" Content="Use syntax coloring in the raw JSON editor" VerticalAlignment="Top" Margin="10,315,0,0" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" />
             </Grid>
             <Grid x:Name="tabFeedback">
                 <TextBlock Text="Feedback Options" FontSize="16" VerticalAlignment="Top" />
@@ -83,5 +83,7 @@
         </Grid>
 
         <Border Grid.Row="1" Grid.ColumnSpan="2" VerticalAlignment="Top" Height="1" BorderThickness="1" BorderBrush="{Binding ElementName=window, Path=BorderBrush}" />
+        <flat:FlatButton x:Name="btnOk" Content="OK" Margin="0,0,105,10" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="80" ColorScheme="{Binding ColorScheme, ElementName=window}" Click="btnOk_Click" Grid.Column="1" Grid.Row="1" />
+        <flat:FlatButton x:Name="btnCancel" Content="Cancel" Margin="0,0,20,10" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="80" ColorScheme="{Binding ColorScheme, ElementName=window}" Click="btnCancel_Click" Grid.Column="1" Grid.Row="1" />
     </Grid>
 </flat:FlatWindow>

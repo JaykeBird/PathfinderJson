@@ -413,5 +413,19 @@ namespace PathfinderJson
             pi.Owner = this;
             pi.ShowDialog();
         }
+
+        public new bool DialogResult { get; set; } = false;
+
+        private void btnOk_Click(object sender, RoutedEventArgs e)
+        {
+            DialogResult = true;
+            SaveSettings();
+            Close();
+        }
+
+        private void btnCancel_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
     }
 }
