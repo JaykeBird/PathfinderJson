@@ -287,6 +287,7 @@ namespace PathfinderJson
             }
 
             UpdateAppearance();
+            UpdateTitlebar();
 
             mnuIndent.IsChecked = App.Settings.IndentJsonData;
             mnuAutoCheck.IsChecked = App.Settings.UpdateAutoCheck;
@@ -794,6 +795,11 @@ namespace PathfinderJson
         private void mnuFeedback_Click(object sender, RoutedEventArgs e)
         {
             OpenBrowser("https://github.com/JaykeBird/PathfinderJson/issues/new/choose");
+        }
+
+        private void mnuKeyboard_Click(object sender, RoutedEventArgs e)
+        {
+            OpenBrowser("https://github.com/JaykeBird/PathfinderJson/wiki/Keyboard-Shortcuts");
         }
 
         private void mnuAutoCheck_Click(object sender, RoutedEventArgs e)
@@ -3378,5 +3384,6 @@ namespace PathfinderJson
 
 
         #endregion
+
     }
 }
