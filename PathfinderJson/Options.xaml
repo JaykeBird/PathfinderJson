@@ -41,18 +41,19 @@
                 <flat:FlatButton x:Name="btnChangeColors" Content="Change Colors..." VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10,55,0,0" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" Width="120" Click="btnChangeColors_Click" />
                 <TextBlock Text="This is the color used throughout the entire user interface." Margin="10,90,0,0" VerticalAlignment="Top" />
                 <TextBlock Text="High Contrast Mode" FontWeight="Bold" Margin="0,120,0,0" VerticalAlignment="Top" />
-                <flat:CheckBox x:Name="chkHighContrast" Content="Use high contrast mode" Margin="10,145,0,0" VerticalAlignment="Top" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" CheckChanged="chkHighContrast_CheckChanged" />
-                <TextBlock Text="High contrast theme:" Margin="55,180,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" />
-                <ComboBox x:Name="cbbHighContrast" Margin="180,177,0,0" Height="24" Width="180" HorizontalAlignment="Left" VerticalAlignment="Top" >
+                <TextBlock Text="High Contrast Mode is good for users with vision impairment or other issues." Margin="10,145,0,0" VerticalAlignment="Top" />
+                <flat:CheckBox x:Name="chkHighContrast" Content="Use high contrast mode" Margin="10,165,0,0" VerticalAlignment="Top" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" CheckChanged="chkHighContrast_CheckChanged" />
+                <TextBlock Text="High contrast theme:" Margin="55,200,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" />
+                <ComboBox x:Name="cbbHighContrast" Margin="180,197,0,0" Height="24" Width="180" HorizontalAlignment="Left" VerticalAlignment="Top" >
                     <ComboBoxItem Content="White on black" />
                     <ComboBoxItem Content="Green on black" />
                     <ComboBoxItem Content="Black on white" />
                 </ComboBox>
-                <TextBlock Text="Toolbar" FontWeight="Bold" Margin="0,210,0,0" VerticalAlignment="Top" />
-                <flat:CheckBox x:Name="chkToolbar" Content="Show toolbar" Margin="10,230,0,0" VerticalAlignment="Top" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" />
-                <TextBlock Text="Title bar" FontWeight="Bold" Margin="0,270,0,0" VerticalAlignment="Top" />
-                <flat:CheckBox x:Name="chkFilename" Content="Show filename in the titlebar" Margin="10,290,0,0" VerticalAlignment="Top" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" />
-                <TextBlock Text="If unchecked, the character's name is shown in the titlebar." Margin="10,320,0,0" VerticalAlignment="Top" />
+                <TextBlock Text="Toolbar" FontWeight="Bold" Margin="0,230,0,0" VerticalAlignment="Top" />
+                <flat:CheckBox x:Name="chkToolbar" Content="Show toolbar" Margin="10,250,0,0" VerticalAlignment="Top" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" />
+                <TextBlock Text="Title bar" FontWeight="Bold" Margin="0,290,0,0" VerticalAlignment="Top" />
+                <flat:CheckBox x:Name="chkFilename" Content="Show filename in the titlebar" Margin="10,310,0,0" VerticalAlignment="Top" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" />
+                <TextBlock Text="If unchecked, the character's name is shown in the titlebar." Margin="10,340,0,0" VerticalAlignment="Top" />
             </Grid>
             <Grid x:Name="tabJsonEditor">
                 <TextBlock Text="JSON Editor Options" FontSize="16" VerticalAlignment="Top" />
