@@ -52,6 +52,14 @@ namespace PathfinderJson
             {
                 throw new FormatException("This expression does not contain any numbers. Cannot be evaluated.");
             }
+            else if (g == 4)
+            {
+                throw new FormatException("This expression ends with an operator character, which is invalid. Cannot be evaluated.");
+            }
+            else if (g == 5)
+            {
+                throw new FormatException("This expression starts with an operator character, which is invalid. Cannot be evaluated.");
+            }
             else
             {
                 throw new FormatException("This expression cannot be evaluated for an undetermined reason.");
@@ -121,7 +129,14 @@ namespace PathfinderJson
             List<string>? ParsedOperations = ParseOperations(input);
             if (ParsedOperations != null)
             {
-                return PerformOperations(ref ParsedOperations);
+                try
+                {
+                    return PerformOperations(ref ParsedOperations);
+                }
+                catch (ArgumentOutOfRangeException)
+                {
+                    throw new FormatException("This expression contains an operator without a number to evaluate with it. Cannot be evaluated.");
+                }
             }
             else
             {
@@ -293,9 +308,9 @@ namespace PathfinderJson
                 return -1;
         }
 
-
         static int PreCheckString(string input)
         {
+
             bool hasnumber = false;
             char prev = '0';
 
@@ -339,6 +354,16 @@ namespace PathfinderJson
             if (!hasnumber)
             {
                 return 3;
+            }
+
+            if (input.EndsWith("/") || input.EndsWith("*") || input.EndsWith("+") || input.EndsWith("-"))
+            {
+                return 4;
+            }
+
+            if (input.StartsWith("+") || input.StartsWith("*") || input.StartsWith("/"))
+            {
+                return 5;
             }
 
             return 0;

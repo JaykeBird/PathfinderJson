@@ -144,7 +144,7 @@
                 <MenuItem Header="_Filename in Titlebar" x:Name="mnuFilename" Click="MnuFilename_Click" />
             </MenuItem>
             <MenuItem Header="_Tools">
-                <MenuItem Header="_Dice Roller" IsEnabled="False" />
+                <MenuItem Header="_Dice Roller" x:Name="mnuDiceRoll" Click="mnuDiceRoll_Click" />
                 <Separator />
                 <MenuItem Header="_Text Editor Font..." x:Name="mnuEditorFont" Click="mnuEditorFont_Click" />
                 <MenuItem Header="_Options..." x:Name="mnuOptions" Click="mnuOptions_Click">

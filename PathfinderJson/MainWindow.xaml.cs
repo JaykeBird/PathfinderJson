@@ -1658,6 +1658,13 @@ namespace PathfinderJson
 
         #region Tools menu
 
+        private void mnuDiceRoll_Click(object sender, RoutedEventArgs e)
+        {
+            DiceRollerWindow drw = new DiceRollerWindow();
+            drw.ColorScheme = App.ColorScheme;
+            drw.Show();
+        }
+
         private void mnuEditorFont_Click(object sender, RoutedEventArgs e)
         {
             FontSelectDialog fds = new FontSelectDialog();
@@ -3384,6 +3391,5 @@ namespace PathfinderJson
 
 
         #endregion
-
     }
 }
