@@ -96,8 +96,5 @@ namespace PathfinderJson
 
         [JsonProperty("editor.wordWrap")]
         public bool EditorWordWrap { get; set; } = true;
-
-        [JsonProperty("editor.indent")]
-        public bool EditorIndent { get; set; } = true;
     }
 }

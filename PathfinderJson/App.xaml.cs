@@ -152,6 +152,7 @@ namespace PathfinderJson
 
                             if (md.ShowDialog() == MessageDialogResult.OK)
                             {
+                                // white on black
                                 Settings.HighContrastTheme = "1";
                             }
                         }
@@ -162,6 +163,7 @@ namespace PathfinderJson
 
                             if (md.ShowDialog() == MessageDialogResult.OK)
                             {
+                                // green on black
                                 Settings.HighContrastTheme = "2";
                             }
                         }
@@ -173,6 +175,7 @@ namespace PathfinderJson
 
                         if (md.ShowDialog() == MessageDialogResult.OK)
                         {
+                            // black on white
                             Settings.HighContrastTheme = "3";
                         }
                     }

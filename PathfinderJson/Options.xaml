@@ -34,11 +34,25 @@
             </Grid>
             <Grid x:Name="tabSaving">
                 <TextBlock Text="Saving Options" FontSize="16" VerticalAlignment="Top" />
-                <TextBlock Text="Indent JSON Data" FontWeight="Bold" Margin="0,30,0,0" VerticalAlignment="Top" />
-                <flat:CheckBox x:Name="chkIndentSaving" Content="Indent/pretty format JSON when saving files" VerticalAlignment="Top" Margin="10,55,0,0" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" />
             </Grid>
             <Grid x:Name="tabInterface">
                 <TextBlock Text="Interface Options" FontSize="16" VerticalAlignment="Top" />
+                <TextBlock Text="Color Scheme" FontWeight="Bold" Margin="0,30,0,0" VerticalAlignment="Top" />
+                <flat:FlatButton x:Name="btnChangeColors" Content="Change Colors..." VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10,55,0,0" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" Width="120" Click="btnChangeColors_Click" />
+                <TextBlock Text="This is the color used throughout the entire user interface." Margin="10,90,0,0" VerticalAlignment="Top" />
+                <TextBlock Text="High Contrast Mode" FontWeight="Bold" Margin="0,120,0,0" VerticalAlignment="Top" />
+                <flat:CheckBox x:Name="chkHighContrast" Content="Use high contrast mode" Margin="10,145,0,0" VerticalAlignment="Top" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" CheckChanged="chkHighContrast_CheckChanged" />
+                <TextBlock Text="High contrast theme:" Margin="55,180,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" />
+                <ComboBox x:Name="cbbHighContrast" Margin="180,177,0,0" Height="24" Width="180" HorizontalAlignment="Left" VerticalAlignment="Top" >
+                    <ComboBoxItem Content="White on black" />
+                    <ComboBoxItem Content="Green on black" />
+                    <ComboBoxItem Content="Black on white" />
+                </ComboBox>
+                <TextBlock Text="Toolbar" FontWeight="Bold" Margin="0,210,0,0" VerticalAlignment="Top" />
+                <flat:CheckBox x:Name="chkToolbar" Content="Show toolbar" Margin="10,230,0,0" VerticalAlignment="Top" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" />
+                <TextBlock Text="Title bar" FontWeight="Bold" Margin="0,270,0,0" VerticalAlignment="Top" />
+                <flat:CheckBox x:Name="chkFilename" Content="Show filename in the titlebar" Margin="10,290,0,0" VerticalAlignment="Top" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" />
+                <TextBlock Text="If unchecked, the character's name is shown in the titlebar." Margin="10,320,0,0" VerticalAlignment="Top" />
             </Grid>
             <Grid x:Name="tabJsonEditor">
                 <TextBlock Text="JSON Editor Options" FontSize="16" VerticalAlignment="Top" />
@@ -52,13 +66,12 @@
                             Here is some more text.
                         </TextBlock>
                     </Grid>
-
                 </Border>
                 <flat:FlatButton x:Name="btnFontOptions" Content="Change Font..." Margin="10,125,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="110" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" Click="btnFontOptions_Click" />
                 <flat:CheckBox x:Name="chkWordWrap" Content="Use word wrap for long lines" VerticalAlignment="Top" Margin="10,160,0,0" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" CheckChanged="chkWordWrap_CheckChanged" />
 
-                <TextBlock Text="Indent JSON while Editing" FontWeight="Bold" Margin="0,190,0,0" VerticalAlignment="Top" />
-                <flat:CheckBox x:Name="chkIndentEditor" Content="Indent/pretty format JSON while using the raw JSON editor" VerticalAlignment="Top" Margin="10,215,0,0" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" />
+                <TextBlock Text="Indent JSON while Editing/Saving" FontWeight="Bold" Margin="0,190,0,0" VerticalAlignment="Top" />
+                <flat:CheckBox x:Name="chkIndentEditor" Content="Indent/pretty format JSON while using the raw JSON editor or saving the file" VerticalAlignment="Top" Margin="10,215,0,0" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" />
 
                 <TextBlock Text="Syntax Coloring" FontWeight="Bold" Margin="0,250,0,0" VerticalAlignment="Top" />
                 <TextBlock Margin="10,275,10,0" VerticalAlignment="Top" TextWrapping="Wrap"

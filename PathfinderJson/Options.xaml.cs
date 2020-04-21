@@ -19,6 +19,10 @@ namespace PathfinderJson
         /// <summary>Path to the AppData folder where settings are stored</summary>
         string appDataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "PathfinderJson");
 
+        // temp settings
+        bool clearRecentList = false;
+        Color uiColor = App.ColorScheme.MainColor;
+
         public Options()
         {
             InitializeComponent();
@@ -42,7 +46,7 @@ namespace PathfinderJson
         void SetupTabs()
         {
             selTabs.AddItem(CreateTab("General"));
-            selTabs.AddItem(CreateTab("Saving"));
+            //selTabs.AddItem(CreateTab("Saving"));
             selTabs.AddItem(CreateTab("Interface"));
             selTabs.AddItem(CreateTab("JSON Editor"));
             selTabs.AddItem(CreateTab("Feedback"));
@@ -113,10 +117,7 @@ namespace PathfinderJson
         }
         #endregion
 
-        #region Settings
-
-        // temp settings
-        bool clearRecentList = false;
+        #region Settings IO
 
         void LoadSettings()
         {
@@ -125,12 +126,33 @@ namespace PathfinderJson
             // General options
             chkAutoUpdate.IsChecked = s.UpdateAutoCheck;
 
-            // Saving options
-            chkIndentSaving.IsChecked = s.IndentJsonData;
+            // Interface options
+            uiColor = App.ColorScheme.MainColor;
+            chkHighContrast.IsChecked = !(s.HighContrastTheme == App.NO_HIGH_CONTRAST);
+            cbbHighContrast.IsEnabled = chkHighContrast.IsChecked;
+            switch (s.HighContrastTheme)
+            {
+                case "1": // white on black
+                    cbbHighContrast.SelectedIndex = 0;
+                    break;
+                case "2": // green on black
+                    cbbHighContrast.SelectedIndex = 1;
+                    break;
+                case "3": // black on white
+                    cbbHighContrast.SelectedIndex = 2;
+                    break;
+                default:
+                    cbbHighContrast.SelectedIndex = 0;
+                    break;
+            }
+
+            chkToolbar.IsChecked = s.ShowToolbar;
+            chkFilename.IsChecked = s.PathInTitleBar;
 
             // Text editor options
             LoadEditorFontSettings(s);
             chkSyntaxHighlight.IsChecked = s.EditorSyntaxHighlighting;
+            chkIndentEditor.IsChecked = s.IndentJsonData;
             chkWordWrap.IsChecked = s.EditorWordWrap;
         }
 
@@ -140,8 +162,34 @@ namespace PathfinderJson
             App.Settings.UpdateAutoCheck = chkAutoUpdate.IsChecked;
             if (clearRecentList) App.Settings.RecentFiles.Clear();
 
-            // Saving options
-            App.Settings.IndentJsonData = chkIndentSaving.IsChecked;
+            // Interface options
+            App.ColorScheme = new ColorScheme(uiColor);
+            App.Settings.ThemeColor = uiColor.GetHexString();
+            App.Settings.ShowToolbar = chkToolbar.IsChecked;
+            App.Settings.PathInTitleBar = chkFilename.IsChecked;
+
+            if (chkHighContrast.IsChecked)
+            {
+                switch (cbbHighContrast.SelectedIndex)
+                {
+                    case 0:
+                        App.Settings.HighContrastTheme = "1";
+                        break;
+                    case 1:
+                        App.Settings.HighContrastTheme = "2";
+                        break;
+                    case 2:
+                        App.Settings.HighContrastTheme = "3";
+                        break;
+                    default:
+                        App.Settings.HighContrastTheme = "1";
+                        break;
+                }
+            }
+            else
+            {
+                App.Settings.HighContrastTheme = App.NO_HIGH_CONTRAST;
+            }
 
             // Text editor options
             string ff = (txtFont.FontFamily.Source).Replace(", Consolas", "");
@@ -165,6 +213,7 @@ namespace PathfinderJson
 
             App.Settings.EditorSyntaxHighlighting = chkSyntaxHighlight.IsChecked;
             App.Settings.EditorWordWrap = chkWordWrap.IsChecked;
+            App.Settings.IndentJsonData = chkIndentEditor.IsChecked;
 
             // ----------------------------------------
             // finally, save the settings to a file
@@ -426,6 +475,24 @@ namespace PathfinderJson
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         {
             Close();
+        }
+
+        private void chkHighContrast_CheckChanged(object sender, RoutedEventArgs e)
+        {
+            cbbHighContrast.IsEnabled = chkHighContrast.IsChecked;
+        }
+
+        private void btnChangeColors_Click(object sender, RoutedEventArgs e)
+        {
+            ColorPickerDialog cpd = new ColorPickerDialog(App.ColorScheme, App.ColorScheme.MainColor);
+            cpd.Owner = this;
+
+            cpd.ShowDialog();
+
+            if (cpd.DialogResult)
+            {
+                uiColor = cpd.SelectedColor;
+            }
         }
     }
 }

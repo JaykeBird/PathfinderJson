@@ -199,6 +199,9 @@ namespace PathfinderJson
 
             LoadEditorFontSettings();
 
+            txtEditRaw.WordWrap = App.Settings.EditorWordWrap;
+            mnuWordWrap.IsChecked = App.Settings.EditorWordWrap;
+
             SearchPanel p = SearchPanel.Install(txtEditRaw);
             p.FontFamily = SystemFonts.MessageFontFamily; // so it isn't a fixed-width font lol
             sp = p;
@@ -254,6 +257,113 @@ namespace PathfinderJson
             }
         }
 
+        void ReloadSettings()
+        {
+            bool updateSettings = false;
+
+            if (App.Settings.HighContrastTheme == NO_HIGH_CONTRAST)
+            {
+                App.ColorScheme = new ColorScheme(ColorsHelper.CreateFromHex(App.Settings.ThemeColor));
+            }
+            else
+            {
+                switch (App.Settings.HighContrastTheme)
+                {
+                    case "1":
+                        App.ColorScheme = ColorScheme.GetHighContrastScheme(HighContrastOption.WhiteOnBlack);
+                        break;
+                    case "2":
+                        App.ColorScheme = ColorScheme.GetHighContrastScheme(HighContrastOption.GreenOnBlack);
+                        break;
+                    case "3":
+                        App.ColorScheme = ColorScheme.GetHighContrastScheme(HighContrastOption.BlackOnWhite);
+                        break;
+                    default:
+                        App.Settings.HighContrastTheme = NO_HIGH_CONTRAST;
+                        App.ColorScheme = new ColorScheme(ColorsHelper.CreateFromHex(App.Settings.ThemeColor));
+                        updateSettings = true;
+                        break;
+                }
+            }
+
+            UpdateAppearance();
+
+            mnuIndent.IsChecked = App.Settings.IndentJsonData;
+            mnuAutoCheck.IsChecked = App.Settings.UpdateAutoCheck;
+
+            if (App.Settings.RecentFiles.Count > 20)
+            {
+                // time to remove some old entries
+                App.Settings.RecentFiles.Reverse();
+                App.Settings.RecentFiles.RemoveRange(20, App.Settings.RecentFiles.Count - 20);
+                App.Settings.RecentFiles.Reverse();
+                updateSettings = true;
+            }
+
+            // clear recent files list in UI (not in backend)
+            List<FrameworkElement> itemsToRemove = new List<FrameworkElement>();
+
+            foreach (FrameworkElement? item in mnuRecent.Items)
+            {
+
+                if (item is MenuItem)
+                {
+                    if (item.Tag != null)
+                    {
+                        itemsToRemove.Add(item);
+                    }
+                }
+            }
+
+            foreach (var item in itemsToRemove)
+            {
+                mnuRecent.Items.Remove(item);
+            }
+
+            mnuRecentEmpty.Visibility = Visibility.Visible;
+
+            foreach (string file in App.Settings.RecentFiles)//.Reverse<string>())
+            {
+                AddRecentFile(file, false);
+            }
+
+            ShowHideToolbar(App.Settings.ShowToolbar);
+
+            // setup up raw JSON editor
+            if (App.Settings.EditorSyntaxHighlighting)
+            {
+                using (Stream? s = System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceStream("PathfinderJson.Json.xshd"))
+                {
+                    if (s != null)
+                    {
+                        using XmlReader reader = new XmlTextReader(s);
+                        txtEditRaw.SyntaxHighlighting = ICSharpCode.AvalonEdit.Highlighting.Xshd.HighlightingLoader.Load(reader, HighlightingManager.Instance);
+                    }
+                }
+            }
+            else
+            {
+                using (Stream? s = System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceStream("PathfinderJson.None.xshd"))
+                {
+                    if (s != null)
+                    {
+                        using XmlReader reader = new XmlTextReader(s);
+                        txtEditRaw.SyntaxHighlighting = ICSharpCode.AvalonEdit.Highlighting.Xshd.HighlightingLoader.Load(reader, HighlightingManager.Instance);
+                    }
+                }
+            }
+
+            LoadEditorFontSettings();
+
+            txtEditRaw.WordWrap = App.Settings.EditorWordWrap;
+            mnuWordWrap.IsChecked = App.Settings.EditorWordWrap;
+
+            if (updateSettings)
+            {
+                SaveSettings();
+            }
+        }
+
         void UpdateTitlebar()
         {
             if (!_sheetLoaded)
@@ -297,6 +407,38 @@ namespace PathfinderJson
             }
         }
 
+        /// <summary>
+        /// Set if the current sheet has unsaved changes. Also updates the title bar and by default sets the tabbed/continuous view as unsynced.
+        /// </summary>
+        /// <param name="isDirty">Set if the sheet is dirty (has unsaved changes).</param>
+        /// <param name="updateInternalValues">Set if the value for the tabbed/continuous view should be marked as unsynced with the text editor.</param>
+        void SetIsDirty(bool isDirty = true, bool updateInternalValues = true)
+        {
+            if (!_sheetLoaded) // if no sheet is loaded, nothing is gonna happen lol
+            {
+                isDirty = false;
+            }
+
+            bool update = isDirty != this.isDirty;
+
+            if (isDirty)
+            {
+                this.isDirty = true;
+                if (updateInternalValues) _isTabsDirty = true;
+            }
+            else
+            {
+                this.isDirty = false;
+                if (updateInternalValues) _isTabsDirty = false;
+            }
+
+            if (update || fileTitle != displayedTitle) UpdateTitlebar();
+        }
+
+        #endregion
+
+        #region Other Window event handlers
+
         private async void window_Loaded(object sender, RoutedEventArgs e)
         {
             if (autoCheckUpdates)
@@ -329,34 +471,6 @@ namespace PathfinderJson
         private void window_Closed(object sender, EventArgs e)
         {
             Application.Current.Shutdown(0);
-        }
-
-        /// <summary>
-        /// Set if the current sheet has unsaved changes. Also updates the title bar and by default sets the tabbed/continuous view as unsynced.
-        /// </summary>
-        /// <param name="isDirty">Set if the sheet is dirty (has unsaved changes).</param>
-        /// <param name="updateInternalValues">Set if the value for the tabbed/continuous view should be marked as unsynced with the text editor.</param>
-        void SetIsDirty(bool isDirty = true, bool updateInternalValues = true)
-        {
-            if (!_sheetLoaded) // if no sheet is loaded, nothing is gonna happen lol
-            {
-                isDirty = false;
-            }
-
-            bool update = isDirty != this.isDirty;
-
-            if (isDirty)
-            {
-                this.isDirty = true;
-                if (updateInternalValues) _isTabsDirty = true;
-            }
-            else
-            {
-                this.isDirty = false;
-                if (updateInternalValues) _isTabsDirty = false;
-            }
-
-            if (update || fileTitle != displayedTitle) UpdateTitlebar();
         }
 
         #endregion
@@ -1570,6 +1684,11 @@ namespace PathfinderJson
             o.ColorScheme = App.ColorScheme;
 
             o.ShowDialog();
+
+            if (o.DialogResult)
+            {
+                ReloadSettings();
+            }
         }
 
         #endregion
@@ -1620,12 +1739,16 @@ namespace PathfinderJson
             {
                 mnuWordWrap.IsChecked = false;
                 txtEditRaw.WordWrap = false;
+                App.Settings.EditorWordWrap = false;
             }
             else
             {
                 mnuWordWrap.IsChecked = true;
                 txtEditRaw.WordWrap = true;
+                App.Settings.EditorWordWrap = true;
             }
+
+            SaveSettings();
         }
 
         private void mnuFind_Click(object sender, RoutedEventArgs e)
