@@ -46,8 +46,8 @@ namespace PathfinderJson
                         else
                         {
                             dsize = num;
-                            int res = DoAllDiceRolls(int.Parse(count), int.Parse(dsize), rng);
-                            resultValue += "(" + res + ")";
+                            (int res, int[] arr) = DoAllDiceRolls(int.Parse(count), int.Parse(dsize), rng);
+                            resultValue += "(" + string.Join("+", arr) + ")";
                         }
                         dsizeMode = false;
 
@@ -87,8 +87,8 @@ namespace PathfinderJson
                 else
                 {
                     dsize = finalNum;
-                    int res = DoAllDiceRolls(int.Parse(count), int.Parse(dsize), rng);
-                    resultValue += "(" + res + ")";
+                    (int res, int[] arr) = DoAllDiceRolls(int.Parse(count), int.Parse(dsize), rng);
+                    resultValue += "(" + string.Join("+", arr) + ")";
                 }
                 dsizeMode = false;
             }
@@ -101,16 +101,19 @@ namespace PathfinderJson
             return (resultValue, ArithmeticParser.Evaluate(resultValue));
         }
 
-        private static int DoAllDiceRolls(int count, int size, RNGCryptoServiceProvider rng)
+        private static (int, int[]) DoAllDiceRolls(int count, int size, RNGCryptoServiceProvider rng)
         {
             int result = 0;
+            int[] arr = new int[count];
     
             for (int i = 0; i < count; i++)
             {
-                result += DoOneDiceRoll(rng, size) + 1;
+                int v = DoOneDiceRoll(rng, size) + 1;
+                result += v;
+                arr[i] = v;
             }
 
-            return result;
+            return (result, arr);
         }
 
         private static int DoOneDiceRoll(RNGCryptoServiceProvider rnd, int max)

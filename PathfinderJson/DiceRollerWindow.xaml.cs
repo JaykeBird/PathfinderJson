@@ -30,6 +30,11 @@ namespace PathfinderJson
 
         private void btnRoll_Click(object sender, RoutedEventArgs e)
         {
+            Roll();
+        }
+
+        void Roll()
+        {
             try
             {
                 (string str, double res) = DiceRoller.RollDice(txtInput.Text);
@@ -48,5 +53,12 @@ namespace PathfinderJson
             Close();
         }
 
+        private void txtInput_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                Roll();
+            }
+        }
     }
 }
