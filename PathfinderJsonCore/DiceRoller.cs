@@ -15,6 +15,11 @@ namespace PathfinderJson
 
             diceString = diceString.Replace(" ", "").Replace("\n", "");
             
+            // quick exit for situations where there aren't any dice
+            if (ArithmeticParser.IsValidString(diceString))
+            {
+                return (diceString, ArithmeticParser.Evaluate(diceString));
+            }
 
             string number = "";
 

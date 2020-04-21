@@ -81,6 +81,7 @@ namespace PathfinderJson
                 Dictionary<string, string> Changes = new Dictionary<string, string>();
 
                 bool openPar = false;
+                bool justClosed = false;
                 int openIndex = 0;
                 char prev = ' ';
                 for (int i = 0; i < input.Length; i++)
@@ -98,6 +99,17 @@ namespace PathfinderJson
                             }
                             openPar = true;
                             openIndex = i;
+                            justClosed = false;
+                        }
+                        else if (justClosed)
+                        {
+                            if ("0123456789".Contains(input[i]))
+                            {
+                                input = input.Insert(i, "*");
+                                i++;
+                            }
+
+                            justClosed = false;
                         }
                     }
                     else
@@ -113,6 +125,7 @@ namespace PathfinderJson
                             }
                             openPar = false;
                             openIndex = 0;
+                            justClosed = true;
                         }
                     }
                     prev = input[i];
@@ -126,7 +139,7 @@ namespace PathfinderJson
                 input = input.Replace(")", "");
             }
 
-            List<string>? ParsedOperations = ParseOperations(input);
+            var ParsedOperations = ParseOperations(input);
             if (ParsedOperations != null)
             {
                 try
