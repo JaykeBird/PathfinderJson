@@ -174,7 +174,7 @@ namespace PathfinderJson
             ShowHideToolbar(App.Settings.ShowToolbar);
 
             // setup up raw JSON editor
-            if (App.Settings.EditorSyntaxHighlighting)
+            if (App.Settings.EditorSyntaxHighlighting && App.Settings.HighContrastTheme == NO_HIGH_CONTRAST)
             {
                 using (Stream? s = System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceStream("PathfinderJson.Json.xshd"))
                 {
@@ -331,7 +331,7 @@ namespace PathfinderJson
             ShowHideToolbar(App.Settings.ShowToolbar);
 
             // setup up raw JSON editor
-            if (App.Settings.EditorSyntaxHighlighting)
+            if (App.Settings.EditorSyntaxHighlighting && App.Settings.HighContrastTheme == NO_HIGH_CONTRAST)
             {
                 using (Stream? s = System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceStream("PathfinderJson.Json.xshd"))
                 {
