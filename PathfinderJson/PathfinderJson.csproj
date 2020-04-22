@@ -14,12 +14,12 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <Version>1.0.0</Version>
+    <Version>1.1.0</Version>
     <Authors>Jayke R. Huempfner</Authors>
     <Company>Jayke R. Huempfner</Company>
     <Product>Pathfinder 1e JSON Sheet Editor</Product>
-    <AssemblyVersion>1.0.0</AssemblyVersion>
-    <FileVersion>1.0.0</FileVersion>
+    <AssemblyVersion>1.1.0</AssemblyVersion>
+    <FileVersion>1.1.0</FileVersion>
     <NeutralLanguage>en</NeutralLanguage>
     <Description>Read and edit JSON Pathfinder sheet files from Mottokrosh's website</Description>
     <Copyright>© 2019-2020 Jayke R. Huempfner</Copyright>
