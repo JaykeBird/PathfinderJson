@@ -653,11 +653,6 @@
             Create a new FlatButton.
             </summary>
         </member>
-        <member name="E:UiCore.FlatButton.UnroutedClick">
-            <summary>
-            Raised when the user clicks on the button. Please use the new Click event instead.
-            </summary>
-        </member>
         <member name="E:UiCore.FlatButton.SelectionChanged">
             <summary>
             Raised if the button's IsSelected value is changed. This can be used to have the button act as a ToggleButton.
@@ -846,113 +841,6 @@
             <summary>
             Image element with the ability to pick out a pixel color value.
             </summary>
-            <remarks>
-            <see cref="T:UiCore.ImageColorPicker"/> element adorns the <see cref="T:System.Windows.Controls.Image"/>
-            it's derived from with the facility to pick the image pixel color value at the position 
-            specified by the selector visual.
-            </remarks>
-        </member>
-        <member name="F:UiCore.ImageColorPicker.SelectedColorPropertyKey">
-            <summary>
-            SelectedColor property backing ReadOnly DependencyProperty.
-            </summary>
-        </member>
-        <member name="P:UiCore.ImageColorPicker.SelectedColor">
-            <summary>
-            Gets the color selected.
-            </summary>
-            <value>The color selected.</value>
-        </member>
-        <member name="F:UiCore.ImageColorPicker.SelectorProperty">
-            <summary>
-            Selector property backing DependencyProperty.
-            </summary>
-        </member>
-        <member name="M:UiCore.ImageColorPicker.ValidateSelector(System.Object)">
-            <summary>
-            Validates the suggested selector drawing value.
-            </summary>
-            <param name="value">The value.</param>
-            <returns><c>true</c> if suggested value isn't null; otherwise <c>false</c>.</returns>
-        </member>
-        <member name="P:UiCore.ImageColorPicker.Selector">
-            <summary>
-            Gets or sets the selector drawing.
-            </summary>
-            <value>The selector drawing. Must not be null</value>
-            <remarks>
-            The selector drawing is the <see cref="T:System.Windows.Media.Drawing"/> using
-            to mark the position where the color is selected.
-            <para>The <see cref="T:UiCore.ImageColorPicker"/> desn't pose any restrictions on the size of
-            this drawing. It's the user duty to choose it resonably.</para>
-            </remarks>
-        </member>
-        <member name="M:UiCore.ImageColorPicker.OnRender(System.Windows.Media.DrawingContext)">
-            <summary>
-            Renders the contents of an <see cref="T:System.Windows.Controls.Image"/> and 
-            the SelectorDrawing.
-            </summary>
-            <param name="dc">An instance of <see cref="T:System.Windows.Media.DrawingContext"/> 
-            used to render the control.</param>
-        </member>
-        <member name="M:UiCore.ImageColorPicker.OnRenderSizeChanged(System.Windows.SizeChangedInfo)">
-            <summary>
-            Raises the <see cref="E:System.Windows.FrameworkElement.SizeChanged"/> event, 
-            using the specified information as part of the eventual event data.
-            </summary>
-            <param name="sizeInfo">Details of the old and new size involved in the change.</param>
-        </member>
-        <member name="M:UiCore.ImageColorPicker.OnPropertyChanged(System.Windows.DependencyPropertyChangedEventArgs)">
-            <summary>
-            Invoked whenever the effective value of any dependency property on this 
-            <see cref="T:System.Windows.FrameworkElement"/> has been updated. 
-            The specific dependency property that changed is reported in the arguments parameter. 
-            Overrides <see cref="M:System.Windows.DependencyObject.OnPropertyChanged(System.Windows.DependencyPropertyChangedEventArgs)"/>.
-            </summary>
-            <param name="e">The event data that describes the property that changed, 
-            as well as old and new values.</param>
-        </member>
-        <member name="P:UiCore.ImageColorPicker.Position">
-            <summary>
-            Gets or sets the Selector Position.
-            </summary>
-            <value>The position.</value>
-        </member>
-        <member name="M:UiCore.ImageColorPicker.RestrictedPosition(System.Windows.Point)">
-            <summary>
-            Get the position restricted by the element bounds.
-            </summary>
-            <param name="point">The point.</param>
-            <returns></returns>
-        </member>
-        <member name="M:UiCore.ImageColorPicker.SetPositionIfInBounds(System.Windows.Point)">
-            <summary>
-            Sets the <paramref name="pt"/> as the new position if the point falls 
-            into the element bounds.
-            </summary>
-            <param name="pt">The point.</param>
-        </member>
-        <member name="P:UiCore.ImageColorPicker.TargetBitmap">
-            <summary>
-            Gets the target bitmap for the DrawingImage image Source.
-            </summary>
-            <value>The target bitmap.</value>
-        </member>
-        <member name="M:UiCore.ImageColorPicker.PickColor(System.Double,System.Double)">
-            <summary>
-            Picks the color at the position specified.
-            </summary>
-            <param name="x">The x coordinate in WPF pixels.</param>
-            <param name="y">The y coordinate in WPF pixels.</param>
-            <returns>The image pixel color at x,y position.</returns>
-            <remarks>
-            Input coordinates are scaled according to the underlying image resolution,
-            so this method doesn't expect exceptions thrown by the 
-            <see cref="M:System.Windows.Media.Imaging.BitmapSource.CopyPixels"/> method.
-            <para>Color can be picked not only from the 
-            <see cref="T:System.Windows.Media.Imaging.BitmapSource"/>, but also from the
-            <see cref="T:System.Windows.Media.DrawingImage"/>.</para>
-            </remarks>
         </member>
         <member name="T:UiCore.IntegerSpinner">
             <summary>
@@ -1330,6 +1218,30 @@
             Get an 32x32 image that is associated with a file.
             </summary>
             <param name="path">The file to get the icon for.</param>
+        </member>
+        <member name="M:UiCore.NativeMethods.GetDC(System.IntPtr)">
+            <summary>
+            Get a handle to the display context, either for a certain window or for the entire screen. This can be used to directly draw or get visual info for that particular context.
+            </summary>
+            <param name="hwnd">The pointer to the item you want the display context for. Use <c>IntPtr.Zero</c> for the entire screen, or a window handle for that window.</param>
+            <returns></returns>
+        </member>
+        <member name="M:UiCore.NativeMethods.ReleaseDC(System.IntPtr,System.IntPtr)">
+            <summary>
+            Release the handle to the display context. Do this when you're done using the display context. Must be in the same thread that GetDC was called.
+            </summary>
+            <param name="hwnd"></param>
+            <param name="hdc"></param>
+            <returns></returns>
+        </member>
+        <member name="M:UiCore.NativeMethods.GetPixel(System.IntPtr,System.Int32,System.Int32)">
+            <summary>
+            Get color info for a particular pixel in a display context.
+            </summary>
+            <param name="hdc">The handle of the display context.</param>
+            <param name="nXPos">The X position of the pixel.</param>
+            <param name="nYPos">The Y position of the pixel.</param>
+            <returns></returns>
         </member>
         <member name="T:UiCore.SelectableItem">
             <summary>
