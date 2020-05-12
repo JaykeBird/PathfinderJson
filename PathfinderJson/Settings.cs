@@ -97,6 +97,9 @@ namespace PathfinderJson
         [JsonProperty("editor.wordWrap")]
         public bool EditorWordWrap { get; set; } = true;
 
+        [JsonProperty("editor.lineNumbers")]
+        public bool EditorLineNumbers { get; set; } = true;
+
         [JsonProperty("startupOptimization")]
         public bool UseStartupOptimization { get; set; } = true;
 

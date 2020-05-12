@@ -201,6 +201,8 @@ namespace PathfinderJson
 
             LoadEditorFontSettings();
 
+            txtEditRaw.ShowLineNumbers = App.Settings.EditorLineNumbers;
+
             txtEditRaw.WordWrap = App.Settings.EditorWordWrap;
             mnuWordWrap.IsChecked = App.Settings.EditorWordWrap;
 
@@ -357,6 +359,8 @@ namespace PathfinderJson
             }
 
             LoadEditorFontSettings();
+
+            txtEditRaw.ShowLineNumbers = App.Settings.EditorLineNumbers;
 
             txtEditRaw.WordWrap = App.Settings.EditorWordWrap;
             mnuWordWrap.IsChecked = App.Settings.EditorWordWrap;
