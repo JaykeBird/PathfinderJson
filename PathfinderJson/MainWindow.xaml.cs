@@ -71,6 +71,8 @@ namespace PathfinderJson
         UserData ud;
         string sheetid;
         Dictionary<string, string> abilities = new Dictionary<string, string>();
+        Dictionary<string, string?> sheetSettings = new Dictionary<string, string?>();
+        string? version;
 
         // keyboard/method data
         RoutedMethodRegistry mr = new RoutedMethodRegistry();
@@ -2107,6 +2109,7 @@ namespace PathfinderJson
             ud = sheet.Player;
             //ac = sheet.AC;
             sheetid = sheet.Id ?? "-1";
+            version = sheet.Version;
 
             txtCharacter.Text = sheet.Name;
             txtLevel.Text = sheet.Level;
@@ -2136,6 +2139,15 @@ namespace PathfinderJson
             }
 
             abilities = sheet.RawAbilities;
+            
+            if (sheet.SheetSettings != null)
+            {
+                sheetSettings = sheet.SheetSettings;
+            }
+            else
+            {
+                sheetSettings = new Dictionary<string, string?>();
+            }
 
             txtStr.Value = sheet.Strength;
             txtDex.Value = sheet.Dexterity;
@@ -2677,6 +2689,7 @@ namespace PathfinderJson
 
             sheet.Player = ud;
             sheet.Id = sheetid;
+            sheet.Version = version;
 
             sheet.Notes = txtNotes.Text;
 
@@ -2711,6 +2724,11 @@ namespace PathfinderJson
                 sp = null;
             }
             sheet.Speed = sp;
+
+            if (sheetSettings.Count > 0)
+            {
+                sheet.SheetSettings = sheetSettings;
+            }
 
             //Dictionary<string, string> abilities = new Dictionary<string, string>
             //{

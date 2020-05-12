@@ -100,10 +100,12 @@ namespace PathfinderJson
             File.WriteAllText(file, SaveJsonText(indented, file, true));
         }
 
-        [JsonProperty("_id", Order = -6)]
+        [JsonProperty("_id", Order = -7)]
         public string? Id { get; set; }
         [JsonProperty(Order = -2, DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore)]
-        public string? Modified { get; set; } // ISO 8601 datetime (with UTC mark)
+        public string? Modified { get; set; } = null; // ISO 8601 datetime (with UTC mark)
+        [JsonProperty(Order = -6, DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore)]
+        public string? Version { get; set; } = null;
 
         // roleplaying characteristics
         [JsonProperty(Order = -3)]
@@ -148,6 +150,11 @@ namespace PathfinderJson
         /// <summary>Used to determine if the abilities structure in JSON was present or not</summary>
         [JsonIgnore]
         public bool AbilitiesPresent { get; set; }
+
+        // sheet settings
+
+        [JsonProperty("sheetSettings", DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore)]
+        public Dictionary<string, string?>? SheetSettings { get; set; }
 
         // other numbers
 
