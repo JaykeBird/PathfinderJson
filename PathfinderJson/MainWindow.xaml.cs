@@ -1591,6 +1591,7 @@ namespace PathfinderJson
                 lblNoSheet.Visibility = Visibility.Visible;
                 selTabs.IsEnabled = false;
                 txtEditRaw.IsEnabled = false;
+                grdEditDrop.Visibility = Visibility.Visible;
                 SetAllTabsVisibility(Visibility.Collapsed);
                 UpdateAppearance();
                 foreach (SelectableItem item in selTabs.GetSelectedItemsOfType<SelectableItem>())
@@ -1603,6 +1604,7 @@ namespace PathfinderJson
                 lblNoSheet.Visibility = Visibility.Collapsed;
                 selTabs.IsEnabled = true;
                 txtEditRaw.IsEnabled = true;
+                grdEditDrop.Visibility = Visibility.Collapsed;
                 if (lblNoSheet.Visibility != v)
                 {
                     UpdateAppearance();
