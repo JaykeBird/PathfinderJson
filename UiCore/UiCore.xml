@@ -653,7 +653,7 @@
             Create a new FlatButton.
             </summary>
         </member>
-        <member name="E:UiCore.FlatButton.SelectionChanged">
+        <member name="E:UiCore.FlatButton.IsSelectedChanged">
             <summary>
             Raised if the button's IsSelected value is changed. This can be used to have the button act as a ToggleButton.
             </summary>
@@ -840,6 +840,16 @@
         <member name="T:UiCore.ImageColorPicker">
             <summary>
             Image element with the ability to pick out a pixel color value.
+            </summary>
+        </member>
+        <member name="P:UiCore.ImageColorPicker.SelectedColor">
+            <summary>
+            Get the color that is selected from the image.
+            </summary>
+        </member>
+        <member name="P:UiCore.ImageColorPicker.SelectedPosition">
+            <summary>
+            Get the position that is selected from the image. This position is relative to the control itself.
             </summary>
         </member>
         <member name="T:UiCore.IntegerSpinner">
@@ -1513,7 +1523,7 @@
             InitializeComponent
             </summary>
         </member>
-        <member name="T:UiCore.TabControl">
+        <member name="T:UiCore.Experimental.TabControl">
             <summary>
             Interaction logic for TabControl.xaml
             </summary>
@@ -1521,12 +1531,17 @@
             TabControl
             </summary>
         </member>
-        <member name="M:UiCore.TabControl.InitializeComponent">
+        <member name="P:UiCore.Experimental.TabControl.ColorScheme">
+            <summary>
+            Get or set the color scheme to apply to the window.
+            </summary>
+        </member>
+        <member name="M:UiCore.Experimental.TabControl.InitializeComponent">
             <summary>
             InitializeComponent
             </summary>
         </member>
-        <member name="T:UiCore.TabDisplayItem">
+        <member name="T:UiCore.Experimental.TabDisplayItem">
             <summary>
             Interaction logic for TabDisplayItem.xaml
             </summary>
@@ -1534,7 +1549,12 @@
             TabDisplayItem
             </summary>
         </member>
-        <member name="M:UiCore.TabDisplayItem.InitializeComponent">
+        <member name="P:UiCore.Experimental.TabDisplayItem.ColorScheme">
+            <summary>
+            Get or set the color scheme to apply to the window.
+            </summary>
+        </member>
+        <member name="M:UiCore.Experimental.TabDisplayItem.InitializeComponent">
             <summary>
             InitializeComponent
             </summary>
