@@ -77,8 +77,12 @@ namespace PathfinderJson
                 }
             }
 
-            ProfileOptimization.SetProfileRoot(Path.Combine(appDataPath, "Optimization"));
-            ProfileOptimization.StartProfile("Startup.profile");
+            if (Settings.UseStartupOptimization)
+            {
+                // more info: https://docs.microsoft.com/en-us/dotnet/api/system.runtime.profileoptimization?view=netcore-3.1
+                ProfileOptimization.SetProfileRoot(Path.Combine(appDataPath, "Optimization"));
+                ProfileOptimization.StartProfile("Startup.profile");
+            }
 
             Newtonsoft.Json.JsonConvert.DefaultSettings = () => new Newtonsoft.Json.JsonSerializerSettings { 
                 DefaultValueHandling = Newtonsoft.Json.DefaultValueHandling.Ignore,

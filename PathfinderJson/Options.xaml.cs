@@ -50,6 +50,7 @@ namespace PathfinderJson
             selTabs.AddItem(CreateTab("Interface"));
             selTabs.AddItem(CreateTab("JSON Editor"));
             selTabs.AddItem(CreateTab("Feedback"));
+            selTabs.AddItem(CreateTab("Advanced"));
 
             SelectableItem CreateTab(string name, ImageSource? image = null)
             {
@@ -113,6 +114,9 @@ namespace PathfinderJson
                 case "Feedback":
                     tabFeedback.Visibility = Visibility.Visible;
                     break;
+                case "Advanced":
+                    tabAdvanced.Visibility = Visibility.Visible;
+                    break;
             }
         }
         #endregion
@@ -154,6 +158,9 @@ namespace PathfinderJson
             chkSyntaxHighlight.IsChecked = s.EditorSyntaxHighlighting;
             chkIndentEditor.IsChecked = s.IndentJsonData;
             chkWordWrap.IsChecked = s.EditorWordWrap;
+
+            // Advanced options
+            chkUseOptimization.IsChecked = s.UseStartupOptimization;
         }
 
         void SaveSettings()
@@ -214,6 +221,9 @@ namespace PathfinderJson
             App.Settings.EditorSyntaxHighlighting = chkSyntaxHighlight.IsChecked;
             App.Settings.EditorWordWrap = chkWordWrap.IsChecked;
             App.Settings.IndentJsonData = chkIndentEditor.IsChecked;
+
+            // Advanced options
+            App.Settings.UseStartupOptimization = chkUseOptimization.IsChecked;
 
             // ----------------------------------------
             // finally, save the settings to a file

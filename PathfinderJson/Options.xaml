@@ -94,6 +94,12 @@
                            Text="This window will display information about the computer you're using right now. Please share this info with the developer if they ask for it! It helps narrow down what could cause a bug or issue." />
                 <flat:FlatButton x:Name="btnPlatformInfo" Content="Platform Info" Margin="10,320,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="110" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" Click="btnPlatformInfo_Click" />
             </Grid>
+            <Grid x:Name="tabAdvanced">
+                <TextBlock Text="Advanced Options" FontSize="16" VerticalAlignment="Top" />
+                <TextBlock Text="Startup Optimization" FontWeight="Bold" Margin="0,30,0,0" VerticalAlignment="Top" />
+                <flat:CheckBox x:Name="chkUseOptimization" Content="Use startup optimization so PathfinderJSON starts up faster" VerticalAlignment="Top" Margin="10,55,0,0" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" />
+                <TextBlock Text="When enabled, PathfinderJSON stores a bit of data on your hard drive, which it'll reuse whenever you open the program again. Unless you have a reason to turn this off, you should keep it on." Margin="10,90,0,0" TextWrapping="Wrap" VerticalAlignment="Top" />
+            </Grid>
         </Grid>
 
         <Border Grid.Row="1" Grid.ColumnSpan="2" VerticalAlignment="Top" Height="1" BorderThickness="1" BorderBrush="{Binding ElementName=window, Path=BorderBrush}" />
