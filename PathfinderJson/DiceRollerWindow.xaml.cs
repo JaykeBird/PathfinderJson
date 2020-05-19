@@ -21,6 +21,7 @@ namespace PathfinderJson
         public DiceRollerWindow()
         {
             InitializeComponent();
+            txtInput.Focus();
         }
 
         private void window_SourceInitialized(object sender, EventArgs e)

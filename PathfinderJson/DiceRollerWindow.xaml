@@ -6,15 +6,15 @@
         xmlns:flat="clr-namespace:UiCore;assembly=UiCore"
         xmlns:local="clr-namespace:PathfinderJson"
         mc:Ignorable="d" x:Name="window" SourceInitialized="window_SourceInitialized" CaptionDisplayType="MinimizeClose"
-        Title="Dice Roller" Height="160" Width="500" MinHeight="150" MaxHeight="240" >
+        Title="Dice Roller" Height="160" Width="500" MinHeight="150" MaxHeight="240" ShowInTaskbar="True" >
     <Grid>
         <TextBlock HorizontalAlignment="Left" Margin="15,39,0,0" Text="Input:" VerticalAlignment="Top"/>
         <TextBlock Margin="60,14,100,0" VerticalAlignment="Top" Text="Enter a dice roll below, such as &quot;3d6+4&quot;:" />
         <TextBlock HorizontalAlignment="Left" Margin="15,55,0,0" Text="Rolls:" VerticalAlignment="Top" Visibility="Collapsed" />
         <TextBlock HorizontalAlignment="Left" Margin="15,93,0,0" Text="Result:" VerticalAlignment="Top"/>
-        <flat:ClickSelectTextBox x:Name="txtInput" Margin="60,35,100,0" VerticalAlignment="Top" Height="24" FontSize="16" KeyUp="txtInput_KeyUp" />
-        <TextBlock x:Name="txtRolls" Margin="60,72,100,0" VerticalAlignment="Top" />
-        <TextBlock x:Name="txtResult" Margin="60,90,100,0" VerticalAlignment="Top" Height="24" FontSize="16" />
+        <flat:ClickSelectTextBox x:Name="txtInput" Margin="60,35,100,0" VerticalAlignment="Top" Height="24" FontSize="16" KeyUp="txtInput_KeyUp" SelectOnFocus="True" CharacterCasing="Lower" />
+        <flat:ClickSelectTextBox BorderThickness="0" Background="Transparent" x:Name="txtRolls" Margin="60,72,100,0" VerticalAlignment="Top" IsReadOnly="True" IsReadOnlyCaretVisible="True" SelectOnFocus="True" />
+        <flat:ClickSelectTextBox BorderThickness="0" Background="Transparent" x:Name="txtResult" Margin="60,90,100,0" VerticalAlignment="Top" Height="24" FontSize="16" IsReadOnly="True" IsReadOnlyCaretVisible="True" SelectOnFocus="True" />
         <flat:FlatButton x:Name="btnRoll" Content="Roll" HorizontalAlignment="Right" Margin="0,35,20,0" VerticalAlignment="Top" Width="70" Click="btnRoll_Click" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" />
 
         <flat:FlatButton x:Name="btnClose" Content="Close" HorizontalAlignment="Right" Margin="0,0,20,20" VerticalAlignment="Bottom" Width="70" Click="btnClose_Click" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" />
