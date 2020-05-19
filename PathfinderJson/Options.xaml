@@ -6,7 +6,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PathfinderJson"
         mc:Ignorable="d" Title="Pathfinder JSON Options" x:Name="window" BorderBrush="DarkGreen"
-        Height="450" Width="700" CaptionDisplayType="Close" ResizeMode="NoResize" >
+        Height="480" Width="700" CaptionDisplayType="Close" ResizeMode="NoResize" >
     <flat:FlatWindow.Resources>
         <flat:ColorToBrushConverter x:Key="ctb" />
     </flat:FlatWindow.Resources>
@@ -23,7 +23,7 @@
         <flat:SelectPanel x:Name="selTabs" Grid.Row="0" Grid.Column="0" PanelBorderThickness="0,0,1,0" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" />
 
         <Grid Grid.Row="0" Grid.Column="1" x:Name="grdHolder" Margin="10,5,0,5" >
-            <Grid x:Name="tabGeneral">
+            <Grid x:Name="tabGeneral" Visibility="Collapsed" >
                 <TextBlock Text="General Options" FontSize="16" VerticalAlignment="Top" />
                 <TextBlock Text="Check for Updates" FontWeight="Bold" Margin="0,30,0,0" VerticalAlignment="Top" />
                 <flat:FlatButton x:Name="btnUpdateNow" Content="Check for Updates Now" Margin="10,55,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="160" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" Click="btnUpdateNow_Click" />
@@ -32,54 +32,69 @@
                 <flat:FlatButton x:Name="btnClearList" Content="Clear Recent File List" Margin="10,145,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="150" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" Click="btnClearList_Click" />
                 <TextBlock x:Name="lblRecentFiles" Text="The recent files list will be cleared when you click OK." Margin="10,175,0,0" VerticalAlignment="Top" Visibility="Collapsed" />
             </Grid>
-            <Grid x:Name="tabSaving">
+            <Grid x:Name="tabSaving" Visibility="Collapsed">
                 <TextBlock Text="Saving Options" FontSize="16" VerticalAlignment="Top" />
             </Grid>
-            <Grid x:Name="tabInterface">
+            <Grid x:Name="tabInterface" >
                 <TextBlock Text="Interface Options" FontSize="16" VerticalAlignment="Top" />
                 <TextBlock Text="Color Scheme" FontWeight="Bold" Margin="0,30,0,0" VerticalAlignment="Top" />
-                <flat:FlatButton x:Name="btnChangeColors" Content="Change Colors..." VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10,55,0,0" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" Width="120" Click="btnChangeColors_Click" />
-                <TextBlock Text="This is the color used throughout the entire user interface." Margin="10,90,0,0" VerticalAlignment="Top" />
-                <TextBlock Text="High Contrast Mode" FontWeight="Bold" Margin="0,120,0,0" VerticalAlignment="Top" />
-                <TextBlock Text="High Contrast Mode is good for users with vision impairment or other issues." Margin="10,145,0,0" VerticalAlignment="Top" />
-                <flat:CheckBox x:Name="chkHighContrast" Content="Use high contrast mode" Margin="10,165,0,0" VerticalAlignment="Top" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" CheckChanged="chkHighContrast_CheckChanged" />
-                <TextBlock Text="High contrast theme:" Margin="55,200,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" />
-                <ComboBox x:Name="cbbHighContrast" Margin="180,197,0,0" Height="24" Width="180" HorizontalAlignment="Left" VerticalAlignment="Top" >
+                <flat:FlatButton x:Name="btnChangeColors" Content="Change Colors..." VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10,95,0,0" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" Width="120" Click="btnChangeColors_Click" />
+                <TextBlock Margin="10,55,20,0" VerticalAlignment="Top" Height="35" TextWrapping="Wrap"
+                           Text="This is the color used throughout the entire user interface. Try to select a color that isn't too bright or too dark, as they make the interface a bit hard to see or understand." />
+                <TextBlock Text="High Contrast Mode" FontWeight="Bold" Margin="0,135,0,0" VerticalAlignment="Top" />
+                <TextBlock Margin="10,160,20,0" VerticalAlignment="Top" Height="35" TextWrapping="Wrap"
+                           Text="High Contrast Mode overrides the color scheme and other settings to display the interface with greatly-contrasting colors. This is good for users with vision impairment or other sight issues." />
+                <flat:CheckBox x:Name="chkHighContrast" Content="Use high contrast mode" Margin="10,200,0,0" VerticalAlignment="Top" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" CheckChanged="chkHighContrast_CheckChanged" />
+                <TextBlock Text="High contrast theme:" Margin="55,232,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" />
+                <ComboBox x:Name="cbbHighContrast" Margin="180,229,0,0" Height="24" Width="180" HorizontalAlignment="Left" VerticalAlignment="Top" >
                     <ComboBoxItem Content="White on black" />
                     <ComboBoxItem Content="Green on black" />
                     <ComboBoxItem Content="Black on white" />
                 </ComboBox>
-                <TextBlock Text="Toolbar" FontWeight="Bold" Margin="0,230,0,0" VerticalAlignment="Top" />
-                <flat:CheckBox x:Name="chkToolbar" Content="Show toolbar" Margin="10,250,0,0" VerticalAlignment="Top" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" />
-                <TextBlock Text="Title bar" FontWeight="Bold" Margin="0,290,0,0" VerticalAlignment="Top" />
-                <flat:CheckBox x:Name="chkFilename" Content="Show filename in the titlebar" Margin="10,310,0,0" VerticalAlignment="Top" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" />
-                <TextBlock Text="If unchecked, the character's name is shown in the titlebar." Margin="10,340,0,0" VerticalAlignment="Top" />
+                <TextBlock Text="Toolbar" FontWeight="Bold" Margin="0,265,0,0" VerticalAlignment="Top" />
+                <flat:CheckBox x:Name="chkToolbar" Content="Show toolbar" Margin="10,285,0,0" VerticalAlignment="Top" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" />
+                <TextBlock Text="Title bar" FontWeight="Bold" Margin="0,325,0,0" VerticalAlignment="Top" />
+                <flat:CheckBox x:Name="chkFilename" Content="Show filename in the titlebar" Margin="10,365,0,0" VerticalAlignment="Top" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" />
+                <TextBlock Text="If unchecked, the character's name is shown in the titlebar." Margin="10,345,0,0" VerticalAlignment="Top" />
             </Grid>
-            <Grid x:Name="tabJsonEditor">
+            <Grid x:Name="tabJsonEditor" Visibility="Collapsed" >
                 <TextBlock Text="JSON Editor Options" FontSize="16" VerticalAlignment="Top" />
                 <TextBlock Text="Font/Text Display" FontWeight="Bold" Margin="0,30,0,0" VerticalAlignment="Top" />
                 <Border x:Name="brdrFont" BorderBrush="{Binding ElementName=window, Path=BorderBrush}" BorderThickness="1" Background="{Binding ElementName=window, Path=ColorScheme.LightBackgroundColor, Converter={StaticResource ctb}}" 
                         Width="350" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10,55,0,0" Height="60">
                     <Grid x:Name="grdFont" Margin="3,0,0,0">
-                        <TextBlock x:Name="txtFont">
-                            This is how text will appear in the JSON editor.<LineBreak />
-                            This is a line that is very long, and doesn't all fit unless you enable word wrap. <LineBreak />
-                            Here is some more text.
-                        </TextBlock>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition x:Name="colNum" Width="Auto" MinWidth="10" />
+                            <ColumnDefinition x:Name="colBuff" Width="2" />
+                            <ColumnDefinition Width="1*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="1*" />
+                        </Grid.RowDefinitions>
+                        <Border Grid.Column="1" Grid.RowSpan="4" HorizontalAlignment="Left" Width="1" BorderThickness="1" BorderBrush="DarkGray" />
+                        <TextBlock x:Name="txtNum1" Grid.Column="0" Margin="2,0,2,0" >1</TextBlock>
+                        <TextBlock x:Name="txtNum2" Grid.Column="0" Margin="2,0,2,0" Grid.Row="1" >2</TextBlock>
+                        <TextBlock x:Name="txtNum3" Grid.Column="0" Margin="2,0,2,0" Grid.Row="2" >3</TextBlock>
+                        <TextBlock x:Name="txtFont1" Grid.Column="2" >This is how text will appear in the JSON editor.</TextBlock>
+                        <TextBlock x:Name="txtFont2" Grid.Column="2" Grid.Row="1" >This is a line that is very long, and doesn't all fit unless you enable word wrap.</TextBlock>
+                        <TextBlock x:Name="txtFont3" Grid.Column="2" Grid.Row="2" >Here, have some more text.</TextBlock>
                     </Grid>
                 </Border>
                 <flat:FlatButton x:Name="btnFontOptions" Content="Change Font..." Margin="10,125,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="110" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" Click="btnFontOptions_Click" />
                 <flat:CheckBox x:Name="chkWordWrap" Content="Use word wrap for long lines" VerticalAlignment="Top" Margin="10,160,0,0" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" CheckChanged="chkWordWrap_CheckChanged" />
+                <flat:CheckBox x:Name="chkLineNumbers" Content="Show line numbers" VerticalAlignment="Top" Margin="10,190,0,0" ColorScheme="{Binding ColorScheme, ElementName=window}" CheckChanged="chkLineNumbers_CheckChanged" />
+                <TextBlock Text="Indent JSON while Editing/Saving" FontWeight="Bold" VerticalAlignment="Top" Margin="0,225,0,0" />
+                <flat:CheckBox x:Name="chkIndentEditor" Content="Indent/pretty format JSON while using the raw JSON editor or saving the file" VerticalAlignment="Top" Margin="10,250,0,0" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" />
 
-                <TextBlock Text="Indent JSON while Editing/Saving" FontWeight="Bold" Margin="0,190,0,0" VerticalAlignment="Top" />
-                <flat:CheckBox x:Name="chkIndentEditor" Content="Indent/pretty format JSON while using the raw JSON editor or saving the file" VerticalAlignment="Top" Margin="10,215,0,0" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" />
-
-                <TextBlock Text="Syntax Coloring" FontWeight="Bold" Margin="0,250,0,0" VerticalAlignment="Top" />
-                <TextBlock Margin="10,275,10,0" VerticalAlignment="Top" TextWrapping="Wrap"
+                <TextBlock Text="Syntax Coloring" FontWeight="Bold" Margin="0,285,0,0" VerticalAlignment="Top" />
+                <TextBlock Margin="10,310,10,0" VerticalAlignment="Top" TextWrapping="Wrap"
                     Text="Syntax coloring adds color to the text, and helps you easily navigate and edit your JSON files. In most cases, it's beneficial to keep it on. However, in High Contrast mode, coloring is always disabled." />
-                <flat:CheckBox x:Name="chkSyntaxHighlight" Content="Use syntax coloring in the raw JSON editor" VerticalAlignment="Top" Margin="10,315,0,0" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" />
+                <flat:CheckBox x:Name="chkSyntaxHighlight" Content="Use syntax coloring in the raw JSON editor" VerticalAlignment="Top" Margin="10,350,0,0" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" />
             </Grid>
-            <Grid x:Name="tabFeedback">
+            <Grid x:Name="tabFeedback" Visibility="Collapsed" >
                 <TextBlock Text="Feedback Options" FontSize="16" VerticalAlignment="Top" />
                 <TextBlock Text="Send Feedback or Report an Issue" FontWeight="Bold" Margin="0,30,0,0" VerticalAlignment="Top" />
                 <TextBlock Margin="10,55,10,0" TextWrapping="Wrap" VerticalAlignment="Top" 
@@ -94,7 +109,7 @@
                            Text="This window will display information about the computer you're using right now. Please share this info with the developer if they ask for it! It helps narrow down what could cause a bug or issue." />
                 <flat:FlatButton x:Name="btnPlatformInfo" Content="Platform Info" Margin="10,320,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="110" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" Click="btnPlatformInfo_Click" />
             </Grid>
-            <Grid x:Name="tabAdvanced">
+            <Grid x:Name="tabAdvanced" Visibility="Collapsed" >
                 <TextBlock Text="Advanced Options" FontSize="16" VerticalAlignment="Top" />
                 <TextBlock Text="Startup Optimization" FontWeight="Bold" Margin="0,30,0,0" VerticalAlignment="Top" />
                 <flat:CheckBox x:Name="chkUseOptimization" Content="Use startup optimization so PathfinderJSON starts up faster" VerticalAlignment="Top" Margin="10,55,0,0" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" />

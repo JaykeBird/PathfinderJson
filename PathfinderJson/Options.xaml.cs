@@ -157,6 +157,7 @@ namespace PathfinderJson
             LoadEditorFontSettings(s);
             chkSyntaxHighlight.IsChecked = s.EditorSyntaxHighlighting;
             chkIndentEditor.IsChecked = s.IndentJsonData;
+            chkLineNumbers.IsChecked = s.EditorLineNumbers;
             chkWordWrap.IsChecked = s.EditorWordWrap;
 
             // Advanced options
@@ -199,17 +200,17 @@ namespace PathfinderJson
             }
 
             // Text editor options
-            string ff = (txtFont.FontFamily.Source).Replace(", Consolas", "");
+            string ff = (txtFont1.FontFamily.Source).Replace(", Consolas", "");
 
             App.Settings.EditorFontFamily = ff;
-            App.Settings.EditorFontSize = txtFont.FontSize.ToString();
+            App.Settings.EditorFontSize = txtFont1.FontSize.ToString();
 
             // because the ToString() method for FontStyle uses CurrentCulture rather than InvariantCulture, I need to convert it to string myself.
-            if (txtFont.FontStyle == FontStyles.Italic)
+            if (txtFont1.FontStyle == FontStyles.Italic)
             {
                 App.Settings.EditorFontStyle = "Italic";
             }
-            else if (txtFont.FontStyle == FontStyles.Oblique)
+            else if (txtFont1.FontStyle == FontStyles.Oblique)
             {
                 App.Settings.EditorFontStyle = "Oblique";
             }
@@ -221,6 +222,7 @@ namespace PathfinderJson
             App.Settings.EditorSyntaxHighlighting = chkSyntaxHighlight.IsChecked;
             App.Settings.EditorWordWrap = chkWordWrap.IsChecked;
             App.Settings.IndentJsonData = chkIndentEditor.IsChecked;
+            App.Settings.EditorLineNumbers = chkLineNumbers.IsChecked;
 
             // Advanced options
             App.Settings.UseStartupOptimization = chkUseOptimization.IsChecked;
@@ -359,10 +361,20 @@ namespace PathfinderJson
             }
             FontWeight fw = FontWeight.FromOpenTypeWeight(w);
 
-            txtFont.FontFamily = ff;
-            txtFont.FontSize = dsz;
-            txtFont.FontStyle = fs;
-            txtFont.FontWeight = fw;
+            UpdateFontForTextBlock(txtFont1);
+            UpdateFontForTextBlock(txtFont2);
+            UpdateFontForTextBlock(txtFont3);
+            UpdateFontForTextBlock(txtNum1);
+            UpdateFontForTextBlock(txtNum2);
+            UpdateFontForTextBlock(txtNum3);
+
+            void UpdateFontForTextBlock(TextBlock tb)
+            {
+                tb.FontFamily = ff;
+                tb.FontSize = dsz;
+                tb.FontStyle = fs;
+                tb.FontWeight = fw;
+            }
         }
 
         #endregion
@@ -420,31 +432,64 @@ namespace PathfinderJson
 
         private void btnFontOptions_Click(object sender, RoutedEventArgs e)
         {
-            FontSelectDialog fds = new FontSelectDialog();
-            fds.ShowDecorations = false;
-            fds.ColorScheme = App.ColorScheme;
+            FontSelectDialog fds = new FontSelectDialog
+            {
+                ShowDecorations = false,
+                ColorScheme = App.ColorScheme,
 
-            fds.SelectedFontFamily = txtFont.FontFamily;
-            fds.SelectedFontSize = txtFont.FontSize;
-            fds.SelectedFontStyle = txtFont.FontStyle;
-            fds.SelectedFontWeight = txtFont.FontWeight;
+                SelectedFontFamily = txtFont1.FontFamily,
+                SelectedFontSize = txtFont1.FontSize,
+                SelectedFontStyle = txtFont1.FontStyle,
+                SelectedFontWeight = txtFont1.FontWeight
+            };
 
             fds.ShowDialog();
 
             if (fds.DialogResult)
             {
-                txtFont.FontFamily = fds.SelectedFontFamily;
-                txtFont.FontSize = fds.SelectedFontSize;
-                txtFont.FontStyle = fds.SelectedFontStyle;
-                txtFont.FontWeight = fds.SelectedFontWeight;
+                UpdateFontForTextBlock(txtFont1);
+                UpdateFontForTextBlock(txtFont2);
+                UpdateFontForTextBlock(txtFont3);
+                UpdateFontForTextBlock(txtNum1);
+                UpdateFontForTextBlock(txtNum2);
+                UpdateFontForTextBlock(txtNum3);
+
+                void UpdateFontForTextBlock(TextBlock tb)
+                {
+                    tb.FontFamily = fds.SelectedFontFamily;
+                    tb.FontSize = fds.SelectedFontSize;
+                    tb.FontStyle = fds.SelectedFontStyle;
+                    tb.FontWeight = fds.SelectedFontWeight;
+                }
             }
         }
 
         private void chkWordWrap_CheckChanged(object sender, RoutedEventArgs e)
         {
-            if (txtFont != null)
+            if (txtFont2 != null)
             {
-                txtFont.TextWrapping = chkWordWrap.IsChecked ? TextWrapping.Wrap : TextWrapping.NoWrap;
+                txtFont1.TextWrapping = chkWordWrap.IsChecked ? TextWrapping.Wrap : TextWrapping.NoWrap;
+                txtFont2.TextWrapping = chkWordWrap.IsChecked ? TextWrapping.Wrap : TextWrapping.NoWrap;
+                txtFont3.TextWrapping = chkWordWrap.IsChecked ? TextWrapping.Wrap : TextWrapping.NoWrap;
+            }
+        }
+
+        private void chkLineNumbers_CheckChanged(object sender, RoutedEventArgs e)
+        {
+            if (chkLineNumbers.IsChecked)
+            {
+                // <ColumnDefinition x:Name="colNum" Width="Auto" MinWidth="10" />
+                // <ColumnDefinition x: Name = "colBuff" Width = "2" />
+
+                colNum.Width = new GridLength(0, GridUnitType.Auto);
+                colNum.MinWidth = 10;
+                colBuff.Width = new GridLength(2);
+            }
+            else
+            {
+                colNum.Width = new GridLength(0, GridUnitType.Pixel);
+                colNum.MinWidth = 0;
+                colBuff.Width = new GridLength(0);
             }
         }
 
@@ -490,6 +535,7 @@ namespace PathfinderJson
         private void chkHighContrast_CheckChanged(object sender, RoutedEventArgs e)
         {
             cbbHighContrast.IsEnabled = chkHighContrast.IsChecked;
+            chkSyntaxHighlight.IsEnabled = !chkHighContrast.IsChecked;
         }
 
         private void btnChangeColors_Click(object sender, RoutedEventArgs e)
