@@ -326,6 +326,6 @@ namespace UiCore.Keyboard
 
         public RoutedEventHandler? Method { get; set; } = null;
         public string MethodId { get; set; } = "";
-        public System.Windows.Controls.MenuItem? MethodHolder { get; set; } = null;
+        public MenuItem? MethodHolder { get; set; } = null;
     }
 }

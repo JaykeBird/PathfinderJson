@@ -92,7 +92,11 @@
                 </MenuItem>
                 <MenuItem Header="_Paste" x:Name="mnuPaste" Click="mnuPaste_Click" />
                 <Separator />
-                <MenuItem Header="_Select All" x:Name="mnuSelectAll" Click="mnuSelectAll_Click" />
+                <MenuItem Header="_Select All" x:Name="mnuSelectAll" Click="mnuSelectAll_Click" >
+                    <MenuItem.Icon>
+                        <Image Source="/PathfinderJson;component/Images/SelectText.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
                 <MenuItem Header="_Delete" x:Name="mnuDelete" Click="mnuDelete_Click" >
                     <MenuItem.Icon>
                         <Image Source="/PathfinderJson;component/Images/Cancel.png" />
@@ -683,7 +687,11 @@
                     </MenuItem>
                     <MenuItem Header="_Paste" Click="mnuPaste_Click" />
                     <Separator />
-                    <MenuItem Header="_Select All" Click="mnuSelectAll_Click" />
+                    <MenuItem Header="_Select All" Click="mnuSelectAll_Click" >
+                        <MenuItem.Icon>
+                            <Image Source="/PathfinderJson;component/Images/SelectText.png" />
+                        </MenuItem.Icon>
+                    </MenuItem>
                     <MenuItem Header="_Delete" Click="mnuDelete_Click" >
                         <MenuItem.Icon>
                             <Image Source="/PathfinderJson;component/Images/Cancel.png" />

@@ -111,11 +111,18 @@ namespace PathfinderJson
             ksh = new KeyboardShortcutHandler(this);
             mr.FillFromMenu(menu);
 
-            try
+            if (File.Exists(Path.Combine(appDataPath, "keyboard.xml")))
             {
-                ksh.LoadShortcutsFromFile(Path.Combine(appDataPath, "keyboard.xml"), mr);
+                try
+                {
+                    ksh.LoadShortcutsFromFile(Path.Combine(appDataPath, "keyboard.xml"), mr);
+                }
+                catch (ArgumentException)
+                {
+                    ksh.LoadShortcutsFromList(DefaultKeySettings.CreateDefaultShortcuts(mr));
+                }
             }
-            catch (ArgumentException)
+            else
             {
                 ksh.LoadShortcutsFromList(DefaultKeySettings.CreateDefaultShortcuts(mr));
             }
