@@ -9,9 +9,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		publish.txt = publish.txt
 		README.md = README.md
+		HTML Export Template\template.htm = HTML Export Template\template.htm
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PathfinderJsonCore", "PathfinderJsonCore\PathfinderJsonCore.csproj", "{627CE462-B9F4-4BBD-AAAC-AD4DEFC2F6EA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PathfinderJsonCore", "PathfinderJsonCore\PathfinderJsonCore.csproj", "{627CE462-B9F4-4BBD-AAAC-AD4DEFC2F6EA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

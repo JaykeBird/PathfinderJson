@@ -1,0 +1,312 @@
+<html>
+<head>
+    <style>
+        body
+        {
+            font-family: 'Sylfaen', 'Book Antiqua', Georgia, 'Times New Roman', Times, serif;
+            margin-left: auto;
+            margin-right: auto;
+            max-width: 1600px;
+        }
+
+        .top-input
+        {
+            border-bottom: 1px solid black;
+            margin-left: 4px;
+            margin-right: 4px;
+            padding-left: 2px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .top-label
+        {
+            margin-left: 6px;
+            margin-right: 4px;
+            font-size: small;
+            overflow: hidden;
+            text-wrap: avoid;
+        }
+
+        .flex-holder
+        {
+            display: flex;
+            flex-direction: row;
+        }
+
+        .main-sheet-list
+        {
+            display: flex;
+            flex-direction: column;
+            width: 50%;
+            margin: 3px 4px;
+        }
+
+        .heading-box
+        {
+            background-color: black;
+            color: white;
+            margin: 2px 4px;
+            padding: 2px;
+            text-align: center;
+            min-height: 40px;
+            align-items: center;
+        }
+
+        .heading-box-desc
+        {
+            text-align: center;
+            font-size: small;
+            overflow: hidden;
+            text-wrap: none;
+            white-space: nowrap;
+            text-wrap: avoid;
+        }
+
+        .input-box
+        {
+            background-color: white;
+            color: black;
+            margin: 2px 4px;
+            border: 2px solid black;
+            min-height: 40px;
+            text-align: center;
+            display: flex;
+            flex-direction: column-reverse;
+        }
+
+        .input-box-text
+        {
+            text-align: center;
+            font-size: large;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .heading-box-text
+        {
+            text-align: center;
+            font-size: large;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        .input-box-label
+        {
+            align-self: flex-end;
+            align-content: end;
+            justify-self: flex-end;
+            text-align: center;
+            width: 100%;
+            font-size: small;
+            overflow: hidden;
+            text-wrap: none;
+            white-space: nowrap;
+            text-wrap: avoid;
+        }
+
+        p
+        {
+            margin: 0px;
+            padding: 0px;
+        }
+    </style>
+</head>
+<body>
+    <div style="display: flex; height: 120px; align-items: center;">
+        <div style="width: 170px; min-width: 170px; height: auto; flex-basis: 170px; text-align: center; vertical-align: middle;">
+            Pathfinder<br />
+            Roleplaying Game 1e<br />
+            Character Sheet
+        </div>
+        <div style="display: flex; flex-grow: 5; flex-direction: column; height: 100%;">
+            <div class="flex-holder" style="height: 17%;">
+                <div class="top-input" style="width: 40%;">
+                    
+                </div>
+                <div class="top-input" style="width: 19%;">
+                    
+                </div>
+                <div class="top-input" style="width: 40%;">
+                    
+                </div>
+            </div>
+            <div class="flex-holder" style="height: 16%;">
+                <div class="top-label" style="width: 40%;">
+                    CHARACTER NAME
+                </div>
+                <div class="top-label" style="width: 19%;">
+                    ALIGNMENT
+                </div>
+                <div class="top-label" style="width: 40%;">
+                    PLAYER
+                </div>
+            </div>
+            <div class="flex-holder" style="height: 17%;">
+                <div class="top-input" style="width: 60%;">
+
+                </div>
+                <div class="top-input" style="width: 25%;">
+
+                </div>
+                <div class="top-input" style="width: 15%;">
+
+                </div>
+            </div>
+            <div class="flex-holder" style="height: 16%;">
+                <div class="top-label" style="width: 60%;">
+                    CHARACTER CLASS / LEVEL
+                </div>
+                <div class="top-label" style="width: 25%;">
+                    DEITY
+                </div>
+                <div class="top-label" style="width: 15%;">
+                    HOMELAND
+                </div>
+            </div>
+            <div class="flex-holder" style="height: 17%;">
+                <div class="top-input" style="width: 30%;">
+
+                </div>
+                <div class="top-input" style="width: 10%;">
+
+                </div>
+                <div class="top-input" style="width: 10%;">
+
+                </div>
+                <div class="top-input" style="width: 10%;">
+
+                </div>
+                <div class="top-input" style="width: 10%;">
+
+                </div>
+                <div class="top-input" style="width: 10%;">
+
+                </div>
+                <div class="top-input" style="width: 10%;">
+
+                </div>
+                <div class="top-input" style="width: 10%;">
+
+                </div>
+            </div>
+            <div class="flex-holder" style="height: 16%;">
+                <div class="top-label" style="width: 30%;">
+                    RACE
+                </div>
+                <div class="top-label" style="width: 10%;">
+                    SIZE
+                </div>
+                <div class="top-label" style="width: 10%;">
+                    GENDER
+                </div>
+                <div class="top-label" style="width: 10%;">
+                    AGE
+                </div>
+                <div class="top-label" style="width: 10%;">
+                    HEIGHT
+                </div>
+                <div class="top-label" style="width: 10%;">
+                    WEIGHT
+                </div>
+                <div class="top-label" style="width: 10%;">
+                    HAIR
+                </div>
+                <div class="top-label" style="width: 10%;">
+                    EYES
+                </div>
+            </div>
+        </div>
+    </div>
+    <div style="display: flex;">
+        <div class="main-sheet-list" style="background-color: #a9ddff;">
+            <div style="display: flex;">
+                <div class="main-sheet-list" style="margin: 0px;">
+                    <div class="flex-holder">
+                        <div style="width: 20%;">
+
+                        </div>
+                        <div style="width: 40%;">
+                            
+                        </div>
+                        <div style="width: 40%;">
+                        </div>
+                        <div style="width: 20%;">
+                        </div>
+                    </div>
+                </div>
+                <div class="main-sheet-list" style="margin: 0px;">
+                    <div class="flex-holder">
+                        <div class="heading-box" style="width: 25%;">
+                            <p class="heading-box-text">HP</p>
+                            <p class="heading-box-desc">Hit Points</p>
+                        </div>
+                        <div class="input-box" style="width: 40%;">
+                            <p class="input-box-label">Total</p>
+                            <p class="input-box-text">Text</p>
+                        </div>
+                        <div class="input-box" style="width: 40%;">
+                            <p class="input-box-label">DR</p>
+                            <p class="input-box-text"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="flex-holder">
+                <div class="heading-box" style="width: 20%;">
+                    <p class="heading-box-text">-</p>
+                    <p class="heading-box-desc"></p>
+                </div>
+                <div class="input-box" style="width: 40%;">
+                    <p class="input-box-label">-</p>
+                    <p class="input-box-text">Text</p>
+                </div>
+                <div class="input-box" style="width: 40%;">
+                    <p class="input-box-label">-</p>
+                    <p class="input-box-text"></p>
+                </div>
+                <div class="input-box" style="width: 20%;">
+                    <p class="input-box-label">-</p>
+                    <p class="input-box-text"></p>
+                </div>
+            </div>
+        </div>
+        <div class="main-sheet-list" style="background-color: #a9ddff;">
+            <div class="flex-holder">
+                <div class="heading-box" style="width: 20%;">
+                    <p class="heading-box-text">SPEED</p>
+                    <p class="heading-box-desc"></p>
+                </div>
+                <div class="input-box" style="width: 40%;">
+                    <p class="input-box-label">Land</p>
+                    <p class="input-box-text">Text</p>
+                </div>
+                <div class="input-box" style="width: 40%;">
+                    <p class="input-box-label">With Armor</p>
+                    <p class="input-box-text"></p>
+                </div>
+                <div class="input-box" style="width: 20%;">
+                    <p class="input-box-label">Swim</p>
+                    <p class="input-box-text"></p>
+                </div>
+            </div>
+            <div class="flex-holder">
+                <div class="input-box" style="width: 20%;">
+                    <p class="input-box-label">Climb</p>
+                    <p class="input-box-text">Text</p>
+                </div>
+                <div class="input-box" style="width: 40%;">
+                    <p class="input-box-label">Fly</p>
+                    <p class="input-box-text"></p>
+                </div>
+                <div class="input-box" style="width: 20%;">
+                    <p class="input-box-label">Burrow</p>
+                    <p class="input-box-text"></p>
+                </div>
+                <div class="input-box" style="width: 40%;">
+                    <p class="input-box-label">Temp Modifiers</p>
+                    <p class="input-box-text"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
