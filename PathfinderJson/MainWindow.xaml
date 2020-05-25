@@ -309,12 +309,12 @@
                     <TextBlock x:Name="lblWis_Copy" HorizontalAlignment="Left" Margin="50,122,0,0" Grid.Row="4" Text="Wisdom" VerticalAlignment="Top"/>
                     <TextBlock x:Name="lblCha_Copy" HorizontalAlignment="Left" Margin="50,150,0,0" Grid.Row="4" Text="Charisma" VerticalAlignment="Top"/>
 
-                    <TextBox x:Name="txtStrm" HorizontalAlignment="Left" Height="23" Margin="256,5,0,0" VerticalAlignment="Top" Width="40" IsEnabled="False" Grid.Row="4"/>
-                    <TextBox x:Name="txtDexm" HorizontalAlignment="Left" Height="23" Margin="256,33,0,0" VerticalAlignment="Top" Width="40" IsEnabled="False" Grid.Row="4"/>
-                    <TextBox x:Name="txtConm" HorizontalAlignment="Left" Height="23" Margin="256,61,0,0" VerticalAlignment="Top" Width="40" IsEnabled="False" Grid.Row="4"/>
-                    <TextBox x:Name="txtIntm" HorizontalAlignment="Left" Height="23" Margin="256,89,0,0" VerticalAlignment="Top" Width="40" IsEnabled="False" Grid.Row="4"/>
-                    <TextBox x:Name="txtWism" HorizontalAlignment="Left" Height="23" Margin="256,117,0,0" VerticalAlignment="Top" Width="40" IsEnabled="False" Grid.Row="4"/>
-                    <TextBox x:Name="txtCham" HorizontalAlignment="Left" Height="23" Margin="256,145,0,0" VerticalAlignment="Top" Width="40" IsEnabled="False" Grid.Row="4"/>
+                    <TextBox x:Name="txtStrm" HorizontalAlignment="Left" Height="23" Margin="256,5,0,0" VerticalAlignment="Top" Width="40" IsReadOnly="True" Grid.Row="4"/>
+                    <TextBox x:Name="txtDexm" HorizontalAlignment="Left" Height="23" Margin="256,33,0,0" VerticalAlignment="Top" Width="40" IsReadOnly="True" Grid.Row="4"/>
+                    <TextBox x:Name="txtConm" HorizontalAlignment="Left" Height="23" Margin="256,61,0,0" VerticalAlignment="Top" Width="40" IsReadOnly="True" Grid.Row="4"/>
+                    <TextBox x:Name="txtIntm" HorizontalAlignment="Left" Height="23" Margin="256,89,0,0" VerticalAlignment="Top" Width="40" IsReadOnly="True" Grid.Row="4"/>
+                    <TextBox x:Name="txtWism" HorizontalAlignment="Left" Height="23" Margin="256,117,0,0" VerticalAlignment="Top" Width="40" IsReadOnly="True" Grid.Row="4"/>
+                    <TextBox x:Name="txtCham" HorizontalAlignment="Left" Height="23" Margin="256,145,0,0" VerticalAlignment="Top" Width="40" IsReadOnly="True" Grid.Row="4"/>
                     <TextBlock HorizontalAlignment="Left" Margin="207,8,0,0" Text="modifier" VerticalAlignment="Top" Grid.Row="4"/>
                     <TextBlock HorizontalAlignment="Left" Margin="207,38,0,0" Text="modifier" VerticalAlignment="Top" Grid.Row="4"/>
                     <TextBlock HorizontalAlignment="Left" Margin="207,66,0,0" Text="modifier" VerticalAlignment="Top" Grid.Row="4"/>
