@@ -131,7 +131,7 @@ namespace PathfinderJson
             chkAutoUpdate.IsChecked = s.UpdateAutoCheck;
 
             // Interface options
-            uiColor = App.ColorScheme.MainColor;
+            uiColor = ColorsHelper.CreateFromHex(App.Settings.ThemeColor);
             chkHighContrast.IsChecked = !(s.HighContrastTheme == App.NO_HIGH_CONTRAST);
             cbbHighContrast.IsEnabled = chkHighContrast.IsChecked;
             switch (s.HighContrastTheme)
