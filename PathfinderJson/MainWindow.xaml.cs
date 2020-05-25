@@ -2469,10 +2469,29 @@ namespace PathfinderJson
 
         #region Sync Editors / update sheet / CreatePathfinderSheetAsync
 
+        #region Update UI (Calculate menu)
+
         private async void mnuUpdate_Click(object sender, RoutedEventArgs e)
         {
             await UpdateCalculations(true, mnuUpdateTotals.IsChecked, mnuUpdateAc.IsChecked);
         }
+
+        private void mnuUpdateAc_Click(object sender, RoutedEventArgs e)
+        {
+            mnuUpdateAc.IsChecked = !mnuUpdateAc.IsChecked;
+        }
+
+        private void mnuAutoUpdate_Click(object sender, RoutedEventArgs e)
+        {
+            mnuAutoUpdate.IsChecked = !mnuAutoUpdate.IsChecked;
+        }
+
+        private void mnuUpdateTotals_Click(object sender, RoutedEventArgs e)
+        {
+            mnuUpdateTotals.IsChecked = !mnuUpdateTotals.IsChecked;
+        }
+
+        #endregion
 
         async Task UpdateCalculations(bool skills = true, bool totals = true, bool ac = true)
         {
@@ -2621,6 +2640,8 @@ namespace PathfinderJson
             SetIsDirty();
         }
 
+        #region Sync
+
         /// <summary>
         /// Update the sheet views from data in the text editor. Also sets the editor as no longer dirty (out-of-sync), as long as the editor has valid JSON.
         /// </summary>
@@ -2687,6 +2708,8 @@ namespace PathfinderJson
         {
             SyncEditorFromSheet();
         }
+
+        #endregion
 
         /// <summary>
         /// Create a PathfinderSheet object by loading in all the values from the sheet view.

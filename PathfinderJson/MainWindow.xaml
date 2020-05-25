@@ -112,10 +112,10 @@
             </MenuItem>
             <MenuItem Header="_Calculate" x:Name="mnuEditSheet" >
                 <MenuItem Header="_Update Calculations" x:Name="mnuUpdate" Click="mnuUpdate_Click" />
-                <MenuItem Header="Change _Totals with Updates" IsChecked="True" x:Name="mnuUpdateTotals" IsCheckable="True" />
-                <MenuItem Header="_Calculate Armor Class with Updates" IsChecked="True" x:Name="mnuUpdateAc" IsCheckable="True" />
+                <MenuItem Header="Change _Totals with Updates" IsChecked="True" x:Name="mnuUpdateTotals" Click="mnuUpdateTotals_Click" />
+                <MenuItem Header="_Calculate Armor Class with Updates" IsChecked="True" x:Name="mnuUpdateAc" Click="mnuUpdateAc_Click" />
                 <Separator />
-                <MenuItem Header="_Auto Update Modifiers" x:Name="mnuAutoUpdate" IsChecked="True" IsCheckable="True" />
+                <MenuItem Header="_Auto Update Modifiers" x:Name="mnuAutoUpdate" IsChecked="True" Click="mnuAutoUpdate_Click" />
                 <Separator Visibility="Collapsed" />
                 <MenuItem Header="Update Text Editor from Sheet" x:Name="mnuRefreshEditor" Click="mnuRefreshEditor_Click" Visibility="Collapsed" />
                 <MenuItem Header="Update Sheet from Text Editor" x:Name="mnuRefresh" Click="mnuRefresh_Click" Visibility="Collapsed" />
