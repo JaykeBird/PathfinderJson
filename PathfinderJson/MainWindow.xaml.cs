@@ -493,7 +493,7 @@ namespace PathfinderJson
 
         #region File / Help menus
 
-        private void mnuNew_Click(object sender, RoutedEventArgs e)
+        private async void mnuNew_Click(object sender, RoutedEventArgs e)
         {
             if (!SaveDirtyChanges() || CheckCalculating())
             {
@@ -521,6 +521,7 @@ namespace PathfinderJson
                 txtEditRaw.Text = ps.SaveJsonText(App.Settings.IndentJsonData);
                 ChangeView(App.Settings.StartView, false, false);
                 LoadPathfinderSheet(ps);
+                await UpdateCalculations();
             }
         }
 
