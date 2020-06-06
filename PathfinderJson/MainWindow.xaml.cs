@@ -73,6 +73,7 @@ namespace PathfinderJson
         Dictionary<string, string> abilities = new Dictionary<string, string>();
         Dictionary<string, string?> sheetSettings = new Dictionary<string, string?>();
         string? version;
+        int babCalc = 0;
 
         // keyboard/method data
         RoutedMethodRegistry mr = new RoutedMethodRegistry();
@@ -2205,6 +2206,8 @@ namespace PathfinderJson
             txtDr.Text = sheet.DamageReduction;
             txtResist.Text = sheet.Resistances;
 
+            UpdateInternalBab();
+
             selMelee.Clear();
             foreach (Weapon item in sheet.MeleeWeapons)
             {
@@ -2494,6 +2497,41 @@ namespace PathfinderJson
 
         #endregion
 
+        void UpdateInternalBab()
+        {
+            string bab = txtBab.Text;
+            string buffer = "";
+
+            if (string.IsNullOrEmpty(bab))
+            {
+                babCalc = 0;
+                return;
+            }
+
+            foreach (char c in bab)
+            {
+                if (char.IsDigit(c) || c == '+' || c == '-')
+                {
+                    buffer += c;
+                }
+                else
+                {
+                    break;
+                }
+            }
+
+            bool res = int.TryParse(buffer, out int value);
+
+            if (res)
+            {
+                babCalc = value;
+            }
+            else
+            {
+                babCalc = 0;
+            }
+        }
+
         async Task UpdateCalculations(bool skills = true, bool totals = true, bool ac = true)
         {
             if (!_sheetLoaded)
@@ -2518,6 +2556,8 @@ namespace PathfinderJson
             _isCalculating = true;
             brdrCalculating.Visibility = Visibility.Visible;
 
+            UpdateInternalBab();
+
             txtStrm.Text = CalculateModifier(txtStr.Value);
             txtDexm.Text = CalculateModifier(txtDex.Value);
             txtCham.Text = CalculateModifier(txtCha.Value);
@@ -2531,8 +2571,8 @@ namespace PathfinderJson
 
             edtAc.UpdateCoreModifier(txtDexm.Text);
             edtInit.UpdateCoreModifier(txtDexm.Text);
-            edtCmb.UpdateCoreModifier(txtStrm.Text, "", txtBab.Text);
-            edtCmd.UpdateCoreModifier(txtStrm.Text, txtDexm.Text, txtBab.Text);
+            edtCmb.UpdateCoreModifier(txtStrm.Text, "", babCalc.ToString());
+            edtCmd.UpdateCoreModifier(txtStrm.Text, txtDexm.Text, babCalc.ToString());
 
             if (skills)
             {
