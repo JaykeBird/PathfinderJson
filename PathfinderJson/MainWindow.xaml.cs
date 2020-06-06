@@ -679,8 +679,8 @@ namespace PathfinderJson
             if (isDirty)
             {
                 MessageDialog md = new MessageDialog(App.ColorScheme);
-                md.ShowDialog("The file has some unsaved changes. Do you want to save them first?", null, this, "Unsaved Changes", MessageDialogButtonDisplay.Three, MessageDialogImage.Question, MessageDialogResult.Cancel,
-                    "Save", "Cancel", "Discard");
+                md.ShowDialog("The file has some unsaved changes. Do you want to save them first?", null, this, "Unsaved Changes", MessageDialogButtonDisplay.Three, MessageDialogImage.Question, 
+                    MessageDialogResult.Cancel, "Save", "Cancel", "Discard");
 
                 if (md.DialogResult == MessageDialogResult.OK)
                 {
@@ -714,8 +714,8 @@ namespace PathfinderJson
             if (isDirty)
             {
                 MessageDialog md = new MessageDialog(App.ColorScheme);
-                md.ShowDialog("The file has some unsaved changes. Are you sure you want to discard them?", App.ColorScheme, this, "Unsaved Changes", MessageDialogButtonDisplay.Auto, image: MessageDialogImage.Question,
-                    customOkButtonText: "Discard", customCancelButtonText: "Cancel");
+                md.ShowDialog("The file has some unsaved changes. Are you sure you want to discard them?", App.ColorScheme, this, "Unsaved Changes", MessageDialogButtonDisplay.Auto, 
+                    image: MessageDialogImage.Question, customOkButtonText: "Discard", customCancelButtonText: "Cancel");
 
                 if (md.DialogResult == MessageDialogResult.OK || md.DialogResult == MessageDialogResult.Discard)
                 {

@@ -29,18 +29,18 @@
             <MenuItem Header="_File">
                 <MenuItem Header="_New Character..." x:Name="mnuNew" Click="mnuNew_Click">
                     <MenuItem.Icon>
-                        <Image Source="/PathfinderJson;component/Images/NewFile.png" />
+                        <Image Source="/PathfinderJson;component/Images/Color/NewFile.png" />
                     </MenuItem.Icon>
                 </MenuItem>
                 <MenuItem Header="New _Window" x:Name="mnuNewWindow" Click="mnuNewWindow_Click" />
                 <MenuItem Header="_Open..." x:Name="mnuOpen" Click="mnuOpen_Click" >
                     <MenuItem.Icon>
-                        <Image Source="/PathfinderJson;component/Images/Open.png" />
+                        <Image Source="/PathfinderJson;component/Images/Color/Open.png" />
                     </MenuItem.Icon>
                 </MenuItem>
                 <MenuItem Header="_Recent Files" x:Name="mnuRecent" >
                     <MenuItem.Icon>
-                        <Image Source="/PathfinderJson;component/Images/RecentFile.png" />
+                        <Image Source="/PathfinderJson;component/Images/Color/RecentFile.png" />
                     </MenuItem.Icon>
                     <MenuItem Header="(list of recent files appear here)" IsEnabled="False" x:Name="mnuRecentEmpty" />
                     <Separator />
@@ -50,12 +50,12 @@
                 <Separator />
                 <MenuItem Header="_Save" x:Name="mnuSave" Click="mnuSave_Click" >
                     <MenuItem.Icon>
-                        <Image Source="/PathfinderJson;component/Images/Save.png" />
+                        <Image Source="/PathfinderJson;component/Images/Color/Save.png" />
                     </MenuItem.Icon>
                 </MenuItem>
                 <MenuItem Header="Save _as..." x:Name="mnuSaveAs" Click="mnuSaveAs_Click" >
                     <MenuItem.Icon>
-                        <Image Source="/PathfinderJson;component/Images/SaveAs.png" />
+                        <Image Source="/PathfinderJson;component/Images/Color/SaveAs.png" />
                     </MenuItem.Icon>
                 </MenuItem>
                 <MenuItem Header="Reloa_d File" x:Name="mnuRevert" Click="mnuRevert_Click" />
@@ -64,49 +64,49 @@
                 <Separator />
                 <MenuItem Header="_Exit" x:Name="mnuExit" Click="btnExit_Click" >
                     <MenuItem.Icon>
-                        <Image Source="/PathfinderJson;component/Images/Exit.png" />
+                        <Image Source="/PathfinderJson;component/Images/Color/Exit.png" />
                     </MenuItem.Icon>
                 </MenuItem>
             </MenuItem>
             <MenuItem Header="_Edit" x:Name="mnuEdit" Visibility="Collapsed" >
                 <MenuItem Header="_Undo" x:Name="mnuUndo" Click="mnuUndo_Click" >
                     <MenuItem.Icon>
-                        <Image Source="/PathfinderJson;component/Images/Undo.png" />
+                        <Image Source="/PathfinderJson;component/Images/Color/Undo.png" />
                     </MenuItem.Icon>
                 </MenuItem>
                 <MenuItem Header="_Redo" x:Name="mnuRedo" Click="mnuRedo_Click" >
                     <MenuItem.Icon>
-                        <Image Source="/PathfinderJson;component/Images/Redo.png" />
+                        <Image Source="/PathfinderJson;component/Images/Color/Redo.png" />
                     </MenuItem.Icon>
                 </MenuItem>
                 <Separator />
                 <MenuItem Header="_Copy" x:Name="mnuCopy" Click="mnuCopy_Click" >
                     <MenuItem.Icon>
-                        <Image Source="/PathfinderJson;component/Images/Copy.png" />
+                        <Image Source="/PathfinderJson;component/Images/Color/Copy.png" />
                     </MenuItem.Icon>
                 </MenuItem>
                 <MenuItem Header="C_ut" x:Name="mnuCut" Click="mnuCut_Click" >
                     <MenuItem.Icon>
-                        <Image Source="/PathfinderJson;component/Images/Cut.png" />
+                        <Image Source="/PathfinderJson;component/Images/Color/Cut.png" />
                     </MenuItem.Icon>
                 </MenuItem>
                 <MenuItem Header="_Paste" x:Name="mnuPaste" Click="mnuPaste_Click" />
                 <Separator />
                 <MenuItem Header="_Select All" x:Name="mnuSelectAll" Click="mnuSelectAll_Click" >
                     <MenuItem.Icon>
-                        <Image Source="/PathfinderJson;component/Images/SelectText.png" />
+                        <Image Source="/PathfinderJson;component/Images/Color/SelectText.png" />
                     </MenuItem.Icon>
                 </MenuItem>
                 <MenuItem Header="_Delete" x:Name="mnuDelete" Click="mnuDelete_Click" >
                     <MenuItem.Icon>
-                        <Image Source="/PathfinderJson;component/Images/Cancel.png" />
+                        <Image Source="/PathfinderJson;component/Images/Color/Cancel.png" />
                     </MenuItem.Icon>
                 </MenuItem>
                 <Separator />
                 <MenuItem Header="_Word Wrap" x:Name="mnuWordWrap" Click="mnuWordWrap_Click" IsChecked="True" />
                 <MenuItem Header="_Find" x:Name="mnuFind" Click="mnuFind_Click">
                     <MenuItem.Icon>
-                        <Image Source="/PathfinderJson;component/Images/Find.png" />
+                        <Image Source="/PathfinderJson;component/Images/Color/Find.png" />
                     </MenuItem.Icon>
                 </MenuItem>
             </MenuItem>
@@ -123,24 +123,24 @@
             <MenuItem Header="_View">
                 <MenuItem Header="_Continuous Scroll View" x:Name="mnuScroll" Click="mnuScroll_Click" >
                     <MenuItem.Icon>
-                        <Image Source="/PathfinderJson;component/Images/ContinuousScroll.png" />
+                        <Image Source="/PathfinderJson;component/Images/Color/ContinuousScroll.png" />
                     </MenuItem.Icon>
                 </MenuItem>
                 <MenuItem Header="_Tabbed Sheet View" x:Name="mnuTabs" Click="mnuTabs_Click" >
                     <MenuItem.Icon>
-                        <Image Source="/PathfinderJson;component/Images/TabView.png" />
+                        <Image Source="/PathfinderJson;component/Images/Color/TabView.png" />
                     </MenuItem.Icon>
                 </MenuItem>
                 <MenuItem Header="_Raw JSON View" x:Name="mnuRawJson" Click="mnuRawJson_Click" >
                     <MenuItem.Icon>
-                        <Image Source="/PathfinderJson;component/Images/TextFile.png" />
+                        <Image Source="/PathfinderJson;component/Images/Color/TextFile.png" />
                     </MenuItem.Icon>
                 </MenuItem>
                 <Separator />
                 <MenuItem Header="Show T_oolbar" x:Name="mnuToolbar" Click="mnuToolbar_Click" />
                 <MenuItem Header="Color _Scheme..." x:Name="mnuColors" Click="mnuColors_Click">
                     <MenuItem.Icon>
-                        <Image Source="/PathfinderJson;component/Images/Colors.png" />
+                        <Image Source="/PathfinderJson;component/Images/Color/Colors.png" />
                     </MenuItem.Icon>
                 </MenuItem>
                 <MenuItem Header="Use _High Contrast..." x:Name="mnuHighContrast" Click="mnuHighContrast_Click" />
@@ -153,7 +153,7 @@
                 <MenuItem Header="_Text Editor Font..." x:Name="mnuEditorFont" Click="mnuEditorFont_Click" />
                 <MenuItem Header="_Options..." x:Name="mnuOptions" Click="mnuOptions_Click">
                     <MenuItem.Icon>
-                        <Image Source="/PathfinderJson;component/Images/Options.png" />
+                        <Image Source="/PathfinderJson;component/Images/Color/Options.png" />
                     </MenuItem.Icon>
                 </MenuItem>
             </MenuItem>
@@ -167,7 +167,7 @@
                 <Separator />
                 <MenuItem Header="_About..." x:Name="mnuAbout" Click="mnuAbout_Click" >
                     <MenuItem.Icon>
-                        <Image Source="/PathfinderJson;component/Images/Info.png" />
+                        <Image Source="/PathfinderJson;component/Images/Color/Info.png" />
                     </MenuItem.Icon>
                 </MenuItem>
             </MenuItem>
@@ -176,35 +176,35 @@
         <Border Grid.Row="1" Grid.ColumnSpan="2" x:Name="toolbar" IsEnabled="False" >
             <StackPanel Orientation="Horizontal" Margin="3,0,0,0" x:Name="stkToolbar" UseLayoutRounding="True" >
                 <flat:FlatButton TransparentBack="True" x:Name="btnNew" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" Click="mnuNew_Click" Margin="0,2" Padding="3,2" ToolTip="New Character" >
-                    <Image Source="/PathfinderJson;component/Images/NewFile.png" Height="16" Width="16" />
+                    <local:ThemedImage ImageName="NewFile" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" Width="16" Height="16" />
                 </flat:FlatButton>
                 <flat:FlatButton TransparentBack="True" x:Name="btnOpen" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" Click="mnuOpen_Click" Margin="0,2" Padding="3,2" ToolTip="Open" >
-                    <Image Source="/PathfinderJson;component/Images/Open.png" Height="16" Width="16" />
+                    <local:ThemedImage ImageName="Open" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" Width="16" Height="16" />
                 </flat:FlatButton>
                 <flat:FlatButton TransparentBack="True" x:Name="btnSave" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" Click="mnuSave_Click" Margin="0,2" Padding="3,2">
                     <StackPanel Orientation="Horizontal">
-                        <Image Source="/PathfinderJson;component/Images/Save.png" Height="16" Width="16" />
+                        <local:ThemedImage ImageName="Save" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" Width="16" Height="16" />
                         <TextBlock Text="Save" Margin="3,0" />
                     </StackPanel>
                 </flat:FlatButton>
                 <Border Width="1" BorderBrush="Black" BorderThickness="1" Margin="1,2" />
                 <flat:FlatButton TransparentBack="True" x:Name="btnUpdate" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" Click="mnuUpdate_Click" Margin="0,2" Padding="3,2" >
                     <StackPanel Orientation="Horizontal">
-                        <Image Source="/PathfinderJson;component/Images/TextFile.png" Height="16" Width="16" SnapsToDevicePixels="True" />
+                        <local:ThemedImage ImageName="TextFile" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" Width="16" Height="16" />
                         <TextBlock Text="Update Calculations" Margin="3,0" />
                     </StackPanel>
                 </flat:FlatButton>
                 <StackPanel Orientation="Horizontal" x:Name="stkEditToolbar" >
                     <Border Width="1" BorderBrush="Black" BorderThickness="1" Margin="1,2" />
                     <flat:FlatButton TransparentBack="True" x:Name="btnUndo" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" Click="mnuUndo_Click" Margin="0,2" Padding="3,2" ToolTip="Undo" >
-                        <Image Source="/PathfinderJson;component/Images/Undo.png" Height="16" Width="16" />
+                        <local:ThemedImage ImageName="Undo" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" Width="16" Height="16" />
                     </flat:FlatButton>
                     <flat:FlatButton TransparentBack="True" x:Name="btnRedo" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" Click="mnuRedo_Click" Margin="0,2" Padding="3,2" ToolTip="Redo" >
-                        <Image Source="/PathfinderJson;component/Images/Redo.png" Height="16" Width="16" />
+                        <local:ThemedImage ImageName="Redo" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" Width="16" Height="16" />
                     </flat:FlatButton>
                     <flat:FlatButton TransparentBack="True" x:Name="btnFind" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" Click="mnuFind_Click" Margin="0,2" Padding="3,2" >
                         <StackPanel Orientation="Horizontal">
-                            <Image Source="/PathfinderJson;component/Images/Find.png" Height="16" Width="16" />
+                            <local:ThemedImage ImageName="Find" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" Width="16" Height="16" />
                             <TextBlock Text="Find" Margin="3,0" />
                         </StackPanel>
                     </flat:FlatButton>
@@ -416,39 +416,39 @@
                     <TextBlock x:Name="lblMelee" HorizontalAlignment="Left" Margin="15,12,0,0" Grid.Row="7" Text="Melee Weapons" FontWeight="SemiBold" VerticalAlignment="Top"/>
                     <Expander VerticalAlignment="Center" Margin="120,0,0,0" HorizontalAlignment="Left" Grid.Row="7" x:Name="expMelee" Header="Show/Hide List" IsExpanded="True" Expanded="ExpMelee_Expanded" Collapsed="ExpMelee_Collapsed" Foreground="{Binding Foreground, ElementName=window}" />
                     <flat:FlatButton ColorScheme="{Binding ColorScheme, ElementName=window}" Width="20" Height="24" HorizontalAlignment="Right" Margin="0,0,50,0" Grid.Row="7" Padding="0" TransparentBack="True" ToolTip="Add" x:Name="btnAddMelee" Click="BtnAddMelee_Click" >
-                        <Image Source="/Images/Add.png" Width="16" Height="16" />
+                        <local:ThemedImage ImageName="Add" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" Width="16" Height="16" />
                     </flat:FlatButton>
                     <flat:FlatButton ColorScheme="{Binding ColorScheme, ElementName=window}" Width="20" Height="24" HorizontalAlignment="Right" Margin="0,0,28,0" Grid.Row="7" Padding="0" TransparentBack="True" ToolTip="Delete" x:Name="btnDeleteMelee" Click="BtnDeleteMelee_Click" >
-                        <Image Source="/Images/Cancel.png" Width="16" Height="16" />
+                        <local:ThemedImage ImageName="Cancel" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" Width="16" Height="16" />
                     </flat:FlatButton>
                     <flat:FlatButton ColorScheme="{Binding ColorScheme, ElementName=window}" Width="20" Height="24" HorizontalAlignment="Right" Margin="0,0,6,0" Grid.Row="7" Padding="0" TransparentBack="True" ToolTip="Deselect All" x:Name="btnDeselectMelee" Click="BtnDeselectMelee_Click" >
-                        <Image Source="/Images/Deselect.png" Width="16" Height="16" />
+                        <local:ThemedImage ImageName="Deselect" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" Width="16" Height="16" />
                     </flat:FlatButton>
                     <flat:SelectPanel ColorScheme="{Binding ColorScheme, ElementName=window}" x:Name="selMelee" PanelBorderThickness="1" UseLighterBorder="True" MinHeight="3" Grid.Row="8" MultiSelect="True" />
 
                     <TextBlock x:Name="lblRanged" HorizontalAlignment="Left" Margin="15,12,0,0" Grid.Row="9" Text="Ranged Weapons" FontWeight="SemiBold" VerticalAlignment="Top"/>
                     <Expander VerticalAlignment="Center" Margin="120,0,0,0" HorizontalAlignment="Left" Grid.Row="9" x:Name="expRanged" Header="Show/Hide List" IsExpanded="True" Expanded="ExpRanged_Expanded" Collapsed="ExpRanged_Collapsed" Foreground="{Binding Foreground, ElementName=window}" />
                     <flat:FlatButton ColorScheme="{Binding ColorScheme, ElementName=window}" Width="20" Height="24" HorizontalAlignment="Right" Margin="0,0,50,0" Grid.Row="9" Padding="0" TransparentBack="True" ToolTip="Add" x:Name="btnAddRanged" Click="BtnAddRanged_Click" >
-                        <Image Source="/Images/Add.png" Width="16" Height="16" />
+                        <local:ThemedImage ImageName="Add" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" Width="16" Height="16" />
                     </flat:FlatButton>
                     <flat:FlatButton ColorScheme="{Binding ColorScheme, ElementName=window}" Width="20" Height="24" HorizontalAlignment="Right" Margin="0,0,28,0" Grid.Row="9" Padding="0" TransparentBack="True" ToolTip="Delete" x:Name="btnDeleteRanged" Click="BtnDeleteRanged_Click" >
-                        <Image Source="/Images/Cancel.png" Width="16" Height="16" />
+                        <local:ThemedImage ImageName="Cancel" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" Width="16" Height="16" />
                     </flat:FlatButton>
                     <flat:FlatButton ColorScheme="{Binding ColorScheme, ElementName=window}" Width="20" Height="24" HorizontalAlignment="Right" Margin="0,0,6,0" Grid.Row="9" Padding="0" TransparentBack="True" ToolTip="Deselect All" x:Name="btnDeselectRanged" Click="BtnDeselectRanged_Click" >
-                        <Image Source="/Images/Deselect.png" Width="16" Height="16" />
+                        <local:ThemedImage ImageName="Deselect" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" Width="16" Height="16" />
                     </flat:FlatButton>
                     <flat:SelectPanel ColorScheme="{Binding ColorScheme, ElementName=window}" x:Name="selRanged" PanelBorderThickness="1" UseLighterBorder="True" MinHeight="3" Grid.Row="10" MultiSelect="True" />
 
                     <TextBlock x:Name="lblAcItems" HorizontalAlignment="Left" Margin="15,0,0,0" Grid.Row="11" Text="Armor/Shields" FontWeight="SemiBold" VerticalAlignment="Center"/>
                     <Expander VerticalAlignment="Center" Margin="120,0,0,0" HorizontalAlignment="Left" Grid.Row="11" x:Name="expAcItem" Header="Show/Hide List" IsExpanded="True" Expanded="expAcItem_Expanded" Collapsed="expAcItem_Collapsed" Foreground="{Binding Foreground, ElementName=window}" />
                     <flat:FlatButton ColorScheme="{Binding ColorScheme, ElementName=window}" Width="20" Height="24" HorizontalAlignment="Right" Margin="0,8,50,8" Grid.Row="11" Padding="0" TransparentBack="True" ToolTip="Add" x:Name="btnAddAcItem" Click="btnAddAcItem_Click" >
-                        <Image Source="Images/Add.png" Width="16" Height="16" />
+                        <local:ThemedImage ImageName="Add" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" Width="16" Height="16" />
                     </flat:FlatButton>
                     <flat:FlatButton ColorScheme="{Binding ColorScheme, ElementName=window}" Width="20" Height="24" HorizontalAlignment="Right" Margin="0,8,28,8" Grid.Row="11" Padding="0" TransparentBack="True" ToolTip="Delete" x:Name="btnDeleteAcItem" Click="btnDeleteAcItem_Click" >
-                        <Image Source="Images/Cancel.png" Width="16" Height="16" />
+                        <local:ThemedImage ImageName="Cancel" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" Width="16" Height="16" />
                     </flat:FlatButton>
                     <flat:FlatButton ColorScheme="{Binding ColorScheme, ElementName=window}" Width="20" Height="24" HorizontalAlignment="Right" Margin="0,8,6,8" Grid.Row="11" Padding="0" TransparentBack="True" ToolTip="Deselect All" x:Name="btnDeselectAcItem" Click="btnDeselectAcItem_Click" >
-                        <Image Source="Images/Deselect.png" Width="16" Height="16" />
+                        <local:ThemedImage ImageName="Deselect" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" Width="16" Height="16" />
                     </flat:FlatButton>
                     <flat:SelectPanel ColorScheme="{Binding ColorScheme, ElementName=window}" x:Name="selAcItem" PanelBorderThickness="1" UseLighterBorder="True" MinHeight="3" Grid.Row="12" MultiSelect="True" />
 
@@ -541,7 +541,7 @@
                     <Expander VerticalAlignment="Center" Margin="120,0,0,0" HorizontalAlignment="Left" Grid.Row="2" x:Name="expSpells" Header="Show/Hide List" IsExpanded="True" Expanded="expSpells_Expanded" Collapsed="expSpells_Collapsed" Foreground="{Binding Foreground, ElementName=window}" />
                     <flat:MenuButton ColorScheme="{Binding ColorScheme, ElementName=window}" Height="24" HorizontalAlignment="Right" Margin="0,0,80,0" Grid.Row="2" Padding="0" TransparentBack="True" ToolTip="Add" x:Name="btnFilterSpell" StaysOpen="True" >
                         <StackPanel Orientation="Horizontal">
-                            <Image Source="/Images/Filter.png" Width="16" Height="16" Margin="0,0,3,0" />
+                            <local:ThemedImage ImageName="Filter" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" Width="16" Height="16" Margin="0,0,3,0" />
                             <TextBlock Text="Filter" />
                         </StackPanel>
                         <flat:MenuButton.Menu>
@@ -560,13 +560,13 @@
                         </flat:MenuButton.Menu>
                     </flat:MenuButton>
                     <flat:FlatButton ColorScheme="{Binding ColorScheme, ElementName=window}" Width="20" Height="24" HorizontalAlignment="Right" Margin="0,0,50,0" Grid.Row="2" Padding="0" TransparentBack="True" ToolTip="Add" x:Name="btnAddSpell" Click="btnAddSpell_Click" >
-                        <Image Source="/Images/Add.png" Width="16" Height="16" />
+                        <local:ThemedImage ImageName="Add" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" Width="16" Height="16" />
                     </flat:FlatButton>
                     <flat:FlatButton ColorScheme="{Binding ColorScheme, ElementName=window}" Width="20" Height="24" HorizontalAlignment="Right" Margin="0,0,28,0" Grid.Row="2" Padding="0" TransparentBack="True" ToolTip="Delete" x:Name="btnDeleteSpell" Click="btnDeleteSpell_Click" >
-                        <Image Source="/Images/Cancel.png" Width="16" Height="16" />
+                        <local:ThemedImage ImageName="Cancel" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" Width="16" Height="16" />
                     </flat:FlatButton>
                     <flat:FlatButton ColorScheme="{Binding ColorScheme, ElementName=window}" Width="20" Height="24" HorizontalAlignment="Right" Margin="0,0,6,0" Grid.Row="2" Padding="0" TransparentBack="True" ToolTip="Deselect All" x:Name="btnDeselectSpell" Click="btnDeselectSpell_Click" >
-                        <Image Source="/Images/Deselect.png" Width="16" Height="16" />
+                        <local:ThemedImage ImageName="Deselect" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" Width="16" Height="16" />
                     </flat:FlatButton>
                     <flat:SelectPanel ColorScheme="{Binding ColorScheme, ElementName=window}" x:Name="selSpells" PanelBorderThickness="1" UseLighterBorder="True" MinHeight="3" Grid.Row="3" MultiSelect="True" />
                 </Grid>
@@ -588,52 +588,52 @@
                     <TextBlock x:Name="lblFeats" HorizontalAlignment="Left" Margin="15,12,0,0" Grid.Row="1" Text="Feats" FontWeight="SemiBold" VerticalAlignment="Top"/>
                     <Expander VerticalAlignment="Center" Margin="120,0,0,0" HorizontalAlignment="Left" Grid.Row="1" x:Name="expFeats" Header="Show/Hide List" IsExpanded="True" Expanded="expFeats_Expanded" Collapsed="expFeats_Collapsed" Foreground="{Binding Foreground, ElementName=window}" />
                     <flat:FlatButton ColorScheme="{Binding ColorScheme, ElementName=window}" Width="20" Height="24" HorizontalAlignment="Right" Margin="0,0,50,0" Grid.Row="1" Padding="0" TransparentBack="True" ToolTip="Add" x:Name="btnAddFeat" Click="btnAddFeat_Click" >
-                        <Image Source="/Images/Add.png" Width="16" Height="16" />
+                        <local:ThemedImage ImageName="Add" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" Width="16" Height="16" />
                     </flat:FlatButton>
                     <flat:FlatButton ColorScheme="{Binding ColorScheme, ElementName=window}" Width="20" Height="24" HorizontalAlignment="Right" Margin="0,0,28,0" Grid.Row="1" Padding="0" TransparentBack="True" ToolTip="Delete" x:Name="btnDeleteFeat" Click="btnDeleteFeat_Click" >
-                        <Image Source="/Images/Cancel.png" Width="16" Height="16" />
+                        <local:ThemedImage ImageName="Cancel" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" Width="16" Height="16" />
                     </flat:FlatButton>
                     <flat:FlatButton ColorScheme="{Binding ColorScheme, ElementName=window}" Width="20" Height="24" HorizontalAlignment="Right" Margin="0,0,6,0" Grid.Row="1" Padding="0" TransparentBack="True" ToolTip="Deselect All" x:Name="btnDeselectFeat" Click="btnDeselectFeat_Click" >
-                        <Image Source="/Images/Deselect.png" Width="16" Height="16" />
+                        <local:ThemedImage ImageName="Deselect" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" Width="16" Height="16" />
                     </flat:FlatButton>
                     <flat:SelectPanel ColorScheme="{Binding ColorScheme, ElementName=window}" x:Name="selFeats" PanelBorderThickness="1" UseLighterBorder="True" MinHeight="3" Grid.Row="2" MultiSelect="True" />
 
                     <TextBlock x:Name="lblAbilities" HorizontalAlignment="Left" Margin="15,12,0,0" Grid.Row="3" Text="Special Abilities" FontWeight="SemiBold" VerticalAlignment="Top"/>
                     <Expander VerticalAlignment="Center" Margin="120,0,0,0" HorizontalAlignment="Left" Grid.Row="3" x:Name="expabilities" Header="Show/Hide List" IsExpanded="True" Expanded="expAbilities_Expanded" Collapsed="expAbilities_Collapsed" Foreground="{Binding Foreground, ElementName=window}" />
                     <flat:FlatButton ColorScheme="{Binding ColorScheme, ElementName=window}" Width="20" Height="24" HorizontalAlignment="Right" Margin="0,0,50,0" Grid.Row="3" Padding="0" TransparentBack="True" ToolTip="Add" x:Name="btnAddAbility" Click="btnAddAbility_Click" >
-                        <Image Source="/Images/Add.png" Width="16" Height="16" />
+                        <local:ThemedImage ImageName="Add" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" Width="16" Height="16" />
                     </flat:FlatButton>
                     <flat:FlatButton ColorScheme="{Binding ColorScheme, ElementName=window}" Width="20" Height="24" HorizontalAlignment="Right" Margin="0,0,28,0" Grid.Row="3" Padding="0" TransparentBack="True" ToolTip="Delete" x:Name="btnDeleteAbility" Click="btnDeleteAbility_Click" >
-                        <Image Source="/Images/Cancel.png" Width="16" Height="16" />
+                        <local:ThemedImage ImageName="Cancel" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" Width="16" Height="16" />
                     </flat:FlatButton>
                     <flat:FlatButton ColorScheme="{Binding ColorScheme, ElementName=window}" Width="20" Height="24" HorizontalAlignment="Right" Margin="0,0,6,0" Grid.Row="3" Padding="0" TransparentBack="True" ToolTip="Deselect All" x:Name="btnDeselectAbility" Click="btnDeselectAbility_Click" >
-                        <Image Source="/Images/Deselect.png" Width="16" Height="16" />
+                        <local:ThemedImage ImageName="Deselect" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" Width="16" Height="16" />
                     </flat:FlatButton>
                     <flat:SelectPanel ColorScheme="{Binding ColorScheme, ElementName=window}" x:Name="selAbilities" PanelBorderThickness="1" UseLighterBorder="True" MinHeight="3" Grid.Row="4" MultiSelect="True" />
 
                     <TextBlock x:Name="lblTraits" HorizontalAlignment="Left" Margin="15,12,0,0" Grid.Row="5" Text="Traits" FontWeight="SemiBold" VerticalAlignment="Top"/>
                     <Expander VerticalAlignment="Center" Margin="120,0,0,0" HorizontalAlignment="Left" Grid.Row="5" x:Name="expTraits" Header="Show/Hide List" IsExpanded="True" Expanded="expTraits_Expanded" Collapsed="expTraits_Collapsed" Foreground="{Binding Foreground, ElementName=window}" />
                     <flat:FlatButton ColorScheme="{Binding ColorScheme, ElementName=window}" Width="20" Height="24" HorizontalAlignment="Right" Margin="0,0,50,0" Grid.Row="5" Padding="0" TransparentBack="True" ToolTip="Add" x:Name="btnAddTrait" Click="btnAddTrait_Click" >
-                        <Image Source="/Images/Add.png" Width="16" Height="16" />
+                        <local:ThemedImage ImageName="Add" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" Width="16" Height="16" />
                     </flat:FlatButton>
                     <flat:FlatButton ColorScheme="{Binding ColorScheme, ElementName=window}" Width="20" Height="24" HorizontalAlignment="Right" Margin="0,0,28,0" Grid.Row="5" Padding="0" TransparentBack="True" ToolTip="Delete" x:Name="btnDeleteTrait" Click="btnDeleteTrait_Click" >
-                        <Image Source="/Images/Cancel.png" Width="16" Height="16" />
+                        <local:ThemedImage ImageName="Cancel" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" Width="16" Height="16" />
                     </flat:FlatButton>
                     <flat:FlatButton ColorScheme="{Binding ColorScheme, ElementName=window}" Width="20" Height="24" HorizontalAlignment="Right" Margin="0,0,6,0" Grid.Row="5" Padding="0" TransparentBack="True" ToolTip="Deselect All" x:Name="btnDeselectTrait" Click="btnDeselectTrait_Click" >
-                        <Image Source="/Images/Deselect.png" Width="16" Height="16" />
+                        <local:ThemedImage ImageName="Deselect" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" Width="16" Height="16" />
                     </flat:FlatButton>
                     <flat:SelectPanel ColorScheme="{Binding ColorScheme, ElementName=window}" x:Name="selTraits" PanelBorderThickness="1" UseLighterBorder="True" MinHeight="3" Grid.Row="6" MultiSelect="True" />
 
                     <TextBlock x:Name="lblSpellLikes" HorizontalAlignment="Left" Margin="15,12,0,0" Grid.Row="7" Text="Spell-like Abilities" FontWeight="SemiBold" VerticalAlignment="Top"/>
                     <Expander VerticalAlignment="Center" Margin="120,0,0,0" HorizontalAlignment="Left" Grid.Row="7" x:Name="expSpellLikes" Header="Show/Hide List" IsExpanded="True" Expanded="expSpellLikes_Expanded" Collapsed="expSpellLikes_Collapsed" Foreground="{Binding Foreground, ElementName=window}" />
                     <flat:FlatButton ColorScheme="{Binding ColorScheme, ElementName=window}" Width="20" Height="24" HorizontalAlignment="Right" Margin="0,0,50,0" Grid.Row="7" Padding="0" TransparentBack="True" ToolTip="Add" x:Name="btnAddSpellLike" Click="btnAddSpellLike_Click" >
-                        <Image Source="/Images/Add.png" Width="16" Height="16" />
+                        <local:ThemedImage ImageName="Add" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" Width="16" Height="16" />
                     </flat:FlatButton>
                     <flat:FlatButton ColorScheme="{Binding ColorScheme, ElementName=window}" Width="20" Height="24" HorizontalAlignment="Right" Margin="0,0,28,0" Grid.Row="7" Padding="0" TransparentBack="True" ToolTip="Delete" x:Name="btnDeleteSpellLike" Click="btnDeleteSpellLike_Click" >
-                        <Image Source="/Images/Cancel.png" Width="16" Height="16" />
+                        <local:ThemedImage ImageName="Cancel" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" Width="16" Height="16" />
                     </flat:FlatButton>
                     <flat:FlatButton ColorScheme="{Binding ColorScheme, ElementName=window}" Width="20" Height="24" HorizontalAlignment="Right" Margin="0,0,6,0" Grid.Row="7" Padding="0" TransparentBack="True" ToolTip="Deselect All" x:Name="btnDeselectSpellLike" Click="btnDeselectSpellLike_Click" >
-                        <Image Source="/Images/Deselect.png" Width="16" Height="16" />
+                        <local:ThemedImage ImageName="Deselect" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" Width="16" Height="16" />
                     </flat:FlatButton>
                     <flat:SelectPanel ColorScheme="{Binding ColorScheme, ElementName=window}" x:Name="selSpellLikes" PanelBorderThickness="1" UseLighterBorder="True" MinHeight="3" Grid.Row="8" MultiSelect="True" />
                 </Grid>
@@ -671,13 +671,13 @@
                     <TextBlock x:Name="lblEquipment" HorizontalAlignment="Left" Margin="15,12,0,0" Grid.Row="2" Text="Equipment/Gear" FontWeight="SemiBold" VerticalAlignment="Top"/>
                     <Expander VerticalAlignment="Center" Margin="120,0,0,0" HorizontalAlignment="Left" Grid.Row="2" x:Name="expEquipment" Header="Show/Hide List" IsExpanded="True" Expanded="expEquipment_Expanded" Collapsed="expEquipment_Collapsed" Foreground="{Binding Foreground, ElementName=window}" />
                     <flat:FlatButton ColorScheme="{Binding ColorScheme, ElementName=window}" Width="20" Height="24" HorizontalAlignment="Right" Margin="0,0,50,0" Grid.Row="2" Padding="0" TransparentBack="True" ToolTip="Add" x:Name="btnAddEquipment" Click="btnAddEquipment_Click" >
-                        <Image Source="/Images/Add.png" Width="16" Height="16" />
+                        <local:ThemedImage ImageName="Add" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" Width="16" Height="16" />
                     </flat:FlatButton>
                     <flat:FlatButton ColorScheme="{Binding ColorScheme, ElementName=window}" Width="20" Height="24" HorizontalAlignment="Right" Margin="0,0,28,0" Grid.Row="2" Padding="0" TransparentBack="True" ToolTip="Delete" x:Name="btnDeleteEquipment" Click="btnDeleteEquipment_Click" >
-                        <Image Source="/Images/Cancel.png" Width="16" Height="16" />
+                        <local:ThemedImage ImageName="Cancel" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" Width="16" Height="16" />
                     </flat:FlatButton>
                     <flat:FlatButton ColorScheme="{Binding ColorScheme, ElementName=window}" Width="20" Height="24" HorizontalAlignment="Right" Margin="0,0,6,0" Grid.Row="2" Padding="0" TransparentBack="True" ToolTip="Deselect All" x:Name="btnDeselectEquipment" Click="btnDeselectEquipment_Click" >
-                        <Image Source="/Images/Deselect.png" Width="16" Height="16" />
+                        <local:ThemedImage ImageName="Deselect" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" Width="16" Height="16" />
                     </flat:FlatButton>
                     <flat:SelectPanel ColorScheme="{Binding ColorScheme, ElementName=window}" x:Name="selEquipment" PanelBorderThickness="1" UseLighterBorder="True" MinHeight="3" Grid.Row="3" MultiSelect="True" />
                 </Grid>
@@ -694,24 +694,24 @@
                 <flat:ContextMenu FontFamily="Segoe UI">
                     <MenuItem Header="_Copy" Click="mnuCopy_Click">
                         <MenuItem.Icon>
-                            <Image Source="/PathfinderJson;component/Images/Copy.png" />
+                            <Image Source="/PathfinderJson;component/Images/Color/Copy.png" />
                         </MenuItem.Icon>
                     </MenuItem>
                     <MenuItem Header="C_ut" Click="mnuCut_Click" >
                         <MenuItem.Icon>
-                            <Image Source="/PathfinderJson;component/Images/Cut.png" />
+                            <Image Source="/PathfinderJson;component/Images/Color/Cut.png" />
                         </MenuItem.Icon>
                     </MenuItem>
                     <MenuItem Header="_Paste" Click="mnuPaste_Click" />
                     <Separator />
                     <MenuItem Header="_Select All" Click="mnuSelectAll_Click" >
                         <MenuItem.Icon>
-                            <Image Source="/PathfinderJson;component/Images/SelectText.png" />
+                            <Image Source="/PathfinderJson;component/Images/Color/SelectText.png" />
                         </MenuItem.Icon>
                     </MenuItem>
                     <MenuItem Header="_Delete" Click="mnuDelete_Click" >
                         <MenuItem.Icon>
-                            <Image Source="/PathfinderJson;component/Images/Cancel.png" />
+                            <Image Source="/PathfinderJson;component/Images/Color/Cancel.png" />
                         </MenuItem.Icon>
                     </MenuItem>
                 </flat:ContextMenu>
