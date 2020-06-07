@@ -292,7 +292,7 @@ namespace PathfinderJson
         public override bool CanRead => true;
         public override bool CanWrite => true;
 
-        public override void WriteJson(JsonWriter writer, Skill value, JsonSerializer serializer)
+        public override void WriteJson(JsonWriter writer, Skill? value, JsonSerializer serializer)
         {
             if (value == null)
             {
@@ -326,7 +326,7 @@ namespace PathfinderJson
 
         }
 
-        public override Skill ReadJson(JsonReader reader, Type objectType, Skill existingValue, bool hasExistingValue, JsonSerializer serializer)
+        public override Skill ReadJson(JsonReader reader, Type objectType, Skill? existingValue, bool hasExistingValue, JsonSerializer serializer)
         {
             if (reader.TokenType == JsonToken.PropertyName)
             {
