@@ -41,7 +41,7 @@ namespace PathfinderJson
 
                 if (!ColorScheme.IsHighContrast)
                 {
-                    var img = App.GetResourcesImage("Email");
+                    var img = App.GetResourcesImage("Color/Email");
                     si.ImageSource = img;
                     si.ShowImage = true;
                 }
@@ -56,7 +56,7 @@ namespace PathfinderJson
 
                 if (!ColorScheme.IsHighContrast)
                 {
-                    si.ImageSource = App.GetResourcesImage("Link");
+                    si.ImageSource = App.GetResourcesImage("Color/Link");
                     si.ShowImage = true;
                 }
 
