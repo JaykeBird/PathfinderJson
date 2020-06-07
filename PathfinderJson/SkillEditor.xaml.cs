@@ -25,6 +25,8 @@ namespace PathfinderJson
             btnEdit.ColorScheme = App.ColorScheme;
             btnInfo.ColorScheme = App.ColorScheme;
             btnModifiers.ColorScheme = App.ColorScheme;
+            imgEdit.ColorScheme = App.ColorScheme;
+            imgInfo.ColorScheme = App.ColorScheme;
             if (App.ColorScheme.IsHighContrast)
             {
                 txtModifier.BorderBrush = new SolidColorBrush(App.ColorScheme.LightDisabledColor);

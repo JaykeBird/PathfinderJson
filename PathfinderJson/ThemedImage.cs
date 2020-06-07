@@ -112,7 +112,15 @@ namespace PathfinderJson
             {
                 ApplyColorScheme(ColorScheme);
             }
-            Source = App.GetResourcesImage(_theme.ToString("g") + "/" + _image);
+
+            try
+            {
+                Source = App.GetResourcesImage(_theme.ToString("g") + "/" + _image);
+            }
+            catch (System.IO.IOException)
+            {
+                Source = null;
+            }
         }
     }
 
