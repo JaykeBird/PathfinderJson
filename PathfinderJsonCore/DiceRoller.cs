@@ -34,7 +34,7 @@ namespace PathfinderJson
             // first, go through each character in the string, picking out any dice syntax
             foreach (char c in diceString)
             {
-                if (char.IsDigit(c) || c == '-')
+                if (char.IsDigit(c))
                 {
                     // this is a number
                     // store it and move in
