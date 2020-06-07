@@ -47,6 +47,11 @@ namespace PathfinderJson
                 txtRolls.Text = "Error: " + ex.Message;
                 txtResult.Text = "";
             }
+            catch (OverflowException)
+            {
+                txtRolls.Text = "Error: Cannot roll negative number of dice.";
+                txtResult.Text = "";
+            }
         }
 
         private void btnClose_Click(object sender, RoutedEventArgs e)

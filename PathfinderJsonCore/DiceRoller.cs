@@ -29,21 +29,50 @@ namespace PathfinderJson
             string resultValue = "";
 
             bool dsizeMode = false;
+            bool prevNumber = false;
 
             // first, go through each character in the string, picking out any dice syntax
             foreach (char c in diceString)
             {
                 if (char.IsDigit(c) || c == '-')
                 {
+                    // this is a number
+                    // store it and move in
                     number += c;
+                    prevNumber = true;
+                }
+                else if (c == '-')
+                {
+                    // special handling for the hyphen
+                    // as it could be symbolizing a negative number or a subtraction operation
+                    if (prevNumber)
+                    {
+                        // this is a subtraction operation
+                        resultValue += number;
+                        resultValue += c;
+                        number = "";
+                        prevNumber = false;
+                    }
+                    else
+                    {
+                        // this is a negative number
+                        number += c;
+                        prevNumber = false;
+                    }
                 }
                 else
                 {
+                    // not a numeric character
+                    // whatever number we have stored, keep it off to the side and clear out the buffer
                     string num = number;
                     number = "";
+                    prevNumber = false;
 
                     if (dsizeMode)
                     {
+                        // is currently in dice-size mode
+                        // the "6" in 2d6
+                        // at this point, we've reached a non-numeric character, which means we should now act upon the number we've currently stored
                         if (string.IsNullOrWhiteSpace(num))
                         {
                             // nothing to use?
@@ -60,8 +89,12 @@ namespace PathfinderJson
                     }
                     else
                     {
+                        // not in dice-size mode
                         if (char.ToLowerInvariant(c) == 'd')
                         {
+                            // currently defining a die
+                            // the stored number is the number of dice to roll (the "2" in 2d6)
+                            // so now, we store this as the number of dice to roll, enter dice-size mode, and move on
                             if (string.IsNullOrWhiteSpace(num))
                             {
                                 // nothing to use?
@@ -74,6 +107,12 @@ namespace PathfinderJson
                         }
                         else
                         {
+                            // not defining a die
+                            // probably just an operator or a parantheses
+                            // store the currently-stored number and move on
+                            resultValue += num;
+
+                            // also, store the current character
                             resultValue += c;
                         }
                     }
