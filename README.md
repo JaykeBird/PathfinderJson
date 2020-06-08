@@ -10,7 +10,11 @@ PathfinderJson requires Windows 7 with SP1, Windows 8.1, or Windows 10 with Anni
 
 For **64-bit** computers, use the x64 download. For **32-bit** computers, use the x86 download. If you're not sure what you have, you probably have a 64-bit computer, but you can go to [WhatsMyOS.com](http://whatsmyos.com/) to get a better idea.
 
+### Issues running the program?
+
 If it does not open or an error occurs (may take a few moments), you may need to install the Visual Studio C++ Redistributable package. I've included this for your convenience in the MSVC folder here, and in the downloads for version 0.9.1 and later. See [Microsoft's website](https://www.microsoft.com/en-us/download/details.aspx?id=52685) for more details. If there's still problems, make sure you have all updates installed; see the purple Note box on [this Microsoft webpage](https://docs.microsoft.com/en-us/dotnet/core/windows-prerequisites?tabs=netcore2x#net-core-dependencies) for more details.
+
+If you're still having troubles - especially if it's a situation where it opens once or twice but then no longer opens - you may have to disable the Startup Optimization feature. I'll write a proper help page about this later, but if you have this issue, try downloading the 1.1.1 release, opening it and going to "Tools > Options". On the Advanced tab, turn off the "Use Startup Optimization" feature. Click OK and then close the program. You should now be able to go back to the latest release and use it just fine. Reach me to me if you have any issues or difficulties with this process!
 
 You can reach out to me if you have any questions by [finding me on Twitter](https://twitter.com/JaykeBird) or [opening an issue report](https://github.com/JaykeBird/PathfinderJson/issues/new/choose) here on GitHub.
 
