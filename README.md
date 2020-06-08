@@ -37,7 +37,7 @@ View this project's roadmap [on the GitHub wiki page](https://github.com/JaykeBi
 ## IntelliCode
 If you're using IntelliCode in Visual Studio 2019 (or Visual Studio 2017 15.8 or later), I have an IntelliCode model that I have been using. If you're looking to fork this project and want to utilize my IntelliCode model, I'll provide you the link to it below:
 
-IntelliCode model: https://prod.intellicode.vsengsaas.visualstudio.com/get?m=6B5E409EF7E8479EA743D5BC933EABB0
+IntelliCode model: https://prod.intellicode.vsengsaas.visualstudio.com/get?m=509ED9C446024BFF8A4F15CD1D3B576B
 
 How to add the model to your fork of the code: [View page on Microsoft Docs site](https://docs.microsoft.com/en-us/visualstudio/intellicode/share-models#add-a-custom-model)
 
