@@ -230,6 +230,7 @@ namespace PathfinderJson
                 {
                     txtName.Text = title;
                 }
+                ContentChanged?.Invoke(this, e);
             }
         }
 
