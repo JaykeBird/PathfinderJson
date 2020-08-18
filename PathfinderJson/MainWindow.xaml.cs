@@ -3190,6 +3190,11 @@ namespace PathfinderJson
             }
         }
 
+        private void lnkCombat_Click(object sender, RoutedEventArgs e)
+        {
+            OpenBrowser("https://www.d20pfsrd.com/gamemastering/combat/");
+        }
+
         #endregion
 
         #region Feats/Abilities editors
