@@ -11,6 +11,7 @@ using System.Runtime;
 using System.IO;
 using System.Windows.Media.Imaging;
 using System.Text;
+using System.Windows.Shell;
 
 namespace PathfinderJson
 {
@@ -239,12 +240,36 @@ namespace PathfinderJson
 
             sb.AppendLine("END FILE");
 
-            await File.WriteAllTextAsync(Path.Combine(errorLogPath, DateTime.UtcNow.ToString("yyyyMMddTHHmmssZ")), sb.ToString(), Encoding.UTF8);
+            await File.WriteAllTextAsync(Path.Combine(errorLogPath, DateTime.UtcNow.ToString("yyyyMMddTHHmmssZ") + ".txt"), sb.ToString(), Encoding.UTF8);
 
             MessageBox.Show("An error has occurred and PathfinderJSON may not be able to continue.\n\n" +
                 "An error log file was created.\n\n" +
                 "Please go to PathfinderJson GitHub website to report the error.",
                 "PathfinderJSON Error Occurred", MessageBoxButton.OK, MessageBoxImage.Error);
         }
+
+        #region Jump List Functions
+        private void JumpList_JumpItemsRemovedByUser(object sender, JumpItemsRemovedEventArgs e)
+        {
+
+        }
+
+        private async void JumpList_JumpItemsRejected(object sender, JumpItemsRejectedEventArgs e)
+        {
+            string appDataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "PathfinderJson");
+
+            StringBuilder sb = new StringBuilder();
+            sb.AppendFormat("{0} Jump Items Rejected:\n", e.RejectionReasons.Count);
+            for (int i = 0; i < e.RejectionReasons.Count; ++i)
+            {
+                if (e.RejectedItems[i].GetType() == typeof(JumpPath))
+                    sb.AppendFormat("Reason: {0}\tItem: {1}\n", e.RejectionReasons[i], ((JumpPath)e.RejectedItems[i]).Path);
+                else
+                    sb.AppendFormat("Reason: {0}\tItem: {1}\n", e.RejectionReasons[i], ((JumpTask)e.RejectedItems[i]).ApplicationPath);
+            }
+
+            await File.WriteAllTextAsync(Path.Combine(appDataPath, "JumpItemsRejected.txt"), sb.ToString(), Encoding.UTF8);
+        }
+        #endregion
     }
 }

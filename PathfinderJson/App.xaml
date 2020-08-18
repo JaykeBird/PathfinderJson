@@ -5,4 +5,7 @@
     <Application.Resources>
          
     </Application.Resources>
+    <JumpList.JumpList>
+        <JumpList ShowRecentCategory="True" JumpItemsRejected="JumpList_JumpItemsRejected" JumpItemsRemovedByUser="JumpList_JumpItemsRemovedByUser" />
+    </JumpList.JumpList>
 </Application>

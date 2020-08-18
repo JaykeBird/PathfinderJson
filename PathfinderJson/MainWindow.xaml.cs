@@ -18,6 +18,7 @@ using UiCore.Keyboard;
 
 using static PathfinderJson.CoreUtils;
 using static PathfinderJson.App;
+using System.Windows.Shell;
 
 namespace PathfinderJson
 {
@@ -909,6 +910,7 @@ namespace PathfinderJson
         {
             if (storeInSettings && App.Settings.RecentFiles.Contains(filename))
             {
+                JumpList.AddToRecentCategory(filename);
                 return;
             }
 
@@ -966,6 +968,7 @@ namespace PathfinderJson
             if (storeInSettings)
             {
                 App.Settings.RecentFiles.Add(filename);
+                JumpList.AddToRecentCategory(filename);
                 SaveSettings();
             }
 
