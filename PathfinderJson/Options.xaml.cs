@@ -133,17 +133,18 @@ namespace PathfinderJson
             if (s.AutoSave <= 0)
             {
                 chkAutoSave.IsChecked = false;
-                nudAudoSave.Value = 5;
+                nudAutoSave.Value = 5;
+                nudAutoSave.IsEnabled = false;
             }
             else if (s.AutoSave > 30)
             {
                 chkAutoSave.IsChecked = true;
-                nudAudoSave.Value = 30;
+                nudAutoSave.Value = 30;
             }
             else
             {
                 chkAutoSave.IsChecked = true;
-                nudAudoSave.Value = s.AutoSave;
+                nudAutoSave.Value = s.AutoSave;
             }
 
             // Interface options
@@ -186,7 +187,7 @@ namespace PathfinderJson
             App.Settings.UpdateAutoCheck = chkAutoUpdate.IsChecked;
             if (clearRecentList) App.Settings.RecentFiles.Clear();
 
-            App.Settings.AutoSave = chkAutoSave.IsChecked ? nudAudoSave.Value : 0;
+            App.Settings.AutoSave = chkAutoSave.IsChecked ? nudAutoSave.Value : 0;
 
             // Interface options
             App.ColorScheme = new ColorScheme(uiColor);
@@ -450,8 +451,8 @@ namespace PathfinderJson
 
         private void chkAutoSave_CheckChanged(object sender, RoutedEventArgs e)
         {
-            if (nudAudoSave == null) return;
-            nudAudoSave.IsEnabled = chkAutoSave.IsChecked;
+            if (nudAutoSave == null) return;
+            nudAutoSave.IsEnabled = chkAutoSave.IsChecked;
         }
 
         private void btnFontOptions_Click(object sender, RoutedEventArgs e)

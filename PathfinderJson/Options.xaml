@@ -33,7 +33,7 @@
                 <TextBlock x:Name="lblRecentFiles" Text="The recent files list will be cleared when you click OK." Margin="10,175,0,0" VerticalAlignment="Top" Visibility="Collapsed" />
                 <TextBlock Text="Auto Save" FontWeight="Bold" VerticalAlignment="Top" Margin="0,205,0,0" />
                 <flat:CheckBox x:Name="chkAutoSave" Content="Automatically save your changes every few minutes" VerticalAlignment="Top" Margin="10,230,0,0" ColorScheme="{Binding ColorScheme, ElementName=window}" CheckChanged="chkAutoSave_CheckChanged" />
-                <flat:IntegerSpinner x:Name="nudAudoSave" Margin="100,261,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="50" MinValue="1" MaxValue="30" Value="5" ColorScheme="{Binding ColorScheme, ElementName=window}" />
+                <flat:IntegerSpinner x:Name="nudAutoSave" Margin="100,261,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="50" MinValue="1" MaxValue="30" Value="5" ColorScheme="{Binding ColorScheme, ElementName=window}" />
                 <TextBlock HorizontalAlignment="Left" Margin="40,265,0,0" Text="Save every" VerticalAlignment="Top"/>
                 <TextBlock HorizontalAlignment="Left" Margin="155,265,0,0" Text="minute(s)" VerticalAlignment="Top"/>
                 <TextBlock HorizontalAlignment="Left" Margin="40,295,0,0" Text="If you've not yet saved your sheet to a file, no auto saving will occur." VerticalAlignment="Top"/>
