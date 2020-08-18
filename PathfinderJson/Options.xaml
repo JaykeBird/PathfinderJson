@@ -23,7 +23,7 @@
         <flat:SelectPanel x:Name="selTabs" Grid.Row="0" Grid.Column="0" PanelBorderThickness="0,0,1,0" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" />
 
         <Grid Grid.Row="0" Grid.Column="1" x:Name="grdHolder" Margin="10,5,0,5" >
-            <Grid x:Name="tabGeneral" Visibility="Collapsed" >
+            <Grid x:Name="tabGeneral" >
                 <TextBlock Text="General Options" FontSize="16" VerticalAlignment="Top" />
                 <TextBlock Text="Check for Updates" FontWeight="Bold" Margin="0,30,0,0" VerticalAlignment="Top" />
                 <flat:FlatButton x:Name="btnUpdateNow" Content="Check for Updates Now" Margin="10,55,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="160" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" Click="btnUpdateNow_Click" />
@@ -31,11 +31,17 @@
                 <TextBlock Text="Recent Files" FontWeight="Bold" Margin="0,120,0,0" VerticalAlignment="Top" />
                 <flat:FlatButton x:Name="btnClearList" Content="Clear Recent File List" Margin="10,145,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="150" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" Click="btnClearList_Click" />
                 <TextBlock x:Name="lblRecentFiles" Text="The recent files list will be cleared when you click OK." Margin="10,175,0,0" VerticalAlignment="Top" Visibility="Collapsed" />
+                <TextBlock Text="Auto Save" FontWeight="Bold" VerticalAlignment="Top" Margin="0,205,0,0" />
+                <flat:CheckBox x:Name="chkAutoSave" Content="Automatically save your changes every few minutes" VerticalAlignment="Top" Margin="10,230,0,0" ColorScheme="{Binding ColorScheme, ElementName=window}" CheckChanged="chkAutoSave_CheckChanged" />
+                <flat:IntegerSpinner x:Name="nudAudoSave" Margin="100,261,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="50" MinValue="1" MaxValue="30" Value="5" ColorScheme="{Binding ColorScheme, ElementName=window}" />
+                <TextBlock HorizontalAlignment="Left" Margin="40,265,0,0" Text="Save every" VerticalAlignment="Top"/>
+                <TextBlock HorizontalAlignment="Left" Margin="155,265,0,0" Text="minute(s)" VerticalAlignment="Top"/>
+                <TextBlock HorizontalAlignment="Left" Margin="40,295,0,0" Text="If you've not yet saved your sheet to a file, no auto saving will occur." VerticalAlignment="Top"/>
             </Grid>
             <Grid x:Name="tabSaving" Visibility="Collapsed">
                 <TextBlock Text="Saving Options" FontSize="16" VerticalAlignment="Top" />
             </Grid>
-            <Grid x:Name="tabInterface" >
+            <Grid x:Name="tabInterface" Visibility="Collapsed" >
                 <TextBlock Text="Interface Options" FontSize="16" VerticalAlignment="Top" />
                 <TextBlock Text="Color Scheme" FontWeight="Bold" Margin="0,30,0,0" VerticalAlignment="Top" />
                 <flat:FlatButton x:Name="btnChangeColors" Content="Change Colors..." VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10,95,0,0" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" Width="120" Click="btnChangeColors_Click" />

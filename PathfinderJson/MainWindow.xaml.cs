@@ -58,6 +58,8 @@ namespace PathfinderJson
         SearchPanel sp;
         /// <summary>Get or set if the sheet view is currently running calculations</summary>
         bool _isCalculating = false;
+        /// <summary>The timer for the auto save feature. When it ticks, save the file.</summary>
+        DispatcherTimer autoSaveTimer = new DispatcherTimer();
 
         // functions for handling undo/redo
         // these aren't actually used for anything at the current time as I've not properly introduced undo/redo yet
@@ -182,6 +184,26 @@ namespace PathfinderJson
             }
 
             ShowHideToolbar(App.Settings.ShowToolbar);
+
+            int autoSave = App.Settings.AutoSave;
+            if (autoSave <= 0)
+            {
+                autoSaveTimer.IsEnabled = false;
+            }
+            else if (autoSave > 30)
+            {
+                autoSaveTimer.IsEnabled = false;
+                autoSaveTimer.Interval = new TimeSpan(0, 30, 0);
+                autoSaveTimer.IsEnabled = true;
+            }
+            else
+            {
+                autoSaveTimer.IsEnabled = false;
+                autoSaveTimer.Interval = new TimeSpan(0, autoSave, 0);
+                autoSaveTimer.IsEnabled = true;
+            }
+
+            autoSaveTimer.Tick += autoSaveTimer_Tick;
 
             // setup up raw JSON editor
             if (App.Settings.EditorSyntaxHighlighting && App.Settings.HighContrastTheme == NO_HIGH_CONTRAST)
@@ -342,6 +364,24 @@ namespace PathfinderJson
 
             ShowHideToolbar(App.Settings.ShowToolbar);
 
+            int autoSave = App.Settings.AutoSave;
+            if (autoSave <= 0)
+            {
+                autoSaveTimer.IsEnabled = false;
+            }
+            else if (autoSave > 30)
+            {
+                autoSaveTimer.IsEnabled = false;
+                autoSaveTimer.Interval = new TimeSpan(0, 30, 0);
+                autoSaveTimer.IsEnabled = true;
+            }
+            else
+            {
+                autoSaveTimer.IsEnabled = false;
+                autoSaveTimer.Interval = new TimeSpan(0, autoSave, 0);
+                autoSaveTimer.IsEnabled = true;
+            }
+
             // setup up raw JSON editor
             if (App.Settings.EditorSyntaxHighlighting && App.Settings.HighContrastTheme == NO_HIGH_CONTRAST)
             {
@@ -448,6 +488,22 @@ namespace PathfinderJson
             }
 
             if (update || fileTitle != displayedTitle) UpdateTitlebar();
+        }
+
+        private void autoSaveTimer_Tick(object? sender, EventArgs e)
+        {
+            Dispatcher.Invoke(() =>
+            {
+                if (string.IsNullOrEmpty(filePath))
+                {
+                    // do not auto save if there is no file path already set up
+                    //SaveAsFile();
+                }
+                else
+                {
+                    SaveFile(filePath);
+                }
+            });
         }
 
         #endregion
