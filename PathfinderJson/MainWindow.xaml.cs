@@ -20,6 +20,10 @@ using static PathfinderJson.CoreUtils;
 using static PathfinderJson.App;
 using System.Windows.Shell;
 
+using Markdig;
+using Markdig.Wpf;
+using Markdig.Renderers.Wpf;
+
 namespace PathfinderJson
 {
     /// <summary>
@@ -61,6 +65,9 @@ namespace PathfinderJson
         bool _isCalculating = false;
         /// <summary>The timer for the auto save feature. When it ticks, save the file.</summary>
         DispatcherTimer autoSaveTimer = new DispatcherTimer();
+
+        /// <summary>set if the Notes tab is in Edit mode (true) or View mode (false) (if Markdown support is disabled, it is always in Edit mode)</summary>
+        bool notesEdit = false;
 
         // functions for handling undo/redo
         // these aren't actually used for anything at the current time as I've not properly introduced undo/redo yet
@@ -1319,6 +1326,9 @@ namespace PathfinderJson
                 item.UpdateAppearance();
             }
 
+            btnNotesEdit.Background = Color.FromArgb(1, 0, 0, 0).ToBrush();
+            btnNotesView.Background = Color.FromArgb(1, 0, 0, 0).ToBrush();
+
             //foreach (SpellEditor item in selSpells.GetItemsAsType<SpellEditor>())
             //{
             //    item.ApplyColorScheme(App.ColorScheme);
@@ -2504,6 +2514,17 @@ namespace PathfinderJson
             }
 
             // Notes tab
+            chkNotesMarkdown.IsChecked = sheet.NotesMarkdown;
+            if (sheet.NotesMarkdown)
+            {
+                ShowMarkdownElements();
+                OpenNotesViewTab();
+            }
+            else
+            {
+                HideMarkdownElements();
+            }
+
             txtNotes.Text = sheet.Notes;
 
             _isUpdating = false;
@@ -2828,6 +2849,7 @@ namespace PathfinderJson
             sheet.Version = version;
 
             sheet.Notes = txtNotes.Text;
+            sheet.NotesMarkdown = chkNotesMarkdown.IsChecked;
 
             sheet.Name = txtCharacter.Text;
             sheet.Level = txtLevel.Text;
@@ -3074,6 +3096,17 @@ namespace PathfinderJson
                 SetIsDirty();
             }
 
+            lastEditedBox = sender as TextBox;
+        }
+
+        private void txtNotes_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (!_isUpdating)
+            {
+                SetIsDirty();
+            }
+
+            vwrNotes.Markdown = txtNotes.Text;
             lastEditedBox = sender as TextBox;
         }
 
@@ -3548,6 +3581,81 @@ namespace PathfinderJson
             }
         }
 
+
+        #endregion
+
+        #region Notes tab
+
+        private void chkNotesMarkdown_CheckChanged(object sender, RoutedEventArgs e)
+        {
+            if (!_isUpdating)
+            {
+                if (chkNotesMarkdown.IsChecked)
+                {
+                    ShowMarkdownElements();
+                }
+                else
+                {
+                    HideMarkdownElements();
+                }
+
+                SetIsDirty();
+            }
+        }
+
+        private void btnNotesEdit_Click(object sender, RoutedEventArgs e)
+        {
+            OpenNotesEditTab();
+        }
+
+        private void btnNotesView_Click(object sender, RoutedEventArgs e)
+        {
+            OpenNotesViewTab();
+        }
+
+        public void OpenNotesEditTab()
+        {
+            notesEdit = true;
+
+            vwrNotes.Visibility = Visibility.Collapsed;
+            txtNotes.Visibility = Visibility.Visible;
+
+            btnNotesView.IsSelected = false;
+            btnNotesEdit.IsSelected = true;
+
+            btnNotesView.BorderThickness = new Thickness(0, 0, 0, 1);
+            btnNotesEdit.BorderThickness = new Thickness(1, 1, 1, 0);
+        }
+
+        public void OpenNotesViewTab()
+        {
+            notesEdit = false;
+
+            vwrNotes.Visibility = Visibility.Visible;
+            txtNotes.Visibility = Visibility.Collapsed;
+
+            btnNotesView.IsSelected = true;
+            btnNotesEdit.IsSelected = false;
+
+            btnNotesView.BorderThickness = new Thickness(1, 1, 1, 0);
+            btnNotesEdit.BorderThickness = new Thickness(0, 0, 0, 1);
+        }
+
+        public void HideMarkdownElements()
+        {
+            OpenNotesEditTab();
+
+            btnNotesEdit.Visibility = Visibility.Collapsed;
+            btnNotesView.Visibility = Visibility.Collapsed;
+            brdrNotesMarkdown.Visibility = Visibility.Collapsed;
+        }
+
+        public void ShowMarkdownElements()
+        {
+            btnNotesEdit.Visibility = Visibility.Visible;
+            btnNotesView.Visibility = Visibility.Visible;
+            brdrNotesMarkdown.Visibility = Visibility.Visible;
+        }
 
         #endregion
     }

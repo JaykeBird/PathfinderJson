@@ -119,6 +119,9 @@ namespace PathfinderJson
         [JsonProperty("user", Order = -5)]
         public UserData? Player { get; set; }// = new UserData(false);
 
+        [JsonProperty(Order = 49, DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
+        public bool NotesMarkdown { get; set; } = false;
+
         [JsonProperty(Order = 50, DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
         public string Notes { get; set; } = "";
 

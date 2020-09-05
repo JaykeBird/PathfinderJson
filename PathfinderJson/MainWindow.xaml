@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:PathfinderJson"
         xmlns:flat="clr-namespace:SolidShineUi;assembly=SolidShineUi"
         xmlns:edit="http://icsharpcode.net/sharpdevelop/avalonedit"
+        xmlns:md="clr-namespace:Markdig.Wpf;assembly=Markdig.Wpf"
         mc:Ignorable="d" x:Name="window"
         Title="Pathfinder JSON" Height="730" Width="550" MinWidth="550" MinHeight="450"
         Loaded="window_Loaded" Closing="window_Closing" Closed="window_Closed" Activated="window_Activated" Deactivated="window_Deactivated" >
@@ -382,7 +383,7 @@
 
                     </StackPanel>
                 </Grid>
-                <Grid Margin="5,5,5,0" x:Name="grdCombat" >
+                <Grid Margin="5,5,5,0" x:Name="grdCombat" Visibility="Collapsed" >
                     <Grid.RowDefinitions>
                         <RowDefinition Height="25"/>
                         <RowDefinition/>
@@ -686,8 +687,15 @@
                     <flat:SelectPanel ColorScheme="{Binding ColorScheme, ElementName=window}" x:Name="selEquipment" PanelBorderThickness="1" UseLighterBorder="True" MinHeight="3" Grid.Row="3" MultiSelect="True" />
                 </Grid>
                 <Grid Margin="5,5,5,0" x:Name="grdNotes">
-                    <TextBlock x:Name="titNotes" Text="Notes" FontSize="16" Margin="10,0,0,0" />
-                    <TextBox x:Name="txtNotes" AcceptsReturn="True" MinHeight="200" Height="Auto" Margin="10,25" TextWrapping="Wrap" SpellCheck.IsEnabled="True" TextChanged="textbox_TextChanged"/>
+                    <TextBlock x:Name="titNotes" Text="Notes" FontSize="16" Margin="10,0,0,0" VerticalAlignment="Top" />
+                    <TextBox x:Name="txtNotes" AcceptsReturn="True" MinHeight="200" Height="Auto" Margin="10,60,10,25" TextWrapping="Wrap" SpellCheck.IsEnabled="True" TextChanged="txtNotes_TextChanged"/>
+                    <md:MarkdownViewer x:Name="vwrNotes" MinHeight="200" Height="Auto" Margin="10,60,10,25" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto" />
+                    <flat:CheckBox x:Name="chkNotesMarkdown" Content="Enable Markdown Support" HorizontalAlignment="Right" Margin="0,30,10,0" VerticalAlignment="Top" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" CheckChanged="chkNotesMarkdown_CheckChanged" />
+                    <flat:FlatButton x:Name="btnNotesView" Content="View" HorizontalAlignment="Left" Margin="10,36,0,0" VerticalAlignment="Top" Width="60" Click="btnNotesView_Click"
+                                     BorderThickness="0,0,0,1" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" BorderSelectionThickness="1,1,1,0" />
+                    <flat:FlatButton x:Name="btnNotesEdit" Content="Edit" HorizontalAlignment="Left" Margin="70,36,0,0" VerticalAlignment="Top" Width="60" Click="btnNotesEdit_Click"
+                                     BorderThickness="0,0,0,1" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" BorderSelectionThickness="1,1,1,0" />
+                    <Border BorderThickness="1" Margin="130,59,10,0" Height="1" VerticalAlignment="Top" BorderBrush="{Binding ElementName=window, Path=BorderBrush}" x:Name="brdrNotesMarkdown" />
                 </Grid>
             </StackPanel>
 
