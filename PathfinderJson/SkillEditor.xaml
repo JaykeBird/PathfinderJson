@@ -25,16 +25,16 @@
             <local:ThemedImage x:Name="imgEdit" ImageName="Edit" ColorTheme="Color" Width="16" Height="16" />
         </flat:FlatButton>
 
-        <TextBox x:Name="txtTotal" Height="22" Margin="5,0,0,0" VerticalAlignment="Center" Grid.Column="1" Width="38" HorizontalAlignment="Left" TextChanged="textbox_TextChanged"/>
-        <TextBox x:Name="txtModifier" Height="22" Margin="85,0,0,0" VerticalAlignment="Center" Grid.Column="1" Width="38" HorizontalAlignment="Left" IsReadOnly="True" />
-        <TextBox x:Name="txtRanks" Height="22" Margin="127,0,0,0" VerticalAlignment="Center" Grid.Column="1" Width="38" HorizontalAlignment="Left" TextChanged="textbox_TextChanged"/>
+        <TextBox x:Name="txtTotal" MinHeight="22" Margin="5,0,0,0" VerticalAlignment="Center" Grid.Column="1" Width="38" HorizontalAlignment="Left" TextChanged="textbox_TextChanged"/>
+        <TextBox x:Name="txtModifier" MinHeight="22" Margin="85,0,0,0" VerticalAlignment="Center" Grid.Column="1" Width="38" HorizontalAlignment="Left" IsReadOnly="True" />
+        <TextBox x:Name="txtRanks" MinHeight="22" Margin="127,0,0,0" VerticalAlignment="Center" Grid.Column="1" Width="38" HorizontalAlignment="Left" TextChanged="textbox_TextChanged"/>
         <Grid Grid.Column="3" Height="22">
             <TextBlock HorizontalAlignment="Left" Text="Racial" VerticalAlignment="Top" Margin="5,4,0,0" />
             <TextBlock HorizontalAlignment="Left" Text="Trait" Height="16" VerticalAlignment="Top" Margin="94,4,0,0" />
             <TextBlock HorizontalAlignment="Left" Text="Misc" Height="16" VerticalAlignment="Top" Margin="175,4,0,0" />
-            <TextBox x:Name="txtRacial" Height="22" Margin="41,0,0,0" VerticalAlignment="Center" Width="38" HorizontalAlignment="Left" TextChanged="textbox_TextChanged"/>
-            <TextBox x:Name="txtTrait" Height="22" Margin="121,0,0,0" VerticalAlignment="Center" Width="38" HorizontalAlignment="Left" TextChanged="textbox_TextChanged"/>
-            <TextBox x:Name="txtMisc" Height="22" Margin="204,0,28,0" VerticalAlignment="Center" TextChanged="textbox_TextChanged"/>
+            <TextBox x:Name="txtRacial" MinHeight="22" Margin="41,0,0,0" VerticalAlignment="Center" Width="38" HorizontalAlignment="Left" TextChanged="textbox_TextChanged"/>
+            <TextBox x:Name="txtTrait" MinHeight="22" Margin="121,0,0,0" VerticalAlignment="Center" Width="38" HorizontalAlignment="Left" TextChanged="textbox_TextChanged"/>
+            <TextBox x:Name="txtMisc" MinHeight="22" Margin="204,0,28,0" VerticalAlignment="Center" TextChanged="textbox_TextChanged"/>
             <flat:FlatButton Width="20" Height="22" HorizontalAlignment="Right" Padding="0" Margin="0,0,2,0" TransparentBack="True" x:Name="btnInfo" Click="btnInfo_Click" ToolTip="More info on D20PFSRD" >
                 <local:ThemedImage x:Name="imgInfo" ImageName="Info" ColorTheme="Color" Width="16" Height="16" />
             </flat:FlatButton>

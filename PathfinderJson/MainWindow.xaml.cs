@@ -1615,7 +1615,8 @@ namespace PathfinderJson
 
                     txtEditRaw.Visibility = Visibility.Collapsed;
                     mnuEdit.Visibility = Visibility.Collapsed;
-                    colTabs.Width = new GridLength(120);
+                    colTabs.Width = new GridLength(120, GridUnitType.Auto);
+                    colTabs.MinWidth = 120;
                     stkEditToolbar.Visibility = Visibility.Collapsed;
 
                     mnuTabs.IsChecked = false;
@@ -1633,7 +1634,8 @@ namespace PathfinderJson
 
                     txtEditRaw.Visibility = Visibility.Collapsed;
                     mnuEdit.Visibility = Visibility.Collapsed;
-                    colTabs.Width = new GridLength(120);
+                    colTabs.Width = new GridLength(120, GridUnitType.Auto);
+                    colTabs.MinWidth = 120;
                     stkEditToolbar.Visibility = Visibility.Collapsed;
 
                     mnuTabs.IsChecked = true;
@@ -1650,6 +1652,7 @@ namespace PathfinderJson
                     txtEditRaw.Visibility = Visibility.Visible;
                     mnuEdit.Visibility = Visibility.Visible;
                     colTabs.Width = new GridLength(0);
+                    colTabs.MinWidth = 0;
                     stkEditToolbar.Visibility = Visibility.Visible;
 
                     mnuTabs.IsChecked = false;

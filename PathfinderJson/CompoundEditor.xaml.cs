@@ -252,11 +252,13 @@ namespace PathfinderJson
         private void ExpModifiers_Collapsed(object sender, RoutedEventArgs e)
         {
             rowExtra.Height = new GridLength(0);
+            rowExtra.MinHeight = 0;
         }
 
         private void ExpModifiers_Expanded(object sender, RoutedEventArgs e)
         {
-            rowExtra.Height = new GridLength(95);
+            rowExtra.Height = new GridLength(95, GridUnitType.Auto);
+            rowExtra.MinHeight = 95;
         }
 
         // event just to update main window's "isDirty" value

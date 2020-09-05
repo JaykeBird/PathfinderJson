@@ -345,3 +345,5 @@ healthchecksdb
 # Release folders
 Release-win-x64/
 Release-win-x86/
+/PathfinderJson/TestSpacingRelease
+/PathfinderJson/TestSpacingRelease2
