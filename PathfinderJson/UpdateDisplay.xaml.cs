@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Documents;
 using System.Windows.Media;
 using SolidShineUi;
 using static PathfinderJson.CoreUtils;
@@ -37,6 +38,11 @@ namespace PathfinderJson
             lblTag.Text = ud.TagName + " - " + ud.PublishTime.ToString("D");
             lblMarkdown.Markdown = ud.Body;
             lblMarkdown.Document.PagePadding = new Thickness(2);
+
+            //foreach (Block item in lblMarkdown.Document.Blocks)
+            //{
+            //    item.Padding = new Thickness(1);
+            //}
 
             url = ud.Url;
         }

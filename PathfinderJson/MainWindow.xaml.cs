@@ -556,7 +556,7 @@ namespace PathfinderJson
 
         #endregion
 
-        #region File / Help menus
+        #region File Menu
 
         private async void mnuNew_Click(object sender, RoutedEventArgs e)
         {
@@ -864,49 +864,6 @@ namespace PathfinderJson
         private void btnExit_Click(object sender, RoutedEventArgs e)
         {
             Close();
-        }
-
-        private void mnuGithub_Click(object sender, RoutedEventArgs e)
-        {
-            OpenBrowser("https://github.com/JaykeBird/PathfinderJson/");
-        }
-
-        private void mnuFeedback_Click(object sender, RoutedEventArgs e)
-        {
-            OpenBrowser("https://github.com/JaykeBird/PathfinderJson/issues/new/choose");
-        }
-
-        private void mnuKeyboard_Click(object sender, RoutedEventArgs e)
-        {
-            OpenBrowser("https://github.com/JaykeBird/PathfinderJson/wiki/Keyboard-Shortcuts");
-        }
-
-        private void mnuAutoCheck_Click(object sender, RoutedEventArgs e)
-        {
-            if (mnuAutoCheck.IsChecked)
-            {
-                mnuAutoCheck.IsChecked = false;
-                App.Settings.UpdateAutoCheck = false;
-            }
-            else
-            {
-                mnuAutoCheck.IsChecked = true;
-                App.Settings.UpdateAutoCheck = false;
-            }
-
-            SaveSettings();
-        }
-
-        private async void mnuCheckUpdates_Click(object sender, RoutedEventArgs e)
-        {
-            await CheckForUpdates();
-        }
-
-        private void mnuAbout_Click(object sender, RoutedEventArgs e)
-        {
-            About a = new About();
-            a.Owner = this;
-            a.ShowDialog();
         }
 
         #endregion
@@ -1795,6 +1752,58 @@ namespace PathfinderJson
 
         #endregion
 
+        #region Help menu
+
+        private void mnuGithub_Click(object sender, RoutedEventArgs e)
+        {
+            OpenBrowser("https://github.com/JaykeBird/PathfinderJson/");
+        }
+
+        private void mnuFeedback_Click(object sender, RoutedEventArgs e)
+        {
+            OpenBrowser("https://github.com/JaykeBird/PathfinderJson/issues/new/choose");
+        }
+
+        private void mnuKeyboard_Click(object sender, RoutedEventArgs e)
+        {
+            OpenBrowser("https://github.com/JaykeBird/PathfinderJson/wiki/Keyboard-Shortcuts");
+        }
+
+        private void mnuMarkdown_Click(object sender, RoutedEventArgs e)
+        {
+            OpenBrowser("https://commonmark.org/help/");
+        }
+
+        private void mnuAutoCheck_Click(object sender, RoutedEventArgs e)
+        {
+            if (mnuAutoCheck.IsChecked)
+            {
+                mnuAutoCheck.IsChecked = false;
+                App.Settings.UpdateAutoCheck = false;
+            }
+            else
+            {
+                mnuAutoCheck.IsChecked = true;
+                App.Settings.UpdateAutoCheck = false;
+            }
+
+            SaveSettings();
+        }
+
+        private async void mnuCheckUpdates_Click(object sender, RoutedEventArgs e)
+        {
+            await CheckForUpdates();
+        }
+
+        private void mnuAbout_Click(object sender, RoutedEventArgs e)
+        {
+            About a = new About();
+            a.Owner = this;
+            a.ShowDialog();
+        }
+
+        #endregion
+
         #region JSON Editor
 
         private void mnuUndo_Click(object sender, RoutedEventArgs e)
@@ -2529,6 +2538,7 @@ namespace PathfinderJson
             }
 
             txtNotes.Text = sheet.Notes;
+            UpdateMarkdownViewerVisuals();
 
             _isUpdating = false;
 
@@ -3102,17 +3112,6 @@ namespace PathfinderJson
             lastEditedBox = sender as TextBox;
         }
 
-        private void txtNotes_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            if (!_isUpdating)
-            {
-                SetIsDirty();
-            }
-
-            vwrNotes.Markdown = txtNotes.Text;
-            lastEditedBox = sender as TextBox;
-        }
-
         private void editor_ContentChanged(object? sender, EventArgs e)
         {
             if (!_isUpdating)
@@ -3614,6 +3613,33 @@ namespace PathfinderJson
         private void btnNotesView_Click(object sender, RoutedEventArgs e)
         {
             OpenNotesViewTab();
+        }
+
+        private void txtNotes_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (!_isUpdating)
+            {
+                SetIsDirty();
+            }
+
+            vwrNotes.Markdown = txtNotes.Text;
+            UpdateMarkdownViewerVisuals();
+
+            lastEditedBox = sender as TextBox;
+        }
+
+        void UpdateMarkdownViewerVisuals()
+        {
+            if (vwrNotes.Document != null)
+            {
+                vwrNotes.Document.PagePadding = new Thickness(2);
+
+                foreach (var item in vwrNotes.Document.Blocks)
+                {
+                    item.Padding = new Thickness(0);
+                    item.Margin = new Thickness(0,1,0,4);
+                }
+            }
         }
 
         public void OpenNotesEditTab()
