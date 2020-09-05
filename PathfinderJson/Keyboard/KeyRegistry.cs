@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using static UiCore.Keyboard.KeyboardConstants;
+using static SolidShineUi.Keyboard.KeyboardConstants;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Controls;
 
-namespace UiCore.Keyboard
+namespace SolidShineUi.Keyboard
 {
     public class KeyboardShortcutEventArgs
     {

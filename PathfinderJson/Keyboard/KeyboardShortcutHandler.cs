@@ -9,7 +9,7 @@ using System.Windows.Threading;
 
 using KeyBoard = System.Windows.Input.Keyboard;
 
-namespace UiCore.Keyboard
+namespace SolidShineUi.Keyboard
 {
     public class KeyboardShortcutHandler
     {

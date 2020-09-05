@@ -7,7 +7,7 @@ using System.Reflection;
 using System.Diagnostics;
 using System.Linq;
 
-namespace UiCore.Keyboard
+namespace SolidShineUi.Keyboard
 {
     /// <summary>
     /// A class to list and manage methods available to use with keyboard shortcuts. 

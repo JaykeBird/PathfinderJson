@@ -13,8 +13,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 using System.Xml;
-using UiCore;
-using UiCore.Keyboard;
+using SolidShineUi;
+using SolidShineUi.Keyboard;
 
 using static PathfinderJson.CoreUtils;
 using static PathfinderJson.App;
@@ -929,7 +929,7 @@ namespace PathfinderJson
             mi.ContextMenuOpening += miRecentContext_Opening;
             mnuRecent.Items.Insert(0, mi);
 
-            UiCore.ContextMenu cm = new UiCore.ContextMenu();
+            SolidShineUi.ContextMenu cm = new SolidShineUi.ContextMenu();
             cm.PlacementTarget = mi;
             cm.Width = 180;
 
@@ -979,7 +979,7 @@ namespace PathfinderJson
         {
             if (sender is MenuItem m)
             {
-                if (m.ContextMenu is UiCore.ContextMenu cm)
+                if (m.ContextMenu is SolidShineUi.ContextMenu cm)
                 {
                     cm.ApplyColorScheme(App.ColorScheme);
                 }
@@ -1286,7 +1286,7 @@ namespace PathfinderJson
             brdrCalculating.Background = App.ColorScheme.SecondaryColor.ToBrush();
             brdrCalculating.BorderBrush = App.ColorScheme.HighlightColor.ToBrush();
 
-            (txtEditRaw.ContextMenu as UiCore.ContextMenu)!.ApplyColorScheme(App.ColorScheme);
+            (txtEditRaw.ContextMenu as SolidShineUi.ContextMenu)!.ApplyColorScheme(App.ColorScheme);
 
             expUser.Background = App.ColorScheme.LightBackgroundColor.ToBrush();
             expUser.BorderBrush = App.ColorScheme.ThirdHighlightColor.ToBrush();

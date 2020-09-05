@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
-using UiCore;
+using SolidShineUi;
 using System.Diagnostics;
 using static PathfinderJson.CoreUtils;
 

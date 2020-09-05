@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using UiCore;
+using SolidShineUi;
 using static PathfinderJson.CoreUtils;
 
 namespace PathfinderJson

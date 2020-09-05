@@ -6,19 +6,19 @@
   "compilationOptions": {},
   "targets": {
     ".NETCoreApp,Version=v3.1": {
-      "UiCore/1.7.0": {
+      "SolidShineUi/1.7.0": {
         "dependencies": {
           "Microsoft.CSharp": "4.6.0"
         },
         "runtime": {
-          "UiCore.dll": {}
+          "SolidShineUi.dll": {}
         }
       },
       "Microsoft.CSharp/4.6.0": {}
     }
   },
   "libraries": {
-    "UiCore/1.7.0": {
+    "SolidShineUi/1.7.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

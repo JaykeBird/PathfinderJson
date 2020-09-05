@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PathfinderJson"
-        xmlns:flat="clr-namespace:UiCore;assembly=UiCore"
+        xmlns:flat="clr-namespace:SolidShineUi;assembly=SolidShineUi"
         mc:Ignorable="d"
         Title="Platform Info" Height="250" Width="340" ResizeMode="NoResize" CaptionDisplayType="Close" >
     <Grid>

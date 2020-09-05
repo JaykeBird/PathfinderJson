@@ -67,8 +67,8 @@
     <Reference Include="Markdig.Wpf">
       <HintPath>..\MarkDig\Markdig.Wpf.dll</HintPath>
     </Reference>
-    <Reference Include="UiCore">
-      <HintPath>..\UiCore\UiCore.dll</HintPath>
+    <Reference Include="SolidShineUi">
+      <HintPath>..\Ssui\SolidShineUi.dll</HintPath>
     </Reference>
   </ItemGroup>
 

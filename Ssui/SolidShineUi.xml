@@ -1,15 +1,15 @@
 <?xml version="1.0"?>
 <doc>
     <assembly>
-        <name>UiCore</name>
+        <name>SolidShineUi</name>
     </assembly>
     <members>
-        <member name="T:UiCore.ArithmeticParser">
+        <member name="T:SolidShineUi.ArithmeticParser">
             <summary>
             Contains functionality to parse and evaluate math arithmetic expressions.
             </summary>
         </member>
-        <member name="M:UiCore.ArithmeticParser.Evaluate(System.String)">
+        <member name="M:SolidShineUi.ArithmeticParser.Evaluate(System.String)">
             <summary>
             Evaluate an arithmetic expression and output the result (i.e. "2+5" will output "7"). See remarks for more info on supported functions.
             </summary>
@@ -20,49 +20,49 @@
             Uses order of operations: exponents, division, multiplication, subtraction, addition.<para/>
             Whitespace and new-line characters are removed prior to evaluation, and the literal characters ×, ⋅, and ÷ are replaced with their representations *, *, and /.</remarks>
         </member>
-        <member name="M:UiCore.ArithmeticParser.IsValidString(System.String)">
+        <member name="M:SolidShineUi.ArithmeticParser.IsValidString(System.String)">
             <summary>
             Check if a string can be parsed as an expression.
             </summary>
             <param name="input">The string to parse.</param>
             <returns>True if it is a string that can be parsed. False if it contains invalid characters.</returns>
         </member>
-        <member name="T:UiCore.AutoCompleteBehavior">
+        <member name="T:SolidShineUi.AutoCompleteBehavior">
             <summary>
             Adds basic auto-complete behavior to text boxes via attached properties. Created by Nimgoble.
             </summary>
         </member>
-        <member name="F:UiCore.AutoCompleteBehavior.AutoCompleteItemsSource">
+        <member name="F:SolidShineUi.AutoCompleteBehavior.AutoCompleteItemsSource">
             <summary>
             The collection to search for matches from.
             </summary>
         </member>
-        <member name="F:UiCore.AutoCompleteBehavior.AutoCompleteStringComparison">
+        <member name="F:SolidShineUi.AutoCompleteBehavior.AutoCompleteStringComparison">
             <summary>
             Whether or not to ignore case when searching for matches.
             </summary>
         </member>
-        <member name="F:UiCore.AutoCompleteBehavior.AutoCompleteIndicator">
+        <member name="F:SolidShineUi.AutoCompleteBehavior.AutoCompleteIndicator">
             <summary>
             What string should indicate that we should start giving auto-completion suggestions.  For example: @
             If this is null or empty, auto-completion suggestions will begin at the beginning of the textbox's text.
             </summary>
         </member>
-        <member name="M:UiCore.AutoCompleteBehavior.OnPreviewKeyDown(System.Object,System.Windows.Input.KeyEventArgs)">
+        <member name="M:SolidShineUi.AutoCompleteBehavior.OnPreviewKeyDown(System.Object,System.Windows.Input.KeyEventArgs)">
             <summary>
             Used for moving the caret to the end of the suggested auto-completion text.
             </summary>
             <param name="sender"></param>
             <param name="e"></param>
         </member>
-        <member name="M:UiCore.AutoCompleteBehavior.OnTextChanged(System.Object,System.Windows.Controls.TextChangedEventArgs)">
+        <member name="M:SolidShineUi.AutoCompleteBehavior.OnTextChanged(System.Object,System.Windows.Controls.TextChangedEventArgs)">
             <summary>
             Search for auto-completion suggestions.
             </summary>
             <param name="sender"></param>
             <param name="e"></param>
         </member>
-        <member name="T:UiCore.BindableHighContrast">
+        <member name="T:SolidShineUi.BindableHighContrast">
             <summary>
             When set up properly, allows a WPF control style to be triggered when the Windows High Contrast mode setting is changed. See remarks for details.
             </summary>
@@ -74,26 +74,26 @@
             This class is identical to the "SystemParameterProperties" class in the accepted answer.
             </remarks>
         </member>
-        <member name="T:UiCore.BrushFactory">
+        <member name="T:SolidShineUi.BrushFactory">
             <summary>
             A class that creates brushes to be used in coloring the user interface.
             </summary>
         </member>
-        <member name="M:UiCore.BrushFactory.Create(System.Windows.Media.Color)">
+        <member name="M:SolidShineUi.BrushFactory.Create(System.Windows.Media.Color)">
             <summary>
             Create a brush based upon a single color.
             </summary>
             <param name="color">The color to use.</param>
             <returns>A SolidColorBrush that includes the color.</returns>
         </member>
-        <member name="M:UiCore.BrushFactory.Create(System.String)">
+        <member name="M:SolidShineUi.BrushFactory.Create(System.String)">
             <summary>
             Create a brush based upon a single color.
             </summary>
             <param name="hex">The hex value of the color to use.</param>
             <returns>A SolidColorBrush that includes the color.</returns>
         </member>
-        <member name="M:UiCore.BrushFactory.Create(System.Windows.Media.Color,System.Windows.Media.Color,System.Double)">
+        <member name="M:SolidShineUi.BrushFactory.Create(System.Windows.Media.Color,System.Windows.Media.Color,System.Double)">
             <summary>
             Create a brush based upon two colors, made into a linear gradient.
             </summary>
@@ -102,63 +102,63 @@
             <param name="angle">The angle of the gradient to be made.</param>
             <returns>A LinearGradientBrush that includes the two colors.</returns>
         </member>
-        <member name="M:UiCore.BrushFactory.CreateFromImage(System.Windows.Media.DrawingImage)">
+        <member name="M:SolidShineUi.BrushFactory.CreateFromImage(System.Windows.Media.DrawingImage)">
             <summary>
             Create a brush based upon an image.
             </summary>
             <param name="image">The image to use.</param>
             <returns>An ImageBrush containing this image.</returns>
         </member>
-        <member name="M:UiCore.BrushFactory.CreateFromImage(System.Uri)">
+        <member name="M:SolidShineUi.BrushFactory.CreateFromImage(System.Uri)">
             <summary>
             Create a brush based upon an image.
             </summary>
             <param name="location">The location, such as a web address or file location, of the image to use.</param>
             <returns>An ImageBrush containing this image.</returns>
         </member>
-        <member name="T:UiCore.HighContrastBrushes">
+        <member name="T:SolidShineUi.HighContrastBrushes">
             <summary>
             Contains some <code>SolidColorBrush</code> fields for usage in High Contrast mode.
             </summary>
         </member>
-        <member name="T:UiCore.CheckBox">
+        <member name="T:SolidShineUi.CheckBox">
             <summary>
             A CheckBox control with more customization over the appearance.
             </summary>
         </member>
-        <member name="M:UiCore.CheckBox.#ctor">
+        <member name="M:SolidShineUi.CheckBox.#ctor">
             <summary>
             Create a new CheckBox control.
             </summary>
         </member>
-        <member name="P:UiCore.CheckBox.ClickOnPress">
+        <member name="P:SolidShineUi.CheckBox.ClickOnPress">
             <summary>
             Gets or sets whether the Click event should be raised when the checkbox is pressed, rather than when it is released.
             </summary>
         </member>
-        <member name="P:UiCore.CheckBox.TriStateClick">
+        <member name="P:SolidShineUi.CheckBox.TriStateClick">
             <summary>
             Gets or sets whether the checkbox should cycle through three states (rather than two) when clicked. The third state is the "Indeterminate" state, which can be checked via the IsIndeterminate property.
             </summary>
         </member>
-        <member name="M:UiCore.CheckBox.PerformPress(System.Boolean)">
+        <member name="M:SolidShineUi.CheckBox.PerformPress(System.Boolean)">
             <summary>
             Sets up the button to be clicked. This must be run before PerformClick.
             </summary>
             <param name="rightClick">Determine whether this should be treated as a right click (which usually invokes a context menu).</param>
         </member>
-        <member name="M:UiCore.CheckBox.PerformClick(System.Boolean)">
+        <member name="M:SolidShineUi.CheckBox.PerformClick(System.Boolean)">
             <summary>
             If the button is prepared by PerformPress, perform the Click actions, including raising the Click event.
             </summary>
             <param name="rightClick">Determine whether this should be treated as a right click (which usually invokes a context menu).</param>
         </member>
-        <member name="M:UiCore.CheckBox.DoClick">
+        <member name="M:SolidShineUi.CheckBox.DoClick">
             <summary>
             Perform a click programattically. The checkbox responds the same way as if it was clicked by the user.
             </summary>
         </member>
-        <member name="T:UiCore.ChromeButtons">
+        <member name="T:SolidShineUi.ChromeButtons">
             <summary>
             Interaction logic for ChromeButtons.xaml
             </summary>
@@ -166,132 +166,132 @@
             ChromeButtons
             </summary>
         </member>
-        <member name="F:UiCore.ChromeButtons._parent">
+        <member name="F:SolidShineUi.ChromeButtons._parent">
             <summary>
             The parent Window of the control.
             </summary>
         </member>
-        <member name="M:UiCore.ChromeButtons.#ctor">
+        <member name="M:SolidShineUi.ChromeButtons.#ctor">
             <summary>
-            Initializes a new instance of the <see cref="T:UiCore.ChromeButtons"/> class.
+            Initializes a new instance of the <see cref="T:SolidShineUi.ChromeButtons"/> class.
             </summary>
         </member>
-        <member name="M:UiCore.ChromeButtons.CaptionButtonsLoaded(System.Object,System.Windows.RoutedEventArgs)">
+        <member name="M:SolidShineUi.ChromeButtons.CaptionButtonsLoaded(System.Object,System.Windows.RoutedEventArgs)">
             <summary>
             Event when the control is loaded.
             </summary>
             <param name="sender">The sender.</param>
             <param name="e">The <see cref="T:System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
         </member>
-        <member name="M:UiCore.ChromeButtons.CloseButtonClick(System.Object,System.Windows.RoutedEventArgs)">
+        <member name="M:SolidShineUi.ChromeButtons.CloseButtonClick(System.Object,System.Windows.RoutedEventArgs)">
             <summary>
             Action on the button to close the window.
             </summary>
             <param name="sender">The sender.</param>
             <param name="e">The <see cref="T:System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
         </member>
-        <member name="M:UiCore.ChromeButtons.RestoreButtonClick(System.Object,System.Windows.RoutedEventArgs)">
+        <member name="M:SolidShineUi.ChromeButtons.RestoreButtonClick(System.Object,System.Windows.RoutedEventArgs)">
             <summary>
             Changes the view of the window (maximized or normal).
             </summary>
             <param name="sender">The sender.</param>
             <param name="e">The <see cref="T:System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
         </member>
-        <member name="M:UiCore.ChromeButtons.MinimizeButtonClick(System.Object,System.Windows.RoutedEventArgs)">
+        <member name="M:SolidShineUi.ChromeButtons.MinimizeButtonClick(System.Object,System.Windows.RoutedEventArgs)">
             <summary>
             Minimizes the Window.
             </summary>
             <param name="sender">The sender.</param>
             <param name="e">The <see cref="T:System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
         </member>
-        <member name="M:UiCore.ChromeButtons.GetTopParent">
+        <member name="M:SolidShineUi.ChromeButtons.GetTopParent">
             <summary>
             Gets the top parent (Window).
             </summary>
             <returns>The parent Window.</returns>
         </member>
-        <member name="P:UiCore.ChromeButtons.MarginButton">
+        <member name="P:SolidShineUi.ChromeButtons.MarginButton">
             <summary>
             Gets or sets the margin button.
             </summary>
             <value>The margin button.</value>
         </member>
-        <member name="F:UiCore.ChromeButtons.MarginButtonProperty">
+        <member name="F:SolidShineUi.ChromeButtons.MarginButtonProperty">
             <summary>
             The dependency property for the Margin between the buttons.
             </summary>
         </member>
-        <member name="T:UiCore.ChromeButtons.CaptionType">
+        <member name="T:SolidShineUi.ChromeButtons.CaptionType">
             <summary>
             Determines which caption buttons will appear on a window.
             </summary>
         </member>
-        <member name="F:UiCore.ChromeButtons.CaptionType.Full">
+        <member name="F:SolidShineUi.ChromeButtons.CaptionType.Full">
             <summary>
             Display the close, maximize/restore, and minimize buttons.
             </summary>
         </member>
-        <member name="F:UiCore.ChromeButtons.CaptionType.Close">
+        <member name="F:SolidShineUi.ChromeButtons.CaptionType.Close">
             <summary>
             Display only the close button.
             </summary>
         </member>
-        <member name="F:UiCore.ChromeButtons.CaptionType.MinimizeClose">
+        <member name="F:SolidShineUi.ChromeButtons.CaptionType.MinimizeClose">
             <summary>
             Display only the close and minimize buttons.
             </summary>
         </member>
-        <member name="F:UiCore.ChromeButtons.CaptionType.MaximizeClose">
+        <member name="F:SolidShineUi.ChromeButtons.CaptionType.MaximizeClose">
             <summary>
             Display only the close and maximize/restore buttons.
             </summary>
         </member>
-        <member name="P:UiCore.ChromeButtons.DisplayType">
+        <member name="P:SolidShineUi.ChromeButtons.DisplayType">
             <summary>
             Gets or sets the visibility of the buttons.
             </summary>
             <value>The visible buttons.</value>
         </member>
-        <member name="F:UiCore.ChromeButtons.TypeProperty">
+        <member name="F:SolidShineUi.ChromeButtons.TypeProperty">
             <summary>
             The dependency property for the Margin between the buttons.
             </summary>
         </member>
-        <member name="M:UiCore.ChromeButtons.InitializeComponent">
+        <member name="M:SolidShineUi.ChromeButtons.InitializeComponent">
             <summary>
             InitializeComponent
             </summary>
         </member>
-        <member name="T:UiCore.ClickSelectTextBox">
+        <member name="T:SolidShineUi.ClickSelectTextBox">
             <summary>
             A TextBox where all the text is automatically selected when the text box gets focus (i.e. mouse click or keyboard focus).
             </summary>
         </member>
-        <member name="M:UiCore.ClickSelectTextBox.#ctor">
+        <member name="M:SolidShineUi.ClickSelectTextBox.#ctor">
             <summary>
             Creates a new ClickSelectTextBox and defines the default event handlers.
             </summary>
         </member>
-        <member name="P:UiCore.ClickSelectTextBox.SelectOnFocus">
+        <member name="P:SolidShineUi.ClickSelectTextBox.SelectOnFocus">
             <summary>
             Get or set whether all text will be selected when the text box receives focus.
             </summary>
         </member>
-        <member name="M:UiCore.ClickSelectTextBox.MouseButtonDown(System.Object,System.Windows.Input.MouseButtonEventArgs)">
+        <member name="M:SolidShineUi.ClickSelectTextBox.MouseButtonDown(System.Object,System.Windows.Input.MouseButtonEventArgs)">
             <summary>
             Handler for when the left mouse button is pressed.
             </summary>
             <param name="sender">The sender of the event.</param>
             <param name="e">Event arguments representing the mouse button being pressed.</param>
         </member>
-        <member name="M:UiCore.ClickSelectTextBox.SelectAllText(System.Object,System.Windows.RoutedEventArgs)">
+        <member name="M:SolidShineUi.ClickSelectTextBox.SelectAllText(System.Object,System.Windows.RoutedEventArgs)">
             <summary>
             Locate the TextBox and have it select all text.
             </summary>
             <param name="sender">The sender of the event.</param>
             <param name="e">Event arguments providing details about the event.</param>
         </member>
-        <member name="T:UiCore.ColorListItem">
+        <member name="T:SolidShineUi.ColorListItem">
             <summary>
             Interaction logic for ColorListItem.xaml
             </summary>
@@ -299,26 +299,26 @@
             ColorListItem
             </summary>
         </member>
-        <member name="M:UiCore.ColorListItem.InitializeComponent">
+        <member name="M:SolidShineUi.ColorListItem.InitializeComponent">
             <summary>
             InitializeComponent
             </summary>
         </member>
-        <member name="M:UiCore.ColorPaletteLoad.ReadInt16(System.IO.Stream)">
+        <member name="M:SolidShineUi.ColorPaletteLoad.ReadInt16(System.IO.Stream)">
             <summary>
             Reads a 16bit unsigned integer in big-endian format.
             </summary>
             <param name="stream">The stream to read the data from.</param>
             <returns>The unsigned 16bit integer cast to an <c>Int32</c>.</returns>
         </member>
-        <member name="M:UiCore.ColorPaletteLoad.ReadInt32(System.IO.Stream)">
+        <member name="M:SolidShineUi.ColorPaletteLoad.ReadInt32(System.IO.Stream)">
             <summary>
             Reads a 32bit unsigned integer in big-endian format.
             </summary>
             <param name="stream">The stream to read the data from.</param>
             <returns>The unsigned 32bit integer cast to an <c>Int32</c>.</returns>
         </member>
-        <member name="M:UiCore.ColorPaletteLoad.ReadString(System.IO.Stream,System.Int32)">
+        <member name="M:SolidShineUi.ColorPaletteLoad.ReadString(System.IO.Stream,System.Int32)">
             <summary>
             Reads a unicode string of the specified length.
             </summary>
@@ -326,25 +326,12 @@
             <param name="length">The number of characters in the string.</param>
             <returns>The string read from the stream.</returns>
         </member>
-        <member name="T:UiCore.ColorPickerDialog">
-            <summary>
-            Interaction logic for ColorPickerDialog.xaml
-            </summary>
-            <summary>
-            ColorPickerDialog
-            </summary>
-        </member>
-        <member name="M:UiCore.ColorPickerDialog.InitializeComponent">
-            <summary>
-            InitializeComponent
-            </summary>
-        </member>
-        <member name="T:UiCore.ColorsHelper">
+        <member name="T:SolidShineUi.ColorsHelper">
             <summary>
             Contains a collection of helper functions in relation to colors.
             </summary>
         </member>
-        <member name="M:UiCore.ColorsHelper.CreateFromRgb(System.Byte,System.Byte,System.Byte)">
+        <member name="M:SolidShineUi.ColorsHelper.CreateFromRgb(System.Byte,System.Byte,System.Byte)">
             <summary>
             Create a color based upon RGB values.
             </summary>
@@ -353,7 +340,7 @@
             <param name="b">The blue value of the color.</param>
             <returns></returns>
         </member>
-        <member name="M:UiCore.ColorsHelper.CreateFromArgb(System.Byte,System.Byte,System.Byte,System.Byte)">
+        <member name="M:SolidShineUi.ColorsHelper.CreateFromArgb(System.Byte,System.Byte,System.Byte,System.Byte)">
             <summary>
             Create a color based upon RGB values, with alpha transparency as well.
             </summary>
@@ -363,21 +350,21 @@
             <param name="b">The blue value of the color.</param>
             <returns></returns>
         </member>
-        <member name="M:UiCore.ColorsHelper.CreateFromHex(System.String)">
+        <member name="M:SolidShineUi.ColorsHelper.CreateFromHex(System.String)">
             <summary>
             Create a color based upon a hex string.
             </summary>
             <param name="hex">The hex string. Should have 3, 6, or 8 characters (i.e. "FFF", "FF00FF", or "FF00FF00"). The starting hash is allowed.</param>
             <exception cref="T:System.FormatException">Thrown if the string is not a hex string, or incorrectly formatted (including if the string is not of the length 3, 6, or 8).</exception>
         </member>
-        <member name="M:UiCore.ColorsHelper.ToHexString(System.Windows.Media.Color)">
+        <member name="M:SolidShineUi.ColorsHelper.ToHexString(System.Windows.Media.Color)">
             <summary>
             Returns an RGB hex triplet string that corresponds to this color. Note that A (alpha) is dropped.
             </summary>
             <param name="color">The color to convert to a hex string.</param>
             <returns></returns>
         </member>
-        <member name="M:UiCore.ColorsHelper.ToHSV(System.Windows.Media.Color,System.Double@,System.Double@,System.Double@)">
+        <member name="M:SolidShineUi.ColorsHelper.ToHSV(System.Windows.Media.Color,System.Double@,System.Double@,System.Double@)">
             <summary>
             Get the HSV values for a particular color.
             </summary>
@@ -386,7 +373,7 @@
             <param name="saturation">The saturation value of the color.</param>
             <param name="value">The value (also known as brightness) value of the color.</param>
         </member>
-        <member name="M:UiCore.ColorsHelper.CreateFromHSV(System.Double,System.Double,System.Double)">
+        <member name="M:SolidShineUi.ColorsHelper.CreateFromHSV(System.Double,System.Double,System.Double)">
             <summary>
             Create a color based upon HSV values.
             </summary>
@@ -395,100 +382,100 @@
             <param name="value">The value of the color.</param>
             <returns>Return a color that corresponds to these HSV values.</returns>
         </member>
-        <member name="P:UiCore.ColorsHelper.DarkBlue">
+        <member name="P:SolidShineUi.ColorsHelper.DarkBlue">
             <summary>A preselected color, good to use for a color scheme. Has hex string 0080E5.</summary>
         </member>
-        <member name="P:UiCore.ColorsHelper.Blue">
+        <member name="P:SolidShineUi.ColorsHelper.Blue">
             <summary>A preselected color, good to use for a color scheme. Has hex string 00AEDB.</summary>
         </member>
-        <member name="P:UiCore.ColorsHelper.Yellow">
+        <member name="P:SolidShineUi.ColorsHelper.Yellow">
             <summary>A preselected color, good to use for a color scheme. Has hex string FFBE00.</summary>
         </member>
-        <member name="P:UiCore.ColorsHelper.Orange">
+        <member name="P:SolidShineUi.ColorsHelper.Orange">
             <summary>A preselected color, good to use for a color scheme. Has hex string FF7000.</summary>
         </member>
-        <member name="P:UiCore.ColorsHelper.Red">
+        <member name="P:SolidShineUi.ColorsHelper.Red">
             <summary>A preselected color, good to use for a color scheme. Has hex string E34234.</summary>
         </member>
-        <member name="P:UiCore.ColorsHelper.SkyBlue">
+        <member name="P:SolidShineUi.ColorsHelper.SkyBlue">
             <summary>A preselected color, good to use for a color scheme. Has hex string 93D2FA.</summary>
         </member>
-        <member name="P:UiCore.ColorsHelper.Pink">
+        <member name="P:SolidShineUi.ColorsHelper.Pink">
             <summary>A preselected color, good to use for a color scheme. Has hex string FDBCB9.</summary>
         </member>
-        <member name="P:UiCore.ColorsHelper.Green">
+        <member name="P:SolidShineUi.ColorsHelper.Green">
             <summary>A preselected color, good to use for a color scheme. Has hex string 228B22.</summary>
         </member>
-        <member name="P:UiCore.ColorsHelper.Cyan">
+        <member name="P:SolidShineUi.ColorsHelper.Cyan">
             <summary>A preselected color, good to use for a color scheme. Has hex string 21B17E.</summary>
         </member>
-        <member name="P:UiCore.ColorsHelper.LightGreen">
+        <member name="P:SolidShineUi.ColorsHelper.LightGreen">
             <summary>A preselected color, good to use for a color scheme. Has hex string 74C365.</summary>
         </member>
-        <member name="P:UiCore.ColorsHelper.GrayGreen">
+        <member name="P:SolidShineUi.ColorsHelper.GrayGreen">
             <summary>A preselected color, good to use for a color scheme. Has hex string 6C7C59.</summary>
         </member>
-        <member name="P:UiCore.ColorsHelper.LightViolet">
+        <member name="P:SolidShineUi.ColorsHelper.LightViolet">
             <summary>A preselected color, good to use for a color scheme. Has hex string 947CFB.</summary>
         </member>
-        <member name="P:UiCore.ColorsHelper.Violet">
+        <member name="P:SolidShineUi.ColorsHelper.Violet">
             <summary>A preselected color, good to use for a color scheme. Has hex string 7F66AF.</summary>
         </member>
-        <member name="P:UiCore.ColorsHelper.Purple">
+        <member name="P:SolidShineUi.ColorsHelper.Purple">
             <summary>A preselected color, good to use for a color scheme. Has hex string B571C7.</summary>
         </member>
-        <member name="P:UiCore.ColorsHelper.Gray">
+        <member name="P:SolidShineUi.ColorsHelper.Gray">
             <summary>A preselected color, good to use for a color scheme. Has hex string 808080.</summary>
         </member>
-        <member name="P:UiCore.ColorsHelper.RedBrown">
+        <member name="P:SolidShineUi.ColorsHelper.RedBrown">
             <summary>A preselected color, good to use for a color scheme. Has hex string 954535.</summary>
         </member>
-        <member name="P:UiCore.ColorsHelper.Salmon">
+        <member name="P:SolidShineUi.ColorsHelper.Salmon">
             <summary>A preselected color, good to use for a color scheme. Has hex string D95E40.</summary>
         </member>
-        <member name="P:UiCore.ColorsHelper.Brown">
+        <member name="P:SolidShineUi.ColorsHelper.Brown">
             <summary>A preselected color, good to use for a color scheme. Has hex string B05010.</summary>
         </member>
-        <member name="P:UiCore.ColorsHelper.White">
+        <member name="P:SolidShineUi.ColorsHelper.White">
             <summary>A preselected color. Has hex string FFFFFF.</summary>
         </member>
-        <member name="P:UiCore.ColorsHelper.Black">
+        <member name="P:SolidShineUi.ColorsHelper.Black">
             <summary>A preselected color. Has hex string 000000.</summary>
         </member>
-        <member name="P:UiCore.ColorsHelper.LightGray">
+        <member name="P:SolidShineUi.ColorsHelper.LightGray">
             <summary>A preselected color, good to use for a color scheme. Has hex string C0C0C0.</summary>
         </member>
-        <member name="P:UiCore.ColorsHelper.Olive">
+        <member name="P:SolidShineUi.ColorsHelper.Olive">
             <summary>A preselected color. Has hex string 808000.</summary>
         </member>
-        <member name="P:UiCore.ColorsHelper.DarkGray">
+        <member name="P:SolidShineUi.ColorsHelper.DarkGray">
             <summary>A preselected color, good to use for a color scheme. Has hex string 666666.</summary>
         </member>
-        <member name="P:UiCore.ColorsHelper.HighContrastLightBlue">
+        <member name="P:SolidShineUi.ColorsHelper.HighContrastLightBlue">
             <summary>A color used in high contrast color schemes, which mirrors Windows's high contrast themes. Has hex string 1AEBFF.</summary>
         </member>
-        <member name="P:UiCore.ColorsHelper.HighContrastPurple">
+        <member name="P:SolidShineUi.ColorsHelper.HighContrastPurple">
             <summary>A color used in high contrast color schemes, which mirrors Windows's high contrast themes. Has hex string 37006E.</summary>
         </member>
-        <member name="P:UiCore.ColorsHelper.HighContrastLightPurple">
+        <member name="P:SolidShineUi.ColorsHelper.HighContrastLightPurple">
             <summary>A color used in high contrast color schemes, which mirrors Windows's high contrast themes. Has hex string 9B7FB6.</summary>
         </member>
-        <member name="P:UiCore.ColorsHelper.HighContrastGreen">
+        <member name="P:SolidShineUi.ColorsHelper.HighContrastGreen">
             <summary>A color used in high contrast color schemes, which mirrors Windows's high contrast themes. Has hex string 00FF00.</summary>
         </member>
-        <member name="P:UiCore.ColorsHelper.HighContrastLightGreen">
+        <member name="P:SolidShineUi.ColorsHelper.HighContrastLightGreen">
             <summary>A color used in high contrast color schemes, which mirrors Windows's high contrast themes. Has hex string 81FF81.</summary>
         </member>
-        <member name="P:UiCore.ColorsHelper.HighContrastBlue">
+        <member name="P:SolidShineUi.ColorsHelper.HighContrastBlue">
             <summary>A color used in high contrast color schemes, which mirrors Windows's high contrast themes. Has hex string 0000FF.</summary>
         </member>
-        <member name="P:UiCore.ColorsHelper.HighContrastGray">
+        <member name="P:SolidShineUi.ColorsHelper.HighContrastGray">
             <summary>A color used in high contrast color schemes, which mirrors Windows's high contrast themes. Has hex string C0C0C0.</summary>
         </member>
-        <member name="P:UiCore.ColorsHelper.HighContrastRed">
+        <member name="P:SolidShineUi.ColorsHelper.HighContrastRed">
             <summary>A color used in high contrast color schemes, which mirrors Windows's high contrast themes. Has hex string 900000.</summary>
         </member>
-        <member name="M:UiCore.ColorsHelper.GetX11Color(System.String)">
+        <member name="M:SolidShineUi.ColorsHelper.GetX11Color(System.String)">
             <summary>
             Get a color from the X11 Color table (<c>System.Windows.Media.Colors</c>) with a particular name.
             </summary>
@@ -497,329 +484,50 @@
             <exception cref="T:System.ArgumentException">Thrown if there is no X11 color with that name.</exception>
             <remarks>Make sure to enter the name as it appears in the class <c>System.Windows.Media.Colors</c>, with no spaces or alternate spellings.</remarks>
         </member>
-        <member name="M:UiCore.ColorsHelper.ToBrush(System.Windows.Media.Color)">
+        <member name="M:SolidShineUi.ColorsHelper.ToBrush(System.Windows.Media.Color)">
             <summary>
             Get a SolidColorBrush for this color.
             </summary>
         </member>
-        <member name="M:UiCore.ColorsHelper.GetHexString(System.Windows.Media.Color)">
+        <member name="M:SolidShineUi.ColorsHelper.GetHexString(System.Windows.Media.Color)">
             <summary>
             Get a hex triplet string for this color. Does not include the hash symbol.
             </summary>
         </member>
-        <member name="M:UiCore.ColorsHelper.GetInversion(System.Windows.Media.Color)">
+        <member name="M:SolidShineUi.ColorsHelper.GetInversion(System.Windows.Media.Color)">
             <summary>
             Get the color that is the invert of this color. The A (alpha) value of the color is also kept.
             </summary>
         </member>
-        <member name="P:UiCore.ColorScheme.IsHighContrast">
+        <member name="P:SolidShineUi.ColorScheme.IsHighContrast">
             <summary>
             Get or set whether this is a high-contrast color scheme.
             </summary>
         </member>
-        <member name="P:UiCore.ColorScheme.MainColor">
+        <member name="P:SolidShineUi.ColorScheme.MainColor">
             <summary>
             Main interface color. With High Contrast color schemes, do not use except for window captions
             </summary>
         </member>
-        <member name="P:UiCore.ColorScheme.SecondaryColor">
+        <member name="P:SolidShineUi.ColorScheme.SecondaryColor">
             <summary>
             Secondary color. Do not use with High Contrast color schemes
             </summary>
         </member>
-        <member name="T:UiCore.DoubleSpinner">
+        <member name="T:SolidShineUi.ColorPickerDialog">
             <summary>
-            Interaction logic for DoubleSpinner.xaml
+            Interaction logic for ColorPickerDialog.xaml
             </summary>
             <summary>
-            DoubleSpinner
-            </summary>
-        </member>
-        <member name="P:UiCore.DoubleSpinner.RepeatDelay">
-            <summary>
-            Get or set the delay period before starting the repeatedly stepping up or down while the button is held, in milliseconds. Default is 300 milliseconds.
+            ColorPickerDialog
             </summary>
         </member>
-        <member name="P:UiCore.DoubleSpinner.AcceptExpressions">
-            <summary>
-            Get or set if the spinner should evaluate arithmetic expressions (such as "2+5") to accept as a value.
-            </summary>
-            <remarks>
-            See the <see cref="T:UiCore.ArithmeticParser"/> class for more info about how expressions are parsed.
-            </remarks>
-        </member>
-        <member name="P:UiCore.DoubleSpinner.ShowArrows">
-            <summary>
-            Get or set the delay period before starting the repeatedly stepping up or down while the button is held, in milliseconds. Default is 300 milliseconds.
-            </summary>
-        </member>
-        <member name="M:UiCore.DoubleSpinner.ValidateValue">
-            <summary>
-            Validate the value and update the UI if neede.
-            </summary>
-        </member>
-        <member name="M:UiCore.DoubleSpinner.InitializeComponent">
+        <member name="M:SolidShineUi.ColorPickerDialog.InitializeComponent">
             <summary>
             InitializeComponent
             </summary>
         </member>
-        <member name="T:UiCore.EnumComboBox">
-            <summary>
-            A ComboBox where the items are populated from an inputted Enum.
-            </summary>
-        </member>
-        <member name="P:UiCore.EnumComboBox.Enum">
-            <summary>
-            The enum to use with this EnumComboBox. When the Enum value is set, the ComboBox's items are changed to match the different values of the enum. 
-            </summary>
-        </member>
-        <member name="P:UiCore.EnumComboBox.SelectedEnumValue">
-            <summary>
-            Get or set the selected item of the EnumComboBox. To avoid casting, use the SelectedEnumValueAsEnum function.
-            </summary>
-        </member>
-        <member name="M:UiCore.EnumComboBox.SelectedEnumValueAsEnum``1">
-            <summary>
-            Get the selected item of the EnumComboBox, returned as a value of that enum.
-            </summary>
-            <typeparam name="T"></typeparam>
-            <returns></returns>
-        </member>
-        <member name="T:UiCore.FileSelect">
-            <summary>
-            Interaction logic for FileSelect.xaml
-            </summary>
-            <summary>
-            FileSelect
-            </summary>
-        </member>
-        <member name="E:UiCore.FileSelect.Click">
-            <summary>
-            Raised when the user clicks on the button, via a mouse click, touch, a stylus, or via the keyboard.
-            </summary>
-        </member>
-        <member name="E:UiCore.FileSelect.RightClick">
-            <summary>
-            Raised when the user right-clicks on the button, via a mouse click or via the keyboard.
-            </summary>
-        </member>
-        <member name="P:UiCore.FileSelect.ClickOnPress">
-            <summary>
-            Gets or sets whether the Click event should be raised when the button is pressed, rather than when it is released.
-            </summary>
-        </member>
-        <member name="M:UiCore.FileSelect.PerformPress(System.Boolean)">
-            <summary>
-            Sets up the button to be clicked. This must be run before PerformClick.
-            </summary>
-            <param name="rightClick">Determine whether this should be treated as a right click (which usually invokes a context menu).</param>
-        </member>
-        <member name="M:UiCore.FileSelect.PerformClick(System.Boolean)">
-            <summary>
-            If the button is prepared by PerformPress, perform the Click actions, including raising the Click event.
-            </summary>
-            <param name="rightClick">Determine whether this should be treated as a right click (which usually invokes a context menu).</param>
-        </member>
-        <member name="M:UiCore.FileSelect.DoClick">
-            <summary>
-            Perform a click programattically. The button responds the same way as if it was clicked by the user.
-            </summary>
-        </member>
-        <member name="P:UiCore.FileSelect.FileFilter">
-            <summary>
-            Get or set the file filter to use when selecting files. Please use semicolons (;) to separate multiple extensions/filters (i.e. <c>"*.docx;*.xlsx;*.pptx"</c>).
-            </summary>
-            <remarks>Default value is <c>ALL_FILES_FILTER</c>, which is <c>"*.*"</c>.</remarks>
-        </member>
-        <member name="M:UiCore.FileSelect.GetStackImage(UiCore.MessageDialogImageConverter.MessageDialogImageColor)">
-            <summary>
-            Return a 16x16 stacked files image.
-            </summary>
-            <param name="color">The color to use for the image. Use black or white for high-contrast themes.</param>
-            <returns></returns>
-        </member>
-        <member name="M:UiCore.FileSelect.InitializeComponent">
-            <summary>
-            InitializeComponent
-            </summary>
-        </member>
-        <member name="T:UiCore.FlatButton">
-            <summary>
-            A button with a custom, flat style and additional funcionality. Use <c>SelectOnClick</c> to have the button act like a toggle button.
-            </summary>
-        </member>
-        <member name="M:UiCore.FlatButton.#ctor">
-            <summary>
-            Create a new FlatButton.
-            </summary>
-        </member>
-        <member name="E:UiCore.FlatButton.IsSelectedChanged">
-            <summary>
-            Raised if the button's IsSelected value is changed. This can be used to have the button act as a ToggleButton.
-            </summary>
-        </member>
-        <member name="P:UiCore.FlatButton.ColorScheme">
-            <summary>
-            Get or set the color scheme to use with the button.
-            </summary>
-        </member>
-        <member name="P:UiCore.FlatButton.TransparentBack">
-            <summary>
-            Get or set whether the button should have a transparent background when the button is not focused.
-            </summary>
-        </member>
-        <member name="P:UiCore.FlatButton.UseAccentColors">
-            <summary>
-            Get or set if the button should use the accent colors of the color scheme, rather than the standard colors.
-            </summary>
-        </member>
-        <member name="P:UiCore.FlatButton.BorderThickness">
-            <summary>
-            Get or set the thickness of the border around the button.
-            </summary>
-        </member>
-        <member name="P:UiCore.FlatButton.BorderSelectionThickness">
-            <summary>
-            Get or set the thickness of the border around the button, while the button is in a selected (<c>IsSelected</c>) state.
-            </summary>
-        </member>
-        <member name="P:UiCore.FlatButton.CornerRadius">
-            <summary>
-            Get or set the corner radius (or radii) to use for the button and its border. Can be used to create a rounded button.
-            </summary>
-        </member>
-        <member name="E:UiCore.FlatButton.Click">
-            <summary>
-            Raised when the user clicks on the button, via a mouse click, touch, a stylus, or via the keyboard.
-            </summary>
-        </member>
-        <member name="E:UiCore.FlatButton.RightClick">
-            <summary>
-            Raised when the user right-clicks on the button, via a mouse click or via the keyboard.
-            </summary>
-        </member>
-        <member name="P:UiCore.FlatButton.IsSelected">
-            <summary>
-            Gets or sets whether this button is selected. This property (combined with <c>SelectOnClick</c>) allows the button to function like a ToggleButton.
-            </summary>
-        </member>
-        <member name="P:UiCore.FlatButton.SelectOnClick">
-            <summary>
-            Gets or sets whether the button should change its IsSelected property when a click is performed.
-            </summary>
-        </member>
-        <member name="P:UiCore.FlatButton.ClickOnPress">
-            <summary>
-            Gets or sets whether the Click event should be raised when the button is pressed, rather than when it is released.
-            </summary>
-        </member>
-        <member name="M:UiCore.FlatButton.PerformPress(System.Boolean)">
-            <summary>
-            Sets up the button to be clicked. This must be run before PerformClick.
-            </summary>
-            <param name="rightClick">Determine whether this should be treated as a right click (which usually invokes a context menu).</param>
-        </member>
-        <member name="M:UiCore.FlatButton.PerformClick(System.Boolean)">
-            <summary>
-            If the button is prepared by PerformPress, perform the Click actions, including raising the Click event.
-            </summary>
-            <param name="rightClick">Determine whether this should be treated as a right click (which usually invokes a context menu).</param>
-        </member>
-        <member name="M:UiCore.FlatButton.DoClick">
-            <summary>
-            Perform a click programattically. The button responds the same way as if it was clicked by the user.
-            </summary>
-        </member>
-        <member name="F:UiCore.FlatButton.IsDefaultedPropertyKey">
-            <summary>
-                The key needed set a read-only property.
-            </summary>
-        </member>
-        <member name="P:UiCore.FlatButton.IsDefaulted">
-            <summary>
-            Specifies whether or not this button is the button that would be invoked when Enter is pressed.
-            </summary>
-        </member>
-        <member name="M:UiCore.FlatButton.OnAccessKey(System.Windows.Input.AccessKeyEventArgs)">
-            <summary>
-            The Access key for this control was invoked.
-            </summary>
-        </member>
-        <member name="T:UiCore.FlatWindow">
-            <summary>
-            A WPF window that has a custom, flat style and additional functionality.
-            </summary>
-        </member>
-        <member name="P:UiCore.FlatWindow.HighContrastMode">
-            <summary>
-            Get if the window's color scheme is a high contrast theme (and thus, the window is displaying high-contrast colors).
-            </summary>
-        </member>
-        <member name="P:UiCore.FlatWindow.ColorScheme">
-            <summary>
-            Get or set the color scheme to apply to the window.
-            </summary>
-        </member>
-        <member name="P:UiCore.FlatWindow.CaptionDisplayType">
-            <summary>
-            Gets or sets the visibility of the caption buttons (close, maximize, minimize). The actions may still be available via other methods even if the buttons are hidden.
-            </summary>
-            <remarks>Use the <c>DisableMinimizeAction</c> and <c>DisableMaximizeAction</c> methods to further prevent the user from being able to minimize or maximize the window. The standard <c>ResizeMode</c> property works as well.</remarks>
-        </member>
-        <member name="P:UiCore.FlatWindow.CaptionHeight">
-            <summary>
-            Get or set the height of the caption (title bar) area of the window. Default is 29.
-            </summary>
-        </member>
-        <member name="P:UiCore.FlatWindow.TopRightElement">
-            <summary>
-            Gets or sets the UI element to place in the top-right of the window, to the left of the caption buttons.
-            </summary>
-        </member>
-        <member name="P:UiCore.FlatWindow.TopLeftElement">
-            <summary>
-            Gets or sets the UI element to place in the top-left corner of the window.
-            </summary>
-        </member>
-        <member name="P:UiCore.FlatWindow.ExcludeTopLeftElementFromChrome">
-            <summary>
-            Get or set if the top-left element should be considered part of the window chrome or not. Set to <c>true</c> to exclude it from the window chrome.
-            </summary>
-            <remarks>
-            This changes the IsHitTestVisibleInChrome property for the top-left element. If set to true, the element can be interacted with.
-            If set to false, the element cannot be interacted with, and clicking, dragging, etc. acts as if you're clicking on the window's title bar.
-            </remarks>
-        </member>
-        <member name="P:UiCore.FlatWindow.ExcludeTopRightElementFromChrome">
-            <summary>
-            Get or set if the top-right element should be considered part of the window chrome or not. Set to <c>true</c> to exclude it from the window chrome.
-            </summary>
-            <remarks>
-            This changes the IsHitTestVisibleInChrome property for the top-right element. If set to true, the element can be interacted with.
-            If set to false, the element cannot be interacted with, and clicking, dragging, etc. acts as if you're clicking on the window's title bar.
-            </remarks>
-        </member>
-        <member name="P:UiCore.FlatWindow.Background">
-            <summary>
-            Get or set the background brush to use for the caption area (title bar). Use <c>ContentBackground</c> for the content area of the window.
-            </summary>
-        </member>
-        <member name="M:UiCore.FlatWindow.DisableMaximizeAction">
-            <summary>
-            Calls the native Windows method to disable the Maximize action (via the right-click menu and the like). Note that you'll want to update the CaptionDisplayType to remove the physical button.
-            </summary>
-        </member>
-        <member name="M:UiCore.FlatWindow.DisableMinimizeAction">
-            <summary>
-            Calls the native Windows method to disable the Minimize action (via the right-click menu and the like). Note that you'll want to update the CaptionDisplayType to remove the physical button.
-            </summary>
-        </member>
-        <member name="M:UiCore.FlatWindow.DisableMinimizeAndMaximizeActions">
-            <summary>
-            Calls the native Windows method to disable the Minimize and Maximize actions (via the right-click menu and the like). Note that you'll want to update the CaptionDisplayType to remove the physical buttons.
-            </summary>
-        </member>
-        <member name="T:UiCore.FontSelectDialog">
+        <member name="T:SolidShineUi.FontSelectDialog">
             <summary>
             Interaction logic for FontPickerDialog.xaml
             </summary>
@@ -827,122 +535,17 @@
             FontSelectDialog
             </summary>
         </member>
-        <member name="P:UiCore.FontSelectDialog.PreserveFontFallback">
+        <member name="P:SolidShineUi.FontSelectDialog.PreserveFontFallback">
             <summary>
             If a font fallback sequence is defined in the FontFamily, preserve it even if the user changes the font. If preserved, only the first found font will be changed and the remaining values will be preserved.
             </summary>
         </member>
-        <member name="M:UiCore.FontSelectDialog.InitializeComponent">
+        <member name="M:SolidShineUi.FontSelectDialog.InitializeComponent">
             <summary>
             InitializeComponent
             </summary>
         </member>
-        <member name="T:UiCore.ImageColorPicker">
-            <summary>
-            Image element with the ability to pick out a pixel color value.
-            </summary>
-        </member>
-        <member name="P:UiCore.ImageColorPicker.SelectedColor">
-            <summary>
-            Get the color that is selected from the image.
-            </summary>
-        </member>
-        <member name="P:UiCore.ImageColorPicker.SelectedPosition">
-            <summary>
-            Get the position that is selected from the image. This position is relative to the control itself.
-            </summary>
-        </member>
-        <member name="T:UiCore.IntegerSpinner">
-            <summary>
-            Interaction logic for IntegerSpinner.xaml
-            </summary>
-            <summary>
-            IntegerSpinner
-            </summary>
-        </member>
-        <member name="P:UiCore.IntegerSpinner.Value">
-            <summary>
-            Get or set the value of the spinner.
-            </summary>
-        </member>
-        <member name="P:UiCore.IntegerSpinner.RepeatDelay">
-            <summary>
-            Get or set the delay period before starting the repeatedly stepping up or down while the button is held, in milliseconds. Default is 300 milliseconds.
-            </summary>
-        </member>
-        <member name="P:UiCore.IntegerSpinner.AcceptExpressions">
-            <summary>
-            Get or set if the spinner should evaluate arithmetic expressions (such as "2+5") to accept as a value.
-            </summary>
-            <remarks>
-            See the <see cref="T:UiCore.ArithmeticParser"/> class for more info about how expressions are parsed.
-            </remarks>
-        </member>
-        <member name="P:UiCore.IntegerSpinner.ShowArrows">
-            <summary>
-            Get or set the delay period before starting the repeatedly stepping up or down while the button is held, in milliseconds. Default is 300 milliseconds.
-            </summary>
-        </member>
-        <member name="M:UiCore.IntegerSpinner.ValidateValue">
-            <summary>
-            Validate the value and update the UI if needed.
-            </summary>
-        </member>
-        <member name="M:UiCore.IntegerSpinner.InitializeComponent">
-            <summary>
-            InitializeComponent
-            </summary>
-        </member>
-        <member name="P:UiCore.LinkTextBlock.TextBrush">
-            <summary>
-            Get or set the standard foreground brush for the text. This overwrites the Foreground property.
-            </summary>
-        </member>
-        <member name="P:UiCore.LinkTextBlock.HighlightBrush">
-            <summary>
-            Get or set the brush for when the control has mouseover or keyboard focus.
-            </summary>
-        </member>
-        <member name="P:UiCore.LinkTextBlock.DisabledBrush">
-            <summary>
-            Get or set the brush for when the control is disabled.
-            </summary>
-        </member>
-        <member name="P:UiCore.LinkTextBlock.AutoSetLinkFromText">
-            <summary>
-            Get or set if the LinkTextBlock should automatically create a link based upon the Text property. See remarks for more details.
-            </summary>
-            <remarks>
-            When AutoSetLinkFromText is set to <c>true</c>, the LinkTextBlock attempts to open the link defined in the Text property when the user clicks on the control.
-            For example, if this property is set to <c>true</c> and the Text property is set to <c>"https://microsoft.com"</c>, the LinkTextBlock will open "https://microsoft.com" when the control is clicked,
-            even if a Click event handler is not attached. Note that for web links, the scheme/protocol should be present (i.e. "http", "https", "ftp", etc.).
-            <para />
-            Note that the Click event will still fire even if this property is set to <c>true</c>.
-            <para/>
-            If an error occurs while attempting to open the link, nothing happens. If a debugger is attached, the LinkTextBlock attempts to log a message to the debugger.
-            </remarks>
-        </member>
-        <member name="P:UiCore.LinkTextBlock.UnderlineOnHighlight">
-            <summary>
-            Get or set if the text should be underlined when the control has mouseover or keyboard focus.
-            </summary>
-        </member>
-        <member name="P:UiCore.LinkTextBlock.IsEnabled">
-            <summary>
-            Gets or sets a value indicating whether this element is enabled in the user interface (UI).
-            </summary>
-        </member>
-        <member name="P:UiCore.MenuButton.StaysOpen">
-            <summary>
-            Get or set if the menu should close automatically. Remember to set the <c>StaysOpenOnClick</c> property for child menu items as well.
-            </summary>
-        </member>
-        <member name="P:UiCore.MenuButton.ShowMenuArrow">
-            <summary>
-            Get or set if an arrow should be shown to the right of the button content to indicate the button as a menu button.
-            </summary>
-        </member>
-        <member name="T:UiCore.MessageDialog">
+        <member name="T:SolidShineUi.MessageDialog">
             <summary>
             Interaction logic for MessageBox.xaml
             </summary>
@@ -950,50 +553,50 @@
             MessageDialog
             </summary>
         </member>
-        <member name="P:UiCore.MessageDialog.ColorScheme">
+        <member name="P:SolidShineUi.MessageDialog.ColorScheme">
             <summary>
             The color scheme to use with the message dialog.
             </summary>
         </member>
-        <member name="P:UiCore.MessageDialog.OkButtonText">
+        <member name="P:SolidShineUi.MessageDialog.OkButtonText">
             <summary>Get or set the text to display in the OK button. If empty, the button will not be displayed (unless the other buttons are also not displayed, in which case this one will be).</summary>
         </member>
-        <member name="P:UiCore.MessageDialog.CancelButtonText">
+        <member name="P:SolidShineUi.MessageDialog.CancelButtonText">
             <summary>Get or set the text to display in the Cancel button. If empty, the button will not be displayed.</summary>
         </member>
-        <member name="P:UiCore.MessageDialog.DiscardButtonText">
+        <member name="P:SolidShineUi.MessageDialog.DiscardButtonText">
             <summary>Get or set the text to display in the Discard button. If empty, the button will not be displayed.</summary>
         </member>
-        <member name="P:UiCore.MessageDialog.ExtraButton1Text">
+        <member name="P:SolidShineUi.MessageDialog.ExtraButton1Text">
             <summary>Get or set the text to display in the first extra button. If empty, the button will not be displayed.</summary>
         </member>
-        <member name="P:UiCore.MessageDialog.ExtraButton2Text">
+        <member name="P:SolidShineUi.MessageDialog.ExtraButton2Text">
             <summary>Get or set the text to display in the second extra button. If empty, the button will not be displayed.</summary>
         </member>
-        <member name="P:UiCore.MessageDialog.ExtraButton3Text">
+        <member name="P:SolidShineUi.MessageDialog.ExtraButton3Text">
             <summary>Get or set the text to display in the third extra button. If empty, the button will not be displayed.</summary>
         </member>
-        <member name="P:UiCore.MessageDialog.DialogResult">
+        <member name="P:SolidShineUi.MessageDialog.DialogResult">
             <summary>Get the result of the message dialog, indicating which button the user pressed.</summary>
         </member>
-        <member name="P:UiCore.MessageDialog.Message">
+        <member name="P:SolidShineUi.MessageDialog.Message">
             <summary>Get or set the text to display for the message.</summary>
         </member>
-        <member name="P:UiCore.MessageDialog.CheckBoxText">
+        <member name="P:SolidShineUi.MessageDialog.CheckBoxText">
             <summary>Get or set the text to display with the checkbox. If empty, the checkbox will not be displayed.</summary>
         </member>
-        <member name="P:UiCore.MessageDialog.CheckBoxValue">
+        <member name="P:SolidShineUi.MessageDialog.CheckBoxValue">
             <summary>Get or set the checked state of the checkbox. Use the checkbox to display a "Remember my choice"-style option.</summary>
         </member>
-        <member name="P:UiCore.MessageDialog.Image">
+        <member name="P:SolidShineUi.MessageDialog.Image">
             <summary>Get or set the image to display with the message.</summary>
         </member>
-        <member name="M:UiCore.MessageDialog.ShowDialog">
+        <member name="M:SolidShineUi.MessageDialog.ShowDialog">
             <summary>
             Display this message dialog. Use the properties such as <c>OkButtonText</c> or <c>CancelButtonText</c> and <c>Message</c> to control the appearance of the message dialog.
             </summary>
         </member>
-        <member name="M:UiCore.MessageDialog.ShowDialog(System.String,System.String,System.Boolean,UiCore.MessageDialogImage,UiCore.MessageDialogResult,System.String,System.String,System.String)">
+        <member name="M:SolidShineUi.MessageDialog.ShowDialog(System.String,System.String,System.Boolean,SolidShineUi.MessageDialogImage,SolidShineUi.MessageDialogResult,System.String,System.String,System.String)">
             <summary>
             Display this message dialog. This is an obsolete method, please use one of the other ones.
             </summary>
@@ -1006,7 +609,7 @@
             <param name="extraButton2Text">The text to use in the second extra button. If this is set to a null or empty string, this button will not be displayed.</param>
             <param name="extraButton3Text">The text to use in the third extra button. If this is set to a null or empty string, this button will not be displayed.</param>
         </member>
-        <member name="M:UiCore.MessageDialog.ShowDialog(System.String,UiCore.ColorScheme,System.Windows.Window,System.String,System.Boolean,UiCore.MessageDialogImage,UiCore.MessageDialogResult,System.String,System.String,System.String,System.String,System.String,System.String)">
+        <member name="M:SolidShineUi.MessageDialog.ShowDialog(System.String,SolidShineUi.ColorScheme,System.Windows.Window,System.String,System.Boolean,SolidShineUi.MessageDialogImage,SolidShineUi.MessageDialogResult,System.String,System.String,System.String,System.String,System.String,System.String)">
             <summary>
             Display this message dialog. This is an obsolete method, please use one of the other ones.
             </summary>
@@ -1024,7 +627,7 @@
             <param name="extraButton3Text">The text to use in the third extra button. If this is set to a null or empty string, this button will not be displayed.</param>
             <param name="checkBoxText">The text to use in the check box. If this is set to a null or empty string, the check box will not be displayed.</param>
         </member>
-        <member name="M:UiCore.MessageDialog.ShowDialog(System.String,UiCore.ColorScheme,System.Windows.Window,System.String,UiCore.MessageDialogButtonDisplay,UiCore.MessageDialogImage,UiCore.MessageDialogResult,System.String,System.String,System.String,System.String,System.String,System.String,System.String)">
+        <member name="M:SolidShineUi.MessageDialog.ShowDialog(System.String,SolidShineUi.ColorScheme,System.Windows.Window,System.String,SolidShineUi.MessageDialogButtonDisplay,SolidShineUi.MessageDialogImage,SolidShineUi.MessageDialogResult,System.String,System.String,System.String,System.String,System.String,System.String,System.String)">
             <summary>
             Display this message dialog.
             </summary>
@@ -1043,46 +646,46 @@
             <param name="extraButton3Text">The text to use in the third extra button. If this is set to a null or empty string, this button will not be displayed.</param>
             <param name="checkBoxText">The text to use in the check box. If this is set to a null or empty string, the check box will not be displayed.</param>
         </member>
-        <member name="M:UiCore.MessageDialog.InitializeComponent">
+        <member name="M:SolidShineUi.MessageDialog.InitializeComponent">
             <summary>
             InitializeComponent
             </summary>
         </member>
-        <member name="T:UiCore.MessageDialogImage">
+        <member name="T:SolidShineUi.MessageDialogImage">
             <summary>
             The image to use when displaying a message dialog.
             </summary>
         </member>
-        <member name="F:UiCore.MessageDialogImage.None">
+        <member name="F:SolidShineUi.MessageDialogImage.None">
             <summary>No image is displayed. This may be good for generic messages, but is not recommended for situations where the user should pay attention to the message.</summary>
         </member>
-        <member name="F:UiCore.MessageDialogImage.Error">
+        <member name="F:SolidShineUi.MessageDialogImage.Error">
             <summary>A white X on a red background is displayed. This is good for situations where an error or exception has occurred, or something isn't acting as intended.</summary>
         </member>
-        <member name="F:UiCore.MessageDialogImage.Warning">
+        <member name="F:SolidShineUi.MessageDialogImage.Warning">
             <summary>An exclamation point on a yellow triangle is displayed. This is good when informing the user about potential errors or unintended side effects.</summary>
         </member>
-        <member name="F:UiCore.MessageDialogImage.Question">
+        <member name="F:SolidShineUi.MessageDialogImage.Question">
             <summary>A white question mark on a blue background is displayed. This is good when asking a question or when asking for confirmation for a routine task.</summary>
         </member>
-        <member name="F:UiCore.MessageDialogImage.Hand">
+        <member name="F:SolidShineUi.MessageDialogImage.Hand">
             <summary>A white exclamation point on a blue background is displayed. This is good for when wanting to alert the user about something that isn't considered a warning.</summary>
         </member>
-        <member name="F:UiCore.MessageDialogImage.Info">
+        <member name="F:SolidShineUi.MessageDialogImage.Info">
             <summary>A white I on a blue background is displayed. This is good for generally informing the user about something, such as a task being completed or the response to a request.</summary>
         </member>
-        <member name="F:UiCore.MessageDialogImage.Stop">
+        <member name="F:SolidShineUi.MessageDialogImage.Stop">
             <summary>A red stop sign is displayed. This is good for informing the user that this action isn't valid in the current state, or that an unavoidable major issue has occurred.</summary>
         </member>
-        <member name="F:UiCore.MessageDialogImage.Lock">
+        <member name="F:SolidShineUi.MessageDialogImage.Lock">
             <summary>A yellow lock is displayed. This is good for situations where security or authentication are involved.</summary>
         </member>
-        <member name="T:UiCore.MessageDialogImageConverter">
+        <member name="T:SolidShineUi.MessageDialogImageConverter">
             <summary>
             A helper class that can retrieve a BitmapImage from a MessageDialogImage.
             </summary>
         </member>
-        <member name="M:UiCore.MessageDialogImageConverter.GetImage(UiCore.MessageDialogImage,UiCore.MessageDialogImageConverter.MessageDialogImageColor)">
+        <member name="M:SolidShineUi.MessageDialogImageConverter.GetImage(SolidShineUi.MessageDialogImage,SolidShineUi.MessageDialogImageConverter.MessageDialogImageColor)">
             <summary>
             Return a 32x32 image to use with a message dialog. If the MessageDialogImage argument is "None", then <c>null</c> is returned.
             </summary>
@@ -1090,375 +693,32 @@
             <param name="color">The color to use for the image. Use black or white for high-contrast themes.</param>
             <returns></returns>
         </member>
-        <member name="T:UiCore.MessageDialogImageConverter.MessageDialogImageColor">
+        <member name="T:SolidShineUi.MessageDialogImageConverter.MessageDialogImageColor">
             <summary>
             The color to use with a message dialog image.
             </summary>
         </member>
-        <member name="F:UiCore.MessageDialogButtonDisplay.Auto">
+        <member name="F:SolidShineUi.MessageDialogButtonDisplay.Auto">
             <summary>
             If set, uses the OkButtonText, CancelButtonText, and DiscardButtonText properties to determine which buttons should be displayed. If a property is null, then the corresponding button isn't displayed.
             </summary>
         </member>
-        <member name="F:UiCore.MessageDialogButtonDisplay.One">
+        <member name="F:SolidShineUi.MessageDialogButtonDisplay.One">
             <summary>
             Display only one button, the OK button. Outputs as <c>MessageDialogResult.OK</c> when clicked.
             </summary>
         </member>
-        <member name="F:UiCore.MessageDialogButtonDisplay.Two">
+        <member name="F:SolidShineUi.MessageDialogButtonDisplay.Two">
             <summary>
             Display two buttons, the OK and Cancel buttons. Outputs as <c>MessageDialogResult.OK</c> or <c>MessageDialogResult.Cancel</c> when clicked.
             </summary>
         </member>
-        <member name="F:UiCore.MessageDialogButtonDisplay.Three">
+        <member name="F:SolidShineUi.MessageDialogButtonDisplay.Three">
             <summary>
             Display three buttons, the OK, Discard, and Cancel buttons. Outputs as <c>MessageDialogResult.OK</c>, <c>MessageDialogResult.Discard</c> or <c>MessageDialogResult.Cancel</c> when clicked. 
             </summary>
         </member>
-        <member name="T:UiCore.NativeMethods">
-            <summary>
-            A small collection of methods to interact with native Windows libraries, used to modify window behavior or get file icons.
-            </summary>
-        </member>
-        <member name="M:UiCore.NativeMethods.ShowWindow(System.IntPtr,System.Int32)">
-            <summary>
-            Displays the window of a specified handle.
-            </summary>
-            <param name="hWnd">The handle of the window to show.</param>
-            <param name="nCmdShow">A command associated with this action.</param>
-            <returns></returns>
-        </member>
-        <member name="M:UiCore.NativeMethods.SetForegroundWindow(System.IntPtr)">
-            <summary>
-            Moves a specified window to the foreground.
-            </summary>
-            <param name="hWnd">The handle of the window.</param>
-            <returns></returns>
-        </member>
-        <member name="F:UiCore.NativeMethods.GWL_STYLE">
-            <summary>
-            The standard style for a window.
-            </summary>
-        </member>
-        <member name="F:UiCore.NativeMethods.WS_MAXIMIZEBOX">
-            <summary>
-            The integer value that points to the maximize button in a window.
-            </summary>
-        </member>
-        <member name="F:UiCore.NativeMethods.WS_MINIMIZEBOX">
-            <summary>
-            The integer value that points to the minimize button in a window.
-            </summary>
-        </member>
-        <member name="M:UiCore.NativeMethods.GetWindowLong(System.IntPtr,System.Int32)">
-            <summary>
-            Get this window's long value, which can be used for further modification.
-            </summary>
-            <param name="hWnd">The handle of the window.</param>
-            <param name="nIndex">The standard style of this window.</param>
-            <returns></returns>
-        </member>
-        <member name="M:UiCore.NativeMethods.SetWindowLong(System.IntPtr,System.Int32,System.Int32)">
-            <summary>
-            Set this window's long value, which is used to modify features and abilities of this window.
-            </summary>
-            <param name="hWnd">The handle of the window.</param>
-            <param name="nIndex">The standard style of this window.</param>
-            <param name="dwNewLong">The long to set for this window.</param>
-            <returns></returns>
-        </member>
-        <member name="M:UiCore.NativeMethods.HideMaximizeButton(System.Windows.Window)">
-            <summary>
-            Hide/disable the maximize button, so that the window cannot be maximized.
-            </summary>
-            <param name="w">The window to hide the button on.</param>
-        </member>
-        <member name="M:UiCore.NativeMethods.HideMaximizeButton(System.IntPtr)">
-            <summary>
-            Hide/disable the maximize button, so that the window cannot be maximized.
-            </summary>
-            <param name="hwnd">The handle to the window.</param>
-        </member>
-        <member name="M:UiCore.NativeMethods.HideMinimizeButton(System.Windows.Window)">
-            <summary>
-            Hide/disable the minimize button, so that the window cannot be minimized (hidden in taskbar).
-            </summary>
-            <param name="w">The window to hide the button on.</param>
-        </member>
-        <member name="M:UiCore.NativeMethods.HideMinimizeButton(System.IntPtr)">
-            <summary>
-            Hide/disable the minimize button, so that the window cannot be minimized (hidden in taskbar).
-            </summary>
-            <param name="hwnd">The handle to the window.</param>
-        </member>
-        <member name="M:UiCore.NativeMethods.HideMinimizeAndMaximizeButtons(System.Windows.Window)">
-            <summary>
-            Hide/disable the minimize and maximize buttons, so that the window cannot be maximized or minimized.
-            </summary>
-            <param name="w">The window to hide the buttons on.</param>
-        </member>
-        <member name="M:UiCore.NativeMethods.HideMinimizeAndMaximizeButtons(System.IntPtr)">
-            <summary>
-            Hide/disable the minimize and maximize buttons, so that the window cannot be maximized or minimized.
-            </summary>
-            <param name="hwnd">The handle to the window.</param>
-        </member>
-        <member name="M:UiCore.NativeMethods.GetSmallIconHandle(System.String)">
-            <summary>
-            Get a handle for a small (16x16) icon associated with a file.
-            </summary>
-            <param name="path">The file to get the icon for.</param>
-            <returns></returns>
-        </member>
-        <member name="M:UiCore.NativeMethods.GetLargeIconHandle(System.String)">
-            <summary>
-            Get a handle for a large (32x32) icon associated with a file.
-            </summary>
-            <param name="path">The file to get the icon for.</param>
-            <returns></returns>
-        </member>
-        <member name="M:UiCore.NativeMethods.GetSmallIcon(System.String)">
-            <summary>
-            Get an 16x16 image that is associated with a file.
-            </summary>
-            <param name="path">The file to get the icon for.</param>
-        </member>
-        <member name="M:UiCore.NativeMethods.GetLargeIcon(System.String)">
-            <summary>
-            Get an 32x32 image that is associated with a file.
-            </summary>
-            <param name="path">The file to get the icon for.</param>
-        </member>
-        <member name="M:UiCore.NativeMethods.GetDC(System.IntPtr)">
-            <summary>
-            Get a handle to the display context, either for a certain window or for the entire screen. This can be used to directly draw or get visual info for that particular context.
-            </summary>
-            <param name="hwnd">The pointer to the item you want the display context for. Use <c>IntPtr.Zero</c> for the entire screen, or a window handle for that window.</param>
-            <returns></returns>
-        </member>
-        <member name="M:UiCore.NativeMethods.ReleaseDC(System.IntPtr,System.IntPtr)">
-            <summary>
-            Release the handle to the display context. Do this when you're done using the display context. Must be in the same thread that GetDC was called.
-            </summary>
-            <param name="hwnd"></param>
-            <param name="hdc"></param>
-            <returns></returns>
-        </member>
-        <member name="M:UiCore.NativeMethods.GetPixel(System.IntPtr,System.Int32,System.Int32)">
-            <summary>
-            Get color info for a particular pixel in a display context.
-            </summary>
-            <param name="hdc">The handle of the display context.</param>
-            <param name="nXPos">The X position of the pixel.</param>
-            <param name="nYPos">The Y position of the pixel.</param>
-            <returns></returns>
-        </member>
-        <member name="T:UiCore.SelectableItem">
-            <summary>
-            Interaction logic for SelectableItem.xaml
-            </summary>
-            <summary>
-            SelectableItem
-            </summary>
-        </member>
-        <member name="M:UiCore.SelectableItem.#ctor">
-            <summary>
-            Create a SelectableItem to use with a SelectPanel.
-            </summary>
-        </member>
-        <member name="M:UiCore.SelectableItem.#ctor(System.String)">
-            <summary>
-            Create a SelectableItem to use with a SelectPanel, with the text preset.
-            </summary>
-            <param name="text">The text to display in the item.</param>
-        </member>
-        <member name="M:UiCore.SelectableItem.#ctor(System.String,System.Windows.Media.ImageSource,System.Double)">
-            <summary>
-            Create a SelectableItem to use with a SelectPanel, with certain properties preset.
-            </summary>
-            <param name="text">The text to display in the item.</param>
-            <param name="image">The image to display in the item. (If the image is wider than 16 pixels, you may need to update the <c>ImageWidth</c> property.)</param>
-            <param name="indent">The left indent to apply to the item's content. The indent can be used to make an improvised tree view.</param>
-        </member>
-        <member name="E:UiCore.SelectableItem.TextChanged">
-            <summary>
-            Raised when the Text property is changed, either via updating the property or via the the user's text editing view.
-            </summary>
-        </member>
-        <member name="P:UiCore.SelectableItem.Indent">
-            <summary>
-            Get or set the left indent to apply to the item's content. This can be used to make an improvised tree view.
-            </summary>
-        </member>
-        <member name="P:UiCore.SelectableItem.ShowCheckbox">
-            <summary>
-            Get or set whether a checkbox should be displayed on the item. Checkboxes can make it easy to select mutliple items.
-            </summary>
-        </member>
-        <member name="P:UiCore.SelectableItem.ImageWidth">
-            <summary>
-            Get or set the width to afford to the image. By default, the width is set to 16, but larger images will require the width to be set higher.
-            </summary>
-        </member>
-        <member name="P:UiCore.SelectableItem.ShowImage">
-            <summary>
-            Get or set whether to display an image on the left side of the item. Set the image via the <c>ImageSource</c> property.
-            </summary>
-        </member>
-        <member name="P:UiCore.SelectableItem.ImageSource">
-            <summary>
-            Get or set the source for the image to show on the left side of the item. If set, the item automatically displays the image (unless <c>AutoShowImageOnSourceSet</c> is set to false).
-            </summary>
-        </member>
-        <member name="P:UiCore.SelectableItem.AutoShowImageOnSourceSet">
-            <summary>
-            Get or set whether the <c>ShowImage</c> property should be updated when the <c>ImageSource</c> property is set. Default is true.
-            </summary>
-        </member>
-        <member name="P:UiCore.SelectableItem.Text">
-            <summary>
-            Get or set the text to display within the item. This text can be edited by setting <c>AllowTextEditing</c> to true, or by calling <see cref="M:UiCore.SelectableItem.DisplayEditText"/>.
-            </summary>
-        </member>
-        <member name="P:UiCore.SelectableItem.RightText">
-            <summary>
-            Get or set the text to display on the far-right side of the item. This text cannot be edited directly by the user.
-            </summary>
-        </member>
-        <member name="P:UiCore.SelectableItem.TextTrimming">
-            <summary>
-            Get or set the text trimming behavior to use when the text overflows the visible area.
-            </summary>
-        </member>
-        <member name="P:UiCore.SelectableItem.TextUnderlineOnMouseOver">
-            <summary>
-            Get or set if the text should have an underline effect when the mouse is over the text. This is enabled by default when <c>AllowTextEditing</c> is set to "true", but otherwise is disabled.
-            </summary>
-        </member>
-        <member name="P:UiCore.SelectableItem.SelectOnFocusTextEdit">
-            <summary>
-            Get or set whether all of the text should be selected when the text-editing text box recieves focus.
-            </summary>
-        </member>
-        <member name="P:UiCore.SelectableItem.AllowTextEditing">
-            <summary>
-            Get or set whether the user should be allowed to edit the text in the Text property. If enabled, a text box will appear when the user clicks on the text.
-            </summary>
-            <remarks>While editing, pressing "Enter" will confirm the edit, while pressing "Escape" will cancel the operation.</remarks>
-        </member>
-        <member name="M:UiCore.SelectableItem.DisplayEditText">
-            <summary>
-            Display the text editing view to the user. This is the same as the user clicking on the text while <c>AllowTextEditing</c> is set to true.
-            </summary>
-            <remarks>This method will activate the text editing view even if <c>AllowTextEditing</c> is set to false.</remarks>
-        </member>
-        <member name="M:UiCore.SelectableItem.ConfirmEdit">
-            <summary>
-            Confirm the user's edit to the text, as changed via the text editing view. Also exits the text editing view. This can only be called when in the text editing view.
-            </summary>
-            <exception cref="T:System.InvalidOperationException">Thrown if this item is not in the text editing view.</exception>
-        </member>
-        <member name="M:UiCore.SelectableItem.CancelEdit">
-            <summary>
-            Cancel the user's edit to the text and exits the text editing view (if in the view). This can be called at any time.
-            </summary>
-        </member>
-        <member name="M:UiCore.SelectableItem.InitializeComponent">
-            <summary>
-            InitializeComponent
-            </summary>
-        </member>
-        <member name="M:UiCore.SelectableUserControl.UpdateBrushes">
-            <summary>
-            Make sure the control's visuals match the set brush properties. Call this if the parent's ColorScheme was changed.
-            </summary>
-        </member>
-        <member name="M:UiCore.SelectableUserControl.ApplyColorScheme(UiCore.ColorScheme)">
-            <summary>
-            When overridden by a derived class, this method is automatically called each time the color scheme is updated by the parent SelectPanel. Use this to update child controls.
-            </summary>
-            <param name="cs">The new color scheme.</param>
-        </member>
-        <member name="T:UiCore.SelectPanel">
-            <summary>
-            Interaction logic for SelectPanel.xaml
-            </summary>
-            <summary>
-            SelectPanel
-            </summary>
-        </member>
-        <member name="P:UiCore.SelectPanel.SelectedItems">
-            <summary>
-            Get a collection of items that have been selected.
-            </summary>
-        </member>
-        <member name="M:UiCore.SelectPanel.GetSelectedItemsOfType``1">
-            <summary>
-            Get a collection of items that have been selected, returned as a certain type (that inherits from SelectableUserControl).
-            </summary>
-            <typeparam name="T">The type to return the selected items as. It must inherit from SelectableUserControl.</typeparam>
-            <returns></returns>
-        </member>
-        <member name="P:UiCore.SelectPanel.UseLighterBorder">
-            <summary>
-            Use a lighter border color when applying color schemes. Note that this does not apply in high-contrast mode.
-            </summary>
-        </member>
-        <member name="P:UiCore.SelectPanel.AllowParentScrolling">
-            <summary>
-            Set whether the SelectPanel should allow its parent to scroll if the SelectPanel doesn't need to scroll. Note that enabling this may disable any child items from scrolling.
-            </summary>
-        </member>
-        <member name="M:UiCore.SelectPanel.InitializeComponent">
-            <summary>
-            InitializeComponent
-            </summary>
-        </member>
-        <member name="M:UiCore.StreamExtensions.ReadAsciiString(System.IO.Stream,System.Int32)">
-            <summary>
-            Reads a ASCII string of the specified length.
-            </summary>
-            <param name="stream">The stream to read the data from.</param>
-            <param name="length">The number of characters in the string.</param>
-            <returns>The string read from the stream.</returns>
-        </member>
-        <member name="M:UiCore.StreamExtensions.ReadSingleBigEndian(System.IO.Stream)">
-            <summary>
-            Reads a 4-byte floating point value from the current stream using big-endian encoding and advances the position of the stream by four bytes.
-            </summary>
-            <param name="stream">The stream to read the data from.</param>
-            <returns>A 4-byte floating point value read from the source stream.</returns>
-        </member>
-        <member name="M:UiCore.StreamExtensions.ReadStringBigEndian(System.IO.Stream,System.Int32)">
-            <summary>
-            Reads a unicode string of the specified length in big-endian format.
-            </summary>
-            <param name="stream">The stream to read the data from.</param>
-            <param name="length">The number of characters in the string.</param>
-            <returns>The string read from the stream.</returns>
-        </member>
-        <member name="M:UiCore.StreamExtensions.ReadStringBigEndian(System.IO.Stream)">
-            <summary>
-            Reads a unicode string from the current stream in big-endian format. The string is prefixed with the length.
-            </summary>
-            <param name="stream">The stream to read the data from.</param>
-            <returns>The string read from the stream.</returns>
-        </member>
-        <member name="M:UiCore.StreamExtensions.ReadUInt16BigEndian(System.IO.Stream)">
-            <summary>
-            Reads a 2-byte unsigned integer from the current stream using big-endian encoding and advances the position of the stream by two bytes.
-            </summary>
-            <param name="stream">The stream to read the data from.</param>
-            <returns>A 2-byte unsigned integer read from the source stream.</returns>
-        </member>
-        <member name="M:UiCore.StreamExtensions.ReadUInt32BigEndian(System.IO.Stream)">
-            <summary>
-            Reads a 4-byte unsigned integer from the current stream using big-endian encoding and advances the position of the stream by four bytes.
-            </summary>
-            <param name="stream">The stream to read the data from.</param>
-            <returns>A 4-byte unsigned integer read from the source stream.</returns>
-        </member>
-        <member name="T:UiCore.StringInputDialog">
+        <member name="T:SolidShineUi.StringInputDialog">
             <summary>
             Interaction logic for StringInputBox.xaml
             </summary>
@@ -1466,18 +726,18 @@
             StringInputDialog
             </summary>
         </member>
-        <member name="M:UiCore.StringInputDialog.#ctor">
+        <member name="M:SolidShineUi.StringInputDialog.#ctor">
             <summary>
             Create a StringInputDialog with nothing preset.
             </summary>
         </member>
-        <member name="M:UiCore.StringInputDialog.#ctor(UiCore.ColorScheme)">
+        <member name="M:SolidShineUi.StringInputDialog.#ctor(SolidShineUi.ColorScheme)">
             <summary>
             Create a StringInputDialog with a color scheme.
             </summary>
             <param name="cs">The color scheme to use for the window.</param>
         </member>
-        <member name="M:UiCore.StringInputDialog.#ctor(UiCore.ColorScheme,System.String,System.String,System.String)">
+        <member name="M:SolidShineUi.StringInputDialog.#ctor(SolidShineUi.ColorScheme,System.String,System.String,System.String)">
             <summary>
             Create a StringInputBox with prefilled values.
             </summary>
@@ -1486,44 +746,784 @@
             <param name="desc">The description to give to the user.</param>
             <param name="value">The value to place in the text box. By default, the text box is empty.</param>
         </member>
-        <member name="P:UiCore.StringInputDialog.Value">
+        <member name="P:SolidShineUi.StringInputDialog.Value">
             <summary>
             Get or set the text value of the input dialog's text box.
             </summary>
         </member>
-        <member name="P:UiCore.StringInputDialog.DialogResult">
+        <member name="P:SolidShineUi.StringInputDialog.DialogResult">
             <summary>
             Get the result of the dialog when it is closed. "False" refers to the user cancelling the operation, while "True" refers to the user confirming, by clicking "OK" or pressing the Enter key.
             </summary>
         </member>
-        <member name="P:UiCore.StringInputDialog.EnterKeyConfirms">
+        <member name="P:SolidShineUi.StringInputDialog.EnterKeyConfirms">
             <summary>
             Get or set whether the Enter key can be used to confirm the dialog. If enabled, pressing down the Enter key will be treated as if the user pressed "OK".
             </summary>
         </member>
-        <member name="P:UiCore.StringInputDialog.EscapeKeyCancels">
+        <member name="P:SolidShineUi.StringInputDialog.EscapeKeyCancels">
             <summary>
             Get or set whether the Escape key can be used to cancel the dialog. If enabled, pressing down the Escape key will be treated as if the user pressed "Cancel".
             </summary>
         </member>
-        <member name="P:UiCore.StringInputDialog.SelectTextOnFocus">
+        <member name="P:SolidShineUi.StringInputDialog.SelectTextOnFocus">
             <summary>
             Get or set whether all of the text in the text box should be selected when the text box receives focus.
             </summary>
         </member>
-        <member name="P:UiCore.StringInputDialog.Description">
+        <member name="P:SolidShineUi.StringInputDialog.Description">
             <summary>
             Get or set the description text to display about the text box. This text should describe what the user should enter into the text box.
             </summary>
             <remarks>Try to keep the description to about a sentence long. 
             Ideally, the overall design of the program should make it apparent what the user should enter into the text box without reading the description.</remarks>
         </member>
-        <member name="M:UiCore.StringInputDialog.InitializeComponent">
+        <member name="M:SolidShineUi.StringInputDialog.InitializeComponent">
             <summary>
             InitializeComponent
             </summary>
         </member>
-        <member name="T:UiCore.Experimental.TabControl">
+        <member name="T:SolidShineUi.DoubleSpinner">
+            <summary>
+            Interaction logic for DoubleSpinner.xaml
+            </summary>
+            <summary>
+            DoubleSpinner
+            </summary>
+        </member>
+        <member name="P:SolidShineUi.DoubleSpinner.RepeatDelay">
+            <summary>
+            Get or set the delay period before starting the repeatedly stepping up or down while the button is held, in milliseconds. Default is 300 milliseconds.
+            </summary>
+        </member>
+        <member name="P:SolidShineUi.DoubleSpinner.AcceptExpressions">
+            <summary>
+            Get or set if the spinner should evaluate arithmetic expressions (such as "2+5") to accept as a value.
+            </summary>
+            <remarks>
+            See the <see cref="T:SolidShineUi.ArithmeticParser"/> class for more info about how expressions are parsed.
+            </remarks>
+        </member>
+        <member name="P:SolidShineUi.DoubleSpinner.ShowArrows">
+            <summary>
+            Get or set the delay period before starting the repeatedly stepping up or down while the button is held, in milliseconds. Default is 300 milliseconds.
+            </summary>
+        </member>
+        <member name="M:SolidShineUi.DoubleSpinner.ValidateValue">
+            <summary>
+            Validate the value and update the UI if neede.
+            </summary>
+        </member>
+        <member name="M:SolidShineUi.DoubleSpinner.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:SolidShineUi.EnumComboBox">
+            <summary>
+            A ComboBox where the items are populated from an inputted Enum.
+            </summary>
+        </member>
+        <member name="P:SolidShineUi.EnumComboBox.Enum">
+            <summary>
+            The enum to use with this EnumComboBox. When the Enum value is set, the ComboBox's items are changed to match the different values of the enum. 
+            </summary>
+        </member>
+        <member name="P:SolidShineUi.EnumComboBox.SelectedEnumValue">
+            <summary>
+            Get or set the selected item of the EnumComboBox. To avoid casting, use the SelectedEnumValueAsEnum function.
+            </summary>
+        </member>
+        <member name="M:SolidShineUi.EnumComboBox.SelectedEnumValueAsEnum``1">
+            <summary>
+            Get the selected item of the EnumComboBox, returned as a value of that enum.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="T:SolidShineUi.FileSelect">
+            <summary>
+            Interaction logic for FileSelect.xaml
+            </summary>
+            <summary>
+            FileSelect
+            </summary>
+        </member>
+        <member name="E:SolidShineUi.FileSelect.Click">
+            <summary>
+            Raised when the user clicks on the button, via a mouse click, touch, a stylus, or via the keyboard.
+            </summary>
+        </member>
+        <member name="E:SolidShineUi.FileSelect.RightClick">
+            <summary>
+            Raised when the user right-clicks on the button, via a mouse click or via the keyboard.
+            </summary>
+        </member>
+        <member name="P:SolidShineUi.FileSelect.ClickOnPress">
+            <summary>
+            Gets or sets whether the Click event should be raised when the button is pressed, rather than when it is released.
+            </summary>
+        </member>
+        <member name="M:SolidShineUi.FileSelect.PerformPress(System.Boolean)">
+            <summary>
+            Sets up the button to be clicked. This must be run before PerformClick.
+            </summary>
+            <param name="rightClick">Determine whether this should be treated as a right click (which usually invokes a context menu).</param>
+        </member>
+        <member name="M:SolidShineUi.FileSelect.PerformClick(System.Boolean)">
+            <summary>
+            If the button is prepared by PerformPress, perform the Click actions, including raising the Click event.
+            </summary>
+            <param name="rightClick">Determine whether this should be treated as a right click (which usually invokes a context menu).</param>
+        </member>
+        <member name="M:SolidShineUi.FileSelect.DoClick">
+            <summary>
+            Perform a click programattically. The button responds the same way as if it was clicked by the user.
+            </summary>
+        </member>
+        <member name="P:SolidShineUi.FileSelect.FileFilter">
+            <summary>
+            Get or set the file filter to use when selecting files. Please use semicolons (;) to separate multiple extensions/filters (i.e. <c>"*.docx;*.xlsx;*.pptx"</c>).
+            </summary>
+            <remarks>Default value is <c>ALL_FILES_FILTER</c>, which is <c>"*.*"</c>.</remarks>
+        </member>
+        <member name="M:SolidShineUi.FileSelect.GetStackImage(SolidShineUi.MessageDialogImageConverter.MessageDialogImageColor)">
+            <summary>
+            Return a 16x16 stacked files image.
+            </summary>
+            <param name="color">The color to use for the image. Use black or white for high-contrast themes.</param>
+            <returns></returns>
+        </member>
+        <member name="M:SolidShineUi.FileSelect.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:SolidShineUi.FlatButton">
+            <summary>
+            A button with a custom, flat style and additional funcionality. Use <c>SelectOnClick</c> to have the button act like a toggle button.
+            </summary>
+        </member>
+        <member name="M:SolidShineUi.FlatButton.#ctor">
+            <summary>
+            Create a new FlatButton.
+            </summary>
+        </member>
+        <member name="E:SolidShineUi.FlatButton.IsSelectedChanged">
+            <summary>
+            Raised if the button's IsSelected value is changed. This can be used to have the button act as a ToggleButton.
+            </summary>
+        </member>
+        <member name="P:SolidShineUi.FlatButton.ColorScheme">
+            <summary>
+            Get or set the color scheme to use with the button.
+            </summary>
+        </member>
+        <member name="P:SolidShineUi.FlatButton.TransparentBack">
+            <summary>
+            Get or set whether the button should have a transparent background when the button is not focused.
+            </summary>
+        </member>
+        <member name="P:SolidShineUi.FlatButton.UseAccentColors">
+            <summary>
+            Get or set if the button should use the accent colors of the color scheme, rather than the standard colors.
+            </summary>
+        </member>
+        <member name="P:SolidShineUi.FlatButton.BorderThickness">
+            <summary>
+            Get or set the thickness of the border around the button.
+            </summary>
+        </member>
+        <member name="P:SolidShineUi.FlatButton.BorderSelectionThickness">
+            <summary>
+            Get or set the thickness of the border around the button, while the button is in a selected (<c>IsSelected</c>) state.
+            </summary>
+        </member>
+        <member name="P:SolidShineUi.FlatButton.CornerRadius">
+            <summary>
+            Get or set the corner radius (or radii) to use for the button and its border. Can be used to create a rounded button.
+            </summary>
+        </member>
+        <member name="E:SolidShineUi.FlatButton.Click">
+            <summary>
+            Raised when the user clicks on the button, via a mouse click, touch, a stylus, or via the keyboard.
+            </summary>
+        </member>
+        <member name="E:SolidShineUi.FlatButton.RightClick">
+            <summary>
+            Raised when the user right-clicks on the button, via a mouse click or via the keyboard.
+            </summary>
+        </member>
+        <member name="P:SolidShineUi.FlatButton.IsSelected">
+            <summary>
+            Gets or sets whether this button is selected. This property (combined with <c>SelectOnClick</c>) allows the button to function like a ToggleButton.
+            </summary>
+        </member>
+        <member name="P:SolidShineUi.FlatButton.SelectOnClick">
+            <summary>
+            Gets or sets whether the button should change its IsSelected property when a click is performed.
+            </summary>
+        </member>
+        <member name="P:SolidShineUi.FlatButton.ClickOnPress">
+            <summary>
+            Gets or sets whether the Click event should be raised when the button is pressed, rather than when it is released.
+            </summary>
+        </member>
+        <member name="M:SolidShineUi.FlatButton.PerformPress(System.Boolean)">
+            <summary>
+            Sets up the button to be clicked. This must be run before PerformClick.
+            </summary>
+            <param name="rightClick">Determine whether this should be treated as a right click (which usually invokes a context menu).</param>
+        </member>
+        <member name="M:SolidShineUi.FlatButton.PerformClick(System.Boolean)">
+            <summary>
+            If the button is prepared by PerformPress, perform the Click actions, including raising the Click event.
+            </summary>
+            <param name="rightClick">Determine whether this should be treated as a right click (which usually invokes a context menu).</param>
+        </member>
+        <member name="M:SolidShineUi.FlatButton.DoClick">
+            <summary>
+            Perform a click programattically. The button responds the same way as if it was clicked by the user.
+            </summary>
+        </member>
+        <member name="F:SolidShineUi.FlatButton.IsDefaultedPropertyKey">
+            <summary>
+                The key needed set a read-only property.
+            </summary>
+        </member>
+        <member name="P:SolidShineUi.FlatButton.IsDefaulted">
+            <summary>
+            Specifies whether or not this button is the button that would be invoked when Enter is pressed.
+            </summary>
+        </member>
+        <member name="M:SolidShineUi.FlatButton.OnAccessKey(System.Windows.Input.AccessKeyEventArgs)">
+            <summary>
+            The Access key for this control was invoked.
+            </summary>
+        </member>
+        <member name="T:SolidShineUi.FlatWindow">
+            <summary>
+            A WPF window that has a custom, flat style and additional functionality.
+            </summary>
+        </member>
+        <member name="P:SolidShineUi.FlatWindow.HighContrastMode">
+            <summary>
+            Get if the window's color scheme is a high contrast theme (and thus, the window is displaying high-contrast colors).
+            </summary>
+        </member>
+        <member name="P:SolidShineUi.FlatWindow.ColorScheme">
+            <summary>
+            Get or set the color scheme to apply to the window.
+            </summary>
+        </member>
+        <member name="P:SolidShineUi.FlatWindow.CaptionDisplayType">
+            <summary>
+            Gets or sets the visibility of the caption buttons (close, maximize, minimize). The actions may still be available via other methods even if the buttons are hidden.
+            </summary>
+            <remarks>Use the <c>DisableMinimizeAction</c> and <c>DisableMaximizeAction</c> methods to further prevent the user from being able to minimize or maximize the window. The standard <c>ResizeMode</c> property works as well.</remarks>
+        </member>
+        <member name="P:SolidShineUi.FlatWindow.CaptionHeight">
+            <summary>
+            Get or set the height of the caption (title bar) area of the window. Default is 29.
+            </summary>
+        </member>
+        <member name="P:SolidShineUi.FlatWindow.TopRightElement">
+            <summary>
+            Gets or sets the UI element to place in the top-right of the window, to the left of the caption buttons.
+            </summary>
+        </member>
+        <member name="P:SolidShineUi.FlatWindow.TopLeftElement">
+            <summary>
+            Gets or sets the UI element to place in the top-left corner of the window.
+            </summary>
+        </member>
+        <member name="P:SolidShineUi.FlatWindow.ExcludeTopLeftElementFromChrome">
+            <summary>
+            Get or set if the top-left element should be considered part of the window chrome or not. Set to <c>true</c> to exclude it from the window chrome.
+            </summary>
+            <remarks>
+            This changes the IsHitTestVisibleInChrome property for the top-left element. If set to true, the element can be interacted with.
+            If set to false, the element cannot be interacted with, and clicking, dragging, etc. acts as if you're clicking on the window's title bar.
+            </remarks>
+        </member>
+        <member name="P:SolidShineUi.FlatWindow.ExcludeTopRightElementFromChrome">
+            <summary>
+            Get or set if the top-right element should be considered part of the window chrome or not. Set to <c>true</c> to exclude it from the window chrome.
+            </summary>
+            <remarks>
+            This changes the IsHitTestVisibleInChrome property for the top-right element. If set to true, the element can be interacted with.
+            If set to false, the element cannot be interacted with, and clicking, dragging, etc. acts as if you're clicking on the window's title bar.
+            </remarks>
+        </member>
+        <member name="P:SolidShineUi.FlatWindow.Background">
+            <summary>
+            Get or set the background brush to use for the caption area (title bar). Use <c>ContentBackground</c> for the content area of the window.
+            </summary>
+        </member>
+        <member name="M:SolidShineUi.FlatWindow.DisableMaximizeAction">
+            <summary>
+            Calls the native Windows method to disable the Maximize action (via the right-click menu and the like). Note that you'll want to update the CaptionDisplayType to remove the physical button.
+            </summary>
+        </member>
+        <member name="M:SolidShineUi.FlatWindow.DisableMinimizeAction">
+            <summary>
+            Calls the native Windows method to disable the Minimize action (via the right-click menu and the like). Note that you'll want to update the CaptionDisplayType to remove the physical button.
+            </summary>
+        </member>
+        <member name="M:SolidShineUi.FlatWindow.DisableMinimizeAndMaximizeActions">
+            <summary>
+            Calls the native Windows method to disable the Minimize and Maximize actions (via the right-click menu and the like). Note that you'll want to update the CaptionDisplayType to remove the physical buttons.
+            </summary>
+        </member>
+        <member name="T:SolidShineUi.ImageColorPicker">
+            <summary>
+            Image element with the ability to pick out a pixel color value.
+            </summary>
+        </member>
+        <member name="P:SolidShineUi.ImageColorPicker.SelectedColor">
+            <summary>
+            Get the color that is selected from the image.
+            </summary>
+        </member>
+        <member name="P:SolidShineUi.ImageColorPicker.SelectedPosition">
+            <summary>
+            Get the position that is selected from the image. This position is relative to the control itself.
+            </summary>
+        </member>
+        <member name="T:SolidShineUi.IntegerSpinner">
+            <summary>
+            Interaction logic for IntegerSpinner.xaml
+            </summary>
+            <summary>
+            IntegerSpinner
+            </summary>
+        </member>
+        <member name="P:SolidShineUi.IntegerSpinner.Value">
+            <summary>
+            Get or set the value of the spinner.
+            </summary>
+        </member>
+        <member name="P:SolidShineUi.IntegerSpinner.RepeatDelay">
+            <summary>
+            Get or set the delay period before starting the repeatedly stepping up or down while the button is held, in milliseconds. Default is 300 milliseconds.
+            </summary>
+        </member>
+        <member name="P:SolidShineUi.IntegerSpinner.AcceptExpressions">
+            <summary>
+            Get or set if the spinner should evaluate arithmetic expressions (such as "2+5") to accept as a value.
+            </summary>
+            <remarks>
+            See the <see cref="T:SolidShineUi.ArithmeticParser"/> class for more info about how expressions are parsed.
+            </remarks>
+        </member>
+        <member name="P:SolidShineUi.IntegerSpinner.ShowArrows">
+            <summary>
+            Get or set the delay period before starting the repeatedly stepping up or down while the button is held, in milliseconds. Default is 300 milliseconds.
+            </summary>
+        </member>
+        <member name="M:SolidShineUi.IntegerSpinner.ValidateValue">
+            <summary>
+            Validate the value and update the UI if needed.
+            </summary>
+        </member>
+        <member name="M:SolidShineUi.IntegerSpinner.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="P:SolidShineUi.LinkTextBlock.TextBrush">
+            <summary>
+            Get or set the standard foreground brush for the text. This overwrites the Foreground property.
+            </summary>
+        </member>
+        <member name="P:SolidShineUi.LinkTextBlock.HighlightBrush">
+            <summary>
+            Get or set the brush for when the control has mouseover or keyboard focus.
+            </summary>
+        </member>
+        <member name="P:SolidShineUi.LinkTextBlock.DisabledBrush">
+            <summary>
+            Get or set the brush for when the control is disabled.
+            </summary>
+        </member>
+        <member name="P:SolidShineUi.LinkTextBlock.AutoSetLinkFromText">
+            <summary>
+            Get or set if the LinkTextBlock should automatically create a link based upon the Text property. See remarks for more details.
+            </summary>
+            <remarks>
+            When AutoSetLinkFromText is set to <c>true</c>, the LinkTextBlock attempts to open the link defined in the Text property when the user clicks on the control.
+            For example, if this property is set to <c>true</c> and the Text property is set to <c>"https://microsoft.com"</c>, the LinkTextBlock will open "https://microsoft.com" when the control is clicked,
+            even if a Click event handler is not attached. Note that for web links, the scheme/protocol should be present (i.e. "http", "https", "ftp", etc.).
+            <para />
+            Note that the Click event will still fire even if this property is set to <c>true</c>.
+            <para/>
+            If an error occurs while attempting to open the link, nothing happens. If a debugger is attached, the LinkTextBlock attempts to log a message to the debugger.
+            </remarks>
+        </member>
+        <member name="P:SolidShineUi.LinkTextBlock.UnderlineOnHighlight">
+            <summary>
+            Get or set if the text should be underlined when the control has mouseover or keyboard focus.
+            </summary>
+        </member>
+        <member name="P:SolidShineUi.LinkTextBlock.IsEnabled">
+            <summary>
+            Gets or sets a value indicating whether this element is enabled in the user interface (UI).
+            </summary>
+        </member>
+        <member name="P:SolidShineUi.MenuButton.StaysOpen">
+            <summary>
+            Get or set if the menu should close automatically. Remember to set the <c>StaysOpenOnClick</c> property for child menu items as well.
+            </summary>
+        </member>
+        <member name="P:SolidShineUi.MenuButton.ShowMenuArrow">
+            <summary>
+            Get or set if an arrow should be shown to the right of the button content to indicate the button as a menu button.
+            </summary>
+        </member>
+        <member name="T:SolidShineUi.NativeMethods">
+            <summary>
+            A small collection of methods to interact with native Windows libraries, used to modify window behavior or get file icons.
+            </summary>
+        </member>
+        <member name="M:SolidShineUi.NativeMethods.ShowWindow(System.IntPtr,System.Int32)">
+            <summary>
+            Displays the window of a specified handle.
+            </summary>
+            <param name="hWnd">The handle of the window to show.</param>
+            <param name="nCmdShow">A command associated with this action.</param>
+            <returns></returns>
+        </member>
+        <member name="M:SolidShineUi.NativeMethods.SetForegroundWindow(System.IntPtr)">
+            <summary>
+            Moves a specified window to the foreground.
+            </summary>
+            <param name="hWnd">The handle of the window.</param>
+            <returns></returns>
+        </member>
+        <member name="F:SolidShineUi.NativeMethods.GWL_STYLE">
+            <summary>
+            The standard style for a window.
+            </summary>
+        </member>
+        <member name="F:SolidShineUi.NativeMethods.WS_MAXIMIZEBOX">
+            <summary>
+            The integer value that points to the maximize button in a window.
+            </summary>
+        </member>
+        <member name="F:SolidShineUi.NativeMethods.WS_MINIMIZEBOX">
+            <summary>
+            The integer value that points to the minimize button in a window.
+            </summary>
+        </member>
+        <member name="M:SolidShineUi.NativeMethods.GetWindowLong(System.IntPtr,System.Int32)">
+            <summary>
+            Get this window's long value, which can be used for further modification.
+            </summary>
+            <param name="hWnd">The handle of the window.</param>
+            <param name="nIndex">The standard style of this window.</param>
+            <returns></returns>
+        </member>
+        <member name="M:SolidShineUi.NativeMethods.SetWindowLong(System.IntPtr,System.Int32,System.Int32)">
+            <summary>
+            Set this window's long value, which is used to modify features and abilities of this window.
+            </summary>
+            <param name="hWnd">The handle of the window.</param>
+            <param name="nIndex">The standard style of this window.</param>
+            <param name="dwNewLong">The long to set for this window.</param>
+            <returns></returns>
+        </member>
+        <member name="M:SolidShineUi.NativeMethods.HideMaximizeButton(System.Windows.Window)">
+            <summary>
+            Hide/disable the maximize button, so that the window cannot be maximized.
+            </summary>
+            <param name="w">The window to hide the button on.</param>
+        </member>
+        <member name="M:SolidShineUi.NativeMethods.HideMaximizeButton(System.IntPtr)">
+            <summary>
+            Hide/disable the maximize button, so that the window cannot be maximized.
+            </summary>
+            <param name="hwnd">The handle to the window.</param>
+        </member>
+        <member name="M:SolidShineUi.NativeMethods.HideMinimizeButton(System.Windows.Window)">
+            <summary>
+            Hide/disable the minimize button, so that the window cannot be minimized (hidden in taskbar).
+            </summary>
+            <param name="w">The window to hide the button on.</param>
+        </member>
+        <member name="M:SolidShineUi.NativeMethods.HideMinimizeButton(System.IntPtr)">
+            <summary>
+            Hide/disable the minimize button, so that the window cannot be minimized (hidden in taskbar).
+            </summary>
+            <param name="hwnd">The handle to the window.</param>
+        </member>
+        <member name="M:SolidShineUi.NativeMethods.HideMinimizeAndMaximizeButtons(System.Windows.Window)">
+            <summary>
+            Hide/disable the minimize and maximize buttons, so that the window cannot be maximized or minimized.
+            </summary>
+            <param name="w">The window to hide the buttons on.</param>
+        </member>
+        <member name="M:SolidShineUi.NativeMethods.HideMinimizeAndMaximizeButtons(System.IntPtr)">
+            <summary>
+            Hide/disable the minimize and maximize buttons, so that the window cannot be maximized or minimized.
+            </summary>
+            <param name="hwnd">The handle to the window.</param>
+        </member>
+        <member name="M:SolidShineUi.NativeMethods.GetSmallIconHandle(System.String)">
+            <summary>
+            Get a handle for a small (16x16) icon associated with a file.
+            </summary>
+            <param name="path">The file to get the icon for.</param>
+            <returns></returns>
+        </member>
+        <member name="M:SolidShineUi.NativeMethods.GetLargeIconHandle(System.String)">
+            <summary>
+            Get a handle for a large (32x32) icon associated with a file.
+            </summary>
+            <param name="path">The file to get the icon for.</param>
+            <returns></returns>
+        </member>
+        <member name="M:SolidShineUi.NativeMethods.GetSmallIcon(System.String)">
+            <summary>
+            Get an 16x16 image that is associated with a file.
+            </summary>
+            <param name="path">The file to get the icon for.</param>
+        </member>
+        <member name="M:SolidShineUi.NativeMethods.GetLargeIcon(System.String)">
+            <summary>
+            Get an 32x32 image that is associated with a file.
+            </summary>
+            <param name="path">The file to get the icon for.</param>
+        </member>
+        <member name="M:SolidShineUi.NativeMethods.GetDC(System.IntPtr)">
+            <summary>
+            Get a handle to the display context, either for a certain window or for the entire screen. This can be used to directly draw or get visual info for that particular context.
+            </summary>
+            <param name="hwnd">The pointer to the item you want the display context for. Use <c>IntPtr.Zero</c> for the entire screen, or a window handle for that window.</param>
+            <returns></returns>
+        </member>
+        <member name="M:SolidShineUi.NativeMethods.ReleaseDC(System.IntPtr,System.IntPtr)">
+            <summary>
+            Release the handle to the display context. Do this when you're done using the display context. Must be in the same thread that GetDC was called.
+            </summary>
+            <param name="hwnd"></param>
+            <param name="hdc"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SolidShineUi.NativeMethods.GetPixel(System.IntPtr,System.Int32,System.Int32)">
+            <summary>
+            Get color info for a particular pixel in a display context.
+            </summary>
+            <param name="hdc">The handle of the display context.</param>
+            <param name="nXPos">The X position of the pixel.</param>
+            <param name="nYPos">The Y position of the pixel.</param>
+            <returns></returns>
+        </member>
+        <member name="T:SolidShineUi.SelectableItem">
+            <summary>
+            Interaction logic for SelectableItem.xaml
+            </summary>
+            <summary>
+            SelectableItem
+            </summary>
+        </member>
+        <member name="M:SolidShineUi.SelectableItem.#ctor">
+            <summary>
+            Create a SelectableItem to use with a SelectPanel.
+            </summary>
+        </member>
+        <member name="M:SolidShineUi.SelectableItem.#ctor(System.String)">
+            <summary>
+            Create a SelectableItem to use with a SelectPanel, with the text preset.
+            </summary>
+            <param name="text">The text to display in the item.</param>
+        </member>
+        <member name="M:SolidShineUi.SelectableItem.#ctor(System.String,System.Windows.Media.ImageSource,System.Double)">
+            <summary>
+            Create a SelectableItem to use with a SelectPanel, with certain properties preset.
+            </summary>
+            <param name="text">The text to display in the item.</param>
+            <param name="image">The image to display in the item. (If the image is wider than 16 pixels, you may need to update the <c>ImageWidth</c> property.)</param>
+            <param name="indent">The left indent to apply to the item's content. The indent can be used to make an improvised tree view.</param>
+        </member>
+        <member name="E:SolidShineUi.SelectableItem.TextChanged">
+            <summary>
+            Raised when the Text property is changed, either via updating the property or via the the user's text editing view.
+            </summary>
+        </member>
+        <member name="P:SolidShineUi.SelectableItem.Indent">
+            <summary>
+            Get or set the left indent to apply to the item's content. This can be used to make an improvised tree view.
+            </summary>
+        </member>
+        <member name="P:SolidShineUi.SelectableItem.ShowCheckbox">
+            <summary>
+            Get or set whether a checkbox should be displayed on the item. Checkboxes can make it easy to select mutliple items.
+            </summary>
+        </member>
+        <member name="P:SolidShineUi.SelectableItem.ImageWidth">
+            <summary>
+            Get or set the width to afford to the image. By default, the width is set to 16, but larger images will require the width to be set higher.
+            </summary>
+        </member>
+        <member name="P:SolidShineUi.SelectableItem.ShowImage">
+            <summary>
+            Get or set whether to display an image on the left side of the item. Set the image via the <c>ImageSource</c> property.
+            </summary>
+        </member>
+        <member name="P:SolidShineUi.SelectableItem.ImageSource">
+            <summary>
+            Get or set the source for the image to show on the left side of the item. If set, the item automatically displays the image (unless <c>AutoShowImageOnSourceSet</c> is set to false).
+            </summary>
+        </member>
+        <member name="P:SolidShineUi.SelectableItem.AutoShowImageOnSourceSet">
+            <summary>
+            Get or set whether the <c>ShowImage</c> property should be updated when the <c>ImageSource</c> property is set. Default is true.
+            </summary>
+        </member>
+        <member name="P:SolidShineUi.SelectableItem.Text">
+            <summary>
+            Get or set the text to display within the item. This text can be edited by setting <c>AllowTextEditing</c> to true, or by calling <see cref="M:SolidShineUi.SelectableItem.DisplayEditText"/>.
+            </summary>
+        </member>
+        <member name="P:SolidShineUi.SelectableItem.RightText">
+            <summary>
+            Get or set the text to display on the far-right side of the item. This text cannot be edited directly by the user.
+            </summary>
+        </member>
+        <member name="P:SolidShineUi.SelectableItem.TextTrimming">
+            <summary>
+            Get or set the text trimming behavior to use when the text overflows the visible area.
+            </summary>
+        </member>
+        <member name="P:SolidShineUi.SelectableItem.TextUnderlineOnMouseOver">
+            <summary>
+            Get or set if the text should have an underline effect when the mouse is over the text. This is enabled by default when <c>AllowTextEditing</c> is set to "true", but otherwise is disabled.
+            </summary>
+        </member>
+        <member name="P:SolidShineUi.SelectableItem.SelectOnFocusTextEdit">
+            <summary>
+            Get or set whether all of the text should be selected when the text-editing text box recieves focus.
+            </summary>
+        </member>
+        <member name="P:SolidShineUi.SelectableItem.AllowTextEditing">
+            <summary>
+            Get or set whether the user should be allowed to edit the text in the Text property. If enabled, a text box will appear when the user clicks on the text.
+            </summary>
+            <remarks>While editing, pressing "Enter" will confirm the edit, while pressing "Escape" will cancel the operation.</remarks>
+        </member>
+        <member name="M:SolidShineUi.SelectableItem.DisplayEditText">
+            <summary>
+            Display the text editing view to the user. This is the same as the user clicking on the text while <c>AllowTextEditing</c> is set to true.
+            </summary>
+            <remarks>This method will activate the text editing view even if <c>AllowTextEditing</c> is set to false.</remarks>
+        </member>
+        <member name="M:SolidShineUi.SelectableItem.ConfirmEdit">
+            <summary>
+            Confirm the user's edit to the text, as changed via the text editing view. Also exits the text editing view. This can only be called when in the text editing view.
+            </summary>
+            <exception cref="T:System.InvalidOperationException">Thrown if this item is not in the text editing view.</exception>
+        </member>
+        <member name="M:SolidShineUi.SelectableItem.CancelEdit">
+            <summary>
+            Cancel the user's edit to the text and exits the text editing view (if in the view). This can be called at any time.
+            </summary>
+        </member>
+        <member name="M:SolidShineUi.SelectableItem.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="M:SolidShineUi.SelectableUserControl.UpdateBrushes">
+            <summary>
+            Make sure the control's visuals match the set brush properties. Call this if the parent's ColorScheme was changed.
+            </summary>
+        </member>
+        <member name="M:SolidShineUi.SelectableUserControl.ApplyColorScheme(SolidShineUi.ColorScheme)">
+            <summary>
+            When overridden by a derived class, this method is automatically called each time the color scheme is updated by the parent SelectPanel. Use this to update child controls.
+            </summary>
+            <param name="cs">The new color scheme.</param>
+        </member>
+        <member name="T:SolidShineUi.SelectPanel">
+            <summary>
+            Interaction logic for SelectPanel.xaml
+            </summary>
+            <summary>
+            SelectPanel
+            </summary>
+        </member>
+        <member name="P:SolidShineUi.SelectPanel.SelectedItems">
+            <summary>
+            Get a collection of items that have been selected.
+            </summary>
+        </member>
+        <member name="M:SolidShineUi.SelectPanel.GetSelectedItemsOfType``1">
+            <summary>
+            Get a collection of items that have been selected, returned as a certain type (that inherits from SelectableUserControl).
+            </summary>
+            <typeparam name="T">The type to return the selected items as. It must inherit from SelectableUserControl.</typeparam>
+            <returns></returns>
+        </member>
+        <member name="P:SolidShineUi.SelectPanel.UseLighterBorder">
+            <summary>
+            Use a lighter border color when applying color schemes. Note that this does not apply in high-contrast mode.
+            </summary>
+        </member>
+        <member name="P:SolidShineUi.SelectPanel.AllowParentScrolling">
+            <summary>
+            Set whether the SelectPanel should allow its parent to scroll if the SelectPanel doesn't need to scroll. Note that enabling this may disable any child items from scrolling.
+            </summary>
+        </member>
+        <member name="M:SolidShineUi.SelectPanel.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="M:SolidShineUi.StreamExtensions.ReadAsciiString(System.IO.Stream,System.Int32)">
+            <summary>
+            Reads a ASCII string of the specified length.
+            </summary>
+            <param name="stream">The stream to read the data from.</param>
+            <param name="length">The number of characters in the string.</param>
+            <returns>The string read from the stream.</returns>
+        </member>
+        <member name="M:SolidShineUi.StreamExtensions.ReadSingleBigEndian(System.IO.Stream)">
+            <summary>
+            Reads a 4-byte floating point value from the current stream using big-endian encoding and advances the position of the stream by four bytes.
+            </summary>
+            <param name="stream">The stream to read the data from.</param>
+            <returns>A 4-byte floating point value read from the source stream.</returns>
+        </member>
+        <member name="M:SolidShineUi.StreamExtensions.ReadStringBigEndian(System.IO.Stream,System.Int32)">
+            <summary>
+            Reads a unicode string of the specified length in big-endian format.
+            </summary>
+            <param name="stream">The stream to read the data from.</param>
+            <param name="length">The number of characters in the string.</param>
+            <returns>The string read from the stream.</returns>
+        </member>
+        <member name="M:SolidShineUi.StreamExtensions.ReadStringBigEndian(System.IO.Stream)">
+            <summary>
+            Reads a unicode string from the current stream in big-endian format. The string is prefixed with the length.
+            </summary>
+            <param name="stream">The stream to read the data from.</param>
+            <returns>The string read from the stream.</returns>
+        </member>
+        <member name="M:SolidShineUi.StreamExtensions.ReadUInt16BigEndian(System.IO.Stream)">
+            <summary>
+            Reads a 2-byte unsigned integer from the current stream using big-endian encoding and advances the position of the stream by two bytes.
+            </summary>
+            <param name="stream">The stream to read the data from.</param>
+            <returns>A 2-byte unsigned integer read from the source stream.</returns>
+        </member>
+        <member name="M:SolidShineUi.StreamExtensions.ReadUInt32BigEndian(System.IO.Stream)">
+            <summary>
+            Reads a 4-byte unsigned integer from the current stream using big-endian encoding and advances the position of the stream by four bytes.
+            </summary>
+            <param name="stream">The stream to read the data from.</param>
+            <returns>A 4-byte unsigned integer read from the source stream.</returns>
+        </member>
+        <member name="T:SolidShineUi.Experimental.TabControl">
             <summary>
             Interaction logic for TabControl.xaml
             </summary>
@@ -1531,17 +1531,17 @@
             TabControl
             </summary>
         </member>
-        <member name="P:UiCore.Experimental.TabControl.ColorScheme">
+        <member name="P:SolidShineUi.Experimental.TabControl.ColorScheme">
             <summary>
             Get or set the color scheme to apply to the window.
             </summary>
         </member>
-        <member name="M:UiCore.Experimental.TabControl.InitializeComponent">
+        <member name="M:SolidShineUi.Experimental.TabControl.InitializeComponent">
             <summary>
             InitializeComponent
             </summary>
         </member>
-        <member name="T:UiCore.Experimental.TabDisplayItem">
+        <member name="T:SolidShineUi.Experimental.TabDisplayItem">
             <summary>
             Interaction logic for TabDisplayItem.xaml
             </summary>
@@ -1549,12 +1549,12 @@
             TabDisplayItem
             </summary>
         </member>
-        <member name="P:UiCore.Experimental.TabDisplayItem.ColorScheme">
+        <member name="P:SolidShineUi.Experimental.TabDisplayItem.ColorScheme">
             <summary>
             Get or set the color scheme to apply to the window.
             </summary>
         </member>
-        <member name="M:UiCore.Experimental.TabDisplayItem.InitializeComponent">
+        <member name="M:SolidShineUi.Experimental.TabDisplayItem.InitializeComponent">
             <summary>
             InitializeComponent
             </summary>

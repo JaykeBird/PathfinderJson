@@ -6,7 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
-using UiCore;
+using SolidShineUi;
 using System.Runtime;
 using System.IO;
 using System.Windows.Media.Imaging;

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Windows.Controls;
 
-namespace UiCore.Keyboard
+namespace SolidShineUi.Keyboard
 {
     public class MenuItemList
     {

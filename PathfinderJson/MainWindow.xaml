@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PathfinderJson"
-        xmlns:flat="clr-namespace:UiCore;assembly=UiCore"
+        xmlns:flat="clr-namespace:SolidShineUi;assembly=SolidShineUi"
         xmlns:edit="http://icsharpcode.net/sharpdevelop/avalonedit"
         mc:Ignorable="d" x:Name="window"
         Title="Pathfinder JSON" Height="730" Width="550" MinWidth="550" MinHeight="450"
@@ -403,7 +403,7 @@
                     <Grid Margin="10,0,0,0">
                         <TextBlock x:Name="titCombat" Text="Combat" FontSize="16" />
                     </Grid>
-                    <Grid Margin="10,0,0,0" Grid.Row="1" >
+                    <Grid Margin="15,5" Grid.Row="1" >
                         <flat:LinkTextBlock x:Name="lnkCombat" Text="View Combat page on D20PFSRD" HorizontalAlignment="Left" Click="lnkCombat_Click" Cursor="Hand" />
                     </Grid>
                     <local:ArmorClassEditor Grid.Row="2" Margin="5,5,0,0" x:Name="edtAc" ContentChanged="editor_ContentChanged" />

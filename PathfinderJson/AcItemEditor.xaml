@@ -1,10 +1,10 @@
-﻿<uicore:SelectableUserControl x:Name="selectableUserControl"
+﻿<SolidShineUi:SelectableUserControl x:Name="selectableUserControl"
              x:Class="PathfinderJson.AcItemEditor"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:uicore="clr-namespace:UiCore;assembly=UiCore"
+             xmlns:SolidShineUi="clr-namespace:SolidShineUi;assembly=SolidShineUi"
              xmlns:local="clr-namespace:PathfinderJson"
              mc:Ignorable="d" 
              d:DesignHeight="200" d:DesignWidth="500">
@@ -34,4 +34,4 @@
         <TextBlock Text="Notes/Properties" Margin="10,63,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="1" Height="16" />
         <TextBox x:Name="txtNotes" Margin="110,61,20,20" AcceptsReturn="True" AcceptsTab="True" TextWrapping="Wrap" Grid.ColumnSpan="3" MinHeight="45" Grid.Row="1" TextChanged="textbox_TextChanged"/>
     </Grid>
-</uicore:SelectableUserControl>
+</SolidShineUi:SelectableUserControl>

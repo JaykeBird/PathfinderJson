@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Windows.Input;
-using UiCore.Keyboard;
+using SolidShineUi.Keyboard;
 
 namespace PathfinderJson
 {

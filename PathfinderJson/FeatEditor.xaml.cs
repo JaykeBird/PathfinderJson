@@ -4,7 +4,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using UiCore;
+using SolidShineUi;
 using static PathfinderJson.CoreUtils;
 
 namespace PathfinderJson

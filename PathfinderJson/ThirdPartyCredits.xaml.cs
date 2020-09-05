@@ -4,7 +4,7 @@ using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
-using UiCore;
+using SolidShineUi;
 
 namespace PathfinderJson
 {
@@ -19,9 +19,9 @@ namespace PathfinderJson
             ApplyColorScheme(App.ColorScheme);
             btnClose.ApplyColorScheme(App.ColorScheme);
 
-            expUiCore.Background = App.ColorScheme.LightBackgroundColor.ToBrush();
-            expUiCore.BorderBrush = App.ColorScheme.ThirdHighlightColor.ToBrush();
-            expUiCore.BorderThickness = new Thickness(1);
+            expSolidShineUi.Background = App.ColorScheme.LightBackgroundColor.ToBrush();
+            expSolidShineUi.BorderBrush = App.ColorScheme.ThirdHighlightColor.ToBrush();
+            expSolidShineUi.BorderThickness = new Thickness(1);
 
             expJson.Background = App.ColorScheme.LightBackgroundColor.ToBrush();
             expJson.BorderBrush = App.ColorScheme.ThirdHighlightColor.ToBrush();

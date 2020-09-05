@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:flat="clr-namespace:UiCore;assembly=UiCore"
+        xmlns:flat="clr-namespace:SolidShineUi;assembly=SolidShineUi"
         xmlns:local="clr-namespace:PathfinderJson"
         mc:Ignorable="d" x:Name="window" SourceInitialized="window_SourceInitialized" CaptionDisplayType="MinimizeClose"
         Title="Dice Roller" Height="160" Width="500" MinHeight="150" MaxHeight="240" ShowInTaskbar="True" >

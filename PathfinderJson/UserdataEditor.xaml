@@ -5,7 +5,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PathfinderJson"
-        xmlns:flat="clr-namespace:UiCore;assembly=UiCore"
+        xmlns:flat="clr-namespace:SolidShineUi;assembly=SolidShineUi"
         xmlns:system="clr-namespace:System;assembly=System.Runtime"
         mc:Ignorable="d" x:Name="window"
         Title="Edit Player Data" Height="480" Width="400">

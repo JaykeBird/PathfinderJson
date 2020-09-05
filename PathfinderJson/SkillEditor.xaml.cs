@@ -215,7 +215,7 @@ namespace PathfinderJson
 
         private void btnEdit_Click(object sender, RoutedEventArgs e)
         {
-            UiCore.StringInputDialog sid = new UiCore.StringInputDialog(App.ColorScheme, "Edit Skill", "Edit the specialization for this skill.", specialization ?? "");
+            SolidShineUi.StringInputDialog sid = new SolidShineUi.StringInputDialog(App.ColorScheme, "Edit Skill", "Edit the specialization for this skill.", specialization ?? "");
             sid.SelectTextOnFocus = true;
             if (OwnerWindow != null) sid.Owner = OwnerWindow;
             sid.ShowDialog();
