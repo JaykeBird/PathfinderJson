@@ -38,15 +38,19 @@
   <ItemGroup>
     <Compile Remove="Release-win-x64\**" />
     <Compile Remove="Release-win-x86\**" />
+    <Compile Remove="TestSpacingRelease2\**" />
     <Compile Remove="TestSpacingRelease\**" />
     <EmbeddedResource Remove="Release-win-x64\**" />
     <EmbeddedResource Remove="Release-win-x86\**" />
+    <EmbeddedResource Remove="TestSpacingRelease2\**" />
     <EmbeddedResource Remove="TestSpacingRelease\**" />
     <None Remove="Release-win-x64\**" />
     <None Remove="Release-win-x86\**" />
+    <None Remove="TestSpacingRelease2\**" />
     <None Remove="TestSpacingRelease\**" />
     <Page Remove="Release-win-x64\**" />
     <Page Remove="Release-win-x86\**" />
+    <Page Remove="TestSpacingRelease2\**" />
     <Page Remove="TestSpacingRelease\**" />
   </ItemGroup>
 

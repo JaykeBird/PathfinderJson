@@ -596,19 +596,6 @@
             Display this message dialog. Use the properties such as <c>OkButtonText</c> or <c>CancelButtonText</c> and <c>Message</c> to control the appearance of the message dialog.
             </summary>
         </member>
-        <member name="M:SolidShineUi.MessageDialog.ShowDialog(System.String,System.String,System.Boolean,SolidShineUi.MessageDialogImage,SolidShineUi.MessageDialogResult,System.String,System.String,System.String)">
-            <summary>
-            Display this message dialog. This is an obsolete method, please use one of the other ones.
-            </summary>
-            <param name="message">The message to display.</param>
-            <param name="title">The window title for this dialog. Use <c>null</c> if already set via property.</param>
-            <param name="showTwoBottomButtons">Determine if one or two buttons should be shown (either [OK], or [OK] and [Cancel]). If false, only OK button is displayed.</param>
-            <param name="image">The image to display with this dialog.</param>
-            <param name="defaultButton">The button to have selected by default when the dialog opens. (DOESN'T CURRENTLY WORK)</param>
-            <param name="extraButton1Text">The text to use in the first extra button. If this is set to a null or empty string, this button will not be displayed.</param>
-            <param name="extraButton2Text">The text to use in the second extra button. If this is set to a null or empty string, this button will not be displayed.</param>
-            <param name="extraButton3Text">The text to use in the third extra button. If this is set to a null or empty string, this button will not be displayed.</param>
-        </member>
         <member name="M:SolidShineUi.MessageDialog.ShowDialog(System.String,SolidShineUi.ColorScheme,System.Windows.Window,System.String,System.Boolean,SolidShineUi.MessageDialogImage,SolidShineUi.MessageDialogResult,System.String,System.String,System.String,System.String,System.String,System.String)">
             <summary>
             Display this message dialog. This is an obsolete method, please use one of the other ones.
@@ -944,11 +931,6 @@
             Get or set the corner radius (or radii) to use for the button and its border. Can be used to create a rounded button.
             </summary>
         </member>
-        <member name="E:SolidShineUi.FlatButton.Click">
-            <summary>
-            Raised when the user clicks on the button, via a mouse click, touch, a stylus, or via the keyboard.
-            </summary>
-        </member>
         <member name="E:SolidShineUi.FlatButton.RightClick">
             <summary>
             Raised when the user right-clicks on the button, via a mouse click or via the keyboard.
@@ -961,25 +943,18 @@
         </member>
         <member name="P:SolidShineUi.FlatButton.SelectOnClick">
             <summary>
-            Gets or sets whether the button should change its IsSelected property when a click is performed.
+            Gets or sets whether the button should change its IsSelected property when a click is performed. With this enabled, this allows the button to take on the functionality of a ToggleButton.
             </summary>
         </member>
-        <member name="P:SolidShineUi.FlatButton.ClickOnPress">
-            <summary>
-            Gets or sets whether the Click event should be raised when the button is pressed, rather than when it is released.
-            </summary>
-        </member>
-        <member name="M:SolidShineUi.FlatButton.PerformPress(System.Boolean)">
+        <member name="M:SolidShineUi.FlatButton.PressRightClick">
             <summary>
             Sets up the button to be clicked. This must be run before PerformClick.
             </summary>
-            <param name="rightClick">Determine whether this should be treated as a right click (which usually invokes a context menu).</param>
         </member>
-        <member name="M:SolidShineUi.FlatButton.PerformClick(System.Boolean)">
+        <member name="M:SolidShineUi.FlatButton.PerformRightClick">
             <summary>
             If the button is prepared by PerformPress, perform the Click actions, including raising the Click event.
             </summary>
-            <param name="rightClick">Determine whether this should be treated as a right click (which usually invokes a context menu).</param>
         </member>
         <member name="M:SolidShineUi.FlatButton.DoClick">
             <summary>
@@ -994,11 +969,6 @@
         <member name="P:SolidShineUi.FlatButton.IsDefaulted">
             <summary>
             Specifies whether or not this button is the button that would be invoked when Enter is pressed.
-            </summary>
-        </member>
-        <member name="M:SolidShineUi.FlatButton.OnAccessKey(System.Windows.Input.AccessKeyEventArgs)">
-            <summary>
-            The Access key for this control was invoked.
             </summary>
         </member>
         <member name="T:SolidShineUi.FlatWindow">

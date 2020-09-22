@@ -60,7 +60,7 @@ namespace PathfinderJson
         /// <summary>Generic cancellation token, use for lengthy cancellable processes</summary>
         CancellationTokenSource cts = new CancellationTokenSource();
         /// <summary>The search panel associated with the raw JSON editor</summary>
-        SearchPanel sp;
+        SearchPanel.SearchPanel sp;
         /// <summary>Get or set if the sheet view is currently running calculations</summary>
         bool _isCalculating = false;
         /// <summary>The timer for the auto save feature. When it ticks, save the file.</summary>
@@ -244,9 +244,10 @@ namespace PathfinderJson
             txtEditRaw.WordWrap = App.Settings.EditorWordWrap;
             mnuWordWrap.IsChecked = App.Settings.EditorWordWrap;
 
-            SearchPanel p = SearchPanel.Install(txtEditRaw);
+            SearchPanel.SearchPanel p = SearchPanel.SearchPanel.Install(txtEditRaw);
             p.FontFamily = SystemFonts.MessageFontFamily; // so it isn't a fixed-width font lol
             sp = p;
+            sp.ColorScheme = App.ColorScheme;
 
             txtEditRaw.Encoding = new System.Text.UTF8Encoding(false);
 
@@ -1207,6 +1208,7 @@ namespace PathfinderJson
             ApplyColorScheme(App.ColorScheme);
             menu.ApplyColorScheme(App.ColorScheme);
             toolbar.Background = App.ColorScheme.MainColor.ToBrush();
+            if (sp != null) sp.ColorScheme = App.ColorScheme;
 
             if (App.ColorScheme.IsHighContrast)
             {
@@ -1866,6 +1868,7 @@ namespace PathfinderJson
         {
             if (_sheetLoaded)
             {
+                
                 sp.Open();
                 if (!(txtEditRaw.TextArea.Selection.IsEmpty || txtEditRaw.TextArea.Selection.IsMultiline))
                     sp.SearchPattern = txtEditRaw.TextArea.Selection.GetText();
@@ -3677,6 +3680,8 @@ namespace PathfinderJson
             btnNotesEdit.Visibility = Visibility.Collapsed;
             btnNotesView.Visibility = Visibility.Collapsed;
             brdrNotesMarkdown.Visibility = Visibility.Collapsed;
+
+            txtNotes.BorderThickness = new Thickness(1, 1, 1, 1);
         }
 
         public void ShowMarkdownElements()
@@ -3684,6 +3689,8 @@ namespace PathfinderJson
             btnNotesEdit.Visibility = Visibility.Visible;
             btnNotesView.Visibility = Visibility.Visible;
             brdrNotesMarkdown.Visibility = Visibility.Visible;
+
+            txtNotes.BorderThickness = new Thickness(1, 0, 1, 1);
         }
 
         #endregion
