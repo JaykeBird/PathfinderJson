@@ -6,30 +6,52 @@
         xmlns:flat="clr-namespace:SolidShineUi;assembly=SolidShineUi"
         mc:Ignorable="d" x:Name="window"
         Title="About" Height="400" Width="500" ResizeMode="NoResize" CaptionDisplayType="Close" >
-    <Grid>
-        <Image HorizontalAlignment="Left" Height="48" Margin="15,20,0,0" VerticalAlignment="Top" Width="48" Source="/Icon48.png"/>
-        <TextBlock HorizontalAlignment="Left" Margin="75,20,0,0" Text="Pathfinder JSON Character Sheet Editor" FontSize="16" FontWeight="SemiBold" VerticalAlignment="Top"/>
-        <TextBlock Margin="75,50,40,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="34" 
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto" MinHeight="35" />
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto" MinHeight="40" />
+            </Grid.RowDefinitions>
+            <Image HorizontalAlignment="Left" Height="48" Margin="15,20,0,0" VerticalAlignment="Top" Width="48" Source="/Icon48.png"/>
+            <TextBlock HorizontalAlignment="Left" Margin="75,20,0,0" Text="Pathfinder JSON Character Sheet Editor" FontSize="16" FontWeight="SemiBold" VerticalAlignment="Top"/>
+            <TextBlock Margin="75,50,40,0" TextWrapping="Wrap" VerticalAlignment="Top" 
                     Text="Character sheet editor for JSON files, such as those exported by Mottokrosh's Pathfinder character sheet website (for Pathfinder 1e)" />
+            <Grid HorizontalAlignment="Left" VerticalAlignment="Center" Width="440" Margin="15,10,0,10" Grid.Row="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
 
-        <TextBlock HorizontalAlignment="Left" Margin="15,101,0,0" Text="Developed by Jayke R. Huempfner" VerticalAlignment="Top"/>
-        <flat:LinkTextBlock HorizontalAlignment="Left" Margin="260,101,0,0" Text="twitter.com/jaykebird" VerticalAlignment="Top" Click="LinkTextBlock2_Click" Cursor="Hand" />
-        <TextBlock x:Name="lblVersion" HorizontalAlignment="Left" Margin="15,120,0,0" Text="Version -.-.-" VerticalAlignment="Top"/>
-        <TextBlock HorizontalAlignment="Left" Margin="15,139,0,0" Text="Open-source under MIT License" VerticalAlignment="Top"/>
-        <flat:LinkTextBlock HorizontalAlignment="Left" Margin="260,139,0,0" Text="github.com/jaykebird/pathfinderjson" VerticalAlignment="Top" Click="LinkTextBlock5_Click" Cursor="Hand" />
-        <Border BorderThickness="1" Margin="10,170,10,0" Height="1" BorderBrush="Black" x:Name="brdrDivider" VerticalAlignment="Top"/>
+                <TextBlock HorizontalAlignment="Left" Text="Developed by Jayke R. Huempfner" VerticalAlignment="Center" Margin="0,3"/>
+                <flat:LinkTextBlock HorizontalAlignment="Left" Text="twitter.com/jaykebird" VerticalAlignment="Center" Click="LinkTextBlock2_Click" Cursor="Hand" Grid.Column="1" />
+                <TextBlock x:Name="lblVersion" HorizontalAlignment="Left" Text="Version -.-.-" VerticalAlignment="Center" Grid.Row="1" Margin="0,3"/>
+                <TextBlock HorizontalAlignment="Left" Text="Open-source under MIT License" VerticalAlignment="Center" Grid.Row="2" Margin="0,3"/>
+                <flat:LinkTextBlock HorizontalAlignment="Stretch" Text="github.com/jaykebird/pathfinderjson" VerticalAlignment="Center" Click="LinkTextBlock5_Click" Cursor="Hand" Grid.Column="1" Grid.Row="2" />
+            </Grid>
+            <Border BorderThickness="1" Margin="10,0,10,0" Height="1" BorderBrush="Black" x:Name="brdrDivider" VerticalAlignment="Center" Grid.Row="2"/>
+            <StackPanel HorizontalAlignment="Left" Orientation="Horizontal" Grid.Row="3" VerticalAlignment="Top" Margin="15,5,0,0">
+                <TextBlock Text="Mottokrosh's Pathfinder Character Sheet site:"/>
+                <flat:LinkTextBlock Text="charactersheet.co.uk/pathfinder/" Click="LinkTextBlock_Click" Cursor="Hand" Margin="5,0" />
+            </StackPanel>
+            <TextBlock Margin="15,4,10,26" TextWrapping="Wrap" Grid.Row="4">
+                <Run>This program uses trademarks and/or copyrights owned by Paizo Inc., which are used under Paizo's Community Use Policy. We are expressly prohibited from charging you to use or access this content.</Run>
+                <Run> This program is not published, endorsed, or specifically approved by Paizo Inc. For more information about Paizo's Community Use Policy, please visit</Run>
+                <Hyperlink RequestNavigate="Hyperlink_RequestNavigate" NavigateUri="https://paizo.com/communityuse" TextDecorations="" >paizo.com/communityuse</Hyperlink><Run>. For more information about Paizo Inc. and Paizo products, please visit</Run> 
+                <Hyperlink RequestNavigate="Hyperlink_RequestNavigate" NavigateUri="https://paizo.com/" TextDecorations="" >paizo.com</Hyperlink><Run>.</Run>
+            </TextBlock>
 
-        <TextBlock HorizontalAlignment="Left" Margin="15,180,0,0" Text="Mottokrosh's Pathfinder Character Sheet site:" VerticalAlignment="Top"/>
-        <flat:LinkTextBlock HorizontalAlignment="Left" Margin="260,180,0,0" Text="charactersheet.co.uk/pathfinder/" VerticalAlignment="Top" Click="LinkTextBlock_Click" Cursor="Hand" />
-        <TextBlock Margin="15,212,10,0" VerticalAlignment="Top" TextWrapping="Wrap" Height="103">
-            <Run>This program uses trademarks and/or copyrights owned by Paizo Inc., which are used under Paizo's Community Use Policy. We are expressly prohibited from charging you to use or access this content.</Run>
-            <Run> This program is not published, endorsed, or specifically approved by Paizo Inc. For more information about Paizo's Community Use Policy, please visit</Run>
-            <Hyperlink RequestNavigate="Hyperlink_RequestNavigate" NavigateUri="https://paizo.com/communityuse" TextDecorations="" >paizo.com/communityuse</Hyperlink><Run>. For more information about Paizo Inc. and Paizo products, please visit</Run> 
-            <Hyperlink RequestNavigate="Hyperlink_RequestNavigate" NavigateUri="https://paizo.com/" TextDecorations="" >paizo.com</Hyperlink><Run>.</Run>
-        </TextBlock>
-        
-        <flat:FlatButton x:Name="btnPlatformInfo" ColorScheme="{Binding ColorScheme, ElementName=window}" Content="Platform Info" Margin="10,0,0,10" VerticalAlignment="Bottom" Click="BtnPlatformInfo_Click" HorizontalAlignment="Left" Width="95" />
-        <flat:FlatButton x:Name="btnThirdParty" Content="Third Party Credits" ColorScheme="{Binding ColorScheme, ElementName=window}" HorizontalAlignment="Left" Margin="110,0,0,10" VerticalAlignment="Bottom" Width="120" Click="BtnThirdParty_Click" />
-        <flat:FlatButton x:Name="btnClose" Content="OK" ColorScheme="{Binding ColorScheme, ElementName=window}" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="80" Click="btnClose_Click" />
-    </Grid>
+            <flat:FlatButton x:Name="btnPlatformInfo" ColorScheme="{Binding ColorScheme, ElementName=window}" Content="Platform Info" Margin="10,0,0,0" VerticalAlignment="Center" Click="BtnPlatformInfo_Click" HorizontalAlignment="Left" MinWidth="95" Grid.Row="5" />
+            <flat:FlatButton x:Name="btnThirdParty" Content="Third Party Credits" ColorScheme="{Binding ColorScheme, ElementName=window}" HorizontalAlignment="Left" Margin="110,0,0,0" VerticalAlignment="Center" MinWidth="120" Click="BtnThirdParty_Click" Grid.Row="5" />
+            <flat:FlatButton x:Name="btnClose" Content="OK" ColorScheme="{Binding ColorScheme, ElementName=window}" HorizontalAlignment="Right" Margin="0,0,15,0" VerticalAlignment="Center" MinWidth="80" Click="btnClose_Click" Grid.Row="5" />
+        </Grid>
+    </ScrollViewer>
 </flat:FlatWindow>
