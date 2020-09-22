@@ -3230,7 +3230,21 @@ namespace PathfinderJson
 
         private void lnkCombat_Click(object sender, RoutedEventArgs e)
         {
-            OpenBrowser("https://www.d20pfsrd.com/gamemastering/combat/");
+            if (sender is FrameworkElement fe)
+            {
+                if (fe.Tag is string link)
+                {
+                    OpenBrowser(link);
+                }
+                else
+                {
+                    Debugger.Log(0, null, "Tag is not a link: " + fe.Tag.ToString());
+                }
+            }
+            else
+            {
+                Debugger.Log(0, null, "Sender is not a FrameworkElement. It is " + sender.GetType().FullName);
+            }
         }
 
         #endregion
