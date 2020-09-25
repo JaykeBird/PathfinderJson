@@ -23,7 +23,7 @@
 									</Binding>
 								</TextBox.Text>
 							</TextBox>
-                            <flat:MenuButton Margin="3" Height="24" ColorScheme="{TemplateBinding ColorScheme}" Content="Options">
+                            <flat:MenuButton Margin="3" Height="24" ColorScheme="{TemplateBinding ColorScheme}" Content="Options" TransparentBack="True" >
                                 <flat:MenuButton.Menu>
                                     <flat:ContextMenu ColorScheme="{TemplateBinding ColorScheme}" StaysOpen="True" >
                                         <MenuItem IsCheckable="True" IsChecked="{Binding MatchCase, RelativeSource={RelativeSource TemplatedParent}}" Header="{Binding Localization.MatchCaseText, RelativeSource={RelativeSource TemplatedParent}}" StaysOpenOnClick="True" />
@@ -32,31 +32,19 @@
                                     </flat:ContextMenu>
                                 </flat:MenuButton.Menu>
                             </flat:MenuButton>
-							<!--<search:DropDownButton Height="24">
-								<search:DropDownButton.DropDownContent>
-									<Popup StaysOpen="False" Name="PART_dropdownPopup">
-										<Border Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}" BorderBrush="{DynamicResource {x:Static SystemColors.WindowTextBrushKey}}" BorderThickness="1">
-											<StackPanel Orientation="Vertical">
-												<CheckBox IsChecked="{Binding MatchCase, RelativeSource={RelativeSource TemplatedParent}}" Content="{Binding Localization.MatchCaseText, RelativeSource={RelativeSource TemplatedParent}}" Margin="3" />
-												<CheckBox IsChecked="{Binding WholeWords, RelativeSource={RelativeSource TemplatedParent}}" Content="{Binding Localization.MatchWholeWordsText, RelativeSource={RelativeSource TemplatedParent}}" Margin="3" />
-												<CheckBox IsChecked="{Binding UseRegex, RelativeSource={RelativeSource TemplatedParent}}" Content="{Binding Localization.UseRegexText, RelativeSource={RelativeSource TemplatedParent}}" Margin="3" />
-											</StackPanel>
-										</Border>
-									</Popup>
-								</search:DropDownButton.DropDownContent>
-							</search:DropDownButton>-->
-                            <flat:FlatButton Margin="3,3,0,3" Height="24" Width="24" Command="asearch:SearchCommands.FindPrevious" ColorScheme="{TemplateBinding ColorScheme}" 
-                                             ToolTip="{Binding Localization.FindPreviousText, RelativeSource={RelativeSource TemplatedParent}}" HorizontalContentAlignment="Center" >
+                            <Border Width="1" Margin="1,3" BorderThickness="1" BorderBrush="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ColorScheme.BorderColor, Converter={StaticResource ctb}}" />
+                            <flat:FlatButton Margin="3,3,0,3" Height="24" Width="24" Command="asearch:SearchCommands.FindPrevious" ColorScheme="{TemplateBinding ColorScheme}" TransparentBack="True" 
+                                             ToolTip="{Binding Localization.FindPreviousText, RelativeSource={RelativeSource TemplatedParent}}" HorizontalContentAlignment="Center" Padding="0" >
                                 <local:ThemedImage ImageName="Left" ColorScheme="{TemplateBinding ColorScheme}" Width="16" Height="16" />
 								<!--<Image Width="16" Height="16" Stretch="Fill" Source="prev.png" />-->
 							</flat:FlatButton>
-                            <flat:FlatButton Margin="0,3,3,3" Height="24" Width="24" Command="asearch:SearchCommands.FindNext" ColorScheme="{TemplateBinding ColorScheme}" 
-                                             ToolTip="{Binding Localization.FindNextText, RelativeSource={RelativeSource TemplatedParent}}" HorizontalContentAlignment="Center" >
+                            <flat:FlatButton Margin="0,3,3,3" Height="24" Width="24" Command="asearch:SearchCommands.FindNext" ColorScheme="{TemplateBinding ColorScheme}" TransparentBack="True"
+                                             ToolTip="{Binding Localization.FindNextText, RelativeSource={RelativeSource TemplatedParent}}" HorizontalContentAlignment="Center" Padding="0" >
                                 <local:ThemedImage ImageName="Right" ColorScheme="{TemplateBinding ColorScheme}" Width="16" Height="16" />
 								<!--<Image Width="16" Height="16" Stretch="Fill" Source="next.png" />-->
 							</flat:FlatButton>
 							<flat:FlatButton Height="24" Width="24" HorizontalAlignment="Right" Margin="0,0,1,0" VerticalAlignment="Center" Command="asearch:SearchCommands.CloseSearchPanel"
-							        VerticalContentAlignment="Center" HorizontalContentAlignment="Center" ColorScheme="{TemplateBinding ColorScheme}" ToolTip="Close" >
+							        VerticalContentAlignment="Center" HorizontalContentAlignment="Center" ColorScheme="{TemplateBinding ColorScheme}" TransparentBack="True" ToolTip="Close" >
                                 <Path Data="M 0,0 L 8,8 M 8,0 L 0,8" Stroke="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ColorScheme.ForegroundColor, Converter={StaticResource ctb}}" StrokeThickness="1" />
 							</flat:FlatButton>
 						</StackPanel>
