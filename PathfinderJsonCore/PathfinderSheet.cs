@@ -28,11 +28,14 @@ namespace PathfinderJson
 
                     try
                     {
-                        JToken a = o["skills"]!["conditionalModifiers"]!;
-                        if (a.Value<string>() != null)
+                        if (o.ContainsKey("skills"))
                         {
-                            Console.WriteLine(a.Value<string>());
-                            csc = a.Value<string>();
+                            JToken a = o["skills"]!["conditionalModifiers"]!;
+                            if (a.Value<string>() != null)
+                            {
+                                Console.WriteLine(a.Value<string>());
+                                csc = a.Value<string>();
+                            }
                         }
                     }
                     catch (ArgumentNullException) { }
