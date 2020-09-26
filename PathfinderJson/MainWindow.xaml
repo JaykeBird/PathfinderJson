@@ -539,7 +539,7 @@
                             <ColumnDefinition Width="1*"/>
                         </Grid.ColumnDefinitions>
                         <TextBlock x:Name="lblBab" HorizontalAlignment="Left" Text="Base Attack Bonus (BAB)" FontWeight="Bold" VerticalAlignment="Center" Margin="0,0,5,0" />
-                        <TextBox x:Name="txtBab" HorizontalAlignment="Center" MinHeight="23" VerticalAlignment="Center" MinWidth="100" TextChanged="textbox_TextChanged" LostFocus="txtBab_LostFocus" Grid.Column="1" />
+                        <TextBox x:Name="txtBab" HorizontalAlignment="Center" MinHeight="23" VerticalAlignment="Center" MinWidth="80" TextChanged="textbox_TextChanged" LostFocus="txtBab_LostFocus" Grid.Column="1" />
                     </Grid>
                     <local:CompoundEditor Grid.Row="5" Margin="5,5,0,0" x:Name="edtCmb" Title="Combat Maneuver Bonus (CMB)" ModifierTitle="Str Mod" BaseTitle="BAB" CanEditBase="False" ContentChanged="editor_ContentChanged" />
                     <local:CompoundEditor Grid.Row="6" Margin="5,5,0,0" x:Name="edtCmd" Title="Combat Maneuver Defense (CMD)" ModifierTitle="Str Mod" Modifier2Title="Dex Mod" BaseTitle="BAB" CanEditBase="False" ShowPlusTen="True" ContentChanged="editor_ContentChanged" />
@@ -598,16 +598,35 @@
                         <local:ThemedImage ImageName="Deselect" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" Width="16" Height="16" />
                     </flat:FlatButton>
                     <flat:SelectPanel ColorScheme="{Binding ColorScheme, ElementName=window}" x:Name="selAcItem" PanelBorderThickness="1" UseLighterBorder="True" MinHeight="3" Grid.Row="13" MultiSelect="True" />
-
-                    <TextBlock x:Name="lblAcItemTotals" Text="Armor/Shield Totals" Margin="15,12,0,0" Grid.Row="14" FontWeight="SemiBold" HorizontalAlignment="Left" VerticalAlignment="Top" />
-                    <TextBlock x:Name="lblAcBonus" Text="AC Bonus" Margin="164,11,0,0" Grid.Row="14" HorizontalAlignment="Left" VerticalAlignment="Top" />
-                    <TextBox x:Name="txtAcBonus" TextChanged="textbox_TextChanged" Margin="219,9,0,0" Grid.Row="14" HorizontalAlignment="Left" Width="50" Height="23" VerticalAlignment="Top"/>
-                    <TextBlock x:Name="lblAcWeight" Text="Weight" Margin="300,11,0,0" Grid.Row="14" HorizontalAlignment="Left" VerticalAlignment="Top" />
-                    <TextBox x:Name="txtAcWeight" TextChanged="textbox_TextChanged" Margin="343,9,0,0" Grid.Row="14" HorizontalAlignment="Left" Width="50" Height="23" VerticalAlignment="Top"/>
-                    <TextBlock x:Name="lblAcPenalty" Text="Check Penalty" Margin="141,46,0,0" Grid.Row="14" HorizontalAlignment="Left" VerticalAlignment="Top" />
-                    <TextBox x:Name="txtAcPenalty" TextChanged="textbox_TextChanged" Margin="219,44,0,0" Grid.Row="14" HorizontalAlignment="Left" Width="50" Height="23" VerticalAlignment="Top"/>
-                    <TextBlock x:Name="lblAcSpellFailure" Text="Spell Failure" Margin="276,46,0,0" Grid.Row="14" HorizontalAlignment="Left" VerticalAlignment="Top" />
-                    <TextBox x:Name="txtAcSpellFailure" TextChanged="textbox_TextChanged" Margin="343,44,0,0" Grid.Row="14" HorizontalAlignment="Left" Width="50" Height="23" VerticalAlignment="Top"/>
+                    <Grid HorizontalAlignment="Stretch" Margin="15,10,0,0" Grid.Row="14" VerticalAlignment="Top">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="1*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock x:Name="lblAcItemTotals" Text="Armor/Shield Totals" Margin="0,2,0,0" FontWeight="SemiBold" HorizontalAlignment="Left" VerticalAlignment="Top" />
+                        <Grid Margin="10,0,0,0" VerticalAlignment="Center" Grid.Column="1" >
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="5"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="1*"/>
+                                <ColumnDefinition Width="5"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="1*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock x:Name="lblAcBonus" Text="AC Bonus" Margin="0,2,5,0" HorizontalAlignment="Right" VerticalAlignment="Top" />
+                            <TextBox x:Name="txtAcBonus" TextChanged="textbox_TextChanged" MinHeight="23" VerticalAlignment="Center" Grid.Column="1" />
+                            <TextBlock x:Name="lblAcWeight" Text="Weight" Margin="0,2,5,0" HorizontalAlignment="Right" VerticalAlignment="Top" Grid.Column="3" />
+                            <TextBox x:Name="txtAcWeight" TextChanged="textbox_TextChanged" MinHeight="23" VerticalAlignment="Center" Grid.Column="4"/>
+                            <TextBlock x:Name="lblAcPenalty" Text="Check Penalty" HorizontalAlignment="Right" Margin="0,2,5,0" Grid.Row="2" />
+                            <TextBox x:Name="txtAcPenalty" TextChanged="textbox_TextChanged" MinHeight="23" VerticalAlignment="Center" Grid.Column="1" Grid.Row="2" />
+                            <TextBlock x:Name="lblAcSpellFailure" Text="Spell Failure" HorizontalAlignment="Right" Margin="0,2,5,0" Grid.Column="3" Grid.Row="2" />
+                            <TextBox x:Name="txtAcSpellFailure" TextChanged="textbox_TextChanged" MinHeight="23" VerticalAlignment="Center" Grid.Column="4" Grid.Row="2"/>
+                        </Grid>
+                    </Grid>
                 </Grid>
                 <Grid Margin="5,5,5,0" x:Name="grdSpells" Visibility="Collapsed" >
                     <Grid.RowDefinitions>

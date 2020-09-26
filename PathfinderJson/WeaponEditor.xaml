@@ -6,19 +6,13 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:SolidShineUi="clr-namespace:SolidShineUi;assembly=SolidShineUi"
              xmlns:local="clr-namespace:PathfinderJson"
-             mc:Ignorable="d" 
-             d:DesignHeight="200" d:DesignWidth="500">
+             mc:Ignorable="d" d:DesignWidth="500">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" MinHeight="36"/>
-            <RowDefinition x:Name="rowDetails" Height="0" />
+            <RowDefinition x:Name="rowDetails" Height="Auto" />
         </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="5*"/>
-            <ColumnDefinition Width="5*"/>
-            <ColumnDefinition Width="4*"/>
-        </Grid.ColumnDefinitions>
-        <Grid MinHeight="23" Margin="10,8,10,0" Grid.ColumnSpan="3" VerticalAlignment="Top" >
+        <Grid MinHeight="23" Margin="10,8,10,0" VerticalAlignment="Top" >
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" MinWidth="45" />
                 <ColumnDefinition/>
@@ -28,19 +22,45 @@
             <TextBox x:Name="txtName" MinHeight="23" Margin="0,0,2,0" VerticalAlignment="Center" TextChanged="textbox_TextChanged" Grid.Column="1"/>
             <Expander x:Name="expander" Header="Details" HorizontalAlignment="Left" Margin="15,0,0,0" VerticalAlignment="Center" MinWidth="80" Expanded="Expander_Expanded" Collapsed="Expander_Collapsed" Foreground="{Binding Foreground, ElementName=selectableUserControl}" Grid.Column="2" />
         </Grid>
-        <TextBlock Text="Attack" Margin="10,7,0,0" HorizontalAlignment="Left"  VerticalAlignment="Top" Grid.Row="1" Height="16" />
-        <TextBox x:Name="txtAttack" Height="23" Margin="55,5,13,0" VerticalAlignment="Top" Grid.Row="1" TextChanged="textbox_TextChanged"/>
-        <TextBlock Text="Damage" Margin="0,7,0,0" HorizontalAlignment="Left"  VerticalAlignment="Top" Grid.Column="1" Grid.Row="1" />
-        <TextBox x:Name="txtDamage" Height="23" Margin="50,5,13,0" VerticalAlignment="Top" Grid.Column="1" Grid.Row="1" TextChanged="textbox_TextChanged"/>
-        <TextBlock Text="Type" Margin="0,7,0,0" HorizontalAlignment="Left"  VerticalAlignment="Top" Grid.Column="2" Grid.Row="1" />
-        <TextBox x:Name="txtType" Height="23" Margin="42,5,20,0" VerticalAlignment="Top" Grid.Column="2" Grid.Row="1" TextChanged="textbox_TextChanged"/>
-        <TextBlock Text="Critical" Margin="10,35,0,0" HorizontalAlignment="Left"  VerticalAlignment="Top" Grid.Row="1" Height="16" />
-        <TextBox x:Name="txtCritical" Height="23" Margin="55,33,13,0" VerticalAlignment="Top" Grid.Row="1" TextChanged="textbox_TextChanged"/>
-        <TextBlock Text="Ammunition" Margin="0,35,0,0" HorizontalAlignment="Left"  VerticalAlignment="Top" Grid.Column="1" Grid.Row="1" />
-        <TextBox x:Name="txtAmmunition" Height="23" Margin="70,33,13,0" VerticalAlignment="Top" Grid.Column="1" Grid.Row="1" TextChanged="textbox_TextChanged"/>
-        <TextBlock Text="Range" Margin="0,35,0,0" HorizontalAlignment="Left"  VerticalAlignment="Top" Grid.Column="2" Grid.Row="1" />
-        <TextBox x:Name="txtRange" Height="23" Margin="42,33,20,0" VerticalAlignment="Top" Grid.Column="2" Grid.Row="1" TextChanged="textbox_TextChanged"/>
-        <TextBlock Text="Notes" Margin="10,63,0,0" HorizontalAlignment="Left"  VerticalAlignment="Top" Grid.Row="1" Height="16" />
-        <TextBox x:Name="txtNotes" Margin="55,61,20,20" AcceptsReturn="True" AcceptsTab="True" TextWrapping="Wrap" Grid.ColumnSpan="3" MinHeight="45" Grid.Row="1" TextChanged="textbox_TextChanged" />
+        <Grid HorizontalAlignment="Stretch" Margin="10" Grid.Row="1" VerticalAlignment="Top" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" MinWidth="40" />
+                <ColumnDefinition Width="5*"/>
+                <ColumnDefinition Width="5*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="3*"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Text="Attack" Margin="0,2,3,0" HorizontalAlignment="Left"  VerticalAlignment="Top" Height="16" />
+            <TextBox x:Name="txtAttack" MinHeight="23" Margin="0,0,10,0" VerticalAlignment="Center" TextChanged="textbox_TextChanged" Grid.Column="1"/>
+            <Grid Grid.Column="2" HorizontalAlignment="Stretch" Margin="0,0,10,0" VerticalAlignment="Center">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="Damage" Margin="0,2,3,0" />
+                <TextBox x:Name="txtDamage" Grid.Column="1" MinHeight="23" TextChanged="textbox_TextChanged" />
+            </Grid>
+            <TextBlock Text="Type" Margin="0,2,3,0" HorizontalAlignment="Left"  VerticalAlignment="Top" Grid.Column="3" />
+            <TextBox x:Name="txtType" MinHeight="23" VerticalAlignment="Center" TextChanged="textbox_TextChanged" Grid.Column="4"/>
+            <TextBlock Text="Critical" HorizontalAlignment="Center" VerticalAlignment="Top" Grid.Row="1" Margin="0,4,3,0" />
+            <TextBox x:Name="txtCritical" MinHeight="23" Margin="0,3,10,0" VerticalAlignment="Top" TextChanged="textbox_TextChanged" Grid.Row="1" Grid.Column="1"/>
+            <Grid Grid.Column="2" HorizontalAlignment="Stretch" Margin="0,3,10,0" Grid.Row="1" VerticalAlignment="Top" >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="Ammunition" Margin="0,2,3,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
+                <TextBox x:Name="txtAmmunition" MinHeight="23" TextChanged="textbox_TextChanged" Grid.Column="1"/>
+            </Grid>
+            <TextBlock Text="Range" HorizontalAlignment="Center" VerticalAlignment="Top" Grid.Column="3" Grid.Row="1" Margin="0,4,3,0" />
+            <TextBox x:Name="txtRange" MinHeight="23" Margin="0,3,0,0" VerticalAlignment="Top" TextChanged="textbox_TextChanged" Grid.Column="4" Grid.Row="1"/>
+            <TextBlock Text="Notes" Margin="0,7,3,0" HorizontalAlignment="Left"  VerticalAlignment="Top" Height="16" Grid.Row="2" />
+            <TextBox x:Name="txtNotes" Margin="0,5,0,0" AcceptsReturn="True" AcceptsTab="True" TextWrapping="Wrap" MinHeight="45" TextChanged="textbox_TextChanged" Grid.ColumnSpan="4" Grid.Row="2" Grid.Column="1" />
+        </Grid>
     </Grid>
 </SolidShineUi:SelectableUserControl>
