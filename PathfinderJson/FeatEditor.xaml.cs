@@ -56,12 +56,14 @@ namespace PathfinderJson
 
         private void Expander_Expanded(object sender, RoutedEventArgs e)
         {
-            rowDetails.Height = new GridLength(1, GridUnitType.Star);
+            rowDetails.Height = new GridLength(1, GridUnitType.Auto);
+            rowDetails.MinHeight = 125;
         }
 
         private void Expander_Collapsed(object sender, RoutedEventArgs e)
         {
             rowDetails.Height = new GridLength(0);
+            rowDetails.MinHeight = 0;
         }
 
         // event just to update main window's "isDirty" value

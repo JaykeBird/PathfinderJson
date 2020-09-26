@@ -52,9 +52,9 @@
                     <ColumnDefinition Width="1*"/>
                     <ColumnDefinition Width="1*"/>
                 </Grid.ColumnDefinitions>
-                <TextBox x:Name="txtOther" Height="22" Margin="0,0,10,0" VerticalAlignment="Center" TextChanged="textbox_TextChanged" Grid.Row="1"/>
+                <TextBox x:Name="txtOther" MinHeight="24" Margin="0,0,10,0" VerticalAlignment="Center" TextChanged="textbox_TextChanged" Grid.Row="1"/>
                 <TextBlock x:Name="lblOther" HorizontalAlignment="Left" Text="Other" VerticalAlignment="Center"/>
-                <TextBox x:Name="txtTemp" Height="22" VerticalAlignment="Center" Grid.Column="1" TextChanged="textbox_TextChanged" Grid.Row="1"/>
+                <TextBox x:Name="txtTemp" MinHeight="24" VerticalAlignment="Center" Grid.Column="1" TextChanged="textbox_TextChanged" Grid.Row="1"/>
                 <TextBlock x:Name="lblTemp" HorizontalAlignment="Left" Text="Temporary" VerticalAlignment="Center" Grid.Column="1"/>
                 <GridSplitter x:Name="gridSplitter" Width="10" Background="#01000000" Grid.RowSpan="2" />
 

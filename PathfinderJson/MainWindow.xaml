@@ -507,7 +507,7 @@
 
                     </StackPanel>
                 </Grid>
-                <Grid Margin="5,5,5,0" x:Name="grdCombat" Visibility="Collapsed" >
+                <Grid Margin="5,5,5,0" x:Name="grdCombat" >
                     <Grid.RowDefinitions>
                         <RowDefinition Height="25"/>
                         <RowDefinition/>
@@ -516,7 +516,7 @@
                         <RowDefinition Height="37" />
                         <RowDefinition/>
                         <RowDefinition/>
-                        <RowDefinition Height="75" />
+                        <RowDefinition Height="Auto" />
                         <RowDefinition Height="40" />
                         <RowDefinition/>
                         <RowDefinition Height="40" />
@@ -533,14 +533,32 @@
                     </Grid>
                     <local:ArmorClassEditor Grid.Row="2" Margin="5,5,0,0" x:Name="edtAc" ContentChanged="editor_ContentChanged" />
                     <local:CompoundEditor Grid.Row="3" Margin="5,5,0,0" x:Name="edtInit" Title="Initiative" ModifierTitle="Dex Mod" ContentChanged="editor_ContentChanged" />
-                    <TextBlock x:Name="lblBab" HorizontalAlignment="Left" Margin="15,0,0,0" Grid.Row="4" Text="Base Attack Bonus (BAB)" FontWeight="Bold" VerticalAlignment="Center"/>
-                    <TextBox x:Name="txtBab" HorizontalAlignment="Left" Height="23" Margin="170,0,0,0" Grid.Row="4" VerticalAlignment="Center" Width="100" TextChanged="textbox_TextChanged" LostFocus="txtBab_LostFocus" />
+                    <Grid HorizontalAlignment="Left" Margin="15,0,0,0" Grid.Row="4" VerticalAlignment="Center" >
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="1*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock x:Name="lblBab" HorizontalAlignment="Left" Text="Base Attack Bonus (BAB)" FontWeight="Bold" VerticalAlignment="Center" Margin="0,0,5,0" />
+                        <TextBox x:Name="txtBab" HorizontalAlignment="Center" MinHeight="23" VerticalAlignment="Center" MinWidth="100" TextChanged="textbox_TextChanged" LostFocus="txtBab_LostFocus" Grid.Column="1" />
+                    </Grid>
                     <local:CompoundEditor Grid.Row="5" Margin="5,5,0,0" x:Name="edtCmb" Title="Combat Maneuver Bonus (CMB)" ModifierTitle="Str Mod" BaseTitle="BAB" CanEditBase="False" ContentChanged="editor_ContentChanged" />
                     <local:CompoundEditor Grid.Row="6" Margin="5,5,0,0" x:Name="edtCmd" Title="Combat Maneuver Defense (CMD)" ModifierTitle="Str Mod" Modifier2Title="Dex Mod" BaseTitle="BAB" CanEditBase="False" ShowPlusTen="True" ContentChanged="editor_ContentChanged" />
-                    <TextBlock x:Name="lblDr" HorizontalAlignment="Left" Margin="15,18,0,0" Grid.Row="7" Text="Damage Reduction (DR)" VerticalAlignment="Top"/>
-                    <TextBox x:Name="txtDr" Height="24" Margin="159,15,10,0" Grid.Row="7" VerticalAlignment="Top" TextChanged="textbox_TextChanged"/>
-                    <TextBlock x:Name="lblResist" HorizontalAlignment="Left" Margin="15,48,0,0" Grid.Row="7" Text="Resistances" VerticalAlignment="Top"/>
-                    <TextBox x:Name="txtResist" Height="23" Margin="159,44,10,0" Grid.Row="7" VerticalAlignment="Top" TextChanged="textbox_TextChanged"/>
+                    <Grid HorizontalAlignment="Stretch" Margin="15" Grid.Row="7" VerticalAlignment="Top">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="3" />
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock x:Name="lblDr" Margin="0,0,3,0" HorizontalAlignment="Left" Text="Damage Reduction (DR)" VerticalAlignment="Center"/>
+                        <TextBox x:Name="txtDr" MinHeight="24" VerticalAlignment="Top" TextChanged="textbox_TextChanged" Grid.Column="1"/>
+                        <TextBlock x:Name="lblResist" HorizontalAlignment="Left" Text="Resistances" VerticalAlignment="Center" Grid.Row="2"/>
+                        <TextBox x:Name="txtResist" MinHeight="24" VerticalAlignment="Center" TextChanged="textbox_TextChanged" Grid.Column="1" Grid.Row="2"/>
+
+                    </Grid>
 
                     <TextBlock x:Name="lblMelee" HorizontalAlignment="Left" Margin="15,12,0,0" Grid.Row="8" Text="Melee Weapons" FontWeight="SemiBold" VerticalAlignment="Top"/>
                     <Expander VerticalAlignment="Center" Margin="120,0,0,0" HorizontalAlignment="Left" Grid.Row="8" x:Name="expMelee" Header="Show/Hide List" IsExpanded="True" Expanded="ExpMelee_Expanded" Collapsed="ExpMelee_Collapsed" Foreground="{Binding Foreground, ElementName=window}" />

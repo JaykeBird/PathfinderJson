@@ -10,7 +10,7 @@
              d:DesignHeight="200" d:DesignWidth="500">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="36"/>
+            <RowDefinition Height="Auto" MinHeight="36"/>
             <RowDefinition x:Name="rowDetails" Height="0" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -18,9 +18,16 @@
             <ColumnDefinition Width="5*"/>
             <ColumnDefinition Width="4*"/>
         </Grid.ColumnDefinitions>
-        <TextBlock Text="Name" Margin="10,0,0,0" HorizontalAlignment="Left"  VerticalAlignment="Center" Height="16" />
-        <TextBox x:Name="txtName" Height="23" Margin="55,8,120,0" VerticalAlignment="Top" Grid.ColumnSpan="3" />
-        <Expander x:Name="expander" Grid.Column="2" Header="Details" HorizontalAlignment="Right" Margin="0,8,20,0" VerticalAlignment="Top" Width="80" Expanded="Expander_Expanded" Collapsed="Expander_Collapsed" Height="23" Foreground="{Binding Foreground, ElementName=selectableUserControl}" />
+        <Grid MinHeight="23" Margin="10,8,10,0" Grid.ColumnSpan="3" VerticalAlignment="Top" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" MinWidth="45" />
+                <ColumnDefinition/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Text="Name" Margin="0,0,10,0" HorizontalAlignment="Left" VerticalAlignment="Center" />
+            <TextBox x:Name="txtName" MinHeight="23" Margin="0,0,2,0" VerticalAlignment="Center" TextChanged="textbox_TextChanged" Grid.Column="1"/>
+            <Expander x:Name="expander" Header="Details" HorizontalAlignment="Left" Margin="15,0,0,0" VerticalAlignment="Center" MinWidth="80" Expanded="Expander_Expanded" Collapsed="Expander_Collapsed" Foreground="{Binding Foreground, ElementName=selectableUserControl}" Grid.Column="2" />
+        </Grid>
         <TextBlock Text="Attack" Margin="10,7,0,0" HorizontalAlignment="Left"  VerticalAlignment="Top" Grid.Row="1" Height="16" />
         <TextBox x:Name="txtAttack" Height="23" Margin="55,5,13,0" VerticalAlignment="Top" Grid.Row="1" TextChanged="textbox_TextChanged"/>
         <TextBlock Text="Damage" Margin="0,7,0,0" HorizontalAlignment="Left"  VerticalAlignment="Top" Grid.Column="1" Grid.Row="1" />
