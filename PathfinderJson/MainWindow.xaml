@@ -224,7 +224,7 @@
         <flat:SelectPanel Grid.Column="0" Grid.Row="2" x:Name="selTabs" MultiSelect="False" PanelBorderThickness="0,0,1,0" />
         <ScrollViewer Grid.Column="1" Grid.Row="2" x:Name="scrSheet" AllowDrop="True" Drop="scrSheet_Drop" >
             <StackPanel x:Name="stkSheet" >
-                <Grid Margin="5,5,5,0" x:Name="grdGeneral" >
+                <Grid Margin="5,5,5,0" x:Name="grdGeneral" Visibility="Collapsed" >
                     <Grid.RowDefinitions>
                         <RowDefinition Height="25"/>
                         <RowDefinition Height="Auto"/>
@@ -529,7 +529,7 @@
                         <TextBlock x:Name="titCombat" Text="Combat" FontSize="16" />
                     </Grid>
                     <Grid Margin="15,5" Grid.Row="1" >
-                        <flat:LinkTextBlock x:Name="lnkCombat" Text="View Combat page on D20PFSRD" HorizontalAlignment="Left" Click="lnkCombat_Click" Tag="https://www.d20pfsrd.com/gamemastering/combat/" Cursor="Hand" />
+                        <flat:LinkTextBlock x:Name="lnkCombat" Text="View Combat on D20PFSRD" HorizontalAlignment="Left" Click="lnkCombat_Click" Tag="https://www.d20pfsrd.com/gamemastering/combat/" Cursor="Hand" />
                     </Grid>
                     <local:ArmorClassEditor Grid.Row="2" Margin="5,5,0,0" x:Name="edtAc" ContentChanged="editor_ContentChanged" />
                     <local:CompoundEditor Grid.Row="3" Margin="5,5,0,0" x:Name="edtInit" Title="Initiative" ModifierTitle="Dex Mod" ContentChanged="editor_ContentChanged" />
@@ -593,16 +593,25 @@
                 </Grid>
                 <Grid Margin="5,5,5,0" x:Name="grdSpells" Visibility="Collapsed" >
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="55" />
+                        <RowDefinition Height="Auto" />
                         <RowDefinition Height="420"/>
                         <RowDefinition Height="40" />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
                     <Grid Margin="10,0,0,0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" MinHeight="25" />
+                            <RowDefinition Height="5" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
                         <TextBlock x:Name="titSpells" Text="Spells" FontSize="16" />
+                        <flat:LinkTextBlock x:Name="lnkMagic" Grid.Row="2" Text="View Magic on D20PFSRD" HorizontalAlignment="Left" Click="lnkCombat_Click" Tag="https://www.d20pfsrd.com/magic/" Cursor="Hand" />
+                        <flat:LinkTextBlock x:Name="lnkSpells" Grid.Row="3" Text="View All Spells on D20PFSRD" HorizontalAlignment="Left" Click="lnkCombat_Click" Tag="https://www.d20pfsrd.com/magic/all-spells/" Cursor="Hand" />
+                        <TextBlock x:Name="lblMoreSpells" HorizontalAlignment="Left" Margin="0,3,0,0" Grid.Row="4" Text="For spell-like abilities, see the Feats/Abilities section." VerticalAlignment="Top"/>
                     </Grid>
-                    <TextBlock x:Name="lblMoreSpells" HorizontalAlignment="Left" Margin="10,30,0,0" Text="For spell-like abilities, see the Feats/Abilities section." VerticalAlignment="Top"/>
-                    <Grid HorizontalAlignment="Center" Height="309" Margin="0,5,0,0" Grid.Row="1" VerticalAlignment="Top" Width="331">
+                    <Grid HorizontalAlignment="Center" MinHeight="309" Margin="0,5,0,0" Grid.Row="1" VerticalAlignment="Top" Width="331">
 
                         <TextBlock x:Name="lblSpellLevel0" HorizontalAlignment="Left" Margin="1,28,0,0" Text="0th level" VerticalAlignment="Top"/>
                         <TextBlock x:Name="lblSpellLevel1" HorizontalAlignment="Left" Margin="1,57,0,0" Text="1st level" VerticalAlignment="Top"/>
@@ -776,17 +785,25 @@
                 </Grid>
                 <Grid Margin="5,5,5,0" x:Name="grdItems">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="55" />
+                        <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="40" />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
                     <Grid Margin="10,0,0,0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" MinHeight="25" />
+                            <RowDefinition Height="5" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
                         <TextBlock x:Name="titItems" Text="Items" FontSize="16" />
+                        <flat:LinkTextBlock x:Name="lnkEquipment" Grid.Row="2" Text="View Equipment on D20PFSRD" HorizontalAlignment="Left" Click="lnkCombat_Click" Tag="https://www.d20pfsrd.com/equipment/" Cursor="Hand" />
+                        <flat:LinkTextBlock x:Name="lnkEq2" Grid.Row="3" Text="View Magic Items on D20PFSRD" HorizontalAlignment="Left" Click="lnkCombat_Click" Tag="https://www.d20pfsrd.com/magic-items/" Cursor="Hand" />
+                        <TextBlock x:Name="lblMoreItems" HorizontalAlignment="Left" Margin="0,3,0,0" Grid.Row="4" Text="For combat items (weapons, armor, etc.), see the Combat section." VerticalAlignment="Top"/>
                     </Grid>
-                    <TextBlock x:Name="lblMoreItems" HorizontalAlignment="Left" Margin="10,30,0,0" Text="For other items (weapons, armor, etc.), see the Combat section." VerticalAlignment="Top"/>
-
                     <TextBlock HorizontalAlignment="Left" Margin="15,10,0,0" Grid.Row="1" Text="Money" FontWeight="SemiBold" VerticalAlignment="Top"/>
                     <Grid HorizontalAlignment="Left" Margin="30,35,0,5" Grid.Row="1" VerticalAlignment="Top" >
                         <Grid.RowDefinitions>
