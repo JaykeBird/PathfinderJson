@@ -27,6 +27,7 @@ namespace PathfinderJson
             btnModifiers.ColorScheme = App.ColorScheme;
             imgEdit.ColorScheme = App.ColorScheme;
             imgInfo.ColorScheme = App.ColorScheme;
+            chkSkill.ColorScheme = App.ColorScheme;
             if (App.ColorScheme.IsHighContrast)
             {
                 txtModifier.BorderBrush = new SolidColorBrush(App.ColorScheme.LightDisabledColor);
@@ -268,6 +269,7 @@ namespace PathfinderJson
                 Background = new SolidColorBrush(Colors.Transparent);
 
                 colModifiers.Width = new GridLength(0);
+                colModifiers.MinWidth = 0;
                 expander.IsEnabled = false;
                 btnModifiers.IsEnabled = false;
                 colExtra.Width = new GridLength(3, GridUnitType.Star);
@@ -275,7 +277,8 @@ namespace PathfinderJson
             }
             else
             {
-                colModifiers.Width = new GridLength(85);
+                colModifiers.Width = new GridLength(0, GridUnitType.Auto);
+                colModifiers.MinWidth = 85;
                 expander.IsEnabled = true;
                 btnModifiers.IsEnabled = true;
                 colExtra.MinWidth = 0;

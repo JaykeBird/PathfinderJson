@@ -11,16 +11,16 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="2*" x:Name="colName" />
             <ColumnDefinition Width="170" x:Name="colBase" />
-            <ColumnDefinition Width="85" x:Name="colModifiers" />
+            <ColumnDefinition MinWidth="85" Width="Auto" x:Name="colModifiers" />
             <ColumnDefinition Width="0" MinWidth="0" x:Name="colExtra" />
             <!--<ColumnDefinition Width="0" x:Name="colName" />
             <ColumnDefinition Width="0" x:Name="colBase" />
             <ColumnDefinition Width="85" x:Name="colModifiers" />
             <ColumnDefinition Width="1*" x:Name="colExtra" />-->
         </Grid.ColumnDefinitions>
-        <CheckBox x:Name="chkSkill" Margin="5,0,0,0" VerticalAlignment="Center" Checked="chkSkill_Checked" Unchecked="chkSkill_Unchecked" >
+        <flat:CheckBox x:Name="chkSkill" Margin="5,0,0,0" Padding="0" VerticalAlignment="Center" Checked="chkSkill_Checked" Unchecked="chkSkill_Unchecked" >
             <TextBlock x:Name="txtName" Text="Knowledge (engineering)" TextTrimming="CharacterEllipsis" Foreground="{Binding Foreground, ElementName=userControl}" />
-        </CheckBox>
+        </flat:CheckBox>
         <flat:FlatButton Width="20" Height="24" HorizontalAlignment="Right" Padding="0" TransparentBack="True" x:Name="btnEdit" Click="btnEdit_Click" ToolTip="Edit Specialization" >
             <local:ThemedImage x:Name="imgEdit" ImageName="Edit" ColorTheme="Color" Width="16" Height="16" />
         </flat:FlatButton>
@@ -28,19 +28,26 @@
         <TextBox x:Name="txtTotal" MinHeight="22" Margin="5,0,0,0" VerticalAlignment="Center" Grid.Column="1" Width="38" HorizontalAlignment="Left" TextChanged="textbox_TextChanged"/>
         <TextBox x:Name="txtModifier" MinHeight="22" Margin="85,0,0,0" VerticalAlignment="Center" Grid.Column="1" Width="38" HorizontalAlignment="Left" IsReadOnly="True" />
         <TextBox x:Name="txtRanks" MinHeight="22" Margin="127,0,0,0" VerticalAlignment="Center" Grid.Column="1" Width="38" HorizontalAlignment="Left" TextChanged="textbox_TextChanged"/>
-        <Grid Grid.Column="3" Height="22">
-            <TextBlock HorizontalAlignment="Left" Text="Racial" VerticalAlignment="Top" Margin="5,4,0,0" />
-            <TextBlock HorizontalAlignment="Left" Text="Trait" Height="16" VerticalAlignment="Top" Margin="94,4,0,0" />
-            <TextBlock HorizontalAlignment="Left" Text="Misc" Height="16" VerticalAlignment="Top" Margin="175,4,0,0" />
-            <TextBox x:Name="txtRacial" MinHeight="22" Margin="41,0,0,0" VerticalAlignment="Center" Width="38" HorizontalAlignment="Left" TextChanged="textbox_TextChanged"/>
-            <TextBox x:Name="txtTrait" MinHeight="22" Margin="121,0,0,0" VerticalAlignment="Center" Width="38" HorizontalAlignment="Left" TextChanged="textbox_TextChanged"/>
-            <TextBox x:Name="txtMisc" MinHeight="22" Margin="204,0,28,0" VerticalAlignment="Center" TextChanged="textbox_TextChanged"/>
-            <flat:FlatButton Width="20" Height="22" HorizontalAlignment="Right" Padding="0" Margin="0,0,2,0" TransparentBack="True" x:Name="btnInfo" Click="btnInfo_Click" ToolTip="More info on D20PFSRD" >
+        <Grid Grid.Column="3" VerticalAlignment="Center" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="1*" MinWidth="20" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <StackPanel Grid.Column="0" MinHeight="22" Orientation="Horizontal" >
+                <TextBlock Text="Racial" VerticalAlignment="Center" Margin="5,0,0,0" />
+                <TextBox x:Name="txtRacial" MinHeight="22" Margin="3,0,0,0" VerticalAlignment="Center" Width="38" TextChanged="textbox_TextChanged"/>
+                <TextBlock Text="Trait" VerticalAlignment="Center" Margin="5,0,0,0" />
+                <TextBox x:Name="txtTrait" MinHeight="22" Margin="3,0,0,0" VerticalAlignment="Center" Width="38" TextChanged="textbox_TextChanged"/>
+                <TextBlock Text="Misc" VerticalAlignment="Center" Margin="5,0,0,0" />
+            </StackPanel>
+            <TextBox x:Name="txtMisc" MinHeight="22" Margin="3,0" VerticalAlignment="Center" Grid.Column="1" TextChanged="textbox_TextChanged"/>
+            <flat:FlatButton Width="20" Height="22" Padding="0" VerticalAlignment="Center" Grid.Column="2"  TransparentBack="True" x:Name="btnInfo" Click="btnInfo_Click" ToolTip="More info on D20PFSRD" >
                 <local:ThemedImage x:Name="imgInfo" ImageName="Info" ColorTheme="Color" Width="16" Height="16" />
             </flat:FlatButton>
         </Grid>
         <TextBlock x:Name="lblSkillAbility" Grid.Column="1" HorizontalAlignment="Left" Text="STR" VerticalAlignment="Center" Margin="53,0,0,0"/>
-        <flat:FlatButton Grid.Column="2" VerticalAlignment="Stretch" Margin="0" TransparentBack="True" x:Name="btnModifiers" Click="btnModifiers_Click" Padding="0" HorizontalAlignment="Stretch" Width="85" >
+        <flat:FlatButton Grid.Column="2" VerticalAlignment="Stretch" Margin="0" TransparentBack="True" x:Name="btnModifiers" Click="btnModifiers_Click" Padding="0" HorizontalAlignment="Stretch" >
             <Grid>
                 <Expander x:Name="expander" Grid.Column="2" Header="More" HorizontalAlignment="Left" Height="24" Margin="-2,0,0,0" ExpandDirection="Left" VerticalAlignment="Center" Width="23" Expanded="Expander_Expanded" Collapsed="Expander_Collapsed" />
                 <TextBlock x:Name="textBlock" Grid.Column="2" HorizontalAlignment="Left" Margin="22,2,0,0" Text="Modifiers" />
