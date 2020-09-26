@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:flat="clr-namespace:SolidShineUi;assembly=SolidShineUi"
         mc:Ignorable="d" x:Name="window"
-        Title="About" Height="400" Width="500" ResizeMode="NoResize" CaptionDisplayType="Close" >
+        Title="About" Height="420" Width="500" ResizeMode="NoResize" CaptionDisplayType="Close" >
     <ScrollViewer VerticalScrollBarVisibility="Auto">
         <Grid>
             <Grid.RowDefinitions>

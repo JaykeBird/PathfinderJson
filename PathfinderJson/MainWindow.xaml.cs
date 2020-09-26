@@ -1525,13 +1525,15 @@ namespace PathfinderJson
         {
             if (show)
             {
-                rowToolbar.Height = new GridLength(28);
+                rowToolbar.Height = new GridLength(1, GridUnitType.Auto);
+                rowToolbar.MinHeight = 28;
                 toolbar.IsEnabled = true;
                 mnuToolbar.IsChecked = true;
             }
             else
             {
                 rowToolbar.Height = new GridLength(0);
+                rowToolbar.MinHeight = 0;
                 toolbar.IsEnabled = false;
                 mnuToolbar.IsChecked = false;
             }
