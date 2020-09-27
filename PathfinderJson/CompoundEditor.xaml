@@ -25,23 +25,33 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <Grid VerticalAlignment="Top" >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="Auto" MinWidth="35" />
+                </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
-                <TextBox x:Name="txtBase" HorizontalAlignment="Left" MinHeight="22" VerticalAlignment="Center" Width="50" TextChanged="textbox_TextChanged" Grid.Row="1"/>
+                <TextBox x:Name="txtBase" MinHeight="22" VerticalAlignment="Center" TextChanged="textbox_TextChanged" Grid.Row="1" Margin="0,0,8,0"/>
                 <TextBlock x:Name="lblBase" HorizontalAlignment="Left" Text="Base" VerticalAlignment="Center"/>
-                <TextBox x:Name="txtMagic" HorizontalAlignment="Left" MinHeight="22" Margin="58,0,0,0" VerticalAlignment="Center" Width="50" TextChanged="textbox_TextChanged" Grid.Row="1"/>
-                <TextBlock x:Name="lblMagic" HorizontalAlignment="Left" Margin="58,0,0,0" Text="Magic" VerticalAlignment="Center"/>
-                <TextBox x:Name="txtSize" HorizontalAlignment="Left" MinHeight="22" Margin="118,0,0,0" VerticalAlignment="Center" Width="50" TextChanged="textbox_TextChanged" Grid.Row="1"/>
-                <TextBlock x:Name="lblSize" HorizontalAlignment="Left" Margin="118,0,0,0" Text="Size" VerticalAlignment="Center"/>
-                <TextBox x:Name="txtModifier" IsEnabled="False" HorizontalAlignment="Left" MinHeight="22" Margin="178,0,0,0" VerticalAlignment="Center" Width="50" Grid.Row="1"/>
-                <TextBlock x:Name="lblModifier" HorizontalAlignment="Left" Margin="178,0,0,0" Text="(modifier)" VerticalAlignment="Center"/>
-                <TextBox x:Name="txtModifier2" IsEnabled="False" HorizontalAlignment="Left" MinHeight="22" Margin="238,0,0,0" VerticalAlignment="Center" Width="50" Grid.Row="1" Visibility="Collapsed" />
-                <TextBlock x:Name="lblModifier2" HorizontalAlignment="Left" Margin="238,0,0,0" Text="(modifier)" VerticalAlignment="Center" Visibility="Collapsed" />
-                <TextBox x:Name="txtMisc" HorizontalAlignment="Left" MinHeight="22" Margin="298,0,0,0" VerticalAlignment="Center" Width="50" TextChanged="textbox_TextChanged" Grid.Row="1"/>
-                <TextBlock x:Name="lblMisc" HorizontalAlignment="Left" Margin="298,0,0,0" Text="Misc" VerticalAlignment="Center"/>
+                <TextBox x:Name="txtMagic" MinHeight="22" VerticalAlignment="Center" TextChanged="textbox_TextChanged" Grid.Row="1" Grid.Column="1" Margin="0,0,8,0"/>
+                <TextBlock x:Name="lblMagic" HorizontalAlignment="Left" Text="Magic" VerticalAlignment="Center" Grid.Column="1"/>
+                <TextBox x:Name="txtSize" MinHeight="22" VerticalAlignment="Center" TextChanged="textbox_TextChanged" Grid.Row="1" Grid.Column="2" Margin="0,0,8,0"/>
+                <TextBlock x:Name="lblSize" HorizontalAlignment="Left" Text="Size" VerticalAlignment="Center" Grid.Column="2"/>
+                <TextBox x:Name="txtModifier" IsEnabled="False" MinHeight="22" VerticalAlignment="Center" Grid.Row="1" Grid.Column="3" Margin="0,0,8,0"/>
+                <TextBlock x:Name="lblModifier" HorizontalAlignment="Left" Text="(modifier)" VerticalAlignment="Center" Grid.Column="3"/>
+                <TextBox x:Name="txtModifier2" IsEnabled="False" MinHeight="22" VerticalAlignment="Center" Grid.Row="1" Grid.Column="4" Margin="0,0,8,0" Visibility="Collapsed" />
+                <TextBlock x:Name="lblModifier2" HorizontalAlignment="Left" Text="(modifier)" VerticalAlignment="Center" Grid.Column="4" Visibility="Collapsed" />
+                <TextBox x:Name="txtMisc" MinHeight="22" VerticalAlignment="Center" TextChanged="textbox_TextChanged" Grid.Row="1" Grid.Column="5" Margin="0,0,8,0"/>
+                <TextBlock x:Name="lblMisc" HorizontalAlignment="Left" Text="Misc" VerticalAlignment="Center" Grid.Column="5"/>
+                <TextBlock x:Name="lblPlusTen" HorizontalAlignment="Left" Text="+10" FontWeight="SemiBold" FontSize="14" VerticalAlignment="Center" Grid.Row="1" Grid.Column="6" Margin="3,0,0,0" Visibility="Collapsed" />
             </Grid>
             <Grid MinHeight="38" Margin="0,5,0,0" VerticalAlignment="Top" Grid.Row="1">
                 <Grid.RowDefinitions>
@@ -60,7 +70,7 @@
 
             </Grid>
         </Grid>
-        <TextBlock x:Name="lblPlusTen" HorizontalAlignment="Left" Margin="368,22,0,0" Text="+10" FontWeight="SemiBold" FontSize="14" VerticalAlignment="Top" Grid.Row="1" Visibility="Collapsed"  />
+
 
     </Grid>
 </UserControl>
