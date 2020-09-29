@@ -10,16 +10,24 @@
         mc:Ignorable="d" x:Name="window"
         Title="Update Available" Height="430" Width="500">
     <Grid>
-        <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Margin="20,20,0,0" Text="An update is available to download!" VerticalAlignment="Top"/>
-        <TextBlock x:Name="lblTitle" HorizontalAlignment="Left" Margin="20,50,0,0" Text="(Title)" FontSize="16" FontWeight="SemiBold" VerticalAlignment="Top"/>
-        <TextBlock x:Name="lblTag" HorizontalAlignment="Left" Margin="20,75,0,0" Text="(tag) - (publish date)" VerticalAlignment="Top"/>
-        <Border x:Name="brdrViewer" Margin="20,100,20,70" BorderBrush="Black" BorderThickness="1" Background="White" >
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Margin="20,20,0,20" Text="An update is available to download!" VerticalAlignment="Top"/>
+        <TextBlock x:Name="lblTitle" HorizontalAlignment="Left" Margin="20,5,0,0" Text="(Title)" FontSize="16" FontWeight="SemiBold" VerticalAlignment="Top" Grid.Row="1"/>
+        <TextBlock x:Name="lblTag" HorizontalAlignment="Left" Margin="20,5,0,5" Text="(tag) - (publish date)" Grid.Row="2"/>
+        <Border x:Name="brdrViewer" Margin="20,1,20,2" BorderBrush="Black" BorderThickness="1" Background="White" Grid.Row="3" >
             <md:MarkdownViewer x:Name="lblMarkdown" Padding="3" />
         </Border>
-        <TextBlock x:Name="textBlock_Copy" HorizontalAlignment="Left" Margin="20,0,0,45" Text="Select what option you would like to take." VerticalAlignment="Bottom"/>
-        <flat:FlatButton x:Name="btnViewWebsite" ColorScheme="{Binding ColorScheme, ElementName=window}" Content="View/Download" Margin="0,0,105,14" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="120" Click="btnViewWebsite_Click" />
-        <flat:FlatButton x:Name="btnDownloadNow" Content="Download Update" ColorScheme="{Binding ColorScheme, ElementName=window}" HorizontalAlignment="Left" Margin="160,0,0,14" VerticalAlignment="Bottom" Width="120" Visibility="Collapsed" />
-        <flat:FlatButton x:Name="btnClose" Content="Cancel" ColorScheme="{Binding ColorScheme, ElementName=window}" HorizontalAlignment="Right" Margin="0,0,20,14" VerticalAlignment="Bottom" Width="80" Click="btnClose_Click" />
+        <TextBlock x:Name="textBlock_Copy" HorizontalAlignment="Left" Margin="20,10,0,10" Text="Select what option you would like to take." VerticalAlignment="Center" Grid.Row="4"/>
+        <flat:FlatButton x:Name="btnViewWebsite" ColorScheme="{Binding ColorScheme, ElementName=window}" Content="View/Download" Margin="0,0,105,14" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="120" Click="btnViewWebsite_Click" Grid.Row="5" />
+        <flat:FlatButton x:Name="btnDownloadNow" Content="Download Update" ColorScheme="{Binding ColorScheme, ElementName=window}" HorizontalAlignment="Left" Margin="160,0,0,14" VerticalAlignment="Bottom" Width="120" Visibility="Collapsed" Grid.Row="5" />
+        <flat:FlatButton x:Name="btnClose" Content="Cancel" ColorScheme="{Binding ColorScheme, ElementName=window}" HorizontalAlignment="Right" Margin="0,0,20,14" VerticalAlignment="Bottom" Width="80" Click="btnClose_Click" Grid.Row="5" />
 
     </Grid>
 </flat:FlatWindow>
