@@ -5,68 +5,123 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="New Character Sheet" Height="640" Width="400" CaptionDisplayType="Close" SourceInitialized="window_SourceInitialized" >
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="470"/>
-            <RowDefinition Height="Auto" MinHeight="30" />
-            <RowDefinition Height="1*"/>
-        </Grid.RowDefinitions>
-        <TextBlock x:Name="lblCreate" HorizontalAlignment="Left" Margin="15,10,0,0" Text="To create a new Pathfinder character sheet, &#x0d;&#x0a;begin with filling in the data below:" VerticalAlignment="Top"/>
-        <TextBlock x:Name="lblCharacterName" HorizontalAlignment="Left" Margin="15,60,0,0" Text="Character name" VerticalAlignment="Top"/>
-        <TextBox x:Name="txtCharacterName" Margin="15,76,20,0" Height="24" VerticalAlignment="Top"/>
-        <TextBlock x:Name="lblCharacterLevel" HorizontalAlignment="Left" Margin="15,110,0,0" Text="Class(es) / Level" VerticalAlignment="Top"/>
-        <TextBox x:Name="txtCharacterLevel" Margin="15,126,20,0" Height="24" VerticalAlignment="Top"/>
+        Title="New Character Sheet" Height="650" MinHeight="580" Width="400" MinWidth="350" CaptionDisplayType="Close" SourceInitialized="window_SourceInitialized" >
+    <ScrollViewer VerticalScrollBarVisibility="Auto" >
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto" MinHeight="30" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <TextBlock x:Name="lblCreate" Margin="15,10,15,10" Text="To create a new Pathfinder character sheet, &#x0d;&#x0a;begin with filling in the data below:" />
+            <Grid Margin="10,0,10,0" Grid.Row="1" VerticalAlignment="Center" >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <TextBlock x:Name="lblCharacterName" HorizontalAlignment="Left" Text="Character name" VerticalAlignment="Center"/>
+                <TextBox x:Name="txtCharacterName" MinHeight="24" VerticalAlignment="Top" Grid.Row="1"/>
+                <TextBlock x:Name="lblCharacterLevel" HorizontalAlignment="Left" Margin="0,7,0,0" Text="Class(es) / Level" VerticalAlignment="Top" Grid.Row="2" />
+                <TextBox x:Name="txtCharacterLevel" MinHeight="24" VerticalAlignment="Top" Grid.Row="3"/>
 
-        <flat:IntegerSpinner x:Name="txtStr" HorizontalAlignment="Left" Height="23" Margin="157,187,0,0" VerticalAlignment="Top" Width="60" ValueChanged="txtStr_ValueChanged" MinValue="0" Value="10" MaxValue="40" AcceptExpressions="True" ColorScheme="{Binding ColorScheme, ElementName=window}" />
-        <flat:IntegerSpinner x:Name="txtDex" HorizontalAlignment="Left" Height="23" Margin="157,215,0,0" VerticalAlignment="Top" Width="60" ValueChanged="txtStr_ValueChanged" MinValue="0" Value="10" MaxValue="40" AcceptExpressions="True" ColorScheme="{Binding ColorScheme, ElementName=window}" />
-        <flat:IntegerSpinner x:Name="txtCon" HorizontalAlignment="Left" Height="23" Margin="157,243,0,0" VerticalAlignment="Top" Width="60" ValueChanged="txtStr_ValueChanged" MinValue="0" Value="10" MaxValue="40" AcceptExpressions="True" ColorScheme="{Binding ColorScheme, ElementName=window}" />
-        <flat:IntegerSpinner x:Name="txtInt" HorizontalAlignment="Left" Height="23" Margin="157,271,0,0" VerticalAlignment="Top" Width="60" ValueChanged="txtStr_ValueChanged" MinValue="0" Value="10" MaxValue="40" AcceptExpressions="True" ColorScheme="{Binding ColorScheme, ElementName=window}" />
-        <flat:IntegerSpinner x:Name="txtWis" HorizontalAlignment="Left" Height="23" Margin="157,299,0,0" VerticalAlignment="Top" Width="60" ValueChanged="txtStr_ValueChanged" MinValue="0" Value="10" MaxValue="40" AcceptExpressions="True" ColorScheme="{Binding ColorScheme, ElementName=window}" />
-        <flat:IntegerSpinner x:Name="txtCha" HorizontalAlignment="Left" Height="23" Margin="157,327,0,0" VerticalAlignment="Top" Width="60" ValueChanged="txtStr_ValueChanged" MinValue="0" Value="10" MaxValue="40" AcceptExpressions="True" ColorScheme="{Binding ColorScheme, ElementName=window}" />
-        <TextBlock x:Name="lblStr" HorizontalAlignment="Left" Margin="40,190,0,0" Text="STR" FontWeight="Bold" VerticalAlignment="Top" />
-        <TextBlock x:Name="lblDex" HorizontalAlignment="Left" Margin="40,220,0,0" Text="DEX" FontWeight="Bold" VerticalAlignment="Top"/>
-        <TextBlock x:Name="lblCon" HorizontalAlignment="Left" Margin="40,248,0,0" Text="CON" FontWeight="Bold" VerticalAlignment="Top"/>
-        <TextBlock x:Name="lblInt" HorizontalAlignment="Left" Margin="40,276,0,0" Text="INT" FontWeight="Bold" VerticalAlignment="Top"/>
-        <TextBlock x:Name="lblWis" HorizontalAlignment="Left" Margin="40,304,0,0" Text="WIS" FontWeight="Bold" VerticalAlignment="Top"/>
-        <TextBlock x:Name="lblCha" HorizontalAlignment="Left" Margin="40,332,0,0" Text="CHA" FontWeight="Bold" VerticalAlignment="Top"/>
-        <TextBlock x:Name="lblStr_Copy" HorizontalAlignment="Left" Margin="75,190,0,0" Text="Strength" VerticalAlignment="Top"/>
-        <TextBlock x:Name="lblDex_Copy" HorizontalAlignment="Left" Margin="75,220,0,0" Text="Dexterity" VerticalAlignment="Top"/>
-        <TextBlock x:Name="lblCon_Copy" HorizontalAlignment="Left" Margin="75,248,0,0" Text="Constitution" VerticalAlignment="Top"/>
-        <TextBlock x:Name="lblInt_Copy" HorizontalAlignment="Left" Margin="75,276,0,0" Text="Intelligence" VerticalAlignment="Top"/>
-        <TextBlock x:Name="lblWis_Copy" HorizontalAlignment="Left" Margin="75,304,0,0" Text="Wisdom" VerticalAlignment="Top"/>
-        <TextBlock x:Name="lblCha_Copy" HorizontalAlignment="Left" Margin="75,332,0,0" Text="Charisma" VerticalAlignment="Top"/>
-        <TextBox x:Name="txtStrm" HorizontalAlignment="Left" Height="23" Margin="280,187,0,0" VerticalAlignment="Top" Width="40" IsEnabled="False" Text="+0" />
-        <TextBox x:Name="txtDexm" HorizontalAlignment="Left" Height="23" Margin="280,215,0,0" VerticalAlignment="Top" Width="40" IsEnabled="False" Text="+0" />
-        <TextBox x:Name="txtConm" HorizontalAlignment="Left" Height="23" Margin="280,243,0,0" VerticalAlignment="Top" Width="40" IsEnabled="False" Text="+0" />
-        <TextBox x:Name="txtIntm" HorizontalAlignment="Left" Height="23" Margin="280,271,0,0" VerticalAlignment="Top" Width="40" IsEnabled="False" Text="+0" />
-        <TextBox x:Name="txtWism" HorizontalAlignment="Left" Height="23" Margin="280,299,0,0" VerticalAlignment="Top" Width="40" IsEnabled="False" Text="+0" />
-        <TextBox x:Name="txtCham" HorizontalAlignment="Left" Height="23" Margin="280,327,0,0" VerticalAlignment="Top" Width="40" IsEnabled="False" Text="+0" />
-        <TextBlock HorizontalAlignment="Left" Margin="231,190,0,0" Text="modifier" VerticalAlignment="Top"/>
-        <TextBlock HorizontalAlignment="Left" Margin="231,220,0,0" Text="modifier" VerticalAlignment="Top"/>
-        <TextBlock HorizontalAlignment="Left" Margin="231,248,0,0" Text="modifier" VerticalAlignment="Top"/>
-        <TextBlock HorizontalAlignment="Left" Margin="231,276,0,0" Text="modifier" VerticalAlignment="Top"/>
-        <TextBlock HorizontalAlignment="Left" Margin="231,304,0,0" Text="modifier" VerticalAlignment="Top"/>
-        <TextBlock HorizontalAlignment="Left" Margin="231,332,0,0" Text="modifier" VerticalAlignment="Top"/>
-        <TextBlock x:Name="lblCharacterScores" HorizontalAlignment="Left" Margin="15,167,0,0" Text="Base Ability Scores" VerticalAlignment="Top"/>
-
-        <TextBlock x:Name="lblPlayer" HorizontalAlignment="Left" Margin="15,374,0,0" Text="Edit player data (optional)" VerticalAlignment="Top"/>
-        <TextBlock x:Name="lblPlayerName" HorizontalAlignment="Left" Margin="40,399,0,0" Text="Player name:" VerticalAlignment="Top"/>
-        <TextBlock x:Name="txtPlayerName" Margin="120,399,20,0" Text="(not set)" TextTrimming="CharacterEllipsis" VerticalAlignment="Top"/>
-        <flat:FlatButton x:Name="btnEditData" ColorScheme="{Binding ColorScheme, ElementName=window}" Content="Edit Player Data..." Margin="40,424,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="120" Click="btnEditData_Click" />
-        <flat:FlatButton x:Name="btnImportData" Content="Import from File..." ColorScheme="{Binding ColorScheme, ElementName=window}" HorizontalAlignment="Left" Margin="165,424,0,0" VerticalAlignment="Top" Width="120" Click="btnImportData_Click" />
-
-        <Expander x:Name="expander" Header="Set file name/location (optional)" Margin="15,4,20,0" VerticalAlignment="Top" Grid.Row="1" Foreground="{Binding Foreground, ElementName=window}">
-            <Grid Height="65">
-                <TextBlock x:Name="txtFilename" Margin="25,15,125,0" Text="(location not set)" TextTrimming="CharacterEllipsis" VerticalAlignment="Top"/>
-                <flat:FlatButton x:Name="btnBrowse" ColorScheme="{Binding ColorScheme, ElementName=window}" Content="Browse Location..." Margin="0,12,0,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="120" Click="btnBrowse_Click" />
-                <CheckBox x:Name="chkNoLoc" HorizontalAlignment="Left" Margin="25,44,0,0" VerticalAlignment="Top" Checked="chkNoLoc_Checked" IsChecked="True">
-                    <TextBlock Text="Don't set a file location right now" Foreground="{Binding Foreground, ElementName=window}" />
-                </CheckBox>
             </Grid>
-        </Expander>
 
-        <flat:FlatButton x:Name="btnCreate" ColorScheme="{Binding ColorScheme, ElementName=window}" Content="Create" Margin="0,0,105,10" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="80" Click="btnCreate_Click" Grid.Row="2" />
-        <flat:FlatButton x:Name="btnClose" Content="Cancel" ColorScheme="{Binding ColorScheme, ElementName=window}" HorizontalAlignment="Right" Margin="0,0,20,10" VerticalAlignment="Bottom" Width="80" Click="btnClose_Click" Grid.Row="2" />
-    </Grid>
+            <Grid HorizontalAlignment="Left" Margin="40,10,0,10" Grid.Row="3">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" MinHeight="28" />
+                    <RowDefinition Height="Auto" MinHeight="28" />
+                    <RowDefinition Height="Auto" MinHeight="28" />
+                    <RowDefinition Height="Auto" MinHeight="28" />
+                    <RowDefinition Height="Auto" MinHeight="28" />
+                    <RowDefinition Height="Auto" MinHeight="28" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" MinWidth="33"/>
+                    <ColumnDefinition Width="Auto" MinWidth="84"/>
+                    <ColumnDefinition Width="Auto" MinWidth="63"/>
+                    <ColumnDefinition Width="Auto" MinWidth="59"/>
+                    <ColumnDefinition Width="Auto" MinWidth="42"/>
+                </Grid.ColumnDefinitions>
+
+                <flat:IntegerSpinner x:Name="txtStr" HorizontalAlignment="Left" Margin="3,0" MinHeight="24" VerticalAlignment="Center" Width="60" ValueChanged="txtStr_ValueChanged" MinValue="-99" MaxValue="999" Value="10" AcceptExpressions="True" ColorScheme="{Binding ColorScheme, ElementName=window}" Grid.Column="2" />
+                <flat:IntegerSpinner x:Name="txtDex" HorizontalAlignment="Left" Margin="3,0" MinHeight="24" VerticalAlignment="Center" Width="60" ValueChanged="txtStr_ValueChanged" MinValue="-99" MaxValue="999" Value="10" AcceptExpressions="True" ColorScheme="{Binding ColorScheme, ElementName=window}" Grid.Column="2" Grid.Row="1" />
+                <flat:IntegerSpinner x:Name="txtCon" HorizontalAlignment="Left" Margin="3,0" MinHeight="24" VerticalAlignment="Center" Width="60" ValueChanged="txtStr_ValueChanged" MinValue="-99" MaxValue="999" Value="10" AcceptExpressions="True" ColorScheme="{Binding ColorScheme, ElementName=window}" Grid.Column="2" Grid.Row="2" />
+                <flat:IntegerSpinner x:Name="txtInt" HorizontalAlignment="Left" Margin="3,0" MinHeight="24" VerticalAlignment="Center" Width="60" ValueChanged="txtStr_ValueChanged" MinValue="-99" MaxValue="999" Value="10" AcceptExpressions="True" ColorScheme="{Binding ColorScheme, ElementName=window}" Grid.Column="2" Grid.Row="3" />
+                <flat:IntegerSpinner x:Name="txtWis" HorizontalAlignment="Left" Margin="3,0" MinHeight="24" VerticalAlignment="Center" Width="60" ValueChanged="txtStr_ValueChanged" MinValue="-99" MaxValue="999" Value="10" AcceptExpressions="True" ColorScheme="{Binding ColorScheme, ElementName=window}" Grid.Column="2" Grid.Row="4" />
+                <flat:IntegerSpinner x:Name="txtCha" HorizontalAlignment="Left" Margin="3,0" MinHeight="24" VerticalAlignment="Center" Width="60" ValueChanged="txtStr_ValueChanged" MinValue="-99" MaxValue="999" Value="10" AcceptExpressions="True" ColorScheme="{Binding ColorScheme, ElementName=window}" Grid.Column="2" Grid.Row="5" />
+                <TextBlock x:Name="lblStr" HorizontalAlignment="Left" Text="STR" FontWeight="Bold" VerticalAlignment="Center" />
+                <TextBlock x:Name="lblDex" HorizontalAlignment="Left" Text="DEX" FontWeight="Bold" VerticalAlignment="Center" Grid.Row="1"/>
+                <TextBlock x:Name="lblCon" HorizontalAlignment="Left" Text="CON" FontWeight="Bold" VerticalAlignment="Center" Grid.Row="2"/>
+                <TextBlock x:Name="lblInt" HorizontalAlignment="Left" Text="INT" FontWeight="Bold" VerticalAlignment="Center" Grid.Row="3"/>
+                <TextBlock x:Name="lblWis" HorizontalAlignment="Left" Text="WIS" FontWeight="Bold" VerticalAlignment="Center" Grid.Row="4"/>
+                <TextBlock x:Name="lblCha" HorizontalAlignment="Left" Text="CHA" FontWeight="Bold" VerticalAlignment="Center" Grid.Row="5"/>
+                <TextBlock x:Name="lblStr_Copy" HorizontalAlignment="Left" Margin="2,0,0,0" Text="Strength" VerticalAlignment="Center" Grid.Column="1"/>
+                <TextBlock x:Name="lblDex_Copy" HorizontalAlignment="Left" Margin="2,0,0,0" Text="Dexterity" VerticalAlignment="Center" Grid.Column="1" Grid.Row="1"/>
+                <TextBlock x:Name="lblCon_Copy" HorizontalAlignment="Left" Margin="2,0,0,0" Text="Constitution" VerticalAlignment="Center" Grid.Column="1" Grid.Row="2"/>
+                <TextBlock x:Name="lblInt_Copy" HorizontalAlignment="Left" Margin="2,0,0,0" Text="Intelligence" VerticalAlignment="Center" Grid.Column="1" Grid.Row="3"/>
+                <TextBlock x:Name="lblWis_Copy" HorizontalAlignment="Left" Margin="2,0,0,0" Text="Wisdom" VerticalAlignment="Center" Grid.Column="1" Grid.Row="4"/>
+                <TextBlock x:Name="lblCha_Copy" HorizontalAlignment="Left" Margin="2,0,0,0" Text="Charisma" VerticalAlignment="Center" Grid.Column="1" Grid.Row="5"/>
+
+                <TextBox x:Name="txtStrm" HorizontalAlignment="Center" Margin="3,0" MinHeight="24" VerticalAlignment="Center" Width="40" IsReadOnly="True" Grid.Column="4"/>
+                <TextBox x:Name="txtDexm" HorizontalAlignment="Center" Margin="3,0" MinHeight="24" VerticalAlignment="Center" Width="40" IsReadOnly="True" Grid.Column="4" Grid.Row="1"/>
+                <TextBox x:Name="txtConm" HorizontalAlignment="Center" Margin="3,0" MinHeight="24" VerticalAlignment="Center" Width="40" IsReadOnly="True" Grid.Column="4" Grid.Row="2"/>
+                <TextBox x:Name="txtIntm" HorizontalAlignment="Center" Margin="3,0" MinHeight="24" VerticalAlignment="Center" Width="40" IsReadOnly="True" Grid.Column="4" Grid.Row="3"/>
+                <TextBox x:Name="txtWism" HorizontalAlignment="Center" Margin="3,0" MinHeight="24" VerticalAlignment="Center" Width="40" IsReadOnly="True" Grid.Column="4" Grid.Row="4"/>
+                <TextBox x:Name="txtCham" HorizontalAlignment="Center" Margin="3,0" MinHeight="24" VerticalAlignment="Center" Width="40" IsReadOnly="True" Grid.Column="4" Grid.Row="5"/>
+                <TextBlock HorizontalAlignment="Left" Margin="12,0,0,0" Text="modifier" VerticalAlignment="Center" Grid.Column="3"/>
+                <TextBlock HorizontalAlignment="Left" Margin="12,0,0,0" Text="modifier" VerticalAlignment="Center" Grid.Column="3" Grid.Row="1"/>
+                <TextBlock HorizontalAlignment="Left" Margin="12,0,0,0" Text="modifier" VerticalAlignment="Center" Grid.Column="3" Grid.Row="2"/>
+                <TextBlock HorizontalAlignment="Left" Margin="12,0,0,0" Text="modifier" VerticalAlignment="Center" Grid.Column="3" Grid.Row="3"/>
+                <TextBlock HorizontalAlignment="Left" Margin="12,0,0,0" Text="modifier" VerticalAlignment="Center" Grid.Column="3" Grid.Row="4"/>
+                <TextBlock HorizontalAlignment="Left" Margin="12,0,0,0" Text="modifier" VerticalAlignment="Center" Grid.Column="3" Grid.Row="5"/>
+            </Grid>
+
+            <TextBlock x:Name="lblCharacterScores" HorizontalAlignment="Left" Margin="15,10,0,3" Text="Base Ability Scores" VerticalAlignment="Top" Grid.Row="2" />
+
+            <TextBlock x:Name="lblPlayer" HorizontalAlignment="Left" Margin="15,5" Text="Edit player data (optional)" VerticalAlignment="Center" Grid.Row="4"/>
+            <Grid Margin="40,15,10,15" Grid.Row="5" VerticalAlignment="Center" >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <TextBlock x:Name="lblPlayerName" Text="Player name:" VerticalAlignment="Center" />
+                <TextBlock x:Name="txtPlayerName" Margin="10,0,0,0" Text="(not set)" TextTrimming="CharacterEllipsis" VerticalAlignment="Center" Grid.Column="1" Grid.ColumnSpan="2"/>
+                <flat:FlatButton x:Name="btnEditData" ColorScheme="{Binding ColorScheme, ElementName=window}" Content="Edit Player Data..." Margin="0,10,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" MinWidth="120" Click="btnEditData_Click" Grid.Row="1" Grid.ColumnSpan="2" />
+                <flat:FlatButton x:Name="btnImportData" Content="Import from File..." ColorScheme="{Binding ColorScheme, ElementName=window}" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" MinWidth="120" Click="btnImportData_Click" Grid.Row="1" Grid.Column="2" />
+
+            </Grid>
+
+            <Expander x:Name="expander" Header="Set file name/location (optional)" Margin="15,5,20,5" VerticalAlignment="Center" Grid.Row="6" Foreground="{Binding Foreground, ElementName=window}">
+                <Grid MinHeight="65">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock x:Name="txtFilename" Margin="25,13,0,0" Text="(location not set)" TextTrimming="CharacterEllipsis" VerticalAlignment="Top"/>
+                    <flat:FlatButton x:Name="btnBrowse" ColorScheme="{Binding ColorScheme, ElementName=window}" Content="Browse Location..." Margin="0,10,0,0" VerticalAlignment="Top" HorizontalAlignment="Right" MinWidth="120" Click="btnBrowse_Click" Grid.Column="1" />
+                    <flat:CheckBox x:Name="chkNoLoc" HorizontalAlignment="Left" Margin="25,6,0,0" VerticalAlignment="Top" Checked="chkNoLoc_Checked" IsChecked="True"
+                                   ColorScheme="{Binding ColorScheme, ElementName=window}" Grid.Row="1" Grid.ColumnSpan="2" Content="Don't set a file location right now" />
+                </Grid>
+            </Expander>
+
+            <flat:FlatButton x:Name="btnCreate" ColorScheme="{Binding ColorScheme, ElementName=window}" Content="Create" Margin="0,10,105,10" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="80" Click="btnCreate_Click" Grid.Row="7" />
+            <flat:FlatButton x:Name="btnClose" Content="Cancel" ColorScheme="{Binding ColorScheme, ElementName=window}" HorizontalAlignment="Right" Margin="0,10,20,10" VerticalAlignment="Bottom" Width="80" Click="btnClose_Click" Grid.Row="7" />
+        </Grid>
+    </ScrollViewer>
 </flat:FlatWindow>

@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using System.Windows.Threading;
 using SolidShineUi;
 using static PathfinderJson.CoreUtils;
 
@@ -18,7 +19,47 @@ namespace PathfinderJson
         {
             InitializeComponent();
 
+            txtStrm.Text = CalculateModifier(txtStr.Value);
+            txtDexm.Text = CalculateModifier(txtDex.Value);
+            txtCham.Text = CalculateModifier(txtCha.Value);
+            txtConm.Text = CalculateModifier(txtCon.Value);
+            txtIntm.Text = CalculateModifier(txtInt.Value);
+            txtWism.Text = CalculateModifier(txtWis.Value);
+
             ColorScheme = App.ColorScheme;
+
+            if (ColorScheme.IsHighContrast)
+            {
+                txtStrm.BorderBrush = new SolidColorBrush(App.ColorScheme.LightDisabledColor);
+                txtDexm.BorderBrush = new SolidColorBrush(App.ColorScheme.LightDisabledColor);
+                txtCham.BorderBrush = new SolidColorBrush(App.ColorScheme.LightDisabledColor);
+                txtConm.BorderBrush = new SolidColorBrush(App.ColorScheme.LightDisabledColor);
+                txtIntm.BorderBrush = new SolidColorBrush(App.ColorScheme.LightDisabledColor);
+                txtWism.BorderBrush = new SolidColorBrush(App.ColorScheme.LightDisabledColor);
+
+                txtStrm.Background = new SolidColorBrush(SystemColors.ControlColor);
+                txtDexm.Background = new SolidColorBrush(SystemColors.ControlColor);
+                txtCham.Background = new SolidColorBrush(SystemColors.ControlColor);
+                txtConm.Background = new SolidColorBrush(SystemColors.ControlColor);
+                txtIntm.Background = new SolidColorBrush(SystemColors.ControlColor);
+                txtWism.Background = new SolidColorBrush(SystemColors.ControlColor);
+            }
+            else
+            {
+                txtStrm.BorderBrush = new SolidColorBrush(SystemColors.ControlDarkColor);
+                txtDexm.BorderBrush = new SolidColorBrush(SystemColors.ControlDarkColor);
+                txtCham.BorderBrush = new SolidColorBrush(SystemColors.ControlDarkColor);
+                txtConm.BorderBrush = new SolidColorBrush(SystemColors.ControlDarkColor);
+                txtIntm.BorderBrush = new SolidColorBrush(SystemColors.ControlDarkColor);
+                txtWism.BorderBrush = new SolidColorBrush(SystemColors.ControlDarkColor);
+
+                txtStrm.Background = App.ColorScheme.SecondHighlightColor.ToBrush();
+                txtDexm.Background = App.ColorScheme.SecondHighlightColor.ToBrush();
+                txtCham.Background = App.ColorScheme.SecondHighlightColor.ToBrush();
+                txtConm.Background = App.ColorScheme.SecondHighlightColor.ToBrush();
+                txtIntm.Background = App.ColorScheme.SecondHighlightColor.ToBrush();
+                txtWism.Background = App.ColorScheme.SecondHighlightColor.ToBrush();
+            }
         }
 
         private void window_SourceInitialized(object sender, EventArgs e)

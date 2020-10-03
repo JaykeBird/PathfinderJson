@@ -1233,6 +1233,20 @@ namespace PathfinderJson
                 //    //    item.Foreground = App.ColorScheme.ForegroundColor.ToBrush();
                 //    //}
                 //}
+
+                txtStrm.BorderBrush = new SolidColorBrush(App.ColorScheme.LightDisabledColor);
+                txtDexm.BorderBrush = new SolidColorBrush(App.ColorScheme.LightDisabledColor);
+                txtCham.BorderBrush = new SolidColorBrush(App.ColorScheme.LightDisabledColor);
+                txtConm.BorderBrush = new SolidColorBrush(App.ColorScheme.LightDisabledColor);
+                txtIntm.BorderBrush = new SolidColorBrush(App.ColorScheme.LightDisabledColor);
+                txtWism.BorderBrush = new SolidColorBrush(App.ColorScheme.LightDisabledColor);
+
+                txtStrm.Background = new SolidColorBrush(SystemColors.ControlColor);
+                txtDexm.Background = new SolidColorBrush(SystemColors.ControlColor);
+                txtCham.Background = new SolidColorBrush(SystemColors.ControlColor);
+                txtConm.Background = new SolidColorBrush(SystemColors.ControlColor);
+                txtIntm.Background = new SolidColorBrush(SystemColors.ControlColor);
+                txtWism.Background = new SolidColorBrush(SystemColors.ControlColor);
             }
             else
             {
@@ -1247,6 +1261,20 @@ namespace PathfinderJson
                         item.Foreground = App.ColorScheme.DarkDisabledColor.ToBrush();
                     }
                 }
+
+                txtStrm.BorderBrush = new SolidColorBrush(SystemColors.ControlDarkColor);
+                txtDexm.BorderBrush = new SolidColorBrush(SystemColors.ControlDarkColor);
+                txtCham.BorderBrush = new SolidColorBrush(SystemColors.ControlDarkColor);
+                txtConm.BorderBrush = new SolidColorBrush(SystemColors.ControlDarkColor);
+                txtIntm.BorderBrush = new SolidColorBrush(SystemColors.ControlDarkColor);
+                txtWism.BorderBrush = new SolidColorBrush(SystemColors.ControlDarkColor);
+
+                txtStrm.Background = App.ColorScheme.SecondHighlightColor.ToBrush();
+                txtDexm.Background = App.ColorScheme.SecondHighlightColor.ToBrush();
+                txtCham.Background = App.ColorScheme.SecondHighlightColor.ToBrush();
+                txtConm.Background = App.ColorScheme.SecondHighlightColor.ToBrush();
+                txtIntm.Background = App.ColorScheme.SecondHighlightColor.ToBrush();
+                txtWism.Background = App.ColorScheme.SecondHighlightColor.ToBrush();
             }
 
             brdrCalculating.Background = App.ColorScheme.SecondaryColor.ToBrush();
@@ -1261,13 +1289,6 @@ namespace PathfinderJson
             expPhysical.Background = App.ColorScheme.LightBackgroundColor.ToBrush();
             expPhysical.BorderBrush = App.ColorScheme.ThirdHighlightColor.ToBrush();
             expPhysical.BorderThickness = new Thickness(1);
-
-            txtStrm.Background = App.ColorScheme.SecondHighlightColor.ToBrush();
-            txtDexm.Background = App.ColorScheme.SecondHighlightColor.ToBrush();
-            txtCham.Background = App.ColorScheme.SecondHighlightColor.ToBrush();
-            txtConm.Background = App.ColorScheme.SecondHighlightColor.ToBrush();
-            txtIntm.Background = App.ColorScheme.SecondHighlightColor.ToBrush();
-            txtWism.Background = App.ColorScheme.SecondHighlightColor.ToBrush();
 
             edtFort.UpdateAppearance();
             edtReflex.UpdateAppearance();

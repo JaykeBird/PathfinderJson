@@ -19,7 +19,7 @@
     </flat:FlatWindow.Resources>
     <flat:FlatWindow.TopRightElement>
         <Border x:Name="brdrCalculating" Margin="0,4" Visibility="Collapsed" BorderThickness="1" >
-            <TextBlock Text="Calculating..." Padding="4,0" VerticalAlignment="Center" />
+            <TextBlock Text="Calculating..." Padding="4,0" FontSize="12" VerticalAlignment="Center" />
         </Border>
     </flat:FlatWindow.TopRightElement>
     <Grid>
@@ -408,7 +408,6 @@
                         <TextBlock HorizontalAlignment="Left" Margin="12,0,0,0" Text="modifier" VerticalAlignment="Center" Grid.Column="3" Grid.Row="3"/>
                         <TextBlock HorizontalAlignment="Left" Margin="12,0,0,0" Text="modifier" VerticalAlignment="Center" Grid.Column="3" Grid.Row="4"/>
                         <TextBlock HorizontalAlignment="Left" Margin="12,0,0,0" Text="modifier" VerticalAlignment="Center" Grid.Column="3" Grid.Row="5"/>
-
                     </Grid>
 
                     <local:CompoundEditor Grid.Row="6" Margin="5,5,0,0" x:Name="edtFort" Title="Fortitude Save (CON)" ModifierTitle="Con Mod" ContentChanged="editor_ContentChanged" />
@@ -820,7 +819,7 @@
                     </flat:FlatButton>
                     <flat:SelectPanel ColorScheme="{Binding ColorScheme, ElementName=window}" x:Name="selSpellLikes" PanelBorderThickness="1" UseLighterBorder="True" MinHeight="3" Grid.Row="8" MultiSelect="True" />
                 </Grid>
-                <Grid Margin="5,5,5,0" x:Name="grdItems">
+                <Grid Margin="5,5,5,0" x:Name="grdItems" Visibility="Collapsed" >
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
@@ -829,7 +828,7 @@
                         <RowDefinition Height="40" />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
-                    <Grid Margin="10,0,0,0">
+                    <Grid Margin="10,0,0,0" >
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" MinHeight="25" />
                             <RowDefinition Height="5" />
