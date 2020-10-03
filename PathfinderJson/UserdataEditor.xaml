@@ -13,7 +13,7 @@
         <TextBlock x:Name="lblTitle" HorizontalAlignment="Left" Margin="25,20,0,0" Text="Edit the player data below, or import data from another file." TextWrapping="Wrap" VerticalAlignment="Top"/>
 
         <TextBlock x:Name="lblProvider" HorizontalAlignment="Left" Margin="25,58,0,0" Text="Provider:" VerticalAlignment="Top"/>
-        <ComboBox x:Name="cbbProvider" HorizontalAlignment="Left" Margin="110,55,0,0" VerticalAlignment="Top" Width="120" SelectedIndex="0" >
+        <ComboBox x:Name="cbbProvider" HorizontalAlignment="Left" Margin="110,55,0,0" VerticalAlignment="Top" MinWidth="120" SelectedIndex="0" >
             <system:String>Google</system:String>
             <system:String>Github</system:String>
             <system:String>Local/Unknown</system:String>
@@ -51,7 +51,7 @@
         </flat:FlatButton>
         <flat:SelectPanel ColorScheme="{Binding ColorScheme, ElementName=window}" x:Name="selPhotos" PanelBorderThickness="1" UseLighterBorder="True" MinHeight="3" MultiSelect="True" Margin="20,320,20,0" Height="80" VerticalAlignment="Top" />
 
-        <flat:FlatButton x:Name="btnImport" Content="Import From File..." ColorScheme="{Binding ColorScheme, ElementName=window}" HorizontalAlignment="Left" Margin="20,0,0,14" VerticalAlignment="Bottom" Width="120" Click="btnImport_Click" />
+        <flat:FlatButton x:Name="btnImport" Content="Import From File..." ColorScheme="{Binding ColorScheme, ElementName=window}" HorizontalAlignment="Left" Margin="20,0,0,14" VerticalAlignment="Bottom" MinWidth="120" Click="btnImport_Click" />
 
         <flat:FlatButton x:Name="btnSave" ColorScheme="{Binding ColorScheme, ElementName=window}" Content="Save" Margin="0,0,105,14" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="80" Click="btnSave_Click" />
         <flat:FlatButton x:Name="btnClose" Content="Cancel" ColorScheme="{Binding ColorScheme, ElementName=window}" HorizontalAlignment="Right" Margin="0,0,20,14" VerticalAlignment="Bottom" Width="80" Click="btnClose_Click" />

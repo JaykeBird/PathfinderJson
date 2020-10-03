@@ -120,6 +120,45 @@ namespace PathfinderJson
             return new BitmapImage(new Uri("pack://application:,,,/Images/" + name, UriKind.RelativeOrAbsolute));
         }
 
+        public static BitmapImage GetResourcesImage(string name, ColorScheme cs)
+        {
+            if (!name.EndsWith(".png"))
+            {
+                name += ".png";
+            }
+
+            ImageColor _theme = ImageColor.Color;
+
+            if (cs.IsHighContrast)
+            {
+                if (cs.BackgroundColor == Colors.Black)
+                {
+                    _theme = ImageColor.White;
+                }
+                else
+                {
+                    _theme = ImageColor.Black;
+                }
+            }
+            else
+            {
+                if (cs.BackgroundColor == Colors.Black)
+                {
+                    _theme = ImageColor.White;
+                }
+                else if (cs.BackgroundColor == Colors.White)
+                {
+                    _theme = ImageColor.Black;
+                }
+                else
+                {
+                    _theme = ImageColor.Color;
+                }
+            }
+
+            return new BitmapImage(new Uri("pack://application:,,,/Images/" + _theme.ToString("g") + "/" + name, UriKind.RelativeOrAbsolute));
+        }
+
         private void Application_Startup(object sender, StartupEventArgs e)
         {
             string appDataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "PathfinderJson");

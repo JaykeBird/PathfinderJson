@@ -39,12 +39,14 @@ namespace PathfinderJson
                 SelectableItem si = new SelectableItem(item.Value);
                 si.AllowTextEditing = true;
 
-                if (!ColorScheme.IsHighContrast)
-                {
-                    var img = App.GetResourcesImage("Color/Email");
-                    si.ImageSource = img;
-                    si.ShowImage = true;
-                }
+                //if (!ColorScheme.IsHighContrast)
+                //{
+
+                //}
+
+                var img = App.GetResourcesImage("Email", ColorScheme);
+                si.ImageSource = img;
+                si.ShowImage = true;
 
                 selEmails.AddItem(si);
             }
@@ -54,11 +56,13 @@ namespace PathfinderJson
                 SelectableItem si = new SelectableItem(item.Value ?? "");
                 si.AllowTextEditing = true;
 
-                if (!ColorScheme.IsHighContrast)
-                {
-                    si.ImageSource = App.GetResourcesImage("Color/Link");
-                    si.ShowImage = true;
-                }
+                //if (!ColorScheme.IsHighContrast)
+                //{
+
+                //}
+
+                si.ImageSource = App.GetResourcesImage("Link", ColorScheme);
+                si.ShowImage = true;
 
                 selPhotos.AddItem(si);
             }
@@ -124,11 +128,8 @@ namespace PathfinderJson
             SelectableItem si = new SelectableItem();
             si.AllowTextEditing = true;
 
-            if (!ColorScheme.IsHighContrast)
-            {
-                si.ImageSource = App.GetResourcesImage("Email");
-                si.ShowImage = true;
-            }
+            si.ImageSource = App.GetResourcesImage("Email", ColorScheme);
+            si.ShowImage = true;
 
             selEmails.AddItem(si);
             si.DisplayEditText();
@@ -149,11 +150,8 @@ namespace PathfinderJson
             SelectableItem si = new SelectableItem();
             si.AllowTextEditing = true;
 
-            if (!ColorScheme.IsHighContrast)
-            {
-                si.ImageSource = App.GetResourcesImage("Link");
-                si.ShowImage = true;
-            }
+            si.ImageSource = App.GetResourcesImage("Link", ColorScheme);
+            si.ShowImage = true;
 
             selPhotos.AddItem(si);
             si.DisplayEditText();
