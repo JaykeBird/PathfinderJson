@@ -57,7 +57,7 @@ namespace PathfinderJson
 
         private void Expander_Expanded(object sender, RoutedEventArgs e)
         {
-            rowDetails.Height = new GridLength(1, GridUnitType.Star);
+            rowDetails.Height = new GridLength(1, GridUnitType.Auto);
         }
 
         private void Expander_Collapsed(object sender, RoutedEventArgs e)
