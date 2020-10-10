@@ -186,6 +186,8 @@ namespace PathfinderJson
             mnuIndent.IsChecked = App.Settings.IndentJsonData;
             mnuAutoCheck.IsChecked = App.Settings.UpdateAutoCheck;
 
+            mnuFilename.IsChecked = App.Settings.PathInTitleBar;
+
             foreach (string file in App.Settings.RecentFiles)//.Reverse<string>())
             {
                 AddRecentFile(file, false);
@@ -334,6 +336,8 @@ namespace PathfinderJson
 
             mnuIndent.IsChecked = App.Settings.IndentJsonData;
             mnuAutoCheck.IsChecked = App.Settings.UpdateAutoCheck;
+
+            mnuFilename.IsChecked = App.Settings.PathInTitleBar;
 
             if (App.Settings.RecentFiles.Count > 20)
             {
@@ -1709,7 +1713,7 @@ namespace PathfinderJson
             SaveSettings();
         }
 
-        private void MnuFilename_Click(object sender, RoutedEventArgs e)
+        private void mnuFilename_Click(object sender, RoutedEventArgs e)
         {
             if (mnuFilename.IsChecked)
             {

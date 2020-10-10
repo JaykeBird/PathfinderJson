@@ -153,7 +153,7 @@
                 </MenuItem>
                 <MenuItem Header="Use _High Contrast..." x:Name="mnuHighContrast" Click="mnuHighContrast_Click" />
                 <Separator />
-                <MenuItem Header="_Filename in Titlebar" x:Name="mnuFilename" Click="MnuFilename_Click" />
+                <MenuItem Header="_Filename in Titlebar" x:Name="mnuFilename" Click="mnuFilename_Click" />
             </MenuItem>
             <MenuItem Header="_Tools">
                 <MenuItem Header="_Dice Roller" x:Name="mnuDiceRoll" Click="mnuDiceRoll_Click" />
