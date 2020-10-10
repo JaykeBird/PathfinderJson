@@ -5,16 +5,16 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:flat="clr-namespace:SolidShineUi;assembly=SolidShineUi"
         mc:Ignorable="d" x:Name="window"
-        Title="About" Height="420" Width="500" ResizeMode="NoResize" CaptionDisplayType="Close" >
+        Title="About" Height="440" Width="500" ResizeMode="NoResize" CaptionDisplayType="Close" >
     <ScrollViewer VerticalScrollBarVisibility="Auto">
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition/>
+                <RowDefinition Height="Auto" MinHeight="110" />
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto" MinHeight="35" />
                 <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto" MinHeight="40" />
+                <RowDefinition Height="1*" MinHeight="40" />
             </Grid.RowDefinitions>
             <Image HorizontalAlignment="Left" Height="48" Margin="15,20,0,0" VerticalAlignment="Top" Width="48" Source="/Icon48.png"/>
             <TextBlock HorizontalAlignment="Left" Margin="75,20,0,0" Text="Pathfinder JSON Character Sheet Editor" FontSize="16" FontWeight="SemiBold" VerticalAlignment="Top"/>
@@ -49,9 +49,9 @@
                 <Hyperlink RequestNavigate="Hyperlink_RequestNavigate" NavigateUri="https://paizo.com/" TextDecorations="" >paizo.com</Hyperlink><Run>.</Run>
             </TextBlock>
 
-            <flat:FlatButton x:Name="btnPlatformInfo" ColorScheme="{Binding ColorScheme, ElementName=window}" Content="Platform Info" Margin="10,0,0,0" VerticalAlignment="Center" Click="BtnPlatformInfo_Click" HorizontalAlignment="Left" MinWidth="95" Grid.Row="5" />
-            <flat:FlatButton x:Name="btnThirdParty" Content="Third Party Credits" ColorScheme="{Binding ColorScheme, ElementName=window}" HorizontalAlignment="Left" Margin="110,0,0,0" VerticalAlignment="Center" MinWidth="120" Click="BtnThirdParty_Click" Grid.Row="5" />
-            <flat:FlatButton x:Name="btnClose" Content="OK" ColorScheme="{Binding ColorScheme, ElementName=window}" HorizontalAlignment="Right" Margin="0,0,15,0" VerticalAlignment="Center" MinWidth="80" Click="btnClose_Click" Grid.Row="5" />
+            <flat:FlatButton x:Name="btnPlatformInfo" ColorScheme="{Binding ColorScheme, ElementName=window}" Content="Platform Info" Margin="10,0,0,10" VerticalAlignment="Bottom" Click="BtnPlatformInfo_Click" HorizontalAlignment="Left" MinWidth="95" Grid.Row="5" />
+            <flat:FlatButton x:Name="btnThirdParty" Content="Third Party Credits" ColorScheme="{Binding ColorScheme, ElementName=window}" HorizontalAlignment="Left" Margin="110,0,0,10" VerticalAlignment="Bottom" MinWidth="120" Click="BtnThirdParty_Click" Grid.Row="5" />
+            <flat:FlatButton x:Name="btnClose" Content="OK" ColorScheme="{Binding ColorScheme, ElementName=window}" Margin="0,0,15,10" VerticalAlignment="Bottom" MinWidth="80" Click="btnClose_Click" Grid.Row="5" HorizontalAlignment="Right" Width="80" />
         </Grid>
     </ScrollViewer>
 </flat:FlatWindow>
