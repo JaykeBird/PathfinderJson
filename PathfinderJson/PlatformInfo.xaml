@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:PathfinderJson"
         xmlns:flat="clr-namespace:SolidShineUi;assembly=SolidShineUi"
         mc:Ignorable="d"
-        Title="Platform Info" Height="250" Width="340" ResizeMode="NoResize" CaptionDisplayType="Close" >
+        Title="Platform Info" Height="250" Width="340" FontSize="12" ResizeMode="NoResize" CaptionDisplayType="Close" >
     <Grid>
         <flat:FlatButton x:Name="btnClose" Content="OK" HorizontalAlignment="Center" Margin="0,0,0,10" VerticalAlignment="Bottom" Width="80" Click="btnClose_Click"/>
         <TextBlock HorizontalAlignment="Left" Margin="10,20,0,0" Text="Platform Information" VerticalAlignment="Top"/>

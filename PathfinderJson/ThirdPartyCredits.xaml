@@ -15,47 +15,47 @@
         <ScrollViewer Margin="0,50,0,50">
             <StackPanel>
                 <Expander x:Name="expSolidShineUi" Header="SolidShineUi (Application UI)" Margin="3" Foreground="{Binding Foreground, ElementName=window}" >
-                    <Grid Margin="10,5">
+                    <StackPanel Margin="10,5">
                         <TextBlock HorizontalAlignment="Left" Margin="0,0,0,0" Text="Application UI designed using SolidShineUi library" VerticalAlignment="Top"/>
-                        <TextBlock HorizontalAlignment="Left" Margin="0,20,0,0" Text="Developed/compiled by Jayke R. Huempfner" VerticalAlignment="Top"/>
-                        <flat:LinkTextBlock HorizontalAlignment="Left" Margin="0,36,0,0" Text="https://jaykebird.com/software/SolidShineUi" VerticalAlignment="Top" AutoSetLinkFromText="True" Cursor="Hand" DisabledBrush="{Binding ColorScheme.LightDisabledColor, Converter={StaticResource ColorToBrushConverter}, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type flat:FlatWindow}}}" />
-                        <TextBlock Margin="0,58,10,0" VerticalAlignment="Top" Height="50" TextWrapping="Wrap"
+                        <TextBlock HorizontalAlignment="Left" Margin="0,5,0,0" Text="Developed/compiled by Jayke R. Huempfner" VerticalAlignment="Top"/>
+                        <flat:LinkTextBlock HorizontalAlignment="Left" Margin="0,2,0,0" Text="https://jaykebird.com/software/SolidShineUi" VerticalAlignment="Top" AutoSetLinkFromText="True" Cursor="Hand" DisabledBrush="{Binding ColorScheme.LightDisabledColor, Converter={StaticResource ColorToBrushConverter}, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type flat:FlatWindow}}}" />
+                        <TextBlock Margin="0,8,10,0" VerticalAlignment="Top" MinHeight="50" TextWrapping="Wrap"
                    Text="Contributing work by Manuel Schweigert, Pete Laker, Steve Lautenschlager, Richard Moss (Cyotek Ltd.), Warren Galyen (Mechanika Design), Oleg V. Polikarpotchkin, Yassine (Stopbyte), Hector Pulido, Sebastien Lambla, and Nimgoble" />
-                        <TextBlock HorizontalAlignment="Left" Margin="0,110,0,0" Text="Licensed under MIT License" VerticalAlignment="Top"/>
-                        <TextBlock HorizontalAlignment="Left" Margin="0,126,0,0" Text="View website for more details." VerticalAlignment="Top"/>
-                    </Grid>
+                        <TextBlock HorizontalAlignment="Left" Margin="0,10,0,0" Text="Licensed under MIT License" VerticalAlignment="Top"/>
+                        <TextBlock HorizontalAlignment="Left" Margin="0,2,0,0" Text="View website for more details." VerticalAlignment="Top"/>
+                    </StackPanel>
                 </Expander>
                 <Expander x:Name="expJson" Header="Newtonsoft.Json (JSON Handling)" Margin="3" Foreground="{Binding Foreground, ElementName=window}" >
-                    <Grid Margin="10,5">
+                    <StackPanel Margin="10,5">
                         <TextBlock HorizontalAlignment="Left" Margin="0,0,0,0" Text="JSON handling done using Newtonsoft.Json library" VerticalAlignment="Top"/>
-                        <TextBlock HorizontalAlignment="Left" Margin="0,20,0,0" Text="Developed by James Newton-King" VerticalAlignment="Top"/>
-                        <flat:LinkTextBlock HorizontalAlignment="Left" Margin="0,36,0,0" Text="https://newtonsoft.com/json" VerticalAlignment="Top" AutoSetLinkFromText="True" Cursor="Hand" />
-                        <TextBlock HorizontalAlignment="Left" Margin="0,52,0,0" Text="Licensed under MIT License" VerticalAlignment="Top"/>
-                    </Grid>
+                        <TextBlock HorizontalAlignment="Left" Margin="0,5,0,0" Text="Developed by James Newton-King" VerticalAlignment="Top"/>
+                        <flat:LinkTextBlock HorizontalAlignment="Left" Margin="0,2,0,0" Text="https://newtonsoft.com/json" VerticalAlignment="Top" AutoSetLinkFromText="True" Cursor="Hand" />
+                        <TextBlock HorizontalAlignment="Left" Margin="0,8,0,0" Text="Licensed under MIT License" VerticalAlignment="Top"/>
+                    </StackPanel>
                 </Expander>
                 <Expander x:Name="expAvalon" Header="AvalonEdit (JSON Text Editor)" Margin="3" Foreground="{Binding Foreground, ElementName=window}" >
-                    <Grid Margin="10,5">
+                    <StackPanel Margin="10,5">
                         <TextBlock HorizontalAlignment="Left" Margin="0,0,0,0" Text="Text Editor built using AvalonEdit library" VerticalAlignment="Top"/>
-                        <TextBlock HorizontalAlignment="Left" Margin="0,20,0,0" Text="Developed by icsharpcode" VerticalAlignment="Top"/>
-                        <flat:LinkTextBlock HorizontalAlignment="Left" Margin="0,36,0,0" Text="https://avalonedit.net" VerticalAlignment="Top" AutoSetLinkFromText="True" Cursor="Hand" />
-                        <TextBlock HorizontalAlignment="Left" Margin="0,52,0,0" Text="Licensed under MIT License" VerticalAlignment="Top"/>
-                    </Grid>
+                        <TextBlock HorizontalAlignment="Left" Margin="0,5,0,0" Text="Developed by icsharpcode" VerticalAlignment="Top"/>
+                        <flat:LinkTextBlock HorizontalAlignment="Left" Margin="0,2,0,0" Text="https://avalonedit.net" VerticalAlignment="Top" AutoSetLinkFromText="True" Cursor="Hand" />
+                        <TextBlock HorizontalAlignment="Left" Margin="0,8,0,0" Text="Licensed under MIT License" VerticalAlignment="Top"/>
+                    </StackPanel>
                 </Expander>
                 <Expander x:Name="expMark1" Header="MarkDig (Markdown text parsing)" Margin="3" Foreground="{Binding Foreground, ElementName=window}" >
-                    <Grid Margin="10,5">
+                    <StackPanel Margin="10,5">
                         <TextBlock HorizontalAlignment="Left" Margin="0,0,0,0" Text="Markdown handling done using MarkDig library" VerticalAlignment="Top"/>
-                        <TextBlock HorizontalAlignment="Left" Margin="0,20,0,0" Text="Developed by Alexandre Mutel (xoofx)" VerticalAlignment="Top"/>
-                        <flat:LinkTextBlock HorizontalAlignment="Left" Margin="0,36,0,0" Text="https://github.com/lunet-io/markdig" VerticalAlignment="Top" AutoSetLinkFromText="True" Cursor="Hand" />
-                        <TextBlock HorizontalAlignment="Left" Margin="0,52,0,0" Text="Licensed under BSD License" VerticalAlignment="Top"/>
-                    </Grid>
+                        <TextBlock HorizontalAlignment="Left" Margin="0,5,0,0" Text="Developed by Alexandre Mutel (xoofx)" VerticalAlignment="Top"/>
+                        <flat:LinkTextBlock HorizontalAlignment="Left" Margin="0,2,0,0" Text="https://github.com/lunet-io/markdig" VerticalAlignment="Top" AutoSetLinkFromText="True" Cursor="Hand" />
+                        <TextBlock HorizontalAlignment="Left" Margin="0,8,0,0" Text="Licensed under BSD License" VerticalAlignment="Top"/>
+                    </StackPanel>
                 </Expander>
                 <Expander x:Name="expMark2" Header="MarkDig.Wpf (Markdown text display)" Margin="3" Foreground="{Binding Foreground, ElementName=window}" >
-                    <Grid Margin="10,5">
+                    <StackPanel Margin="10,5">
                         <TextBlock HorizontalAlignment="Left" Margin="0,0,0,0" Text="Markdown Display built using MarkDig.Wpf library" VerticalAlignment="Top"/>
-                        <TextBlock HorizontalAlignment="Left" Margin="0,20,0,0" Text="Developed by Nicolas Musset (Kryptos-FR)" VerticalAlignment="Top"/>
-                        <flat:LinkTextBlock HorizontalAlignment="Left" Margin="0,36,0,0" Text="https://github.com/Kryptos-FR/markdig.wpf" VerticalAlignment="Top" AutoSetLinkFromText="True" Cursor="Hand" />
-                        <TextBlock HorizontalAlignment="Left" Margin="0,52,0,0" Text="Licensed under MIT License" VerticalAlignment="Top"/>
-                    </Grid>
+                        <TextBlock HorizontalAlignment="Left" Margin="0,5,0,0" Text="Developed by Nicolas Musset (Kryptos-FR)" VerticalAlignment="Top"/>
+                        <flat:LinkTextBlock HorizontalAlignment="Left" Margin="0,2,0,0" Text="https://github.com/Kryptos-FR/markdig.wpf" VerticalAlignment="Top" AutoSetLinkFromText="True" Cursor="Hand" />
+                        <TextBlock HorizontalAlignment="Left" Margin="0,8,0,0" Text="Licensed under MIT License" VerticalAlignment="Top"/>
+                    </StackPanel>
                 </Expander>
             </StackPanel>
         </ScrollViewer>

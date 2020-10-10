@@ -20,7 +20,7 @@
             <TextBlock HorizontalAlignment="Left" Margin="75,20,0,0" Text="Pathfinder JSON Character Sheet Editor" FontSize="16" FontWeight="SemiBold" VerticalAlignment="Top"/>
             <TextBlock Margin="75,50,40,0" TextWrapping="Wrap" VerticalAlignment="Top" 
                     Text="Character sheet editor for JSON files, such as those exported by Mottokrosh's Pathfinder character sheet website (for Pathfinder 1e)" />
-            <Grid HorizontalAlignment="Left" VerticalAlignment="Center" Width="440" Margin="15,10,0,10" Grid.Row="1">
+            <Grid HorizontalAlignment="Left" VerticalAlignment="Center" MinWidth="440" Margin="15,10,0,10" Grid.Row="1">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
