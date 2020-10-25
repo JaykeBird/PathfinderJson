@@ -76,6 +76,12 @@ namespace PathfinderJson
             set => nudLevel.Value = value;
         }
 
+        public bool Marked
+        {
+            get => chkMarked.IsChecked.GetValueOrDefault(false);
+            set => chkMarked.IsChecked = value;
+        }
+
         private void Expander_Expanded(object sender, RoutedEventArgs e)
         {
             rowDetails.Height = new GridLength(1, GridUnitType.Star);

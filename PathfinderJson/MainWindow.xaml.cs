@@ -3601,6 +3601,8 @@ namespace PathfinderJson
         private void mnuSpellFilter_Click(object sender, RoutedEventArgs e)
         {
             List<int> AllowedLevels = new List<int>();
+            bool allowMarked = true;
+            bool allowUnmarked = true;
 
             if (mnuSpellFilter0.IsChecked) AllowedLevels.Add(0);
             if (mnuSpellFilter1.IsChecked) AllowedLevels.Add(1);
@@ -3613,11 +3615,22 @@ namespace PathfinderJson
             if (mnuSpellFilter8.IsChecked) AllowedLevels.Add(8);
             if (mnuSpellFilter9.IsChecked) AllowedLevels.Add(9);
 
+            allowMarked = mnuSpellFilterM.IsChecked;
+            allowUnmarked = mnuSpellFilterUM.IsChecked;
+
             foreach (SpellEditor item in selSpells.GetItemsAsType<SpellEditor>())
             {
                 if (AllowedLevels.Contains(item.Level))
                 {
-                    item.Visibility = Visibility.Visible;
+                    if (item.Marked && allowMarked || !item.Marked && allowUnmarked)
+                    {
+                        item.Visibility = Visibility.Visible;
+                    }
+                    else
+                    {
+                        item.Visibility = Visibility.Collapsed;
+                        item.IsSelected = false; // don't have hidden items be selected
+                    }
                 }
                 else
                 {
