@@ -11,6 +11,11 @@
             text-overflow: ellipsis;
         }
 
+        div
+        {
+            page-break-inside: avoid;
+        }
+
         .top-input
         {
             border-bottom: 1px solid black;
@@ -43,6 +48,13 @@
             margin: 2px 2px;
         }
 
+        .full-width-list
+        {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+        }
+
         .grid-5col
         {
             display: grid;
@@ -59,6 +71,39 @@
             grid-template-columns: 20px minmax(0, 1fr) 60px 50px 60px 5px 60px 5px 60px;
             text-overflow: ellipsis;
             overflow: hidden;
+        }
+
+        .weapons-table-grid
+        {
+            display: grid;
+            margin: 5px 3px 0px 3px;
+            grid-gap: 0px;
+            white-space: nowrap;
+            grid-template-columns: 70px 120px minmax(0, 1fr) 120px 80px;
+            text-overflow: ellipsis;
+            overflow: hidden;
+        }
+
+        .table-header
+        {
+            background-color: black;
+            color: white;
+            margin: 0px;
+            padding: 0px 2px;
+            text-align: center;
+            min-height: 20px;
+            align-items: center;
+        }
+
+        .table-input
+        {
+            background-color: white;
+            color: black;
+            margin: 0px;
+            border: 1px solid black;
+            min-height: 40px;
+            text-align: center;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         .input-check
@@ -160,6 +205,14 @@
         {
             margin: 0px;
             padding: 0px;
+        }
+
+        @media print
+        {
+            body
+            {
+                zoom: 72%;
+            }
         }
     </style>
 </head>
@@ -347,22 +400,6 @@
                     <div>
                         <div style="margin-left: 4px; margin-top: 2px; font-size: 80%;">NONLETHAL DAMAGE</div><div class="input-box-no-label" style="height:70px;text-wrap: normal;"></div>
                     </div>
-                    <!--<div style="margin-top: 30px;">
-                        <div class="flex-holder">
-                            <div class="heading-box" style="width: 40%;">
-                                <p class="heading-box-text">INITIATIVE</p><p class="heading-box-desc">Modifier</p>
-                            </div>
-                            <div class="input-box" style="width: 20%;">
-                                <p class="input-box-label">TOTAL</p><p class="input-box-text"></p>
-                            </div>
-                            <div class="input-box" style="width: 20%;">
-                                <p class="input-box-label">DEX</p><p class="input-box-text"></p>
-                            </div>
-                            <div class="input-box" style="width: 20%;">
-                                <p class="input-box-label">Misc</p><p class="input-box-text"></p>
-                            </div>
-                        </div>
-                    </div>-->
                 </div>
             </div>
             <div class="flex-holder" style="margin-top: 10px;">
@@ -377,42 +414,27 @@
                 <div class="input-box" style="width: 15%;"><p class="input-box-label">Misc</p><p class="input-box-text"></p></div>
             </div>
             <div class="flex-holder" style="margin-top: 10px;">
-                <div class="heading-box" style="width: 10%;">
-                    <p class="heading-box-text">AC</p>
-                    <p class="heading-box-desc">Armor Class</p>
-                </div>
-                <div class="input-box" style="width: 10%;">
-                    <p class="input-box-label">Total</p><p class="input-box-text"></p>
-                </div>
-                <div style="width: 10%; text-align: center; vertical-align: middle; align-self: center;">= 10 +</div>
-                <div class="input-box" style="width: 10%;">
-                    <p class="input-box-label">Armor</p><p class="input-box-text"></p>
-                </div>
-                <div class="input-box" style="width: 10%;">
-                    <p class="input-box-label">Shield</p><p class="input-box-text"></p>
-                </div>
-                <div class="input-box" style="width: 10%;">
-                    <p class="input-box-label">DEX</p><p class="input-box-text"></p>
-                </div>
-                <div class="input-box" style="width: 10%;">
-                    <p class="input-box-label">Natural</p><p class="input-box-text"></p>
-                </div>
-                <div class="input-box" style="width: 10%;">
-                    <p class="input-box-label">Deflect</p><p class="input-box-text"></p>
-                </div>
-                <div class="input-box" style="width: 10%;">
-                    <p class="input-box-label">Size</p><p class="input-box-text"></p>
-                </div>
-                <div class="input-box" style="width: 10%;">
-                    <p class="input-box-label">Misc</p><p class="input-box-text"></p>
-                </div>
+                <div class="heading-box" style="width: 15%;"><p class="heading-box-text">AC</p><p class="heading-box-desc">Armor Class</p></div>
+                <div class="input-box" style="width: 10%;"><p class="input-box-label">Total</p><p class="input-box-text"></p></div>
+                <div style="width: 4%; text-align: center; vertical-align: middle; align-self: center;">=</div>
+                <div style="width: 6%; text-align: center; vertical-align: middle; align-self: center;">10 +</div>
+                <div class="input-box" style="width: 10%;"><p class="input-box-label">Armor</p><p class="input-box-text"></p></div>
+                <div class="input-box" style="width: 10%;"><p class="input-box-label">Shield</p><p class="input-box-text"></p></div>
+                <div class="input-box" style="width: 10%;"><p class="input-box-label">DEX</p><p class="input-box-text"></p></div>
+                <div class="input-box" style="width: 10%;"><p class="input-box-label">Natural</p><p class="input-box-text"></p></div>
+                <div class="input-box" style="width: 10%;"><p class="input-box-label">Deflect</p><p class="input-box-text"></p></div>
+            </div>
+            <div class="flex-holder">
+                <div class="input-box" style="width: 10%;"><p class="input-box-label">Size</p><p class="input-box-text"></p></div>
+                <div class="input-box" style="width: 45%;"><p class="input-box-label">Other</p><p class="input-box-text"></p></div>
+                <div class="input-box" style="width: 45%;"><p class="input-box-label">Misc</p><p class="input-box-text"></p></div>
             </div>
             <div class="flex-holder">
                 <div class="heading-box" style="width: 20%;"><p class="heading-box-text">TOUCH</p><p class="heading-box-desc">Armor Class</p></div>
                 <div class="input-box-no-label" style="width: 10%;"><p class="input-box-text"></p></div>
                 <div class="heading-box" style="width: 30%;"><p class="heading-box-text">FLAT-FOOTED</p><p class="heading-box-desc">Armor Class</p></div>
                 <div class="input-box-no-label" style="width: 10%;"><p class="input-box-text"></p></div>
-                <div class="input-box" style="width: 30%;"><p class="input-box-label">Misc/Temp Modifiers</p><p class="input-box-text"></p></div>
+                <!--<div class="input-box" style="width: 30%;"><p class="input-box-label">Misc/Temp Modifiers</p><p class="input-box-text"></p></div>-->
             </div>
             <div style="text-align: center; margin-top: 10px; margin-bottom: 2px;">Saving Throws</div>
             <div class="flex-holder">
@@ -454,14 +476,17 @@
             </div>
             <div class="flex-holder">
                 <div class="heading-box" style="width: 30%;"><p class="heading-box-text">CMB</p><p class="heading-box-desc">Combat Maneuver Bonus</p></div>
-                <div class="input-box" style="width: 7%;"><p class="input-box-label">Total</p><p class="input-box-text"></p></div>
-                <div style="width: 3%; text-align: center; vertical-align: middle; align-self: center;">=</div>
-                <div class="input-box" style="width: 7%;"><p class="input-box-label">BAB</p><p class="input-box-text"></p></div>
-                <div class="input-box" style="width: 7%;"><p class="input-box-label">STR</p><p class="input-box-text"></p></div>
-                <div class="input-box" style="width: 7%;"><p class="input-box-label">Magic</p><p class="input-box-text"></p></div>
-                <div class="input-box" style="width: 7%;"><p class="input-box-label">Size</p><p class="input-box-text"></p></div>
-                <div class="input-box" style="width: 16%;"><p class="input-box-label">Other</p><p class="input-box-text"></p></div>
-                <div class="input-box" style="width: 16%;"><p class="input-box-label">Misc</p><p class="input-box-text"></p></div>
+                <div class="input-box" style="width: 10%;"><p class="input-box-label">Total</p><p class="input-box-text"></p></div>
+                <div style="width: 5%; text-align: center; vertical-align: middle; align-self: center;">=</div>
+                <div class="input-box" style="width: 10%;"><p class="input-box-label">BAB</p><p class="input-box-text"></p></div>
+                <div class="input-box" style="width: 10%;"><p class="input-box-label">STR</p><p class="input-box-text"></p></div>
+                <div style="width: 5%; text-align: center; vertical-align: middle; align-self: center;">+</div>
+            </div>
+            <div class="flex-holder">
+                <div class="input-box" style="width: 10%;"><p class="input-box-label">Magic</p><p class="input-box-text"></p></div>
+                <div class="input-box" style="width: 10%;"><p class="input-box-label">Size</p><p class="input-box-text"></p></div>
+                <div class="input-box" style="width: 40%;"><p class="input-box-label">Other</p><p class="input-box-text"></p></div>
+                <div class="input-box" style="width: 40%;"><p class="input-box-label">Misc</p><p class="input-box-text"></p></div>
             </div>
             <div class="flex-holder">
                 <div class="heading-box" style="width: 30%;"><p class="heading-box-text">CMD</p><p class="heading-box-desc">Combat Maneuver Defense</p></div>
@@ -476,8 +501,8 @@
             <div class="flex-holder">
                 <div class="input-box" style="width: 10%;"><p class="input-box-label">Magic</p><p class="input-box-text"></p></div>
                 <div class="input-box" style="width: 10%;"><p class="input-box-label">Size</p><p class="input-box-text"></p></div>
-                <div class="input-box" style="width: 25%;"><p class="input-box-label">Other</p><p class="input-box-text"></p></div>
-                <div class="input-box" style="width: 25%;"><p class="input-box-label">Misc</p><p class="input-box-text"></p></div>
+                <div class="input-box" style="width: 40%;"><p class="input-box-label">Other</p><p class="input-box-text"></p></div>
+                <div class="input-box" style="width: 40%;"><p class="input-box-label">Misc</p><p class="input-box-text"></p></div>
             </div>
             <div class="flex-holder" style="margin-top: 10px;">
                 <div class="heading-box" style="width: 40%;"><p class="heading-box-text">DAMAGE REDUCTION</p><p class="heading-box-desc">DR</p></div>
@@ -501,6 +526,7 @@
                 <div class="input-box" style="width: 20%;"><p class="input-box-label">Burrow</p><p class="input-box-text"></p></div>
                 <div class="input-box" style="width: 40%;"><p class="input-box-label">Temp Modifiers</p><p class="input-box-text"></p></div>
             </div>
+            <div class="heading-box" style="margin-top: 15px; min-height: 21px;"><p class="heading-box-text">SKILLS</p></div>
             <div class="skills-grid">
                 <div></div>
                 <div>SKILL NAME</div>
@@ -551,18 +577,96 @@
                 <div class="input-check"> </div><div>Swim</div>                     <div class="top-input"></div><div>= STR</div><div class="top-input"></div><div>+</div><div class="top-input"></div><div>+</div><div class="top-input"></div>
                 <div class="input-check"> </div><div>Use Magic Device</div>         <div class="top-input"></div><div>= CHA</div><div class="top-input"></div><div>+</div><div class="top-input"></div><div>+</div><div class="top-input"></div>
             </div>
-            <div style="margin-top: 5px; margin-left: 4px;">CONDITIONAL MODIFIERS:</div>
+            <div style="margin-top: 10px; margin-left: 4px;">SKILL CONDITIONAL MODIFIERS:</div>
             <div class="top-input" style="min-height: 21px;"></div>
-            <div style="margin-top: 5px; margin-left: 4px;">LANGUAGES:</div>
+            <div style="margin-top: 10px; margin-left: 4px;">LANGUAGES:</div>
             <div class="top-input" style="min-height: 21px;"></div>
         </div>
     </div>
-    <div style="display: flex;">
+    <div style="display: flex; page-break-after: always;">
         <div class="main-sheet-list">
+            <div style="text-align: center; margin-top: 10px; margin-bottom: 5px;">Weapons</div>
+            <div class="weapons-table-grid">
+                <div class="table-header" style="grid-column: span 3;">WEAPON</div>
+                <div class="table-header">ATK BONUS</div>
+                <div class="table-header">CRITICAL</div>
+                <div class="table-input" style="grid-column: span 3;"></div>
+                <div class="table-input"></div>
+                <div class="table-input"></div>
+                <div class="table-header">TYPE</div>
+                <div class="table-header">RANGE</div>
+                <div class="table-header">AMMUNITION</div>
+                <div class="table-header" style="grid-column: span 2;">DAMAGE</div>
+                <div class="table-input"></div>
+                <div class="table-input"></div>
+                <div class="table-input"></div>
+                <div class="table-input" style="grid-column: span 2;"></div>
+                <div class="table-header" style="grid-column: span 5;">NOTES</div>
+                <div class="table-input" style="grid-column: span 5;"></div>
+            </div>
+            <div class="weapons-table-grid">
+                <div class="table-header" style="grid-column: span 3;">WEAPON</div>
+                <div class="table-header">ATK BONUS</div>
+                <div class="table-header">CRITICAL</div>
+                <div class="table-input" style="grid-column: span 3;"></div>
+                <div class="table-input"></div>
+                <div class="table-input"></div>
+                <div class="table-header">TYPE</div>
+                <div class="table-header">RANGE</div>
+                <div class="table-header">AMMUNITION</div>
+                <div class="table-header" style="grid-column: span 2;">DAMAGE</div>
+                <div class="table-input"></div>
+                <div class="table-input"></div>
+                <div class="table-input"></div>
+                <div class="table-input" style="grid-column: span 2;"></div>
+                <div class="table-header" style="grid-column: span 5;">NOTES</div>
+                <div class="table-input" style="grid-column: span 5;"></div>
+            </div>
             <!-- WEAPONS -->
         </div>
         <div class="main-sheet-list">
             <!-- AC ITEMS -->
+            <div style="text-align: center; margin-top: 10px; margin-bottom: 5px;">Armor/Shields</div>
+            <div class="weapons-table-grid">
+                <div class="table-header" style="grid-column: span 3;">ARMOR/SHIELD</div>
+                <div class="table-header">AC BONUS</div>
+                <div class="table-header">WEIGHT</div>
+                <div class="table-input" style="grid-column: span 3;"></div>
+                <div class="table-input"></div>
+                <div class="table-input"></div>
+                <div class="table-header" style="grid-column: span 2;">TYPE</div>
+                <div class="table-header">CHK PENALTY</div>
+                <div class="table-header" style="grid-column: span 2;">SPELL FAILURE</div>
+                <div class="table-input" style="grid-column: span 2;"></div>
+                <div class="table-input"></div>
+                <div class="table-input" style="grid-column: span 2;"></div>
+                <div class="table-header" style="grid-column: span 5;">NOTES</div>
+                <div class="table-input" style="grid-column: span 5;"></div>
+            </div>
+            <div style="text-align: center; margin-top: 10px; margin-bottom: 5px;">Totals</div>
+            <div class="flex-holder">
+                <div style="width: 2%; text-align: center; vertical-align: middle; align-self: center;"></div>
+                <div class="input-box" style="width: 20%;"><p class="input-box-label">AC Bonus</p><p class="input-box-text"></p></div>
+                <div style="width: 3%; text-align: center; vertical-align: middle; align-self: center;"></div>
+                <div class="input-box" style="width: 20%;"><p class="input-box-label">Weight</p><p class="input-box-text"></p></div>
+                <div style="width: 3%; text-align: center; vertical-align: middle; align-self: center;"></div>
+                <div class="input-box" style="width: 20%;"><p class="input-box-label">Check Penalty</p><p class="input-box-text"></p></div>
+                <div style="width: 3%; text-align: center; vertical-align: middle; align-self: center;"></div>
+                <div class="input-box" style="width: 20%;"><p class="input-box-label">Spell Failure</p><p class="input-box-text"></p></div>
+                <div style="width: 2%; text-align: center; vertical-align: middle; align-self: center;"></div>
+            </div>
+        </div>
+    </div>
+    <div style="display: flex; page-break-after: always;">
+        <!-- FEATS / ABILITIES / ITEMS -->
+    </div>
+    <div style="display: flex; page-break-after: always;">
+        <!-- SPELLS -->
+    </div>
+    <div style="display: flex; page-break-after: always;">
+        <div class="full-width-list">
+            <div style="margin-top: 10px; margin-left: 4px;">NOTES:</div>
+            <div class="top-input" style="min-height: 10px;"></div>
         </div>
     </div>
 </body>
