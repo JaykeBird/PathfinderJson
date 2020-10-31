@@ -16,7 +16,7 @@
         <ComboBox x:Name="cbbProvider" HorizontalAlignment="Left" Margin="110,55,0,0" VerticalAlignment="Top" MinWidth="120" SelectedIndex="0" >
             <system:String>Google</system:String>
             <system:String>Github</system:String>
-            <system:String>JaykeBird</system:String>
+            <system:String>JaykeBird.com</system:String>
             <system:String>Local/Unknown</system:String>
         </ComboBox>
         <TextBlock x:Name="lblUserId" HorizontalAlignment="Left" Margin="25,82,0,0" Text="User ID:" VerticalAlignment="Top"/>
