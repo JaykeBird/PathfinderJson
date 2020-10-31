@@ -6,7 +6,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PathfinderJson"
         mc:Ignorable="d" Title="Pathfinder JSON Options" x:Name="window" BorderBrush="DarkGreen"
-        Height="480" Width="700" CaptionDisplayType="Close" ResizeMode="NoResize" >
+        Height="480" Width="700" CaptionDisplayType="Close" ResizeMode="NoResize" FontSize="12" >
     <flat:FlatWindow.Resources>
         <flat:ColorToBrushConverter x:Key="ctb" />
     </flat:FlatWindow.Resources>
