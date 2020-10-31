@@ -2218,11 +2218,15 @@ namespace PathfinderJson
                         ImageSource iss = new BitmapImage(new Uri(sheet.Player.Photos[0].Value ?? ""));
                         imgPlayer.Source = iss;
                     }
+                    else
+                    {
+                        imgPlayer.Source = null;
+                    }
                 }
-                catch (IndexOutOfRangeException) { }
-                catch (NullReferenceException) { }
-                catch (ArgumentOutOfRangeException) { }
-                catch (System.Net.WebException) { }
+                catch (IndexOutOfRangeException) { imgPlayer.Source = null; }
+                catch (NullReferenceException) { imgPlayer.Source = null; }
+                catch (ArgumentOutOfRangeException) { imgPlayer.Source = null; }
+                catch (System.Net.WebException) { imgPlayer.Source = null; }
 
                 _userDataCheck = false;
             }
