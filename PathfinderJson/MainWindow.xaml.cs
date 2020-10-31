@@ -2560,16 +2560,43 @@ namespace PathfinderJson
             }
 
             // Notes tab
-            chkNotesMarkdown.IsChecked = sheet.NotesMarkdown;
-            if (sheet.NotesMarkdown)
+            if (sheetSettings != null)
             {
-                ShowMarkdownElements();
-                OpenNotesViewTab();
+                if (sheetSettings.ContainsKey("notesMarkdown"))
+                {
+                    if (sheetSettings["notesMarkdown"]?.ToLowerInvariant() == "enabled")
+                    {
+                        ShowMarkdownElements();
+                        OpenNotesViewTab();
+                        chkNotesMarkdown.IsChecked = true;
+                    }
+                    else
+                    {
+                        HideMarkdownElements();
+                        chkNotesMarkdown.IsChecked = false;
+                    }
+                }
+                else
+                {
+                    HideMarkdownElements();
+                    chkNotesMarkdown.IsChecked = false;
+                }
             }
             else
             {
                 HideMarkdownElements();
+                chkNotesMarkdown.IsChecked = false;
             }
+
+            //if (sheet.NotesMarkdown)
+            //{
+            //    ShowMarkdownElements();
+            //    OpenNotesViewTab();
+            //}
+            //else
+            //{
+            //    HideMarkdownElements();
+            //}
 
             txtNotes.Text = sheet.Notes;
             UpdateMarkdownViewerVisuals();
@@ -2896,7 +2923,12 @@ namespace PathfinderJson
             sheet.Version = version;
 
             sheet.Notes = txtNotes.Text;
-            sheet.NotesMarkdown = chkNotesMarkdown.IsChecked;
+
+            if (chkNotesMarkdown.IsChecked)
+            {
+                sheetSettings["notesMarkdown"] = "enabled";
+            }
+            //sheet.NotesMarkdown = chkNotesMarkdown.IsChecked;
 
             sheet.Name = txtCharacter.Text;
             sheet.Level = txtLevel.Text;
