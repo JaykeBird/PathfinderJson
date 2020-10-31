@@ -3,7 +3,7 @@
     <style>
         body
         {
-            font-family: 'Sylfaen', 'Book Antiqua', Georgia, 'Times New Roman', Times, serif;
+            font-family: 'Book Antiqua', Georgia, Sylfaen, 'Times New Roman', Times, serif;
             margin-left: auto;
             margin-right: auto;
             max-width: 1600px;
@@ -22,7 +22,7 @@
             margin-left: 4px;
             margin-right: 4px;
             padding-left: 2px;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Segoe UI', Selawik, Tahoma, Geneva, Verdana, sans-serif;
         }
 
         .top-label
@@ -59,6 +59,7 @@
         {
             display: grid;
             grid-gap: 1px;
+            margin-left: 4px;
             grid-template-columns: repeat(5, minmax(0, 1fr));
         }
 
@@ -76,12 +77,13 @@
         .weapons-table-grid
         {
             display: grid;
-            margin: 5px 3px 0px 3px;
+            margin: 5px 3px 3px 3px;
             grid-gap: 0px;
             white-space: nowrap;
             grid-template-columns: 70px 120px minmax(0, 1fr) 120px 80px;
             text-overflow: ellipsis;
             overflow: hidden;
+            page-break-inside: avoid;
         }
 
         .table-header
@@ -101,7 +103,32 @@
             color: black;
             margin: 0px;
             border: 1px solid black;
-            min-height: 40px;
+            min-height: 35px;
+            text-align: center;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .feat-table-grid
+        {
+            display: grid;
+            margin: 5px 3px 10px 3px;
+            grid-gap: 0px;
+            grid-column-gap: 10px;
+            white-space: nowrap;
+            grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr);
+            text-overflow: ellipsis;
+            overflow: hidden;
+            page-break-inside: avoid;
+        }
+
+        .plain-table-input
+        {
+            background-color: white;
+            color: black;
+            margin: 0px;
+            border: 0px solid white;
+            border-bottom: 1px solid black;
+            min-height: 30px;
             text-align: center;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
@@ -213,119 +240,64 @@
             {
                 zoom: 72%;
             }
+
+            .heading-box-text
+            {
+                font-weight: 800;
+            }
         }
     </style>
 </head>
 <body>
     <div style="display: flex; height: 120px; align-items: center;">
-        <div style="width: 170px; min-width: 170px; height: auto; flex-basis: 170px; text-align: center; vertical-align: middle;">
-            Pathfinder<br />
-            Roleplaying Game 1e<br />
-            Character Sheet
-        </div>
+        <div style="width: 170px; min-width: 170px; height: auto; flex-basis: 170px; text-align: center; vertical-align: middle;">Pathfinder<br />Roleplaying Game 1e<br />Character Sheet</div>
         <div style="display: flex; flex-grow: 5; flex-direction: column; height: 100%;">
             <div class="flex-holder" style="height: 17%;">
-                <div class="top-input" style="width: 40%;">
-
-                </div>
-                <div class="top-input" style="width: 19%;">
-
-                </div>
-                <div class="top-input" style="width: 40%;">
-
-                </div>
+                <div class="top-input" style="width: 40%;"></div>
+                <div class="top-input" style="width: 19%;"></div>
+                <div class="top-input" style="width: 40%;"></div>
             </div>
             <div class="flex-holder" style="height: 16%;">
-                <div class="top-label" style="width: 40%;">
-                    CHARACTER NAME
-                </div>
-                <div class="top-label" style="width: 19%;">
-                    ALIGNMENT
-                </div>
-                <div class="top-label" style="width: 40%;">
-                    PLAYER
-                </div>
+                <div class="top-label" style="width: 40%;">CHARACTER NAME</div>
+                <div class="top-label" style="width: 19%;">ALIGNMENT</div>
+                <div class="top-label" style="width: 40%;">PLAYER</div>
             </div>
             <div class="flex-holder" style="height: 17%;">
-                <div class="top-input" style="width: 60%;">
-
-                </div>
-                <div class="top-input" style="width: 25%;">
-
-                </div>
-                <div class="top-input" style="width: 15%;">
-
-                </div>
+                <div class="top-input" style="width: 60%;"></div>
+                <div class="top-input" style="width: 25%;"></div>
+                <div class="top-input" style="width: 15%;"></div>
             </div>
             <div class="flex-holder" style="height: 16%;">
-                <div class="top-label" style="width: 60%;">
-                    CHARACTER CLASS / LEVEL
-                </div>
-                <div class="top-label" style="width: 25%;">
-                    DEITY
-                </div>
-                <div class="top-label" style="width: 15%;">
-                    HOMELAND
-                </div>
+                <div class="top-label" style="width: 60%;">CHARACTER CLASS / LEVEL</div>
+                <div class="top-label" style="width: 25%;">DEITY</div>
+                <div class="top-label" style="width: 15%;">HOMELAND</div>
             </div>
             <div class="flex-holder" style="height: 17%;">
-                <div class="top-input" style="width: 30%;">
-
-                </div>
-                <div class="top-input" style="width: 10%;">
-
-                </div>
-                <div class="top-input" style="width: 10%;">
-
-                </div>
-                <div class="top-input" style="width: 10%;">
-
-                </div>
-                <div class="top-input" style="width: 10%;">
-
-                </div>
-                <div class="top-input" style="width: 10%;">
-
-                </div>
-                <div class="top-input" style="width: 10%;">
-
-                </div>
-                <div class="top-input" style="width: 10%;">
-
-                </div>
+                <div class="top-input" style="width: 30%;"></div>
+                <div class="top-input" style="width: 10%;"></div>
+                <div class="top-input" style="width: 10%;"></div>
+                <div class="top-input" style="width: 10%;"></div>
+                <div class="top-input" style="width: 10%;"></div>
+                <div class="top-input" style="width: 10%;"></div>
+                <div class="top-input" style="width: 10%;"></div>
+                <div class="top-input" style="width: 10%;"></div>
             </div>
             <div class="flex-holder" style="height: 16%;">
-                <div class="top-label" style="width: 30%;">
-                    RACE
-                </div>
-                <div class="top-label" style="width: 10%;">
-                    SIZE
-                </div>
-                <div class="top-label" style="width: 10%;">
-                    GENDER
-                </div>
-                <div class="top-label" style="width: 10%;">
-                    AGE
-                </div>
-                <div class="top-label" style="width: 10%;">
-                    HEIGHT
-                </div>
-                <div class="top-label" style="width: 10%;">
-                    WEIGHT
-                </div>
-                <div class="top-label" style="width: 10%;">
-                    HAIR
-                </div>
-                <div class="top-label" style="width: 10%;">
-                    EYES
-                </div>
+                <div class="top-label" style="width: 30%;">RACE</div>
+                <div class="top-label" style="width: 10%;">SIZE</div>
+                <div class="top-label" style="width: 10%;">GENDER</div>
+                <div class="top-label" style="width: 10%;">AGE</div>
+                <div class="top-label" style="width: 10%;">HEIGHT</div>
+                <div class="top-label" style="width: 10%;">WEIGHT</div>
+                <div class="top-label" style="width: 10%;">HAIR</div>
+                <div class="top-label" style="width: 10%;">EYES</div>
             </div>
         </div>
     </div>
     <div style="display: flex; margin-top: 5px; page-break-after: always;">
         <div class="main-sheet-list">
             <div style="display: flex;">
-                <div class="main-sheet-list" style="margin: 0px; text-align: center;">
+                <div class="main-sheet-list" style="margin: 0px; text-align: center; width: 65%;">
                     <div class="grid-5col">
                         <div style="font-size: 70%;">ABILITY<br />NAME</div>
                         <div style="font-size: 70%;">ABILITY<br />SCORE</div>
@@ -333,73 +305,51 @@
                         <div style="font-size: 70%;">TEMP<br />SCORE</div>
                         <div style="font-size: 70%;">TEMP<br />MODIFIER</div>
 
-                        <div class="grid-heading-box">
-                            <p class="heading-box-text">STR</p>
-                            <p class="heading-box-desc">Strength</p>
-                        </div>
+                        <div class="grid-heading-box"><p class="heading-box-text">STR</p><p class="heading-box-desc">Strength</p></div>
                         <div class="input-box-no-label"><p class="input-box-text"></p></div>
                         <div class="input-box-no-label"><p class="input-box-text"></p></div>
                         <div class="input-box-no-label"><p class="input-box-text"></p></div>
                         <div class="input-box-no-label"><p class="input-box-text"></p></div>
 
-                        <div class="grid-heading-box">
-                            <p class="heading-box-text">DEX</p>
-                            <p class="heading-box-desc">Dexterity</p>
-                        </div>
+                        <div class="grid-heading-box"><p class="heading-box-text">DEX</p><p class="heading-box-desc">Dexterity</p></div>
                         <div class="input-box-no-label"><p class="input-box-text"></p></div>
                         <div class="input-box-no-label"><p class="input-box-text"></p></div>
                         <div class="input-box-no-label"><p class="input-box-text"></p></div>
                         <div class="input-box-no-label"><p class="input-box-text"></p></div>
 
-                        <div class="grid-heading-box">
-                            <p class="heading-box-text">CON</p>
-                            <p class="heading-box-desc">Constitution</p>
-                        </div>
+                        <div class="grid-heading-box"><p class="heading-box-text">CON</p><p class="heading-box-desc">Constitution</p></div>
                         <div class="input-box-no-label"><p class="input-box-text"></p></div>
                         <div class="input-box-no-label"><p class="input-box-text"></p></div>
                         <div class="input-box-no-label"><p class="input-box-text"></p></div>
                         <div class="input-box-no-label"><p class="input-box-text"></p></div>
 
-                        <div class="grid-heading-box">
-                            <p class="heading-box-text">INT</p>
-                            <p class="heading-box-desc">Intelligence</p>
-                        </div>
+                        <div class="grid-heading-box"><p class="heading-box-text">INT</p><p class="heading-box-desc">Intelligence</p></div>
                         <div class="input-box-no-label"><p class="input-box-text"></p></div>
                         <div class="input-box-no-label"><p class="input-box-text"></p></div>
                         <div class="input-box-no-label"><p class="input-box-text"></p></div>
                         <div class="input-box-no-label"><p class="input-box-text"></p></div>
 
-                        <div class="grid-heading-box">
-                            <p class="heading-box-text">WIS</p>
-                            <p class="heading-box-desc">Wisdom</p>
-                        </div>
+                        <div class="grid-heading-box"><p class="heading-box-text">WIS</p><p class="heading-box-desc">Wisdom</p></div>
                         <div class="input-box-no-label"><p class="input-box-text"></p></div>
                         <div class="input-box-no-label"><p class="input-box-text"></p></div>
                         <div class="input-box-no-label"><p class="input-box-text"></p></div>
                         <div class="input-box-no-label"><p class="input-box-text"></p></div>
 
-                        <div class="grid-heading-box">
-                            <p class="heading-box-text">CHA</p>
-                            <p class="heading-box-desc">Charisma</p>
-                        </div>
+                        <div class="grid-heading-box"><p class="heading-box-text">CHA</p><p class="heading-box-desc">Charisma</p></div>
                         <div class="input-box-no-label"><p class="input-box-text"></p></div>
                         <div class="input-box-no-label"><p class="input-box-text"></p></div>
                         <div class="input-box-no-label"><p class="input-box-text"></p></div>
                         <div class="input-box-no-label"><p class="input-box-text"></p></div>
                     </div>
                 </div>
-                <div class="main-sheet-list" style="margin: 0px;">
+                <div class="main-sheet-list" style="margin: 0px; width: 35%;">
                     <div class="flex-holder">
-                        <div class="heading-box" style="width: 25%;"><p class="heading-box-text">HP</p><p class="heading-box-desc">Hit Points</p></div>
-                        <div class="input-box" style="width: 40%;"><p class="input-box-label">Total</p><p class="input-box-text"></p></div>
-                        <div class="input-box" style="width: 40%;"><p class="input-box-label">DR</p><p class="input-box-text"></p></div>
+                        <div class="heading-box" style="width: 40%;"><p class="heading-box-text">HP</p><p class="heading-box-desc">Hit Points</p></div>
+                        <div class="input-box" style="width: 60%;"><p class="input-box-label">Total</p><p class="input-box-text"></p></div>
+                        <!--<div class="input-box" style="width: 40%;"><p class="input-box-label">DR</p><p class="input-box-text"></p></div>-->
                     </div>
-                    <div>
-                        <div style="margin-left: 4px; margin-top: 2px; font-size: 80%;">WOUNDS / CURRENT HP</div><div class="input-box-no-label" style="height:120px;text-wrap: normal;"></div>
-                    </div>
-                    <div>
-                        <div style="margin-left: 4px; margin-top: 2px; font-size: 80%;">NONLETHAL DAMAGE</div><div class="input-box-no-label" style="height:70px;text-wrap: normal;"></div>
-                    </div>
+                    <div><div style="margin-left: 4px; margin-top: 2px; font-size: 80%;">WOUNDS / CURRENT HP</div><div class="input-box-no-label" style="height:120px;text-wrap: normal;"></div></div>
+                    <div><div style="margin-left: 4px; margin-top: 2px; font-size: 80%;">NONLETHAL DAMAGE</div><div class="input-box-no-label" style="height:70px;text-wrap: normal;"></div></div>
                 </div>
             </div>
             <div class="flex-holder" style="margin-top: 10px;">
@@ -505,12 +455,17 @@
                 <div class="input-box" style="width: 40%;"><p class="input-box-label">Misc</p><p class="input-box-text"></p></div>
             </div>
             <div class="flex-holder" style="margin-top: 10px;">
-                <div class="heading-box" style="width: 40%;"><p class="heading-box-text">DAMAGE REDUCTION</p><p class="heading-box-desc">DR</p></div>
-                <div class="input-box-no-label" style="width: 60%;"><p class="input-box-text"></p></div>
+                <div class="heading-box" style="width: 45%;"><p class="heading-box-text">DAMAGE REDUCTION</p><p class="heading-box-desc">DR</p></div>
+                <div class="input-box-no-label" style="width: 55%;"><p class="input-box-text"></p></div>
             </div>
             <div class="flex-holder" style="margin-bottom: 10px;">
-                <div class="heading-box" style="width: 40%;"><p class="heading-box-text">RESISTANCES</p><p class="heading-box-desc"></p></div>
-                <div class="input-box-no-label" style="width: 60%;"><p class="input-box-text"></p></div>
+                <div class="heading-box" style="width: 45%;"><p class="heading-box-text">RESISTANCES</p><p class="heading-box-desc"></p></div>
+                <div class="input-box-no-label" style="width: 55%;"><p class="input-box-text"></p></div>
+            </div>
+            <div class="flex-holder" style="margin-top: 5px;" >
+                <div class="heading-box" style="width: 20%;"><p class="heading-box-text">XP</p><p class="heading-box-desc">Experience</p></div>
+                <div class="input-box" style="width: 40%;"><p class="input-box-label">Total</p><p class="input-box-text"></p></div>
+                <div class="input-box" style="width: 40%;"><p class="input-box-label">To Next Level</p><p class="input-box-text"></p></div>
             </div>
         </div>
         <div class="main-sheet-list">
@@ -584,49 +539,219 @@
         </div>
     </div>
     <div style="display: flex; page-break-after: always;">
-        <div class="main-sheet-list">
-            <div style="text-align: center; margin-top: 10px; margin-bottom: 5px;">Weapons</div>
-            <div class="weapons-table-grid">
-                <div class="table-header" style="grid-column: span 3;">WEAPON</div>
-                <div class="table-header">ATK BONUS</div>
-                <div class="table-header">CRITICAL</div>
-                <div class="table-input" style="grid-column: span 3;"></div>
-                <div class="table-input"></div>
-                <div class="table-input"></div>
-                <div class="table-header">TYPE</div>
-                <div class="table-header">RANGE</div>
-                <div class="table-header">AMMUNITION</div>
-                <div class="table-header" style="grid-column: span 2;">DAMAGE</div>
-                <div class="table-input"></div>
-                <div class="table-input"></div>
-                <div class="table-input"></div>
-                <div class="table-input" style="grid-column: span 2;"></div>
-                <div class="table-header" style="grid-column: span 5;">NOTES</div>
-                <div class="table-input" style="grid-column: span 5;"></div>
-            </div>
-            <div class="weapons-table-grid">
-                <div class="table-header" style="grid-column: span 3;">WEAPON</div>
-                <div class="table-header">ATK BONUS</div>
-                <div class="table-header">CRITICAL</div>
-                <div class="table-input" style="grid-column: span 3;"></div>
-                <div class="table-input"></div>
-                <div class="table-input"></div>
-                <div class="table-header">TYPE</div>
-                <div class="table-header">RANGE</div>
-                <div class="table-header">AMMUNITION</div>
-                <div class="table-header" style="grid-column: span 2;">DAMAGE</div>
-                <div class="table-input"></div>
-                <div class="table-input"></div>
-                <div class="table-input"></div>
-                <div class="table-input" style="grid-column: span 2;"></div>
-                <div class="table-header" style="grid-column: span 5;">NOTES</div>
-                <div class="table-input" style="grid-column: span 5;"></div>
-            </div>
+        <div class="main-sheet-list" style="page-break-inside: unset;">
             <!-- WEAPONS -->
+            <div style="text-align: center; margin-top: 2px; margin-bottom: 5px;">Weapons</div>
+            <div class="weapons-table-grid">
+                <div class="table-header" style="grid-column: span 3;">WEAPON</div>
+                <div class="table-header">ATK BONUS</div>
+                <div class="table-header">CRITICAL</div>
+                <div class="table-input" style="grid-column: span 3;"></div>
+                <div class="table-input"></div>
+                <div class="table-input"></div>
+                <div class="table-header">TYPE</div>
+                <div class="table-header">RANGE</div>
+                <div class="table-header">AMMUNITION</div>
+                <div class="table-header" style="grid-column: span 2;">DAMAGE</div>
+                <div class="table-input"></div>
+                <div class="table-input"></div>
+                <div class="table-input"></div>
+                <div class="table-input" style="grid-column: span 2;"></div>
+                <div class="table-header" style="grid-column: span 5;">NOTES</div>
+                <div class="table-input" style="grid-column: span 5;"></div>
+            </div>
+            <div class="weapons-table-grid">
+                <div class="table-header" style="grid-column: span 3;">WEAPON</div>
+                <div class="table-header">ATK BONUS</div>
+                <div class="table-header">CRITICAL</div>
+                <div class="table-input" style="grid-column: span 3;"></div>
+                <div class="table-input"></div>
+                <div class="table-input"></div>
+                <div class="table-header">TYPE</div>
+                <div class="table-header">RANGE</div>
+                <div class="table-header">AMMUNITION</div>
+                <div class="table-header" style="grid-column: span 2;">DAMAGE</div>
+                <div class="table-input"></div>
+                <div class="table-input"></div>
+                <div class="table-input"></div>
+                <div class="table-input" style="grid-column: span 2;"></div>
+                <div class="table-header" style="grid-column: span 5;">NOTES</div>
+                <div class="table-input" style="grid-column: span 5;"></div>
+            </div>
+            <div class="weapons-table-grid">
+                <div class="table-header" style="grid-column: span 3;">WEAPON</div>
+                <div class="table-header">ATK BONUS</div>
+                <div class="table-header">CRITICAL</div>
+                <div class="table-input" style="grid-column: span 3;"></div>
+                <div class="table-input"></div>
+                <div class="table-input"></div>
+                <div class="table-header">TYPE</div>
+                <div class="table-header">RANGE</div>
+                <div class="table-header">AMMUNITION</div>
+                <div class="table-header" style="grid-column: span 2;">DAMAGE</div>
+                <div class="table-input"></div>
+                <div class="table-input"></div>
+                <div class="table-input"></div>
+                <div class="table-input" style="grid-column: span 2;"></div>
+                <div class="table-header" style="grid-column: span 5;">NOTES</div>
+                <div class="table-input" style="grid-column: span 5;"></div>
+            </div>
+            <div class="weapons-table-grid">
+                <div class="table-header" style="grid-column: span 3;">WEAPON</div>
+                <div class="table-header">ATK BONUS</div>
+                <div class="table-header">CRITICAL</div>
+                <div class="table-input" style="grid-column: span 3;"></div>
+                <div class="table-input"></div>
+                <div class="table-input"></div>
+                <div class="table-header">TYPE</div>
+                <div class="table-header">RANGE</div>
+                <div class="table-header">AMMUNITION</div>
+                <div class="table-header" style="grid-column: span 2;">DAMAGE</div>
+                <div class="table-input"></div>
+                <div class="table-input"></div>
+                <div class="table-input"></div>
+                <div class="table-input" style="grid-column: span 2;"></div>
+                <div class="table-header" style="grid-column: span 5;">NOTES</div>
+                <div class="table-input" style="grid-column: span 5;"></div>
+            </div>
+            <div class="weapons-table-grid">
+                <div class="table-header" style="grid-column: span 3;">WEAPON</div>
+                <div class="table-header">ATK BONUS</div>
+                <div class="table-header">CRITICAL</div>
+                <div class="table-input" style="grid-column: span 3;"></div>
+                <div class="table-input"></div>
+                <div class="table-input"></div>
+                <div class="table-header">TYPE</div>
+                <div class="table-header">RANGE</div>
+                <div class="table-header">AMMUNITION</div>
+                <div class="table-header" style="grid-column: span 2;">DAMAGE</div>
+                <div class="table-input"></div>
+                <div class="table-input"></div>
+                <div class="table-input"></div>
+                <div class="table-input" style="grid-column: span 2;"></div>
+                <div class="table-header" style="grid-column: span 5;">NOTES</div>
+                <div class="table-input" style="grid-column: span 5;"></div>
+            </div>
+            <div class="weapons-table-grid">
+                <div class="table-header" style="grid-column: span 3;">WEAPON</div>
+                <div class="table-header">ATK BONUS</div>
+                <div class="table-header">CRITICAL</div>
+                <div class="table-input" style="grid-column: span 3;"></div>
+                <div class="table-input"></div>
+                <div class="table-input"></div>
+                <div class="table-header">TYPE</div>
+                <div class="table-header">RANGE</div>
+                <div class="table-header">AMMUNITION</div>
+                <div class="table-header" style="grid-column: span 2;">DAMAGE</div>
+                <div class="table-input"></div>
+                <div class="table-input"></div>
+                <div class="table-input"></div>
+                <div class="table-input" style="grid-column: span 2;"></div>
+                <div class="table-header" style="grid-column: span 5;">NOTES</div>
+                <div class="table-input" style="grid-column: span 5;"></div>
+            </div>
+            <div class="weapons-table-grid">
+                <div class="table-header" style="grid-column: span 3;">WEAPON</div>
+                <div class="table-header">ATK BONUS</div>
+                <div class="table-header">CRITICAL</div>
+                <div class="table-input" style="grid-column: span 3;"></div>
+                <div class="table-input"></div>
+                <div class="table-input"></div>
+                <div class="table-header">TYPE</div>
+                <div class="table-header">RANGE</div>
+                <div class="table-header">AMMUNITION</div>
+                <div class="table-header" style="grid-column: span 2;">DAMAGE</div>
+                <div class="table-input"></div>
+                <div class="table-input"></div>
+                <div class="table-input"></div>
+                <div class="table-input" style="grid-column: span 2;"></div>
+                <div class="table-header" style="grid-column: span 5;">NOTES</div>
+                <div class="table-input" style="grid-column: span 5;"></div>
+            </div>
         </div>
-        <div class="main-sheet-list">
+        <div class="main-sheet-list" style="page-break-inside: unset;">
             <!-- AC ITEMS -->
-            <div style="text-align: center; margin-top: 10px; margin-bottom: 5px;">Armor/Shields</div>
+            <div style="text-align: center; margin-top: 2px; margin-bottom: 5px;">Armor/Shields</div>
+            <div class="weapons-table-grid">
+                <div class="table-header" style="grid-column: span 3;">ARMOR/SHIELD</div>
+                <div class="table-header">AC BONUS</div>
+                <div class="table-header">WEIGHT</div>
+                <div class="table-input" style="grid-column: span 3;"></div>
+                <div class="table-input"></div>
+                <div class="table-input"></div>
+                <div class="table-header" style="grid-column: span 2;">TYPE</div>
+                <div class="table-header">CHK PENALTY</div>
+                <div class="table-header" style="grid-column: span 2;">SPELL FAILURE</div>
+                <div class="table-input" style="grid-column: span 2;"></div>
+                <div class="table-input"></div>
+                <div class="table-input" style="grid-column: span 2;"></div>
+                <div class="table-header" style="grid-column: span 5;">NOTES</div>
+                <div class="table-input" style="grid-column: span 5;"></div>
+            </div>
+            <div class="weapons-table-grid">
+                <div class="table-header" style="grid-column: span 3;">ARMOR/SHIELD</div>
+                <div class="table-header">AC BONUS</div>
+                <div class="table-header">WEIGHT</div>
+                <div class="table-input" style="grid-column: span 3;"></div>
+                <div class="table-input"></div>
+                <div class="table-input"></div>
+                <div class="table-header" style="grid-column: span 2;">TYPE</div>
+                <div class="table-header">CHK PENALTY</div>
+                <div class="table-header" style="grid-column: span 2;">SPELL FAILURE</div>
+                <div class="table-input" style="grid-column: span 2;"></div>
+                <div class="table-input"></div>
+                <div class="table-input" style="grid-column: span 2;"></div>
+                <div class="table-header" style="grid-column: span 5;">NOTES</div>
+                <div class="table-input" style="grid-column: span 5;"></div>
+            </div>
+            <div class="weapons-table-grid">
+                <div class="table-header" style="grid-column: span 3;">ARMOR/SHIELD</div>
+                <div class="table-header">AC BONUS</div>
+                <div class="table-header">WEIGHT</div>
+                <div class="table-input" style="grid-column: span 3;"></div>
+                <div class="table-input"></div>
+                <div class="table-input"></div>
+                <div class="table-header" style="grid-column: span 2;">TYPE</div>
+                <div class="table-header">CHK PENALTY</div>
+                <div class="table-header" style="grid-column: span 2;">SPELL FAILURE</div>
+                <div class="table-input" style="grid-column: span 2;"></div>
+                <div class="table-input"></div>
+                <div class="table-input" style="grid-column: span 2;"></div>
+                <div class="table-header" style="grid-column: span 5;">NOTES</div>
+                <div class="table-input" style="grid-column: span 5;"></div>
+            </div>
+            <div class="weapons-table-grid">
+                <div class="table-header" style="grid-column: span 3;">ARMOR/SHIELD</div>
+                <div class="table-header">AC BONUS</div>
+                <div class="table-header">WEIGHT</div>
+                <div class="table-input" style="grid-column: span 3;"></div>
+                <div class="table-input"></div>
+                <div class="table-input"></div>
+                <div class="table-header" style="grid-column: span 2;">TYPE</div>
+                <div class="table-header">CHK PENALTY</div>
+                <div class="table-header" style="grid-column: span 2;">SPELL FAILURE</div>
+                <div class="table-input" style="grid-column: span 2;"></div>
+                <div class="table-input"></div>
+                <div class="table-input" style="grid-column: span 2;"></div>
+                <div class="table-header" style="grid-column: span 5;">NOTES</div>
+                <div class="table-input" style="grid-column: span 5;"></div>
+            </div>
+            <div class="weapons-table-grid">
+                <div class="table-header" style="grid-column: span 3;">ARMOR/SHIELD</div>
+                <div class="table-header">AC BONUS</div>
+                <div class="table-header">WEIGHT</div>
+                <div class="table-input" style="grid-column: span 3;"></div>
+                <div class="table-input"></div>
+                <div class="table-input"></div>
+                <div class="table-header" style="grid-column: span 2;">TYPE</div>
+                <div class="table-header">CHK PENALTY</div>
+                <div class="table-header" style="grid-column: span 2;">SPELL FAILURE</div>
+                <div class="table-input" style="grid-column: span 2;"></div>
+                <div class="table-input"></div>
+                <div class="table-input" style="grid-column: span 2;"></div>
+                <div class="table-header" style="grid-column: span 5;">NOTES</div>
+                <div class="table-input" style="grid-column: span 5;"></div>
+            </div>
             <div class="weapons-table-grid">
                 <div class="table-header" style="grid-column: span 3;">ARMOR/SHIELD</div>
                 <div class="table-header">AC BONUS</div>
@@ -644,7 +769,7 @@
                 <div class="table-input" style="grid-column: span 5;"></div>
             </div>
             <div style="text-align: center; margin-top: 10px; margin-bottom: 5px;">Totals</div>
-            <div class="flex-holder">
+            <div class="flex-holder" style="page-break-inside: avoid;">
                 <div style="width: 2%; text-align: center; vertical-align: middle; align-self: center;"></div>
                 <div class="input-box" style="width: 20%;"><p class="input-box-label">AC Bonus</p><p class="input-box-text"></p></div>
                 <div style="width: 3%; text-align: center; vertical-align: middle; align-self: center;"></div>
@@ -659,6 +784,166 @@
     </div>
     <div style="display: flex; page-break-after: always;">
         <!-- FEATS / ABILITIES / ITEMS -->
+        <div class="main-sheet-list" style="page-break-inside: unset;">
+            <!-- FEATS -->
+            <div style="text-align: center; margin-top: 2px; margin-bottom: 5px;">Feats</div>
+            <div class="feat-table-grid">
+                <div class="plain-table-input" style="grid-column: span 3;"></div>
+                <div class="plain-table-input"></div>
+                <div style="grid-column: span 3;">FEAT</div>
+                <div>TYPE</div>
+                <!--<div class="plain-table-input" style="grid-column: span 2;"></div>
+        <div class="plain-table-input" style="grid-column: span 2;"></div>
+        <div style="grid-column: span 2;">SCHOOL</div>
+        <div style="grid-column: span 2;">SUBSCHOOL</div>-->
+                <div class="plain-table-input" style="grid-column: span 4;"></div>
+                <div style="grid-column: span 4;">NOTES</div>
+            </div>
+            <div class="feat-table-grid">
+                <div class="plain-table-input" style="grid-column: span 3;"></div>
+                <div class="plain-table-input"></div>
+                <div style="grid-column: span 3;">FEAT</div>
+                <div>TYPE</div>
+                <!--<div class="plain-table-input" style="grid-column: span 2;"></div>
+        <div class="plain-table-input" style="grid-column: span 2;"></div>
+        <div style="grid-column: span 2;">SCHOOL</div>
+        <div style="grid-column: span 2;">SUBSCHOOL</div>-->
+                <div class="plain-table-input" style="grid-column: span 4;"></div>
+                <div style="grid-column: span 4;">NOTES</div>
+            </div>
+            <div class="feat-table-grid">
+                <div class="plain-table-input" style="grid-column: span 3;"></div>
+                <div class="plain-table-input"></div>
+                <div style="grid-column: span 3;">FEAT</div>
+                <div>TYPE</div>
+                <!--<div class="plain-table-input" style="grid-column: span 2;"></div>
+        <div class="plain-table-input" style="grid-column: span 2;"></div>
+        <div style="grid-column: span 2;">SCHOOL</div>
+        <div style="grid-column: span 2;">SUBSCHOOL</div>-->
+                <div class="plain-table-input" style="grid-column: span 4;"></div>
+                <div style="grid-column: span 4;">NOTES</div>
+            </div>
+            <div class="feat-table-grid">
+                <div class="plain-table-input" style="grid-column: span 3;"></div>
+                <div class="plain-table-input"></div>
+                <div style="grid-column: span 3;">FEAT</div>
+                <div>TYPE</div>
+                <!--<div class="plain-table-input" style="grid-column: span 2;"></div>
+        <div class="plain-table-input" style="grid-column: span 2;"></div>
+        <div style="grid-column: span 2;">SCHOOL</div>
+        <div style="grid-column: span 2;">SUBSCHOOL</div>-->
+                <div class="plain-table-input" style="grid-column: span 4;"></div>
+                <div style="grid-column: span 4;">NOTES</div>
+            </div>
+            <div class="feat-table-grid">
+                <div class="plain-table-input" style="grid-column: span 3;"></div>
+                <div class="plain-table-input"></div>
+                <div style="grid-column: span 3;">FEAT</div>
+                <div>TYPE</div>
+                <!--<div class="plain-table-input" style="grid-column: span 2;"></div>
+        <div class="plain-table-input" style="grid-column: span 2;"></div>
+        <div style="grid-column: span 2;">SCHOOL</div>
+        <div style="grid-column: span 2;">SUBSCHOOL</div>-->
+                <div class="plain-table-input" style="grid-column: span 4;"></div>
+                <div style="grid-column: span 4;">NOTES</div>
+            </div>
+            <div class="feat-table-grid">
+                <div class="plain-table-input" style="grid-column: span 3;"></div>
+                <div class="plain-table-input"></div>
+                <div style="grid-column: span 3;">FEAT</div>
+                <div>TYPE</div>
+                <!--<div class="plain-table-input" style="grid-column: span 2;"></div>
+        <div class="plain-table-input" style="grid-column: span 2;"></div>
+        <div style="grid-column: span 2;">SCHOOL</div>
+        <div style="grid-column: span 2;">SUBSCHOOL</div>-->
+                <div class="plain-table-input" style="grid-column: span 4;"></div>
+                <div style="grid-column: span 4;">NOTES</div>
+            </div>
+            <div class="feat-table-grid">
+                <div class="plain-table-input" style="grid-column: span 3;"></div>
+                <div class="plain-table-input"></div>
+                <div style="grid-column: span 3;">FEAT</div>
+                <div>TYPE</div>
+                <!--<div class="plain-table-input" style="grid-column: span 2;"></div>
+        <div class="plain-table-input" style="grid-column: span 2;"></div>
+        <div style="grid-column: span 2;">SCHOOL</div>
+        <div style="grid-column: span 2;">SUBSCHOOL</div>-->
+                <div class="plain-table-input" style="grid-column: span 4;"></div>
+                <div style="grid-column: span 4;">NOTES</div>
+            </div>
+            <div class="feat-table-grid">
+                <div class="plain-table-input" style="grid-column: span 3;"></div>
+                <div class="plain-table-input"></div>
+                <div style="grid-column: span 3;">FEAT</div>
+                <div>TYPE</div>
+                <!--<div class="plain-table-input" style="grid-column: span 2;"></div>
+        <div class="plain-table-input" style="grid-column: span 2;"></div>
+        <div style="grid-column: span 2;">SCHOOL</div>
+        <div style="grid-column: span 2;">SUBSCHOOL</div>-->
+                <div class="plain-table-input" style="grid-column: span 4;"></div>
+                <div style="grid-column: span 4;">NOTES</div>
+            </div>
+            <div class="feat-table-grid">
+                <div class="plain-table-input" style="grid-column: span 3;"></div>
+                <div class="plain-table-input"></div>
+                <div style="grid-column: span 3;">FEAT</div>
+                <div>TYPE</div>
+                <!--<div class="plain-table-input" style="grid-column: span 2;"></div>
+        <div class="plain-table-input" style="grid-column: span 2;"></div>
+        <div style="grid-column: span 2;">SCHOOL</div>
+        <div style="grid-column: span 2;">SUBSCHOOL</div>-->
+                <div class="plain-table-input" style="grid-column: span 4;"></div>
+                <div style="grid-column: span 4;">NOTES</div>
+            </div>
+            <div class="feat-table-grid">
+                <div class="plain-table-input" style="grid-column: span 3;"></div>
+                <div class="plain-table-input"></div>
+                <div style="grid-column: span 3;">FEAT</div>
+                <div>TYPE</div>
+                <!--<div class="plain-table-input" style="grid-column: span 2;"></div>
+        <div class="plain-table-input" style="grid-column: span 2;"></div>
+        <div style="grid-column: span 2;">SCHOOL</div>
+        <div style="grid-column: span 2;">SUBSCHOOL</div>-->
+                <div class="plain-table-input" style="grid-column: span 4;"></div>
+                <div style="grid-column: span 4;">NOTES</div>
+            </div>
+            <div class="feat-table-grid">
+                <div class="plain-table-input" style="grid-column: span 3;"></div>
+                <div class="plain-table-input"></div>
+                <div style="grid-column: span 3;">FEAT</div>
+                <div>TYPE</div>
+                <!--<div class="plain-table-input" style="grid-column: span 2;"></div>
+        <div class="plain-table-input" style="grid-column: span 2;"></div>
+        <div style="grid-column: span 2;">SCHOOL</div>
+        <div style="grid-column: span 2;">SUBSCHOOL</div>-->
+                <div class="plain-table-input" style="grid-column: span 4;"></div>
+                <div style="grid-column: span 4;">NOTES</div>
+            </div>
+            <!--<div style="margin-bottom: 10px;">
+        <div class="flex-holder">
+            <div class="top-input" style="width: 70%;"></div>
+            <div class="top-input" style="width: 30%;"></div>
+        </div>
+        <div class="flex-holder">
+            <div class="top-label" style="width: 70%;">NAME</div>
+            <div class="top-label" style="width: 30%;">TYPE</div>
+        </div>
+        <div class="flex-holder">
+            <div class="top-input" style="width: 50%;"></div>
+            <div class="top-input" style="width: 50%;"></div>
+        </div>
+        <div class="flex-holder">
+            <div class="top-label" style="width: 50%;">SCHOOL</div>
+            <div class="top-label" style="width: 50%;">SUBSCHOOL</div>
+        </div>
+        <div class="flex-holder">
+            <div class="top-input" style="width: 100%;"></div>
+        </div>
+        <div class="flex-holder">
+            <div class="top-label" style="width: 100%;">NOTES</div>
+        </div>
+    </div>-->
+        </div>
     </div>
     <div style="display: flex; page-break-after: always;">
         <!-- SPELLS -->
