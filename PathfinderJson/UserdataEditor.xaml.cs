@@ -26,8 +26,9 @@ namespace PathfinderJson
             {
                 "google" => 0,
                 "github" => 1,
-                "local" => 2,
-                _ => 2,
+                "jaykebird" => 2,
+                "local" => 3,
+                _ => 3,
             };
 
             txtName.Text = ud.DisplayName;
@@ -76,7 +77,8 @@ namespace PathfinderJson
             {
                 0 => "google",
                 1 => "github",
-                2 => "local",
+                2 => "jaykebird",
+                3 => "local",
                 _ => "local",
             };
 
