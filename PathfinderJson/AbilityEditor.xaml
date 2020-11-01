@@ -21,7 +21,7 @@
             <TextBox x:Name="txtName" MinHeight="23" Margin="0,0,2,0" VerticalAlignment="Center" TextChanged="textbox_TextChanged" Grid.Column="1"/>
             <Expander x:Name="expander" Header="Details" HorizontalAlignment="Left" Margin="15,0,0,0" VerticalAlignment="Center" MinWidth="80" Expanded="Expander_Expanded" Collapsed="Expander_Collapsed" Foreground="{Binding Foreground, ElementName=selectableUserControl}" Grid.Column="2" />
         </Grid>
-        <Grid HorizontalAlignment="Stretch" MinHeight="75" Margin="10,5,0,0" Grid.Row="1" VerticalAlignment="Top" >
+        <Grid HorizontalAlignment="Stretch" MinHeight="75" Margin="10,5" Grid.Row="1" VerticalAlignment="Top" >
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="1*"/>
