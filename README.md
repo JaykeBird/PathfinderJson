@@ -45,6 +45,8 @@ If you're using IntelliCode in Visual Studio 2019 (or Visual Studio 2017 15.8 or
 
 IntelliCode model: https://prod.intellicode.vsengsaas.visualstudio.com/get?m=509ED9C446024BFF8A4F15CD1D3B576B
 
+(I'll update the model for 1.2 sometime soon!)
+
 How to add the model to your fork of the code: [View page on Microsoft Docs site](https://docs.microsoft.com/en-us/visualstudio/intellicode/share-models#add-a-custom-model)
 
 ## License
