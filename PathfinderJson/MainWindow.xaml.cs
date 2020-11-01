@@ -2886,6 +2886,21 @@ namespace PathfinderJson
                     _isTabsDirty = true;
                     SetIsDirty(true, false);
                 }
+                catch (Newtonsoft.Json.JsonSerializationException)
+                {
+                    _isEditorDirty = false;
+                    _isTabsDirty = true;
+                    SetIsDirty(true, false);
+
+                    MessageDialog md = new MessageDialog(App.ColorScheme);
+                    md.Message = "This JSON file doesn't seem to look like it's a character sheet at all. " +
+                        "It may be good to open the Raw JSON view to check that the file matches what you're expecting.\n\n" +
+                        "PathfinderJSON will continue, but if you save any changes, any non-character sheet data may be deleted.";
+                    md.Title = "File Check Warning";
+                    md.Owner = this;
+                    md.Image = MessageDialogImage.Hand;
+                    md.ShowDialog();
+                }
             }
             else
             {
