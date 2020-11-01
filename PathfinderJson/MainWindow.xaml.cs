@@ -20,9 +20,9 @@ using static PathfinderJson.CoreUtils;
 using static PathfinderJson.App;
 using System.Windows.Shell;
 
-using Markdig;
-using Markdig.Wpf;
-using Markdig.Renderers.Wpf;
+//using Markdig;
+//using Markdig.Wpf;
+//using Markdig.Renderers.Wpf;
 
 namespace PathfinderJson
 {
@@ -65,6 +65,8 @@ namespace PathfinderJson
         bool _isCalculating = false;
         /// <summary>The timer for the auto save feature. When it ticks, save the file.</summary>
         DispatcherTimer autoSaveTimer = new DispatcherTimer();
+        /// <summary>The timer for displaying the "Saved" text in the top.</summary>
+        DispatcherTimer saveDisplayTimer = new DispatcherTimer();
 
         /// <summary>set if the Notes tab is in Edit mode (true) or View mode (false) (if Markdown support is disabled, it is always in Edit mode)</summary>
         bool notesEdit = false;
@@ -213,7 +215,10 @@ namespace PathfinderJson
                 autoSaveTimer.IsEnabled = true;
             }
 
+            saveDisplayTimer.Interval = new TimeSpan(0, 0, 15);
+
             autoSaveTimer.Tick += autoSaveTimer_Tick;
+            saveDisplayTimer.Tick += saveDisplayTimer_Tick;
 
             // setup up raw JSON editor
             if (App.Settings.EditorSyntaxHighlighting && App.Settings.HighContrastTheme == NO_HIGH_CONTRAST)
@@ -519,6 +524,16 @@ namespace PathfinderJson
             });
         }
 
+        private void saveDisplayTimer_Tick(object? sender, EventArgs e)
+        {
+            brdrSaved.Visibility = Visibility.Collapsed;
+        }
+
+        private void brdrSaved_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            brdrSaved.Visibility = Visibility.Collapsed;
+        }
+
         #endregion
 
         #region Other Window event handlers
@@ -679,6 +694,9 @@ namespace PathfinderJson
             _isTabsDirty = false;
             isDirty = false;
             UpdateTitlebar();
+
+            brdrSaved.Visibility = Visibility.Visible;
+            saveDisplayTimer.Start();
         }
 
         bool SaveAsFile()
@@ -720,6 +738,9 @@ namespace PathfinderJson
             _sheetLoaded = false;
             SetIsDirty(false);
             txtEditRaw.Text = "";
+
+            brdrSaved.Visibility = Visibility.Collapsed;
+            saveDisplayTimer.Stop();
 
             ChangeView(App.Settings.StartView, false, true, false);
         }

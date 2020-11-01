@@ -8,7 +8,7 @@
         xmlns:edit="http://icsharpcode.net/sharpdevelop/avalonedit"
         xmlns:md="clr-namespace:Markdig.Wpf;assembly=Markdig.Wpf"
         mc:Ignorable="d" x:Name="window"
-        Title="Pathfinder JSON" Height="730" Width="550" MinWidth="550" MinHeight="450"
+        Title="Pathfinder JSON" Height="730" Width="550" MinWidth="550" MinHeight="450" ExcludeTopRightElementFromChrome="False"
         Loaded="window_Loaded" Closing="window_Closing" Closed="window_Closed" Activated="window_Activated" Deactivated="window_Deactivated" >
     <flat:FlatWindow.Resources>
         <ResourceDictionary>
@@ -18,9 +18,14 @@
         </ResourceDictionary>
     </flat:FlatWindow.Resources>
     <flat:FlatWindow.TopRightElement>
-        <Border x:Name="brdrCalculating" Margin="0,4" Visibility="Collapsed" BorderThickness="1" >
-            <TextBlock Text="Calculating..." Padding="4,0" FontSize="12" VerticalAlignment="Center" />
-        </Border>
+        <StackPanel Orientation="Horizontal">
+            <Border x:Name="brdrSaved" Margin="0,4" Visibility="Collapsed" BorderThickness="1" BorderBrush="Transparent" Background="#01FFFFFF" WindowChrome.IsHitTestVisibleInChrome="True" MouseDown="brdrSaved_MouseDown" >
+                <TextBlock Text="File Saved" Padding="4,0" FontSize="12" VerticalAlignment="Center" />
+            </Border>
+            <Border x:Name="brdrCalculating" Margin="0,4" Visibility="Collapsed" BorderThickness="1" >
+                <TextBlock Text="Calculating..." Padding="4,0" FontSize="12" VerticalAlignment="Center" />
+            </Border>
+        </StackPanel>
     </flat:FlatWindow.TopRightElement>
     <Grid>
         <Grid.ColumnDefinitions>
