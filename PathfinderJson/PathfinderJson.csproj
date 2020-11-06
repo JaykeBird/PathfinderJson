@@ -25,33 +25,17 @@
     <Copyright>© 2019-2020 Jayke R. Huempfner</Copyright>
     <StartupObject>PathfinderJson.App</StartupObject>
     <Nullable>enable</Nullable>
-    <!--<PackageId>PackageId</PackageId>-->
-    <!--<PackageLicenseUrl>License URL</PackageLicenseUrl>
-    <PackageProjectUrl>Project URL</PackageProjectUrl>-->
-    <!--<PackageIconUrl>Icon URL</PackageIconUrl>
-    <RepositoryUrl>Repo URL</RepositoryUrl>-->
-    <!--<RepositoryType>Repo type</RepositoryType>-->
-    <!--<PackageTags>Tags</PackageTags>-->
-    <!--<PackageReleaseNotes>Release</PackageReleaseNotes>-->
   </PropertyGroup>
 
   <ItemGroup>
     <Compile Remove="Release-win-x64\**" />
     <Compile Remove="Release-win-x86\**" />
-    <Compile Remove="TestSpacingRelease2\**" />
-    <Compile Remove="TestSpacingRelease\**" />
     <EmbeddedResource Remove="Release-win-x64\**" />
     <EmbeddedResource Remove="Release-win-x86\**" />
-    <EmbeddedResource Remove="TestSpacingRelease2\**" />
-    <EmbeddedResource Remove="TestSpacingRelease\**" />
     <None Remove="Release-win-x64\**" />
     <None Remove="Release-win-x86\**" />
-    <None Remove="TestSpacingRelease2\**" />
-    <None Remove="TestSpacingRelease\**" />
     <Page Remove="Release-win-x64\**" />
     <Page Remove="Release-win-x86\**" />
-    <Page Remove="TestSpacingRelease2\**" />
-    <Page Remove="TestSpacingRelease\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -67,8 +51,8 @@
 
   <ItemGroup>
     <PackageReference Include="AvalonEdit" Version="6.0.1" />
-    <PackageReference Include="Markdig" Version="0.18.0" />
-    <PackageReference Include="Markdig.Wpf" Version="0.3.1" />
+    <PackageReference Include="Markdig" Version="0.20.0" />
+    <PackageReference Include="Markdig.Wpf" Version="0.4.0" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
   </ItemGroup>
 
