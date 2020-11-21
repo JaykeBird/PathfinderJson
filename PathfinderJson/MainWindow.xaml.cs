@@ -1754,11 +1754,33 @@ namespace PathfinderJson
 
         #region Tools menu
 
+        DiceRollerWindow? drw = null;
+
         private void mnuDiceRoll_Click(object sender, RoutedEventArgs e)
         {
-            DiceRollerWindow drw = new DiceRollerWindow();
-            drw.ColorScheme = App.ColorScheme;
-            drw.Show();
+            if (drw != null)
+            {
+                drw.Show();
+                drw.Focus();
+            }
+            else
+            {
+                drw = new DiceRollerWindow();
+                drw.ColorScheme = App.ColorScheme;
+                drw.Closed += DiceRollerWindow_Closed;
+                drw.Show();
+            }
+
+
+        }
+
+        private void DiceRollerWindow_Closed(object? sender, EventArgs e)
+        {
+            if (drw != null)
+            {
+                drw.Closed -= DiceRollerWindow_Closed;
+                drw = null;
+            }
         }
 
         private void mnuEditorFont_Click(object sender, RoutedEventArgs e)

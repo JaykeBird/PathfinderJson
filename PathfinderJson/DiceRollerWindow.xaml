@@ -6,7 +6,14 @@
         xmlns:flat="clr-namespace:SolidShineUi;assembly=SolidShineUi"
         xmlns:local="clr-namespace:PathfinderJson"
         mc:Ignorable="d" x:Name="window" SourceInitialized="window_SourceInitialized" CaptionDisplayType="MinimizeClose"
-        Title="Dice Roller" Height="160" Width="500" MinHeight="150" MaxHeight="240" ShowInTaskbar="True" >
+        Title="Dice Roller" Height="160" Width="500" MinHeight="150" MaxHeight="240" ShowInTaskbar="True"
+        Topmost="{Binding ElementName=btnKeepOnTop, Path=IsSelected}" >
+    <flat:FlatWindow.TopRightElement>
+        <flat:FlatButton MinWidth="90" Margin="0,0,3,0" SelectOnClick="True" x:Name="btnKeepOnTop" 
+                         TransparentBack="True" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" HorizontalContentAlignment="Left" >
+            <TextBlock>Keep on Top</TextBlock>
+        </flat:FlatButton>
+    </flat:FlatWindow.TopRightElement>
     <Grid>
         <TextBlock HorizontalAlignment="Left" Margin="15,39,0,0" Text="Input:" VerticalAlignment="Top"/>
         <TextBlock Margin="60,14,100,0" VerticalAlignment="Top" Text="Enter a dice roll below, such as &quot;3d6+4&quot;:" />
