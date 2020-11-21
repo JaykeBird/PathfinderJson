@@ -48,6 +48,16 @@
             If this is null or empty, auto-completion suggestions will begin at the beginning of the textbox's text.
             </summary>
         </member>
+        <member name="M:SolidShineUi.AutoCompleteBehavior.GetAutoCompleteItemsSource(System.Windows.DependencyObject)">
+            <summary>
+            Return the string list/enumerable associated with a specified object; this list is used as the source for the auto complete list.
+            </summary>
+        </member>
+        <member name="M:SolidShineUi.AutoCompleteBehavior.SetAutoCompleteItemsSource(System.Windows.DependencyObject,System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            Set the string list/enumerable used for the auto complete list for the specified object.
+            </summary>
+        </member>
         <member name="M:SolidShineUi.AutoCompleteBehavior.OnPreviewKeyDown(System.Object,System.Windows.Input.KeyEventArgs)">
             <summary>
             Used for moving the caret to the end of the suggested auto-completion text.
@@ -61,6 +71,20 @@
             </summary>
             <param name="sender"></param>
             <param name="e"></param>
+        </member>
+        <member name="M:SolidShineUi.BindableChild.GetBindableChild(System.Windows.DependencyObject)">
+            <summary>
+            Get the bindable child element for this object.
+            </summary>
+            <param name="obj"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SolidShineUi.BindableChild.SetBindableChild(System.Windows.DependencyObject,System.Windows.UIElement)">
+            <summary>
+            Set the bindable child element for this object.
+            </summary>
+            <param name="obj"></param>
+            <param name="value"></param>
         </member>
         <member name="T:SolidShineUi.BindableHighContrast">
             <summary>
@@ -123,12 +147,17 @@
         </member>
         <member name="T:SolidShineUi.CheckBox">
             <summary>
-            A CheckBox control with more customization over the appearance.
+            A CheckBox control with more customization over the appearance, and a larger box for a more touch-friendly UI.
             </summary>
         </member>
         <member name="M:SolidShineUi.CheckBox.#ctor">
             <summary>
             Create a new CheckBox control.
+            </summary>
+        </member>
+        <member name="E:SolidShineUi.CheckBox.CheckBoxClick">
+            <summary>
+            An event that raises only when the checkbox itself is clicked.
             </summary>
         </member>
         <member name="P:SolidShineUi.CheckBox.ClickOnPress">
