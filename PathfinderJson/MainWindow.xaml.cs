@@ -19,8 +19,6 @@ using SolidShineUi.Keyboard;
 using static PathfinderJson.CoreUtils;
 using static PathfinderJson.App;
 using System.Windows.Shell;
-using System.Windows.Documents;
-using System.Linq;
 
 //using Markdig;
 //using Markdig.Wpf;
@@ -3839,7 +3837,6 @@ namespace PathfinderJson
             lastEditedBox = sender as TextBox;
         }
 
-
         private void HyperlinkCommand_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             string? s = e.Parameter.ToString();
@@ -3847,7 +3844,6 @@ namespace PathfinderJson
             {
                 OpenBrowser(s);
             }
-            //Process.Start(new ProcessStartInfo(e.Parameter.ToString()) { UseShellExecute = true });
         }
 
         void UpdateMarkdownViewerVisuals()
@@ -3861,8 +3857,6 @@ namespace PathfinderJson
                     item.Padding = new Thickness(0);
                     item.Margin = new Thickness(0,1,0,4);
                 }
-
-                //SetupMarkdownHyperlinks(vwrNotes.Document);
             }
         }
 
