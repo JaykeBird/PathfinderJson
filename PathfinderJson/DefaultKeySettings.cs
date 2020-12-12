@@ -20,6 +20,7 @@ namespace PathfinderJson
             AddShortcut(ref ks, KeyboardCombination.Ctrl, Key.S, "mnuSave", mr);
             AddShortcut(ref ks, KeyboardCombination.None, Key.F12, "mnuSaveAs", mr);
             AddShortcut(ref ks, KeyboardCombination.CtrlAlt, Key.S, "mnuSaveAs", mr);
+            AddShortcut(ref ks, KeyboardCombination.CtrlAlt, Key.R, "mnuRevert", mr);
             AddShortcut(ref ks, KeyboardCombination.None, Key.F5, "mnuUpdate", mr);
             AddShortcut(ref ks, KeyboardCombination.Ctrl, Key.K, "mnuUpdate", mr);
             AddShortcut(ref ks, KeyboardCombination.Ctrl, Key.E, "mnuRawJson", mr);
@@ -27,6 +28,7 @@ namespace PathfinderJson
             AddShortcut(ref ks, KeyboardCombination.Ctrl, Key.D2, "mnuTabs", mr);
             AddShortcut(ref ks, KeyboardCombination.Ctrl, Key.D3, "mnuRawJson", mr);
             AddShortcut(ref ks, KeyboardCombination.None, Key.F8, "mnuToolbar", mr);
+            AddShortcut(ref ks, KeyboardCombination.Ctrl, Key.D, "mnuDiceRoll", mr);
             AddShortcut(ref ks, KeyboardCombination.CtrlAlt, Key.F1, "mnuAbout", mr);
             AddShortcut(ref ks, KeyboardCombination.Ctrl, Key.F1, "mnuFeedback", mr);
 
