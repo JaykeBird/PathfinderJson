@@ -11,7 +11,10 @@
     <flat:FlatWindow.TopRightElement>
         <flat:FlatButton MinWidth="90" Margin="0,0,3,0" SelectOnClick="True" x:Name="btnKeepOnTop" 
                          TransparentBack="True" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" HorizontalContentAlignment="Left" >
-            <TextBlock>Keep on Top</TextBlock>
+            <StackPanel Orientation="Horizontal">
+                <local:ThemedImage ImageName="Pushpin" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" Width="16" Height="16" />
+                <TextBlock Text="Keep on Top" Margin="3,0" />
+            </StackPanel>
         </flat:FlatButton>
     </flat:FlatWindow.TopRightElement>
     <Grid>
