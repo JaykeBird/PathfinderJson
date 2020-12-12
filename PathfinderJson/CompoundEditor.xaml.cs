@@ -151,7 +151,7 @@ namespace PathfinderJson
 
         public void LoadModifier(CompoundModifier cm, string modValue, string modValue2 = "", string baseValue = "")
         {
-            txtTotal.Text = cm.Total;
+            txtTotal.Text = cm.Total == null ? "0" : cm.Total;
             txtMagic.Text = cm.MagicModifier;
             txtMisc.Text = cm.MiscModifier;
             txtOther.Text = cm.OtherModifiers;
