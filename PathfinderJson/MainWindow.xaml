@@ -59,7 +59,11 @@
                     <Separator />
                     <MenuItem Header="_Clear Recent File List" x:Name="mnuRecentClear" Click="mnuRecentClear_Click" />
                 </MenuItem>
-                <MenuItem Header="_Close" x:Name="mnuClose" Click="btnClose_Click" />
+                <MenuItem Header="_Close" x:Name="mnuClose" Click="btnClose_Click" >
+                    <MenuItem.Icon>
+                        <Image Source="/PathfinderJson;component/Images/Color/Close.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
                 <Separator />
                 <MenuItem Header="_Save" x:Name="mnuSave" Click="mnuSave_Click" >
                     <MenuItem.Icon>
