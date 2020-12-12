@@ -128,6 +128,8 @@ namespace PathfinderJson
             Settings s = App.Settings;
 
             // General options
+            chkRecentDisplayMenus.IsChecked = s.DisplayRecentActionsAsSubmenu;
+
             chkAutoUpdate.IsChecked = s.UpdateAutoCheck;
 
             if (s.AutoSave <= 0)
@@ -186,6 +188,8 @@ namespace PathfinderJson
             // General options
             App.Settings.UpdateAutoCheck = chkAutoUpdate.IsChecked;
             if (clearRecentList) App.Settings.RecentFiles.Clear();
+
+            App.Settings.DisplayRecentActionsAsSubmenu = chkRecentDisplayMenus.IsChecked;
 
             App.Settings.AutoSave = chkAutoSave.IsChecked ? nudAutoSave.Value : 0;
 

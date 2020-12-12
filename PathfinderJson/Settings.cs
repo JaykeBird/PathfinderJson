@@ -103,6 +103,9 @@ namespace PathfinderJson
         [JsonProperty("startupOptimization")]
         public bool UseStartupOptimization { get; set; } = true;
 
+        [JsonProperty("recentActionsSubmenu")]
+        public bool DisplayRecentActionsAsSubmenu { get; set; } = false;
+
         [JsonProperty("autoSave", DefaultValueHandling = DefaultValueHandling.Ignore), DefaultValue(0)]
         public int AutoSave { get; set; } = 0; // feature being added in 1.2
     }
