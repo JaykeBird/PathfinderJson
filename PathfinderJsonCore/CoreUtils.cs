@@ -19,11 +19,12 @@ namespace PathfinderJson
             // This is best-effort only, but should work most of the time.
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
-                // See https://stackoverflow.com/a/6040946/44360 for why this is required
-                url = System.Text.RegularExpressions.Regex.Replace(url, @"(\\*)" + "\"", @"$1$1\" + "\"");
-                url = System.Text.RegularExpressions.Regex.Replace(url, @"(\\+)$", @"$1$1");
-                Process.Start(new ProcessStartInfo("cmd", $"/c start \"\" \"{url}\"") { CreateNoWindow = true });
-                return true;
+                //// See https://stackoverflow.com/a/6040946/44360 for why this is required
+                //url = System.Text.RegularExpressions.Regex.Replace(url, @"(\\*)" + "\"", @"$1$1\" + "\"");
+                //url = System.Text.RegularExpressions.Regex.Replace(url, @"(\\+)$", @"$1$1");
+                //Process.Start(new ProcessStartInfo("cmd", $"/c start \"\" \"{url}\"") { CreateNoWindow = true });
+                //return true;
+                Process.Start(new ProcessStartInfo(url) { UseShellExecute = true });
             }
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
             {

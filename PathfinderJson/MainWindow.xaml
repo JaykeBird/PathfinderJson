@@ -17,6 +17,9 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </flat:FlatWindow.Resources>
+    <flat:FlatWindow.CommandBindings>
+        <CommandBinding Command="{x:Static md:Commands.Hyperlink}" Executed="HyperlinkCommand_Executed" />
+    </flat:FlatWindow.CommandBindings>
     <flat:FlatWindow.TopRightElement>
         <StackPanel Orientation="Horizontal">
             <Border x:Name="brdrSaved" Margin="0,4" Visibility="Collapsed" BorderThickness="1" BorderBrush="Transparent" Background="#01FFFFFF" WindowChrome.IsHitTestVisibleInChrome="True" MouseDown="brdrSaved_MouseDown" >
