@@ -19,6 +19,7 @@ using SolidShineUi.Keyboard;
 using static PathfinderJson.CoreUtils;
 using static PathfinderJson.App;
 using System.Windows.Shell;
+using System.ComponentModel;
 
 //using Markdig;
 //using Markdig.Wpf;
@@ -3840,9 +3841,45 @@ namespace PathfinderJson
         private void HyperlinkCommand_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             string? s = e.Parameter.ToString();
-            if (s != null)
+
+            try
             {
-                OpenBrowser(s);
+                if (s != null)
+                {
+                    OpenBrowser(s);
+                }
+            }
+            catch (ArgumentNullException)
+            {
+                // could not open the link as it is null
+                if (Debugger.IsAttached)
+                {
+                    Debugger.Log(0, "vwrNotes", "Link is null, from Notes viewer.\n");
+                }
+            }
+            catch (System.IO.FileNotFoundException)
+            {
+                // could not open the link as it doesn't exist
+                if (Debugger.IsAttached)
+                {
+                    Debugger.Log(0, "vwrNotes", "Link \"" + s + "\" does not exist, from Notes viewer.\n");
+                }
+            }
+            catch (InvalidOperationException)
+            {
+                // could not open the link for some reason
+                if (Debugger.IsAttached)
+                {
+                    Debugger.Log(0, "vwrNotes", "Link \"" + s + "\" was not defined, from Notes viewer.\n");
+                }
+            }
+            catch (Win32Exception)
+            {
+                // could not open the link for some reason
+                if (Debugger.IsAttached)
+                {
+                    Debugger.Log(0, "vwrNotes", "Link \"" + s + "\" could not be opened, from Notes viewer.\n");
+                }
             }
         }
 

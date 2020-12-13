@@ -160,6 +160,56 @@
             An event that raises only when the checkbox itself is clicked.
             </summary>
         </member>
+        <member name="P:SolidShineUi.CheckBox.IsChecked">
+            <summary>
+            Get or set if the check box is checked. (Note: if in the Indeterminate state, it will still return true as checked.)
+            </summary>
+        </member>
+        <member name="P:SolidShineUi.CheckBox.IsIndeterminate">
+            <summary>
+            Get or set if the check box is in the Indeterminate state. 
+            </summary>
+        </member>
+        <member name="P:SolidShineUi.CheckBox.CheckState">
+            <summary>
+            Get or set the state of the checkbox, via a CheckState enum. Can be set via this property or via the IsChecked and IsIndeterminate properties.
+            </summary>
+        </member>
+        <member name="P:SolidShineUi.CheckBox.ColorScheme">
+            <summary>
+            Get or set the color scheme used for this checkbox. For easier color scheme management, bind this to the window or larger control you're using.
+            </summary>
+        </member>
+        <member name="P:SolidShineUi.CheckBox.CheckBackground">
+            <summary>
+            Get or set the brush used for the background of the checkbox's box. This is not set via a color scheme.
+            </summary>
+        </member>
+        <member name="P:SolidShineUi.CheckBox.CheckForeground">
+            <summary>
+            Get or set the brush used for the check mark in the checkbox's box.
+            </summary>
+        </member>
+        <member name="P:SolidShineUi.CheckBox.BackgroundDisabledBrush">
+            <summary>
+            Get or set the brush to use for the background of the checkbox's box when it is disabled.
+            </summary>
+        </member>
+        <member name="P:SolidShineUi.CheckBox.CheckDisabledBrush">
+            <summary>
+            Get or set the brush used for the check mark when the control is disabled.
+            </summary>
+        </member>
+        <member name="P:SolidShineUi.CheckBox.BorderBrush">
+            <summary>
+            Get or set the brush used for the border of the checkbox's box.
+            </summary>
+        </member>
+        <member name="P:SolidShineUi.CheckBox.BorderHighlightBrush">
+            <summary>
+            Get or set the brush used for the border of the checkbox's box, while the mouse is over the control or it has keyboard focus.
+            </summary>
+        </member>
         <member name="P:SolidShineUi.CheckBox.ClickOnPress">
             <summary>
             Gets or sets whether the Click event should be raised when the checkbox is pressed, rather than when it is released.
@@ -168,6 +218,11 @@
         <member name="P:SolidShineUi.CheckBox.TriStateClick">
             <summary>
             Gets or sets whether the checkbox should cycle through three states (rather than two) when clicked. The third state is the "Indeterminate" state, which can be checked via the IsIndeterminate property.
+            </summary>
+        </member>
+        <member name="P:SolidShineUi.CheckBox.OnlyAllowCheckBoxClick">
+            <summary>
+            Gets or sets whether clicking should only occur when the checkbox's box is clicked, and not the rest of the control.
             </summary>
         </member>
         <member name="M:SolidShineUi.CheckBox.PerformPress(System.Boolean)">
@@ -528,6 +583,29 @@
             Get the color that is the invert of this color. The A (alpha) value of the color is also kept.
             </summary>
         </member>
+        <member name="T:SolidShineUi.HighContrastOption">
+            <summary>
+            Available options for creating high-contrast color schemes. These are based upon color schemes available through Windows's High Contrast options.
+            </summary>
+        </member>
+        <member name="M:SolidShineUi.ColorScheme.#ctor">
+            <summary>
+            Create a color scheme with no colors preset; default values are all grey. Can be used to custom build a scheme color by color.
+            </summary>
+        </member>
+        <member name="M:SolidShineUi.ColorScheme.#ctor(System.Windows.Media.Color)">
+            <summary>
+            Create a color scheme with a single preset color as the basis. All other colors in the scheme are based off this color.
+            </summary>
+            <param name="mainColor"></param>
+        </member>
+        <member name="M:SolidShineUi.ColorScheme.#ctor(System.Windows.Media.Color,System.Windows.Media.Color)">
+            <summary>
+            Create a color scheme with a preset color for the basis, and an additional preset color to use as a secondary accent. All other colors are based off one of these two colors.
+            </summary>
+            <param name="mainColor"></param>
+            <param name="accentColor"></param>
+        </member>
         <member name="P:SolidShineUi.ColorScheme.IsHighContrast">
             <summary>
             Get or set whether this is a high-contrast color scheme.
@@ -535,12 +613,55 @@
         </member>
         <member name="P:SolidShineUi.ColorScheme.MainColor">
             <summary>
-            Main interface color. With High Contrast color schemes, do not use except for window captions
+            Main interface color. With High Contrast color schemes, this will be the same as BackgroundColor.
             </summary>
         </member>
         <member name="P:SolidShineUi.ColorScheme.SecondaryColor">
             <summary>
             Secondary color. Do not use with High Contrast color schemes
+            </summary>
+        </member>
+        <member name="M:SolidShineUi.ColorScheme.GetHighContrastScheme(SolidShineUi.HighContrastOption)">
+            <summary>
+            Create a color scheme with high-contrast colors, based upon one of the available options.
+            </summary>
+            <param name="hco">The high-contrast scheme option to create.</param>
+            <returns></returns>
+        </member>
+        <member name="P:SolidShineUi.ContextMenu.MenuBackground">
+            <summary>
+            Get or set the brush used for the background of the menu's drop-down area. This is different from the Background brush, which is not used in a ContextMenu.
+            </summary>
+        </member>
+        <member name="P:SolidShineUi.ContextMenu.BorderBrush">
+            <summary>
+            Get or set the brush used for the border of the menu's drop-down area.
+            </summary>
+        </member>
+        <member name="P:SolidShineUi.ContextMenu.HighlightBrush">
+            <summary>
+            Get or set the brush used for the top-level menu items in the menu bar. This is not used in a ContextMenu; instead look at the HighlightSubitemBrush property.
+            </summary>
+        </member>
+        <member name="P:SolidShineUi.ContextMenu.HighlightSubitemBrush">
+            <summary>
+            Get or set the brush used for menu items that aren't top-level on the menu bar, when the mouse is over them or they have keyboard focus.
+            </summary>
+        </member>
+        <member name="P:SolidShineUi.ContextMenu.CheckedBrush">
+            <summary>
+            Get or set the brush to use for the check highlight for checked menu items.
+            </summary>
+        </member>
+        <member name="P:SolidShineUi.ContextMenu.RoundedCorners">
+            <summary>
+            Get or set if the context menu has rounded corners.
+            </summary>
+        </member>
+        <member name="P:SolidShineUi.ContextMenu.VerticalScrollBarVisibility">
+            <summary>
+            Get or set if a vertical scroll bar is visible for the context menu.
+            If the context menu is longer than the screen, the scroll bar can be used.
             </summary>
         </member>
         <member name="T:SolidShineUi.ColorPickerDialog">
@@ -897,11 +1018,78 @@
             Perform a click programattically. The button responds the same way as if it was clicked by the user.
             </summary>
         </member>
+        <member name="P:SolidShineUi.FileSelect.SelectedFiles">
+            <summary>
+            Get or set the list of selected files. The list contains each file's path.
+            </summary>
+        </member>
+        <member name="P:SolidShineUi.FileSelect.SelectedFilesCount">
+            <summary>
+            Get the number of selected files.
+            </summary>
+        </member>
+        <member name="P:SolidShineUi.FileSelect.SelectedFile">
+            <summary>
+            Get or set the selected file. If multiple files are selected, returns the first file.
+            </summary>
+        </member>
         <member name="P:SolidShineUi.FileSelect.FileFilter">
             <summary>
-            Get or set the file filter to use when selecting files. Please use semicolons (;) to separate multiple extensions/filters (i.e. <c>"*.docx;*.xlsx;*.pptx"</c>).
+            Get or set the file filter to use when selecting files. Use semicolons (;) to separate multiple extensions/filters (i.e. <c>"*.docx;*.xlsx;*.pptx"</c>).
             </summary>
             <remarks>Default value is <c>ALL_FILES_FILTER</c>, which is <c>"*.*"</c>.</remarks>
+        </member>
+        <member name="P:SolidShineUi.FileSelect.AllowMultipleFiles">
+            <summary>
+            Get or set if multiple files can be selected or dropped in. If false, only one file can be selected.
+            </summary>
+        </member>
+        <member name="M:SolidShineUi.FileSelect.BrowseFiles">
+            <summary>
+            Display an OpenFileDialog for the user to select files.
+            </summary>
+        </member>
+        <member name="M:SolidShineUi.FileSelect.CopyFilenamesToClipboard">
+            <summary>
+            Copy the filenames for all the selected files to the clipboard. Each file path is on its own separate line.
+            </summary>
+            <exception cref="T:System.InvalidOperationException">No files are currently selected.</exception>
+        </member>
+        <member name="M:SolidShineUi.FileSelect.OpenContainingFolders">
+            <summary>
+            Open the containing folder in Windows Explorer for each of the selected files. If multiple files are in the same folder, that folder will be opened multiple times.
+            </summary>
+        </member>
+        <member name="M:SolidShineUi.FileSelect.OpenFilesForReading">
+            <summary>
+            Create a file stream for each selected file, which can be used for reading the files.
+            </summary>
+            <exception cref="T:System.InvalidOperationException">No files are currently selected.</exception>
+        </member>
+        <member name="M:SolidShineUi.FileSelect.OpenFilesForWriting">
+            <summary>
+            Create a file stream for each selected file, which can be used for reading or writing the files.
+            </summary>
+            <exception cref="T:System.InvalidOperationException">No files are currently selected.</exception>
+        </member>
+        <member name="M:SolidShineUi.FileSelect.Clear">
+            <summary>
+            Remove all selected files.
+            </summary>
+        </member>
+        <member name="M:SolidShineUi.FileSelect.SelectFiles(System.String)">
+            <summary>
+            Select a file.
+            </summary>
+            <param name="file">The full path to the file.</param>
+            <remarks>If there is no file at the specified path, it is not selected.</remarks>
+        </member>
+        <member name="M:SolidShineUi.FileSelect.SelectFiles(System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            Select a list of files.
+            </summary>
+            <param name="files">An enumeration of files, each string being a separate full path to a file.</param>
+            <remarks>If there is no file at the specified path, it is not selected.</remarks>
         </member>
         <member name="M:SolidShineUi.FileSelect.GetStackImage(SolidShineUi.MessageDialogImageConverter.MessageDialogImageColor)">
             <summary>
@@ -909,6 +1097,11 @@
             </summary>
             <param name="color">The color to use for the image. Use black or white for high-contrast themes.</param>
             <returns></returns>
+        </member>
+        <member name="P:SolidShineUi.FileSelect.AllowContextMenu">
+            <summary>
+            Get or set whether the context menu is displayed when the control is right-clicked.
+            </summary>
         </member>
         <member name="M:SolidShineUi.FileSelect.InitializeComponent">
             <summary>
@@ -1130,6 +1323,11 @@
             InitializeComponent
             </summary>
         </member>
+        <member name="E:SolidShineUi.LinkTextBlock.Click">
+            <summary>
+            This event is raised when the control is clicked.
+            </summary>
+        </member>
         <member name="P:SolidShineUi.LinkTextBlock.TextBrush">
             <summary>
             Get or set the standard foreground brush for the text. This overwrites the Foreground property.
@@ -1167,6 +1365,56 @@
         <member name="P:SolidShineUi.LinkTextBlock.IsEnabled">
             <summary>
             Gets or sets a value indicating whether this element is enabled in the user interface (UI).
+            </summary>
+        </member>
+        <member name="P:SolidShineUi.Menu.MenuBackground">
+            <summary>
+            Get or set the brush used for the background of the menu's drop-down area. This is different from the Background brush, which set the background of the top menu bar.
+            </summary>
+        </member>
+        <member name="P:SolidShineUi.Menu.BorderBrush">
+            <summary>
+            Get or set the brush used for the border of the menu's drop-down area.
+            </summary>
+        </member>
+        <member name="P:SolidShineUi.Menu.HighlightBrush">
+            <summary>
+            Get or set the brush used for the top-level menu items in the menu bar, when the mouse is over them or they have keyboard focus.
+            </summary>
+        </member>
+        <member name="P:SolidShineUi.Menu.HighlightSubitemBrush">
+            <summary>
+            Get or set the brush used for menu items that aren't top-level on the menu bar, when the mouse is over them or they have keyboard focus.
+            </summary>
+        </member>
+        <member name="P:SolidShineUi.Menu.CheckedBrush">
+            <summary>
+            Get or set the brush to use for the check highlight for checked menu items.
+            </summary>
+        </member>
+        <member name="T:SolidShineUi.MenuButton">
+            <summary>
+            A flat-styled button that displays a menu when it is clicked.
+            </summary>
+        </member>
+        <member name="P:SolidShineUi.MenuButton.Menu">
+            <summary>
+            Get or set the menu that appears when the button is clicked.
+            </summary>
+        </member>
+        <member name="F:SolidShineUi.MenuButton.MenuClosed">
+            <summary>
+            This event is raised when this MenuButtons's menu is closed.
+            </summary>
+        </member>
+        <member name="P:SolidShineUi.MenuButton.MenuPlacement">
+            <summary>
+            Get or set the placement mode for the MenuButton's menu.
+            </summary>
+        </member>
+        <member name="P:SolidShineUi.MenuButton.MenuPlacementRectangle">
+            <summary>
+            Get or set the placement rectangle for the MenuButton's menu. This sets the area relative to the button that the menu is positioned.
             </summary>
         </member>
         <member name="P:SolidShineUi.MenuButton.StaysOpen">
