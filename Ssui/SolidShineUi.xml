@@ -100,7 +100,7 @@
         </member>
         <member name="T:SolidShineUi.BrushFactory">
             <summary>
-            A class that creates brushes to be used in coloring the user interface.
+            A class that creates various brushes conveniently.
             </summary>
         </member>
         <member name="M:SolidShineUi.BrushFactory.Create(System.Windows.Media.Color)">
@@ -139,11 +139,6 @@
             </summary>
             <param name="location">The location, such as a web address or file location, of the image to use.</param>
             <returns>An ImageBrush containing this image.</returns>
-        </member>
-        <member name="T:SolidShineUi.HighContrastBrushes">
-            <summary>
-            Contains some <code>SolidColorBrush</code> fields for usage in High Contrast mode.
-            </summary>
         </member>
         <member name="T:SolidShineUi.CheckBox">
             <summary>
@@ -388,27 +383,91 @@
             InitializeComponent
             </summary>
         </member>
-        <member name="M:SolidShineUi.ColorPaletteLoad.ReadInt16(System.IO.Stream)">
+        <member name="T:SolidShineUi.ColorPaletteFileReader">
+            <summary>
+            A class containing methods that can be used to load colors from various color palette file formats.
+            </summary>
+        </member>
+        <member name="M:SolidShineUi.ColorPaletteFileReader.LoadPalFilePalette(System.String)">
+            <summary>
+            Loads colors from a .pal color palette file. Supports JASC and RIFF file types.
+            </summary>
+            <param name="filename">The file to load.</param>
+            <exception cref="T:System.FormatException">Thrown if the file format doesn't match the JASC or RIFF types.</exception>
+        </member>
+        <member name="M:SolidShineUi.ColorPaletteFileReader.LoadRiffPalette(System.String)">
+            <summary>
+            Loads colors from a color palette file formatted using the RIFF format.
+            </summary>
+            <param name="filename">The file to load.</param>
+            <exception cref="T:System.FormatException">Thrown if the file doesn't match the expected format.</exception>
+        </member>
+        <member name="M:SolidShineUi.ColorPaletteFileReader.LoadJascPalette(System.String)">
+            <summary>
+            Loads colors from a color palette file formatted using the JASC format.
+            </summary>
+            <param name="filename">The file to load.</param>
+            <exception cref="T:System.FormatException">Thrown if the file doesn't match the expected format.</exception>
+        </member>
+        <member name="M:SolidShineUi.ColorPaletteFileReader.LoadRawPalette(System.String)">
+            <summary>
+            Loads colors from a color palette file, reading from raw binary bytes.
+            </summary>
+            <param name="filename">The file to load.</param>
+            <exception cref="T:System.FormatException">Thrown if the file doesn't match the expected format.</exception>
+        </member>
+        <member name="M:SolidShineUi.ColorPaletteFileReader.ReadInt16(System.IO.Stream)">
             <summary>
             Reads a 16bit unsigned integer in big-endian format.
             </summary>
             <param name="stream">The stream to read the data from.</param>
             <returns>The unsigned 16bit integer cast to an <c>Int32</c>.</returns>
         </member>
-        <member name="M:SolidShineUi.ColorPaletteLoad.ReadInt32(System.IO.Stream)">
+        <member name="M:SolidShineUi.ColorPaletteFileReader.ReadInt32(System.IO.Stream)">
             <summary>
             Reads a 32bit unsigned integer in big-endian format.
             </summary>
             <param name="stream">The stream to read the data from.</param>
             <returns>The unsigned 32bit integer cast to an <c>Int32</c>.</returns>
         </member>
-        <member name="M:SolidShineUi.ColorPaletteLoad.ReadString(System.IO.Stream,System.Int32)">
+        <member name="M:SolidShineUi.ColorPaletteFileReader.LoadPhotoshopPalette(System.String)">
+            <summary>
+            Loads colors from a Photoshop color palette file (.aco). Note that Adobe Swatch Exchange files (.ase) are not supported.
+            </summary>
+            <param name="filename">The file to load.</param>
+            <exception cref="T:System.FormatException">Thrown if the file doesn't match the expected format.</exception>
+        </member>
+        <member name="M:SolidShineUi.ColorPaletteFileReader.ReadString(System.IO.Stream,System.Int32)">
             <summary>
             Reads a unicode string of the specified length.
             </summary>
             <param name="stream">The stream to read the data from.</param>
             <param name="length">The number of characters in the string.</param>
             <returns>The string read from the stream.</returns>
+        </member>
+        <member name="M:SolidShineUi.ColorPaletteFileReader.LoadPaintNetPalette(System.String)">
+            <summary>
+            Loads colors from a PAINT.NET or basic HEX color palette file (.txt;.hex).
+            </summary>
+            <param name="filename">The file to load.</param>
+            <exception cref="T:System.ArgumentException">Thrown if the file cannot be opened.</exception>
+        </member>
+        <member name="M:SolidShineUi.ColorPaletteFileReader.LoadGimpPalette(System.String)">
+            <summary>
+            Loads colors from a GIMP color palette file (.gpl).
+            </summary>
+            <param name="filename">The file to load.</param>
+            <exception cref="T:System.FormatException">Thrown if the file doesn't match the GIMP file format (the first lime must say "gimp palette").</exception>
+            <exception cref="T:System.ArgumentException">Thrown if the file cannot be opened.</exception>
+        </member>
+        <member name="M:SolidShineUi.ColorPaletteFileReader.LoadBitmapImagePalette(System.String)">
+            <summary>
+            Loads colors from the palette present in TIFF and GIF image files (.tif;.tiff;.gif). Only the first 256 colors are loaded.
+            </summary>
+            <param name="filename">The file to load.</param>
+            <exception cref="T:System.ArgumentException">Thrown if the file cannot be opened.</exception>
+            <exception cref="T:System.ArgumentNullException">Thrown if a null value is passed in or if the file cannot be opened.</exception>
+            <exception cref="T:System.UriFormatException">Thrown if the file string does not appear to be a path or URL.</exception>
         </member>
         <member name="T:SolidShineUi.ColorsHelper">
             <summary>
@@ -666,7 +725,7 @@
         </member>
         <member name="T:SolidShineUi.ColorPickerDialog">
             <summary>
-            Interaction logic for ColorPickerDialog.xaml
+            A dialog for the user to be able to select a color, either from a preset list, or via sliders, an image source, or from a color palette file.
             </summary>
             <summary>
             ColorPickerDialog
@@ -679,7 +738,7 @@
         </member>
         <member name="T:SolidShineUi.FontSelectDialog">
             <summary>
-            Interaction logic for FontPickerDialog.xaml
+            A dialog for the user to select a font, as well as being able to choose a font size and styling if desired.
             </summary>
             <summary>
             FontSelectDialog
@@ -697,7 +756,7 @@
         </member>
         <member name="T:SolidShineUi.MessageDialog">
             <summary>
-            Interaction logic for MessageBox.xaml
+            A dialog to display a message to the user, and potentially allowing them to select from a few options via selecting the appropriate button. Similar to the generic WPF MessageBox.
             </summary>
             <summary>
             MessageDialog
@@ -857,7 +916,7 @@
         </member>
         <member name="T:SolidShineUi.StringInputDialog">
             <summary>
-            Interaction logic for StringInputBox.xaml
+            A dialog for the user to enter in a string (in response to a message or prompt).
             </summary>
             <summary>
             StringInputDialog
@@ -910,7 +969,7 @@
         </member>
         <member name="P:SolidShineUi.StringInputDialog.Description">
             <summary>
-            Get or set the description text to display about the text box. This text should describe what the user should enter into the text box.
+            Get or set the description text to display above the text box. This text should describe what the user should enter into the text box.
             </summary>
             <remarks>Try to keep the description to about a sentence long. 
             Ideally, the overall design of the program should make it apparent what the user should enter into the text box without reading the description.</remarks>
@@ -977,6 +1036,42 @@
             </summary>
             <typeparam name="T"></typeparam>
             <returns></returns>
+        </member>
+        <member name="T:SolidShineUi.Experimental.TabControl">
+            <summary>
+            Interaction logic for TabControl.xaml
+            </summary>
+            <summary>
+            TabControl
+            </summary>
+        </member>
+        <member name="P:SolidShineUi.Experimental.TabControl.ColorScheme">
+            <summary>
+            Get or set the color scheme to apply to the window.
+            </summary>
+        </member>
+        <member name="M:SolidShineUi.Experimental.TabControl.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:SolidShineUi.Experimental.TabDisplayItem">
+            <summary>
+            Interaction logic for TabDisplayItem.xaml
+            </summary>
+            <summary>
+            TabDisplayItem
+            </summary>
+        </member>
+        <member name="P:SolidShineUi.Experimental.TabDisplayItem.ColorScheme">
+            <summary>
+            Get or set the color scheme to apply to the window.
+            </summary>
+        </member>
+        <member name="M:SolidShineUi.Experimental.TabDisplayItem.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
         </member>
         <member name="T:SolidShineUi.FileSelect">
             <summary>
@@ -1348,7 +1443,7 @@
             Get or set if the LinkTextBlock should automatically create a link based upon the Text property. See remarks for more details.
             </summary>
             <remarks>
-            When AutoSetLinkFromText is set to <c>true</c>, the LinkTextBlock attempts to open the link defined in the Text property when the user clicks on the control.
+            When AutoSetLinkFromText is set to <c>true</c>, the LinkTextBlock attempts to open a file or URL based upon the value of the Text property when the user clicks on the control.
             For example, if this property is set to <c>true</c> and the Text property is set to <c>"https://microsoft.com"</c>, the LinkTextBlock will open "https://microsoft.com" when the control is clicked,
             even if a Click event handler is not attached. Note that for web links, the scheme/protocol should be present (i.e. "http", "https", "ftp", etc.).
             <para />
@@ -1425,6 +1520,11 @@
         <member name="P:SolidShineUi.MenuButton.ShowMenuArrow">
             <summary>
             Get or set if an arrow should be shown to the right of the button content to indicate the button as a menu button.
+            </summary>
+        </member>
+        <member name="T:SolidShineUi.MenuItemExtensions">
+            <summary>
+            Adds additional methods that can be used to hook into the menu item's IsEnabledChanged event.
             </summary>
         </member>
         <member name="T:SolidShineUi.NativeMethods">
@@ -1564,6 +1664,16 @@
             <param name="nXPos">The X position of the pixel.</param>
             <param name="nYPos">The Y position of the pixel.</param>
             <returns></returns>
+        </member>
+        <member name="T:SolidShineUi.RectConverter">
+            <summary>
+            A MultiValueConverter that takes 4 values and creates a Rect. This class can be used to get around the fact that a Rect cannot be used for XAML binding.
+            </summary>
+        </member>
+        <member name="F:SolidShineUi.RectConverter.ZERO">
+            <summary>
+            A double defined as zero. Can be used if there is a value in your Rect that you do not want to set (via {x:Static} in XAML).
+            </summary>
         </member>
         <member name="T:SolidShineUi.SelectableItem">
             <summary>
@@ -1726,6 +1836,11 @@
             InitializeComponent
             </summary>
         </member>
+        <member name="T:SolidShineUi.StreamExtensions">
+            <summary>
+            Extension methods for Streams. Used in color palette file handling. In the future, I may remove this file.
+            </summary>
+        </member>
         <member name="M:SolidShineUi.StreamExtensions.ReadAsciiString(System.IO.Stream,System.Int32)">
             <summary>
             Reads a ASCII string of the specified length.
@@ -1770,41 +1885,43 @@
             <param name="stream">The stream to read the data from.</param>
             <returns>A 4-byte unsigned integer read from the source stream.</returns>
         </member>
-        <member name="T:SolidShineUi.Experimental.TabControl">
+        <member name="T:SolidShineUi.WildcardMatch">
             <summary>
-            Interaction logic for TabControl.xaml
-            </summary>
-            <summary>
-            TabControl
+            A class that can match a string against a given target string with wildcards (i.e. "d*g" can match "dig" or "dog" or "ding"). 
             </summary>
         </member>
-        <member name="P:SolidShineUi.Experimental.TabControl.ColorScheme">
+        <member name="M:SolidShineUi.WildcardMatch.MatchesWildcard(System.String,System.String)">
             <summary>
-            Get or set the color scheme to apply to the window.
+            Match a string against a given target string with wildcards ("*" and "?" are supported). See Remarks for more details.
             </summary>
+            <param name="text">The string to test.</param>
+            <param name="wildcardString">The string to match against, containing the wildcards.</param>
+            <returns>True if it can be matched; false if they cannot be.</returns>
+            <remarks>
+            This function can match a string against a wildcard string. This is used, for example, in Windows's file dialogs for opening or saving files.
+            Supported wildcard characters are "*", which matches any number of characters, and "?", which matches just one character.
+            (For example, "d*g" will match both "dig" and "ding", where as "d?g" will only match "dig" and not "ding".)
+            Regex (regular expressions) is a lot more powerful than what wildcards alone can provide, but regex strings can also be a lot more complicated to decipher.
+            <para/>
+            This class was written by H.A. Sullivan.
+            </remarks>
         </member>
-        <member name="M:SolidShineUi.Experimental.TabControl.InitializeComponent">
+        <member name="M:SolidShineUi.WildcardMatch.MatchesWildcard(System.String,System.String,System.Boolean)">
             <summary>
-            InitializeComponent
+            Match a string against a given target string with wildcards ("*" and "?" are supported). See Remarks for details.
             </summary>
-        </member>
-        <member name="T:SolidShineUi.Experimental.TabDisplayItem">
-            <summary>
-            Interaction logic for TabDisplayItem.xaml
-            </summary>
-            <summary>
-            TabDisplayItem
-            </summary>
-        </member>
-        <member name="P:SolidShineUi.Experimental.TabDisplayItem.ColorScheme">
-            <summary>
-            Get or set the color scheme to apply to the window.
-            </summary>
-        </member>
-        <member name="M:SolidShineUi.Experimental.TabDisplayItem.InitializeComponent">
-            <summary>
-            InitializeComponent
-            </summary>
+            <param name="text">The string to test.</param>
+            <param name="wildcardString">The string to match against, containing the wildcards.</param>
+            <param name="ignoreCase">Set if letter casing is ignored while matching.</param>
+            <returns>True if it can be matched; false if they cannot be.</returns>
+            <remarks>
+            This function can match a string against a wildcard string. This is used, for example, in Windows's file dialogs for opening or saving files.
+            Supported wildcard characters are "*", which matches any number of characters, and "?", which matches just one character.
+            (For example, "d*g" will match both "dig" and "ding", where as "d?g" will only match "dig" and not "ding".)
+            Regex (regular expressions) is a lot more powerful than what wildcards alone can provide, but regex strings can also be a lot more complicated to decipher.
+            <para/>
+            This class was written by H.A. Sullivan.
+            </remarks>
         </member>
         <member name="T:XamlGeneratedNamespace.GeneratedInternalTypeHelper">
             <summary>
