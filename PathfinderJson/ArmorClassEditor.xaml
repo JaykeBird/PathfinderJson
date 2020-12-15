@@ -9,7 +9,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="20" />
             <RowDefinition Height="1*"/>
-            <RowDefinition Height="Auto" x:Name="rowExtra" />
+            <RowDefinition Height="0" x:Name="rowExtra" />
         </Grid.RowDefinitions>
 
         <TextBlock x:Name="lblTitle" Margin="10,0,0,0" Text="Armor Class (AC)" FontWeight="Bold" VerticalAlignment="Center"/>
