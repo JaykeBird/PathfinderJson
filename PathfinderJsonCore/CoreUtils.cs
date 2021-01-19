@@ -5,6 +5,8 @@ using System.Runtime.InteropServices;
 
 namespace PathfinderJson
 {
+#nullable enable
+
     public static class CoreUtils
     {
 
@@ -25,6 +27,7 @@ namespace PathfinderJson
                 //Process.Start(new ProcessStartInfo("cmd", $"/c start \"\" \"{url}\"") { CreateNoWindow = true });
                 //return true;
                 Process.Start(new ProcessStartInfo(url) { UseShellExecute = true });
+                return true;
             }
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
             {
@@ -76,11 +79,22 @@ namespace PathfinderJson
                 }
             }
         }
-        
+
+        public static int CalculateModifierInt(int score)
+        {
+            return (int)Math.Floor((score - 10) / 2d);
+        }
+
         public static string CalculateModifier(int score)
         {
             int r = (int)Math.Floor((score - 10) / 2d);
             if (r >= 0) return "+" + r.ToString(); else return r.ToString();
         }
+
+        public static string DisplayModifier(int mod)
+        {
+            if (mod >= 0) return "+" + mod; else return mod.ToString();
+        }
     }
 }
+#nullable restore
