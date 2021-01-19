@@ -14,6 +14,7 @@ jobs:
       with:
         dotnet-version: 3.1.405
     - name: Add Nuget Source
-      run: dotnet nuget add https://api.nuget.org/v3/index.json -n "nuget.org"
+      run: dotnet nuget add source https://api.nuget.org/v3/index.json -n "nuget.org"
+      continue-on-error: true
     - name: Build with dotnet
       run: dotnet build --configuration Release
