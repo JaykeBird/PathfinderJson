@@ -74,9 +74,7 @@ namespace PathfinderJson
 
         // functions for handling undo/redo
         // these aren't actually used for anything at the current time as I've not properly introduced undo/redo yet
-        private const int undoLimit = 20;
-        Stack<PathfinderSheet> undoItems = new Stack<PathfinderSheet>(undoLimit);
-        Stack<PathfinderSheet> redoItems = new Stack<PathfinderSheet>(undoLimit);
+        UndoStack<PathfinderSheet> undoStack = new UndoStack<PathfinderSheet>();
         TextBox? lastEditedBox = null;
         DispatcherTimer undoSetTimer = new DispatcherTimer();
 
@@ -263,6 +261,11 @@ namespace PathfinderJson
             {
                 SaveSettings();
             }
+
+#if DEBUG
+            mnuTestUndo.IsEnabled = true;
+            mnuTestUndo.Visibility = Visibility.Visible;
+#endif
         }
 
         #region Other Base Functions
@@ -1250,20 +1253,6 @@ namespace PathfinderJson
 
         }
 
-        void PerformUndo()
-        {
-
-
-            if (redoItems.Count > 0)
-            {
-                redoItems.Clear();
-            }
-        }
-
-        void PerformRedo()
-        {
-
-        }
 
         #endregion
 
@@ -1663,6 +1652,7 @@ namespace PathfinderJson
 
                     txtEditRaw.Visibility = Visibility.Collapsed;
                     mnuEdit.Visibility = Visibility.Collapsed;
+                    mnuEditS.Visibility = Visibility.Visible;
                     colTabs.Width = new GridLength(120, GridUnitType.Auto);
                     colTabs.MinWidth = 120;
                     stkEditToolbar.Visibility = Visibility.Collapsed;
@@ -1682,6 +1672,7 @@ namespace PathfinderJson
 
                     txtEditRaw.Visibility = Visibility.Collapsed;
                     mnuEdit.Visibility = Visibility.Collapsed;
+                    mnuEditS.Visibility = Visibility.Visible;
                     colTabs.Width = new GridLength(120, GridUnitType.Auto);
                     colTabs.MinWidth = 120;
                     stkEditToolbar.Visibility = Visibility.Collapsed;
@@ -1699,6 +1690,7 @@ namespace PathfinderJson
                 case RAWJSON_VIEW:
                     txtEditRaw.Visibility = Visibility.Visible;
                     mnuEdit.Visibility = Visibility.Visible;
+                    mnuEditS.Visibility = Visibility.Collapsed;
                     colTabs.Width = new GridLength(0);
                     colTabs.MinWidth = 0;
                     stkEditToolbar.Visibility = Visibility.Visible;
@@ -3947,5 +3939,25 @@ namespace PathfinderJson
 
         #endregion
 
+        private void mnuTestUndo_Click(object sender, RoutedEventArgs e)
+        {
+            UndoStackTest ust = new UndoStackTest();
+            ust.Show();
+        }
+
+        private void mnuCounters_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void mnuUndoS_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void mnuRedoS_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
