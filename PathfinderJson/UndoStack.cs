@@ -6,13 +6,40 @@ namespace PathfinderJson
 {
     public class UndoStack<T>
     {
+        /// <summary>
+        /// Create a new undo stack with the default size of 30 undo items (can be changed later).
+        /// </summary>
+        public UndoStack() { }
+
+        /// <summary>
+        /// Create a new undo stack with a size pre-defined.
+        /// </summary>
+        /// <param name="size">The size of the undo stack to set.</param>
+        public UndoStack(uint size)
+        {
+            undoSize = size;
+        }
+
         private uint undoSize = 30;
         private List<T> undoList = new List<T>();
         private List<T> redoList = new List<T>();
 
+        /// <summary>
+        /// Count the number of items in the undo stack. Note that this may not 100% match how many undo actions are possible.
+        /// </summary>
         public int UndoCount { get => undoList.Count; }
+
+        /// <summary>
+        /// Count the number of items in the redo stack. Note that this may not 100% match how many redo actions are possible.
+        /// </summary>
         public int RedoCount { get => redoList.Count; }
 
+        /// <summary>
+        /// Get or set the size limit of the undo stack. If more than this number of actions are stored for undoing, the oldest actions are deleted out.
+        /// </summary>
+        /// <remarks>
+        /// If you set the size limit to a lower number than previously, the undo stack will go ahead and delete any undo items that are beyond the new limit.
+        /// </remarks>
         public uint UndoSizeLimit
         {
             get
@@ -33,6 +60,9 @@ namespace PathfinderJson
             }
         }
 
+        /// <summary>
+        /// Get if the undo action is currently possible.
+        /// </summary>
         public bool CanUndo
         {
             get
@@ -41,6 +71,10 @@ namespace PathfinderJson
                 else return undoList.Count > 0;
             }
         }
+
+        /// <summary>
+        /// Get if the redo action is currently possible.
+        /// </summary>
         public bool CanRedo
         {
             get
@@ -53,6 +87,10 @@ namespace PathfinderJson
         bool isUndoing = false;
         bool isRedoing = false;
 
+        /// <summary>
+        /// Store the current state of the item. Stored states can be undone back to later. Storing a state will clear the redo stack and set it as it is now.
+        /// </summary>
+        /// <param name="state"></param>
         public void StoreState(T state)
         {
             undoList.Add(state);
