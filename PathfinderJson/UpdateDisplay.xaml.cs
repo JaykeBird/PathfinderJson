@@ -37,12 +37,15 @@ namespace PathfinderJson
             lblTitle.Text = ud.Name;
             lblTag.Text = ud.TagName + " - " + ud.PublishTime.ToString("D");
             lblMarkdown.Markdown = ud.Body;
-            lblMarkdown.Document.PagePadding = new Thickness(2);
+            if (lblMarkdown.Document != null)
+            {
+                lblMarkdown.Document.PagePadding = new Thickness(2);
 
-            //foreach (Block item in lblMarkdown.Document.Blocks)
-            //{
-            //    item.Padding = new Thickness(1);
-            //}
+                //foreach (Block item in lblMarkdown.Document.Blocks)
+                //{
+                //    item.Padding = new Thickness(1);
+                //}
+            }
 
             url = ud.Url;
         }
