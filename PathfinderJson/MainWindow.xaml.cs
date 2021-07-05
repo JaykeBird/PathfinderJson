@@ -75,7 +75,7 @@ namespace PathfinderJson
         // functions for handling undo/redo
         // these aren't actually used for anything at the current time as I've not properly introduced undo/redo yet
         UndoStack<PathfinderSheet> undoStack = new UndoStack<PathfinderSheet>();
-        TextBox? lastEditedBox = null;
+        UIElement? lastEditedItem = null;
         DispatcherTimer undoSetTimer = new DispatcherTimer();
 
         // these are stored here as the program doesn't display these values to the user directly
@@ -1247,7 +1247,7 @@ namespace PathfinderJson
 
         // relevant variables are declared at the top of the class
 
-        void StartUndoTimer(TextBox sender)
+        void StartUndoTimer(UIElement sender)
         {
             CreateUndoState();
             //if (undoSetTimer.IsEnabled)
@@ -3352,10 +3352,10 @@ namespace PathfinderJson
             if (!_isUpdating)
             {
                 SetIsDirty();
-                StartUndoTimer(sender as TextBox ?? new TextBox());
+                StartUndoTimer(sender as UIElement ?? new TextBox());
             }
 
-            lastEditedBox = sender as TextBox;
+            lastEditedItem = sender as UIElement;
         }
 
         private void editor_ContentChanged(object? sender, EventArgs e)
@@ -3921,7 +3921,7 @@ namespace PathfinderJson
             vwrNotes.Markdown = txtNotes.Text;
             UpdateMarkdownViewerVisuals();
 
-            lastEditedBox = sender as TextBox;
+            lastEditedItem = sender as TextBox;
         }
 
         private void HyperlinkCommand_Executed(object sender, ExecutedRoutedEventArgs e)
