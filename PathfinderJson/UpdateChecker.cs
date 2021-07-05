@@ -24,22 +24,30 @@ namespace PathfinderJson
             // no longer need the WebClient
             wc.Dispose();
 
-            if (App.AppVersion >= new Version(t.tag_name))
+            if (t != null)
             {
-                return new UpdateData();
+
+                if (App.AppVersion >= new Version(t.tag_name))
+                {
+                    return new UpdateData();
+                }
+                else
+                {
+                    return new UpdateData
+                    {
+                        HasUpdate = true,
+                        Assets = t.assets,
+                        PublishTime = t.published_at,
+                        Name = t.name,
+                        TagName = t.tag_name,
+                        Url = t.html_url,
+                        Body = t.body
+                    };
+                }
             }
             else
             {
-                return new UpdateData
-                {
-                    HasUpdate = true,
-                    Assets = t.assets,
-                    PublishTime = t.published_at,
-                    Name = t.name,
-                    TagName = t.tag_name,
-                    Url = t.html_url,
-                    Body = t.body
-                };
+                return new UpdateData();
             }
         }
 

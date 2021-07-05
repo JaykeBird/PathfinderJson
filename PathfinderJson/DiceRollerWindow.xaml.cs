@@ -26,7 +26,7 @@ namespace PathfinderJson
 
         private void window_SourceInitialized(object sender, EventArgs e)
         {
-            DisableMaximizeAction();
+            this.DisableMaximizeAction();
         }
 
         private void btnRoll_Click(object sender, RoutedEventArgs e)
