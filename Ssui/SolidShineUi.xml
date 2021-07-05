@@ -94,7 +94,7 @@
             For the control or style in question that you want to monitor changes to high contrast in, set the property 
             <c>flat:BindableHighContrast.HighContrast = "{DynamicResource ResourceKey={x:Static Member=SystemParameters.HighContrastKey}}"</c> in the control or style.
             Then you can use the trigger as such: <c>&lt;Trigger Property="flat:BindableHighContrast.HighContrast" Value="True"&gt; ... &lt;/Trigger&gt;</c>.
-            Visit https://stackoverflow.com/questions/18708794/how-can-i-fall-back-to-a-high-contrast-color-in-wpf for more information and source.
+            Visit <a href="https://stackoverflow.com/questions/18708794/how-can-i-fall-back-to-a-high-contrast-color-in-wpf">this StackOverflow question</a> for more information and source.
             This class is identical to the "SystemParameterProperties" class in the accepted answer.
             </remarks>
         </member>
@@ -126,7 +126,7 @@
             <param name="angle">The angle of the gradient to be made.</param>
             <returns>A LinearGradientBrush that includes the two colors.</returns>
         </member>
-        <member name="M:SolidShineUi.BrushFactory.CreateFromImage(System.Windows.Media.DrawingImage)">
+        <member name="M:SolidShineUi.BrushFactory.CreateFromImage(System.Windows.Media.ImageSource)">
             <summary>
             Create a brush based upon an image.
             </summary>
@@ -369,19 +369,6 @@
             </summary>
             <param name="sender">The sender of the event.</param>
             <param name="e">Event arguments providing details about the event.</param>
-        </member>
-        <member name="T:SolidShineUi.ColorListItem">
-            <summary>
-            Interaction logic for ColorListItem.xaml
-            </summary>
-            <summary>
-            ColorListItem
-            </summary>
-        </member>
-        <member name="M:SolidShineUi.ColorListItem.InitializeComponent">
-            <summary>
-            InitializeComponent
-            </summary>
         </member>
         <member name="T:SolidShineUi.ColorPaletteFileReader">
             <summary>
@@ -749,6 +736,37 @@
             If a font fallback sequence is defined in the FontFamily, preserve it even if the user changes the font. If preserved, only the first found font will be changed and the remaining values will be preserved.
             </summary>
         </member>
+        <member name="M:SolidShineUi.FontSelectDialog.LoadFromControl(System.Windows.Controls.Control)">
+            <summary>
+            Load in the selected values of this dialog from a control.
+            </summary>
+            <param name="element">The control to load from.</param>
+            <remarks>If the control is a TextBox, it will also load in the TextDecorations; otherwise, no text decorations are loaded.</remarks>
+        </member>
+        <member name="M:SolidShineUi.FontSelectDialog.LoadFromControl(System.Windows.Controls.TextBlock)">
+            <summary>
+            Load in the selected values of this dialog from a TextBlock control.
+            </summary>
+            <param name="element">The TextBlock to load from.</param>
+        </member>
+        <member name="M:SolidShineUi.FontSelectDialog.SetToControl(System.Windows.Controls.Control)">
+            <summary>
+            Set a control's font properties to match the selected values of the dialog.
+            </summary>
+            <param name="element">The control to set.</param>
+            <remarks>If the control is a TextBox, it will also set the TextDecorations property.</remarks>
+        </member>
+        <member name="M:SolidShineUi.FontSelectDialog.SetToControl(System.Windows.Controls.TextBlock)">
+            <summary>
+            Set a TextBlock's font properties to match the selected values of the dialog.
+            </summary>
+            <param name="element">The TextBlock to set.</param>
+        </member>
+        <member name="P:SolidShineUi.FontSelectDialog.PreviewText">
+            <summary>
+            Get or set the preview text displayed at the bottom of the dialog, to allow the user to see how their font selections look.
+            </summary>
+        </member>
         <member name="M:SolidShineUi.FontSelectDialog.InitializeComponent">
             <summary>
             InitializeComponent
@@ -987,6 +1005,31 @@
             DoubleSpinner
             </summary>
         </member>
+        <member name="P:SolidShineUi.DoubleSpinner.Value">
+            <summary>
+             Get or set the value of the spinner.
+            </summary>
+        </member>
+        <member name="P:SolidShineUi.DoubleSpinner.Step">
+            <summary>
+             Get or set how much to change the value by when you press the up or down button.
+            </summary>
+        </member>
+        <member name="P:SolidShineUi.DoubleSpinner.Decimals">
+            <summary>
+             Get or set how many decimal places to display. Values entered with a more precise decimal point will be rounded.
+            </summary>
+        </member>
+        <member name="P:SolidShineUi.DoubleSpinner.MinValue">
+            <summary>
+             Get or set the minimum value allowed for this spinner (inclusive).
+            </summary>
+        </member>
+        <member name="P:SolidShineUi.DoubleSpinner.MaxValue">
+            <summary>
+             Get or set the maximum value allowed for this spinner (inclusive).
+            </summary>
+        </member>
         <member name="P:SolidShineUi.DoubleSpinner.RepeatDelay">
             <summary>
             Get or set the delay period before starting the repeatedly stepping up or down while the button is held, in milliseconds. Default is 300 milliseconds.
@@ -1002,7 +1045,7 @@
         </member>
         <member name="P:SolidShineUi.DoubleSpinner.ShowArrows">
             <summary>
-            Get or set the delay period before starting the repeatedly stepping up or down while the button is held, in milliseconds. Default is 300 milliseconds.
+            Get or set whether the up and down arrow buttons are shown.
             </summary>
         </member>
         <member name="M:SolidShineUi.DoubleSpinner.ValidateValue">
@@ -1036,42 +1079,6 @@
             </summary>
             <typeparam name="T"></typeparam>
             <returns></returns>
-        </member>
-        <member name="T:SolidShineUi.Experimental.TabControl">
-            <summary>
-            Interaction logic for TabControl.xaml
-            </summary>
-            <summary>
-            TabControl
-            </summary>
-        </member>
-        <member name="P:SolidShineUi.Experimental.TabControl.ColorScheme">
-            <summary>
-            Get or set the color scheme to apply to the window.
-            </summary>
-        </member>
-        <member name="M:SolidShineUi.Experimental.TabControl.InitializeComponent">
-            <summary>
-            InitializeComponent
-            </summary>
-        </member>
-        <member name="T:SolidShineUi.Experimental.TabDisplayItem">
-            <summary>
-            Interaction logic for TabDisplayItem.xaml
-            </summary>
-            <summary>
-            TabDisplayItem
-            </summary>
-        </member>
-        <member name="P:SolidShineUi.Experimental.TabDisplayItem.ColorScheme">
-            <summary>
-            Get or set the color scheme to apply to the window.
-            </summary>
-        </member>
-        <member name="M:SolidShineUi.Experimental.TabDisplayItem.InitializeComponent">
-            <summary>
-            InitializeComponent
-            </summary>
         </member>
         <member name="T:SolidShineUi.FileSelect">
             <summary>
@@ -1125,7 +1132,12 @@
         </member>
         <member name="P:SolidShineUi.FileSelect.SelectedFile">
             <summary>
-            Get or set the selected file. If multiple files are selected, returns the first file.
+            Get or set the selected file. If multiple files are selected, returns the first file. If no files are selected, returns an empty string.
+            </summary>
+        </member>
+        <member name="E:SolidShineUi.FileSelect.SelectionChanged">
+            <summary>
+            Raised when the list of selected files is changed.
             </summary>
         </member>
         <member name="P:SolidShineUi.FileSelect.FileFilter">
@@ -1191,6 +1203,7 @@
             Return a 16x16 stacked files image.
             </summary>
             <param name="color">The color to use for the image. Use black or white for high-contrast themes.</param>
+            <exception cref="T:System.ArgumentException">Thrown if the image could not found and loaded. Suggests the library may be corrupted.</exception>
             <returns></returns>
         </member>
         <member name="P:SolidShineUi.FileSelect.AllowContextMenu">
@@ -1347,36 +1360,6 @@
             Get or set the background brush to use for the caption area (title bar). Use <c>ContentBackground</c> for the content area of the window.
             </summary>
         </member>
-        <member name="M:SolidShineUi.FlatWindow.DisableMaximizeAction">
-            <summary>
-            Calls the native Windows method to disable the Maximize action (via the right-click menu and the like). Note that you'll want to update the CaptionDisplayType to remove the physical button.
-            </summary>
-        </member>
-        <member name="M:SolidShineUi.FlatWindow.DisableMinimizeAction">
-            <summary>
-            Calls the native Windows method to disable the Minimize action (via the right-click menu and the like). Note that you'll want to update the CaptionDisplayType to remove the physical button.
-            </summary>
-        </member>
-        <member name="M:SolidShineUi.FlatWindow.DisableMinimizeAndMaximizeActions">
-            <summary>
-            Calls the native Windows method to disable the Minimize and Maximize actions (via the right-click menu and the like). Note that you'll want to update the CaptionDisplayType to remove the physical buttons.
-            </summary>
-        </member>
-        <member name="T:SolidShineUi.ImageColorPicker">
-            <summary>
-            Image element with the ability to pick out a pixel color value.
-            </summary>
-        </member>
-        <member name="P:SolidShineUi.ImageColorPicker.SelectedColor">
-            <summary>
-            Get the color that is selected from the image.
-            </summary>
-        </member>
-        <member name="P:SolidShineUi.ImageColorPicker.SelectedPosition">
-            <summary>
-            Get the position that is selected from the image. This position is relative to the control itself.
-            </summary>
-        </member>
         <member name="T:SolidShineUi.IntegerSpinner">
             <summary>
             Interaction logic for IntegerSpinner.xaml
@@ -1388,6 +1371,21 @@
         <member name="P:SolidShineUi.IntegerSpinner.Value">
             <summary>
             Get or set the value of the spinner.
+            </summary>
+        </member>
+        <member name="P:SolidShineUi.IntegerSpinner.Step">
+            <summary>
+             Get or set how much to change the value by when you press the up or down button.
+            </summary>
+        </member>
+        <member name="P:SolidShineUi.IntegerSpinner.MinValue">
+            <summary>
+             Get or set the minimum value allowed for this spinner (inclusive).
+            </summary>
+        </member>
+        <member name="P:SolidShineUi.IntegerSpinner.MaxValue">
+            <summary>
+             Get or set the maximum value allowed for this spinner (inclusive).
             </summary>
         </member>
         <member name="P:SolidShineUi.IntegerSpinner.RepeatDelay">
@@ -1405,7 +1403,7 @@
         </member>
         <member name="P:SolidShineUi.IntegerSpinner.ShowArrows">
             <summary>
-            Get or set the delay period before starting the repeatedly stepping up or down while the button is held, in milliseconds. Default is 300 milliseconds.
+            Get or set whether the up and down arrow buttons are shown.
             </summary>
         </member>
         <member name="M:SolidShineUi.IntegerSpinner.ValidateValue">
@@ -1417,6 +1415,124 @@
             <summary>
             InitializeComponent
             </summary>
+        </member>
+        <member name="M:SolidShineUi.KeyboardShortcuts.KeyActionList.Add(SolidShineUi.KeyboardShortcuts.IKeyAction)">
+            <summary>
+            Add an IKeyAction to the list. If an IKeyAction with the same ID is already on this list, this new IKeyAction is not added.
+            </summary>
+            <param name="action">The IKeyAction to add.</param>
+            <returns>True if the item was added; false if the item was not added (an action is already on this list with the same ID).</returns>
+        </member>
+        <member name="M:SolidShineUi.KeyboardShortcuts.KeyActionList.AddRange(System.Collections.Generic.IEnumerable{SolidShineUi.KeyboardShortcuts.IKeyAction})">
+            <summary>
+            Add a collection of IKeyAction items to this list. If an IKeyAction with the same ID is already on this list, the new IKeyAction is not added and is skipped.
+            </summary>
+            <param name="actions">The collection of IKeyAction items to add.</param>
+            <returns>The collection of items that were successfully added to the list. Any items that are not on this list were not added, as an action is already on this list with the same ID.</returns>
+        </member>
+        <member name="M:SolidShineUi.KeyboardShortcuts.KeyActionList.Insert(System.Int32,SolidShineUi.KeyboardShortcuts.IKeyAction)">
+            <summary>
+            Inserts an IKeyAction to the list at the specified index. If an IKeyAction with the same ID is already on this list, this new IKeyAction is not inserted.
+            </summary>
+            <param name="index">The zero-based index to insert the IKeyAction at.</param>
+            <param name="action">The IKeyAction to add.</param>
+            <returns>True if the item was added; false if the item was not added (an action is already on this list with the same ID).</returns>
+        </member>
+        <member name="M:SolidShineUi.KeyboardShortcuts.KeyActionList.InsertRange(System.Int32,System.Collections.Generic.IEnumerable{SolidShineUi.KeyboardShortcuts.IKeyAction})">
+            <summary>
+            Inserts a collection of IKeyAction items to the list at the specified index. If an IKeyAction with the same ID is already on this list, the new IKeyAction is not inserted and is skipped.
+            </summary>
+            <param name="index">The zero-based index to insert the collection at.</param>
+            <param name="actions">The collection of IKeyAction items to insert.</param>
+            <returns>The collection of items that were successfully added to the list. Any items that are not on this list were not added, as an action is already on this list with the same ID.</returns>
+        </member>
+        <member name="M:SolidShineUi.KeyboardShortcuts.KeyActionList.ContainsId(System.String)">
+            <summary>
+            Get if this list contains an IKeyAction with this ID.
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SolidShineUi.KeyboardShortcuts.KeyActionList.GetFromId(System.String)">
+            <summary>
+            Get an IKeyAction with a particular ID.
+            </summary>
+            <param name="id">The ID to get.</param>
+            <exception cref="T:System.InvalidOperationException">Thrown if there is no item with this ID.</exception>
+        </member>
+        <member name="P:SolidShineUi.KeyboardShortcuts.KeyActionList.Item(System.String)">
+            <summary>
+            Get an IKeyAction with a particular ID.
+            </summary>
+            <param name="id">The ID to get.</param>
+            <exception cref="T:System.InvalidOperationException">Thrown if there is no item with this ID.</exception>
+        </member>
+        <member name="T:SolidShineUi.KeyboardShortcuts.KeyboardShortcut">
+            <summary>
+            Represents a single keyboard shortcut entry.
+            </summary>
+        </member>
+        <member name="M:SolidShineUi.KeyboardShortcuts.KeyboardShortcut.#ctor(SolidShineUi.KeyboardShortcuts.KeyboardCombination,System.Windows.Input.Key,SolidShineUi.KeyboardShortcuts.IKeyAction)">
+            <summary>
+            Create a keyboard shortcut entry.
+            </summary>
+            <param name="combination">The key combination needed, if any, for activating this shortcut.</param>
+            <param name="key">The specific key that corresponds to this shortcut.</param>
+            <param name="action">The action to perform when this shortcut is activated.</param>
+        </member>
+        <member name="P:SolidShineUi.KeyboardShortcuts.KeyboardShortcut.Combination">
+            <summary>
+            The control key combination needed before activating this shortcut. This shortcut will not activate unless these keys are also held down.
+            </summary>
+        </member>
+        <member name="P:SolidShineUi.KeyboardShortcuts.KeyboardShortcut.Key">
+            <summary>
+            The specific key that, when pressed, triggers the shortcut.
+            </summary>
+        </member>
+        <member name="P:SolidShineUi.KeyboardShortcuts.KeyboardShortcut.KeyString">
+            <summary>
+            The string to display to the user, so they know which keys to press to activate the shortcut.
+            </summary>
+        </member>
+        <member name="M:SolidShineUi.KeyboardShortcuts.KeyboardShortcut.GenerateKeyString">
+            <summary>
+            Generate the string to display to the user, so they know which keys to press to activate the shortcut.
+            </summary>
+        </member>
+        <member name="M:SolidShineUi.KeyboardShortcuts.KeyRegistry.GetShortcutsForMethod(System.String)">
+            <summary>
+            Get a list of keyboard shortcuts registered to a certain method.
+            </summary>
+            <param name="methodId">The name of the method. If you used the RoutedMethodRegistry to fill from a menu, the name will be the name of the MenuItem itself.</param>
+            <returns></returns>
+        </member>
+        <member name="M:SolidShineUi.KeyboardShortcuts.KeyRegistry.GetActionForKey(SolidShineUi.KeyboardShortcuts.KeyboardCombination,System.Windows.Input.Key)">
+            <summary>
+            Get the IKeyAction associated with a certain keyboard shortcut.
+            </summary>
+            <param name="key">The key for this shortcut.</param>
+            <param name="combination">The combination of modifier keys to have pressed for this shortcut.</param>
+            <returns>A Tuple containing the IKeyAction associated with this shortcut, if there is one (null if there is not), and a friendly string that displays the keyboard combination to press (i.e. "Ctrl+Alt+V").</returns>
+        </member>
+        <member name="M:SolidShineUi.KeyboardShortcuts.KeyRegistry.GetActionForKey(System.Windows.Input.Key,System.Boolean,System.Boolean,System.Boolean)">
+            <summary>
+            Get the IKeyAction associated with a certain keyboard shortcut.
+            </summary>
+            <param name="key">The key for this shortcut.</param>
+            <param name="shift">Set if the Shift key is part of this shortcut.</param>
+            <param name="alt">Set if the Alt key is part of this shortcut.</param>
+            <param name="ctrl">Set if the Ctrl key is part of this shortcut.</param>
+            <returns>A Tuple containing the IKeyAction associated with this shortcut, if there is one (null if there is not), and a friendly string that displays the keyboard combination to press (i.e. "Ctrl+Alt+V").</returns>
+        </member>
+        <member name="M:SolidShineUi.KeyboardShortcuts.RoutedEventKeyAction.CreateFromMenuItem(System.Windows.Controls.MenuItem)">
+            <summary>
+            Generate a RoutedEventKeyAction using the Click event of a MenuItem. If the MenuItem doesn't have the Click event handled, an exception is thrown.
+            </summary>
+            <param name="mi">The menu item to use the Click event from.</param>
+            <exception cref="T:System.MissingMethodException">Thrown if the MenuItem does not have any Click event handlers.</exception>
+            <exception cref="T:System.InvalidOperationException">Thrown if there was an issue entering into the MenuItem via reflection. If this error occurs, please contact the library creator.</exception>
+            <exception cref="T:System.ArgumentNullException">Thrown if the MenuItem is null.</exception>
         </member>
         <member name="E:SolidShineUi.LinkTextBlock.Click">
             <summary>
@@ -1522,6 +1638,11 @@
             Get or set if an arrow should be shown to the right of the button content to indicate the button as a menu button.
             </summary>
         </member>
+        <member name="P:SolidShineUi.MenuButton.KeepMenuArrowOnRight">
+            <summary>
+            Get or set if the arrow should be kept to the right side of the button, even if the content of the button is left or center aligned.
+            </summary>
+        </member>
         <member name="T:SolidShineUi.MenuItemExtensions">
             <summary>
             Adds additional methods that can be used to hook into the menu item's IsEnabledChanged event.
@@ -1615,6 +1736,21 @@
             </summary>
             <param name="hwnd">The handle to the window.</param>
         </member>
+        <member name="M:SolidShineUi.NativeMethods.DisableMaximizeAction(System.Windows.Window)">
+            <summary>
+            Calls the native Windows method to disable the Maximize action (via the right-click menu and the like). Note that you'll want to update the CaptionDisplayType to remove the physical button.
+            </summary>
+        </member>
+        <member name="M:SolidShineUi.NativeMethods.DisableMinimizeAction(System.Windows.Window)">
+            <summary>
+            Calls the native Windows method to disable the Minimize action (via the right-click menu and the like). Note that you'll want to update the CaptionDisplayType to remove the physical button.
+            </summary>
+        </member>
+        <member name="M:SolidShineUi.NativeMethods.DisableMinimizeAndMaximizeActions(System.Windows.Window)">
+            <summary>
+            Calls the native Windows method to disable the Minimize and Maximize actions (via the right-click menu and the like). Note that you'll want to update the CaptionDisplayType to remove the physical buttons.
+            </summary>
+        </member>
         <member name="M:SolidShineUi.NativeMethods.GetSmallIconHandle(System.String)">
             <summary>
             Get a handle for a small (16x16) icon associated with a file.
@@ -1675,6 +1811,92 @@
             A double defined as zero. Can be used if there is a value in your Rect that you do not want to set (via {x:Static} in XAML).
             </summary>
         </member>
+        <member name="M:SolidShineUi.SelectableCollection`1.#ctor">
+            <summary>
+            Initializes a new SelectableCollection&lt;<typeparamref name="T"/>&gt;.
+            </summary>
+        </member>
+        <member name="M:SolidShineUi.SelectableCollection`1.#ctor(System.Collections.Generic.IEnumerable{`0})">
+            <summary>
+            Initializes a new SelectableCollection&lt;<typeparamref name="T"/>&gt; that contains elements copied from the specified collection.
+            </summary>
+            <param name="collection">The collection to copy from.</param>
+            <exception cref="T:System.ArgumentNullException">Thrown if the collection is null.</exception>
+        </member>
+        <member name="M:SolidShineUi.SelectableCollection`1.#ctor(System.Collections.Generic.IList{`0})">
+            <summary>
+            Initializes a new SelectableCollection&lt;<typeparamref name="T"/>&gt; that contains elements copied from the specified list.
+            </summary>
+            <param name="list">The list to copy from.</param>
+            <exception cref="T:System.ArgumentNullException">Thrown if the list is null.</exception>
+        </member>
+        <member name="M:SolidShineUi.SelectableCollection`1.Remove(`0)">
+            <summary>
+            Removes the first occurrence of a specific object in the collection.
+            </summary>
+            <param name="item">The item to remove.</param>
+            <returns><c>true</c> if the item is removed, otherwise <c>false</c>. It may be <c>false</c> if the item isn't actually in the collection or if the removal was cancelled via the ItemRemoving event.</returns>
+        </member>
+        <member name="M:SolidShineUi.SelectableCollection`1.RemoveAt(System.Int32)">
+            <summary>
+            Remove the item at the specified index of this collection.
+            </summary>
+            <param name="index">The index of the item to remove.</param>
+            <returns><c>true</c> if the item is removed, otherwise <c>false</c>. It will be <c>false</c> if the removal was cancelled via the ItemRemoving event.</returns>
+        </member>
+        <member name="M:SolidShineUi.SelectableCollection`1.RemoveItem(System.Int32)">
+            <summary>
+            Remove the item at the specified index of this collection.
+            </summary>
+            <param name="index">The index of the item to remove.</param>
+            <returns><c>true</c> if the item is removed, otherwise <c>false</c>. It will be <c>false</c> if the removal was cancelled via the ItemRemoving event.</returns>
+        </member>
+        <member name="P:SolidShineUi.SelectableCollection`1.SelectedItems">
+            <summary>
+            A collection of items that are currently selected (if no items are selected, the collection is empty). If <c>CanSelectMultiple</c> is false, this collection will only have 0 or 1 items.
+            </summary>
+            <remarks>To interact with the collection to add or remove items, use the methods of the SelectableCollection itself, such as Select, AddToSelection, Deselect, and ClearSelection.</remarks>
+        </member>
+        <member name="M:SolidShineUi.SelectableCollection`1.Select(`0)">
+            <summary>
+            Select an item, replacing the current selection.
+            </summary>
+            <param name="item">The item to select.</param>
+        </member>
+        <member name="M:SolidShineUi.SelectableCollection`1.AddToSelection(`0)">
+            <summary>
+            Add an item to the existing list of selected items. If <c>CanSelectMultiple</c> is false, this item is only selected if nothing else is selected. Otherwise, nothing happens.
+            </summary>
+            <param name="item">The item to add.</param>
+        </member>
+        <member name="M:SolidShineUi.SelectableCollection`1.Deselect(`0)">
+            <summary>
+            Remove an item from the list of selected items.
+            </summary>
+            <param name="item">The item to remove.</param>
+        </member>
+        <member name="M:SolidShineUi.SelectableCollection`1.ClearSelection">
+            <summary>
+            Clear the list of selected items. No items will be selected.
+            </summary>
+        </member>
+        <member name="P:SolidShineUi.SelectableCollection`1.CanSelectMultiple">
+            <summary>
+            Get or set if multiple items can be selected in this SelectableCollection.
+            </summary>
+            <remarks>If CanSelectMultiple is set to false while there's currently more than 1 item selected, all items except the first are removed from the selection.</remarks>
+        </member>
+        <member name="M:SolidShineUi.SelectableCollection`1.SelectRange(System.Collections.Generic.IEnumerable{`0})">
+            <summary>
+            Select a collection of items. If <c>CanSelectMultiple</c> is false, only the first item in the collection is selected. If the collection is empty, the selection is not changed.
+            </summary>
+            <param name="items">The items to select.</param>
+        </member>
+        <member name="E:SolidShineUi.SelectableCollection`1.SelectionChanged">
+            <summary>
+            Raised when the selection is changed in any way, including additions, removals, and the selection being cleared.
+            </summary>
+        </member>
         <member name="T:SolidShineUi.SelectableItem">
             <summary>
             Interaction logic for SelectableItem.xaml
@@ -1699,7 +1921,7 @@
             Create a SelectableItem to use with a SelectPanel, with certain properties preset.
             </summary>
             <param name="text">The text to display in the item.</param>
-            <param name="image">The image to display in the item. (If the image is wider than 16 pixels, you may need to update the <c>ImageWidth</c> property.)</param>
+            <param name="image">The image to display in the item. (If the image is wider than 16 pixels, you may need to update the <c>ImageWidth</c> property.) Set to <c>null</c> to not show an image.</param>
             <param name="indent">The left indent to apply to the item's content. The indent can be used to make an improvised tree view.</param>
         </member>
         <member name="E:SolidShineUi.SelectableItem.TextChanged">
@@ -1836,12 +2058,100 @@
             InitializeComponent
             </summary>
         </member>
-        <member name="T:SolidShineUi.StreamExtensions">
+        <member name="P:SolidShineUi.TabControl.ColorScheme">
+            <summary>
+            Get or set the color scheme to apply to the window.
+            </summary>
+        </member>
+        <member name="P:SolidShineUi.TabItem.Title">
+            <summary>
+             Get or set the title of this tab.
+            </summary>
+        </member>
+        <member name="P:SolidShineUi.TabItem.IsDirty">
+            <summary>
+             Get or set if the tab is dirty. In this current release, this does not make a visual change on the tab.
+            </summary>
+        </member>
+        <member name="P:SolidShineUi.TabItem.CanClose">
+            <summary>
+             Get or set if this tab can be closed via the UI (i.e. the close button).
+            </summary>
+        </member>
+        <member name="P:SolidShineUi.TabItem.ShowIcon">
+            <summary>
+             Get or set if an icon is shown for this tab. The icon section of the tab will be visible if this is true, even if there is no icon set.
+            </summary>
+        </member>
+        <member name="P:SolidShineUi.TabItem.CanSelect">
+            <summary>
+             Get or set whether this tab can be selected via UI.
+            </summary>
+        </member>
+        <member name="P:SolidShineUi.TabItem.Icon">
+            <summary>
+             Get or set the icon to display with this tab.
+            </summary>
+        </member>
+        <member name="P:SolidShineUi.TabItem.Content">
+            <summary>
+             Get or set the content to display when this tab is selected.
+            </summary>
+        </member>
+        <member name="P:SolidShineUi.TabItem.Visibility">
+            <summary>
+             Get or set if this tab is visually displayed in the UI.
+            </summary>
+        </member>
+        <member name="P:SolidShineUi.TabItem.TabContextMenu">
+            <summary>
+            Get or set the menu that appears when you right-click on the tab in the TabControl.
+            </summary>
+        </member>
+        <member name="M:SolidShineUi.TabItem.Close">
+            <summary>
+            Close the current tab, if it is currently in a TabControl.
+            </summary>
+        </member>
+        <member name="P:SolidShineUi.TabItem.IsVisible">
+            <summary>
+             Get or set if this tab is visible in the UI.
+            </summary>
+        </member>
+        <member name="T:SolidShineUi.Utils.ColorListItem">
+            <summary>
+            Interaction logic for ColorListItem.xaml
+            </summary>
+            <summary>
+            ColorListItem
+            </summary>
+        </member>
+        <member name="M:SolidShineUi.Utils.ColorListItem.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:SolidShineUi.Utils.ImageColorPicker">
+            <summary>
+            Image element with the ability to pick out a pixel color value.
+            </summary>
+        </member>
+        <member name="P:SolidShineUi.Utils.ImageColorPicker.SelectedColor">
+            <summary>
+            Get the color that is selected from the image.
+            </summary>
+        </member>
+        <member name="P:SolidShineUi.Utils.ImageColorPicker.SelectedPosition">
+            <summary>
+            Get the position that is selected from the image. This position is relative to the control itself.
+            </summary>
+        </member>
+        <member name="T:SolidShineUi.Utils.StreamExtensions">
             <summary>
             Extension methods for Streams. Used in color palette file handling. In the future, I may remove this file.
             </summary>
         </member>
-        <member name="M:SolidShineUi.StreamExtensions.ReadAsciiString(System.IO.Stream,System.Int32)">
+        <member name="M:SolidShineUi.Utils.StreamExtensions.ReadAsciiString(System.IO.Stream,System.Int32)">
             <summary>
             Reads a ASCII string of the specified length.
             </summary>
@@ -1849,14 +2159,14 @@
             <param name="length">The number of characters in the string.</param>
             <returns>The string read from the stream.</returns>
         </member>
-        <member name="M:SolidShineUi.StreamExtensions.ReadSingleBigEndian(System.IO.Stream)">
+        <member name="M:SolidShineUi.Utils.StreamExtensions.ReadSingleBigEndian(System.IO.Stream)">
             <summary>
             Reads a 4-byte floating point value from the current stream using big-endian encoding and advances the position of the stream by four bytes.
             </summary>
             <param name="stream">The stream to read the data from.</param>
             <returns>A 4-byte floating point value read from the source stream.</returns>
         </member>
-        <member name="M:SolidShineUi.StreamExtensions.ReadStringBigEndian(System.IO.Stream,System.Int32)">
+        <member name="M:SolidShineUi.Utils.StreamExtensions.ReadStringBigEndian(System.IO.Stream,System.Int32)">
             <summary>
             Reads a unicode string of the specified length in big-endian format.
             </summary>
@@ -1864,26 +2174,44 @@
             <param name="length">The number of characters in the string.</param>
             <returns>The string read from the stream.</returns>
         </member>
-        <member name="M:SolidShineUi.StreamExtensions.ReadStringBigEndian(System.IO.Stream)">
+        <member name="M:SolidShineUi.Utils.StreamExtensions.ReadStringBigEndian(System.IO.Stream)">
             <summary>
             Reads a unicode string from the current stream in big-endian format. The string is prefixed with the length.
             </summary>
             <param name="stream">The stream to read the data from.</param>
             <returns>The string read from the stream.</returns>
         </member>
-        <member name="M:SolidShineUi.StreamExtensions.ReadUInt16BigEndian(System.IO.Stream)">
+        <member name="M:SolidShineUi.Utils.StreamExtensions.ReadUInt16BigEndian(System.IO.Stream)">
             <summary>
             Reads a 2-byte unsigned integer from the current stream using big-endian encoding and advances the position of the stream by two bytes.
             </summary>
             <param name="stream">The stream to read the data from.</param>
             <returns>A 2-byte unsigned integer read from the source stream.</returns>
         </member>
-        <member name="M:SolidShineUi.StreamExtensions.ReadUInt32BigEndian(System.IO.Stream)">
+        <member name="M:SolidShineUi.Utils.StreamExtensions.ReadUInt32BigEndian(System.IO.Stream)">
             <summary>
             Reads a 4-byte unsigned integer from the current stream using big-endian encoding and advances the position of the stream by four bytes.
             </summary>
             <param name="stream">The stream to read the data from.</param>
             <returns>A 4-byte unsigned integer read from the source stream.</returns>
+        </member>
+        <member name="T:SolidShineUi.Utils.TabDisplayItem">
+            <summary>
+            Interaction logic for TabDisplayItem.xaml
+            </summary>
+            <summary>
+            TabDisplayItem
+            </summary>
+        </member>
+        <member name="P:SolidShineUi.Utils.TabDisplayItem.ColorScheme">
+            <summary>
+            Get or set the color scheme to apply to the window.
+            </summary>
+        </member>
+        <member name="M:SolidShineUi.Utils.TabDisplayItem.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
         </member>
         <member name="T:SolidShineUi.WildcardMatch">
             <summary>
@@ -1922,36 +2250,6 @@
             <para/>
             This class was written by H.A. Sullivan.
             </remarks>
-        </member>
-        <member name="T:XamlGeneratedNamespace.GeneratedInternalTypeHelper">
-            <summary>
-            GeneratedInternalTypeHelper
-            </summary>
-        </member>
-        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.CreateInstance(System.Type,System.Globalization.CultureInfo)">
-            <summary>
-            CreateInstance
-            </summary>
-        </member>
-        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.GetPropertyValue(System.Reflection.PropertyInfo,System.Object,System.Globalization.CultureInfo)">
-            <summary>
-            GetPropertyValue
-            </summary>
-        </member>
-        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.SetPropertyValue(System.Reflection.PropertyInfo,System.Object,System.Object,System.Globalization.CultureInfo)">
-            <summary>
-            SetPropertyValue
-            </summary>
-        </member>
-        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.CreateDelegate(System.Type,System.Object,System.String)">
-            <summary>
-            CreateDelegate
-            </summary>
-        </member>
-        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.AddEventHandler(System.Reflection.EventInfo,System.Object,System.Delegate)">
-            <summary>
-            AddEventHandler
-            </summary>
         </member>
     </members>
 </doc>
