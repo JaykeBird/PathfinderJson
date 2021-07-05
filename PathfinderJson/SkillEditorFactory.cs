@@ -16,22 +16,22 @@ namespace PathfinderJson
                 SkillEditor se = new SkillEditor();
 
                 se.SkillName = item.Value.name;
-                se.SkillAbility = item.Value.modifier;
-                se.CanEditTitle = item.Value.canEdit;
-                se.SkillInternalName = item.Key;
+                se.ModifierName = item.Value.modifier;
+                se.HasSpecialization = item.Value.canEdit;
+                se.InternalSkillName = item.Key;
 
-                se.OwnerWindow = owner;
+                if (owner != null) se.OwnerWindow = owner;
 
                 // set skill name to use with d20pfsrd.com
                 string snl = se.SkillName.ToLowerInvariant();
 
                 if (snl.Contains("knowledge"))
                 {
-                    se.SkillOnlineName = "knowledge";
+                    se.InfoUrl = "https://d20pfsrd.com/skills/knowledge";
                 }
                 else
                 {
-                    se.SkillOnlineName = snl.Replace(' ', '-');
+                    se.InfoUrl = "https://d20pfsrd.com/skills/" + snl.Replace(' ', '-');
                 }
 
                 if (ps.Skills != null)
