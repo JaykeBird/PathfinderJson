@@ -14,7 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 using System.Xml;
 using SolidShineUi;
-using SolidShineUi.Keyboard;
+using SolidShineUi.KeyboardShortcuts;
 
 using static PathfinderJson.CoreUtils;
 using static PathfinderJson.App;
@@ -87,9 +87,8 @@ namespace PathfinderJson
         int babCalc = 0;
 
         // keyboard/method data
-        RoutedMethodRegistry mr = new RoutedMethodRegistry();
+        KeyActionList mr = new KeyActionList();
         KeyboardShortcutHandler ksh;
-        KeyRegistry kr = new KeyRegistry();
 
         #region Constructor/ window events/ basic functions
 
@@ -121,7 +120,7 @@ namespace PathfinderJson
 
             InitializeComponent();
             ksh = new KeyboardShortcutHandler(this);
-            mr.FillFromMenu(menu);
+            mr = RoutedEventKeyAction.CreateListFromMenu(menu);
 
             if (File.Exists(Path.Combine(appDataPath, "keyboard.xml")))
             {

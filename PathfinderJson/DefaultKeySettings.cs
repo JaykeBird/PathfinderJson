@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Windows.Input;
-using SolidShineUi.Keyboard;
+using SolidShineUi.KeyboardShortcuts;
 
 namespace PathfinderJson
 {
     public static class DefaultKeySettings
     {
 
-        public static List<KeyboardShortcut> CreateDefaultShortcuts(RoutedMethodRegistry mr)
+        public static List<KeyboardShortcut> CreateDefaultShortcuts(KeyActionList mr)
         {
             List<KeyboardShortcut> ks = new List<KeyboardShortcut>();
 
@@ -35,13 +35,13 @@ namespace PathfinderJson
             return ks;
         }
 
-        private static void AddShortcut(ref List<KeyboardShortcut> list, KeyboardCombination combination, Key key, string method, RoutedMethodRegistry mr)
+        private static void AddShortcut(ref List<KeyboardShortcut> list, KeyboardCombination combination, Key key, string method, KeyActionList mr)
         {
             try
             {
-                var res = mr[method];
+                IKeyAction res = mr[method];
 
-                KeyboardShortcut ks = new KeyboardShortcut(combination, key, res.handler, res.methodId, res.menuItem);
+                KeyboardShortcut ks = new KeyboardShortcut(combination, key, res);
                 list.Add(ks);
             }
             catch (KeyNotFoundException) { }
