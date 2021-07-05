@@ -15,8 +15,8 @@ namespace PathfinderJson
         {
             WebClient wc = new WebClient();
             wc.Encoding = new UTF8Encoding();
-            // Github's API only seems to respond if there's a user agent present? so I just used the IE11 one (will probably change it later)
-            wc.Headers.Add(HttpRequestHeader.UserAgent, "Mozilla/5.0 (Windows NT 10.0; WOW64; Trident/7.0; rv:11.0) like Gecko");
+            // Github's API only responds if there's a user agent present. I'm currently using a Chrome user agent
+            wc.Headers.Add(HttpRequestHeader.UserAgent, "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.114 Safari/537.36 PathfinderJson/" + App.AppVersion.ToString());
             string s = await wc.DownloadStringTaskAsync("https://api.github.com/repos/JaykeBird/PathfinderJson/releases/latest");
 
             var t = JsonConvert.DeserializeObject<GitHubReleaseData>(s);
