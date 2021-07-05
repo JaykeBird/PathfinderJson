@@ -229,6 +229,15 @@
                         <TextBlock Text="Update Calculations" Margin="3,0" />
                     </StackPanel>
                 </flat:FlatButton>
+                <StackPanel Orientation="Horizontal" x:Name="stkSheetEditToolbar" >
+                    <Border Width="1" BorderBrush="Black" BorderThickness="1" Margin="1,2" />
+                    <flat:FlatButton TransparentBack="True" x:Name="btnUndoS" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" Click="mnuUndoS_Click" Margin="0,2" Padding="3,2" ToolTip="Undo" >
+                        <local:ThemedImage ImageName="Undo" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" Width="16" Height="16" />
+                    </flat:FlatButton>
+                    <flat:FlatButton TransparentBack="True" x:Name="btnRedoS" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" Click="mnuRedoS_Click" Margin="0,2" Padding="3,2" ToolTip="Redo" >
+                        <local:ThemedImage ImageName="Redo" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" Width="16" Height="16" />
+                    </flat:FlatButton>
+                </StackPanel>
                 <StackPanel Orientation="Horizontal" x:Name="stkEditToolbar" >
                     <Border Width="1" BorderBrush="Black" BorderThickness="1" Margin="1,2" />
                     <flat:FlatButton TransparentBack="True" x:Name="btnUndo" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" Click="mnuUndo_Click" Margin="0,2" Padding="3,2" ToolTip="Undo" >

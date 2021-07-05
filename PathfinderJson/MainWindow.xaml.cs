@@ -265,6 +265,11 @@ namespace PathfinderJson
             mnuTestUndo.IsEnabled = true;
             mnuTestUndo.Visibility = Visibility.Visible;
 #endif
+
+            btnUndoS.IsEnabled = undoStack.CanUndo;
+            mnuUndoS.IsEnabled = undoStack.CanUndo;
+            btnRedoS.IsEnabled = undoStack.CanRedo;
+            mnuRedoS.IsEnabled = undoStack.CanRedo;
         }
 
         #region Other Base Functions
@@ -1242,16 +1247,72 @@ namespace PathfinderJson
 
         // relevant variables are declared at the top of the class
 
+        void StartUndoTimer(TextBox sender)
+        {
+            CreateUndoState();
+            //if (undoSetTimer.IsEnabled)
+            //{
+            //    if (sender != lastEditedBox)
+            //    {
+            //        CreateUndoState();
+            //    }
+
+            //    undoSetTimer.Stop();
+            //    undoSetTimer.Start();
+            //}
+            //else
+            //{
+            //    undoSetTimer.Start();
+            //}
+        }
+
         private void UndoSetTimer_Tick(object? sender, EventArgs e)
         {
-            CreateUndoItem();
+            CreateUndoState();
         }
 
-        void CreateUndoItem()
+        private void mnuTestUndo_Click(object sender, RoutedEventArgs e)
         {
-
+            UndoStackTest ust = new UndoStackTest();
+            ust.Show();
         }
 
+        private void CreateUndoState()
+        {
+            PathfinderSheet ps = CreatePathfinderSheet();
+            undoStack.StoreState(ps);
+
+            btnUndoS.IsEnabled = undoStack.CanUndo;
+            mnuUndoS.IsEnabled = undoStack.CanUndo;
+            btnRedoS.IsEnabled = undoStack.CanRedo;
+            mnuRedoS.IsEnabled = undoStack.CanRedo;
+        }
+
+        private void mnuUndoS_Click(object sender, RoutedEventArgs e)
+        {
+            if (undoStack.CanUndo)
+            {
+                CoreLoadPathfinderSheet(undoStack.Undo());
+            }
+
+            btnUndoS.IsEnabled = undoStack.CanUndo;
+            mnuUndoS.IsEnabled = undoStack.CanUndo;
+            btnRedoS.IsEnabled = undoStack.CanRedo;
+            mnuRedoS.IsEnabled = undoStack.CanRedo;
+        }
+
+        private void mnuRedoS_Click(object sender, RoutedEventArgs e)
+        {
+            if (undoStack.CanRedo)
+            {
+                CoreLoadPathfinderSheet(undoStack.Redo());
+            }
+
+            btnUndoS.IsEnabled = undoStack.CanUndo;
+            mnuUndoS.IsEnabled = undoStack.CanUndo;
+            btnRedoS.IsEnabled = undoStack.CanRedo;
+            mnuRedoS.IsEnabled = undoStack.CanRedo;
+        }
 
         #endregion
 
@@ -1656,6 +1717,7 @@ namespace PathfinderJson
                     colTabs.Width = new GridLength(120, GridUnitType.Auto);
                     colTabs.MinWidth = 120;
                     stkEditToolbar.Visibility = Visibility.Collapsed;
+                    stkSheetEditToolbar.Visibility = Visibility.Visible;
 
                     mnuTabs.IsChecked = false;
                     mnuScroll.IsChecked = true;
@@ -1676,6 +1738,7 @@ namespace PathfinderJson
                     colTabs.Width = new GridLength(120, GridUnitType.Auto);
                     colTabs.MinWidth = 120;
                     stkEditToolbar.Visibility = Visibility.Collapsed;
+                    stkSheetEditToolbar.Visibility = Visibility.Visible;
 
                     mnuTabs.IsChecked = true;
                     mnuScroll.IsChecked = false;
@@ -1694,6 +1757,7 @@ namespace PathfinderJson
                     colTabs.Width = new GridLength(0);
                     colTabs.MinWidth = 0;
                     stkEditToolbar.Visibility = Visibility.Visible;
+                    stkSheetEditToolbar.Visibility = Visibility.Collapsed;
 
                     mnuTabs.IsChecked = false;
                     mnuScroll.IsChecked = false;
@@ -2256,11 +2320,10 @@ namespace PathfinderJson
 
         void LoadPathfinderSheet(PathfinderSheet sheet)
         {
-            // set this flag so that the program doesn't try to set the sheet as dirty while loading in the file
-            _isUpdating = true;
-
             // check if the userdata structure is present
             bool _userDataCheck = false;
+
+            // first, some sanity checks and null checks
 
             // General tab
             if (sheet.Player != null)
@@ -2312,7 +2375,51 @@ namespace PathfinderJson
                 sheet.Player = new UserData(true);
             }
 
-            ud = sheet.Player;
+            if (sheet.SheetSettings != null)
+            {
+                sheetSettings = sheet.SheetSettings;
+            }
+            else
+            {
+                sheetSettings = new Dictionary<string, string?>();
+            }
+
+            // Equipment tab
+            if (sheet.Money == null) // in sheets where the player hasn't given their character money, Mottokrosh's site doesn't add a "money" object to the JSON output
+            {
+                sheet.Money = new Dictionary<string, string?>();
+            }
+
+            CoreLoadPathfinderSheet(sheet);
+
+            // this is a check to determine if this JSON file looks like a character sheet file or not
+            // the program will happily open and work with the file, but if the user saves the file the existing data in the file will be deleted
+            // thus, I'm most concerned about data loss for the user, in case the user accidentally opened the wrong file
+            // the check looks at two of three things being missing:
+            // 1. the character's name (name attribute)
+            // 2. the player's info (user data structure)
+            // 3. the character's base abilities structure (abilities structure)
+            // if two of them are missing, it displays a warning dialog but continues otherwise
+            if ((string.IsNullOrEmpty(sheet.Name) && (!sheet.AbilitiesPresent || _userDataCheck)) || (!sheet.AbilitiesPresent && _userDataCheck))
+            {
+                MessageDialog md = new MessageDialog(App.ColorScheme);
+                md.Message = "This JSON file doesn't seem to look like it's a character sheet at all. " +
+                    "It may be good to open the Raw JSON view to check that the file matches what you're expecting.\n\n" +
+                    "PathfinderJSON will continue, but if you save any changes, any non-character sheet data may be deleted.";
+                md.Title = "File Check Warning";
+                md.Owner = this;
+                md.Image = MessageDialogImage.Hand;
+                md.ShowDialog();
+            }
+        }
+
+        private void CoreLoadPathfinderSheet(PathfinderSheet sheet)
+        {
+            // set this flag so that the program doesn't try to set the sheet as dirty while loading in the file
+            _isUpdating = true;
+
+            // General tab
+            ud = sheet.Player ?? new UserData();
             //ac = sheet.AC;
             sheetid = sheet.Id ?? "-1";
             version = sheet.Version;
@@ -2346,15 +2453,6 @@ namespace PathfinderJson
 
             abilities = sheet.RawAbilities;
 
-            if (sheet.SheetSettings != null)
-            {
-                sheetSettings = sheet.SheetSettings;
-            }
-            else
-            {
-                sheetSettings = new Dictionary<string, string?>();
-            }
-
             txtStr.Value = sheet.Strength;
             txtDex.Value = sheet.Dexterity;
             txtCha.Value = sheet.Charisma;
@@ -2369,14 +2467,18 @@ namespace PathfinderJson
             txtIntm.Text = CalculateModifier(sheet.Intelligence);
             txtWism.Text = CalculateModifier(sheet.Wisdom);
 
-            if (sheet.Saves.ContainsKey("fort")) edtFort.LoadModifier(sheet.Saves["fort"], txtConm.Text);
-            else edtFort.LoadModifier(new CompoundModifier(), txtConm.Text);
+            edtFort.LoadModifier(sheet.Saves.ContainsKey("fort") ? sheet.Saves["fort"] : new CompoundModifier(), txtConm.Text);
+            edtReflex.LoadModifier(sheet.Saves.ContainsKey("reflex") ? sheet.Saves["reflex"] : new CompoundModifier(), txtDexm.Text);
+            edtWill.LoadModifier(sheet.Saves.ContainsKey("will") ? sheet.Saves["will"] : new CompoundModifier(), txtWism.Text);
 
-            if (sheet.Saves.ContainsKey("reflex")) edtReflex.LoadModifier(sheet.Saves["reflex"], txtDexm.Text);
-            else edtReflex.LoadModifier(new CompoundModifier(), txtDexm.Text);
+            //if (sheet.Saves.ContainsKey("fort")) edtFort.LoadModifier(sheet.Saves["fort"], txtConm.Text);
+            //else edtFort.LoadModifier(new CompoundModifier(), txtConm.Text);
 
-            if (sheet.Saves.ContainsKey("will")) edtWill.LoadModifier(sheet.Saves["will"], txtWism.Text);
-            else edtWill.LoadModifier(new CompoundModifier(), txtWism.Text);
+            //if (sheet.Saves.ContainsKey("reflex")) edtReflex.LoadModifier(sheet.Saves["reflex"], txtDexm.Text);
+            //else edtReflex.LoadModifier(new CompoundModifier(), txtDexm.Text);
+
+            //if (sheet.Saves.ContainsKey("will")) edtWill.LoadModifier(sheet.Saves["will"], txtWism.Text);
+            //else edtWill.LoadModifier(new CompoundModifier(), txtWism.Text);
 
             txtHpTotal.Text = sheet.HP.Total;
             txtHpWounds.Text = sheet.HP.Wounds;
@@ -2471,12 +2573,8 @@ namespace PathfinderJson
             }
 
             // Equipment tab
-
             Dictionary<string, string?> money = sheet.Money ?? new Dictionary<string, string?>();
-            if (sheet.Money == null) // in sheets where the player hasn't given their character money, Mottokrosh's site doesn't add a "money" object to the JSON output
-            {
-                money = new Dictionary<string, string?>();
-            }
+
             txtMoneyCp.Text = money.ContainsKey("cp") ? money["cp"] : "0";
             txtMoneySp.Text = money.ContainsKey("sp") ? money["sp"] : "0";
             txtMoneyGp.Text = money.ContainsKey("gp") ? money["gp"] : "0";
@@ -2682,26 +2780,6 @@ namespace PathfinderJson
             UpdateMarkdownViewerVisuals();
 
             _isUpdating = false;
-
-            // this is a check to determine if this JSON file looks like a character sheet file or not
-            // the program will happily open and work with the file, but if the user saves the file the existing data in the file will be deleted
-            // thus, I'm most concerned about data loss for the user, in case the user accidentally opened the wrong file
-            // the check looks at two of three things being missing:
-            // 1. the character's name (name attribute)
-            // 2. the player's info (user data structure)
-            // 3. the character's base abilities structure (abilities structure)
-            // if two of them are missing, it displays a warning dialog but continues otherwise
-            if ((string.IsNullOrEmpty(sheet.Name) && (!sheet.AbilitiesPresent || _userDataCheck)) || (!sheet.AbilitiesPresent && _userDataCheck))
-            {
-                MessageDialog md = new MessageDialog(App.ColorScheme);
-                md.Message = "This JSON file doesn't seem to look like it's a character sheet at all. " +
-                    "It may be good to open the Raw JSON view to check that the file matches what you're expecting.\n\n" +
-                    "PathfinderJSON will continue, but if you save any changes, any non-character sheet data may be deleted.";
-                md.Title = "File Check Warning";
-                md.Owner = this;
-                md.Image = MessageDialogImage.Hand;
-                md.ShowDialog();
-            }
         }
 
         private void editor_ModifierChanged(object? sender, EventArgs e)
@@ -3274,6 +3352,7 @@ namespace PathfinderJson
             if (!_isUpdating)
             {
                 SetIsDirty();
+                StartUndoTimer(sender as TextBox ?? new TextBox());
             }
 
             lastEditedBox = sender as TextBox;
@@ -3284,6 +3363,7 @@ namespace PathfinderJson
             if (!_isUpdating)
             {
                 SetIsDirty();
+                CreateUndoState();
             }
         }
 
@@ -3299,6 +3379,7 @@ namespace PathfinderJson
                 txtWism.Text = CalculateModifier(txtWis.Value);
 
                 SetIsDirty();
+                CreateUndoState();
 
                 if (mnuAutoUpdate.IsChecked)
                 {
@@ -3317,6 +3398,7 @@ namespace PathfinderJson
                 }
 
                 SetIsDirty(); // <-- this includes updating the title bar
+                StartUndoTimer(txtCharacter);
             }
         }
 
@@ -3373,6 +3455,7 @@ namespace PathfinderJson
                 catch (System.Net.WebException) { imgPlayer.Source = null; }
 
                 SetIsDirty();
+                CreateUndoState();
             }
         }
 
@@ -3479,6 +3562,7 @@ namespace PathfinderJson
             ae.IsSelected = true;
 
             SetIsDirty();
+            CreateUndoState();
         }
 
         private void btnDeleteAbility_Click(object sender, EventArgs e)
@@ -3949,23 +4033,7 @@ namespace PathfinderJson
 
         #endregion
 
-        private void mnuTestUndo_Click(object sender, RoutedEventArgs e)
-        {
-            UndoStackTest ust = new UndoStackTest();
-            ust.Show();
-        }
-
         private void mnuCounters_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void mnuUndoS_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void mnuRedoS_Click(object sender, RoutedEventArgs e)
         {
 
         }
