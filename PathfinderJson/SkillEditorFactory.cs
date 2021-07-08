@@ -11,34 +11,52 @@ namespace PathfinderJson
         {
             List<SkillEditor> eds = new List<SkillEditor>();
 
-            foreach (var item in SkillEntries)
+            string? skillListFile = null;
+
+            if (ps.SheetSettings != null)
+            {
+                if (ps.SheetSettings.ContainsKey("skillList"))
+                {
+                    string? loc = ps.SheetSettings["skillList"];
+
+                    if (System.IO.File.Exists(loc ?? ""))
+                    {
+                        skillListFile = loc;
+                    }
+                }
+            }
+
+            SkillList sl = skillListFile == null ? SkillList.LoadStandardList() : SkillList.LoadFile(skillListFile);
+
+            foreach (var item in sl.SkillEntries)
             {
                 SkillEditor se = new SkillEditor();
 
-                se.SkillName = item.Value.name;
-                se.SkillAbility = item.Value.modifier;
-                se.CanEditTitle = item.Value.canEdit;
-                se.SkillInternalName = item.Key;
+                se.SkillName = item.DisplayName ?? (item.Name.Substring(0, 1).ToUpperInvariant() + item.Name.Substring(1));
+                se.ModifierName = item.Modifier;
+                se.HasSpecialization = item.HasSpecialization;
+                se.InternalSkillName = item.Name;
 
-                se.OwnerWindow = owner;
+                if (owner != null) se.OwnerWindow = owner;
 
                 // set skill name to use with d20pfsrd.com
-                string snl = se.SkillName.ToLowerInvariant();
+                se.InfoUrl = item.InfoUrl ?? "https://d20pfsrd.com/skills/";
+                //string snl = se.SkillName.ToLowerInvariant();
 
-                if (snl.Contains("knowledge"))
-                {
-                    se.SkillOnlineName = "knowledge";
-                }
-                else
-                {
-                    se.SkillOnlineName = snl.Replace(' ', '-');
-                }
+                //if (snl.Contains("knowledge"))
+                //{
+                //    se.InfoUrl = "https://d20pfsrd.com/skills/knowledge";
+                //}
+                //else
+                //{
+                //    se.InfoUrl = "https://d20pfsrd.com/skills/" + snl.Replace(' ', '-');
+                //}
 
                 if (ps.Skills != null)
                 {
                     try
                     {
-                        Skill s = ps.Skills[item.Key] ?? new Skill();
+                        Skill s = ps.Skills[item.Name] ?? new Skill();
                         se.LoadSkillData(s);
                     }
                     catch (KeyNotFoundException)
