@@ -46,6 +46,7 @@
     <None Remove="Json.xshd" />
     <None Remove="None.xshd" />
     <None Remove="SkillEditor.xaml" />
+    <None Remove="SkillList\pathfinder.json" />
     <None Remove="ThirdPartyCredits.xaml" />
   </ItemGroup>
 
@@ -70,6 +71,7 @@
     <Resource Include="..\Icon48.png" Link="Icon48.png" />
     <EmbeddedResource Include="Json.xshd" />
     <EmbeddedResource Include="None.xshd" />
+    <EmbeddedResource Include="SkillList\pathfinder.json" />
   </ItemGroup>
 
   <ItemGroup>
