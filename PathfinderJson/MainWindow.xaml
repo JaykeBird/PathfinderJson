@@ -80,6 +80,8 @@
                 </MenuItem>
                 <MenuItem Header="Reloa_d File" x:Name="mnuRevert" Click="mnuRevert_Click" />
                 <Separator/>
+                <MenuItem Header="S_heet Settings..." x:Name="mnuSheetSettings" Click="mnuSheetSettings_Click" />
+                <Separator/>
                 <MenuItem Header="Indent _JSON Data" x:Name="mnuIndent" Click="mnuIndent_Click" />
                 <Separator />
                 <MenuItem Header="_Exit" x:Name="mnuExit" Click="btnExit_Click" >
