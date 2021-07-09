@@ -82,7 +82,9 @@ namespace PathfinderJson
         UserData ud;
         string sheetid;
         Dictionary<string, string> abilities = new Dictionary<string, string>();
+        Dictionary<string, int> abilityMods = new Dictionary<string, int>();
         Dictionary<string, string?> sheetSettings = new Dictionary<string, string?>();
+        Dictionary<string, string> skillModSubs = new Dictionary<string, string>();
         string? version;
         int babCalc = 0;
 
@@ -2460,12 +2462,20 @@ namespace PathfinderJson
             txtInt.Value = sheet.Intelligence;
             txtWis.Value = sheet.Wisdom;
 
-            txtStrm.Text = CalculateModifier(sheet.Strength);
-            txtDexm.Text = CalculateModifier(sheet.Dexterity);
-            txtCham.Text = CalculateModifier(sheet.Charisma);
-            txtConm.Text = CalculateModifier(sheet.Constitution);
-            txtIntm.Text = CalculateModifier(sheet.Intelligence);
-            txtWism.Text = CalculateModifier(sheet.Wisdom);
+            abilityMods.Clear();
+            abilityMods["STR"] = CalculateModifierInt(sheet.Strength);
+            abilityMods["DEX"] = CalculateModifierInt(sheet.Dexterity);
+            abilityMods["CHA"] = CalculateModifierInt(sheet.Charisma);
+            abilityMods["CON"] = CalculateModifierInt(sheet.Constitution);
+            abilityMods["INT"] = CalculateModifierInt(sheet.Intelligence);
+            abilityMods["WIS"] = CalculateModifierInt(sheet.Wisdom);
+
+            txtStrm.Text = DisplayModifier(abilityMods["STR"]);
+            txtDexm.Text = DisplayModifier(abilityMods["DEX"]);
+            txtCham.Text = DisplayModifier(abilityMods["CHA"]);
+            txtConm.Text = DisplayModifier(abilityMods["CON"]);
+            txtIntm.Text = DisplayModifier(abilityMods["INT"]);
+            txtWism.Text = DisplayModifier(abilityMods["WIS"]);
 
             edtFort.LoadModifier(sheet.Saves.ContainsKey("fort") ? sheet.Saves["fort"] : new CompoundModifier(), txtConm.Text);
             edtReflex.LoadModifier(sheet.Saves.ContainsKey("reflex") ? sheet.Saves["reflex"] : new CompoundModifier(), txtDexm.Text);
@@ -2604,32 +2614,32 @@ namespace PathfinderJson
             stkSkills.Children.Clear();
             foreach (SkillEditor item in ses)
             {
-                string modifier = "";
+                //string modifier = "";
 
-                switch (item.ModifierName)
-                {
-                    case "DEX":
-                        modifier = txtDexm.Text;
-                        break;
-                    case "INT":
-                        modifier = txtIntm.Text;
-                        break;
-                    case "CHA":
-                        modifier = txtCham.Text;
-                        break;
-                    case "STR":
-                        modifier = txtStrm.Text;
-                        break;
-                    case "WIS":
-                        modifier = txtWism.Text;
-                        break;
-                    case "CON":
-                        modifier = txtConm.Text;
-                        break;
-                    default:
-                        break;
-                }
-                item.ModifierValue = int.Parse(modifier);
+                //switch (item.ModifierName)
+                //{
+                //    case "DEX":
+                //        modifier = txtDexm.Text;
+                //        break;
+                //    case "INT":
+                //        modifier = txtIntm.Text;
+                //        break;
+                //    case "CHA":
+                //        modifier = txtCham.Text;
+                //        break;
+                //    case "STR":
+                //        modifier = txtStrm.Text;
+                //        break;
+                //    case "WIS":
+                //        modifier = txtWism.Text;
+                //        break;
+                //    case "CON":
+                //        modifier = txtConm.Text;
+                //        break;
+                //    default:
+                //        break;
+                //}
+                item.ModifierValue = abilityMods[item.ModifierName];
                 item.UpdateCalculations();
                 //item.LoadModifier(modifier);
 
@@ -2742,7 +2752,7 @@ namespace PathfinderJson
             {
                 if (sheetSettings.ContainsKey("notesMarkdown"))
                 {
-                    if (sheetSettings["notesMarkdown"]?.ToLowerInvariant() == "enabled")
+                    if ((sheetSettings["notesMarkdown"]?.ToLowerInvariant() ?? "disabled") == "enabled")
                     {
                         ShowMarkdownElements();
                         OpenNotesViewTab();
@@ -2759,11 +2769,24 @@ namespace PathfinderJson
                     HideMarkdownElements();
                     chkNotesMarkdown.IsChecked = false;
                 }
+
+                if (sheetSettings.ContainsKey("notesNoSpellCheck"))
+                {
+                    if ((sheetSettings["notesNoSpellCheck"]?.ToLowerInvariant() ?? "disabled") == "enabled")
+                    {
+                        SpellCheck.SetIsEnabled(txtNotes, false);
+                    }
+                    else
+                    {
+                        SpellCheck.SetIsEnabled(txtNotes, true);
+                    }
+                }
             }
             else
             {
                 HideMarkdownElements();
                 chkNotesMarkdown.IsChecked = false;
+                SpellCheck.SetIsEnabled(txtNotes, true);
             }
 
             //if (sheet.NotesMarkdown)
@@ -2782,11 +2805,6 @@ namespace PathfinderJson
             _isUpdating = false;
         }
 
-        private void editor_ModifierChanged(object? sender, EventArgs e)
-        {
-            // TODO: handle modifier change
-            //throw new NotImplementedException();
-        }
         #endregion
 
         #region Sync Editors / update sheet / CreatePathfinderSheetAsync
@@ -3103,6 +3121,11 @@ namespace PathfinderJson
 
             sheet.Notes = txtNotes.Text;
 
+            if (!SpellCheck.GetIsEnabled(txtNotes))
+            {
+                sheetSettings["notesNoSpellCheck"] = "enabled";
+            }
+
             if (chkNotesMarkdown.IsChecked)
             {
                 sheetSettings["notesMarkdown"] = "enabled";
@@ -3140,11 +3163,6 @@ namespace PathfinderJson
                 sp = null;
             }
             sheet.Speed = sp;
-
-            if (sheetSettings.Count > 0)
-            {
-                sheet.SheetSettings = sheetSettings;
-            }
 
             //Dictionary<string, string> abilities = new Dictionary<string, string>
             //{
@@ -3292,6 +3310,19 @@ namespace PathfinderJson
 
             sheet.Skills = skills;
 
+            if (skillModSubs.Count > 0)
+            {
+                sheetSettings["skillModSet"] = string.Join(";", GetStringListFromDictionary());
+            }
+
+            IEnumerable<string> GetStringListFromDictionary()
+            {
+                foreach (KeyValuePair<string, string> item in skillModSubs)
+                {
+                    yield return item.Key + "," + item.Value;
+                }
+            }
+
             // spells
 
             List<Spell> allspells = new List<Spell>();
@@ -3323,6 +3354,11 @@ namespace PathfinderJson
             }
             sheet.SpellsConditionalModifiers = GetStringOrNull(txtSpellConditionalModifiers.Text);
             sheet.SpellsSpeciality = GetStringOrNull(txtSpellSpecialty.Text);
+
+            if (sheetSettings.Count > 0)
+            {
+                sheet.SheetSettings = sheetSettings;
+            }
 
             return sheet;
             //});
@@ -3511,6 +3547,63 @@ namespace PathfinderJson
                 Debugger.Log(0, null, "Sender is not a FrameworkElement. It is " + sender.GetType().FullName);
             }
         }
+
+        #endregion
+
+        #region Skill editors
+
+        public void LoadSkillModSubstitutions(string s)
+        {
+            skillModSubs.Clear();
+
+            string[] pairs = s.Split(';');
+            foreach (string item in pairs)
+            {
+                string[] itemVals = item.Split(',');
+                if (itemVals.Length != 2)
+                {
+                    continue;
+                }
+                else
+                {
+                    if (!abilityMods.ContainsKey(itemVals[2])) continue;
+                    skillModSubs.Add(itemVals[0], itemVals[1]);
+                }
+            }
+
+            if (skillModSubs.Count > 0)
+            {
+                foreach (SkillEditor? item in stkSkills.Children)
+                {
+                    if (item != null)
+                    {
+                        if (skillModSubs.ContainsKey(item.InternalSkillName))
+                        {
+                            item.ModifierName = skillModSubs[item.InternalSkillName];
+                        }
+                    }
+                }
+            }
+        }
+
+        private void editor_ModifierChanged(object? sender, EventArgs e)
+        {
+            // TODO: handle modifier change
+            //throw new NotImplementedException();
+            if (sender is SkillEditor se)
+            {
+                if (se.ModifierName == se.OriginalModifierName)
+                {
+                    skillModSubs.Remove(se.InternalSkillName);
+                }
+                else
+                {
+                    skillModSubs[se.InternalSkillName] = se.ModifierName;
+                }
+                se.ModifierValue = abilityMods[se.ModifierName];
+            }
+        }
+
 
         #endregion
 
@@ -4036,6 +4129,21 @@ namespace PathfinderJson
         private void mnuCounters_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void mnuSheetSettings_Click(object sender, RoutedEventArgs e)
+        {
+            if (!_sheetLoaded)
+            {
+                MessageDialog md = new MessageDialog(App.ColorScheme);
+                md.ShowDialog("No sheet is currently open.", null, this, "No Sheet Open", MessageDialogButtonDisplay.Auto, image: MessageDialogImage.Error);
+                return;
+            }
+
+            SheetSettings sse = new SheetSettings();
+            sse.SheetSettingsList = sheetSettings;
+            sse.Owner = this;
+            sse.ShowDialog();
         }
     }
 }

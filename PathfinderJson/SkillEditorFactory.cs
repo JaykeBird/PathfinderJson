@@ -34,6 +34,7 @@ namespace PathfinderJson
 
                 se.SkillName = item.DisplayName ?? (item.Name.Substring(0, 1).ToUpperInvariant() + item.Name.Substring(1));
                 se.ModifierName = item.Modifier;
+                se.OriginalModifierName = item.Modifier;
                 se.HasSpecialization = item.HasSpecialization;
                 se.InternalSkillName = item.Name;
 

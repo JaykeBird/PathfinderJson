@@ -173,6 +173,8 @@ namespace PathfinderJson
             set => SetValue(ModifierNameProperty, value);
         }
 
+        public string OriginalModifierName { get; set; } = "";
+
         public static DependencyProperty InfoUrlProperty
             = DependencyProperty.Register("InfoUrl", typeof(string), typeof(SkillEditor),
             new FrameworkPropertyMetadata("https://d20pfsrd.com/skills", new PropertyChangedCallback(OnModifierNameChanged)));

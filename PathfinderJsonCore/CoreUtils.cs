@@ -87,7 +87,7 @@ namespace PathfinderJson
 
         public static string CalculateModifier(int score)
         {
-            int r = (int)Math.Floor((score - 10) / 2d);
+            int r = CalculateModifierInt(score);
             if (r >= 0) return "+" + r.ToString(); else return r.ToString();
         }
 
