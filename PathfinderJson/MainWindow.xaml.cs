@@ -2377,15 +2377,6 @@ namespace PathfinderJson
                 sheet.Player = new UserData(true);
             }
 
-            if (sheet.SheetSettings != null)
-            {
-                sheetSettings = sheet.SheetSettings;
-            }
-            else
-            {
-                sheetSettings = new Dictionary<string, string?>();
-            }
-
             // Equipment tab
             if (sheet.Money == null) // in sheets where the player hasn't given their character money, Mottokrosh's site doesn't add a "money" object to the JSON output
             {
@@ -2419,6 +2410,15 @@ namespace PathfinderJson
         {
             // set this flag so that the program doesn't try to set the sheet as dirty while loading in the file
             _isUpdating = true;
+
+            if (sheet.SheetSettings != null)
+            {
+                sheetSettings = sheet.SheetSettings;
+            }
+            else
+            {
+                sheetSettings = new Dictionary<string, string?>();
+            }
 
             // General tab
             ud = sheet.Player ?? new UserData();
@@ -2649,6 +2649,11 @@ namespace PathfinderJson
                 stkSkills.Children.Add(item);
                 item.ColorScheme = ColorScheme;
                 //item.UpdateAppearance();
+            }
+
+            if (sheetSettings.ContainsKey("skillModSet"))
+            {
+                LoadSkillModSubstitutions(sheetSettings["skillModSet"] ?? "");
             }
 
             // Spells tab
@@ -3554,19 +3559,21 @@ namespace PathfinderJson
 
         public void LoadSkillModSubstitutions(string s)
         {
+            if (string.IsNullOrEmpty(s)) return;
+
             skillModSubs.Clear();
 
-            string[] pairs = s.Split(';');
+            string[] pairs = s.Split(';', StringSplitOptions.RemoveEmptyEntries);
             foreach (string item in pairs)
             {
-                string[] itemVals = item.Split(',');
+                string[] itemVals = item.Split(',', StringSplitOptions.RemoveEmptyEntries);
                 if (itemVals.Length != 2)
                 {
                     continue;
                 }
                 else
                 {
-                    if (!abilityMods.ContainsKey(itemVals[2])) continue;
+                    if (!abilityMods.ContainsKey(itemVals[1])) continue;
                     skillModSubs.Add(itemVals[0], itemVals[1]);
                 }
             }

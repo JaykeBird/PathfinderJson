@@ -13,8 +13,10 @@ namespace PathfinderJson
 
             string? skillListFile = null;
 
+            // check sheet settings first for relevant settings
             if (ps.SheetSettings != null)
             {
+                // check if a specific skill list file is referenced
                 if (ps.SheetSettings.ContainsKey("skillList"))
                 {
                     string? loc = ps.SheetSettings["skillList"];
