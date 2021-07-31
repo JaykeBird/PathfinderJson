@@ -120,6 +120,8 @@ namespace PathfinderJson
 
         private void btnEditSetting_Click(object sender, RoutedEventArgs e)
         {
+            if (selSheetSettings.SelectionCount == 0) return;
+
             SelectableItem si = selSheetSettings.GetSelectedItemsOfType<SelectableItem>().First();
             if (si.Tag is KeyValuePair<string, string?> kvp)
             {
