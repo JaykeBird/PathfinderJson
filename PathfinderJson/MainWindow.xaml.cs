@@ -1720,6 +1720,7 @@ namespace PathfinderJson
                     colTabs.MinWidth = 120;
                     stkEditToolbar.Visibility = Visibility.Collapsed;
                     stkSheetEditToolbar.Visibility = Visibility.Visible;
+                    if (!sp.IsClosed) sp.Close();
 
                     mnuTabs.IsChecked = false;
                     mnuScroll.IsChecked = true;
@@ -1741,6 +1742,7 @@ namespace PathfinderJson
                     colTabs.MinWidth = 120;
                     stkEditToolbar.Visibility = Visibility.Collapsed;
                     stkSheetEditToolbar.Visibility = Visibility.Visible;
+                    if (!sp.IsClosed) sp.Close();
 
                     mnuTabs.IsChecked = true;
                     mnuScroll.IsChecked = false;
