@@ -4137,7 +4137,8 @@ namespace PathfinderJson
 
         private void mnuCounters_Click(object sender, RoutedEventArgs e)
         {
-
+            CountersWindow cw = new CountersWindow();
+            cw.Show();
         }
 
         private void mnuSheetSettings_Click(object sender, RoutedEventArgs e)
