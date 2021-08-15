@@ -69,13 +69,32 @@ namespace PathfinderJson
             }
             else
             {
-                try
+                if (int.TryParse(value, out int r))
                 {
-                    return int.Parse(value);
+                    return r;
                 }
-                catch (FormatException)
+                else
                 {
-                    throw;
+                    return 0;
+                }
+            }
+        }
+
+        public static double ParseStringAsDouble(string? value)
+        {
+            if (string.IsNullOrEmpty(value))
+            {
+                return 0;
+            }
+            else
+            {
+                if (double.TryParse(value, out double r))
+                {
+                    return r;
+                }
+                else
+                {
+                    return 0;
                 }
             }
         }

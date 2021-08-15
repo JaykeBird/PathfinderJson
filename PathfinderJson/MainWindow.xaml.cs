@@ -2587,10 +2587,10 @@ namespace PathfinderJson
             // Equipment tab
             Dictionary<string, string?> money = sheet.Money ?? new Dictionary<string, string?>();
 
-            txtMoneyCp.Text = money.ContainsKey("cp") ? money["cp"] : "0";
-            txtMoneySp.Text = money.ContainsKey("sp") ? money["sp"] : "0";
-            txtMoneyGp.Text = money.ContainsKey("gp") ? money["gp"] : "0";
-            txtMoneyPp.Text = money.ContainsKey("pp") ? money["pp"] : "0";
+            txtMoneyCp.Value = ParseStringAsDouble(money.ContainsKey("cp") ? money["cp"] : "0");
+            txtMoneySp.Value = ParseStringAsDouble(money.ContainsKey("sp") ? money["sp"] : "0");
+            txtMoneyGp.Value = ParseStringAsDouble(money.ContainsKey("gp") ? money["gp"] : "0");
+            txtMoneyPp.Value = ParseStringAsDouble(money.ContainsKey("pp") ? money["pp"] : "0");
             txtGemsArt.Text = money.ContainsKey("gems") ? money["gems"] : "";
             txtOtherTreasure.Text = money.ContainsKey("other") ? money["other"] : "";
 
@@ -2668,63 +2668,63 @@ namespace PathfinderJson
                 {
                     case 0:
                         txtSpellsBonus0.Text = item.BonusSpells;
-                        txtSpellsDC0.Text = item.SaveDC;
-                        txtSpellsKnown0.Text = item.TotalKnown;
-                        txtSpellsPerDay0.Text = item.TotalPerDay;
+                        txtSpellsDC0.Value = ParseStringAsInt(item.SaveDC);
+                        txtSpellsKnown0.Value = ParseStringAsInt(item.TotalKnown);
+                        txtSpellsPerDay0.Value = ParseStringAsInt(item.TotalPerDay);
                         break;
                     case 1:
                         txtSpellsBonus1.Text = item.BonusSpells;
-                        txtSpellsDC1.Text = item.SaveDC;
-                        txtSpellsKnown1.Text = item.TotalKnown;
-                        txtSpellsPerDay1.Text = item.TotalPerDay;
+                        txtSpellsDC1.Value = ParseStringAsInt(item.SaveDC);
+                        txtSpellsKnown1.Value = ParseStringAsInt(item.TotalKnown);
+                        txtSpellsPerDay1.Value = ParseStringAsInt(item.TotalPerDay);
                         break;
                     case 2:
                         txtSpellsBonus2.Text = item.BonusSpells;
-                        txtSpellsDC2.Text = item.SaveDC;
-                        txtSpellsKnown2.Text = item.TotalKnown;
-                        txtSpellsPerDay2.Text = item.TotalPerDay;
+                        txtSpellsDC2.Value = ParseStringAsInt(item.SaveDC);
+                        txtSpellsKnown2.Value = ParseStringAsInt(item.TotalKnown);
+                        txtSpellsPerDay2.Value = ParseStringAsInt(item.TotalPerDay);
                         break;
                     case 3:
                         txtSpellsBonus3.Text = item.BonusSpells;
-                        txtSpellsDC3.Text = item.SaveDC;
-                        txtSpellsKnown3.Text = item.TotalKnown;
-                        txtSpellsPerDay3.Text = item.TotalPerDay;
+                        txtSpellsDC3.Value = ParseStringAsInt(item.SaveDC);
+                        txtSpellsKnown3.Value = ParseStringAsInt(item.TotalKnown);
+                        txtSpellsPerDay3.Value = ParseStringAsInt(item.TotalPerDay);
                         break;
                     case 4:
                         txtSpellsBonus4.Text = item.BonusSpells;
-                        txtSpellsDC4.Text = item.SaveDC;
-                        txtSpellsKnown4.Text = item.TotalKnown;
-                        txtSpellsPerDay4.Text = item.TotalPerDay;
+                        txtSpellsDC4.Value = ParseStringAsInt(item.SaveDC);
+                        txtSpellsKnown4.Value = ParseStringAsInt(item.TotalKnown);
+                        txtSpellsPerDay4.Value = ParseStringAsInt(item.TotalPerDay);
                         break;
                     case 5:
                         txtSpellsBonus5.Text = item.BonusSpells;
-                        txtSpellsDC5.Text = item.SaveDC;
-                        txtSpellsKnown5.Text = item.TotalKnown;
-                        txtSpellsPerDay5.Text = item.TotalPerDay;
+                        txtSpellsDC5.Value = ParseStringAsInt(item.SaveDC);
+                        txtSpellsKnown5.Value = ParseStringAsInt(item.TotalKnown);
+                        txtSpellsPerDay5.Value = ParseStringAsInt(item.TotalPerDay);
                         break;
                     case 6:
                         txtSpellsBonus6.Text = item.BonusSpells;
-                        txtSpellsDC6.Text = item.SaveDC;
-                        txtSpellsKnown6.Text = item.TotalKnown;
-                        txtSpellsPerDay6.Text = item.TotalPerDay;
+                        txtSpellsDC6.Value = ParseStringAsInt(item.SaveDC);
+                        txtSpellsKnown6.Value = ParseStringAsInt(item.TotalKnown);
+                        txtSpellsPerDay6.Value = ParseStringAsInt(item.TotalPerDay);
                         break;
                     case 7:
                         txtSpellsBonus7.Text = item.BonusSpells;
-                        txtSpellsDC7.Text = item.SaveDC;
-                        txtSpellsKnown7.Text = item.TotalKnown;
-                        txtSpellsPerDay7.Text = item.TotalPerDay;
+                        txtSpellsDC7.Value = ParseStringAsInt(item.SaveDC);
+                        txtSpellsKnown7.Value = ParseStringAsInt(item.TotalKnown);
+                        txtSpellsPerDay7.Value = ParseStringAsInt(item.TotalPerDay);
                         break;
                     case 8:
                         txtSpellsBonus8.Text = item.BonusSpells;
-                        txtSpellsDC8.Text = item.SaveDC;
-                        txtSpellsKnown8.Text = item.TotalKnown;
-                        txtSpellsPerDay8.Text = item.TotalPerDay;
+                        txtSpellsDC8.Value = ParseStringAsInt(item.SaveDC);
+                        txtSpellsKnown8.Value = ParseStringAsInt(item.TotalKnown);
+                        txtSpellsPerDay8.Value = ParseStringAsInt(item.TotalPerDay);
                         break;
                     case 9:
                         txtSpellsBonus9.Text = item.BonusSpells;
-                        txtSpellsDC9.Text = item.SaveDC;
-                        txtSpellsKnown9.Text = item.TotalKnown;
-                        txtSpellsPerDay9.Text = item.TotalPerDay;
+                        txtSpellsDC9.Value = ParseStringAsInt(item.SaveDC);
+                        txtSpellsKnown9.Value = ParseStringAsInt(item.TotalKnown);
+                        txtSpellsPerDay9.Value = ParseStringAsInt(item.TotalPerDay);
                         break;
                     default:
                         break;
@@ -2977,18 +2977,18 @@ namespace PathfinderJson
                     if ((ai.Name ?? "").ToLowerInvariant().Contains("shield") || (ai.Type ?? "").ToLowerInvariant().Contains("shield"))
                     {
                         // this is a shield
-                        try { acShield += ParseStringAsInt(ai.Bonus); } catch (FormatException) { }
+                        acShield += ParseStringAsInt(ai.Bonus);
                     }
                     else
                     {
                         // probably not a shield? consider it armor
-                        try { acArmor += ParseStringAsInt(ai.Bonus); } catch (FormatException) { }
+                        acArmor += ParseStringAsInt(ai.Bonus);
                     }
 
-                    try { tBonus += ParseStringAsInt(ai.Bonus); } catch (FormatException) { }
-                    try { tSpellcheck += ParseStringAsInt((ai.SpellFailure ?? "").Replace("%", "")); } catch (FormatException) { }
-                    try { tPenalty += ParseStringAsInt(ai.ArmorCheckPenalty); } catch (FormatException) { }
-                    try { tWeight += ParseStringAsInt(ai.Weight); } catch (FormatException) { }
+                    tBonus += ParseStringAsInt(ai.Bonus);
+                    tSpellcheck += ParseStringAsInt((ai.SpellFailure ?? "").Replace("%", ""));
+                    tPenalty += ParseStringAsInt(ai.ArmorCheckPenalty);
+                    tWeight += ParseStringAsInt(ai.Weight);
                 }
 
                 txtAcBonus.Text = tBonus.ToString();
@@ -3274,10 +3274,10 @@ namespace PathfinderJson
             // equipment
             sheet.Money = new Dictionary<string, string?>
             {
-                { "cp", GetStringOrNull(txtMoneyCp.Text, true) },
-                { "sp", GetStringOrNull(txtMoneySp.Text, true) },
-                { "gp", GetStringOrNull(txtMoneyGp.Text, true) },
-                { "pp", GetStringOrNull(txtMoneyPp.Text, true) },
+                { "cp", GetStringOrNull(txtMoneyCp.Value.ToString(), true) },
+                { "sp", GetStringOrNull(txtMoneySp.Value.ToString(), true) },
+                { "gp", GetStringOrNull(txtMoneyGp.Value.ToString(), true) },
+                { "pp", GetStringOrNull(txtMoneyPp.Value.ToString(), true) },
                 { "gems", GetStringOrNull(txtGemsArt.Text, true) },
                 { "other", GetStringOrNull(txtOtherTreasure.Text, true) }
             };
@@ -3343,10 +3343,10 @@ namespace PathfinderJson
             {
                 SpellLevel sl = new SpellLevel();
 
-                sl.TotalKnown = GetStringOrNull(((TextBox)grdSpells.FindName("txtSpellsKnown" + i)).Text, true);
-                sl.SaveDC = GetStringOrNull(((TextBox)grdSpells.FindName("txtSpellsDC" + i)).Text, true);
-                sl.TotalPerDay = GetStringOrNull(((TextBox)grdSpells.FindName("txtSpellsPerDay" + i)).Text, true);
-                sl.BonusSpells = GetStringOrNull(((TextBox)grdSpells.FindName("txtSpellsBonus" + i)).Text, true);
+                sl.TotalKnown = GetStringOrNull(((IntegerSpinner)grdSpells.FindName("txtSpellsKnown" + i)).Value.ToString(), true);
+                sl.SaveDC = GetStringOrNull(((IntegerSpinner)grdSpells.FindName("txtSpellsDC" + i)).Value.ToString(), true);
+                sl.TotalPerDay = GetStringOrNull(((IntegerSpinner)grdSpells.FindName("txtSpellsPerDay" + i)).Value.ToString(), true);
+                sl.BonusSpells = GetStringOrNull(((IntegerSpinner)grdSpells.FindName("txtSpellsBonus" + i)).Value.ToString(), true);
 
                 sl.Spells = new List<Spell>();
 
@@ -3396,6 +3396,17 @@ namespace PathfinderJson
             {
                 SetIsDirty();
                 StartUndoTimer(sender as UIElement ?? new TextBox());
+            }
+
+            lastEditedItem = sender as UIElement;
+        }
+
+        private void nud_TextChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            if (!_isUpdating)
+            {
+                SetIsDirty();
+                StartUndoTimer(sender as UIElement ?? new IntegerSpinner());
             }
 
             lastEditedItem = sender as UIElement;
