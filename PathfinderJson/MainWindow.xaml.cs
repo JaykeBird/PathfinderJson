@@ -2641,7 +2641,7 @@ namespace PathfinderJson
             {
                 if (sheetSettings.ContainsKey("notesMarkdown"))
                 {
-                    if (sheetSettings["notesMarkdown"]?.ToLowerInvariant() == "enabled")
+                    if ((sheetSettings["notesMarkdown"]?.ToLowerInvariant() ?? "disabled") == "enabled")
                     {
                         ShowMarkdownElements();
                         OpenNotesViewTab();
@@ -2657,6 +2657,18 @@ namespace PathfinderJson
                 {
                     HideMarkdownElements();
                     chkNotesMarkdown.IsChecked = false;
+                }
+
+                if (sheetSettings.ContainsKey("notesNoSpellCheck"))
+                {
+                    if ((sheetSettings["notesNoSpellCheck"]?.ToLowerInvariant() ?? "disabled") == "enabled")
+                    {
+                        SpellCheck.SetIsEnabled(txtNotes, false);
+                    }
+                    else
+                    {
+                        SpellCheck.SetIsEnabled(txtNotes, true);
+                    }
                 }
             }
             else
@@ -3054,11 +3066,6 @@ namespace PathfinderJson
             }
             sheet.Speed = sp;
 
-            if (sheetSettings.Count > 0)
-            {
-                sheet.SheetSettings = sheetSettings;
-            }
-
             //Dictionary<string, string> abilities = new Dictionary<string, string>
             //{
             //    { "str", txtStr.Value.ToString() },
@@ -3236,6 +3243,11 @@ namespace PathfinderJson
             }
             sheet.SpellsConditionalModifiers = GetStringOrNull(txtSpellConditionalModifiers.Text);
             sheet.SpellsSpeciality = GetStringOrNull(txtSpellSpecialty.Text);
+
+            if (sheetSettings.Count > 0)
+            {
+                sheet.SheetSettings = sheetSettings;
+            }
 
             return sheet;
             //});
