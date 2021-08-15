@@ -88,7 +88,7 @@
                     </MenuItem.Icon>
                 </MenuItem>
             </MenuItem>
-            <MenuItem Header="_Edit" x:Name="mnuEditS" Visibility="Visible">
+            <!--<MenuItem Header="_Edit" x:Name="mnuEditS" Visibility="Visible">
                 <MenuItem Header="_Undo" x:Name="mnuUndoS" Click="mnuUndoS_Click" >
                     <MenuItem.Icon>
                         <Image Source="/PathfinderJson;component/Images/Color/Undo.png" />
@@ -100,7 +100,7 @@
                     </MenuItem.Icon>
                 </MenuItem>
                 <MenuItem Header="Test _Undo Stack" x:Name="mnuTestUndo" Click="mnuTestUndo_Click" IsEnabled="False" Visibility="Collapsed" />
-            </MenuItem>
+            </MenuItem>-->
             <MenuItem Header="_Edit" x:Name="mnuEdit" Visibility="Collapsed" >
                 <MenuItem Header="_Undo Text Edit" x:Name="mnuUndo" Click="mnuUndo_Click" >
                     <MenuItem.Icon>
@@ -182,7 +182,6 @@
             </MenuItem>
             <MenuItem Header="_Tools">
                 <MenuItem Header="_Dice Roller" x:Name="mnuDiceRoll" Click="mnuDiceRoll_Click" />
-                <MenuItem Header="_Counters" x:Name="mnuCounters" Click="mnuCounters_Click" />
                 <Separator />
                 <MenuItem Header="_Text Editor Font..." x:Name="mnuEditorFont" Click="mnuEditorFont_Click" />
                 <MenuItem Header="_Options..." x:Name="mnuOptions" Click="mnuOptions_Click">
@@ -372,7 +371,7 @@
                             </Grid>
 
                             <TextBlock x:Name="lblSpeed" HorizontalAlignment="Left" Margin="10,0,0,0" Text="Speed" VerticalAlignment="Center" Grid.Row="2"/>
-                            <flat:LinkTextBlock x:Name="lnkMovement" Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Right" Text="View Movement on D20PFSRD" 
+                            <flat:LinkTextBlock x:Name="lnkMovement" Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Right" Text="View Movement on D20PFSRD"
                                                 Click="lnkCombat_Click" Tag="https://www.d20pfsrd.com/alignment-description/movement/" Cursor="Hand" Margin="0,0,15,0" />
                             <Grid Margin="10,5" Grid.Row="3" >
                                 <Grid.ColumnDefinitions>

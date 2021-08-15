@@ -261,10 +261,10 @@ namespace PathfinderJson
                 SaveSettings();
             }
 
-#if DEBUG
-            mnuTestUndo.IsEnabled = true;
-            mnuTestUndo.Visibility = Visibility.Visible;
-#endif
+//#if DEBUG
+//            mnuTestUndo.IsEnabled = true;
+//            mnuTestUndo.Visibility = Visibility.Visible;
+//#endif
         }
 
         #region Other Base Functions
@@ -1651,7 +1651,7 @@ namespace PathfinderJson
 
                     txtEditRaw.Visibility = Visibility.Collapsed;
                     mnuEdit.Visibility = Visibility.Collapsed;
-                    mnuEditS.Visibility = Visibility.Visible;
+                    //mnuEditS.Visibility = Visibility.Visible;
                     colTabs.Width = new GridLength(120, GridUnitType.Auto);
                     colTabs.MinWidth = 120;
                     stkEditToolbar.Visibility = Visibility.Collapsed;
@@ -1672,7 +1672,7 @@ namespace PathfinderJson
 
                     txtEditRaw.Visibility = Visibility.Collapsed;
                     mnuEdit.Visibility = Visibility.Collapsed;
-                    mnuEditS.Visibility = Visibility.Visible;
+                    //mnuEditS.Visibility = Visibility.Visible;
                     colTabs.Width = new GridLength(120, GridUnitType.Auto);
                     colTabs.MinWidth = 120;
                     stkEditToolbar.Visibility = Visibility.Collapsed;
@@ -1691,7 +1691,7 @@ namespace PathfinderJson
                 case RAWJSON_VIEW:
                     txtEditRaw.Visibility = Visibility.Visible;
                     mnuEdit.Visibility = Visibility.Visible;
-                    mnuEditS.Visibility = Visibility.Collapsed;
+                    //mnuEditS.Visibility = Visibility.Collapsed;
                     colTabs.Width = new GridLength(0);
                     colTabs.MinWidth = 0;
                     stkEditToolbar.Visibility = Visibility.Visible;
