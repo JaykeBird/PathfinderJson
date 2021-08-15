@@ -1655,7 +1655,7 @@ namespace PathfinderJson
                     colTabs.Width = new GridLength(120, GridUnitType.Auto);
                     colTabs.MinWidth = 120;
                     stkEditToolbar.Visibility = Visibility.Collapsed;
-                    if (!sp.IsClosed) sp.Close();
+                    if (sp != null) if (!sp.IsClosed) sp.Close();
 
                     mnuTabs.IsChecked = false;
                     mnuScroll.IsChecked = true;
@@ -1676,7 +1676,7 @@ namespace PathfinderJson
                     colTabs.Width = new GridLength(120, GridUnitType.Auto);
                     colTabs.MinWidth = 120;
                     stkEditToolbar.Visibility = Visibility.Collapsed;
-                    if (!sp.IsClosed) sp.Close();
+                    if (sp != null) if (!sp.IsClosed) sp.Close();
 
                     mnuTabs.IsChecked = true;
                     mnuScroll.IsChecked = false;
