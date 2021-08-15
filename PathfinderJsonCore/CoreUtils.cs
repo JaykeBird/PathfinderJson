@@ -75,7 +75,7 @@ namespace PathfinderJson
                 }
                 catch (FormatException)
                 {
-                    throw;
+                    return 0;
                 }
             }
         }

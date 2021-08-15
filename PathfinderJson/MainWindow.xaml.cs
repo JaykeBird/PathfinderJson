@@ -2877,18 +2877,18 @@ namespace PathfinderJson
                     if ((ai.Name ?? "").ToLowerInvariant().Contains("shield") || (ai.Type ?? "").ToLowerInvariant().Contains("shield"))
                     {
                         // this is a shield
-                        try { acShield += ParseStringAsInt(ai.Bonus); } catch (FormatException) { }
+                        acShield += ParseStringAsInt(ai.Bonus);
                     }
                     else
                     {
                         // probably not a shield? consider it armor
-                        try { acArmor += ParseStringAsInt(ai.Bonus); } catch (FormatException) { }
+                        acArmor += ParseStringAsInt(ai.Bonus);
                     }
 
-                    try { tBonus += ParseStringAsInt(ai.Bonus); } catch (FormatException) { }
-                    try { tSpellcheck += ParseStringAsInt((ai.SpellFailure ?? "").Replace("%", "")); } catch (FormatException) { }
-                    try { tPenalty += ParseStringAsInt(ai.ArmorCheckPenalty); } catch (FormatException) { }
-                    try { tWeight += ParseStringAsInt(ai.Weight); } catch (FormatException) { }
+                    tBonus += ParseStringAsInt(ai.Bonus);
+                    tSpellcheck += ParseStringAsInt((ai.SpellFailure ?? "").Replace("%", ""));
+                    tPenalty += ParseStringAsInt(ai.ArmorCheckPenalty);
+                    tWeight += ParseStringAsInt(ai.Weight);
                 }
 
                 txtAcBonus.Text = tBonus.ToString();
