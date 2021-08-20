@@ -266,6 +266,8 @@ namespace PathfinderJson
 #if DEBUG
             mnuTestUndo.IsEnabled = true;
             mnuTestUndo.Visibility = Visibility.Visible;
+            mnuShowUndo.IsEnabled = true;
+            mnuShowUndo.Visibility = Visibility.Visible;
 #endif
 
             btnUndoS.IsEnabled = undoStack.CanUndo;
@@ -1251,26 +1253,31 @@ namespace PathfinderJson
 
         void StartUndoTimer(UIElement sender)
         {
-            CreateUndoState();
-            //if (undoSetTimer.IsEnabled)
-            //{
-            //    if (sender != lastEditedBox)
-            //    {
-            //        CreateUndoState();
-            //    }
+            //CreateUndoState();
+            if (undoSetTimer.IsEnabled)
+            {
+                PostUndoStateUpdate("Timer restart");
+                if (sender != lastEditedItem)
+                {
+                    CreateUndoState();
+                    PostUndoStateUpdate("New element state / timer restart");
+                }
 
-            //    undoSetTimer.Stop();
-            //    undoSetTimer.Start();
-            //}
-            //else
-            //{
-            //    undoSetTimer.Start();
-            //}
+                undoSetTimer.Stop();
+                undoSetTimer.Start();
+            }
+            else
+            {
+                undoSetTimer.Start();
+                PostUndoStateUpdate("Timer start");
+            }
         }
 
         private void UndoSetTimer_Tick(object? sender, EventArgs e)
         {
             CreateUndoState();
+            undoSetTimer.IsEnabled = false;
+            PostUndoStateUpdate("Tick new state");
         }
 
         private void mnuTestUndo_Click(object sender, RoutedEventArgs e)
@@ -1283,6 +1290,7 @@ namespace PathfinderJson
         {
             PathfinderSheet ps = CreatePathfinderSheet();
             undoStack.StoreState(ps);
+            PostUndoStateUpdate("New state");
 
             btnUndoS.IsEnabled = undoStack.CanUndo;
             mnuUndoS.IsEnabled = undoStack.CanUndo;
@@ -1295,6 +1303,7 @@ namespace PathfinderJson
             if (undoStack.CanUndo)
             {
                 CoreLoadPathfinderSheet(undoStack.Undo());
+                PostUndoStateUpdate("Undo done");
             }
 
             btnUndoS.IsEnabled = undoStack.CanUndo;
@@ -1308,12 +1317,31 @@ namespace PathfinderJson
             if (undoStack.CanRedo)
             {
                 CoreLoadPathfinderSheet(undoStack.Redo());
+                PostUndoStateUpdate("Redo done");
             }
 
             btnUndoS.IsEnabled = undoStack.CanUndo;
             mnuUndoS.IsEnabled = undoStack.CanUndo;
             btnRedoS.IsEnabled = undoStack.CanRedo;
             mnuRedoS.IsEnabled = undoStack.CanRedo;
+        }
+
+        void PostUndoStateUpdate(string text)
+        {
+            if (mnuShowUndo.IsChecked)
+            {
+                brdrUndoState.Visibility = Visibility.Visible;
+                txtUndoState.Text = text;
+            }
+            else
+            {
+                brdrUndoState.Visibility = Visibility.Collapsed;
+            }
+        }
+
+        private void mnuShowUndo_Click(object sender, RoutedEventArgs e)
+        {
+            mnuShowUndo.IsChecked = !mnuShowUndo.IsChecked;
         }
 
         #endregion
@@ -3346,7 +3374,7 @@ namespace PathfinderJson
                 sl.TotalKnown = GetStringOrNull(((IntegerSpinner)grdSpells.FindName("txtSpellsKnown" + i)).Value.ToString(), true);
                 sl.SaveDC = GetStringOrNull(((IntegerSpinner)grdSpells.FindName("txtSpellsDC" + i)).Value.ToString(), true);
                 sl.TotalPerDay = GetStringOrNull(((IntegerSpinner)grdSpells.FindName("txtSpellsPerDay" + i)).Value.ToString(), true);
-                sl.BonusSpells = GetStringOrNull(((IntegerSpinner)grdSpells.FindName("txtSpellsBonus" + i)).Value.ToString(), true);
+                sl.BonusSpells = GetStringOrNull(((TextBox)grdSpells.FindName("txtSpellsBonus" + i)).Text.ToString(), true);
 
                 sl.Spells = new List<Spell>();
 

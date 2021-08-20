@@ -22,6 +22,9 @@
     </flat:FlatWindow.CommandBindings>
     <flat:FlatWindow.TopRightElement>
         <StackPanel Orientation="Horizontal">
+            <Border x:Name="brdrUndoState" Margin="0,4" Visibility="Collapsed" BorderThickness="0">
+                <TextBlock Text="-" Padding="4,0" FontSize="12" VerticalAlignment="Center" x:Name="txtUndoState" />
+            </Border>
             <Border x:Name="brdrSaved" Margin="0,4" Visibility="Collapsed" BorderThickness="1" BorderBrush="Transparent" Background="#01FFFFFF" WindowChrome.IsHitTestVisibleInChrome="True" MouseDown="brdrSaved_MouseDown" >
                 <TextBlock Text="File Saved" Padding="4,0" FontSize="12" VerticalAlignment="Center" />
             </Border>
@@ -101,7 +104,8 @@
                         <Image Source="/PathfinderJson;component/Images/Color/Redo.png" />
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem Header="Test _Undo Stack" x:Name="mnuTestUndo" Click="mnuTestUndo_Click" IsEnabled="False" Visibility="Collapsed" />
+                <MenuItem Header="Isolated Undo _Test" x:Name="mnuTestUndo" Click="mnuTestUndo_Click" IsEnabled="False" Visibility="Collapsed" />
+                <MenuItem Header="_Show Undo State" x:Name="mnuShowUndo" Click="mnuShowUndo_Click" IsEnabled="False" Visibility="Collapsed" />
             </MenuItem>
             <MenuItem Header="_Edit" x:Name="mnuEdit" Visibility="Collapsed" >
                 <MenuItem Header="_Undo Text Edit" x:Name="mnuUndo" Click="mnuUndo_Click" >
@@ -948,10 +952,10 @@
                             <ColumnDefinition Width="10" />
                             <ColumnDefinition Width="Auto" MinWidth="80" />
                         </Grid.ColumnDefinitions>
-                        <flat:DoubleSpinner x:Name="txtMoneyPp" HorizontalAlignment="Stretch" MinHeight="23" MaxWidth="1200" VerticalAlignment="Center" ValueChanged="nud_TextChanged" ColorScheme="{Binding ColorScheme, ElementName=window}" AcceptExpressions="True" Grid.Column="3"/>
-                        <flat:DoubleSpinner x:Name="txtMoneyGp" HorizontalAlignment="Stretch" MinHeight="23" MaxWidth="1200" VerticalAlignment="Center" ValueChanged="nud_TextChanged" ColorScheme="{Binding ColorScheme, ElementName=window}" AcceptExpressions="True" Grid.Column="3" Grid.Row="1"/>
-                        <flat:DoubleSpinner x:Name="txtMoneySp" HorizontalAlignment="Stretch" MinHeight="23" MaxWidth="1200" VerticalAlignment="Center" ValueChanged="nud_TextChanged" ColorScheme="{Binding ColorScheme, ElementName=window}" AcceptExpressions="True" Grid.Column="3" Grid.Row="2"/>
-                        <flat:DoubleSpinner x:Name="txtMoneyCp" HorizontalAlignment="Stretch" MinHeight="23" MaxWidth="1200" VerticalAlignment="Center" ValueChanged="nud_TextChanged" ColorScheme="{Binding ColorScheme, ElementName=window}" AcceptExpressions="True" Grid.Column="3" Grid.Row="3"/>
+                        <flat:DoubleSpinner x:Name="txtMoneyPp" HorizontalAlignment="Stretch" MinHeight="23" MaxWidth="1200" VerticalAlignment="Center" ValueChanged="nud_TextChanged" ColorScheme="{Binding ColorScheme, ElementName=window}" AcceptExpressions="True" Step="1" Decimals="3" Grid.Column="3"/>
+                        <flat:DoubleSpinner x:Name="txtMoneyGp" HorizontalAlignment="Stretch" MinHeight="23" MaxWidth="1200" VerticalAlignment="Center" ValueChanged="nud_TextChanged" ColorScheme="{Binding ColorScheme, ElementName=window}" AcceptExpressions="True" Step="1" Decimals="3" Grid.Column="3" Grid.Row="1"/>
+                        <flat:DoubleSpinner x:Name="txtMoneySp" HorizontalAlignment="Stretch" MinHeight="23" MaxWidth="1200" VerticalAlignment="Center" ValueChanged="nud_TextChanged" ColorScheme="{Binding ColorScheme, ElementName=window}" AcceptExpressions="True" Step="1" Decimals="3" Grid.Column="3" Grid.Row="2"/>
+                        <flat:DoubleSpinner x:Name="txtMoneyCp" HorizontalAlignment="Stretch" MinHeight="23" MaxWidth="1200" VerticalAlignment="Center" ValueChanged="nud_TextChanged" ColorScheme="{Binding ColorScheme, ElementName=window}" AcceptExpressions="True" Step="1" Decimals="3" Grid.Column="3" Grid.Row="3"/>
                         <TextBlock x:Name="lblMoneyPp" HorizontalAlignment="Left" Text="PP" FontWeight="Bold" VerticalAlignment="Center"/>
                         <TextBlock x:Name="lblMoneyGp" HorizontalAlignment="Left" Text="GP" FontWeight="Bold" VerticalAlignment="Center" Grid.Row="1"/>
                         <TextBlock x:Name="lblMoneySp" HorizontalAlignment="Left" Text="SP" FontWeight="Bold" VerticalAlignment="Center" Grid.Row="2"/>
