@@ -81,6 +81,7 @@ namespace PathfinderJson
                 Dictionary<string, string> Changes = new Dictionary<string, string>();
 
                 bool openPar = false;
+                byte openParCount = 0;
                 bool justClosed = false;
                 int openIndex = 0;
                 char prev = ' ';
@@ -98,6 +99,7 @@ namespace PathfinderJson
                                 i++;
                             }
                             openPar = true;
+                            openParCount = 1;
                             openIndex = i;
                             justClosed = false;
                         }
@@ -114,8 +116,18 @@ namespace PathfinderJson
                     }
                     else
                     {
+                        if (input[i] == '(')
+                        {
+                            openParCount++;
+                        }
                         if (input[i] == ')')
                         {
+                            if (openParCount > 1)
+                            {
+                                openParCount--;
+                                continue;
+                            }
+
                             string subInput = input.Substring(openIndex + 1, i - openIndex - 1);
 
                             if (!Changes.ContainsKey(subInput))
@@ -124,6 +136,7 @@ namespace PathfinderJson
                                 Changes.Add(subInput, evaluatedSubInput);
                             }
                             openPar = false;
+                            openParCount = 0;
                             openIndex = 0;
                             justClosed = true;
                         }
