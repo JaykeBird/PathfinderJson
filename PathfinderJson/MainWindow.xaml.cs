@@ -462,12 +462,12 @@ namespace PathfinderJson
                 {
                     if (string.IsNullOrEmpty(filePath))
                     {
-                        Title = "Pathfinder JSON - New File";
+                        Title = "(new file) - Pathfinder JSON";
                         displayedTitle = "New File";
                     }
                     else
                     {
-                        Title = "Pathfinder JSON - " + Path.GetFileName(filePath);
+                        Title = Path.GetFileName(filePath) + " - Pathfinder JSON";
                         displayedTitle = Path.GetFileName(filePath);
                     }
                 }
@@ -475,12 +475,12 @@ namespace PathfinderJson
                 {
                     if (string.IsNullOrEmpty(fileTitle))
                     {
-                        Title = "Pathfinder JSON - (unnamed character)";
+                        Title = "(unnamed character) - Pathfinder JSON";
                         displayedTitle = fileTitle;
                     }
                     else
                     {
-                        Title = "Pathfinder JSON - " + fileTitle;
+                        Title = fileTitle + " - Pathfinder JSON";
                         displayedTitle = fileTitle;
                     }
                 }
