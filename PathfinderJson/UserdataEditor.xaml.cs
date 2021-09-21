@@ -35,6 +35,9 @@ namespace PathfinderJson
             txtProfileUrl.Text = ud.ProfileUrl;
             txtUserId.Text = ud.Id;
 
+            selEmails.Clear();
+            selPhotos.Clear();
+
             foreach (UserData.Email item in ud.Emails)
             {
                 SelectableItem si = new SelectableItem(item.Value);
@@ -109,7 +112,7 @@ namespace PathfinderJson
             Microsoft.Win32.OpenFileDialog ofd = new Microsoft.Win32.OpenFileDialog();
             ofd.Title = "Import Data from File";
             ofd.Filter = "Pathfinder Character Sheet|*.json|All Files|*.*";
-            
+
             if (ofd.ShowDialog() ?? false == true)
             {
                 string filename = ofd.FileName;
