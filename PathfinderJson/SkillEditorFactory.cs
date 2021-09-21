@@ -33,14 +33,15 @@ namespace PathfinderJson
                 SkillEditor se = new SkillEditor();
 
                 se.SkillName = item.DisplayName ?? (item.Name.Substring(0, 1).ToUpperInvariant() + item.Name.Substring(1));
-                se.ModifierName = item.Modifier;
-                se.HasSpecialization = item.HasSpecialization;
-                se.InternalSkillName = item.Name;
+                se.SkillAbility = item.Modifier;
+                se.CanEditTitle = item.HasSpecialization;
+                se.SkillInternalName = item.Name;
+                //se.SkillOnlineName = item.Name;
 
                 if (owner != null) se.OwnerWindow = owner;
 
                 // set skill name to use with d20pfsrd.com
-                se.InfoUrl = item.InfoUrl ?? "https://d20pfsrd.com/skills/";
+                se.SkillOnlineName = item.InfoUrl ?? "https://d20pfsrd.com/skills/";
                 //string snl = se.SkillName.ToLowerInvariant();
 
                 //if (snl.Contains("knowledge"))

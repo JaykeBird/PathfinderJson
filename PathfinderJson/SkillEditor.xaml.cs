@@ -255,7 +255,8 @@ namespace PathfinderJson
 
         private void btnInfo_Click(object sender, RoutedEventArgs e)
         {
-            OpenBrowser("https://www.d20pfsrd.com/skills/" + SkillOnlineName);
+            OpenBrowser(SkillOnlineName);
+            //OpenBrowser("https://www.d20pfsrd.com/skills/" + SkillOnlineName);
         }
 
         private void userControl_SizeChanged(object sender, SizeChangedEventArgs e)
