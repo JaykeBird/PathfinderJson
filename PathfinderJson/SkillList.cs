@@ -19,6 +19,14 @@ namespace PathfinderJson
             //return Load(Application.GetResourceStream(new Uri("pack://application:,,,/SkillLists/pathfinder.json")).Stream);
         }
 
+        public static SkillList LoadPsionicsList()
+        {
+            //var ss = System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceNames();
+
+            return Load(System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceStream("PathfinderJson.SkillList.pathfinder-psionics.json"), throwOnNull: false);
+            //return Load(Application.GetResourceStream(new Uri("pack://application:,,,/SkillLists/pathfinder.json")).Stream);
+        }
+
         public static SkillList Load(Stream? s, string filename = "", bool throwOnNull = true)
         {
             if (s == null)

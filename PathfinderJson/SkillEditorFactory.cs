@@ -19,14 +19,19 @@ namespace PathfinderJson
                 {
                     string? loc = ps.SheetSettings["skillList"];
 
-                    if (System.IO.File.Exists(loc ?? ""))
+                    if (System.IO.File.Exists(loc ?? "") || loc == "standard" || loc == "psionics")
                     {
                         skillListFile = loc;
                     }
                 }
             }
 
-            SkillList sl = skillListFile == null ? SkillList.LoadStandardList() : SkillList.LoadFile(skillListFile);
+            SkillList sl = skillListFile == null ? SkillList.LoadStandardList() : skillListFile switch
+            {
+                "standard" => SkillList.LoadStandardList(),
+                "psionics" => SkillList.LoadPsionicsList(),
+                _ => SkillList.LoadFile(skillListFile)
+            };
 
             foreach (var item in sl.SkillEntries)
             {
