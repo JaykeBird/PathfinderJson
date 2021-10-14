@@ -264,8 +264,8 @@ namespace PathfinderJson
             }
 
 #if DEBUG
-            mnuTestUndo.IsEnabled = true;
-            mnuTestUndo.Visibility = Visibility.Visible;
+            //mnuTestUndo.IsEnabled = true;
+            //mnuTestUndo.Visibility = Visibility.Visible;
             mnuShowUndo.IsEnabled = true;
             mnuShowUndo.Visibility = Visibility.Visible;
 #endif
@@ -4193,6 +4193,101 @@ namespace PathfinderJson
             sse.SheetSettingsList = sheetSettings;
             sse.Owner = this;
             sse.ShowDialog();
+        }
+
+        private void mnuInsertJson_Click(object sender, RoutedEventArgs e)
+        {
+            if (!_sheetLoaded)
+            {
+                MessageDialog md = new MessageDialog(App.ColorScheme);
+                md.ShowDialog("No sheet is currently open.", null, this, "No Sheet Open", MessageDialogButtonDisplay.Auto, image: MessageDialogImage.Error);
+                return;
+            }
+
+            if (currentView == RAWJSON_VIEW)
+            {
+                string jsonText = txtEditRaw.Text;
+
+                try
+                {
+                    Newtonsoft.Json.Linq.JObject jo = Newtonsoft.Json.Linq.JObject.Parse(jsonText);
+                }
+                catch (Newtonsoft.Json.JsonReaderException)
+                {
+                    MessageDialog md = new MessageDialog(App.ColorScheme);
+                    md.ShowDialog("The current text does not appear to be valid JSON. Please fix or undo any JSON errors and try again.", null, this, "Invalid Sheet JSON", MessageDialogButtonDisplay.Auto, image: MessageDialogImage.Error);
+                    return;
+                }
+            }
+
+            InsertJson ij = new InsertJson();
+            ij.Owner = this;
+            ij.ShowDialog();
+
+            if (ij.DialogResult)
+            {
+                string newJson = ij.InsertedJson;
+
+                // check if the inserted JSON starts with enclosing braces (to build the root JSON element). if it does not, add it in
+                // in the future, I may go back and make this disable-able via an advanced setting in case this ends up messing up something for someone
+                if (!newJson.StartsWith("{") && !newJson.EndsWith("}"))
+                {
+                    newJson = "{" + newJson + "}";
+                }
+
+                if (currentView == RAWJSON_VIEW)
+                {
+                    string jsonText = txtEditRaw.Text;
+
+                    Newtonsoft.Json.Linq.JObject jo = Newtonsoft.Json.Linq.JObject.Parse(jsonText);
+                    Newtonsoft.Json.Linq.JObject jn;
+
+                    try
+                    {
+                        jn = Newtonsoft.Json.Linq.JObject.Parse(newJson);
+                    }
+                    catch (Newtonsoft.Json.JsonReaderException)
+                    {
+                        MessageDialog md = new MessageDialog(App.ColorScheme);
+                        md.ShowDialog("The JSON to be inserted does not appear to be valid. No merging will occur.", null, this, "Invalid JSON to Insert", MessageDialogButtonDisplay.Auto, image: MessageDialogImage.Error);
+                        return;
+                    }
+
+                    jo.Merge(jn, new Newtonsoft.Json.Linq.JsonMergeSettings()
+                    {
+                        PropertyNameComparison = StringComparison.InvariantCulture,
+                        MergeArrayHandling = Newtonsoft.Json.Linq.MergeArrayHandling.Merge,
+                        MergeNullValueHandling = Newtonsoft.Json.Linq.MergeNullValueHandling.Merge
+                    });
+
+                    txtEditRaw.Text = jo.ToString();
+                }
+                else
+                {
+                    Newtonsoft.Json.Linq.JObject jo = Newtonsoft.Json.Linq.JObject.Parse(CreatePathfinderSheet().SaveJsonText(false, "", false));
+                    Newtonsoft.Json.Linq.JObject jn;
+
+                    try
+                    {
+                        jn = Newtonsoft.Json.Linq.JObject.Parse(newJson);
+                    }
+                    catch (Newtonsoft.Json.JsonReaderException)
+                    {
+                        MessageDialog md = new MessageDialog(App.ColorScheme);
+                        md.ShowDialog("The JSON to be inserted does not appear to be valid. No merging will occur.", null, this, "Invalid JSON to Insert", MessageDialogButtonDisplay.Auto, image: MessageDialogImage.Error);
+                        return;
+                    }
+
+                    jo.Merge(jn, new Newtonsoft.Json.Linq.JsonMergeSettings()
+                    {
+                        PropertyNameComparison = StringComparison.InvariantCulture,
+                        MergeArrayHandling = Newtonsoft.Json.Linq.MergeArrayHandling.Merge,
+                        MergeNullValueHandling = Newtonsoft.Json.Linq.MergeNullValueHandling.Merge
+                    });
+
+                    LoadPathfinderSheet(PathfinderSheet.LoadJsonText(jo.ToString()));
+                }
+            }
         }
     }
 }

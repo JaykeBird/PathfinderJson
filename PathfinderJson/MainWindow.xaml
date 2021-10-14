@@ -106,6 +106,8 @@
                 </MenuItem>
                 <MenuItem Header="Isolated Undo _Test" x:Name="mnuTestUndo" Click="mnuTestUndo_Click" IsEnabled="False" Visibility="Collapsed" />
                 <MenuItem Header="_Show Undo State" x:Name="mnuShowUndo" Click="mnuShowUndo_Click" IsEnabled="False" Visibility="Collapsed" />
+                <Separator />
+                <MenuItem Header="Insert _JSON..." x:Name="mnuInsertJson" Click="mnuInsertJson_Click" />
             </MenuItem>
             <MenuItem Header="_Edit" x:Name="mnuEdit" Visibility="Collapsed" >
                 <MenuItem Header="_Undo Text Edit" x:Name="mnuUndo" Click="mnuUndo_Click" >
@@ -1038,6 +1040,12 @@
                     <MenuItem Header="_Delete" Click="mnuDelete_Click" >
                         <MenuItem.Icon>
                             <Image Source="/PathfinderJson;component/Images/Color/Cancel.png" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <Separator />
+                    <MenuItem Header="_Find" Click="mnuFind_Click" >
+                        <MenuItem.Icon>
+                            <Image Source="/PathfinderJson;component/Images/Color/Find.png" />
                         </MenuItem.Icon>
                     </MenuItem>
                 </flat:ContextMenu>

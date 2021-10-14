@@ -1,0 +1,62 @@
+﻿<flat:FlatWindow x:Class="PathfinderJson.InsertJson" x:Name="window"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:flat="clr-namespace:SolidShineUi;assembly=SolidShineUi"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:edit="http://icsharpcode.net/sharpdevelop/avalonedit"
+        xmlns:local="clr-namespace:PathfinderJson"
+        mc:Ignorable="d"
+        Title="InsertJson" Height="350" Width="600" ResizeMode="NoResize" CaptionDisplayType="Close" >
+    <flat:FlatWindow.Resources>
+        <ResourceDictionary>
+            <flat:ColorToBrushConverter x:Key="ctb" />
+        </ResourceDictionary>
+    </flat:FlatWindow.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+            <RowDefinition Height="60"/>
+        </Grid.RowDefinitions>
+        <TextBlock x:Name="lblDescription" HorizontalAlignment="Left" Margin="20,20,0,20" Text="Type or paste a JSON fragment to insert into the character sheet:" VerticalAlignment="Center"/>
+        <Border Grid.Row="1" Margin="20,5" BorderThickness="1" BorderBrush="{Binding BorderBrush, ElementName=window}" >
+            <edit:TextEditor x:Name="txtEditRaw" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+                <edit:TextEditor.ContextMenu>
+                    <flat:ContextMenu FontFamily="Segoe UI">
+                        <MenuItem Header="_Copy" Click="mnuCopy_Click">
+                            <MenuItem.Icon>
+                                <Image Source="/PathfinderJson;component/Images/Color/Copy.png" />
+                            </MenuItem.Icon>
+                        </MenuItem>
+                        <MenuItem Header="C_ut" Click="mnuCut_Click" >
+                            <MenuItem.Icon>
+                                <Image Source="/PathfinderJson;component/Images/Color/Cut.png" />
+                            </MenuItem.Icon>
+                        </MenuItem>
+                        <MenuItem Header="_Paste" Click="mnuPaste_Click" />
+                        <Separator />
+                        <MenuItem Header="_Select All" Click="mnuSelectAll_Click" >
+                            <MenuItem.Icon>
+                                <Image Source="/PathfinderJson;component/Images/Color/SelectText.png" />
+                            </MenuItem.Icon>
+                        </MenuItem>
+                        <MenuItem Header="_Delete" Click="mnuDelete_Click" >
+                            <MenuItem.Icon>
+                                <Image Source="/PathfinderJson;component/Images/Color/Cancel.png" />
+                            </MenuItem.Icon>
+                        </MenuItem>
+                        <Separator />
+                        <MenuItem Header="_Find" Click="mnuFind_Click" >
+                            <MenuItem.Icon>
+                                <Image Source="/PathfinderJson;component/Images/Color/Find.png" />
+                            </MenuItem.Icon>
+                        </MenuItem>
+                    </flat:ContextMenu>
+                </edit:TextEditor.ContextMenu>
+            </edit:TextEditor>
+        </Border>
+        <flat:FlatButton x:Name="btnInsert" ColorScheme="{Binding ColorScheme, ElementName=window}" Content="Insert" VerticalAlignment="Bottom" Margin="0,0,110,20" HorizontalAlignment="Right" Width="80" Click="btnInsert_Click" Grid.Row="2" />
+        <flat:FlatButton x:Name="btnClose" Content="Cancel" ColorScheme="{Binding ColorScheme, ElementName=window}" HorizontalAlignment="Right" Margin="0,0,20,20" VerticalAlignment="Bottom" Width="80" Click="btnClose_Click" Grid.Row="2" />
+    </Grid>
+</flat:FlatWindow>
