@@ -35,7 +35,7 @@ namespace PathfinderJson
                 }
                 catch (UnauthorizedAccessException)
                 {
-                    MessageBox.Show("The settings file for PathfinderJson could not be found or accessed. PathfinderJson will continue with default settings. Please check the permissions for your AppData folder.", 
+                    MessageBox.Show("The settings file for PathfinderJson could not be found or accessed. PathfinderJson will continue with default settings. Please check the permissions for your AppData folder.",
                         "Settings Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     Settings = new Settings();
                 }
@@ -85,9 +85,9 @@ namespace PathfinderJson
                 ProfileOptimization.StartProfile("Startup.profile");
             }
 
-            Newtonsoft.Json.JsonConvert.DefaultSettings = () => new Newtonsoft.Json.JsonSerializerSettings { 
+            Newtonsoft.Json.JsonConvert.DefaultSettings = () => new Newtonsoft.Json.JsonSerializerSettings {
                 DefaultValueHandling = Newtonsoft.Json.DefaultValueHandling.Ignore,
-                NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore 
+                NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore
             };
         }
 
@@ -96,8 +96,8 @@ namespace PathfinderJson
         public static Settings Settings { get; set; } = new Settings();
 
         #region Constants
-        public static Version AppVersion = new Version("1.2.1");
-        
+        public static Version AppVersion = new Version("1.2.3");
+
         public const string NO_HIGH_CONTRAST = "0";
 
         public const string TABS_VIEW = "tabs";
