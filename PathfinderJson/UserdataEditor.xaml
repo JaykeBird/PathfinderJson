@@ -10,51 +10,67 @@
         mc:Ignorable="d" x:Name="window"
         Title="Edit Player Data" Height="480" Width="400">
     <Grid>
-        <TextBlock x:Name="lblTitle" HorizontalAlignment="Left" Margin="25,20,0,0" Text="Edit the player data below, or import data from another file." TextWrapping="Wrap" VerticalAlignment="Top"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition MinHeight="45" Height="Auto" />
+            <RowDefinition MinHeight="32" Height="Auto" />
+            <RowDefinition MinHeight="28" Height="Auto" />
+            <RowDefinition Height="35"/>
+            <RowDefinition Height="35"/>
+            <RowDefinition MinHeight="30" Height="Auto" />
+            <RowDefinition Height="90"/>
+            <RowDefinition MinHeight="30" Height="Auto" />
+            <RowDefinition Height="90"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <TextBlock x:Name="lblTitle" HorizontalAlignment="Left" Margin="25,20,0,5" Text="Edit the player data below, or import data from another file." TextWrapping="Wrap" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
 
-        <TextBlock x:Name="lblProvider" HorizontalAlignment="Left" Margin="25,58,0,0" Text="Provider:" VerticalAlignment="Top"/>
-        <ComboBox x:Name="cbbProvider" HorizontalAlignment="Left" Margin="110,55,0,0" VerticalAlignment="Top" MinWidth="120" SelectedIndex="0" >
+        <TextBlock x:Name="lblProvider" HorizontalAlignment="Left" Margin="25,13,8,0" Text="Provider:" VerticalAlignment="Top" Grid.Row="1"/>
+        <ComboBox x:Name="cbbProvider" HorizontalAlignment="Left" Margin="0,10,0,0" VerticalAlignment="Top" MinWidth="120" SelectedIndex="0" Grid.Row="1" Grid.Column="1" >
             <system:String>Google</system:String>
             <system:String>Github</system:String>
             <system:String>JaykeBird.com</system:String>
             <system:String>Local/Unknown</system:String>
         </ComboBox>
-        <TextBlock x:Name="lblUserId" HorizontalAlignment="Left" Margin="25,82,0,0" Text="User ID:" VerticalAlignment="Top"/>
-        <TextBlock x:Name="txtUserId" HorizontalAlignment="Left" Margin="110,82,0,0" Text="-" VerticalAlignment="Top" />
+        <TextBlock x:Name="lblUserId" HorizontalAlignment="Left" Margin="25,2,8,2" Text="User ID:" VerticalAlignment="Center" Grid.Row="2"/>
+        <TextBlock x:Name="txtUserId" HorizontalAlignment="Left" Margin="0,2,0,2" Text="-" VerticalAlignment="Center" Grid.Row="2" Grid.Column="1" />
 
-        <TextBox x:Name="txtName" HorizontalAlignment="Left" Margin="110,114,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="170" Height="20"/>
-        <TextBlock x:Name="lblName" HorizontalAlignment="Left" Margin="25,116,0,0" Text="User Name:" VerticalAlignment="Top"/>
-        <TextBox x:Name="txtProfileUrl" HorizontalAlignment="Left" Margin="110,140,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="170" Height="20"/>
-        <TextBlock x:Name="lblProfileUrl" HorizontalAlignment="Left" Margin="25,142,0,0" Text="Profile URL:" VerticalAlignment="Top"/>
+        <TextBox x:Name="txtName" HorizontalAlignment="Left" Margin="0,9,0,0" VerticalAlignment="Top" Width="170" MinHeight="20" Grid.Row="3" Grid.Column="1"/>
+        <TextBlock x:Name="lblName" HorizontalAlignment="Left" Margin="25,11,8,0" Text="User Name:" VerticalAlignment="Top" Grid.Row="3"/>
+        <TextBox x:Name="txtProfileUrl" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top" Width="170" MinHeight="20" Grid.Row="4" Grid.Column="1"/>
+        <TextBlock x:Name="lblProfileUrl" HorizontalAlignment="Left" Margin="25,2,8,0" Text="Profile URL:" VerticalAlignment="Top" Grid.Row="4"/>
 
-        <TextBlock x:Name="lblEmail" HorizontalAlignment="Left" Margin="25,175,0,0" Text="Email addresses:" VerticalAlignment="Top"/>
-        <TextBlock x:Name="lblPhoto" HorizontalAlignment="Left" Margin="25,295,0,0" Text="Profile photo URLs:" VerticalAlignment="Top"/>
+        <TextBlock x:Name="lblEmail" HorizontalAlignment="Left" Margin="25,0,0,4" Text="Email addresses:" VerticalAlignment="Bottom" Grid.Row="5" Grid.ColumnSpan="2"/>
+        <TextBlock x:Name="lblPhoto" HorizontalAlignment="Left" Margin="25,0,0,4" Text="Profile photo URLs:" VerticalAlignment="Bottom" Grid.Row="7" Grid.ColumnSpan="2"/>
 
-        <flat:FlatButton ColorScheme="{Binding ColorScheme, ElementName=window}" Width="20" Height="24" HorizontalAlignment="Right" Margin="0,172,60,0" Padding="0" TransparentBack="True" ToolTip="Add Email" x:Name="btnAddEmail" VerticalAlignment="Top" Click="btnAddEmail_Click" >
+        <flat:FlatButton ColorScheme="{Binding ColorScheme, ElementName=window}" Width="20" Height="24" HorizontalAlignment="Left" Margin="212,0,0,0" Padding="0" TransparentBack="True" ToolTip="Add Email" x:Name="btnAddEmail" VerticalAlignment="Center" Click="btnAddEmail_Click" Grid.Row="5" Grid.Column="1" >
             <local:ThemedImage ColorScheme="{Binding ColorScheme, ElementName=window}" ImageName="Add" Width="16" Height="16" />
         </flat:FlatButton>
-        <flat:FlatButton ColorScheme="{Binding ColorScheme, ElementName=window}" Width="20" Height="24" HorizontalAlignment="Right" Margin="0,172,40,0" Padding="0" TransparentBack="True" ToolTip="Delete Email" x:Name="btnDeleteEmail" VerticalAlignment="Top" Click="btnDeleteEmail_Click" >
+        <flat:FlatButton ColorScheme="{Binding ColorScheme, ElementName=window}" Width="20" Height="24" HorizontalAlignment="Left" Margin="232,0,0,0" Padding="0" TransparentBack="True" ToolTip="Delete Email" x:Name="btnDeleteEmail" VerticalAlignment="Center" Click="btnDeleteEmail_Click" Grid.Row="5" Grid.Column="1" >
             <local:ThemedImage ColorScheme="{Binding ColorScheme, ElementName=window}" ImageName="Cancel" Width="16" Height="16" />
         </flat:FlatButton>
-        <flat:FlatButton ColorScheme="{Binding ColorScheme, ElementName=window}" Width="20" Height="24" HorizontalAlignment="Right" Margin="0,172,20,0" Padding="0" TransparentBack="True" ToolTip="Deselect All" x:Name="btnDeselectEmail" VerticalAlignment="Top" Click="btnDeselectEmail_Click" >
+        <flat:FlatButton ColorScheme="{Binding ColorScheme, ElementName=window}" Width="20" Height="24" HorizontalAlignment="Left" Margin="252,0,0,0" Padding="0" TransparentBack="True" ToolTip="Deselect All" x:Name="btnDeselectEmail" VerticalAlignment="Center" Click="btnDeselectEmail_Click" Grid.Row="5" Grid.Column="1" >
             <local:ThemedImage ColorScheme="{Binding ColorScheme, ElementName=window}" ImageName="Deselect" Width="16" Height="16" />
         </flat:FlatButton>
-        <flat:SelectPanel ColorScheme="{Binding ColorScheme, ElementName=window}" x:Name="selEmails" PanelBorderThickness="1" UseLighterBorder="True" MinHeight="3" MultiSelect="True" Margin="20,200,20,0" Height="80" VerticalAlignment="Top" />
+        <flat:SelectPanel ColorScheme="{Binding ColorScheme, ElementName=window}" x:Name="selEmails" PanelBorderThickness="1" UseLighterBorder="True" MinHeight="3" MultiSelect="True" Margin="20,0,20,0" Grid.Row="6" Grid.ColumnSpan="2" />
 
-        <flat:FlatButton ColorScheme="{Binding ColorScheme, ElementName=window}" Width="20" Height="24" HorizontalAlignment="Right" Margin="0,292,60,0" Padding="0" TransparentBack="True" ToolTip="Add Photo URL" x:Name="btnAddPhoto" VerticalAlignment="Top" Click="btnAddPhoto_Click" >
+        <flat:FlatButton ColorScheme="{Binding ColorScheme, ElementName=window}" Width="20" Height="24" HorizontalAlignment="Right" Margin="0,8,60,0" Padding="0" TransparentBack="True" ToolTip="Add Photo URL" x:Name="btnAddPhoto" VerticalAlignment="Top" Click="btnAddPhoto_Click" Grid.Row="7" Grid.Column="1" Grid.RowSpan="2" >
             <local:ThemedImage ColorScheme="{Binding ColorScheme, ElementName=window}" ImageName="Add" Width="16" Height="16" />
         </flat:FlatButton>
-        <flat:FlatButton ColorScheme="{Binding ColorScheme, ElementName=window}" Width="20" Height="24" HorizontalAlignment="Right" Margin="0,292,40,0" Padding="0" TransparentBack="True" ToolTip="Delete Photo URL" x:Name="btnDeletePhoto" VerticalAlignment="Top" Click="btnDeletePhoto_Click" >
+        <flat:FlatButton ColorScheme="{Binding ColorScheme, ElementName=window}" Width="20" Height="24" HorizontalAlignment="Right" Margin="0,8,40,0" Padding="0" TransparentBack="True" ToolTip="Delete Photo URL" x:Name="btnDeletePhoto" VerticalAlignment="Top" Click="btnDeletePhoto_Click" Grid.Row="7" Grid.Column="1" Grid.RowSpan="2" >
             <local:ThemedImage ColorScheme="{Binding ColorScheme, ElementName=window}" ImageName="Cancel" Width="16" Height="16" />
         </flat:FlatButton>
-        <flat:FlatButton ColorScheme="{Binding ColorScheme, ElementName=window}" Width="20" Height="24" HorizontalAlignment="Right" Margin="0,292,20,0" Padding="0" TransparentBack="True" ToolTip="Deselect All" x:Name="btnDeselectPhoto" VerticalAlignment="Top" Click="btnDeselectPhoto_Click" >
+        <flat:FlatButton ColorScheme="{Binding ColorScheme, ElementName=window}" Width="20" Height="24" HorizontalAlignment="Right" Margin="0,8,20,0" Padding="0" TransparentBack="True" ToolTip="Deselect All" x:Name="btnDeselectPhoto" VerticalAlignment="Top" Click="btnDeselectPhoto_Click" Grid.Row="7" Grid.Column="1" Grid.RowSpan="2" >
             <local:ThemedImage ColorScheme="{Binding ColorScheme, ElementName=window}" ImageName="Deselect" Width="16" Height="16" />
         </flat:FlatButton>
-        <flat:SelectPanel ColorScheme="{Binding ColorScheme, ElementName=window}" x:Name="selPhotos" PanelBorderThickness="1" UseLighterBorder="True" MinHeight="3" MultiSelect="True" Margin="20,320,20,0" Height="80" VerticalAlignment="Top" />
+        <flat:SelectPanel ColorScheme="{Binding ColorScheme, ElementName=window}" x:Name="selPhotos" PanelBorderThickness="1" UseLighterBorder="True" MinHeight="3" MultiSelect="True" Margin="20,0,20,0" Grid.Row="8" Grid.ColumnSpan="2" />
 
-        <flat:FlatButton x:Name="btnImport" Content="Import From File..." ColorScheme="{Binding ColorScheme, ElementName=window}" HorizontalAlignment="Left" Margin="20,0,0,14" VerticalAlignment="Bottom" MinWidth="120" Click="btnImport_Click" />
+        <flat:FlatButton x:Name="btnImport" Content="Import From File..." ColorScheme="{Binding ColorScheme, ElementName=window}" HorizontalAlignment="Left" Margin="20,0,0,0" VerticalAlignment="Center" MinWidth="120" Click="btnImport_Click" Grid.Row="9" Grid.ColumnSpan="2" />
 
-        <flat:FlatButton x:Name="btnSave" ColorScheme="{Binding ColorScheme, ElementName=window}" Content="Save" Margin="0,0,105,14" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="80" Click="btnSave_Click" />
-        <flat:FlatButton x:Name="btnClose" Content="Cancel" ColorScheme="{Binding ColorScheme, ElementName=window}" HorizontalAlignment="Right" Margin="0,0,20,14" VerticalAlignment="Bottom" Width="80" Click="btnClose_Click" />
+        <flat:FlatButton x:Name="btnSave" ColorScheme="{Binding ColorScheme, ElementName=window}" Content="Save" VerticalAlignment="Center" HorizontalAlignment="Right" Width="80" Click="btnSave_Click" Grid.Row="9" Grid.Column="1" Margin="0,2,115,2" />
+        <flat:FlatButton x:Name="btnClose" Content="Cancel" ColorScheme="{Binding ColorScheme, ElementName=window}" HorizontalAlignment="Right" Margin="0,2,25,2" VerticalAlignment="Center" Width="80" Click="btnClose_Click" Grid.Row="9" Grid.Column="1" />
     </Grid>
 </flat:FlatWindow>
