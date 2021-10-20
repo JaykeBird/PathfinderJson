@@ -19,9 +19,12 @@
         </Grid.RowDefinitions>
 
 
-        <Border HorizontalAlignment="Center" Height="72" BorderBrush="Black" BorderThickness="1" VerticalAlignment="Center" Width="72" CornerRadius="36" >
+        <Border HorizontalAlignment="Center" Height="72" BorderThickness="2" VerticalAlignment="Center" Width="72" CornerRadius="36"
+                        Background="{Binding ElementName=control, Path=ColorScheme.SecondHighlightColor, Converter={StaticResource ctb}}"
+                        BorderBrush="{Binding ElementName=control, Path=ColorScheme.BorderColor, Converter={StaticResource ctb}}" >
             <Grid>
-                <Border VerticalAlignment="Stretch" HorizontalAlignment="Stretch" CornerRadius="36" x:Name="innerBorder" Background="{Binding ElementName=control, Path=ColorScheme.SecondHighlightColor, Converter={StaticResource ctb}}" />
+                <Border VerticalAlignment="Stretch" HorizontalAlignment="Stretch" CornerRadius="36" x:Name="innerBorder"
+                        Background="{Binding ElementName=control, Path=ColorScheme.SecondHighlightColor, Converter={StaticResource ctb}}" />
                 <Grid VerticalAlignment="Stretch" Width="72" HorizontalAlignment="Center" >
                     <Grid.OpacityMask>
                         <VisualBrush Visual="{Binding ElementName=innerBorder}" Stretch="None" />
@@ -33,7 +36,7 @@
                     </Grid.ColumnDefinitions>
 
                     <flat:FlatButton Grid.Column="0" VerticalAlignment="Center" Content="-" FontSize="16" Padding="0" Height="40" x:Name="btnDecrease" Click="btnDecrease_Click"
-                                     HorizontalAlignment="Stretch" VerticalContentAlignment="Center" ColorScheme="{Binding ElementName=control, Path=ColorScheme}" TransparentBack="True" />
+                                     VerticalContentAlignment="Center" ColorScheme="{Binding ElementName=control, Path=ColorScheme}" TransparentBack="True" />
                     <TextBlock Grid.Column="1" FontSize="24" Text="0" VerticalAlignment="Center" HorizontalAlignment="Center" x:Name="lblValue" />
                     <flat:FlatButton Grid.Column="2" VerticalAlignment="Center" Content="+" FontSize="16" Padding="0" Height="40" x:Name="btnIncrease" Click="btnIncrease_Click"
                                      VerticalContentAlignment="Center" ColorScheme="{Binding ElementName=control, Path=ColorScheme}" TransparentBack="True" />
@@ -41,7 +44,7 @@
             </Grid>
         </Border>
 
-        <TextBlock Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" x:Name="lblTitle" Text="Title" TextTrimming="CharacterEllipsis" />
+        <TextBlock Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" x:Name="lblTitle" Text="New Counter" TextTrimming="CharacterEllipsis" />
         <flat:ClickSelectTextBox Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" x:Name="txtTitle" Visibility="Collapsed"
                  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Text="Title" Padding="0"  KeyDown="txtTitle_KeyDown" />
 
@@ -51,10 +54,10 @@
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
 
-            <flat:FlatButton Grid.Column="0" CornerRadius="12,0,0,12" ColorScheme="{Binding ElementName=control, Path=ColorScheme}" x:Name="btnEdit" Click="btnEdit_Click" >
+            <flat:FlatButton Grid.Column="0" CornerRadius="12,0,0,12" ColorScheme="{Binding ElementName=control, Path=ColorScheme}" x:Name="btnEdit" Click="btnEdit_Click" ToolTip="Edit Title" >
                 <local:ThemedImage Height="16" Width="16" ImageName="Edit" ColorScheme="{Binding ElementName=control, Path=ColorScheme}" />
             </flat:FlatButton>
-            <flat:FlatButton Grid.Column="2" CornerRadius="0,12,12,0" ColorScheme="{Binding ElementName=control, Path=ColorScheme}" x:Name="btnDelete" Click="btnDelete_Click" >
+            <flat:FlatButton Grid.Column="2" CornerRadius="0,12,12,0" ColorScheme="{Binding ElementName=control, Path=ColorScheme}" x:Name="btnDelete" Click="btnDelete_Click" ToolTip="Delete" >
                 <local:ThemedImage Height="16" Width="16" ImageName="Cancel" ColorScheme="{Binding ElementName=control, Path=ColorScheme}" />
             </flat:FlatButton>
         </Grid>
