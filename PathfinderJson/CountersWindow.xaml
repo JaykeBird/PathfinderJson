@@ -14,9 +14,9 @@
             <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
         <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Margin="24,15,0,10" Text="Use counters for when you have something you need to count up or down." VerticalAlignment="Center"/>
-        <WrapPanel Grid.Row="2"/>
+        <WrapPanel Grid.Row="2" x:Name="grdCounters" Margin="10,0" />
         <flat:FlatButton x:Name="btnAdd" HorizontalAlignment="Left" Margin="24,10,0,10" Padding="10,4" Grid.Row="1" VerticalAlignment="Top" TransparentBack="True"
-                         ColorScheme="{Binding ElementName=window, Path=ColorScheme}" >
+                         ColorScheme="{Binding ElementName=window, Path=ColorScheme}" Click="btnAdd_Click" >
             <StackPanel Orientation="Horizontal" >
                 <local:ThemedImage Width="16" ImageName="Add" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" />
                 <TextBlock Text="Add Counter" Margin="5,0" />

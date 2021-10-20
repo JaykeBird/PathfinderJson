@@ -18,5 +18,22 @@ namespace PathfinderJson
             InitializeComponent();
             ColorScheme = App.ColorScheme;
         }
+
+        private void btnAdd_Click(object sender, RoutedEventArgs e)
+        {
+            CounterItem ci = new CounterItem();
+            ci.ColorScheme = this.ColorScheme;
+            ci.Margin = new Thickness(8, 6, 8, 6);
+            ci.RemoveRequested += counter_RemoveRequested;
+            grdCounters.Children.Add(ci);
+        }
+
+        private void counter_RemoveRequested(object? sender, EventArgs e)
+        {
+            if (sender is CounterItem ci)
+            {
+                grdCounters.Children.Remove(ci);
+            }
+        }
     }
 }
