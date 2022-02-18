@@ -7,7 +7,7 @@
     <ApplicationIcon>..\appicon.ico</ApplicationIcon>
     <ApplicationManifest>PathfinderJson.manifest</ApplicationManifest>
     <PublishSingleFile>true</PublishSingleFile>
-    <PublishTrimmed>true</PublishTrimmed>
+    <!--<PublishTrimmed>true</PublishTrimmed>-->
     <!--<PublishReadyToRun>true</PublishReadyToRun>
     <PublishReadyToRunShowWarnings>true</PublishReadyToRunShowWarnings>-->
     <RuntimeIdentifier>win-x64</RuntimeIdentifier>
