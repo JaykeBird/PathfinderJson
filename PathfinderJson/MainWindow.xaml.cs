@@ -4215,7 +4215,7 @@ namespace PathfinderJson
                 catch (Newtonsoft.Json.JsonReaderException)
                 {
                     MessageDialog md = new MessageDialog(App.ColorScheme);
-                    md.ShowDialog("The current text does not appear to be valid JSON. Please fix or undo any JSON errors and try again.", null, this, "Invalid Sheet JSON", MessageDialogButtonDisplay.Auto, image: MessageDialogImage.Error);
+                    md.ShowDialog("The sheet currently does not appear to be valid JSON. Please fix or undo any JSON errors and try again.", null, this, "Invalid Sheet JSON", MessageDialogButtonDisplay.Auto, image: MessageDialogImage.Error);
                     return;
                 }
             }

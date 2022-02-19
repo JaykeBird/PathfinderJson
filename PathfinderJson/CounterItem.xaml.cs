@@ -4,13 +4,9 @@ using System.Collections.Generic;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using Newtonsoft.Json.Linq;
 
 namespace PathfinderJson
 {
@@ -191,6 +187,66 @@ namespace PathfinderJson
                 btnChangeColor.Background = cpd.SelectedColor.ToBrush();
                 btnChangeColor.HighlightBrush = cpd.SelectedColor.ToBrush();
                 btnChangeColor.ClickBrush = cpd.SelectedColor.ToBrush();
+            }
+        }
+
+        public string WriteJson()
+        {
+            return "{value:" + Value + ", color:\"" + ((SolidColorBrush)brdrEllipse.Background).Color.GetHexString() + "\", title:\"" + lblTitle.Text + "\"}";
+        }
+
+        public void ReadJson(string json)
+        {
+            JObject jn;
+
+            try
+            {
+                jn = JObject.Parse(json);
+            }
+            catch (Newtonsoft.Json.JsonReaderException e)
+            {
+                throw new FormatException("Text passed in is not valid JSON", e);
+            }
+
+            ReadJson(jn);
+        }
+
+        public void ReadJson(JObject json)
+        {
+            JToken? jvalue = json["value"];
+            JToken? jcolor = json["color"];
+            JToken? jtitle = json["title"];
+
+            if (jvalue != null)
+            {
+                if (!jvalue.HasValues)
+                {
+                    Value = (int?)jvalue ?? Value;
+                }
+            }
+
+            if (jcolor != null)
+            {
+                if (!jcolor.HasValues)
+                {
+                    string scol = (string?)jcolor ?? "";
+                    try
+                    {
+                        Color c = ColorsHelper.CreateFromHex(scol);
+                        brdrEllipse.Background = c.ToBrush();
+                        innerBorder.Background = c.ToBrush();
+                    }
+                    catch (FormatException) { }
+                }
+            }
+
+            if (jtitle != null)
+            {
+                if (!jtitle.HasValues)
+                {
+                    string stit = (string?)jtitle ?? lblTitle.Text;
+                    lblTitle.Text = stit;
+                }
             }
         }
     }
