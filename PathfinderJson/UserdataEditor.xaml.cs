@@ -22,7 +22,7 @@ namespace PathfinderJson
 
         public void LoadUserData(UserData ud)
         {
-            cbbProvider.SelectedIndex = (ud.Provider.ToLowerInvariant()) switch
+            cbbProvider.SelectedIndex = ud.Provider.ToLowerInvariant() switch
             {
                 "google" => 0,
                 "github" => 1,
