@@ -46,17 +46,13 @@
                                 <Image Source="/PathfinderJson;component/Images/Color/Cancel.png" />
                             </MenuItem.Icon>
                         </MenuItem>
-                        <Separator />
-                        <MenuItem Header="_Find" Click="mnuFind_Click" >
-                            <MenuItem.Icon>
-                                <Image Source="/PathfinderJson;component/Images/Color/Find.png" />
-                            </MenuItem.Icon>
-                        </MenuItem>
                     </flat:ContextMenu>
                 </edit:TextEditor.ContextMenu>
             </edit:TextEditor>
         </Border>
-        <flat:FlatButton x:Name="btnInsert" ColorScheme="{Binding ColorScheme, ElementName=window}" Content="Insert" VerticalAlignment="Bottom" Margin="0,0,110,20" HorizontalAlignment="Right" Width="80" Click="btnInsert_Click" Grid.Row="2" />
-        <flat:FlatButton x:Name="btnClose" Content="Cancel" ColorScheme="{Binding ColorScheme, ElementName=window}" HorizontalAlignment="Right" Margin="0,0,20,20" VerticalAlignment="Bottom" Width="80" Click="btnClose_Click" Grid.Row="2" />
+        <StackPanel HorizontalAlignment="Right" Margin="0,0,20,20" Orientation="Horizontal" Grid.Row="2" VerticalAlignment="Bottom">
+            <flat:FlatButton x:Name="btnInsert" ColorScheme="{Binding ColorScheme, ElementName=window}" Content="Insert" Width="80" Click="btnInsert_Click" Margin="10,0" />
+            <flat:FlatButton x:Name="btnClose" Content="Cancel" ColorScheme="{Binding ColorScheme, ElementName=window}" Width="80" Click="btnClose_Click" />
+        </StackPanel>
     </Grid>
 </flat:FlatWindow>
