@@ -21,7 +21,7 @@ namespace PathfinderJson
 
         private void window_SourceInitialized(object sender, EventArgs e)
         {
-            this.DisableMinimizeAndMaximizeActions();
+            this.DisableMinimizeAction();
         }
 
         public void UpdateUi()
@@ -120,7 +120,7 @@ namespace PathfinderJson
             asv.ColorScheme = ColorScheme;
             asv.ShowDialog();
 
-            if (asv.DialogResult == true)
+            if (asv.DialogResult)
             {
                 SelectableItem si = new SelectableItem();
                 si.Tag = new KeyValuePair<string, string>(asv.SettingName, asv.SettingValue);

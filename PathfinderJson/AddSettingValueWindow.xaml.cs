@@ -16,6 +16,11 @@ namespace PathfinderJson
             InitializeComponent();
         }
 
+        private void window_SourceInitialized(object sender, EventArgs e)
+        {
+            this.DisableMinimizeAndMaximizeActions();
+        }
+
         public string Description
         {
             get => lblDescription.Text;
@@ -52,5 +57,6 @@ namespace PathfinderJson
         {
             Close();
         }
+
     }
 }

@@ -6,7 +6,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PathfinderJson"
         mc:Ignorable="d"
-        Title="Sheet Settings" Height="600" Width="700">
+        Title="Sheet Settings" Height="600" Width="700" CaptionDisplayType="MaximizeClose" >
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="50" />
