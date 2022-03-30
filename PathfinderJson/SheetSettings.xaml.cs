@@ -116,6 +116,16 @@ namespace PathfinderJson
         private void btnAddSetting_Click(object sender, RoutedEventArgs e)
         {
             // TO BE ADDED
+            AddSettingValueWindow asv = new AddSettingValueWindow();
+            asv.ColorScheme = ColorScheme;
+            asv.ShowDialog();
+
+            if (asv.DialogResult == true)
+            {
+                SelectableItem si = new SelectableItem();
+                si.Tag = new KeyValuePair<string, string>(asv.SettingName, asv.SettingValue);
+                si.Text = $"Name: \"{asv.SettingName}\", Value: \"{asv.SettingValue}\"";
+            }
         }
 
         private void btnEditSetting_Click(object sender, RoutedEventArgs e)
@@ -132,7 +142,7 @@ namespace PathfinderJson
                 if (sid.DialogResult)
                 {
                     si.Tag = new KeyValuePair<string, string?>(kvp.Key, sid.Value);
-                    si.Text = "Name: \"" + kvp.Key + "\", Value: \"" + sid.Value + "\"";
+                    si.Text = $"Name: \"{kvp.Key}\", Value: \"{sid.Value}\"";
                 }
             }
         }

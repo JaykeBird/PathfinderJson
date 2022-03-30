@@ -72,7 +72,7 @@
             <TextBlock x:Name="lblGenericSettingsWarning" HorizontalAlignment="Left" Margin="40,5" Text="(Be careful with editing these values. PathfinderJSON uses them for some features.)" VerticalAlignment="Center" Grid.Row="1"/>
             <flat:SelectPanel x:Name="selSheetSettings" Grid.Row="2" MinHeight="80" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" Margin="40,0,20,0" MultiSelect="False" SelectionChanged="selSheetSettings_SelectionChanged" />
             <StackPanel Orientation="Horizontal" Grid.Row="3" MinHeight="24" Margin="40,5">
-                <flat:FlatButton Margin="5,0" Content="Add..." MinWidth="80" x:Name="btnAddSetting" Click="btnAddSetting_Click" IsEnabled="False" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" />
+                <flat:FlatButton Margin="5,0" Content="Add..." MinWidth="80" x:Name="btnAddSetting" Click="btnAddSetting_Click" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" />
                 <flat:FlatButton Margin="5,0" Content="Edit..." MinWidth="80" x:Name="btnEditSetting" Click="btnEditSetting_Click" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" />
                 <flat:FlatButton Margin="5,0" Content="Remove..." MinWidth="80" x:Name="btnRemoveSetting" Click="btnRemoveSetting_Click" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" />
             </StackPanel>
