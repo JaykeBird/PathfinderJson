@@ -624,7 +624,14 @@ namespace PathfinderJson
 
         private void mnuNewWindow_Click(object sender, RoutedEventArgs e)
         {
-            Process.Start(Process.GetCurrentProcess().MainModule?.FileName);
+            string? filename = Process.GetCurrentProcess().MainModule?.FileName;
+            if (filename == null)
+            {
+                MessageBox.Show("Cannot open another instance automatically.");
+                return;
+            }
+
+            Process.Start(filename);
         }
 
         private void mnuOpen_Click(object sender, RoutedEventArgs e)
@@ -1176,7 +1183,15 @@ namespace PathfinderJson
                 {
                     if (parent.Tag is string file)
                     {
-                        Process.Start(Process.GetCurrentProcess().MainModule?.FileName, "\"" + file + "\"");
+                        string? filename = Process.GetCurrentProcess().MainModule?.FileName;
+                        if (filename == null)
+                        {
+                            // TODO: ask user if they want to open in this instance instead
+                            MessageBox.Show("Cannot open another instance automatically.");
+                            return;
+                        }
+
+                        Process.Start(filename, "\"" + file + "\"");
                     }
                 }
             }
@@ -2224,7 +2239,7 @@ namespace PathfinderJson
             FontStyle fs = FontStyles.Normal;
             try
             {
-                fs = (FontStyle)new FontStyleConverter().ConvertFromInvariantString(style);
+                fs = (FontStyle?)new FontStyleConverter().ConvertFromInvariantString(style) ?? FontStyles.Normal;
             }
             catch (NotSupportedException) { } // if "style" is a string that isn't actually a FontStyle, just keep it as normal
             catch (FormatException) { }

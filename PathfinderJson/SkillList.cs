@@ -69,9 +69,9 @@ namespace PathfinderJson
 
         public void Save(string filename)
         {
-            DirectoryInfo di = Directory.GetParent(filename);
+            DirectoryInfo? di = Directory.GetParent(filename);
 
-            if (!di.Exists)
+            if (di != null && !di.Exists)
             {
                 di.Create();
             }

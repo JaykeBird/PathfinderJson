@@ -164,7 +164,7 @@ namespace PathfinderJson
             FontStyle fs = FontStyles.Normal;
             try
             {
-                fs = (FontStyle)new FontStyleConverter().ConvertFromInvariantString(style);
+                fs = (FontStyle?)new FontStyleConverter().ConvertFromInvariantString(style) ?? FontStyles.Normal;
             }
             catch (NotSupportedException) { } // if "style" is a string that isn't actually a FontStyle, just keep it as normal
             catch (FormatException) { }

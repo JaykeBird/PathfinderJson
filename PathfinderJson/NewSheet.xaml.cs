@@ -144,7 +144,7 @@ namespace PathfinderJson
             }
             else
             {
-                sfd.InitialDirectory = System.IO.Directory.GetParent(FileLocation).FullName;
+                sfd.InitialDirectory = System.IO.Directory.GetParent(FileLocation)?.FullName ?? Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
             }
 
             if (sfd.ShowDialog().GetValueOrDefault(false))
