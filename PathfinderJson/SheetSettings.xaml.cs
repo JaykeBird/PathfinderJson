@@ -39,7 +39,7 @@ namespace PathfinderJson
                     case "skillList":
                         if (System.IO.File.Exists(kvp.Value ?? ""))
                         {
-                            fileSelect.SelectedFile = kvp.Value!;
+                            fileSelect.SelectedFiles[0] = kvp.Value!;
                             rdoSelectFile.IsChecked = true;
                         }
                         else
@@ -67,9 +67,9 @@ namespace PathfinderJson
         {
             Dictionary<string, string?> newShettings = new Dictionary<string, string?>();
 
-            if (rdoSelectFile.IsChecked.GetValueOrDefault(false) && fileSelect.SelectedFilesCount > 0)
+            if (rdoSelectFile.IsChecked.GetValueOrDefault(false) && fileSelect.SelectedFiles.Count > 0)
             {
-                newShettings["skillList"] = fileSelect.SelectedFile;
+                newShettings["skillList"] = fileSelect.SelectedFiles[0];
             }
 
             if (chkMarkdown.IsChecked)
@@ -103,7 +103,7 @@ namespace PathfinderJson
 
         private void fileSelect_SelectionChanged(object sender, RoutedEventArgs e)
         {
-            if (fileSelect.SelectedFilesCount == 0)
+            if (fileSelect.SelectedFiles.Count == 0)
             {
                 rdoSkillList.IsChecked = true;
             }
@@ -130,7 +130,7 @@ namespace PathfinderJson
 
         private void btnEditSetting_Click(object sender, RoutedEventArgs e)
         {
-            if (selSheetSettings.SelectionCount == 0) return;
+            if (selSheetSettings.Items.SelectedItems.Count == 0) return;
 
             SelectableItem si = selSheetSettings.GetSelectedItemsOfType<SelectableItem>().First();
             if (si.Tag is KeyValuePair<string, string?> kvp)

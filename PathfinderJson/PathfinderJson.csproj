@@ -1,12 +1,13 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <!--<TargetFramework>netcoreapp3.1</TargetFramework>-->
+    <TargetFramework>net6.0-windows</TargetFramework>
     <UseWPF>true</UseWPF>
     <ApplicationIcon>..\appicon.ico</ApplicationIcon>
     <ApplicationManifest>PathfinderJson.manifest</ApplicationManifest>
-    <PublishSingleFile>true</PublishSingleFile>
+    <!--<PublishSingleFile>true</PublishSingleFile>-->
     <!--<PublishTrimmed>true</PublishTrimmed>-->
     <!--<PublishReadyToRun>true</PublishReadyToRun>
     <PublishReadyToRunShowWarnings>true</PublishReadyToRunShowWarnings>-->
@@ -56,13 +57,14 @@
     <PackageReference Include="Markdig" Version="0.22.1" />
     <PackageReference Include="Markdig.Wpf" Version="0.5.0.1" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+	<PackageReference Include="SolidShineUi" Version="1.9.0" />
   </ItemGroup>
 
-  <ItemGroup>
+  <!--<ItemGroup>
     <Reference Include="SolidShineUi">
       <HintPath>..\Ssui\SolidShineUi.dll</HintPath>
     </Reference>
-  </ItemGroup>
+  </ItemGroup>-->
 
   <ItemGroup>
     <Resource Include="Images\**" />
