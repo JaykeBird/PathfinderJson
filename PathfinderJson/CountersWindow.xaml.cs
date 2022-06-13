@@ -107,6 +107,13 @@ namespace PathfinderJson
 
         private void btnExport_Click(object sender, RoutedEventArgs e)
         {
+            if (grdCounters.Children.Count == 0)
+            {
+                MessageDialog md = new MessageDialog(ColorScheme);
+                md.ShowDialog("There are no counters currently added, so there is nothing to save.", null, this, "No Counters", MessageDialogButtonDisplay.Auto, MessageDialogImage.Error);
+                return;
+            }
+
             SaveFileDialog sfd = new SaveFileDialog();
             sfd.Title = "Save Counters File";
             sfd.Filter = "JSON Data File|*.json";
