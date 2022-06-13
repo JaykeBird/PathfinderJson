@@ -5,10 +5,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
+using System.Linq;
 using System.Reflection;
 
 namespace PathfinderJson.Ild
@@ -155,7 +152,31 @@ namespace PathfinderJson.Ild
 
         public List<T> GetItems<T>()
         {
-            return new List<T>();
+            if (typeof(T) != SheetClassType) throw new ArgumentException("Passed in generic data type does not match SheetClassType");
+            if (propertyNames.Count == 0) throw new InvalidOperationException("SheetClassType has no properties, or was not set.");
+            List<T> items = new List<T>();
+
+            foreach (SelectableListItem item in selPanel.Items)
+            {
+                //Dictionary<string, object> propVals = item.GetAllProperties();
+
+                var newBase = Activator.CreateInstance(typeof(T));
+                if (newBase == null) throw new ArgumentNullException(nameof(T), "Passed in generic data type cannot be created via reflection");
+                Type tt = typeof(T);
+                foreach (IldPropertyInfo property in propertyNames)
+                {
+                    PropertyInfo? pi = tt.GetProperty(property.Name);
+
+                    if (pi != null)
+                    {
+                        pi.SetValue(newBase, item.GetPropertyValue(property));
+                    }
+                }
+
+                items.Add((T)newBase);
+            }
+
+            return items;
         }
 
         //private List<string> ListProperties<T>(T item)

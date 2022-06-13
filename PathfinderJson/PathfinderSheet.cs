@@ -448,12 +448,16 @@ namespace PathfinderJson
     {
         [IldDisplay(Name = "Name")]
         public string Name { get; set; } = "";
+
         [IldDisplay(Name = "Type")]
         public string? Type { get; set; }
+
         [IldDisplay(Name = "Notes")]
         public string? Notes { get; set; }
+
         [IldDisplay(Name = "School")]
         public string? School { get; set; }
+
         [IldDisplay(Name = "Subschool")]
         public string? Subschool { get; set; }
     }
