@@ -134,6 +134,8 @@ namespace PathfinderJson.Ild
                 throw new InvalidOperationException("DisplayElementType is not set");
             }
 
+            selPanel.Items.Clear();
+
             foreach (T item in items)
             {
                 var newItem = Activator.CreateInstance(DisplayElementType);
