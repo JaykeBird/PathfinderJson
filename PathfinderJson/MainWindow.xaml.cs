@@ -20,6 +20,7 @@ using static PathfinderJson.CoreUtils;
 using static PathfinderJson.App;
 using System.Windows.Shell;
 using System.ComponentModel;
+using System.Linq;
 
 //using Markdig;
 //using Markdig.Wpf;
@@ -1830,7 +1831,8 @@ namespace PathfinderJson
                 grdEditDrop.Visibility = Visibility.Visible;
                 SetAllTabsVisibility(Visibility.Collapsed);
                 UpdateAppearance();
-                foreach (SelectableItem item in selTabs.GetSelectedItemsOfType<SelectableItem>())
+                IEnumerable<SelectableItem> si = selTabs.GetSelectedItemsOfType<SelectableItem>().ToList();
+                foreach (SelectableItem item in si)
                 {
                     item.IsSelected = false;
                 }
@@ -2590,14 +2592,15 @@ namespace PathfinderJson
             txtAcWeight.Text = total.Weight;
 
             // Feats/Abilities tab
-            selFeats.Clear();
-            foreach (Feat item in sheet.Feats)
-            {
-                FeatEditor fe = new FeatEditor();
-                fe.ContentChanged += editor_ContentChanged;
-                fe.LoadFeat(item);
-                selFeats.AddItem(fe);
-            }
+            selFeats.LoadList(sheet.Feats);
+            ////selFeats.Clear();
+            //foreach (Feat item in sheet.Feats)
+            //{
+            //    FeatEditor fe = new FeatEditor();
+            //    fe.ContentChanged += editor_ContentChanged;
+            //    fe.LoadFeat(item);
+            //    //selFeats.AddItem(fe);
+            //}
 
             selAbilities.Clear();
             foreach (SpecialAbility item in sheet.SpecialAbilities)
@@ -3290,11 +3293,11 @@ namespace PathfinderJson
             }
 
             // feats/abilites
-            sheet.Feats = new List<Feat>();
-            foreach (FeatEditor item in selFeats.GetItemsAsType<FeatEditor>())
-            {
-                sheet.Feats.Add(item.GetFeat());
-            }
+            sheet.Feats = selFeats.GetItems<Feat>();
+            //foreach (FeatEditor item in selFeats.GetItemsAsType<FeatEditor>())
+            //{
+            //    sheet.Feats.Add(item.GetFeat());
+            //}
 
             sheet.SpecialAbilities = new List<SpecialAbility>();
             foreach (AbilityEditor item in selAbilities.GetItemsAsType<AbilityEditor>())
@@ -3676,9 +3679,9 @@ namespace PathfinderJson
         {
             FeatEditor fe = new FeatEditor();
             fe.ContentChanged += editor_ContentChanged;
-            selFeats.AddItem(fe);
+            //selFeats.AddItem(fe);
 
-            expFeats.IsExpanded = true;
+            //expFeats.IsExpanded = true;
             fe.BringIntoView();
             fe.IsSelected = true;
 
@@ -3687,13 +3690,13 @@ namespace PathfinderJson
 
         private void btnDeleteFeat_Click(object sender, EventArgs e)
         {
-            selFeats.RemoveSelectedItems();
+            //selFeats.RemoveSelectedItems();
             SetIsDirty();
         }
 
         private void btnDeselectFeat_Click(object sender, EventArgs e)
         {
-            selFeats.DeselectAll();
+            //selFeats.DeselectAll();
         }
 
         private void expFeats_Expanded(object sender, RoutedEventArgs e)

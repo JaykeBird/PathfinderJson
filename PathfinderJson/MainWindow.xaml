@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PathfinderJson"
+        xmlns:ild="clr-namespace:PathfinderJson.Ild"
         xmlns:flat="clr-namespace:SolidShineUi;assembly=SolidShineUi"
         xmlns:edit="http://icsharpcode.net/sharpdevelop/avalonedit"
         xmlns:md="clr-namespace:Markdig.Wpf;assembly=Markdig.Wpf"
@@ -867,7 +868,7 @@
                         <flat:LinkTextBlock x:Name="lnkTraits" Grid.Row="3" Text="View Traits on D20PFSRD" HorizontalAlignment="Left" Click="lnkCombat_Click" Tag="https://www.d20pfsrd.com/traits/" Cursor="Hand" />
                     </Grid>
                     <TextBlock x:Name="lblFeats" HorizontalAlignment="Left" Margin="15,12,0,0" Grid.Row="1" Text="Feats" FontWeight="SemiBold" VerticalAlignment="Top"/>
-                    <Expander VerticalAlignment="Center" Margin="120,0,0,0" HorizontalAlignment="Left" Grid.Row="1" x:Name="expFeats" Header="Show/Hide List" IsExpanded="True" Expanded="expFeats_Expanded" Collapsed="expFeats_Collapsed" Foreground="{Binding Foreground, ElementName=window}" />
+                    <!--<Expander VerticalAlignment="Center" Margin="120,0,0,0" HorizontalAlignment="Left" Grid.Row="1" x:Name="expFeats" Header="Show/Hide List" IsExpanded="True" Expanded="expFeats_Expanded" Collapsed="expFeats_Collapsed" Foreground="{Binding Foreground, ElementName=window}" />
                     <flat:FlatButton ColorScheme="{Binding ColorScheme, ElementName=window}" Width="20" Height="24" HorizontalAlignment="Right" Margin="0,0,50,0" Grid.Row="1" Padding="0" TransparentBack="True" ToolTip="Add" x:Name="btnAddFeat" Click="btnAddFeat_Click" >
                         <local:ThemedImage ImageName="Add" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" Width="16" Height="16" />
                     </flat:FlatButton>
@@ -876,8 +877,9 @@
                     </flat:FlatButton>
                     <flat:FlatButton ColorScheme="{Binding ColorScheme, ElementName=window}" Width="20" Height="24" HorizontalAlignment="Right" Margin="0,0,6,0" Grid.Row="1" Padding="0" TransparentBack="True" ToolTip="Deselect All" x:Name="btnDeselectFeat" Click="btnDeselectFeat_Click" >
                         <local:ThemedImage ImageName="Deselect" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" Width="16" Height="16" />
-                    </flat:FlatButton>
-                    <flat:SelectPanel ColorScheme="{Binding ColorScheme, ElementName=window}" x:Name="selFeats" BorderThickness="1" UseLighterBorder="True" MinHeight="3" Grid.Row="2" MultiSelect="True" />
+                    </flat:FlatButton>-->
+                    <!--<flat:SelectPanel ColorScheme="{Binding ColorScheme, ElementName=window}" x:Name="selFeats" BorderThickness="1" UseLighterBorder="True" MultiSelect="True" MinHeight="3" Grid.Row="2" />-->
+                    <ild:ItemListDisplay ColorScheme="{Binding ColorScheme, ElementName=window}" x:Name="selFeats" BorderThickness="1" Title="Feats" SheetClassType="{x:Type local:Feat}" DisplayElementType="{x:Type local:FeatEditor}" MinHeight="3" Grid.Row="2" />
 
                     <TextBlock x:Name="lblAbilities" HorizontalAlignment="Left" Margin="15,12,0,0" Grid.Row="3" Text="Special Abilities" FontWeight="SemiBold" VerticalAlignment="Top"/>
                     <Expander VerticalAlignment="Center" Margin="120,0,0,0" HorizontalAlignment="Left" Grid.Row="3" x:Name="expabilities" Header="Show/Hide List" IsExpanded="True" Expanded="expAbilities_Expanded" Collapsed="expAbilities_Collapsed" Foreground="{Binding Foreground, ElementName=window}" />
