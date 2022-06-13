@@ -34,7 +34,7 @@
             <flat:FlatButton x:Name="btnExport" HorizontalAlignment="Right" Margin="0,0,24,0" Padding="10,4" VerticalAlignment="Center" TransparentBack="True"
             ColorScheme="{Binding ColorScheme, ElementName=window}" Click="btnExport_Click" >
                 <StackPanel Orientation="Horizontal" >
-                    <local:ThemedImage Width="16" ImageName="Save" ColorScheme="{Binding ColorScheme, ElementName=window}" />
+                    <local:ThemedImage Width="16" ImageName="FileSave" ColorScheme="{Binding ColorScheme, ElementName=window}" />
                     <TextBlock Text="Export to File..." Margin="5,0" />
                 </StackPanel>
             </flat:FlatButton>
