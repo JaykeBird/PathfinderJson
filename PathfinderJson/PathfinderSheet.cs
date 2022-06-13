@@ -464,12 +464,25 @@ namespace PathfinderJson
 
     public class CompoundModifier
     {
+        [IldDisplay(Name = "Base")]
         public string? Base { get; set; }
+
+        [IldDisplay(Name = "Total")]
         public string? Total { get; set; }
+
+        [IldDisplay(Name = "MagicModifier")]
         public string? MagicModifier { get; set; }
+
+        [IldDisplay(Name = "MiscModifier")]
         public string? MiscModifier { get; set; }
+
+        [IldDisplay(Name = "OtherModifiers")]
         public string? OtherModifiers { get; set; }
+
+        [IldDisplay(Name = "SizeModifier")]
         public string? SizeModifier { get; set; }
+
+        [IldDisplay(Name = "TempModifier")]
         public string? TempModifier { get; set; }
     }
 
@@ -506,26 +519,52 @@ namespace PathfinderJson
 
     public class Weapon
     {
-        [JsonProperty("weapon")]
+        [JsonProperty("weapon"), IldDisplay(Name = "Name")]
         public string Name { get; set; } = "";
+
+        [IldDisplay(Name = "Damage")]
         public string? Damage { get; set; }
-        [JsonProperty("critical")]
+
+        [JsonProperty("critical"), IldDisplay(Name = "Critical")]
         public string? CriticalRange { get; set; }
+
+        [IldDisplay(Name = "Type")]
         public string? Type { get; set; }
+
+        [IldDisplay(Name = "AttackBonus")]
         public string? AttackBonus { get; set; }
+
+        [IldDisplay(Name = "Notes")]
         public string? Notes { get; set; }
+
+        [IldDisplay(Name = "Range")]
         public string? Range { get; set; }
+
+        [IldDisplay(Name = "Ammunition")]
         public string? Ammunition { get; set; }
     }
 
     public class AcItem
     {
+        [IldDisplay(Name = "Name")]
         public string? Name { get; set; } = "";
+
+        [IldDisplay(Name = "Bonus")]
         public string? Bonus { get; set; } = "";
+
+        [IldDisplay(Name = "Type")]
         public string? Type { get; set; } = "";
+
+        [IldDisplay(Name = "ArmorCheckPenalty")]
         public string? ArmorCheckPenalty { get; set; } = "";
+
+        [IldDisplay(Name = "SpellFailure")]
         public string? SpellFailure { get; set; } = "";
+
+        [IldDisplay(Name = "Weight")]
         public string? Weight { get; set; } = "";
+
+        [IldDisplay(Name = "Properties")]
         public string? Properties { get; set; } = "";
     }
 
@@ -559,8 +598,14 @@ namespace PathfinderJson
 
     public class SpecialAbility
     {
+
+        [IldDisplay(Name = "Name")]
         public string Name { get; set; } = "";
+
+        [IldDisplay(Name = "Type")]
         public string? Type { get; set; }
+
+        [IldDisplay(Name = "Notes")]
         public string? Notes { get; set; }
     }
 
