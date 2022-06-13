@@ -875,8 +875,8 @@
                         <local:ThemedImage ImageName="Deselect" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" Width="16" Height="16" />
                     </flat:FlatButton>-->
                     <!--<flat:SelectPanel ColorScheme="{Binding ColorScheme, ElementName=window}" x:Name="selFeats" BorderThickness="1" UseLighterBorder="True" MultiSelect="True" MinHeight="3" Grid.Row="2" />-->
-                    <ild:ItemListDisplay ColorScheme="{Binding ColorScheme, ElementName=window}" x:Name="selFeats" BorderThickness="1" Title="Feats" Margin="0,5"
-                                         SheetClassType="{x:Type local:Feat}" DisplayElementType="{x:Type local:FeatEditor}" MinHeight="3" Grid.Row="1" />
+                    <ild:ItemListDisplay ColorScheme="{Binding ColorScheme, ElementName=window}" x:Name="selFeats" BorderThickness="1" Title="Feats" MinHeight="3" Grid.Row="1" 
+                                         SheetClassType="{x:Type local:Feat}" DisplayElementType="{x:Type local:FeatEditor}"  Margin="0,5" ContentChanged="editor_ContentChanged" />
                     <!--<Expander VerticalAlignment="Center" Margin="120,0,0,0" HorizontalAlignment="Left" Grid.Row="2" x:Name="expabilities" Header="Show/Hide List" IsExpanded="True" Expanded="expAbilities_Expanded" Collapsed="expAbilities_Collapsed" Foreground="{Binding Foreground, ElementName=window}" />
                     <flat:FlatButton ColorScheme="{Binding ColorScheme, ElementName=window}" Width="20" Height="24" HorizontalAlignment="Right" Margin="0,0,50,0" Grid.Row="2" Padding="0" TransparentBack="True" ToolTip="Add" x:Name="btnAddAbility" Click="btnAddAbility_Click" >
                         <local:ThemedImage ImageName="Add" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" Width="16" Height="16" />
@@ -889,7 +889,7 @@
                     </flat:FlatButton>-->
                     <!--<flat:SelectPanel ColorScheme="{Binding ColorScheme, ElementName=window}" x:Name="selAbilities" BorderThickness="1" UseLighterBorder="True" MinHeight="3" Grid.Row="3" MultiSelect="True" />-->
                     <ild:ItemListDisplay ColorScheme="{Binding ColorScheme, ElementName=window}" x:Name="selAbilities" BorderThickness="1" MinHeight="3" Grid.Row="2" Title="Special Abilities" 
-                                         SheetClassType="{x:Type local:SpecialAbility}" DisplayElementType="{x:Type local:AbilityEditor}" Margin="0,5" />
+                                         SheetClassType="{x:Type local:SpecialAbility}" DisplayElementType="{x:Type local:AbilityEditor}" Margin="0,5" ContentChanged="editor_ContentChanged" />
 
                     <!--<TextBlock x:Name="lblTraits" HorizontalAlignment="Left" Margin="15,12,0,0" Grid.Row="3" Text="Traits" FontWeight="SemiBold" VerticalAlignment="Top"/>
                     <Expander VerticalAlignment="Center" Margin="120,0,0,0" HorizontalAlignment="Left" Grid.Row="3" x:Name="expTraits" Header="Show/Hide List" IsExpanded="True" Expanded="expTraits_Expanded" Collapsed="expTraits_Collapsed" Foreground="{Binding Foreground, ElementName=window}" />
@@ -904,7 +904,7 @@
                     </flat:FlatButton>-->
                     <!--<flat:SelectPanel ColorScheme="{Binding ColorScheme, ElementName=window}" x:Name="selTraits" BorderThickness="1" UseLighterBorder="True" MinHeight="3" Grid.Row="4" MultiSelect="True" />-->
                     <ild:ItemListDisplay ColorScheme="{Binding ColorScheme, ElementName=window}" x:Name="selTraits" BorderThickness="1" Title="Traits" MinHeight="3" Grid.Row="3"
-                                         SheetClassType="{x:Type local:SpecialAbility}" DisplayElementType="{x:Type local:AbilityEditor}" Margin="0,5" />
+                                         SheetClassType="{x:Type local:SpecialAbility}" DisplayElementType="{x:Type local:AbilityEditor}" Margin="0,5" ContentChanged="editor_ContentChanged" />
 
                     <TextBlock x:Name="lblSpellLikes" HorizontalAlignment="Left" Margin="15,12,0,0" Grid.Row="4" Text="Spell-like Abilities" FontWeight="SemiBold" VerticalAlignment="Top"/>
                     <Expander VerticalAlignment="Center" Margin="120,0,0,0" HorizontalAlignment="Left" Grid.Row="4" x:Name="expSpellLikes" Header="Show/Hide List" IsExpanded="True" Expanded="expSpellLikes_Expanded" Collapsed="expSpellLikes_Collapsed" Foreground="{Binding Foreground, ElementName=window}" />
@@ -995,7 +995,7 @@
                     </flat:FlatButton>-->
                     <!--<flat:SelectPanel ColorScheme="{Binding ColorScheme, ElementName=window}" x:Name="selEquipment" BorderThickness="1" UseLighterBorder="True" MinHeight="3" Grid.Row="5" MultiSelect="True" />-->
                     <ild:ItemListDisplay ColorScheme="{Binding ColorScheme, ElementName=window}" x:Name="selEquipment" BorderThickness="1" MinHeight="3" Grid.Row="4" Title="Equipment/Gear"
-                                         DisplayElementType="{x:Type local:ItemEditor}" SheetClassType="{x:Type local:Equipment}" Margin="0,5" />
+                                         DisplayElementType="{x:Type local:ItemEditor}" SheetClassType="{x:Type local:Equipment}" Margin="0,5" ContentChanged="editor_ContentChanged" />
                 </Grid>
                 <Grid Margin="5,5,5,0" x:Name="grdNotes">
                     <TextBlock x:Name="titNotes" Text="Notes" FontSize="16" Margin="10,0,0,0" VerticalAlignment="Top" />
