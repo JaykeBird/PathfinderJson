@@ -527,12 +527,30 @@ namespace PathfinderJson
 
     public class Equipment
     {
+        [IldDisplay(Name = "Name")]
         public string? Name { get; set; }
+
+        [IldDisplay(Name = "Location")]
         public string? Location { get; set; }
+
+        [IldDisplay(Name = "Type")]
         public string? Type { get; set; }
-        public string? Quantity { get; set; }
+
+        [IldDisplay(Name = "Quantity")]
+        public int Quantity { get; set; } = 1;
+
+        [IldDisplay(Name = "Weight")]
         public string? Weight { get; set; }
+
+        [IldDisplay(Name = "Notes")]
         public string? Notes { get; set; }
+
+
+        [IldDisplay(Name = "Equippable")]
+        public bool Equippable { get; set; } = false;
+
+        [IldDisplay(Name = "Equipped")]
+        public bool Equipped { get; set; } = false;
     }
 
     public class SpecialAbility

@@ -2640,14 +2640,15 @@ namespace PathfinderJson
             txtGemsArt.Text = money.ContainsKey("gems") ? money["gems"] : "";
             txtOtherTreasure.Text = money.ContainsKey("other") ? money["other"] : "";
 
-            selEquipment.Clear();
-            foreach (Equipment item in sheet.Equipment)
-            {
-                ItemEditor ie = new ItemEditor();
-                ie.ContentChanged += editor_ContentChanged;
-                ie.LoadEquipment(item);
-                selEquipment.AddItem(ie);
-            }
+            selEquipment.LoadList(sheet.Equipment);
+            ////selEquipment.Clear();
+            //foreach (Equipment item in sheet.Equipment)
+            //{
+            //    ItemEditor ie = new ItemEditor();
+            //    ie.ContentChanged += editor_ContentChanged;
+            //    ie.LoadEquipment(item);
+            //    //selEquipment.AddItem(ie);
+            //}
 
             // Skills tab
             txtSkillModifiers.Text = sheet.SkillConditionalModifiers;
@@ -3341,11 +3342,11 @@ namespace PathfinderJson
                 sheet.Money = null;
             }
 
-            sheet.Equipment = new List<Equipment>();
-            foreach (ItemEditor item in selEquipment.GetItemsAsType<ItemEditor>())
-            {
-                sheet.Equipment.Add(item.GetEquipment());
-            }
+            sheet.Equipment = selEquipment.GetItems<Equipment>();
+            //foreach (ItemEditor item in selEquipment.GetItemsAsType<ItemEditor>())
+            //{
+            //    sheet.Equipment.Add(item.GetEquipment());
+            //}
 
             // skills
             Dictionary<string, Skill> skills = new Dictionary<string, Skill>();
@@ -3675,40 +3676,6 @@ namespace PathfinderJson
 
         #region Feats/Abilities editors
 
-        private void btnAddFeat_Click(object sender, EventArgs e)
-        {
-            FeatEditor fe = new FeatEditor();
-            fe.ContentChanged += editor_ContentChanged;
-            //selFeats.AddItem(fe);
-
-            //expFeats.IsExpanded = true;
-            fe.BringIntoView();
-            fe.IsSelected = true;
-
-            SetIsDirty();
-        }
-
-        private void btnDeleteFeat_Click(object sender, EventArgs e)
-        {
-            //selFeats.RemoveSelectedItems();
-            SetIsDirty();
-        }
-
-        private void btnDeselectFeat_Click(object sender, EventArgs e)
-        {
-            //selFeats.DeselectAll();
-        }
-
-        private void expFeats_Expanded(object sender, RoutedEventArgs e)
-        {
-            if (selFeats != null) selFeats.Visibility = Visibility.Visible;
-        }
-
-        private void expFeats_Collapsed(object sender, RoutedEventArgs e)
-        {
-            if (selFeats != null) selFeats.Visibility = Visibility.Collapsed;
-        }
-
 
         private void btnAddAbility_Click(object sender, EventArgs e)
         {
@@ -3886,40 +3853,6 @@ namespace PathfinderJson
         private void BtnDeselectRanged_Click(object sender, EventArgs e)
         {
             selRanged.DeselectAll();
-        }
-
-        private void expEquipment_Expanded(object sender, RoutedEventArgs e)
-        {
-            if (selEquipment != null) selEquipment.Visibility = Visibility.Visible;
-        }
-
-        private void expEquipment_Collapsed(object sender, RoutedEventArgs e)
-        {
-            if (selEquipment != null) selEquipment.Visibility = Visibility.Collapsed;
-        }
-
-        private void btnAddEquipment_Click(object sender, EventArgs e)
-        {
-            ItemEditor ie = new ItemEditor();
-            ie.ContentChanged += editor_ContentChanged;
-            selEquipment.AddItem(ie);
-
-            expEquipment.IsExpanded = true;
-            ie.BringIntoView();
-            ie.IsSelected = true;
-
-            SetIsDirty();
-        }
-
-        private void btnDeleteEquipment_Click(object sender, EventArgs e)
-        {
-            selEquipment.RemoveSelectedItems();
-            SetIsDirty();
-        }
-
-        private void btnDeselectEquipment_Click(object sender, EventArgs e)
-        {
-            selEquipment.DeselectAll();
         }
 
         private void expAcItem_Expanded(object sender, RoutedEventArgs e)

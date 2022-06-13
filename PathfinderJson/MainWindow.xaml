@@ -987,7 +987,7 @@
                     </Grid>
 
                     <TextBlock x:Name="lblEquipment" HorizontalAlignment="Left" Margin="15,0,0,0" Grid.Row="4" Text="Equipment/Gear" FontWeight="SemiBold" VerticalAlignment="Center"/>
-                    <Expander VerticalAlignment="Center" Margin="120,0,0,0" HorizontalAlignment="Left" Grid.Row="4" x:Name="expEquipment" Header="Show/Hide List" IsExpanded="True" Expanded="expEquipment_Expanded" Collapsed="expEquipment_Collapsed" Foreground="{Binding Foreground, ElementName=window}" />
+                    <!--<Expander VerticalAlignment="Center" Margin="120,0,0,0" HorizontalAlignment="Left" Grid.Row="4" x:Name="expEquipment" Header="Show/Hide List" IsExpanded="True" Expanded="expEquipment_Expanded" Collapsed="expEquipment_Collapsed" Foreground="{Binding Foreground, ElementName=window}" />
                     <flat:FlatButton ColorScheme="{Binding ColorScheme, ElementName=window}" Width="20" Height="24" HorizontalAlignment="Right" Margin="0,8,50,8" Grid.Row="4" Padding="0" TransparentBack="True" ToolTip="Add" x:Name="btnAddEquipment" Click="btnAddEquipment_Click" >
                         <local:ThemedImage ImageName="Add" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" Width="16" Height="16" />
                     </flat:FlatButton>
@@ -996,8 +996,10 @@
                     </flat:FlatButton>
                     <flat:FlatButton ColorScheme="{Binding ColorScheme, ElementName=window}" Width="20" Height="24" HorizontalAlignment="Right" Margin="0,8,6,8" Grid.Row="4" Padding="0" TransparentBack="True" ToolTip="Deselect All" x:Name="btnDeselectEquipment" Click="btnDeselectEquipment_Click" >
                         <local:ThemedImage ImageName="Deselect" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" Width="16" Height="16" />
-                    </flat:FlatButton>
-                    <flat:SelectPanel ColorScheme="{Binding ColorScheme, ElementName=window}" x:Name="selEquipment" BorderThickness="1" UseLighterBorder="True" MinHeight="3" Grid.Row="5" MultiSelect="True" />
+                    </flat:FlatButton>-->
+                    <!--<flat:SelectPanel ColorScheme="{Binding ColorScheme, ElementName=window}" x:Name="selEquipment" BorderThickness="1" UseLighterBorder="True" MinHeight="3" Grid.Row="5" MultiSelect="True" />-->
+                    <ild:ItemListDisplay ColorScheme="{Binding ColorScheme, ElementName=window}" x:Name="selEquipment" BorderThickness="1" MinHeight="3" Grid.Row="5" Title="Equipment/Gear"
+                                         DisplayElementType="{x:Type local:ItemEditor}" SheetClassType="{x:Type local:Equipment}" />
                 </Grid>
                 <Grid Margin="5,5,5,0" x:Name="grdNotes">
                     <TextBlock x:Name="titNotes" Text="Notes" FontSize="16" Margin="10,0,0,0" VerticalAlignment="Top" />
