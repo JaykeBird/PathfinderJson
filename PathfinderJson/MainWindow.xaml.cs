@@ -2602,23 +2602,25 @@ namespace PathfinderJson
             //    //selFeats.AddItem(fe);
             //}
 
-            selAbilities.Clear();
-            foreach (SpecialAbility item in sheet.SpecialAbilities)
-            {
-                AbilityEditor ae = new AbilityEditor();
-                ae.ContentChanged += editor_ContentChanged;
-                ae.LoadAbility(item);
-                selAbilities.AddItem(ae);
-            }
+            selAbilities.LoadList(sheet.SpecialAbilities);
+            //selAbilities.Clear();
+            //foreach (SpecialAbility item in sheet.SpecialAbilities)
+            //{
+            //    AbilityEditor ae = new AbilityEditor();
+            //    ae.ContentChanged += editor_ContentChanged;
+            //    ae.LoadAbility(item);
+            //    selAbilities.AddItem(ae);
+            //}
 
-            selTraits.Clear();
-            foreach (SpecialAbility item in sheet.Traits)
-            {
-                AbilityEditor ae = new AbilityEditor();
-                ae.ContentChanged += editor_ContentChanged;
-                ae.LoadAbility(item);
-                selTraits.AddItem(ae);
-            }
+            selTraits.LoadList(sheet.Traits);
+            //selTraits.Clear();
+            //foreach (SpecialAbility item in sheet.Traits)
+            //{
+            //    AbilityEditor ae = new AbilityEditor();
+            //    ae.ContentChanged += editor_ContentChanged;
+            //    ae.LoadAbility(item);
+            //    selTraits.AddItem(ae);
+            //}
 
             selSpellLikes.Clear();
             foreach (Spell item in sheet.SpellLikeAbilities)
@@ -3300,17 +3302,19 @@ namespace PathfinderJson
             //    sheet.Feats.Add(item.GetFeat());
             //}
 
-            sheet.SpecialAbilities = new List<SpecialAbility>();
-            foreach (AbilityEditor item in selAbilities.GetItemsAsType<AbilityEditor>())
-            {
-                sheet.SpecialAbilities.Add(item.GetAbility());
-            }
+            sheet.SpecialAbilities = selAbilities.GetItems<SpecialAbility>();
+            //sheet.SpecialAbilities = new List<SpecialAbility>();
+            //foreach (AbilityEditor item in selAbilities.GetItemsAsType<AbilityEditor>())
+            //{
+            //    sheet.SpecialAbilities.Add(item.GetAbility());
+            //}
 
-            sheet.Traits = new List<SpecialAbility>();
-            foreach (AbilityEditor item in selTraits.GetItemsAsType<AbilityEditor>())
-            {
-                sheet.Traits.Add(item.GetAbility());
-            }
+            sheet.Traits = selAbilities.GetItems<SpecialAbility>();
+            //sheet.Traits = new List<SpecialAbility>();
+            //foreach (AbilityEditor item in selTraits.GetItemsAsType<AbilityEditor>())
+            //{
+            //    sheet.Traits.Add(item.GetAbility());
+            //}
 
             sheet.SpellLikeAbilities = new List<Spell>();
             foreach (SpellEditor item in selSpellLikes.GetItemsAsType<SpellEditor>())
@@ -3675,77 +3679,6 @@ namespace PathfinderJson
         #endregion
 
         #region Feats/Abilities editors
-
-
-        private void btnAddAbility_Click(object sender, EventArgs e)
-        {
-            AbilityEditor ae = new AbilityEditor();
-            ae.ContentChanged += editor_ContentChanged;
-            selAbilities.AddItem(ae);
-
-            expabilities.IsExpanded = true;
-            ae.BringIntoView();
-            ae.IsSelected = true;
-
-            SetIsDirty();
-            CreateUndoState();
-        }
-
-        private void btnDeleteAbility_Click(object sender, EventArgs e)
-        {
-            selAbilities.RemoveSelectedItems();
-            SetIsDirty();
-        }
-
-        private void btnDeselectAbility_Click(object sender, EventArgs e)
-        {
-            selAbilities.DeselectAll();
-        }
-
-        private void expAbilities_Expanded(object sender, RoutedEventArgs e)
-        {
-            if (selAbilities != null) selAbilities.Visibility = Visibility.Visible;
-        }
-
-        private void expAbilities_Collapsed(object sender, RoutedEventArgs e)
-        {
-            if (selAbilities != null) selAbilities.Visibility = Visibility.Collapsed;
-        }
-
-
-        private void btnAddTrait_Click(object sender, EventArgs e)
-        {
-            AbilityEditor ae = new AbilityEditor();
-            ae.ContentChanged += editor_ContentChanged;
-            selTraits.AddItem(ae);
-
-            expTraits.IsExpanded = true;
-            ae.BringIntoView();
-            ae.IsSelected = true;
-
-            SetIsDirty();
-        }
-
-        private void btnDeleteTrait_Click(object sender, EventArgs e)
-        {
-            selTraits.RemoveSelectedItems();
-            SetIsDirty();
-        }
-
-        private void btnDeselectTrait_Click(object sender, EventArgs e)
-        {
-            selTraits.DeselectAll();
-        }
-
-        private void expTraits_Expanded(object sender, RoutedEventArgs e)
-        {
-            if (selTraits != null) selTraits.Visibility = Visibility.Visible;
-        }
-
-        private void expTraits_Collapsed(object sender, RoutedEventArgs e)
-        {
-            if (selTraits != null) selTraits.Visibility = Visibility.Collapsed;
-        }
 
         private void expSpellLikes_Expanded(object sender, RoutedEventArgs e)
         {

@@ -847,11 +847,8 @@
                 <Grid Margin="5,5,5,0" x:Name="grdFeats" Visibility="Collapsed" >
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
-                        <RowDefinition Height="40" />
                         <RowDefinition Height="Auto" />
-                        <RowDefinition Height="40" />
                         <RowDefinition Height="Auto" />
-                        <RowDefinition Height="40" />
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="40" />
                         <RowDefinition Height="Auto" />
@@ -867,7 +864,6 @@
                         <flat:LinkTextBlock x:Name="lnkFeats" Grid.Row="2" Text="View Feats on D20PFSRD" HorizontalAlignment="Left" Click="lnkCombat_Click" Tag="https://www.d20pfsrd.com/feats/" Cursor="Hand" />
                         <flat:LinkTextBlock x:Name="lnkTraits" Grid.Row="3" Text="View Traits on D20PFSRD" HorizontalAlignment="Left" Click="lnkCombat_Click" Tag="https://www.d20pfsrd.com/traits/" Cursor="Hand" />
                     </Grid>
-                    <TextBlock x:Name="lblFeats" HorizontalAlignment="Left" Margin="15,12,0,0" Grid.Row="1" Text="Feats" FontWeight="SemiBold" VerticalAlignment="Top"/>
                     <!--<Expander VerticalAlignment="Center" Margin="120,0,0,0" HorizontalAlignment="Left" Grid.Row="1" x:Name="expFeats" Header="Show/Hide List" IsExpanded="True" Expanded="expFeats_Expanded" Collapsed="expFeats_Collapsed" Foreground="{Binding Foreground, ElementName=window}" />
                     <flat:FlatButton ColorScheme="{Binding ColorScheme, ElementName=window}" Width="20" Height="24" HorizontalAlignment="Right" Margin="0,0,50,0" Grid.Row="1" Padding="0" TransparentBack="True" ToolTip="Add" x:Name="btnAddFeat" Click="btnAddFeat_Click" >
                         <local:ThemedImage ImageName="Add" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" Width="16" Height="16" />
@@ -879,46 +875,49 @@
                         <local:ThemedImage ImageName="Deselect" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" Width="16" Height="16" />
                     </flat:FlatButton>-->
                     <!--<flat:SelectPanel ColorScheme="{Binding ColorScheme, ElementName=window}" x:Name="selFeats" BorderThickness="1" UseLighterBorder="True" MultiSelect="True" MinHeight="3" Grid.Row="2" />-->
-                    <ild:ItemListDisplay ColorScheme="{Binding ColorScheme, ElementName=window}" x:Name="selFeats" BorderThickness="1" Title="Feats" SheetClassType="{x:Type local:Feat}" DisplayElementType="{x:Type local:FeatEditor}" MinHeight="3" Grid.Row="2" />
-
-                    <TextBlock x:Name="lblAbilities" HorizontalAlignment="Left" Margin="15,12,0,0" Grid.Row="3" Text="Special Abilities" FontWeight="SemiBold" VerticalAlignment="Top"/>
-                    <Expander VerticalAlignment="Center" Margin="120,0,0,0" HorizontalAlignment="Left" Grid.Row="3" x:Name="expabilities" Header="Show/Hide List" IsExpanded="True" Expanded="expAbilities_Expanded" Collapsed="expAbilities_Collapsed" Foreground="{Binding Foreground, ElementName=window}" />
-                    <flat:FlatButton ColorScheme="{Binding ColorScheme, ElementName=window}" Width="20" Height="24" HorizontalAlignment="Right" Margin="0,0,50,0" Grid.Row="3" Padding="0" TransparentBack="True" ToolTip="Add" x:Name="btnAddAbility" Click="btnAddAbility_Click" >
+                    <ild:ItemListDisplay ColorScheme="{Binding ColorScheme, ElementName=window}" x:Name="selFeats" BorderThickness="1" Title="Feats" Margin="0,5"
+                                         SheetClassType="{x:Type local:Feat}" DisplayElementType="{x:Type local:FeatEditor}" MinHeight="3" Grid.Row="1" />
+                    <!--<Expander VerticalAlignment="Center" Margin="120,0,0,0" HorizontalAlignment="Left" Grid.Row="2" x:Name="expabilities" Header="Show/Hide List" IsExpanded="True" Expanded="expAbilities_Expanded" Collapsed="expAbilities_Collapsed" Foreground="{Binding Foreground, ElementName=window}" />
+                    <flat:FlatButton ColorScheme="{Binding ColorScheme, ElementName=window}" Width="20" Height="24" HorizontalAlignment="Right" Margin="0,0,50,0" Grid.Row="2" Padding="0" TransparentBack="True" ToolTip="Add" x:Name="btnAddAbility" Click="btnAddAbility_Click" >
                         <local:ThemedImage ImageName="Add" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" Width="16" Height="16" />
                     </flat:FlatButton>
-                    <flat:FlatButton ColorScheme="{Binding ColorScheme, ElementName=window}" Width="20" Height="24" HorizontalAlignment="Right" Margin="0,0,28,0" Grid.Row="3" Padding="0" TransparentBack="True" ToolTip="Delete" x:Name="btnDeleteAbility" Click="btnDeleteAbility_Click" >
+                    <flat:FlatButton ColorScheme="{Binding ColorScheme, ElementName=window}" Width="20" Height="24" HorizontalAlignment="Right" Margin="0,0,28,0" Grid.Row="2" Padding="0" TransparentBack="True" ToolTip="Delete" x:Name="btnDeleteAbility" Click="btnDeleteAbility_Click" >
                         <local:ThemedImage ImageName="Cancel" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" Width="16" Height="16" />
                     </flat:FlatButton>
-                    <flat:FlatButton ColorScheme="{Binding ColorScheme, ElementName=window}" Width="20" Height="24" HorizontalAlignment="Right" Margin="0,0,6,0" Grid.Row="3" Padding="0" TransparentBack="True" ToolTip="Deselect All" x:Name="btnDeselectAbility" Click="btnDeselectAbility_Click" >
+                    <flat:FlatButton ColorScheme="{Binding ColorScheme, ElementName=window}" Width="20" Height="24" HorizontalAlignment="Right" Margin="0,0,6,0" Grid.Row="2" Padding="0" TransparentBack="True" ToolTip="Deselect All" x:Name="btnDeselectAbility" Click="btnDeselectAbility_Click" >
                         <local:ThemedImage ImageName="Deselect" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" Width="16" Height="16" />
-                    </flat:FlatButton>
-                    <flat:SelectPanel ColorScheme="{Binding ColorScheme, ElementName=window}" x:Name="selAbilities" BorderThickness="1" UseLighterBorder="True" MinHeight="3" Grid.Row="4" MultiSelect="True" />
+                    </flat:FlatButton>-->
+                    <!--<flat:SelectPanel ColorScheme="{Binding ColorScheme, ElementName=window}" x:Name="selAbilities" BorderThickness="1" UseLighterBorder="True" MinHeight="3" Grid.Row="3" MultiSelect="True" />-->
+                    <ild:ItemListDisplay ColorScheme="{Binding ColorScheme, ElementName=window}" x:Name="selAbilities" BorderThickness="1" MinHeight="3" Grid.Row="2" Title="Special Abilities" 
+                                         SheetClassType="{x:Type local:SpecialAbility}" DisplayElementType="{x:Type local:AbilityEditor}" Margin="0,5" />
 
-                    <TextBlock x:Name="lblTraits" HorizontalAlignment="Left" Margin="15,12,0,0" Grid.Row="5" Text="Traits" FontWeight="SemiBold" VerticalAlignment="Top"/>
-                    <Expander VerticalAlignment="Center" Margin="120,0,0,0" HorizontalAlignment="Left" Grid.Row="5" x:Name="expTraits" Header="Show/Hide List" IsExpanded="True" Expanded="expTraits_Expanded" Collapsed="expTraits_Collapsed" Foreground="{Binding Foreground, ElementName=window}" />
-                    <flat:FlatButton ColorScheme="{Binding ColorScheme, ElementName=window}" Width="20" Height="24" HorizontalAlignment="Right" Margin="0,0,50,0" Grid.Row="5" Padding="0" TransparentBack="True" ToolTip="Add" x:Name="btnAddTrait" Click="btnAddTrait_Click" >
+                    <!--<TextBlock x:Name="lblTraits" HorizontalAlignment="Left" Margin="15,12,0,0" Grid.Row="3" Text="Traits" FontWeight="SemiBold" VerticalAlignment="Top"/>
+                    <Expander VerticalAlignment="Center" Margin="120,0,0,0" HorizontalAlignment="Left" Grid.Row="3" x:Name="expTraits" Header="Show/Hide List" IsExpanded="True" Expanded="expTraits_Expanded" Collapsed="expTraits_Collapsed" Foreground="{Binding Foreground, ElementName=window}" />
+                    <flat:FlatButton ColorScheme="{Binding ColorScheme, ElementName=window}" Width="20" Height="24" HorizontalAlignment="Right" Margin="0,0,50,0" Grid.Row="3" Padding="0" TransparentBack="True" ToolTip="Add" x:Name="btnAddTrait" Click="btnAddTrait_Click" >
                         <local:ThemedImage ImageName="Add" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" Width="16" Height="16" />
                     </flat:FlatButton>
-                    <flat:FlatButton ColorScheme="{Binding ColorScheme, ElementName=window}" Width="20" Height="24" HorizontalAlignment="Right" Margin="0,0,28,0" Grid.Row="5" Padding="0" TransparentBack="True" ToolTip="Delete" x:Name="btnDeleteTrait" Click="btnDeleteTrait_Click" >
+                    <flat:FlatButton ColorScheme="{Binding ColorScheme, ElementName=window}" Width="20" Height="24" HorizontalAlignment="Right" Margin="0,0,28,0" Grid.Row="3" Padding="0" TransparentBack="True" ToolTip="Delete" x:Name="btnDeleteTrait" Click="btnDeleteTrait_Click" >
                         <local:ThemedImage ImageName="Cancel" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" Width="16" Height="16" />
                     </flat:FlatButton>
-                    <flat:FlatButton ColorScheme="{Binding ColorScheme, ElementName=window}" Width="20" Height="24" HorizontalAlignment="Right" Margin="0,0,6,0" Grid.Row="5" Padding="0" TransparentBack="True" ToolTip="Deselect All" x:Name="btnDeselectTrait" Click="btnDeselectTrait_Click" >
+                    <flat:FlatButton ColorScheme="{Binding ColorScheme, ElementName=window}" Width="20" Height="24" HorizontalAlignment="Right" Margin="0,0,6,0" Grid.Row="3" Padding="0" TransparentBack="True" ToolTip="Deselect All" x:Name="btnDeselectTrait" Click="btnDeselectTrait_Click" >
                         <local:ThemedImage ImageName="Deselect" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" Width="16" Height="16" />
-                    </flat:FlatButton>
-                    <flat:SelectPanel ColorScheme="{Binding ColorScheme, ElementName=window}" x:Name="selTraits" BorderThickness="1" UseLighterBorder="True" MinHeight="3" Grid.Row="6" MultiSelect="True" />
+                    </flat:FlatButton>-->
+                    <!--<flat:SelectPanel ColorScheme="{Binding ColorScheme, ElementName=window}" x:Name="selTraits" BorderThickness="1" UseLighterBorder="True" MinHeight="3" Grid.Row="4" MultiSelect="True" />-->
+                    <ild:ItemListDisplay ColorScheme="{Binding ColorScheme, ElementName=window}" x:Name="selTraits" BorderThickness="1" Title="Traits" MinHeight="3" Grid.Row="3"
+                                         SheetClassType="{x:Type local:SpecialAbility}" DisplayElementType="{x:Type local:AbilityEditor}" Margin="0,5" />
 
-                    <TextBlock x:Name="lblSpellLikes" HorizontalAlignment="Left" Margin="15,12,0,0" Grid.Row="7" Text="Spell-like Abilities" FontWeight="SemiBold" VerticalAlignment="Top"/>
-                    <Expander VerticalAlignment="Center" Margin="120,0,0,0" HorizontalAlignment="Left" Grid.Row="7" x:Name="expSpellLikes" Header="Show/Hide List" IsExpanded="True" Expanded="expSpellLikes_Expanded" Collapsed="expSpellLikes_Collapsed" Foreground="{Binding Foreground, ElementName=window}" />
-                    <flat:FlatButton ColorScheme="{Binding ColorScheme, ElementName=window}" Width="20" Height="24" HorizontalAlignment="Right" Margin="0,0,50,0" Grid.Row="7" Padding="0" TransparentBack="True" ToolTip="Add" x:Name="btnAddSpellLike" Click="btnAddSpellLike_Click" >
+                    <TextBlock x:Name="lblSpellLikes" HorizontalAlignment="Left" Margin="15,12,0,0" Grid.Row="4" Text="Spell-like Abilities" FontWeight="SemiBold" VerticalAlignment="Top"/>
+                    <Expander VerticalAlignment="Center" Margin="120,0,0,0" HorizontalAlignment="Left" Grid.Row="4" x:Name="expSpellLikes" Header="Show/Hide List" IsExpanded="True" Expanded="expSpellLikes_Expanded" Collapsed="expSpellLikes_Collapsed" Foreground="{Binding Foreground, ElementName=window}" />
+                    <flat:FlatButton ColorScheme="{Binding ColorScheme, ElementName=window}" Width="20" Height="24" HorizontalAlignment="Right" Margin="0,0,50,0" Grid.Row="4" Padding="0" TransparentBack="True" ToolTip="Add" x:Name="btnAddSpellLike" Click="btnAddSpellLike_Click" >
                         <local:ThemedImage ImageName="Add" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" Width="16" Height="16" />
                     </flat:FlatButton>
-                    <flat:FlatButton ColorScheme="{Binding ColorScheme, ElementName=window}" Width="20" Height="24" HorizontalAlignment="Right" Margin="0,0,28,0" Grid.Row="7" Padding="0" TransparentBack="True" ToolTip="Delete" x:Name="btnDeleteSpellLike" Click="btnDeleteSpellLike_Click" >
+                    <flat:FlatButton ColorScheme="{Binding ColorScheme, ElementName=window}" Width="20" Height="24" HorizontalAlignment="Right" Margin="0,0,28,0" Grid.Row="4" Padding="0" TransparentBack="True" ToolTip="Delete" x:Name="btnDeleteSpellLike" Click="btnDeleteSpellLike_Click" >
                         <local:ThemedImage ImageName="Cancel" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" Width="16" Height="16" />
                     </flat:FlatButton>
-                    <flat:FlatButton ColorScheme="{Binding ColorScheme, ElementName=window}" Width="20" Height="24" HorizontalAlignment="Right" Margin="0,0,6,0" Grid.Row="7" Padding="0" TransparentBack="True" ToolTip="Deselect All" x:Name="btnDeselectSpellLike" Click="btnDeselectSpellLike_Click" >
+                    <flat:FlatButton ColorScheme="{Binding ColorScheme, ElementName=window}" Width="20" Height="24" HorizontalAlignment="Right" Margin="0,0,6,0" Grid.Row="4" Padding="0" TransparentBack="True" ToolTip="Deselect All" x:Name="btnDeselectSpellLike" Click="btnDeselectSpellLike_Click" >
                         <local:ThemedImage ImageName="Deselect" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" Width="16" Height="16" />
                     </flat:FlatButton>
-                    <flat:SelectPanel ColorScheme="{Binding ColorScheme, ElementName=window}" x:Name="selSpellLikes" BorderThickness="1" UseLighterBorder="True" MinHeight="3" Grid.Row="8" MultiSelect="True" />
+                    <flat:SelectPanel ColorScheme="{Binding ColorScheme, ElementName=window}" x:Name="selSpellLikes" BorderThickness="1" UseLighterBorder="True" MinHeight="3" Grid.Row="5" MultiSelect="True" />
                 </Grid>
                 <Grid Margin="5,5,5,0" x:Name="grdItems" >
                     <Grid.RowDefinitions>
@@ -926,7 +925,6 @@
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="40" />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
                     <Grid Margin="10,0,0,0" >
@@ -985,8 +983,6 @@
                         <TextBlock x:Name="lblGemsArt" HorizontalAlignment="Left" Margin="0,3,0,0" Text="Gems/Art" VerticalAlignment="Top"/>
                         <TextBlock x:Name="lblOtherTreasure" HorizontalAlignment="Left" Text="Other Treasure" VerticalAlignment="Center" Grid.Row="1"/>
                     </Grid>
-
-                    <TextBlock x:Name="lblEquipment" HorizontalAlignment="Left" Margin="15,0,0,0" Grid.Row="4" Text="Equipment/Gear" FontWeight="SemiBold" VerticalAlignment="Center"/>
                     <!--<Expander VerticalAlignment="Center" Margin="120,0,0,0" HorizontalAlignment="Left" Grid.Row="4" x:Name="expEquipment" Header="Show/Hide List" IsExpanded="True" Expanded="expEquipment_Expanded" Collapsed="expEquipment_Collapsed" Foreground="{Binding Foreground, ElementName=window}" />
                     <flat:FlatButton ColorScheme="{Binding ColorScheme, ElementName=window}" Width="20" Height="24" HorizontalAlignment="Right" Margin="0,8,50,8" Grid.Row="4" Padding="0" TransparentBack="True" ToolTip="Add" x:Name="btnAddEquipment" Click="btnAddEquipment_Click" >
                         <local:ThemedImage ImageName="Add" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" Width="16" Height="16" />
@@ -998,8 +994,8 @@
                         <local:ThemedImage ImageName="Deselect" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" Width="16" Height="16" />
                     </flat:FlatButton>-->
                     <!--<flat:SelectPanel ColorScheme="{Binding ColorScheme, ElementName=window}" x:Name="selEquipment" BorderThickness="1" UseLighterBorder="True" MinHeight="3" Grid.Row="5" MultiSelect="True" />-->
-                    <ild:ItemListDisplay ColorScheme="{Binding ColorScheme, ElementName=window}" x:Name="selEquipment" BorderThickness="1" MinHeight="3" Grid.Row="5" Title="Equipment/Gear"
-                                         DisplayElementType="{x:Type local:ItemEditor}" SheetClassType="{x:Type local:Equipment}" />
+                    <ild:ItemListDisplay ColorScheme="{Binding ColorScheme, ElementName=window}" x:Name="selEquipment" BorderThickness="1" MinHeight="3" Grid.Row="4" Title="Equipment/Gear"
+                                         DisplayElementType="{x:Type local:ItemEditor}" SheetClassType="{x:Type local:Equipment}" Margin="0,5" />
                 </Grid>
                 <Grid Margin="5,5,5,0" x:Name="grdNotes">
                     <TextBlock x:Name="titNotes" Text="Notes" FontSize="16" Margin="10,0,0,0" VerticalAlignment="Top" />

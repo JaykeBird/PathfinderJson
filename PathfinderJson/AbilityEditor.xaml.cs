@@ -3,13 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using PathfinderJson.Ild;
 using SolidShineUi;
 
 namespace PathfinderJson
@@ -17,7 +11,7 @@ namespace PathfinderJson
     /// <summary>
     /// Interaction logic for AbilityEditor.xaml
     /// </summary>
-    public partial class AbilityEditor : SelectableUserControl
+    public partial class AbilityEditor : SelectableListItem
     {
         public AbilityEditor()
         {
@@ -55,24 +49,53 @@ namespace PathfinderJson
             }
         }
 
-        private void Expander_Expanded(object sender, RoutedEventArgs e)
-        {
-            rowDetails.Height = new GridLength(1, GridUnitType.Auto);
-            rowDetails.MinHeight = 80;
-        }
+        #region Dependency Properties
+        [IldLink("Name")]
+        public string ItemName { get => (string)GetValue(ItemNameProperty); set => SetValue(ItemNameProperty, value); }
 
-        private void Expander_Collapsed(object sender, RoutedEventArgs e)
-        {
-            rowDetails.Height = new GridLength(0);
-            rowDetails.MinHeight = 0;
-        }
+        public static DependencyProperty ItemNameProperty
+            = DependencyProperty.Register("ItemName", typeof(string), typeof(AbilityEditor));
 
-        // event just to update main window's "isDirty" value
-        public event EventHandler? ContentChanged;
+        [IldLink("Notes")]
+        public string Notes { get => (string)GetValue(NotesProperty); set => SetValue(NotesProperty, value); }
+
+        public static DependencyProperty NotesProperty
+            = DependencyProperty.Register("Notes", typeof(string), typeof(AbilityEditor));
+
+        [IldLink("Type")]
+        public string ItemType { get => (string)GetValue(ItemTypeProperty); set => SetValue(ItemTypeProperty, value); }
+
+        public static DependencyProperty ItemTypeProperty
+            = DependencyProperty.Register("ItemType", typeof(string), typeof(AbilityEditor));
+        #endregion
+
+        public override void ApplyColorScheme(ColorScheme cs)
+        {
+            base.ApplyColorScheme(cs);
+
+            //btnRemove.ApplyColorScheme(cs);
+            btnDetails.ApplyColorScheme(cs);
+        }
 
         private void textbox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            ContentChanged?.Invoke(this, e);
+            DoContentChanged();
+            //ContentChanged?.Invoke(this, e);
+        }
+
+        public override void LoadValues(Dictionary<IldPropertyInfo, object> properties)
+        {
+            LoadValuesInternal(this, properties);
+        }
+
+        public override object? GetPropertyValue(IldPropertyInfo property)
+        {
+            return GetPropertyValueInternal(this, property.Name);
+        }
+
+        public override Dictionary<string, object> GetAllProperties()
+        {
+            return GetAllPropertiesInternal(this);
         }
     }
 }
