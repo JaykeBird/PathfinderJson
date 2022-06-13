@@ -45,12 +45,12 @@ namespace PathfinderJson
         #region Tab bar
         void SetupTabs()
         {
-            selTabs.AddItem(CreateTab("General"));
+            selTabs.Items.Add(CreateTab("General"));
             //selTabs.AddItem(CreateTab("Saving"));
-            selTabs.AddItem(CreateTab("Interface"));
-            selTabs.AddItem(CreateTab("JSON Editor"));
-            selTabs.AddItem(CreateTab("Feedback"));
-            selTabs.AddItem(CreateTab("Advanced"));
+            selTabs.Items.Add(CreateTab("Interface"));
+            selTabs.Items.Add(CreateTab("JSON Editor"));
+            selTabs.Items.Add(CreateTab("Feedback"));
+            selTabs.Items.Add(CreateTab("Advanced"));
 
             SelectableItem CreateTab(string name, ImageSource? image = null)
             {

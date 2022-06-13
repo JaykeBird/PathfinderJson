@@ -1478,13 +1478,13 @@ namespace PathfinderJson
 
         void SetupTabs()
         {
-            selTabs.AddItem(CreateTab("General"));
-            selTabs.AddItem(CreateTab("Skills"));
-            selTabs.AddItem(CreateTab("Combat"));
-            selTabs.AddItem(CreateTab("Spells"));
-            selTabs.AddItem(CreateTab("Feats/Abilities"));
-            selTabs.AddItem(CreateTab("Items"));
-            selTabs.AddItem(CreateTab("Notes"));
+            selTabs.Items.Add(CreateTab("General"));
+            selTabs.Items.Add(CreateTab("Skills"));
+            selTabs.Items.Add(CreateTab("Combat"));
+            selTabs.Items.Add(CreateTab("Spells"));
+            selTabs.Items.Add(CreateTab("Feats/Abilities"));
+            selTabs.Items.Add(CreateTab("Items"));
+            selTabs.Items.Add(CreateTab("Notes"));
 
             SetAllTabsVisibility(Visibility.Collapsed);
         }

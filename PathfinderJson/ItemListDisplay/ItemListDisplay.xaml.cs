@@ -484,18 +484,26 @@ namespace PathfinderJson.Ild
         private void sli_RequestMoveUp(object? sender, EventArgs e)
         {
             //throw new NotImplementedException();
+            if (sender is SelectableListItem sli)
+            {
+                selPanel.MoveItemUp(selPanel.Items.IndexOf(sli));
+            }
         }
 
         private void sli_RequestMoveDown(object? sender, EventArgs e)
         {
             //throw new NotImplementedException();
+            if (sender is SelectableListItem sli)
+            {
+                selPanel.MoveItemDown(selPanel.Items.IndexOf(sli));
+            }
         }
 
         private void sli_RequestDelete(object? sender, EventArgs e)
         {
             if (sender is SelectableListItem sli)
             {
-                selPanel.RemoveItem(sli);
+                selPanel.Items.Remove(sli);
 
                 ContentChanged?.Invoke(this, EventArgs.Empty);
             }
@@ -503,7 +511,7 @@ namespace PathfinderJson.Ild
 
         private void btnDeselect_Click(object sender, RoutedEventArgs e)
         {
-            selPanel.DeselectAll();
+            selPanel.Items.ClearSelection();
         }
 
         private void btnShowHide_Click(object sender, RoutedEventArgs e)

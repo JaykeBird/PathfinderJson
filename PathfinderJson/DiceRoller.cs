@@ -145,7 +145,7 @@ namespace PathfinderJson
             return (resultValue, ArithmeticParser.Evaluate(resultValue));
         }
 
-        private static (int, int[]) DoAllDiceRolls(int count, int size, RNGCryptoServiceProvider rng)
+        private static (int, int[]) DoAllDiceRolls(int count, int size, RandomNumberGenerator rng)
         {
             int result = 0;
             int[] arr = new int[count];
@@ -160,7 +160,7 @@ namespace PathfinderJson
             return (result, arr);
         }
 
-        private static int DoOneDiceRoll(RNGCryptoServiceProvider rnd, int max)
+        private static int DoOneDiceRoll(RandomNumberGenerator rnd, int max)
         {
             byte[] r = new byte[4];
             int value;
