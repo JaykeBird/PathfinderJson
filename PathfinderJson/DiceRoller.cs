@@ -11,7 +11,7 @@ namespace PathfinderJson
         
         public static (string, double) RollDice(string diceString)
         {
-            var rng = new RNGCryptoServiceProvider();
+            var rng = RandomNumberGenerator.Create();// RNGCryptoServiceProvider();
 
             diceString = diceString.Replace(" ", "").Replace("\n", "");
             
