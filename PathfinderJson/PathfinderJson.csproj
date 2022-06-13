@@ -78,10 +78,6 @@
     <EmbeddedResource Include="SkillList\pathfinder.json" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\PathfinderJsonCore\PathfinderJsonCore.csproj" />
-  </ItemGroup>
-
   <!-- Uncomment these lines if using PublishReadyToRun -->
   <!--<ItemGroup>
     <TrimmerRootAssembly Include="System.Collections.Immutable" />

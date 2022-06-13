@@ -4,6 +4,7 @@ using System.IO;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Serialization;
+using PathfinderJson.Ild;
 
 namespace PathfinderJson
 {
@@ -445,10 +446,15 @@ namespace PathfinderJson
 
     public class Feat
     {
+        [IldDisplay(Name = "Name")]
         public string Name { get; set; } = "";
+        [IldDisplay(Name = "Type")]
         public string? Type { get; set; }
+        [IldDisplay(Name = "Notes")]
         public string? Notes { get; set; }
+        [IldDisplay(Name = "School")]
         public string? School { get; set; }
+        [IldDisplay(Name = "Subschool")]
         public string? Subschool { get; set; }
     }
 
