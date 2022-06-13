@@ -58,7 +58,7 @@
                          ToolTip="Deselect All" x:Name="btnDeselectEmail" VerticalAlignment="Center" Click="btnDeselectEmail_Click" Grid.Row="5" Grid.Column="1" >
             <local:ThemedImage ColorScheme="{Binding ColorScheme, ElementName=window}" ImageName="Deselect" Width="16" Height="16" />
         </flat:FlatButton>
-        <flat:SelectPanel ColorScheme="{Binding ColorScheme, ElementName=window}" x:Name="selEmails" PanelBorderThickness="1" UseLighterBorder="True" MinHeight="3" MultiSelect="True" Margin="20,0,20,0" Grid.Row="6" Grid.ColumnSpan="2" />
+        <flat:SelectPanel ColorScheme="{Binding ColorScheme, ElementName=window}" x:Name="selEmails" BorderThickness="1" UseLighterBorder="True" MinHeight="3" MultiSelect="True" Margin="20,0,20,0" Grid.Row="6" Grid.ColumnSpan="2" />
 
         <flat:FlatButton ColorScheme="{Binding ColorScheme, ElementName=window}" Width="20" Height="24" HorizontalAlignment="Right" Margin="0,8,60,0" Padding="0" TransparentBack="True"
                          ToolTip="Add Photo URL" x:Name="btnAddPhoto" VerticalAlignment="Top" Click="btnAddPhoto_Click" Grid.Row="7" Grid.Column="1" Grid.RowSpan="2" >
@@ -72,7 +72,7 @@
                          ToolTip="Deselect All" x:Name="btnDeselectPhoto" VerticalAlignment="Top" Click="btnDeselectPhoto_Click" Grid.Row="7" Grid.Column="1" Grid.RowSpan="2" >
             <local:ThemedImage ColorScheme="{Binding ColorScheme, ElementName=window}" ImageName="Deselect" Width="16" Height="16" />
         </flat:FlatButton>
-        <flat:SelectPanel ColorScheme="{Binding ColorScheme, ElementName=window}" x:Name="selPhotos" PanelBorderThickness="1" UseLighterBorder="True" MinHeight="3" MultiSelect="True" Margin="20,0,20,0" Grid.Row="8" Grid.ColumnSpan="2" />
+        <flat:SelectPanel ColorScheme="{Binding ColorScheme, ElementName=window}" x:Name="selPhotos" BorderThickness="1" UseLighterBorder="True" MinHeight="3" MultiSelect="True" Margin="20,0,20,0" Grid.Row="8" Grid.ColumnSpan="2" />
 
         <flat:FlatButton x:Name="btnImport" Content="Import From File..." ColorScheme="{Binding ColorScheme, ElementName=window}" HorizontalAlignment="Left" Margin="20,0,0,0"
                          VerticalAlignment="Center" MinWidth="120" Click="btnImport_Click" Grid.Row="9" Grid.ColumnSpan="2" />

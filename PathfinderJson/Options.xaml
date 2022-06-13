@@ -20,7 +20,7 @@
             <RowDefinition Height="42"/>
         </Grid.RowDefinitions>
 
-        <flat:SelectPanel x:Name="selTabs" Grid.Row="0" Grid.Column="0" PanelBorderThickness="0,0,1,0" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" />
+        <flat:SelectPanel x:Name="selTabs" Grid.Row="0" Grid.Column="0" BorderThickness="0,0,1,0" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" />
 
         <Grid Grid.Row="0" Grid.Column="1" x:Name="grdHolder" Margin="10,5,0,5" >
             <Grid x:Name="tabGeneral" >

@@ -53,7 +53,7 @@ namespace PathfinderJson
                     default:
                         SelectableItem si = new SelectableItem("Name: \"" + kvp.Key + "\", Value: \"" + (kvp.Value ?? "(empty)") + "\"", null, 5);
                         si.Tag = kvp;
-                        selSheetSettings.AddItem(si);
+                        selSheetSettings.Items.Add(si);
                         break;
                 }
             }
@@ -132,7 +132,7 @@ namespace PathfinderJson
         {
             if (selSheetSettings.Items.SelectedItems.Count == 0) return;
 
-            SelectableItem si = selSheetSettings.GetSelectedItemsOfType<SelectableItem>().First();
+            SelectableItem si = selSheetSettings.Items.SelectedItems.OfType<SelectableItem>().First();
             if (si.Tag is KeyValuePair<string, string?> kvp)
             {
                 StringInputDialog sid = new StringInputDialog(App.ColorScheme, "Set Setting Value", "Set the value for the setting \"" + kvp.Key + "\":", kvp.Value ?? "");
@@ -154,8 +154,8 @@ namespace PathfinderJson
 
         private void selSheetSettings_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            btnEditSetting.IsEnabled = selSheetSettings.SelectionCount != 0;
-            btnRemoveSetting.IsEnabled = selSheetSettings.SelectionCount != 0;
+            btnEditSetting.IsEnabled = selSheetSettings.Items.SelectedItems.Count != 0;
+            btnRemoveSetting.IsEnabled = selSheetSettings.Items.SelectedItems.Count != 0;
         }
     }
 }
