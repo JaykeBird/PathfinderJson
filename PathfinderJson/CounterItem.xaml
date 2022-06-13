@@ -24,6 +24,8 @@
             <Grid>
                 <Border VerticalAlignment="Stretch" HorizontalAlignment="Stretch" CornerRadius="36" x:Name="innerBorder"
                         Background="GhostWhite" />
+                <Border VerticalAlignment="Stretch" HorizontalAlignment="Stretch" CornerRadius="36" x:Name="dimmer"
+                        Background="#44000000" Visibility="Collapsed" />
                 <Grid VerticalAlignment="Stretch" Width="72" HorizontalAlignment="Center" >
                     <Grid.OpacityMask>
                         <VisualBrush Visual="{Binding ElementName=innerBorder}" Stretch="None" />

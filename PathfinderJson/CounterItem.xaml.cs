@@ -97,6 +97,7 @@ namespace PathfinderJson
 
                 btnDecrease.Visibility = Visibility.Collapsed;
                 btnIncrease.Visibility = Visibility.Collapsed;
+                dimmer.Visibility = Visibility.Visible;
 
                 imgEdit.ImageName = "Save";
                 imgDelete.ImageName = "Undo";
@@ -166,6 +167,7 @@ namespace PathfinderJson
 
             btnDecrease.Visibility = Visibility.Visible;
             btnIncrease.Visibility = Visibility.Visible;
+            dimmer.Visibility = Visibility.Collapsed;
 
             imgEdit.ImageName = "Edit";
             imgDelete.ImageName = "Cancel";
