@@ -14,7 +14,7 @@
     {"name": "disguise", "modifier": "CHA", "infoUrl": "https://d20pfsrd.com/skills/disguise"},
     {"name": "escapeArtist", "displayName": "Escape Artist", "modifier": "DEX", "infoUrl": "https://d20pfsrd.com/skills/escape-artist"},
     {"name": "fly", "modifier": "DEX", "infoUrl": "https://d20pfsrd.com/skills/fly"},
-    {"name": "handleAnimal", "displayName": "Handle Animel", "modifier": "CHA", "infoUrl": "https://d20pfsrd.com/skills/handle-animal"},
+    {"name": "handleAnimal", "displayName": "Handle Animal", "modifier": "CHA", "infoUrl": "https://d20pfsrd.com/skills/handle-animal"},
     {"name": "heal", "modifier": "WIS", "infoUrl": "https://d20pfsrd.com/skills/heal"},
     {"name": "intimidate", "modifier": "CHA", "infoUrl": "https://d20pfsrd.com/skills/intimidate"},
     {"name": "knowledgeArcana", "displayName": "Knowledge (arcana)", "modifier": "INT", "infoUrl": "https://d20pfsrd.com/skills/knowledge"},
