@@ -56,47 +56,35 @@ namespace PathfinderJson
             }
         }
 
-        [IldLink(BaseName = "Name")]
+        [IldLink("Name")]
         public string FeatName { get => (string)GetValue(FeatNameProperty); set => SetValue(FeatNameProperty, value); }
 
         public static DependencyProperty FeatNameProperty
             = DependencyProperty.Register("FeatName", typeof(string), typeof(FeatEditor));
 
-        [IldLink(BaseName = "Notes")]
+        [IldLink("Notes")]
         public string Notes { get => (string)GetValue(NotesProperty); set => SetValue(NotesProperty, value); }
 
         public static DependencyProperty NotesProperty
             = DependencyProperty.Register("Notes", typeof(string), typeof(FeatEditor));
 
-        [IldLink(BaseName = "School")]
+        [IldLink("School")]
         public string School { get => (string)GetValue(SchoolProperty); set => SetValue(SchoolProperty, value); }
 
         public static DependencyProperty SchoolProperty
             = DependencyProperty.Register("School", typeof(string), typeof(FeatEditor));
 
-        [IldLink(BaseName = "Subschool")]
+        [IldLink("Subschool")]
         public string Subschool { get => (string)GetValue(SubschoolProperty); set => SetValue(SubschoolProperty, value); }
 
         public static DependencyProperty SubschoolProperty
             = DependencyProperty.Register("Subschool", typeof(string), typeof(FeatEditor));
 
-        [IldLink(BaseName = "Type")]
+        [IldLink("Type")]
         public string FeatType { get => (string)GetValue(FeatTypeProperty); set => SetValue(FeatTypeProperty, value); }
 
         public static DependencyProperty FeatTypeProperty
             = DependencyProperty.Register("FeatType", typeof(string), typeof(FeatEditor));
-
-        private void Expander_Expanded(object sender, RoutedEventArgs e)
-        {
-            rowDetails.Height = new GridLength(1, GridUnitType.Auto);
-            rowDetails.MinHeight = 125;
-        }
-
-        private void Expander_Collapsed(object sender, RoutedEventArgs e)
-        {
-            rowDetails.Height = new GridLength(0);
-            rowDetails.MinHeight = 0;
-        }
 
         // event just to update main window's "isDirty" value
         //public event EventHandler? ContentChanged;
@@ -105,6 +93,14 @@ namespace PathfinderJson
         {
             DoContentChanged();
             //ContentChanged?.Invoke(this, e);
+        }
+
+        public override void ApplyColorScheme(ColorScheme cs)
+        {
+            base.ApplyColorScheme(cs);
+
+            //btnRemove.ApplyColorScheme(cs);
+            btnDetails.ApplyColorScheme(cs);
         }
 
         private void lblSearch_Click(object sender, RoutedEventArgs e)

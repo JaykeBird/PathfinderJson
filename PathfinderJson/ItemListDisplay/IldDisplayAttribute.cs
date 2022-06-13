@@ -28,8 +28,8 @@ namespace PathfinderJson.Ild
         //  http://go.microsoft.com/fwlink/?LinkId=85236
 
         // This is a positional argument
-        public IldLinkAttribute() { }
+        public IldLinkAttribute(string? baseName) { BaseName = baseName; }
 
-        public string? BaseName { get; set; } = null;
+        public string? BaseName { get; } = null;
     }
 }
