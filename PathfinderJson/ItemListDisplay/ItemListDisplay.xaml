@@ -1,0 +1,49 @@
+﻿<UserControl x:Class="PathfinderJson.Ild.ItemListDisplay"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:PathfinderJson"
+             xmlns:flat="clr-namespace:SolidShineUi;assembly=SolidShineUi"
+             mc:Ignorable="d" x:Name="ild"
+             d:DesignHeight="450" d:DesignWidth="440">
+    <Border >
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" MinHeight="20"/>
+                <RowDefinition x:Name="rowButtons" Height="Auto" MinHeight="32" />
+                <RowDefinition x:Name="rowSearch" Height="0"/>
+                <RowDefinition x:Name="rowPanel" Height="1*" MinHeight="20" />
+                <RowDefinition x:Name="rowBottom" Height="0"/>
+            </Grid.RowDefinitions>
+            <TextBlock x:Name="txtTitle" HorizontalAlignment="Left" Margin="10,5,0,5" Text="Title" FontWeight="Bold" VerticalAlignment="Center"/>
+
+            <flat:FlatButton x:Name="btnShowHide" ColorScheme="{Binding ElementName=ild, Path=ColorScheme}" Click="btnShowHide_Click" FontSize="12" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="10,0,0,0" Grid.Row="0" TransparentBack="True" >
+                <StackPanel Orientation="Horizontal">
+                    <local:ThemedImage x:Name="imgShowHide" ImageName="UpArrow" ColorScheme="{Binding ElementName=ild, Path=ColorScheme}" Width="16" Height="16" />
+                    <TextBlock x:Name="txtShowHide" Text="Hide List" Margin="3,0" />
+                </StackPanel>
+            </flat:FlatButton>
+
+            <flat:FlatButton x:Name="btnAdd" ColorScheme="{Binding ElementName=ild, Path=ColorScheme}" Click="btnAdd_Click" FontSize="12" HorizontalAlignment="Left" Margin="10,4,0,4" Grid.Row="1" TransparentBack="True" >
+                <StackPanel Orientation="Horizontal">
+                    <local:ThemedImage ImageName="Add" ColorScheme="{Binding ElementName=ild, Path=ColorScheme}" Width="16" Height="16" />
+                    <TextBlock Text="Add" Margin="3,0" />
+                </StackPanel>
+            </flat:FlatButton>
+
+            <flat:MenuButton x:Name="btnFilter" ColorScheme="{Binding ElementName=ild, Path=ColorScheme}" FontSize="12" HorizontalAlignment="Right" Margin="0,4,10,4" Grid.Row="1" TransparentBack="True" >
+                <StackPanel Orientation="Horizontal">
+                    <local:ThemedImage ImageName="Filter" ColorScheme="{Binding ElementName=ild, Path=ColorScheme}" Width="16" Height="16" />
+                    <TextBlock Text="Filter" Margin="3,0" />
+                </StackPanel>
+            </flat:MenuButton>
+
+            <!--<flat:FlatButton x:Name="btnDeselect" ToolTip="Deselect All" ColorScheme="{Binding ElementName=ild, Path=ColorScheme}" Click="btnDeselect_Click" FontSize="12" HorizontalAlignment="Right" Margin="0,4,10,4" Grid.Row="1" TransparentBack="True" >
+                <local:ThemedImage ImageName="Deselect" ColorScheme="{Binding ElementName=ild, Path=ColorScheme}" Width="16" Height="16" />
+            </flat:FlatButton>-->
+
+            <flat:SelectPanel x:Name="selPanel" Grid.Row="3" BorderThickness="0,1,0,0" MultiSelect="False" ColorScheme="{Binding ElementName=ild, Path=ColorScheme}" UseLighterBorder="True" VerticalScrollBarVisibility="Disabled" />
+        </Grid>
+    </Border>
+</UserControl>
