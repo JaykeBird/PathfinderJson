@@ -7,7 +7,7 @@
              xmlns:flat="clr-namespace:SolidShineUi;assembly=SolidShineUi"
              mc:Ignorable="d" x:Name="ild"
              d:DesignHeight="450" d:DesignWidth="440">
-    <Border >
+    <Border>
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" MinHeight="20"/>
@@ -31,19 +31,37 @@
                     <TextBlock Text="Add" Margin="3,0" />
                 </StackPanel>
             </flat:FlatButton>
-
-            <flat:MenuButton x:Name="btnFilter" ColorScheme="{Binding ElementName=ild, Path=ColorScheme}" FontSize="12" HorizontalAlignment="Right" Margin="0,4,10,4" Grid.Row="1" TransparentBack="True" >
-                <StackPanel Orientation="Horizontal">
-                    <local:ThemedImage ImageName="Filter" ColorScheme="{Binding ElementName=ild, Path=ColorScheme}" Width="16" Height="16" />
-                    <TextBlock Text="Filter" Margin="3,0" />
-                </StackPanel>
-            </flat:MenuButton>
+            <StackPanel HorizontalAlignment="Right" Margin="0,4,10,4" Orientation="Horizontal" Grid.Row="1">
+                <flat:FlatButton x:Name="btnSearch" ColorScheme="{Binding ElementName=ild, Path=ColorScheme}" Click="btnSearch_Click" FontSize="12" 
+                                 HorizontalAlignment="Left" Margin="10,0,0,0" Grid.Row="1" TransparentBack="True" IsEnabled="False" >
+                    <StackPanel Orientation="Horizontal">
+                        <local:ThemedImage ImageName="Find" ColorScheme="{Binding ElementName=ild, Path=ColorScheme}" Width="16" Height="16" />
+                        <TextBlock Text="Search" Margin="3,0" />
+                    </StackPanel>
+                </flat:FlatButton>
+                <flat:MenuButton x:Name="btnFilter" ColorScheme="{Binding ColorScheme, ElementName=ild}" FontSize="12" TransparentBack="True" Height="24" >
+                    <StackPanel Orientation="Horizontal">
+                        <local:ThemedImage ImageName="Filter" ColorScheme="{Binding ColorScheme, ElementName=ild}" Width="16" Height="16" />
+                        <TextBlock Text="Filter" Margin="3,0" />
+                    </StackPanel>
+                </flat:MenuButton>
+                <flat:MenuButton x:Name="btnMore" ColorScheme="{Binding ColorScheme, ElementName=ild}" FontSize="12" TransparentBack="True" Height="24" ShowMenuArrow="False" Margin="3,0,0,0" >
+                    <local:ThemedImage ImageName="ThreeDots" ColorScheme="{Binding ColorScheme, ElementName=ild}" Width="16" Height="16" />
+                    <flat:MenuButton.Menu>
+                        <flat:ContextMenu>
+                            <MenuItem Header="Deselect All" x:Name="btnDeselect" Click="btnDeselect_Click" />
+                        </flat:ContextMenu>
+                    </flat:MenuButton.Menu>
+                </flat:MenuButton>
+            </StackPanel>
 
             <!--<flat:FlatButton x:Name="btnDeselect" ToolTip="Deselect All" ColorScheme="{Binding ElementName=ild, Path=ColorScheme}" Click="btnDeselect_Click" FontSize="12" HorizontalAlignment="Right" Margin="0,4,10,4" Grid.Row="1" TransparentBack="True" >
                 <local:ThemedImage ImageName="Deselect" ColorScheme="{Binding ElementName=ild, Path=ColorScheme}" Width="16" Height="16" />
             </flat:FlatButton>-->
 
-            <flat:SelectPanel x:Name="selPanel" Grid.Row="3" BorderThickness="0,1,0,0" MultiSelect="False" ColorScheme="{Binding ElementName=ild, Path=ColorScheme}" UseLighterBorder="True" VerticalScrollBarVisibility="Disabled" />
+            <flat:SelectPanel x:Name="selPanel" Grid.Row="3" BorderThickness="0,1,0,0" MultiSelect="False" ColorScheme="{Binding ElementName=ild, Path=ColorScheme}" 
+                              UseLighterBorder="True" VerticalScrollBarVisibility="Disabled" >
+            </flat:SelectPanel>
         </Grid>
     </Border>
 </UserControl>

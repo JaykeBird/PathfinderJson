@@ -7,6 +7,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Linq;
 using System.Reflection;
+using System.Collections.ObjectModel;
 
 namespace PathfinderJson.Ild
 {
@@ -368,6 +369,13 @@ namespace PathfinderJson.Ild
                 mcf.IsEnabled = false;
                 mi.Items.Add(mcf);
 
+                //MenuItem smi = new MenuItem();
+                //smi.Header = item.DisplayName;
+                //smi.Tag = item;
+                //smi.Click += (s, e) => { Sort(item); };
+
+                //btnSort.Items.Add(smi);
+
                 cm.Items.Add(mi);
             }
 
@@ -481,6 +489,11 @@ namespace PathfinderJson.Ild
 
         #endregion
 
+        //void Sort(IldPropertyInfo? sortProp)
+        //{
+        //    return;
+        //}
+
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
             if (DisplayElementType == null) return;
@@ -510,6 +523,8 @@ namespace PathfinderJson.Ild
             if (sender is SelectableListItem sli)
             {
                 selPanel.MoveItemUp(selPanel.Items.IndexOf(sli));
+
+                ContentChanged?.Invoke(this, EventArgs.Empty);
             }
         }
 
@@ -519,6 +534,8 @@ namespace PathfinderJson.Ild
             if (sender is SelectableListItem sli)
             {
                 selPanel.MoveItemDown(selPanel.Items.IndexOf(sli));
+
+                ContentChanged?.Invoke(this, EventArgs.Empty);
             }
         }
 
@@ -563,6 +580,11 @@ namespace PathfinderJson.Ild
                 imgShowHide.ImageName = "UpArrow";
                 txtShowHide.Text = "Hide List";
             }
+        }
+
+        private void btnSearch_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
