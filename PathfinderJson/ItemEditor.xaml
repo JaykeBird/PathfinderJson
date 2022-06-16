@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:PathfinderJson"
              xmlns:ild="clr-namespace:PathfinderJson.Ild"
+             xmlns:flat="clr-namespace:SolidShineUi;assembly=SolidShineUi"
              mc:Ignorable="d" d:DesignWidth="500">
     <ild:SelectableListItem.Resources>
         <BooleanToVisibilityConverter x:Key="btv" />
@@ -19,13 +20,26 @@
                 <ColumnDefinition Width="Auto" MinWidth="45" />
                 <ColumnDefinition/>
                 <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="66" />
+                <ColumnDefinition Width="32" />
             </Grid.ColumnDefinitions>
             <TextBlock Text="Name" Margin="0,0,10,0" HorizontalAlignment="Left" VerticalAlignment="Center" />
             <TextBox x:Name="txtName" MinHeight="23" Margin="0,0,2,0" VerticalAlignment="Center" TextChanged="textbox_TextChanged" Grid.Column="1"
                      Text="{Binding ItemName, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:ItemEditor}}}" />
-            <local:DetailsButton x:Name="btnDetails" Margin="15,0,0,0" Grid.Column="2" IsSelected="False" />
+            <local:DetailsButton x:Name="btnDetails" Margin="10,0,0,0" Grid.Column="2" IsSelected="False" />
             <!--<Expander x:Name="expander" Header="Details" HorizontalAlignment="Left" Margin="15,0,0,0" VerticalAlignment="Center" MinWidth="80" 
             Expanded="Expander_Expanded" Collapsed="Expander_Collapsed" Foreground="{Binding Foreground, ElementName=selectableUserControl}" Grid.Column="2" />-->
+            <StackPanel Grid.Column="3" Orientation="Horizontal" HorizontalAlignment="Center">
+                <flat:FlatButton Width="30" HorizontalAlignment="Center" x:Name="btnMoveUp" Click="btnMoveUp_Click" >
+                    <local:ThemedImage x:Name="imgMoveUp" ImageName="Up" />
+                </flat:FlatButton>
+                <flat:FlatButton Width="30" HorizontalAlignment="Center" x:Name="btnMoveDown" Click="btnMoveDown_Click" >
+                    <local:ThemedImage x:Name="imgMoveDown" ImageName="Down" />
+                </flat:FlatButton>
+            </StackPanel>
+            <flat:FlatButton Grid.Column="4" Width="30" HorizontalAlignment="Center" x:Name="btnRemove" Click="btnRemove_Click" >
+                <local:ThemedImage x:Name="imgRemove" ImageName="Cancel" />
+            </flat:FlatButton>
         </Grid>
         <Grid HorizontalAlignment="Stretch" MinHeight="100" Margin="10,5" Grid.Row="1" VerticalAlignment="Top" Visibility="{Binding ElementName=btnDetails, Path=IsSelected, Converter={StaticResource btv}}" >
             <Grid.RowDefinitions>

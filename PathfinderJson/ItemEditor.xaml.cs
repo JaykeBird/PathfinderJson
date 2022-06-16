@@ -112,8 +112,14 @@ namespace PathfinderJson
         {
             base.ApplyColorScheme(cs);
 
-            //btnRemove.ApplyColorScheme(cs);
+            btnRemove.ApplyColorScheme(cs);
+            imgRemove.ApplyColorScheme(cs);
             btnDetails.ApplyColorScheme(cs);
+
+            btnMoveDown.ApplyColorScheme(cs);
+            btnMoveUp.ApplyColorScheme(cs);
+            imgMoveDown.ApplyColorScheme(cs);
+            imgMoveUp.ApplyColorScheme(cs);
         }
 
         // event just to update main window's "isDirty" value
@@ -138,6 +144,21 @@ namespace PathfinderJson
         public override Dictionary<string, object> GetAllProperties()
         {
             return GetAllPropertiesInternal(this);
+        }
+
+        private void btnRemove_Click(object sender, RoutedEventArgs e)
+        {
+            DoRequestDelete();
+        }
+
+        private void btnMoveUp_Click(object sender, RoutedEventArgs e)
+        {
+            DoRequestMoveUp();
+        }
+
+        private void btnMoveDown_Click(object sender, RoutedEventArgs e)
+        {
+            DoRequestMoveDown();
         }
     }
 }
