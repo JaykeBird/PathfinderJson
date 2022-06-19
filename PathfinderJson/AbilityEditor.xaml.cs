@@ -73,8 +73,14 @@ namespace PathfinderJson
         {
             base.ApplyColorScheme(cs);
 
-            //btnRemove.ApplyColorScheme(cs);
+            btnRemove.ApplyColorScheme(cs);
             btnDetails.ApplyColorScheme(cs);
+            btnMoveDown.ApplyColorScheme(cs);
+            btnMoveUp.ApplyColorScheme(cs);
+
+            imgMoveDown.ApplyColorScheme(cs);
+            imgMoveUp.ApplyColorScheme(cs);
+            imgRemove.ApplyColorScheme(cs);
         }
 
         private void textbox_TextChanged(object sender, TextChangedEventArgs e)
@@ -96,6 +102,21 @@ namespace PathfinderJson
         public override Dictionary<string, object> GetAllProperties()
         {
             return GetAllPropertiesInternal(this);
+        }
+
+        private void btnMoveUp_Click(object sender, RoutedEventArgs e)
+        {
+            DoRequestMoveUp();
+        }
+
+        private void btnMoveDown_Click(object sender, RoutedEventArgs e)
+        {
+            DoRequestMoveDown();
+        }
+
+        private void btnRemove_Click(object sender, RoutedEventArgs e)
+        {
+            DoRequestDelete();
         }
     }
 }

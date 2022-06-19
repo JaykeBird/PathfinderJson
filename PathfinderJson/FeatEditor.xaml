@@ -21,6 +21,8 @@
                 <ColumnDefinition Width="Auto" MinWidth="45" />
                 <ColumnDefinition/>
                 <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="66" />
+                <ColumnDefinition Width="30" />
             </Grid.ColumnDefinitions>
             <TextBlock Text="Name" Margin="0,0,10,0" HorizontalAlignment="Left" VerticalAlignment="Center" />
             <TextBox x:Name="txtName" MinHeight="23" Margin="0,0,2,0" VerticalAlignment="Center" TextChanged="textbox_TextChanged" Grid.Column="1"
@@ -28,6 +30,17 @@
             <!--<Expander x:Name="expander" Header="Details" HorizontalAlignment="Left" Margin="15,0,0,0" VerticalAlignment="Center" 
             MinWidth="80" Expanded="Expander_Expanded" Collapsed="Expander_Collapsed" Foreground="{Binding Foreground, ElementName=selectableUserControl}" Grid.Column="2" />-->
             <local:DetailsButton x:Name="btnDetails" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center" MinWidth="70" Grid.Column="2" IsSelected="False" />
+            <StackPanel Grid.Column="3" Orientation="Horizontal" HorizontalAlignment="Center">
+                <flat:FlatButton Width="30" ToolTip="Move Up" HorizontalAlignment="Center" x:Name="btnMoveUp" Click="btnMoveUp_Click" TransparentBack="True" >
+                    <local:ThemedImage x:Name="imgMoveUp" ImageName="Up" Width="16" />
+                </flat:FlatButton>
+                <flat:FlatButton Width="30" ToolTip="Move Down" HorizontalAlignment="Center" x:Name="btnMoveDown" Click="btnMoveDown_Click" TransparentBack="True" >
+                    <local:ThemedImage x:Name="imgMoveDown" ImageName="Down" Width="16" />
+                </flat:FlatButton>
+            </StackPanel>
+            <flat:FlatButton Grid.Column="4" ToolTip="Remove" Width="30" HorizontalAlignment="Center" x:Name="btnRemove" Click="btnRemove_Click" TransparentBack="True" >
+                <local:ThemedImage x:Name="imgRemove" ImageName="Cancel" Width="16" />
+            </flat:FlatButton>
         </Grid>
         <Grid Grid.ColumnSpan="2" Margin="10,2" Grid.Row="1" VerticalAlignment="Center" Visibility="{Binding IsSelected, Converter={StaticResource btv}, ElementName=btnDetails}" >
             <Grid.RowDefinitions>

@@ -12,16 +12,16 @@
     </ild:SelectableListItem.Resources>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="36"/>
+            <RowDefinition Height="Auto" MinHeight="35"/>
             <RowDefinition x:Name="rowDetails" Height="Auto" />
         </Grid.RowDefinitions>
-        <Grid MinHeight="23" Margin="10,8,10,0" VerticalAlignment="Top" >
+        <Grid MinHeight="23" Margin="10,6,10,0" VerticalAlignment="Top" >
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" MinWidth="45" />
                 <ColumnDefinition/>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="66" />
-                <ColumnDefinition Width="32" />
+                <ColumnDefinition Width="30" />
             </Grid.ColumnDefinitions>
             <TextBlock Text="Name" Margin="0,0,10,0" HorizontalAlignment="Left" VerticalAlignment="Center" />
             <TextBox x:Name="txtName" MinHeight="23" Margin="0,0,2,0" VerticalAlignment="Center" TextChanged="textbox_TextChanged" Grid.Column="1"
@@ -30,14 +30,14 @@
             <!--<Expander x:Name="expander" Header="Details" HorizontalAlignment="Left" Margin="15,0,0,0" VerticalAlignment="Center" MinWidth="80" 
             Expanded="Expander_Expanded" Collapsed="Expander_Collapsed" Foreground="{Binding Foreground, ElementName=selectableUserControl}" Grid.Column="2" />-->
             <StackPanel Grid.Column="3" Orientation="Horizontal" HorizontalAlignment="Center">
-                <flat:FlatButton Width="30" HorizontalAlignment="Center" x:Name="btnMoveUp" Click="btnMoveUp_Click" >
+                <flat:FlatButton Width="30" ToolTip="Move Up" HorizontalAlignment="Center" x:Name="btnMoveUp" Click="btnMoveUp_Click" TransparentBack="True" >
                     <local:ThemedImage x:Name="imgMoveUp" ImageName="Up" Width="16" />
                 </flat:FlatButton>
-                <flat:FlatButton Width="30" HorizontalAlignment="Center" x:Name="btnMoveDown" Click="btnMoveDown_Click" >
+                <flat:FlatButton Width="30" ToolTip="Move Down" HorizontalAlignment="Center" x:Name="btnMoveDown" Click="btnMoveDown_Click" TransparentBack="True" >
                     <local:ThemedImage x:Name="imgMoveDown" ImageName="Down" Width="16" />
                 </flat:FlatButton>
             </StackPanel>
-            <flat:FlatButton Grid.Column="4" Width="30" HorizontalAlignment="Center" x:Name="btnRemove" Click="btnRemove_Click" >
+            <flat:FlatButton Grid.Column="4" ToolTip="Remove" Width="30" HorizontalAlignment="Center" x:Name="btnRemove" Click="btnRemove_Click" TransparentBack="True" >
                 <local:ThemedImage x:Name="imgRemove" ImageName="Cancel" Width="16" />
             </flat:FlatButton>
         </Grid>
