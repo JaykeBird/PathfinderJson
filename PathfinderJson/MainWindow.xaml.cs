@@ -2558,23 +2558,26 @@ namespace PathfinderJson
 
             UpdateInternalBab();
 
-            selMelee.Clear();
-            foreach (Weapon item in sheet.MeleeWeapons)
-            {
-                WeaponEditor we = new WeaponEditor();
-                we.ContentChanged += editor_ContentChanged;
-                we.LoadWeapon(item);
-                selMelee.AddItem(we);
-            }
+            selMelee.LoadList(sheet.MeleeWeapons);
+            selRanged.LoadList(sheet.RangedWeapons);
 
-            selRanged.Clear();
-            foreach (Weapon item in sheet.RangedWeapons)
-            {
-                WeaponEditor we = new WeaponEditor();
-                we.ContentChanged += editor_ContentChanged;
-                we.LoadWeapon(item);
-                selRanged.AddItem(we);
-            }
+            //selMelee.Clear();
+            //foreach (Weapon item in sheet.MeleeWeapons)
+            //{
+            //    WeaponEditor we = new WeaponEditor();
+            //    we.ContentChanged += editor_ContentChanged;
+            //    we.LoadWeapon(item);
+            //    selMelee.AddItem(we);
+            //}
+
+            //selRanged.Clear();
+            //foreach (Weapon item in sheet.RangedWeapons)
+            //{
+            //    WeaponEditor we = new WeaponEditor();
+            //    we.ContentChanged += editor_ContentChanged;
+            //    we.LoadWeapon(item);
+            //    selRanged.AddItem(we);
+            //}
 
             selAcItem.Clear();
             foreach (AcItem item in sheet.AC.Items)
@@ -3283,17 +3286,9 @@ namespace PathfinderJson
             sheet.DamageReduction = GetStringOrNull(txtDr.Text);
             sheet.Resistances = GetStringOrNull(txtResist.Text);
 
-            sheet.MeleeWeapons = new List<Weapon>();
-            foreach (WeaponEditor item in selMelee.GetItemsAsType<WeaponEditor>())
-            {
-                sheet.MeleeWeapons.Add(item.GetWeapon());
-            }
+            sheet.MeleeWeapons = selMelee.GetItems<Weapon>();
 
-            sheet.RangedWeapons = new List<Weapon>();
-            foreach (WeaponEditor item in selRanged.GetItemsAsType<WeaponEditor>())
-            {
-                sheet.RangedWeapons.Add(item.GetWeapon());
-            }
+            sheet.RangedWeapons = selRanged.GetItems<Weapon>();
 
             // feats/abilites
             sheet.Feats = selFeats.GetItems<Feat>();
@@ -3718,75 +3713,6 @@ namespace PathfinderJson
         #endregion
 
         #region Equipment/combat item list editors
-
-        private void ExpMelee_Expanded(object sender, RoutedEventArgs e)
-        {
-            if (selMelee != null) selMelee.Visibility = Visibility.Visible;
-        }
-
-        private void ExpMelee_Collapsed(object sender, RoutedEventArgs e)
-        {
-            if (selMelee != null) selMelee.Visibility = Visibility.Collapsed;
-        }
-
-        private void BtnAddMelee_Click(object sender, EventArgs e)
-        {
-            WeaponEditor we = new WeaponEditor();
-            we.ContentChanged += editor_ContentChanged;
-            selMelee.AddItem(we);
-
-            expMelee.IsExpanded = true;
-            we.BringIntoView();
-            we.IsSelected = true;
-
-            SetIsDirty();
-        }
-
-        private void BtnDeleteMelee_Click(object sender, EventArgs e)
-        {
-            selMelee.RemoveSelectedItems();
-            SetIsDirty();
-        }
-
-        private void BtnDeselectMelee_Click(object sender, EventArgs e)
-        {
-            selMelee.DeselectAll();
-        }
-
-
-        private void ExpRanged_Expanded(object sender, RoutedEventArgs e)
-        {
-            if (selRanged != null) selRanged.Visibility = Visibility.Visible;
-        }
-
-        private void ExpRanged_Collapsed(object sender, RoutedEventArgs e)
-        {
-            if (selRanged != null) selRanged.Visibility = Visibility.Collapsed;
-        }
-
-        private void BtnAddRanged_Click(object sender, EventArgs e)
-        {
-            WeaponEditor we = new WeaponEditor();
-            we.ContentChanged += editor_ContentChanged;
-            selRanged.AddItem(we);
-
-            expRanged.IsExpanded = true;
-            we.BringIntoView();
-            we.IsSelected = true;
-
-            SetIsDirty();
-        }
-
-        private void BtnDeleteRanged_Click(object sender, EventArgs e)
-        {
-            selRanged.RemoveSelectedItems();
-            SetIsDirty();
-        }
-
-        private void BtnDeselectRanged_Click(object sender, EventArgs e)
-        {
-            selRanged.DeselectAll();
-        }
 
         private void expAcItem_Expanded(object sender, RoutedEventArgs e)
         {

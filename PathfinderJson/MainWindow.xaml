@@ -536,7 +536,7 @@
                         </Grid>
                     </Grid>
                 </Grid>
-                <Grid Margin="5,5,5,0" x:Name="grdSkills" >
+                <Grid Margin="5,5,5,0" x:Name="grdSkills" Visibility="Collapsed" >
                     <Grid.RowDefinitions>
                         <RowDefinition />
                         <RowDefinition Height="Auto"/>
@@ -569,22 +569,20 @@
 
                     </StackPanel>
                 </Grid>
-                <Grid Margin="5,5,5,0" x:Name="grdCombat" Visibility="Collapsed" >
+                <Grid Margin="5,5,5,0" x:Name="grdCombat" >
                     <Grid.RowDefinitions>
                         <RowDefinition Height="25"/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
+                        <RowDefinition Height="26*"/>
+                        <RowDefinition Height="59*"/>
+                        <RowDefinition Height="38*"/>
                         <RowDefinition Height="37" />
-                        <RowDefinition/>
-                        <RowDefinition/>
+                        <RowDefinition Height="38*"/>
+                        <RowDefinition Height="38*"/>
                         <RowDefinition Height="Auto" />
+                        <RowDefinition Height="80*"/>
+                        <RowDefinition Height="80*"/>
                         <RowDefinition Height="40" />
-                        <RowDefinition/>
-                        <RowDefinition Height="40" />
-                        <RowDefinition/>
-                        <RowDefinition Height="40" />
-                        <RowDefinition/>
+                        <RowDefinition Height="3*"/>
                         <RowDefinition Height="80" />
                     </Grid.RowDefinitions>
                     <Grid Margin="10,0,0,0">
@@ -622,45 +620,24 @@
 
                     </Grid>
 
-                    <TextBlock x:Name="lblMelee" HorizontalAlignment="Left" Margin="15,12,0,0" Grid.Row="8" Text="Melee Weapons" FontWeight="SemiBold" VerticalAlignment="Top"/>
-                    <Expander VerticalAlignment="Center" Margin="120,0,0,0" HorizontalAlignment="Left" Grid.Row="8" x:Name="expMelee" Header="Show/Hide List" IsExpanded="True" Expanded="ExpMelee_Expanded" Collapsed="ExpMelee_Collapsed" Foreground="{Binding Foreground, ElementName=window}" />
-                    <flat:FlatButton ColorScheme="{Binding ColorScheme, ElementName=window}" Width="20" Height="24" HorizontalAlignment="Right" Margin="0,0,50,0" Grid.Row="8" Padding="0" TransparentBack="True" ToolTip="Add" x:Name="btnAddMelee" Click="BtnAddMelee_Click" >
-                        <local:ThemedImage ImageName="Add" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" Width="16" Height="16" />
-                    </flat:FlatButton>
-                    <flat:FlatButton ColorScheme="{Binding ColorScheme, ElementName=window}" Width="20" Height="24" HorizontalAlignment="Right" Margin="0,0,28,0" Grid.Row="8" Padding="0" TransparentBack="True" ToolTip="Delete" x:Name="btnDeleteMelee" Click="BtnDeleteMelee_Click" >
-                        <local:ThemedImage ImageName="Cancel" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" Width="16" Height="16" />
-                    </flat:FlatButton>
-                    <flat:FlatButton ColorScheme="{Binding ColorScheme, ElementName=window}" Width="20" Height="24" HorizontalAlignment="Right" Margin="0,0,6,0" Grid.Row="8" Padding="0" TransparentBack="True" ToolTip="Deselect All" x:Name="btnDeselectMelee" Click="BtnDeselectMelee_Click" >
-                        <local:ThemedImage ImageName="Deselect" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" Width="16" Height="16" />
-                    </flat:FlatButton>
-                    <flat:SelectPanel ColorScheme="{Binding ColorScheme, ElementName=window}" x:Name="selMelee" BorderThickness="1" UseLighterBorder="True" MinHeight="3" Grid.Row="9" MultiSelect="True" />
+                    <ild:ItemListDisplay ColorScheme="{Binding ColorScheme, ElementName=window}" x:Name="selMelee" BorderThickness="1" MinHeight="3" Grid.Row="8" 
+                                         DisplayElementType="{x:Type local:WeaponEditor}" SheetClassType="{x:Type local:Weapon}" Title="Melee Weapons" ContentChanged="editor_ContentChanged" />
+                    <ild:ItemListDisplay ColorScheme="{Binding ColorScheme, ElementName=window}" x:Name="selRanged" BorderThickness="1" MinHeight="3" Grid.Row="9" Margin="0,5,0,0"
+                                         DisplayElementType="{x:Type local:WeaponEditor}" SheetClassType="{x:Type local:Weapon}" Title="Ranged Weapons" ContentChanged="editor_ContentChanged" />
 
-                    <TextBlock x:Name="lblRanged" HorizontalAlignment="Left" Margin="15,12,0,0" Grid.Row="10" Text="Ranged Weapons" FontWeight="SemiBold" VerticalAlignment="Top"/>
-                    <Expander VerticalAlignment="Center" Margin="120,0,0,0" HorizontalAlignment="Left" Grid.Row="10" x:Name="expRanged" Header="Show/Hide List" IsExpanded="True" Expanded="ExpRanged_Expanded" Collapsed="ExpRanged_Collapsed" Foreground="{Binding Foreground, ElementName=window}" />
-                    <flat:FlatButton ColorScheme="{Binding ColorScheme, ElementName=window}" Width="20" Height="24" HorizontalAlignment="Right" Margin="0,0,50,0" Grid.Row="10" Padding="0" TransparentBack="True" ToolTip="Add" x:Name="btnAddRanged" Click="BtnAddRanged_Click" >
+                    <TextBlock x:Name="lblAcItems" HorizontalAlignment="Left" Margin="15,0,0,0" Grid.Row="10" Text="Armor/Shields" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                    <Expander VerticalAlignment="Center" Margin="120,0,0,0" HorizontalAlignment="Left" Grid.Row="10" x:Name="expAcItem" Header="Show/Hide List" IsExpanded="True" Expanded="expAcItem_Expanded" Collapsed="expAcItem_Collapsed" Foreground="{Binding Foreground, ElementName=window}" />
+                    <flat:FlatButton ColorScheme="{Binding ColorScheme, ElementName=window}" Width="20" Height="24" HorizontalAlignment="Right" Margin="0,8,50,8" Grid.Row="10" Padding="0" TransparentBack="True" ToolTip="Add" x:Name="btnAddAcItem" Click="btnAddAcItem_Click" >
                         <local:ThemedImage ImageName="Add" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" Width="16" Height="16" />
                     </flat:FlatButton>
-                    <flat:FlatButton ColorScheme="{Binding ColorScheme, ElementName=window}" Width="20" Height="24" HorizontalAlignment="Right" Margin="0,0,28,0" Grid.Row="10" Padding="0" TransparentBack="True" ToolTip="Delete" x:Name="btnDeleteRanged" Click="BtnDeleteRanged_Click" >
+                    <flat:FlatButton ColorScheme="{Binding ColorScheme, ElementName=window}" Width="20" Height="24" HorizontalAlignment="Right" Margin="0,8,28,8" Grid.Row="10" Padding="0" TransparentBack="True" ToolTip="Delete" x:Name="btnDeleteAcItem" Click="btnDeleteAcItem_Click" >
                         <local:ThemedImage ImageName="Cancel" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" Width="16" Height="16" />
                     </flat:FlatButton>
-                    <flat:FlatButton ColorScheme="{Binding ColorScheme, ElementName=window}" Width="20" Height="24" HorizontalAlignment="Right" Margin="0,0,6,0" Grid.Row="10" Padding="0" TransparentBack="True" ToolTip="Deselect All" x:Name="btnDeselectRanged" Click="BtnDeselectRanged_Click" >
+                    <flat:FlatButton ColorScheme="{Binding ColorScheme, ElementName=window}" Width="20" Height="24" HorizontalAlignment="Right" Margin="0,8,6,8" Grid.Row="10" Padding="0" TransparentBack="True" ToolTip="Deselect All" x:Name="btnDeselectAcItem" Click="btnDeselectAcItem_Click" >
                         <local:ThemedImage ImageName="Deselect" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" Width="16" Height="16" />
                     </flat:FlatButton>
-                    <flat:SelectPanel ColorScheme="{Binding ColorScheme, ElementName=window}" x:Name="selRanged" BorderThickness="1" UseLighterBorder="True" MinHeight="3" Grid.Row="11" MultiSelect="True" />
-
-                    <TextBlock x:Name="lblAcItems" HorizontalAlignment="Left" Margin="15,0,0,0" Grid.Row="12" Text="Armor/Shields" FontWeight="SemiBold" VerticalAlignment="Center"/>
-                    <Expander VerticalAlignment="Center" Margin="120,0,0,0" HorizontalAlignment="Left" Grid.Row="12" x:Name="expAcItem" Header="Show/Hide List" IsExpanded="True" Expanded="expAcItem_Expanded" Collapsed="expAcItem_Collapsed" Foreground="{Binding Foreground, ElementName=window}" />
-                    <flat:FlatButton ColorScheme="{Binding ColorScheme, ElementName=window}" Width="20" Height="24" HorizontalAlignment="Right" Margin="0,8,50,8" Grid.Row="12" Padding="0" TransparentBack="True" ToolTip="Add" x:Name="btnAddAcItem" Click="btnAddAcItem_Click" >
-                        <local:ThemedImage ImageName="Add" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" Width="16" Height="16" />
-                    </flat:FlatButton>
-                    <flat:FlatButton ColorScheme="{Binding ColorScheme, ElementName=window}" Width="20" Height="24" HorizontalAlignment="Right" Margin="0,8,28,8" Grid.Row="12" Padding="0" TransparentBack="True" ToolTip="Delete" x:Name="btnDeleteAcItem" Click="btnDeleteAcItem_Click" >
-                        <local:ThemedImage ImageName="Cancel" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" Width="16" Height="16" />
-                    </flat:FlatButton>
-                    <flat:FlatButton ColorScheme="{Binding ColorScheme, ElementName=window}" Width="20" Height="24" HorizontalAlignment="Right" Margin="0,8,6,8" Grid.Row="12" Padding="0" TransparentBack="True" ToolTip="Deselect All" x:Name="btnDeselectAcItem" Click="btnDeselectAcItem_Click" >
-                        <local:ThemedImage ImageName="Deselect" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" Width="16" Height="16" />
-                    </flat:FlatButton>
-                    <flat:SelectPanel ColorScheme="{Binding ColorScheme, ElementName=window}" x:Name="selAcItem" BorderThickness="1" UseLighterBorder="True" MinHeight="3" Grid.Row="13" MultiSelect="True" />
-                    <Grid HorizontalAlignment="Stretch" Margin="15,10,0,0" Grid.Row="14" VerticalAlignment="Top">
+                    <flat:SelectPanel ColorScheme="{Binding ColorScheme, ElementName=window}" x:Name="selAcItem" BorderThickness="1" UseLighterBorder="True" MinHeight="3" Grid.Row="11" MultiSelect="True" />
+                    <Grid HorizontalAlignment="Stretch" Margin="15,10,0,0" Grid.Row="12" VerticalAlignment="Top">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="1*"/>

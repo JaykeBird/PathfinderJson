@@ -1,28 +1,47 @@
-﻿<SolidShineUi:SelectableUserControl x:Name="selectableUserControl"
-             x:Class="PathfinderJson.WeaponEditor"
+﻿<ild:SelectableListItem x:Class="PathfinderJson.WeaponEditor"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:SolidShineUi="clr-namespace:SolidShineUi;assembly=SolidShineUi"
+             xmlns:flat="clr-namespace:SolidShineUi;assembly=SolidShineUi"
+             xmlns:ild="clr-namespace:PathfinderJson.Ild"
              xmlns:local="clr-namespace:PathfinderJson"
              mc:Ignorable="d" d:DesignWidth="500">
+    <ild:SelectableListItem.Resources>
+        <BooleanToVisibilityConverter x:Key="btv" />
+    </ild:SelectableListItem.Resources>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" MinHeight="36"/>
-            <RowDefinition x:Name="rowDetails" Height="0" />
+            <RowDefinition Height="Auto" MinHeight="35"/>
+            <RowDefinition x:Name="rowDetails" Height="Auto" />
         </Grid.RowDefinitions>
-        <Grid MinHeight="23" Margin="10,8,10,0" VerticalAlignment="Top" >
+        <Grid MinHeight="23" Margin="10,6,10,0" VerticalAlignment="Top" >
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" MinWidth="45" />
                 <ColumnDefinition/>
                 <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="66" />
+                <ColumnDefinition Width="30" />
             </Grid.ColumnDefinitions>
             <TextBlock Text="Name" Margin="0,0,10,0" HorizontalAlignment="Left" VerticalAlignment="Center" />
-            <TextBox x:Name="txtName" MinHeight="23" Margin="0,0,2,0" VerticalAlignment="Center" TextChanged="textbox_TextChanged" Grid.Column="1"/>
-            <Expander x:Name="expander" Header="Details" HorizontalAlignment="Left" Margin="15,0,0,0" VerticalAlignment="Center" MinWidth="80" Expanded="Expander_Expanded" Collapsed="Expander_Collapsed" Foreground="{Binding Foreground, ElementName=selectableUserControl}" Grid.Column="2" />
+            <TextBox x:Name="txtName" MinHeight="23" Margin="0,0,2,0" VerticalAlignment="Center" TextChanged="textbox_TextChanged" Grid.Column="1"
+                     Text="{Binding WeaponName, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:WeaponEditor}}}" />
+            <!--<Expander x:Name="expander" Header="Details" HorizontalAlignment="Left" Margin="15,0,0,0" VerticalAlignment="Center" MinWidth="80"
+                      Expanded="Expander_Expanded" Collapsed="Expander_Collapsed" Foreground="{Binding Foreground, ElementName=selectableUserControl}" Grid.Column="2" />-->
+            <local:DetailsButton x:Name="btnDetails" Grid.Column="2" Margin="10,0,0,0" IsSelected="False" />
+            <StackPanel Grid.Column="3" Orientation="Horizontal" HorizontalAlignment="Center">
+                <flat:FlatButton Width="30" ToolTip="Move Up" HorizontalAlignment="Center" x:Name="btnMoveUp" Click="btnMoveUp_Click" TransparentBack="True" >
+                    <local:ThemedImage x:Name="imgMoveUp" ImageName="Up" Width="16" />
+                </flat:FlatButton>
+                <flat:FlatButton Width="30" ToolTip="Move Down" HorizontalAlignment="Center" x:Name="btnMoveDown" Click="btnMoveDown_Click" TransparentBack="True" >
+                    <local:ThemedImage x:Name="imgMoveDown" ImageName="Down" Width="16" />
+                </flat:FlatButton>
+            </StackPanel>
+            <flat:FlatButton Grid.Column="4" ToolTip="Remove" Width="30" HorizontalAlignment="Center" x:Name="btnRemove" Click="btnRemove_Click" TransparentBack="True" >
+                <local:ThemedImage x:Name="imgRemove" ImageName="Cancel" Width="16" />
+            </flat:FlatButton>
         </Grid>
-        <Grid HorizontalAlignment="Stretch" Margin="10" Grid.Row="1" VerticalAlignment="Top" >
+        <Grid HorizontalAlignment="Stretch" Margin="10" Grid.Row="1" VerticalAlignment="Top" Visibility="{Binding ElementName=btnDetails, Path=IsSelected, Converter={StaticResource btv}}" >
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
@@ -36,31 +55,38 @@
                 <ColumnDefinition Width="3*"/>
             </Grid.ColumnDefinitions>
             <TextBlock Text="Attack" Margin="0,2,3,0" HorizontalAlignment="Left"  VerticalAlignment="Top" Height="16" />
-            <TextBox x:Name="txtAttack" MinHeight="23" Margin="0,0,10,0" VerticalAlignment="Center" TextChanged="textbox_TextChanged" Grid.Column="1"/>
+            <TextBox x:Name="txtAttack" MinHeight="23" Margin="0,0,10,0" VerticalAlignment="Center" TextChanged="textbox_TextChanged" Grid.Column="1"
+                     Text="{Binding AttackBonus, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:WeaponEditor}}}" />
             <Grid Grid.Column="2" HorizontalAlignment="Stretch" Margin="0,0,10,0" VerticalAlignment="Center">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
                 <TextBlock Text="Damage" Margin="0,2,3,0" />
-                <TextBox x:Name="txtDamage" Grid.Column="1" MinHeight="23" TextChanged="textbox_TextChanged" />
+                <TextBox x:Name="txtDamage" Grid.Column="1" MinHeight="23" TextChanged="textbox_TextChanged" 
+                     Text="{Binding Damage, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:WeaponEditor}}}" />
             </Grid>
             <TextBlock Text="Type" Margin="0,2,3,0" HorizontalAlignment="Left"  VerticalAlignment="Top" Grid.Column="3" />
-            <TextBox x:Name="txtType" MinHeight="23" VerticalAlignment="Center" TextChanged="textbox_TextChanged" Grid.Column="4"/>
+            <TextBox x:Name="txtType" MinHeight="23" VerticalAlignment="Center" TextChanged="textbox_TextChanged" Grid.Column="4"
+                     Text="{Binding WeaponType, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:WeaponEditor}}}" />
             <TextBlock Text="Critical" HorizontalAlignment="Center" VerticalAlignment="Top" Grid.Row="1" Margin="0,4,3,0" />
-            <TextBox x:Name="txtCritical" MinHeight="23" Margin="0,3,10,0" VerticalAlignment="Top" TextChanged="textbox_TextChanged" Grid.Row="1" Grid.Column="1"/>
+            <TextBox x:Name="txtCritical" MinHeight="23" Margin="0,3,10,0" VerticalAlignment="Top" TextChanged="textbox_TextChanged" Grid.Row="1" Grid.Column="1"
+                     Text="{Binding CriticalRange, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:WeaponEditor}}}" />
             <Grid Grid.Column="2" HorizontalAlignment="Stretch" Margin="0,3,10,0" Grid.Row="1" VerticalAlignment="Top" >
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
                 <TextBlock Text="Ammunition" Margin="0,2,3,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
-                <TextBox x:Name="txtAmmunition" MinHeight="23" TextChanged="textbox_TextChanged" Grid.Column="1"/>
+                <TextBox x:Name="txtAmmunition" MinHeight="23" TextChanged="textbox_TextChanged" Grid.Column="1"
+                     Text="{Binding Ammunition, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:WeaponEditor}}}" />
             </Grid>
             <TextBlock Text="Range" HorizontalAlignment="Center" VerticalAlignment="Top" Grid.Column="3" Grid.Row="1" Margin="0,4,3,0" />
-            <TextBox x:Name="txtRange" MinHeight="23" Margin="0,3,0,0" VerticalAlignment="Top" TextChanged="textbox_TextChanged" Grid.Column="4" Grid.Row="1"/>
+            <TextBox x:Name="txtRange" MinHeight="23" Margin="0,3,0,0" VerticalAlignment="Top" TextChanged="textbox_TextChanged" Grid.Column="4" Grid.Row="1"
+                     Text="{Binding Range, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:WeaponEditor}}}" />
             <TextBlock Text="Notes" Margin="0,7,3,0" HorizontalAlignment="Left"  VerticalAlignment="Top" Height="16" Grid.Row="2" />
-            <TextBox x:Name="txtNotes" Margin="0,5,0,0" AcceptsReturn="True" AcceptsTab="True" TextWrapping="Wrap" MinHeight="45" TextChanged="textbox_TextChanged" Grid.ColumnSpan="4" Grid.Row="2" Grid.Column="1" />
+            <TextBox x:Name="txtNotes" Margin="0,5,0,0" AcceptsReturn="True" AcceptsTab="True" TextWrapping="Wrap" MinHeight="45" TextChanged="textbox_TextChanged" Grid.ColumnSpan="4" Grid.Row="2" Grid.Column="1" 
+                     Text="{Binding Notes, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:WeaponEditor}}}" />
         </Grid>
     </Grid>
-</SolidShineUi:SelectableUserControl>
+</ild:SelectableListItem>
