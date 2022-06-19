@@ -33,7 +33,7 @@
             </flat:FlatButton>
             <StackPanel HorizontalAlignment="Right" Margin="0,4,10,4" Orientation="Horizontal" Grid.Row="1">
                 <flat:FlatButton x:Name="btnSearch" ColorScheme="{Binding ElementName=ild, Path=ColorScheme}" Click="btnSearch_Click" FontSize="12" 
-                                 HorizontalAlignment="Left" Margin="10,0,0,0" Grid.Row="1" TransparentBack="True" IsEnabled="False" >
+                                 HorizontalAlignment="Left" Margin="10,0,0,0" Grid.Row="1" TransparentBack="True" IsEnabled="False" Visibility="Collapsed" >
                     <StackPanel Orientation="Horizontal">
                         <local:ThemedImage ImageName="Find" ColorScheme="{Binding ElementName=ild, Path=ColorScheme}" Width="16" Height="16" />
                         <TextBlock Text="Search" Margin="3,0" />
