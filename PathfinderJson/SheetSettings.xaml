@@ -7,6 +7,9 @@
         xmlns:local="clr-namespace:PathfinderJson"
         mc:Ignorable="d"
         Title="Sheet Settings" Height="600" Width="700" CaptionDisplayType="MaximizeClose" >
+    <flat:FlatWindow.Resources>
+        <flat:ColorToBrushConverter x:Key="ctb" />
+    </flat:FlatWindow.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="50" />
@@ -53,8 +56,10 @@
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
                 <TextBlock x:Name="lblSkillList" HorizontalAlignment="Left" Text="Skill list:" VerticalAlignment="Center"/>
-                <RadioButton x:Name="rdoSkillList" Grid.Column="0" Grid.Row="2" GroupName="SkillOption" Margin="15,0,0,0" Content="Use the standard Pathfinder list" VerticalAlignment="Center" IsChecked="True" Grid.ColumnSpan="3" />
-                <RadioButton x:Name="rdoSelectFile" Grid.Column="0" Grid.Row="4" GroupName="SkillOption" Margin="15,0,0,0" Content="Load from a file:" VerticalAlignment="Center" />
+                <RadioButton x:Name="rdoSkillList" Grid.Column="0" Grid.Row="2" GroupName="SkillOption" Margin="15,0,0,0" Content="Use the standard Pathfinder list" VerticalAlignment="Center" Grid.ColumnSpan="3"
+                             IsChecked="True" Foreground="{Binding ColorScheme.ForegroundColor, Converter={StaticResource ctb}, ElementName=window}" />
+                <RadioButton x:Name="rdoSelectFile" Grid.Column="0" Grid.Row="4" GroupName="SkillOption" Margin="15,0,0,0" Content="Load from a file:" VerticalAlignment="Center" 
+                             Foreground="{Binding ColorScheme.ForegroundColor, Converter={StaticResource ctb}, ElementName=window}" />
                 <flat:FileSelect x:Name="fileSelect" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" Grid.Column="2" Grid.Row="4" AllowMultipleFiles="False" FileFilter="*.json" SelectionChanged="fileSelect_SelectionChanged" />
             </Grid>
             <TextBlock Grid.Row="2" Margin="50,0,10,20" TextWrapping="Wrap" >

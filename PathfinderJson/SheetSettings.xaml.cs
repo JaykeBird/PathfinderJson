@@ -125,6 +125,8 @@ namespace PathfinderJson
                 SelectableItem si = new SelectableItem();
                 si.Tag = new KeyValuePair<string, string>(asv.SettingName, asv.SettingValue);
                 si.Text = $"Name: \"{asv.SettingName}\", Value: \"{asv.SettingValue}\"";
+
+                selSheetSettings.Items.Add(si);
             }
         }
 
