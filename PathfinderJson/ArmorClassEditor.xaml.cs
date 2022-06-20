@@ -20,20 +20,10 @@ namespace PathfinderJson
 
         public void UpdateAppearance()
         {
+            btnDetails.ColorScheme = App.ColorScheme;
+
             txtModifier.Background = new SolidColorBrush(App.ColorScheme.SecondHighlightColor);
             brdrModifiers.BorderBrush = new SolidColorBrush(App.ColorScheme.SecondaryColor);
-        }
-
-        private void ExpModifiers_Collapsed(object sender, RoutedEventArgs e)
-        {
-            rowExtra.Height = new GridLength(0);
-            rowExtra.MinHeight = 0;
-        }
-
-        private void ExpModifiers_Expanded(object sender, RoutedEventArgs e)
-        {
-            rowExtra.Height = new GridLength(1, GridUnitType.Auto);
-            rowExtra.MinHeight = 95;
         }
 
         public void LoadArmorClass(ArmorClass ac, string modValue)
