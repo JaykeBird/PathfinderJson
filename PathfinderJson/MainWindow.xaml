@@ -592,7 +592,7 @@
                         <flat:LinkTextBlock x:Name="lnkCombat" Text="View Combat on D20PFSRD" HorizontalAlignment="Left" Click="lnkCombat_Click" Tag="https://www.d20pfsrd.com/gamemastering/combat/" Cursor="Hand" />
                     </Grid>
                     <local:ArmorClassEditor Grid.Row="2" Margin="5,5,0,0" x:Name="edtAc" ContentChanged="editor_ContentChanged" />
-                    <local:CompoundEditor Grid.Row="3" Margin="5,5,0,0" x:Name="edtInit" Title="Initiative" ModifierTitle="Dex Mod" ContentChanged="editor_ContentChanged" />
+                    <local:CompoundEditor Grid.Row="3" Margin="5,15,0,0" x:Name="edtInit" Title="Initiative" ModifierTitle="Dex Mod" ContentChanged="editor_ContentChanged" />
                     <Grid HorizontalAlignment="Left" Margin="15,0,0,0" Grid.Row="4" VerticalAlignment="Center" >
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"/>
