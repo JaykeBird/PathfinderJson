@@ -151,7 +151,12 @@ namespace PathfinderJson
 
         private void btnRemoveSetting_Click(object sender, RoutedEventArgs e)
         {
-            selSheetSettings.RemoveSelectedItems();
+            MessageDialog md = new MessageDialog(ColorScheme);
+            md.ShowDialog("Are you sure you want to remove the selected setting?", null, this, "Confirm Remove", MessageDialogButtonDisplay.Two, MessageDialogImage.Question);
+            if (md.DialogResult == MessageDialogResult.OK)
+            {
+                selSheetSettings.RemoveSelectedItems();
+            }
         }
 
         private void selSheetSettings_SelectionChanged(object sender, SelectionChangedEventArgs e)
