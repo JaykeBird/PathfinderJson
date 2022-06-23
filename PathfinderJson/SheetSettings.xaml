@@ -6,7 +6,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PathfinderJson"
         mc:Ignorable="d"
-        Title="Sheet Settings" Height="600" Width="700" CaptionDisplayType="MaximizeClose" >
+        Title="Sheet Settings" Height="600" Width="650" CaptionDisplayType="MaximizeClose" >
     <flat:FlatWindow.Resources>
         <flat:ColorToBrushConverter x:Key="ctb" />
     </flat:FlatWindow.Resources>
@@ -17,7 +17,7 @@
             <RowDefinition Height="1*" />
             <RowDefinition Height="45" />
         </Grid.RowDefinitions>
-        <TextBlock x:Name="lblSentinelsSettings" HorizontalAlignment="Left" Margin="15,5" Text="Edit settings for this character sheet:" VerticalAlignment="Center" Grid.Row="0"/>
+        <TextBlock x:Name="lblSentinelsSettings" HorizontalAlignment="Left" Margin="20,5" Text="Edit settings for this character sheet:" VerticalAlignment="Center" Grid.Row="0"/>
 
         <Grid Grid.Row="1" >
             <Grid.RowDefinitions>
@@ -26,7 +26,7 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
-            <Grid Margin="30,5,10,10" Grid.Row="0" VerticalAlignment="Center" >
+            <Grid Margin="20,5,10,10" Grid.Row="0" VerticalAlignment="Center" >
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="5" />
@@ -41,7 +41,7 @@
                 <flat:CheckBox x:Name="chkSpellcheckGeneral" Grid.Column="0" Grid.Row="4" Margin="15,0,0,0" Content="Enable spell check in the general character notes" VerticalAlignment="Center" HorizontalAlignment="Left" IsChecked="True" />
                 <flat:CheckBox x:Name="chkSpellcheckAll" Grid.Column="0" Grid.Row="6" Margin="15,0,0,0" Content="Enable spell check in all other note fields" VerticalAlignment="Center" HorizontalAlignment="Left" IsChecked="True" Visibility="Collapsed" />
             </Grid>
-            <Grid Margin="30,5,10,10" Grid.Row="1" VerticalAlignment="Center" >
+            <Grid Margin="20,5,10,10" Grid.Row="1" VerticalAlignment="Center" >
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="5" />
@@ -74,13 +74,14 @@
                 <RowDefinition Height="1*" MinHeight="80" />
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            <TextBlock x:Name="lblGenericSettings" HorizontalAlignment="Left" Margin="15,5" Text="Advanced sheet settings:" VerticalAlignment="Center" Grid.Row="0"/>
-            <TextBlock x:Name="lblGenericSettingsWarning" HorizontalAlignment="Left" Margin="40,5" Text="(Be careful with editing these values. PathfinderJSON uses them for some features.)" VerticalAlignment="Center" Grid.Row="1"/>
-            <flat:SelectPanel x:Name="selSheetSettings" Grid.Row="2" MinHeight="80" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" Margin="40,0,20,0" MultiSelect="False" SelectionChanged="selSheetSettings_SelectionChanged" />
-            <StackPanel Orientation="Horizontal" Grid.Row="3" MinHeight="24" Margin="40,5">
+            <TextBlock x:Name="lblGenericSettings" HorizontalAlignment="Left" Margin="20,5" Text="Advanced sheet settings:" VerticalAlignment="Center" Grid.Row="0"/>
+            <TextBlock x:Name="lblGenericSettingsWarning" HorizontalAlignment="Left" Margin="35,5" Text="(Be careful with editing these values. PathfinderJSON uses them for some features.)" VerticalAlignment="Center" Grid.Row="1"/>
+            <flat:SelectPanel x:Name="selSheetSettings" Grid.Row="2" MinHeight="80" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" Margin="35,0,20,0" MultiSelect="False" 
+                              SelectionChanged="selSheetSettings_SelectionChanged" />
+            <StackPanel Orientation="Horizontal" Grid.Row="3" MinHeight="24" Margin="30,5">
                 <flat:FlatButton Margin="5,0" Content="Add..." MinWidth="80" x:Name="btnAddSetting" Click="btnAddSetting_Click" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" />
-                <flat:FlatButton Margin="5,0" Content="Edit..." MinWidth="80" x:Name="btnEditSetting" Click="btnEditSetting_Click" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" />
-                <flat:FlatButton Margin="5,0" Content="Remove..." MinWidth="80" x:Name="btnRemoveSetting" Click="btnRemoveSetting_Click" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" />
+                <flat:FlatButton Margin="5,0" Content="Edit..." MinWidth="80" x:Name="btnEditSetting" Click="btnEditSetting_Click" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" IsEnabled="False" />
+                <flat:FlatButton Margin="5,0" Content="Remove..." MinWidth="80" x:Name="btnRemoveSetting" Click="btnRemoveSetting_Click" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" IsEnabled="False" />
             </StackPanel>
         </Grid>
         <flat:FlatButton x:Name="btnSave" ColorScheme="{Binding ColorScheme, ElementName=window}" Content="Save" Margin="0,0,105,0" VerticalAlignment="Center" HorizontalAlignment="Right" Width="80" Click="btnSave_Click" Grid.Row="3" />

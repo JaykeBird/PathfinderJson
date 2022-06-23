@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:PathfinderJson"
         xmlns:flat="clr-namespace:SolidShineUi;assembly=SolidShineUi"
         mc:Ignorable="d"
-        Title="AddSettingValueWindow" Height="250" Width="600" CaptionDisplayType="Close" SourceInitialized="window_SourceInitialized" >
+        Title="Add Setting" Height="240" Width="550" CaptionDisplayType="Close" SourceInitialized="window_SourceInitialized" Loaded="window_Loaded" >
     <flat:FlatWindow.Resources>
         <ResourceDictionary>
             <flat:ColorToBrushConverter x:Key="ctb" />
@@ -18,7 +18,7 @@
             <RowDefinition/>
             <RowDefinition Height="50"/>
         </Grid.RowDefinitions>
-        <TextBlock x:Name="lblDescription" HorizontalAlignment="Left" Margin="20,20,0,20" Text="Create a setting entry for this sheet:" VerticalAlignment="Center"/>
+        <TextBlock x:Name="lblDescription" HorizontalAlignment="Left" Margin="20,10,0,10" Text="Create a setting entry for this sheet:" VerticalAlignment="Center"/>
         <Grid Grid.Row="1" Margin="20,5">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
@@ -26,13 +26,13 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" MinHeight="24" />
             </Grid.RowDefinitions>
-            <TextBlock x:Name="lblSettingName" Grid.Row="0" Margin="10,5,0,3" Text="Setting name:" />
-            <flat:ClickSelectTextBox x:Name="txtSettingName" Grid.Row="1" />
-            <TextBlock x:Name="lblSettingValue" Grid.Row="2" Margin="10,5,0,3" Text="Setting value:" />
-            <flat:ClickSelectTextBox x:Name="txtSettingValue" Grid.Row="3" />
+            <TextBlock x:Name="lblSettingName" Grid.Row="0" Margin="0,5,0,3" Text="Setting name:" />
+            <flat:ClickSelectTextBox x:Name="txtSettingName" Grid.Row="1" KeyDown="txtSettingName_KeyDown" />
+            <TextBlock x:Name="lblSettingValue" Grid.Row="2" Margin="0,5,0,3" Text="Setting value:" />
+            <flat:ClickSelectTextBox x:Name="txtSettingValue" Grid.Row="3" KeyDown="txtSettingValue_KeyDown" />
         </Grid>
         <StackPanel HorizontalAlignment="Right" Margin="0,0,20,20" Orientation="Horizontal" Grid.Row="2" VerticalAlignment="Bottom">
-            <flat:FlatButton x:Name="btnInsert" ColorScheme="{Binding ColorScheme, ElementName=window}" Content="OK" Width="80" Click="btnInsert_Click" Margin="10,0" />
+            <flat:FlatButton x:Name="btnInsert" ColorScheme="{Binding ColorScheme, ElementName=window}" Content="Add" Width="80" Click="btnInsert_Click" Margin="10,0" />
             <flat:FlatButton x:Name="btnClose" Content="Cancel" ColorScheme="{Binding ColorScheme, ElementName=window}" Width="80" Click="btnClose_Click" />
         </StackPanel>
     </Grid>
