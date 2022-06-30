@@ -35,7 +35,7 @@ namespace PathfinderJson
                             if (a.Value<string>() != null)
                             {
                                 Console.WriteLine(a.Value<string>());
-                                csc = a.Value<string>();
+                                csc = a.Value<string>() ?? "";
                             }
                         }
                     }
@@ -69,9 +69,16 @@ namespace PathfinderJson
 
         public static PathfinderSheet LoadJsonText(string text)
         {
-            PathfinderSheet ps = JsonConvert.DeserializeObject<PathfinderSheet>(text);
-            ps.SetupSheet();
-            return ps;
+            PathfinderSheet? ps = JsonConvert.DeserializeObject<PathfinderSheet>(text);
+            if (ps != null)
+            {
+                ps.SetupSheet();
+                return ps;
+            }
+            else
+            {
+                throw new FormatException("The provided text is not parseable as JSON.");
+            }
         }
 
         public static PathfinderSheet CreateNewSheet(string name, string level, UserData? userdata = null)
