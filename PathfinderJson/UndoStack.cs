@@ -129,6 +129,12 @@ namespace PathfinderJson
             }
         }
 
+        public void Clear()
+        {
+            undoList.Clear();
+            redoList.Clear();
+        }
+
         public bool SkipCurrentStateOnUndo { get; set; } = true;
 
         public T Undo()

@@ -103,7 +103,9 @@ namespace PathfinderJson
             // if true, run SaveSettings at the end of this function, to avoid calling SaveSettings like 5 times at once
             bool updateSettings = false;
 
-            undoSetTimer.Interval = new TimeSpan(0, 0, 3);
+            // set timer delay to 2 seconds
+            // perhaps in the future I'll add a setting to allow users to set the undo timer delay
+            undoSetTimer.Interval = new TimeSpan(0, 0, 2);
             undoSetTimer.Tick += UndoSetTimer_Tick;
 
             autoCheckUpdates = App.Settings.UpdateAutoCheck;
@@ -759,6 +761,7 @@ namespace PathfinderJson
             _sheetLoaded = false;
             SetIsDirty(false);
             txtEditRaw.Text = "";
+            undoStack.Clear();
 
             brdrSaved.Visibility = Visibility.Collapsed;
             saveDisplayTimer.Stop();
@@ -1270,23 +1273,29 @@ namespace PathfinderJson
 
         void StartUndoTimer(UIElement sender)
         {
-            //CreateUndoState();
-            if (undoSetTimer.IsEnabled)
+            if (sender != lastEditedItem)
             {
-                PostUndoStateUpdate("Timer restart");
-                if (sender != lastEditedItem)
-                {
-                    CreateUndoState();
-                    PostUndoStateUpdate("New element state / timer restart");
-                }
+                CreateUndoState();
+                PostUndoStateUpdate("New element state / timer restart");
 
                 undoSetTimer.Stop();
                 undoSetTimer.Start();
             }
             else
             {
-                undoSetTimer.Start();
-                PostUndoStateUpdate("Timer start");
+                //CreateUndoState();
+                if (undoSetTimer.IsEnabled)
+                {
+                    PostUndoStateUpdate("Timer restart");
+
+                    undoSetTimer.Stop();
+                    undoSetTimer.Start();
+                }
+                else
+                {
+                    undoSetTimer.Start();
+                    PostUndoStateUpdate("Timer start");
+                }
             }
         }
 
@@ -3255,6 +3264,14 @@ namespace PathfinderJson
             abilities["int"] = txtInt.Value.ToString();
             abilities["wis"] = txtWis.Value.ToString();
             sheet.RawAbilities = abilities;
+
+            // also set the actual ability values, to fix bugs with the undo stack
+            sheet.Strength = txtStr.Value;
+            sheet.Dexterity = txtDex.Value;
+            sheet.Charisma = txtCha.Value;
+            sheet.Constitution = txtCon.Value;
+            sheet.Intelligence = txtInt.Value;
+            sheet.Wisdom = txtWis.Value;
 
             Dictionary<string, CompoundModifier> saves = new Dictionary<string, CompoundModifier>
             {
