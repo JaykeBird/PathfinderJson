@@ -170,7 +170,7 @@ namespace PathfinderJson
 
             SetupTabs();
             selTabs.IsEnabled = false;
-            foreach (SelectableItem item in selTabs.GetSelectedItemsOfType<SelectableItem>())
+            foreach (SelectableItem item in selTabs.Items.SelectedItems.OfType<SelectableItem>())
             {
                 item.IsEnabled = false;
             }
@@ -2440,6 +2440,8 @@ namespace PathfinderJson
                 sheet.Money = new Dictionary<string, string?>();
             }
 
+            // let's actually load the sheet now!
+
             CoreLoadPathfinderSheet(sheet);
 
             // this is a check to determine if this JSON file looks like a character sheet file or not
@@ -2518,6 +2520,28 @@ namespace PathfinderJson
             txtCon.Value = sheet.Constitution;
             txtInt.Value = sheet.Intelligence;
             txtWis.Value = sheet.Wisdom;
+
+            LoadTempStat("tempStr", grdTempStr, btnTempStr);
+            LoadTempStat("tempDex", grdTempDex, btnTempDex);
+            LoadTempStat("tempCha", grdTempCha, btnTempCha);
+            LoadTempStat("tempCon", grdTempCon, btnTempCon);
+            LoadTempStat("tempInt", grdTempInt, btnTempInt);
+            LoadTempStat("tempWis", grdTempWis, btnTempWis);
+
+            void LoadTempStat(string statName, TempAbilityDisplay control, FlatButton button)
+            {
+                if (abilities.ContainsKey(statName))
+                {
+                    control.Visibility = Visibility.Visible;
+                    button.Visibility = Visibility.Collapsed;
+                    control.Value = ParseStringAsInt(abilities[statName], 10);
+                }
+                else
+                {
+                    control.Visibility = Visibility.Collapsed;
+                    button.Visibility = Visibility.Visible;
+                }
+            }
 
             abilityMods.Clear();
             abilityMods["STR"] = CalculateModifierInt(sheet.Strength);
@@ -2678,34 +2702,8 @@ namespace PathfinderJson
             stkSkills.Children.Clear();
             foreach (SkillEditor item in ses)
             {
-                //string modifier = "";
-
-                //switch (item.ModifierName)
-                //{
-                //    case "DEX":
-                //        modifier = txtDexm.Text;
-                //        break;
-                //    case "INT":
-                //        modifier = txtIntm.Text;
-                //        break;
-                //    case "CHA":
-                //        modifier = txtCham.Text;
-                //        break;
-                //    case "STR":
-                //        modifier = txtStrm.Text;
-                //        break;
-                //    case "WIS":
-                //        modifier = txtWism.Text;
-                //        break;
-                //    case "CON":
-                //        modifier = txtConm.Text;
-                //        break;
-                //    default:
-                //        break;
-                //}
                 item.ModifierValue = abilityMods[item.ModifierName];
                 item.UpdateCalculations();
-                //item.LoadModifier(modifier);
 
                 item.ContentChanged += editor_ContentChanged;
                 item.ModifierChanged += editor_ModifierChanged;
@@ -2857,16 +2855,6 @@ namespace PathfinderJson
                 chkNotesMarkdown.IsChecked = false;
                 SpellCheck.SetIsEnabled(txtNotes, true);
             }
-
-            //if (sheet.NotesMarkdown)
-            //{
-            //    ShowMarkdownElements();
-            //    OpenNotesViewTab();
-            //}
-            //else
-            //{
-            //    HideMarkdownElements();
-            //}
 
             txtNotes.Text = sheet.Notes;
             UpdateMarkdownViewerVisuals();
@@ -3264,6 +3252,14 @@ namespace PathfinderJson
             abilities["int"] = txtInt.Value.ToString();
             abilities["wis"] = txtWis.Value.ToString();
             sheet.RawAbilities = abilities;
+
+            // temp abilities
+            if (grdTempStr.Visibility == Visibility.Visible) abilities["tempStr"] = grdTempStr.Value.ToString();
+            if (grdTempDex.Visibility == Visibility.Visible) abilities["tempDex"] = grdTempStr.Value.ToString();
+            if (grdTempCha.Visibility == Visibility.Visible) abilities["tempCha"] = grdTempStr.Value.ToString();
+            if (grdTempCon.Visibility == Visibility.Visible) abilities["tempCon"] = grdTempStr.Value.ToString();
+            if (grdTempInt.Visibility == Visibility.Visible) abilities["tempInt"] = grdTempStr.Value.ToString();
+            if (grdTempWis.Visibility == Visibility.Visible) abilities["tempWis"] = grdTempStr.Value.ToString();
 
             // also set the actual ability values, to fix bugs with the undo stack
             sheet.Strength = txtStr.Value;
@@ -4131,6 +4127,78 @@ namespace PathfinderJson
                     LoadPathfinderSheet(PathfinderSheet.LoadJsonText(jo.ToString()));
                 }
             }
+        }
+
+        private void btnTempStr_Click(object sender, RoutedEventArgs e)
+        {
+            grdTempStr.Visibility = Visibility.Visible;
+            btnTempStr.Visibility = Visibility.Collapsed;
+        }
+
+        private void btnTempDex_Click(object sender, RoutedEventArgs e)
+        {
+            grdTempDex.Visibility = Visibility.Visible;
+            btnTempDex.Visibility = Visibility.Collapsed;
+        }
+
+        private void btnTempCon_Click(object sender, RoutedEventArgs e)
+        {
+            grdTempCon.Visibility = Visibility.Visible;
+            btnTempCon.Visibility = Visibility.Collapsed;
+        }
+
+        private void btnTempInt_Click(object sender, RoutedEventArgs e)
+        {
+            grdTempInt.Visibility = Visibility.Visible;
+            btnTempInt.Visibility = Visibility.Collapsed;
+        }
+
+        private void btnTempWis_Click(object sender, RoutedEventArgs e)
+        {
+            grdTempWis.Visibility = Visibility.Visible;
+            btnTempWis.Visibility = Visibility.Collapsed;
+        }
+
+        private void btnTempCha_Click(object sender, RoutedEventArgs e)
+        {
+            grdTempCha.Visibility = Visibility.Visible;
+            btnTempCha.Visibility = Visibility.Collapsed;
+        }
+
+        private void grdTempStr_CloseRequested(object sender, EventArgs e)
+        {
+            grdTempStr.Visibility = Visibility.Collapsed;
+            btnTempStr.Visibility = Visibility.Visible;
+        }
+
+        private void grdTempDex_CloseRequested(object sender, EventArgs e)
+        {
+            grdTempDex.Visibility = Visibility.Collapsed;
+            btnTempDex.Visibility = Visibility.Visible;
+        }
+
+        private void grdTempCon_CloseRequested(object sender, EventArgs e)
+        {
+            grdTempCon.Visibility = Visibility.Collapsed;
+            btnTempCon.Visibility = Visibility.Visible;
+        }
+
+        private void grdTempInt_CloseRequested(object sender, EventArgs e)
+        {
+            grdTempInt.Visibility = Visibility.Collapsed;
+            btnTempInt.Visibility = Visibility.Visible;
+        }
+
+        private void grdTempWis_CloseRequested(object sender, EventArgs e)
+        {
+            grdTempWis.Visibility = Visibility.Collapsed;
+            btnTempWis.Visibility = Visibility.Visible;
+        }
+
+        private void grdTempCha_CloseRequested(object sender, EventArgs e)
+        {
+            grdTempCha.Visibility = Visibility.Collapsed;
+            btnTempCha.Visibility = Visibility.Visible;
         }
     }
 }
