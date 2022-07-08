@@ -80,6 +80,25 @@ namespace PathfinderJson
             }
         }
 
+        public static int ParseStringAsInt(string? value, int defaultValue)
+        {
+            if (string.IsNullOrEmpty(value))
+            {
+                return defaultValue;
+            }
+            else
+            {
+                if (int.TryParse(value, out int r))
+                {
+                    return r;
+                }
+                else
+                {
+                    return defaultValue;
+                }
+            }
+        }
+
         public static double ParseStringAsDouble(string? value)
         {
             if (string.IsNullOrEmpty(value))
