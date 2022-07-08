@@ -267,7 +267,7 @@
         <flat:SelectPanel Grid.Column="0" Grid.Row="2" x:Name="selTabs" MultiSelect="False" BorderThickness="0,0,1,0" />
         <ScrollViewer Grid.Column="1" Grid.Row="2" x:Name="scrSheet" AllowDrop="True" Drop="scrSheet_Drop" >
             <StackPanel x:Name="stkSheet" >
-                <Grid Margin="5,5,5,0" x:Name="grdGeneral" Visibility="Collapsed" >
+                <Grid Margin="5,5,5,0" x:Name="grdGeneral" Visibility="Visible" >
                     <Grid.RowDefinitions>
                         <RowDefinition Height="25"/>
                         <RowDefinition Height="Auto"/>
@@ -421,14 +421,20 @@
                             <TextBlock x:Name="lblSpeedTemp" HorizontalAlignment="Left" Margin="10,1,0,2" Text="Temporary Speed Modifiers" VerticalAlignment="Center" Grid.Row="4"/>
                         </Grid>
                     </Expander>
-                    <Grid HorizontalAlignment="Left" Margin="15,10,0,10" Grid.Row="5" VerticalAlignment="Stretch">
+                    <Grid HorizontalAlignment="Left" Margin="15,10,0,10" Grid.Row="5" x:Name="grdAbilityList" VerticalAlignment="Stretch">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" MinHeight="28" />
+                            <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto" MinHeight="28" />
+                            <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto" MinHeight="28" />
+                            <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto" MinHeight="28" />
+                            <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto" MinHeight="28" />
+                            <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto" MinHeight="28" />
+                            <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" MinWidth="33"/>
@@ -436,39 +442,54 @@
                             <ColumnDefinition Width="Auto" MinWidth="63"/>
                             <ColumnDefinition Width="Auto" MinWidth="59"/>
                             <ColumnDefinition Width="Auto" MinWidth="42"/>
+                            <ColumnDefinition Width="Auto" MinWidth="60"/>
                         </Grid.ColumnDefinitions>
 
                         <flat:IntegerSpinner x:Name="txtStr" HorizontalAlignment="Left" Margin="3,0" MinHeight="24" VerticalAlignment="Center" Width="60" ValueChanged="txtStr_ValueChanged" LostFocus="txtStr_LostFocus" MinValue="-99" MaxValue="999" AcceptExpressions="True" ColorScheme="{Binding ColorScheme, ElementName=window}" Grid.Column="2" />
-                        <flat:IntegerSpinner x:Name="txtDex" HorizontalAlignment="Left" Margin="3,0" MinHeight="24" VerticalAlignment="Center" Width="60" ValueChanged="txtStr_ValueChanged" LostFocus="txtStr_LostFocus" MinValue="-99" MaxValue="999" AcceptExpressions="True" ColorScheme="{Binding ColorScheme, ElementName=window}" Grid.Column="2" Grid.Row="1" />
-                        <flat:IntegerSpinner x:Name="txtCon" HorizontalAlignment="Left" Margin="3,0" MinHeight="24" VerticalAlignment="Center" Width="60" ValueChanged="txtStr_ValueChanged" LostFocus="txtStr_LostFocus" MinValue="-99" MaxValue="999" AcceptExpressions="True" ColorScheme="{Binding ColorScheme, ElementName=window}" Grid.Column="2" Grid.Row="2" />
-                        <flat:IntegerSpinner x:Name="txtInt" HorizontalAlignment="Left" Margin="3,0" MinHeight="24" VerticalAlignment="Center" Width="60" ValueChanged="txtStr_ValueChanged" LostFocus="txtStr_LostFocus" MinValue="-99" MaxValue="999" AcceptExpressions="True" ColorScheme="{Binding ColorScheme, ElementName=window}" Grid.Column="2" Grid.Row="3" />
-                        <flat:IntegerSpinner x:Name="txtWis" HorizontalAlignment="Left" Margin="3,0" MinHeight="24" VerticalAlignment="Center" Width="60" ValueChanged="txtStr_ValueChanged" LostFocus="txtStr_LostFocus" MinValue="-99" MaxValue="999" AcceptExpressions="True" ColorScheme="{Binding ColorScheme, ElementName=window}" Grid.Column="2" Grid.Row="4" />
-                        <flat:IntegerSpinner x:Name="txtCha" HorizontalAlignment="Left" Margin="3,0" MinHeight="24" VerticalAlignment="Center" Width="60" ValueChanged="txtStr_ValueChanged" LostFocus="txtStr_LostFocus" MinValue="-99" MaxValue="999" AcceptExpressions="True" ColorScheme="{Binding ColorScheme, ElementName=window}" Grid.Column="2" Grid.Row="5" />
+                        <flat:IntegerSpinner x:Name="txtDex" HorizontalAlignment="Left" Margin="3,0" MinHeight="24" VerticalAlignment="Center" Width="60" ValueChanged="txtStr_ValueChanged" LostFocus="txtStr_LostFocus" MinValue="-99" MaxValue="999" AcceptExpressions="True" ColorScheme="{Binding ColorScheme, ElementName=window}" Grid.Column="2" Grid.Row="2" />
+                        <flat:IntegerSpinner x:Name="txtCon" HorizontalAlignment="Left" Margin="3,0" MinHeight="24" VerticalAlignment="Center" Width="60" ValueChanged="txtStr_ValueChanged" LostFocus="txtStr_LostFocus" MinValue="-99" MaxValue="999" AcceptExpressions="True" ColorScheme="{Binding ColorScheme, ElementName=window}" Grid.Column="2" Grid.Row="4" />
+                        <flat:IntegerSpinner x:Name="txtInt" HorizontalAlignment="Left" Margin="3,0" MinHeight="24" VerticalAlignment="Center" Width="60" ValueChanged="txtStr_ValueChanged" LostFocus="txtStr_LostFocus" MinValue="-99" MaxValue="999" AcceptExpressions="True" ColorScheme="{Binding ColorScheme, ElementName=window}" Grid.Column="2" Grid.Row="6" />
+                        <flat:IntegerSpinner x:Name="txtWis" HorizontalAlignment="Left" Margin="3,0" MinHeight="24" VerticalAlignment="Center" Width="60" ValueChanged="txtStr_ValueChanged" LostFocus="txtStr_LostFocus" MinValue="-99" MaxValue="999" AcceptExpressions="True" ColorScheme="{Binding ColorScheme, ElementName=window}" Grid.Column="2" Grid.Row="8" />
+                        <flat:IntegerSpinner x:Name="txtCha" HorizontalAlignment="Left" Margin="3,0" MinHeight="24" VerticalAlignment="Center" Width="60" ValueChanged="txtStr_ValueChanged" LostFocus="txtStr_LostFocus" MinValue="-99" MaxValue="999" AcceptExpressions="True" ColorScheme="{Binding ColorScheme, ElementName=window}" Grid.Column="2" Grid.Row="10" />
                         <TextBlock x:Name="lblStr" HorizontalAlignment="Left" Text="STR" FontWeight="Bold" VerticalAlignment="Center" />
-                        <TextBlock x:Name="lblDex" HorizontalAlignment="Left" Text="DEX" FontWeight="Bold" VerticalAlignment="Center" Grid.Row="1"/>
-                        <TextBlock x:Name="lblCon" HorizontalAlignment="Left" Text="CON" FontWeight="Bold" VerticalAlignment="Center" Grid.Row="2"/>
-                        <TextBlock x:Name="lblInt" HorizontalAlignment="Left" Text="INT" FontWeight="Bold" VerticalAlignment="Center" Grid.Row="3"/>
-                        <TextBlock x:Name="lblWis" HorizontalAlignment="Left" Text="WIS" FontWeight="Bold" VerticalAlignment="Center" Grid.Row="4"/>
-                        <TextBlock x:Name="lblCha" HorizontalAlignment="Left" Text="CHA" FontWeight="Bold" VerticalAlignment="Center" Grid.Row="5"/>
+                        <TextBlock x:Name="lblDex" HorizontalAlignment="Left" Text="DEX" FontWeight="Bold" VerticalAlignment="Center" Grid.Row="2"/>
+                        <TextBlock x:Name="lblCon" HorizontalAlignment="Left" Text="CON" FontWeight="Bold" VerticalAlignment="Center" Grid.Row="4"/>
+                        <TextBlock x:Name="lblInt" HorizontalAlignment="Left" Text="INT" FontWeight="Bold" VerticalAlignment="Center" Grid.Row="6"/>
+                        <TextBlock x:Name="lblWis" HorizontalAlignment="Left" Text="WIS" FontWeight="Bold" VerticalAlignment="Center" Grid.Row="8"/>
+                        <TextBlock x:Name="lblCha" HorizontalAlignment="Left" Text="CHA" FontWeight="Bold" VerticalAlignment="Center" Grid.Row="10"/>
                         <TextBlock x:Name="lblStr_Copy" HorizontalAlignment="Left" Margin="2,0,0,0" Text="Strength" VerticalAlignment="Center" Grid.Column="1"/>
-                        <TextBlock x:Name="lblDex_Copy" HorizontalAlignment="Left" Margin="2,0,0,0" Text="Dexterity" VerticalAlignment="Center" Grid.Column="1" Grid.Row="1"/>
-                        <TextBlock x:Name="lblCon_Copy" HorizontalAlignment="Left" Margin="2,0,0,0" Text="Constitution" VerticalAlignment="Center" Grid.Column="1" Grid.Row="2"/>
-                        <TextBlock x:Name="lblInt_Copy" HorizontalAlignment="Left" Margin="2,0,0,0" Text="Intelligence" VerticalAlignment="Center" Grid.Column="1" Grid.Row="3"/>
-                        <TextBlock x:Name="lblWis_Copy" HorizontalAlignment="Left" Margin="2,0,0,0" Text="Wisdom" VerticalAlignment="Center" Grid.Column="1" Grid.Row="4"/>
-                        <TextBlock x:Name="lblCha_Copy" HorizontalAlignment="Left" Margin="2,0,0,0" Text="Charisma" VerticalAlignment="Center" Grid.Column="1" Grid.Row="5"/>
+                        <TextBlock x:Name="lblDex_Copy" HorizontalAlignment="Left" Margin="2,0,0,0" Text="Dexterity" VerticalAlignment="Center" Grid.Column="1" Grid.Row="2"/>
+                        <TextBlock x:Name="lblCon_Copy" HorizontalAlignment="Left" Margin="2,0,0,0" Text="Constitution" VerticalAlignment="Center" Grid.Column="1" Grid.Row="4"/>
+                        <TextBlock x:Name="lblInt_Copy" HorizontalAlignment="Left" Margin="2,0,0,0" Text="Intelligence" VerticalAlignment="Center" Grid.Column="1" Grid.Row="6"/>
+                        <TextBlock x:Name="lblWis_Copy" HorizontalAlignment="Left" Margin="2,0,0,0" Text="Wisdom" VerticalAlignment="Center" Grid.Column="1" Grid.Row="8"/>
+                        <TextBlock x:Name="lblCha_Copy" HorizontalAlignment="Left" Margin="2,0,0,0" Text="Charisma" VerticalAlignment="Center" Grid.Column="1" Grid.Row="10"/>
 
                         <TextBox x:Name="txtStrm" HorizontalAlignment="Center" Margin="3,0" MinHeight="24" VerticalAlignment="Center" Width="40" IsReadOnly="True" Grid.Column="4"/>
-                        <TextBox x:Name="txtDexm" HorizontalAlignment="Center" Margin="3,0" MinHeight="24" VerticalAlignment="Center" Width="40" IsReadOnly="True" Grid.Column="4" Grid.Row="1"/>
-                        <TextBox x:Name="txtConm" HorizontalAlignment="Center" Margin="3,0" MinHeight="24" VerticalAlignment="Center" Width="40" IsReadOnly="True" Grid.Column="4" Grid.Row="2"/>
-                        <TextBox x:Name="txtIntm" HorizontalAlignment="Center" Margin="3,0" MinHeight="24" VerticalAlignment="Center" Width="40" IsReadOnly="True" Grid.Column="4" Grid.Row="3"/>
-                        <TextBox x:Name="txtWism" HorizontalAlignment="Center" Margin="3,0" MinHeight="24" VerticalAlignment="Center" Width="40" IsReadOnly="True" Grid.Column="4" Grid.Row="4"/>
-                        <TextBox x:Name="txtCham" HorizontalAlignment="Center" Margin="3,0" MinHeight="24" VerticalAlignment="Center" Width="40" IsReadOnly="True" Grid.Column="4" Grid.Row="5"/>
+                        <TextBox x:Name="txtDexm" HorizontalAlignment="Center" Margin="3,0" MinHeight="24" VerticalAlignment="Center" Width="40" IsReadOnly="True" Grid.Column="4" Grid.Row="2"/>
+                        <TextBox x:Name="txtConm" HorizontalAlignment="Center" Margin="3,0" MinHeight="24" VerticalAlignment="Center" Width="40" IsReadOnly="True" Grid.Column="4" Grid.Row="4"/>
+                        <TextBox x:Name="txtIntm" HorizontalAlignment="Center" Margin="3,0" MinHeight="24" VerticalAlignment="Center" Width="40" IsReadOnly="True" Grid.Column="4" Grid.Row="6"/>
+                        <TextBox x:Name="txtWism" HorizontalAlignment="Center" Margin="3,0" MinHeight="24" VerticalAlignment="Center" Width="40" IsReadOnly="True" Grid.Column="4" Grid.Row="8"/>
+                        <TextBox x:Name="txtCham" HorizontalAlignment="Center" Margin="3,0" MinHeight="24" VerticalAlignment="Center" Width="40" IsReadOnly="True" Grid.Column="4" Grid.Row="10"/>
                         <TextBlock HorizontalAlignment="Left" Margin="12,0,0,0" Text="modifier" VerticalAlignment="Center" Grid.Column="3"/>
-                        <TextBlock HorizontalAlignment="Left" Margin="12,0,0,0" Text="modifier" VerticalAlignment="Center" Grid.Column="3" Grid.Row="1"/>
                         <TextBlock HorizontalAlignment="Left" Margin="12,0,0,0" Text="modifier" VerticalAlignment="Center" Grid.Column="3" Grid.Row="2"/>
-                        <TextBlock HorizontalAlignment="Left" Margin="12,0,0,0" Text="modifier" VerticalAlignment="Center" Grid.Column="3" Grid.Row="3"/>
                         <TextBlock HorizontalAlignment="Left" Margin="12,0,0,0" Text="modifier" VerticalAlignment="Center" Grid.Column="3" Grid.Row="4"/>
-                        <TextBlock HorizontalAlignment="Left" Margin="12,0,0,0" Text="modifier" VerticalAlignment="Center" Grid.Column="3" Grid.Row="5"/>
+                        <TextBlock HorizontalAlignment="Left" Margin="12,0,0,0" Text="modifier" VerticalAlignment="Center" Grid.Column="3" Grid.Row="6"/>
+                        <TextBlock HorizontalAlignment="Left" Margin="12,0,0,0" Text="modifier" VerticalAlignment="Center" Grid.Column="3" Grid.Row="8"/>
+                        <TextBlock HorizontalAlignment="Left" Margin="12,0,0,0" Text="modifier" VerticalAlignment="Center" Grid.Column="3" Grid.Row="10"/>
+
+                        <flat:FlatButton HorizontalAlignment="Left" Margin="12,0,0,0" Content="+ Temp" VerticalAlignment="Center" Grid.Column="5" Grid.Row="0" TransparentBack="True" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" x:Name="btnTempStr" Click="btnTempStr_Click" />
+                        <flat:FlatButton HorizontalAlignment="Left" Margin="12,0,0,0" Content="+ Temp" VerticalAlignment="Center" Grid.Column="5" Grid.Row="2" TransparentBack="True" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" x:Name="btnTempDex" Click="btnTempDex_Click" />
+                        <flat:FlatButton HorizontalAlignment="Left" Margin="12,0,0,0" Content="+ Temp" VerticalAlignment="Center" Grid.Column="5" Grid.Row="4" TransparentBack="True" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" x:Name="btnTempCon" Click="btnTempCon_Click" />
+                        <flat:FlatButton HorizontalAlignment="Left" Margin="12,0,0,0" Content="+ Temp" VerticalAlignment="Center" Grid.Column="5" Grid.Row="6" TransparentBack="True" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" x:Name="btnTempInt" Click="btnTempInt_Click" />
+                        <flat:FlatButton HorizontalAlignment="Left" Margin="12,0,0,0" Content="+ Temp" VerticalAlignment="Center" Grid.Column="5" Grid.Row="8" TransparentBack="True" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" x:Name="btnTempWis" Click="btnTempWis_Click" />
+                        <flat:FlatButton HorizontalAlignment="Left" Margin="12,0,0,0" Content="+ Temp" VerticalAlignment="Center" Grid.Column="5" Grid.Row="10" TransparentBack="True" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" x:Name="btnTempCha" Click="btnTempCha_Click" />
+
+                        <local:TempAbilityDisplay Grid.Row="1" Grid.ColumnSpan="5" Width="Auto" HorizontalAlignment="Left" Margin="10,2,0,4" x:Name="grdTempStr" CloseRequested="grdTempStr_CloseRequested" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" Visibility="Collapsed" />
+                        <local:TempAbilityDisplay Grid.Row="3" Grid.ColumnSpan="5" Width="Auto" HorizontalAlignment="Left" Margin="10,2,0,4" x:Name="grdTempDex" CloseRequested="grdTempDex_CloseRequested" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" Visibility="Collapsed" />
+                        <local:TempAbilityDisplay Grid.Row="5" Grid.ColumnSpan="5" Width="Auto" HorizontalAlignment="Left" Margin="10,2,0,4" x:Name="grdTempCon" CloseRequested="grdTempCon_CloseRequested" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" Visibility="Collapsed" />
+                        <local:TempAbilityDisplay Grid.Row="7" Grid.ColumnSpan="5" Width="Auto" HorizontalAlignment="Left" Margin="10,2,0,4" x:Name="grdTempInt" CloseRequested="grdTempInt_CloseRequested" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" Visibility="Collapsed" />
+                        <local:TempAbilityDisplay Grid.Row="9" Grid.ColumnSpan="5" Width="Auto" HorizontalAlignment="Left" Margin="10,2,0,4" x:Name="grdTempWis" CloseRequested="grdTempWis_CloseRequested" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" Visibility="Collapsed" />
+                        <local:TempAbilityDisplay Grid.Row="11" Grid.ColumnSpan="5" Width="Auto" HorizontalAlignment="Left" Margin="10,2,0,4" x:Name="grdTempCha" CloseRequested="grdTempCha_CloseRequested" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" Visibility="Collapsed" />
                     </Grid>
 
                     <local:CompoundEditor Grid.Row="6" Margin="5,5,0,0" x:Name="edtFort" Title="Fortitude Save (CON)" ModifierTitle="Con Mod" ContentChanged="editor_ContentChanged" />
