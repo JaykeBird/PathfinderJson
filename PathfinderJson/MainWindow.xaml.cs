@@ -2595,31 +2595,13 @@ namespace PathfinderJson
             selMelee.LoadList(sheet.MeleeWeapons);
             selRanged.LoadList(sheet.RangedWeapons);
 
-            //selMelee.Clear();
-            //foreach (Weapon item in sheet.MeleeWeapons)
-            //{
-            //    WeaponEditor we = new WeaponEditor();
-            //    we.ContentChanged += editor_ContentChanged;
-            //    we.LoadWeapon(item);
-            //    selMelee.AddItem(we);
-            //}
-
-            //selRanged.Clear();
-            //foreach (Weapon item in sheet.RangedWeapons)
-            //{
-            //    WeaponEditor we = new WeaponEditor();
-            //    we.ContentChanged += editor_ContentChanged;
-            //    we.LoadWeapon(item);
-            //    selRanged.AddItem(we);
-            //}
-
-            selAcItem.Clear();
+            selAcItem.Items.Clear();
             foreach (AcItem item in sheet.AC.Items)
             {
                 AcItemEditor ae = new AcItemEditor();
                 ae.ContentChanged += editor_ContentChanged;
                 ae.LoadAcItem(item);
-                selAcItem.AddItem(ae);
+                selAcItem.Items.Add(ae);
             }
 
             AcItem total = sheet.AC.ItemTotals;
@@ -2630,43 +2612,19 @@ namespace PathfinderJson
 
             // Feats/Abilities tab
             selFeats.LoadList(sheet.Feats);
-            ////selFeats.Clear();
-            //foreach (Feat item in sheet.Feats)
-            //{
-            //    FeatEditor fe = new FeatEditor();
-            //    fe.ContentChanged += editor_ContentChanged;
-            //    fe.LoadFeat(item);
-            //    //selFeats.AddItem(fe);
-            //}
 
             selAbilities.LoadList(sheet.SpecialAbilities);
-            //selAbilities.Clear();
-            //foreach (SpecialAbility item in sheet.SpecialAbilities)
-            //{
-            //    AbilityEditor ae = new AbilityEditor();
-            //    ae.ContentChanged += editor_ContentChanged;
-            //    ae.LoadAbility(item);
-            //    selAbilities.AddItem(ae);
-            //}
 
             selTraits.LoadList(sheet.Traits);
-            //selTraits.Clear();
-            //foreach (SpecialAbility item in sheet.Traits)
-            //{
-            //    AbilityEditor ae = new AbilityEditor();
-            //    ae.ContentChanged += editor_ContentChanged;
-            //    ae.LoadAbility(item);
-            //    selTraits.AddItem(ae);
-            //}
 
-            selSpellLikes.Clear();
+            selSpellLikes.Items.Clear();
             foreach (Spell item in sheet.SpellLikeAbilities)
             {
                 SpellEditor se = new SpellEditor();
                 se.ContentChanged += editor_ContentChanged;
                 se.ApplyColorScheme(App.ColorScheme);
                 se.LoadSpell(item);
-                selSpellLikes.AddItem(se);
+                selSpellLikes.Items.Add(se);
             }
 
             // Equipment tab
@@ -2680,14 +2638,6 @@ namespace PathfinderJson
             txtOtherTreasure.Text = money.ContainsKey("other") ? money["other"] : "";
 
             selEquipment.LoadList(sheet.Equipment);
-            ////selEquipment.Clear();
-            //foreach (Equipment item in sheet.Equipment)
-            //{
-            //    ItemEditor ie = new ItemEditor();
-            //    ie.ContentChanged += editor_ContentChanged;
-            //    ie.LoadEquipment(item);
-            //    //selEquipment.AddItem(ie);
-            //}
 
             // Skills tab
             txtSkillModifiers.Text = sheet.SkillConditionalModifiers;
@@ -2804,14 +2754,14 @@ namespace PathfinderJson
             txtSpellSpecialty.Text = sheet.SpellsSpeciality;
             txtSpellConditionalModifiers.Text = sheet.SpellsConditionalModifiers;
 
-            selSpells.Clear();
+            selSpells.Items.Clear();
             foreach (Spell spell in allSpells)
             {
                 SpellEditor se = new SpellEditor();
                 se.ContentChanged += editor_ContentChanged;
                 se.ApplyColorScheme(App.ColorScheme);
                 se.LoadSpell(spell);
-                selSpells.AddItem(se);
+                selSpells.Items.Add(se);
             }
 
             // Notes tab
