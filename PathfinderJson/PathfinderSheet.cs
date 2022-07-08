@@ -48,6 +48,7 @@ namespace PathfinderJson
                     serializer.DefaultValueHandling = DefaultValueHandling.Ignore;
                     serializer.NullValueHandling = NullValueHandling.Ignore;
                     serializer.ContractResolver = new CamelCasePropertyNamesContractResolver();
+                    serializer.MaxDepth = 64;
                     serializer.Error += (object? sender, Newtonsoft.Json.Serialization.ErrorEventArgs e) => ErrorHandler(sender, e, filename);
                     PathfinderSheet ps = (PathfinderSheet)serializer.Deserialize(file, typeof(PathfinderSheet))!;
                     ps.SetupSheet();
