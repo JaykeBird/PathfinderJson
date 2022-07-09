@@ -24,7 +24,7 @@
         </Grid.RowDefinitions>
 
         <Path Grid.RowSpan="2" Grid.Column="0" Stroke="Black" Fill="LightGray" VerticalAlignment="Center" HorizontalAlignment="Center" Opacity="0.3" Margin="0,0,0,0" >
-            <Path.Data>M 0,0L 40,0 C 40,12 32,34 20,40 C 4,34 0,12 0,0</Path.Data>
+            <Path.Data>M 0,0L 40,0 C 40,12 32,34 20,40 C 4,32 0,12 0,0</Path.Data>
         </Path>
         <TextBlock x:Name="lblTitle_Copy" Text="AC" FontWeight="Bold" FontFamily="Sylfaen,Times New Roman,Times"
                    VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Row="1" FontSize="18" />

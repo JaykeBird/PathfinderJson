@@ -103,6 +103,9 @@ namespace PathfinderJson
         public const string TABS_VIEW = "tabs";
         public const string CONTINUOUS_VIEW = "continuous";
         public const string RAWJSON_VIEW = "rawjson";
+
+        public const int ABILITY_TABLE_VIEW = 0;
+        public const int ABILITY_ICON_VIEW = 1;
         #endregion
 
         /// <summary>
