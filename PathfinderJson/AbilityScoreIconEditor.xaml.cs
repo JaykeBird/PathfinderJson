@@ -66,8 +66,6 @@ namespace PathfinderJson
             }
         }
 
-        public event DependencyPropertyChangedEventHandler? ValueChanged;
-
         protected void OnInternalValueChanged(DependencyPropertyChangedEventArgs e)
         {
             Modifier = CoreUtils.CalculateModifierInt(Value);
@@ -75,9 +73,24 @@ namespace PathfinderJson
 
         #endregion
 
+        public event DependencyPropertyChangedEventHandler? ValueChanged;
+
+        public event EventHandler? RequestTempEditorDisplay;
+
+        public void HideTempButton()
+        {
+            btnTempAbi.Visibility = Visibility.Collapsed;
+        }
+
+        public void ShowTempButton()
+        {
+            btnTempAbi.Visibility = Visibility.Visible;
+        }
+
         private void btnTempAbi_Click(object sender, RoutedEventArgs e)
         {
-
+            RequestTempEditorDisplay?.Invoke(this, e);
+            btnTempAbi.Visibility = Visibility.Collapsed;
         }
     }
 }

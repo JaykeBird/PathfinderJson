@@ -463,12 +463,37 @@
                             <ColumnDefinition Width="1*" MinWidth="120" />
                             <ColumnDefinition Width="1*" MinWidth="120" />
                         </Grid.ColumnDefinitions>
-                        <local:AbilityScoreIconEditor x:Name="eleStr" Margin="0,0,0,5" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" Title="Strength" Abbreviation="STR" />
-                        <local:AbilityScoreIconEditor x:Name="eleDex" Margin="0,0,0,5" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" Title="Dexterity" Abbreviation="DEX" Grid.Column="1" />
-                        <local:AbilityScoreIconEditor x:Name="eleCon" Margin="0,0,0,5" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" Title="Constitution" Abbreviation="CON" Grid.Column="2"/>
-                        <local:AbilityScoreIconEditor x:Name="eleInt" Margin="0,0,0,5" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" Title="Intelligence" Abbreviation="INT" Grid.Row="1"/>
-                        <local:AbilityScoreIconEditor x:Name="eleWis" Margin="0,0,0,5" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" Title="Wisdom" Abbreviation="WIS" Grid.Row="1" Grid.Column="1"/>
-                        <local:AbilityScoreIconEditor x:Name="eleCha" Margin="0,0,0,5" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" Title="Charisma" Abbreviation="CHA" Grid.Column="2" Grid.Row="1"/>
+                        <local:AbilityScoreIconEditor x:Name="eleStr" Margin="0,0,0,5" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" ValueChanged="eleStr_ValueChanged" RequestTempEditorDisplay="eleStr_RequestTempEditorDisplay" Title="Strength" Abbreviation="STR" />
+                        <local:AbilityScoreIconEditor x:Name="eleDex" Margin="0,0,0,5" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" ValueChanged="eleStr_ValueChanged" RequestTempEditorDisplay="eleDex_RequestTempEditorDisplay" Title="Dexterity" Abbreviation="DEX" Grid.Column="1" />
+                        <local:AbilityScoreIconEditor x:Name="eleCon" Margin="0,0,0,5" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" ValueChanged="eleStr_ValueChanged" RequestTempEditorDisplay="eleCon_RequestTempEditorDisplay" Title="Constitution" Abbreviation="CON" Grid.Column="2"/>
+                        <local:AbilityScoreIconEditor x:Name="eleInt" Margin="0,0,0,5" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" ValueChanged="eleStr_ValueChanged" RequestTempEditorDisplay="eleInt_RequestTempEditorDisplay" Title="Intelligence" Abbreviation="INT" Grid.Row="1"/>
+                        <local:AbilityScoreIconEditor x:Name="eleWis" Margin="0,0,0,5" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" ValueChanged="eleStr_ValueChanged" RequestTempEditorDisplay="eleWis_RequestTempEditorDisplay" Title="Wisdom" Abbreviation="WIS" Grid.Row="1" Grid.Column="1"/>
+                        <local:AbilityScoreIconEditor x:Name="eleCha" Margin="0,0,0,5" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" ValueChanged="eleStr_ValueChanged" RequestTempEditorDisplay="eleCha_RequestTempEditorDisplay" Title="Charisma" Abbreviation="CHA" Grid.Column="2" Grid.Row="1"/>
+
+                        <StackPanel Grid.Row="3" Orientation="Horizontal" Grid.ColumnSpan="3" x:Name="stkTempStr" Visibility="Collapsed" >
+                            <TextBlock MinWidth="30" Text="STR" Margin="5,0" VerticalAlignment="Center" FontWeight="Bold" />
+                            <local:TempAbilityDisplay x:Name="eleTempStr" ColorScheme="{Binding ElementName=window,Path=ColorScheme}" CloseRequested="grdTempStr_CloseRequested" />
+                        </StackPanel>
+                        <StackPanel Grid.Row="4" Orientation="Horizontal" Grid.ColumnSpan="3" x:Name="stkTempDex" Visibility="Collapsed" >
+                            <TextBlock MinWidth="30" Text="DEX" Margin="5,0" VerticalAlignment="Center" FontWeight="Bold" />
+                            <local:TempAbilityDisplay x:Name="eleTempDex" ColorScheme="{Binding ElementName=window,Path=ColorScheme}" CloseRequested="grdTempDex_CloseRequested" />
+                        </StackPanel>
+                        <StackPanel Grid.Row="5" Orientation="Horizontal" Grid.ColumnSpan="3" x:Name="stkTempCon" Visibility="Collapsed" >
+                            <TextBlock MinWidth="30" Text="CON" Margin="5,0" VerticalAlignment="Center" FontWeight="Bold" />
+                            <local:TempAbilityDisplay x:Name="eleTempCon" ColorScheme="{Binding ElementName=window,Path=ColorScheme}" CloseRequested="grdTempCon_CloseRequested" />
+                        </StackPanel>
+                        <StackPanel Grid.Row="6" Orientation="Horizontal" Grid.ColumnSpan="3" x:Name="stkTempInt" Visibility="Collapsed" >
+                            <TextBlock MinWidth="30" Text="INT" Margin="5,0" VerticalAlignment="Center" FontWeight="Bold" />
+                            <local:TempAbilityDisplay x:Name="eleTempInt" ColorScheme="{Binding ElementName=window,Path=ColorScheme}" CloseRequested="grdTempInt_CloseRequested" />
+                        </StackPanel>
+                        <StackPanel Grid.Row="7" Orientation="Horizontal" Grid.ColumnSpan="3" x:Name="stkTempWis" Visibility="Collapsed" >
+                            <TextBlock MinWidth="30" Text="WIS" Margin="5,0" VerticalAlignment="Center" FontWeight="Bold" />
+                            <local:TempAbilityDisplay x:Name="eleTempWis" ColorScheme="{Binding ElementName=window,Path=ColorScheme}" CloseRequested="grdTempWis_CloseRequested" />
+                        </StackPanel>
+                        <StackPanel Grid.Row="8" Orientation="Horizontal" Grid.ColumnSpan="3" x:Name="stkTempCha" Visibility="Collapsed" >
+                            <TextBlock MinWidth="30" Text="CHA" Margin="5,0" VerticalAlignment="Center" FontWeight="Bold" />
+                            <local:TempAbilityDisplay x:Name="eleTempCha" ColorScheme="{Binding ElementName=window,Path=ColorScheme}" CloseRequested="grdTempCha_CloseRequested" />
+                        </StackPanel>
                     </Grid>
 
                     <Grid HorizontalAlignment="Left" Margin="15,5,0,10" Grid.Row="6" x:Name="grdAbilityList" VerticalAlignment="Stretch" Visibility="Visible" >
