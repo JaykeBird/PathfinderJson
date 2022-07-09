@@ -8,7 +8,7 @@
         xmlns:edit="http://icsharpcode.net/sharpdevelop/avalonedit"
         xmlns:md="clr-namespace:Markdig.Wpf;assembly=Markdig.Wpf"
         mc:Ignorable="d" x:Name="window"
-        Title="Pathfinder JSON" Height="730" Width="550" MinWidth="550" MinHeight="450" ExcludeTopRightElementFromChrome="False"
+        Title="Pathfinder JSON" Height="785" Width="550" MinWidth="550" MinHeight="450" ExcludeTopRightElementFromChrome="False"
         Loaded="window_Loaded" Closing="window_Closing" Closed="window_Closed" Activated="window_Activated" Deactivated="window_Deactivated" >
     <flat:FlatWindow.Resources>
         <ResourceDictionary>
@@ -274,6 +274,7 @@
                         <RowDefinition Height="Auto" MinHeight="60"/>
                         <RowDefinition Height="Auto" MinHeight="50"/>
                         <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" MinHeight="32" />
                         <RowDefinition Height="Auto"/>
                         <RowDefinition/>
                         <RowDefinition/>
@@ -332,7 +333,6 @@
                         <TextBlock x:Name="lblHomeland" HorizontalAlignment="Left" Text="Homeland" VerticalAlignment="Center" Grid.Column="1"/>
                         <TextBox x:Name="txtDeity" MinHeight="23" VerticalAlignment="Center" TextChanged="textbox_TextChanged" Grid.Column="2" Grid.Row="1"/>
                         <TextBlock x:Name="lblDeity" HorizontalAlignment="Left" Text="Deity" VerticalAlignment="Center" Grid.Column="2"/>
-
                     </Grid>
 
                     <Expander VerticalAlignment="Top" Margin="10,0,10,0" Grid.Row="4" x:Name="expPhysical" Header="Physical Attributes / Speed" Foreground="{Binding Foreground, ElementName=window}" >
@@ -421,7 +421,57 @@
                             <TextBlock x:Name="lblSpeedTemp" HorizontalAlignment="Left" Margin="10,1,0,2" Text="Temporary Speed Modifiers" VerticalAlignment="Center" Grid.Row="4"/>
                         </Grid>
                     </Expander>
-                    <Grid HorizontalAlignment="Left" Margin="15,10,0,10" Grid.Row="5" x:Name="grdAbilityList" VerticalAlignment="Stretch">
+
+                    <Grid x:Name="grdAbilityHeader" Grid.Row="5" Margin="0,6,0,0" >
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="24" />
+                            <ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Text="Base Ability Scores" FontWeight="Bold" Grid.Column="0" Margin="3,0,8,0" VerticalAlignment="Center" />
+                        <flat:FlatButton x:Name="btnAbilitiesInfo" ToolTip="More info about Ability Scores" Click="btnAbilitiesInfo_Click" Height="24" Padding="0"
+                                         ColorScheme="{Binding ElementName=window,Path=ColorScheme}" Grid.Column="1" Width="24" TransparentBack="True" >
+                            <local:ThemedImage ImageName="Info" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" Height="16" />
+                        </flat:FlatButton>
+                        <flat:MenuButton x:Name="mnuAbilityView" Content="Table view" Grid.Column="3" KeepMenuArrowOnRight="True" Height="24"
+                                         ColorScheme="{Binding ElementName=window, Path=ColorScheme}" TransparentBack="True" >
+                            <flat:MenuButton.Menu>
+                                <flat:ContextMenu>
+                                    <MenuItem Header="Table view" x:Name="mnuAbilityView1" Click="mnuAbilityView1_Click" IsChecked="True" />
+                                    <MenuItem Header="Icon view" x:Name="mnuAbilityView2" Click="mnuAbilityView2_Click" />
+                                </flat:ContextMenu>
+                            </flat:MenuButton.Menu>
+                        </flat:MenuButton>
+                    </Grid>
+
+                    <Grid Margin="15,5,15,10" Grid.Row="6" x:Name="grdAbilityIcon" Visibility="Collapsed" >
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" MinHeight="120" />
+                            <RowDefinition Height="Auto" MinHeight="120" />
+                            <RowDefinition Height="5" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*" MinWidth="120" />
+                            <ColumnDefinition Width="1*" MinWidth="120" />
+                            <ColumnDefinition Width="1*" MinWidth="120" />
+                        </Grid.ColumnDefinitions>
+                        <local:AbilityScoreIconEditor x:Name="eleStr" Margin="0,0,0,5" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" Title="Strength" Abbreviation="STR" />
+                        <local:AbilityScoreIconEditor x:Name="eleDex" Margin="0,0,0,5" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" Title="Dexterity" Abbreviation="DEX" Grid.Column="1" />
+                        <local:AbilityScoreIconEditor x:Name="eleCon" Margin="0,0,0,5" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" Title="Constitution" Abbreviation="CON" Grid.Column="2"/>
+                        <local:AbilityScoreIconEditor x:Name="eleInt" Margin="0,0,0,5" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" Title="Intelligence" Abbreviation="INT" Grid.Row="1"/>
+                        <local:AbilityScoreIconEditor x:Name="eleWis" Margin="0,0,0,5" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" Title="Wisdom" Abbreviation="WIS" Grid.Row="1" Grid.Column="1"/>
+                        <local:AbilityScoreIconEditor x:Name="eleCha" Margin="0,0,0,5" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" Title="Charisma" Abbreviation="CHA" Grid.Column="2" Grid.Row="1"/>
+                    </Grid>
+
+                    <Grid HorizontalAlignment="Left" Margin="15,5,0,10" Grid.Row="6" x:Name="grdAbilityList" VerticalAlignment="Stretch" Visibility="Visible" >
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" MinHeight="28" />
                             <RowDefinition Height="Auto"/>
@@ -492,10 +542,10 @@
                         <local:TempAbilityDisplay Grid.Row="11" Grid.ColumnSpan="5" Width="Auto" HorizontalAlignment="Left" Margin="10,2,0,4" x:Name="grdTempCha" CloseRequested="grdTempCha_CloseRequested" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" Visibility="Collapsed" />
                     </Grid>
 
-                    <local:CompoundEditor Grid.Row="6" Margin="5,5,0,0" x:Name="edtFort" Title="Fortitude Save (CON)" ModifierTitle="Con Mod" ContentChanged="editor_ContentChanged" />
-                    <local:CompoundEditor Grid.Row="7" Margin="5,5,0,0" x:Name="edtReflex" Title="Reflex Save (DEX)" ModifierTitle="Dex Mod" ContentChanged="editor_ContentChanged" />
-                    <local:CompoundEditor Grid.Row="8" Margin="5,5,0,0" x:Name="edtWill" Title="Will Save (WIS)" ModifierTitle="Wis Mod" ContentChanged="editor_ContentChanged" />
-                    <Grid Margin="15,0,10,0" Grid.Row="9" VerticalAlignment="Center" >
+                    <local:CompoundEditor Grid.Row="7" Margin="5,5,0,0" x:Name="edtFort" Title="Fortitude Save (CON)" ModifierTitle="Con Mod" ContentChanged="editor_ContentChanged" />
+                    <local:CompoundEditor Grid.Row="8" Margin="5,5,0,0" x:Name="edtReflex" Title="Reflex Save (DEX)" ModifierTitle="Dex Mod" ContentChanged="editor_ContentChanged" />
+                    <local:CompoundEditor Grid.Row="9" Margin="5,5,0,0" x:Name="edtWill" Title="Will Save (WIS)" ModifierTitle="Wis Mod" ContentChanged="editor_ContentChanged" />
+                    <Grid Margin="15,0,10,0" Grid.Row="10" VerticalAlignment="Center" >
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>

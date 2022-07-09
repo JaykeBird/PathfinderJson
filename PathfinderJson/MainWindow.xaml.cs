@@ -2511,6 +2511,13 @@ namespace PathfinderJson
             txtInt.Value = sheet.Intelligence;
             txtWis.Value = sheet.Wisdom;
 
+            eleStr.Value = sheet.Strength;
+            eleDex.Value = sheet.Dexterity;
+            eleCha.Value = sheet.Charisma;
+            eleCon.Value = sheet.Constitution;
+            eleInt.Value = sheet.Intelligence;
+            eleWis.Value = sheet.Wisdom;
+
             LoadTempStat("tempStr", grdTempStr, btnTempStr);
             LoadTempStat("tempDex", grdTempDex, btnTempDex);
             LoadTempStat("tempCha", grdTempCha, btnTempCha);
@@ -2934,6 +2941,11 @@ namespace PathfinderJson
 
             UpdateInternalBab();
 
+            if (grdAbilityIcon.Visibility == Visibility.Visible)
+            {
+                ApplyIconValuesToTable();
+            }
+
             txtStrm.Text = CalculateModifier(txtStr.Value);
             txtDexm.Text = CalculateModifier(txtDex.Value);
             txtCham.Text = CalculateModifier(txtCha.Value);
@@ -3218,6 +3230,13 @@ namespace PathfinderJson
                 sp = null;
             }
             sheet.Speed = sp;
+
+            _isUpdating = true;
+            if (grdAbilityIcon.Visibility == Visibility.Visible)
+            {
+                ApplyIconValuesToTable();
+            }
+            _isUpdating = false;
 
             //Dictionary<string, string> abilities = new Dictionary<string, string>
             //{
@@ -4326,76 +4345,171 @@ namespace PathfinderJson
             }
         }
 
+        #region Ability score editors / views
+
+        #region Temporary editors
         private void btnTempStr_Click(object sender, RoutedEventArgs e)
         {
             grdTempStr.Visibility = Visibility.Visible;
             btnTempStr.Visibility = Visibility.Collapsed;
+            SetIsDirty();
         }
 
         private void btnTempDex_Click(object sender, RoutedEventArgs e)
         {
             grdTempDex.Visibility = Visibility.Visible;
             btnTempDex.Visibility = Visibility.Collapsed;
+            SetIsDirty();
         }
 
         private void btnTempCon_Click(object sender, RoutedEventArgs e)
         {
             grdTempCon.Visibility = Visibility.Visible;
             btnTempCon.Visibility = Visibility.Collapsed;
+            SetIsDirty();
         }
 
         private void btnTempInt_Click(object sender, RoutedEventArgs e)
         {
             grdTempInt.Visibility = Visibility.Visible;
             btnTempInt.Visibility = Visibility.Collapsed;
+            SetIsDirty();
         }
 
         private void btnTempWis_Click(object sender, RoutedEventArgs e)
         {
             grdTempWis.Visibility = Visibility.Visible;
             btnTempWis.Visibility = Visibility.Collapsed;
+            SetIsDirty();
         }
 
         private void btnTempCha_Click(object sender, RoutedEventArgs e)
         {
             grdTempCha.Visibility = Visibility.Visible;
             btnTempCha.Visibility = Visibility.Collapsed;
+            SetIsDirty();
         }
 
         private void grdTempStr_CloseRequested(object sender, EventArgs e)
         {
             grdTempStr.Visibility = Visibility.Collapsed;
             btnTempStr.Visibility = Visibility.Visible;
+            SetIsDirty();
         }
 
         private void grdTempDex_CloseRequested(object sender, EventArgs e)
         {
             grdTempDex.Visibility = Visibility.Collapsed;
             btnTempDex.Visibility = Visibility.Visible;
+            SetIsDirty();
         }
 
         private void grdTempCon_CloseRequested(object sender, EventArgs e)
         {
             grdTempCon.Visibility = Visibility.Collapsed;
             btnTempCon.Visibility = Visibility.Visible;
+            SetIsDirty();
         }
 
         private void grdTempInt_CloseRequested(object sender, EventArgs e)
         {
             grdTempInt.Visibility = Visibility.Collapsed;
             btnTempInt.Visibility = Visibility.Visible;
+            SetIsDirty();
         }
 
         private void grdTempWis_CloseRequested(object sender, EventArgs e)
         {
             grdTempWis.Visibility = Visibility.Collapsed;
             btnTempWis.Visibility = Visibility.Visible;
+            SetIsDirty();
         }
 
         private void grdTempCha_CloseRequested(object sender, EventArgs e)
         {
             grdTempCha.Visibility = Visibility.Collapsed;
             btnTempCha.Visibility = Visibility.Visible;
+            SetIsDirty();
         }
+        #endregion
+
+        private void btnAbilitiesInfo_Click(object sender, RoutedEventArgs e)
+        {
+            OpenBrowser("https://www.d20pfsrd.com/basics-ability-scores/ability-scores/");
+        }
+
+        void ApplyIconValuesToTable()
+        {
+            txtWis.Value = eleWis.Value;
+            txtCha.Value = eleCha.Value;
+            txtInt.Value = eleInt.Value;
+            txtStr.Value = eleStr.Value;
+            txtCon.Value = eleCon.Value;
+            txtDex.Value = eleDex.Value;
+
+            // TODO: add in temp values if the temp editors in icon view are present
+        }
+
+        void SetAbilityScoreView(int view, bool init = false)
+        {
+            bool updOld = _isUpdating;
+            switch (view)
+            {
+                case ABILITY_ICON_VIEW:
+                    mnuAbilityView2.IsChecked = true;
+                    mnuAbilityView1.IsChecked = false;
+                    mnuAbilityView.Content = "Icon view";
+
+                    grdAbilityList.Visibility = Visibility.Collapsed;
+                    grdAbilityIcon.Visibility = Visibility.Visible;
+
+                    if (!init)
+                    {
+                        _isUpdating = true;
+                        eleWis.Value = txtWis.Value;
+                        eleCha.Value = txtCha.Value;
+                        eleInt.Value = txtInt.Value;
+                        eleStr.Value = txtStr.Value;
+                        eleCon.Value = txtCon.Value;
+                        eleDex.Value = txtDex.Value;
+                        _isUpdating = updOld;
+                    }
+                    break;
+                case ABILITY_TABLE_VIEW:
+                    mnuAbilityView2.IsChecked = false;
+                    mnuAbilityView1.IsChecked = true;
+                    mnuAbilityView.Content = "Table view";
+
+                    grdAbilityList.Visibility = Visibility.Visible;
+                    grdAbilityIcon.Visibility = Visibility.Collapsed;
+
+                    if (!init)
+                    {
+                        _isUpdating = true;
+                        txtWis.Value = eleWis.Value;
+                        txtCha.Value = eleCha.Value;
+                        txtInt.Value = eleInt.Value;
+                        txtStr.Value = eleStr.Value;
+                        txtCon.Value = eleCon.Value;
+                        txtDex.Value = eleDex.Value;
+                        _isUpdating = updOld;
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private void mnuAbilityView1_Click(object sender, RoutedEventArgs e)
+        {
+            SetAbilityScoreView(ABILITY_TABLE_VIEW);
+        }
+
+        private void mnuAbilityView2_Click(object sender, RoutedEventArgs e)
+        {
+            SetAbilityScoreView(ABILITY_ICON_VIEW);
+        }
+
+        #endregion
     }
 }
