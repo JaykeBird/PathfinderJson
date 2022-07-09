@@ -18,7 +18,7 @@
                 <TextBlock Text="Temporary" VerticalAlignment="Center" Margin="0,3" />
                 <flat:IntegerSpinner x:Name="nudValue" Width="60" Value="10" Height="24" Margin="10,2" MinValue="-99" MaxValue="99" AcceptExpressions="True"
                                      ColorScheme="{Binding ElementName=control, Path=ColorScheme}" ValueChanged="nudValue_ValueChanged" />
-                <TextBlock x:Name="txtMod" Text="( +99 )" VerticalAlignment="Center" />
+                <TextBlock x:Name="txtMod" Text="( +0 )" VerticalAlignment="Center" />
             </StackPanel>
             <flat:FlatButton Grid.Column="1" Width="24" Height="24" TransparentBack="True" x:Name="btnClose" VerticalAlignment="Center"
                              ColorScheme="{Binding ElementName=control, Path=ColorScheme}" Click="btnClose_Click" >

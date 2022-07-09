@@ -2528,25 +2528,30 @@ namespace PathfinderJson
             eleInt.Value = sheet.Intelligence;
             eleWis.Value = sheet.Wisdom;
 
-            LoadTempStat("tempStr", grdTempStr, btnTempStr);
-            LoadTempStat("tempDex", grdTempDex, btnTempDex);
-            LoadTempStat("tempCha", grdTempCha, btnTempCha);
-            LoadTempStat("tempCon", grdTempCon, btnTempCon);
-            LoadTempStat("tempInt", grdTempInt, btnTempInt);
-            LoadTempStat("tempWis", grdTempWis, btnTempWis);
+            LoadTempStat("tempStr", grdTempStr, btnTempStr, eleStr, stkTempStr);
+            LoadTempStat("tempDex", grdTempDex, btnTempDex, eleDex, stkTempDex);
+            LoadTempStat("tempCha", grdTempCha, btnTempCha, eleCha, stkTempCha);
+            LoadTempStat("tempCon", grdTempCon, btnTempCon, eleCon, stkTempCon);
+            LoadTempStat("tempInt", grdTempInt, btnTempInt, eleInt, stkTempInt);
+            LoadTempStat("tempWis", grdTempWis, btnTempWis, eleWis, stkTempWis);
 
-            void LoadTempStat(string statName, TempAbilityDisplay control, FlatButton button)
+            void LoadTempStat(string statName, TempAbilityDisplay control, FlatButton button, AbilityScoreIconEditor iconControl, StackPanel control2)
             {
                 if (abilities.ContainsKey(statName))
                 {
                     control.Visibility = Visibility.Visible;
+                    control2.Visibility = Visibility.Visible;
                     button.Visibility = Visibility.Collapsed;
                     control.Value = ParseStringAsInt(abilities[statName], 10);
+                    ((TempAbilityDisplay)control2.Children[1]).Value = ParseStringAsInt(abilities[statName], 10);
+                    iconControl.HideTempButton();
                 }
                 else
                 {
                     control.Visibility = Visibility.Collapsed;
+                    control2.Visibility = Visibility.Collapsed;
                     button.Visibility = Visibility.Visible;
+                    iconControl.ShowTempButton();
                 }
             }
 
@@ -3486,6 +3491,27 @@ namespace PathfinderJson
             }
         }
 
+        private async void eleStr_ValueChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            if (!_isUpdating)
+            {
+                txtStrm.Text = CalculateModifier(eleStr.Value);
+                txtDexm.Text = CalculateModifier(eleDex.Value);
+                txtCham.Text = CalculateModifier(eleCha.Value);
+                txtConm.Text = CalculateModifier(eleCon.Value);
+                txtIntm.Text = CalculateModifier(eleInt.Value);
+                txtWism.Text = CalculateModifier(eleWis.Value);
+
+                SetIsDirty();
+                CreateUndoState();
+
+                if (mnuAutoUpdate.IsChecked)
+                {
+                    await UpdateCalculations(true, false, false);
+                }
+            }
+        }
+
         private void txtCharacter_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (!_isUpdating)
@@ -4147,6 +4173,8 @@ namespace PathfinderJson
         {
             grdTempStr.Visibility = Visibility.Collapsed;
             btnTempStr.Visibility = Visibility.Visible;
+            stkTempStr.Visibility = Visibility.Collapsed;
+            eleStr.ShowTempButton();
             SetIsDirty();
         }
 
@@ -4154,6 +4182,8 @@ namespace PathfinderJson
         {
             grdTempDex.Visibility = Visibility.Collapsed;
             btnTempDex.Visibility = Visibility.Visible;
+            stkTempDex.Visibility = Visibility.Collapsed;
+            eleDex.ShowTempButton();
             SetIsDirty();
         }
 
@@ -4161,6 +4191,8 @@ namespace PathfinderJson
         {
             grdTempCon.Visibility = Visibility.Collapsed;
             btnTempCon.Visibility = Visibility.Visible;
+            stkTempCon.Visibility = Visibility.Collapsed;
+            eleCon.ShowTempButton();
             SetIsDirty();
         }
 
@@ -4168,6 +4200,8 @@ namespace PathfinderJson
         {
             grdTempInt.Visibility = Visibility.Collapsed;
             btnTempInt.Visibility = Visibility.Visible;
+            stkTempInt.Visibility = Visibility.Collapsed;
+            eleInt.ShowTempButton();
             SetIsDirty();
         }
 
@@ -4175,6 +4209,8 @@ namespace PathfinderJson
         {
             grdTempWis.Visibility = Visibility.Collapsed;
             btnTempWis.Visibility = Visibility.Visible;
+            stkTempWis.Visibility = Visibility.Collapsed;
+            eleWis.ShowTempButton();
             SetIsDirty();
         }
 
@@ -4182,8 +4218,47 @@ namespace PathfinderJson
         {
             grdTempCha.Visibility = Visibility.Collapsed;
             btnTempCha.Visibility = Visibility.Visible;
+            stkTempCha.Visibility = Visibility.Collapsed;
+            eleCha.ShowTempButton();
             SetIsDirty();
         }
+
+        private void eleStr_RequestTempEditorDisplay(object sender, EventArgs e)
+        {
+            stkTempStr.Visibility = Visibility.Visible;
+            SetIsDirty();
+        }
+
+        private void eleDex_RequestTempEditorDisplay(object sender, EventArgs e)
+        {
+            stkTempDex.Visibility = Visibility.Visible;
+            SetIsDirty();
+        }
+
+        private void eleCon_RequestTempEditorDisplay(object sender, EventArgs e)
+        {
+            stkTempCon.Visibility = Visibility.Visible;
+            SetIsDirty();
+        }
+
+        private void eleInt_RequestTempEditorDisplay(object sender, EventArgs e)
+        {
+            stkTempInt.Visibility = Visibility.Visible;
+            SetIsDirty();
+        }
+
+        private void eleWis_RequestTempEditorDisplay(object sender, EventArgs e)
+        {
+            stkTempWis.Visibility = Visibility.Visible;
+            SetIsDirty();
+        }
+
+        private void eleCha_RequestTempEditorDisplay(object sender, EventArgs e)
+        {
+            stkTempCha.Visibility = Visibility.Visible;
+            SetIsDirty();
+        }
+
         #endregion
 
         private void btnAbilitiesInfo_Click(object sender, RoutedEventArgs e)
@@ -4209,6 +4284,7 @@ namespace PathfinderJson
             switch (view)
             {
                 case ABILITY_ICON_VIEW:
+                    // convert from table view to icon view
                     mnuAbilityView2.IsChecked = true;
                     mnuAbilityView1.IsChecked = false;
                     mnuAbilityView.Content = "Icon view";
@@ -4225,10 +4301,27 @@ namespace PathfinderJson
                         eleStr.Value = txtStr.Value;
                         eleCon.Value = txtCon.Value;
                         eleDex.Value = txtDex.Value;
+
+                        if (grdTempCha.Visibility == Visibility.Visible) { stkTempCha.Visibility = Visibility.Visible; eleCha.HideTempButton(); } else { eleCha.ShowTempButton(); }
+                        if (grdTempCon.Visibility == Visibility.Visible) { stkTempCon.Visibility = Visibility.Visible; eleCon.HideTempButton(); } else { eleCon.ShowTempButton(); }
+                        if (grdTempDex.Visibility == Visibility.Visible) { stkTempDex.Visibility = Visibility.Visible; eleDex.HideTempButton(); } else { eleDex.ShowTempButton(); }
+                        if (grdTempInt.Visibility == Visibility.Visible) { stkTempInt.Visibility = Visibility.Visible; eleInt.HideTempButton(); } else { eleInt.ShowTempButton(); }
+                        if (grdTempStr.Visibility == Visibility.Visible) { stkTempStr.Visibility = Visibility.Visible; eleStr.HideTempButton(); } else { eleStr.ShowTempButton(); }
+                        if (grdTempWis.Visibility == Visibility.Visible) { stkTempWis.Visibility = Visibility.Visible; eleWis.HideTempButton(); } else { eleWis.ShowTempButton(); }
+
+                        eleTempCha.Value = grdTempCha.Value;
+                        eleTempCon.Value = grdTempCon.Value;
+                        eleTempDex.Value = grdTempDex.Value;
+                        eleTempInt.Value = grdTempInt.Value;
+                        eleTempStr.Value = grdTempStr.Value;
+                        eleTempWis.Value = grdTempWis.Value;
+
                         _isUpdating = updOld;
                     }
+
                     break;
                 case ABILITY_TABLE_VIEW:
+                    // convert from icon view to table view
                     mnuAbilityView2.IsChecked = false;
                     mnuAbilityView1.IsChecked = true;
                     mnuAbilityView.Content = "Table view";
@@ -4245,6 +4338,21 @@ namespace PathfinderJson
                         txtStr.Value = eleStr.Value;
                         txtCon.Value = eleCon.Value;
                         txtDex.Value = eleDex.Value;
+
+                        if (stkTempCha.Visibility == Visibility.Visible) grdTempCha.Visibility = Visibility.Visible;
+                        if (stkTempCon.Visibility == Visibility.Visible) grdTempCon.Visibility = Visibility.Visible;
+                        if (stkTempDex.Visibility == Visibility.Visible) grdTempDex.Visibility = Visibility.Visible;
+                        if (stkTempInt.Visibility == Visibility.Visible) grdTempInt.Visibility = Visibility.Visible;
+                        if (stkTempStr.Visibility == Visibility.Visible) grdTempStr.Visibility = Visibility.Visible;
+                        if (stkTempWis.Visibility == Visibility.Visible) grdTempWis.Visibility = Visibility.Visible;
+
+                        grdTempCha.Value = eleTempCha.Value;
+                        grdTempCon.Value = eleTempCon.Value;
+                        grdTempDex.Value = eleTempDex.Value;
+                        grdTempInt.Value = eleTempInt.Value;
+                        grdTempStr.Value = eleTempStr.Value;
+                        grdTempWis.Value = eleTempWis.Value;
+
                         _isUpdating = updOld;
                     }
                     break;
@@ -4264,5 +4372,6 @@ namespace PathfinderJson
         }
 
         #endregion
+
     }
 }
