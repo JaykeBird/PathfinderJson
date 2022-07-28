@@ -63,6 +63,8 @@
                     </MenuItem.Icon>
                     <MenuItem Header="(list of recent files appear here)" IsEnabled="False" x:Name="mnuRecentEmpty" />
                     <Separator />
+                    <MenuItem Header="_Show Actions Menu on Left Click" x:Name="mnuRecentActions" Click="mnuRecentActions_Click" />
+                    <Separator />
                     <MenuItem Header="_Clear Recent File List" x:Name="mnuRecentClear" Click="mnuRecentClear_Click" />
                 </MenuItem>
                 <MenuItem Header="_Close" x:Name="mnuClose" Click="btnClose_Click" >
