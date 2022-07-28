@@ -197,6 +197,7 @@ namespace PathfinderJson
             {
                 AddRecentFile(file, false);
             }
+            mnuRecentActions.IsChecked = App.Settings.DisplayRecentActionsAsSubmenu;
 
             ShowHideToolbar(App.Settings.ShowToolbar);
 
@@ -369,31 +370,7 @@ namespace PathfinderJson
             }
 
             // clear recent files list in UI (not in backend)
-            List<FrameworkElement> itemsToRemove = new List<FrameworkElement>();
-
-            foreach (FrameworkElement? item in mnuRecent.Items)
-            {
-
-                if (item is MenuItem)
-                {
-                    if (item.Tag != null)
-                    {
-                        itemsToRemove.Add(item);
-                    }
-                }
-            }
-
-            foreach (var item in itemsToRemove)
-            {
-                mnuRecent.Items.Remove(item);
-            }
-
-            mnuRecentEmpty.Visibility = Visibility.Visible;
-
-            foreach (string file in App.Settings.RecentFiles)//.Reverse<string>())
-            {
-                AddRecentFile(file, false);
-            }
+            RebuildRecentMenu();
 
             ShowHideToolbar(App.Settings.ShowToolbar);
 
@@ -957,35 +934,11 @@ namespace PathfinderJson
                 tt.HorizontalOffset = 3;
             }
 
-            MenuItem cm1 = new MenuItem();
-            cm1.Header = "Open";
-            cm1.Tag = mi;
-            cm1.Click += miRecentOpen_Click;
-            if (submenu) mi.Items.Add(cm1); else cm.Items.Add(cm1);
-
-            MenuItem cm4 = new MenuItem();
-            cm4.Header = "Open in New Window";
-            cm4.Tag = mi;
-            cm4.Click += miRecentOpenNew_Click;
-            if (submenu) mi.Items.Add(cm4); else cm.Items.Add(cm4);
-
-            MenuItem cm5 = new MenuItem();
-            cm5.Header = "Copy Path";
-            cm5.Tag = mi;
-            cm5.Click += miRecentCopy_Click;
-            if (submenu) mi.Items.Add(cm5); else cm.Items.Add(cm5);
-
-            MenuItem cm2 = new MenuItem();
-            cm2.Header = "View in Explorer";
-            cm2.Tag = mi;
-            cm2.Click += miRecentView_Click;
-            if (submenu) mi.Items.Add(cm2); else cm.Items.Add(cm2);
-
-            MenuItem cm3 = new MenuItem();
-            cm3.Header = "Remove";
-            cm3.Tag = mi;
-            cm3.Click += miRecentRemove_Click;
-            if (submenu) mi.Items.Add(cm3); else cm.Items.Add(cm3);
+            CreateMenuItem("Open", miRecentOpen_Click);
+            CreateMenuItem("Open in New Window", miRecentOpenNew_Click);
+            CreateMenuItem("Copy Path", miRecentCopy_Click);
+            CreateMenuItem("View in Explorer", miRecentView_Click);
+            CreateMenuItem("Remove", miRecentRemove_Click);
 
             if (!submenu)
             {
@@ -1000,6 +953,16 @@ namespace PathfinderJson
             }
 
             mnuRecentEmpty.Visibility = Visibility.Collapsed;
+
+            MenuItem CreateMenuItem(string header, RoutedEventHandler handler)
+            {
+                MenuItem mii = new MenuItem();
+                mii.Header = header;
+                mii.Tag = mi;
+                mii.Click += handler;
+                if (submenu) mi.Items.Add(mii); else cm.Items.Add(mii);
+                return mi;
+            }
         }
 
         private void miRecentContext_Opening(object sender, ContextMenuEventArgs e)
@@ -1124,6 +1087,14 @@ namespace PathfinderJson
             }
         }
 
+        private void mnuRecentActions_Click(object sender, RoutedEventArgs e)
+        {
+            App.Settings.DisplayRecentActionsAsSubmenu = !App.Settings.DisplayRecentActionsAsSubmenu;
+
+            SaveSettings();
+            RebuildRecentMenu();
+        }
+
         bool AskClearRecentList()
         {
             MessageDialog md = new MessageDialog(App.ColorScheme);
@@ -1165,6 +1136,8 @@ namespace PathfinderJson
             {
                 AddRecentFile(file, false);
             }
+
+            mnuRecentActions.IsChecked = App.Settings.DisplayRecentActionsAsSubmenu;
         }
 
         private void miRecentOpen_Click(object sender, RoutedEventArgs e)
@@ -4372,6 +4345,5 @@ namespace PathfinderJson
         }
 
         #endregion
-
     }
 }
