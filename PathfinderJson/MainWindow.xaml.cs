@@ -2811,6 +2811,7 @@ namespace PathfinderJson
         private void mnuUpdateAc_Click(object sender, RoutedEventArgs e)
         {
             mnuUpdateAc.IsChecked = !mnuUpdateAc.IsChecked;
+            edtAc.CalculateAcValueChanged(mnuUpdateAc.IsChecked);
         }
 
         private void mnuAutoUpdate_Click(object sender, RoutedEventArgs e)

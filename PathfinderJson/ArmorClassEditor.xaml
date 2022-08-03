@@ -38,11 +38,16 @@
         <TextBox x:Name="txtFlat" MinHeight="24" MinWidth="60" Margin="6,0" VerticalAlignment="Center" TextChanged="textbox_TextChanged" Grid.Column="3" Grid.Row="1"/>
 
         <StackPanel HorizontalAlignment="Left" Orientation="Horizontal" VerticalAlignment="Center" Grid.Row="1" Grid.ColumnSpan="5" />
+        
+        <!--<Expander x:Name="expModifiers" Header="Modifiers" Margin="2,1,4,0" Collapsed="ExpModifiers_Collapsed" Expanded="ExpModifiers_Expanded" 
+                  IsExpanded="False" Foreground="{Binding Foreground, ElementName=userControl}" Grid.Column="4" Grid.Row="1" />-->
+        <local:DetailsButton x:Name="btnDetails" DetailsText="Modifiers" Margin="2,0,2,0" Grid.Column="5" Grid.Row="1" IsSelected="False" />
 
         <Border BorderThickness="1,0,1,1" BorderBrush="Black" Grid.Row="2" x:Name="brdrModifiers" Grid.ColumnSpan="6" Visibility="{Binding ElementName=btnDetails, Path=IsSelected, Converter={StaticResource btv}}" >
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition />
+                    <RowDefinition Height="Auto" x:Name="rowCalculations" />
                     <RowDefinition />
                 </Grid.RowDefinitions>
                 <Grid VerticalAlignment="Top" Margin="10,5,10,0">
@@ -74,7 +79,29 @@
                     <TextBlock x:Name="lblDeflection" HorizontalAlignment="Left" Text="Deflect" VerticalAlignment="Center" Grid.Column="5"/>
                     <TextBlock x:Name="lblPlusTen" HorizontalAlignment="Left" Margin="2,0,0,0" Text="+10" FontWeight="SemiBold" FontSize="14" VerticalAlignment="Top" Grid.Row="1" Grid.Column="6" />
                 </Grid>
-                <Grid Margin="10,5" VerticalAlignment="Center" Grid.Row="1" >
+                <Grid Margin="10,5,10,2" MinHeight="20" x:Name="grdCalculationData" Grid.Row="1" >
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="10"/>
+                        <RowDefinition Height="1*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="20" />
+                        <ColumnDefinition Width="1*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid Grid.Row="0" Grid.ColumnSpan="2" Margin="0,0,0,3">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*" />
+                            <ColumnDefinition Width="20" />
+                            <ColumnDefinition Width="4*" />
+                            <ColumnDefinition Width="25" />
+                        </Grid.ColumnDefinitions>
+                        <Path Data="M 0,0 L 0,5 L 120,5 L 120,0" Stroke="Black" Stretch="Fill" x:Name="pathOutline" />
+                    </Grid>
+                    <local:ThemedImage ImageName="Info" Width="16" VerticalAlignment="Center" Grid.Column="0" Grid.Row="1" x:Name="imgInfo" />
+                    <TextBlock Margin="3,2,3,2" Grid.Column="1" TextWrapping="Wrap"  Grid.Row="1"
+                               Text="These AC values are calculated for you when you run &quot;Update Calculations&quot;. See the list of armor and shields below to change these values, or turn off &quot;Calculate Armor Class with Updates&quot;." />
+                </Grid>
+                <Grid Margin="10,5" VerticalAlignment="Center" Grid.Row="2" >
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
@@ -91,9 +118,6 @@
                 </Grid>
             </Grid>
         </Border>
-        <!--<Expander x:Name="expModifiers" Header="Modifiers" Margin="2,1,4,0" Collapsed="ExpModifiers_Collapsed" Expanded="ExpModifiers_Expanded" 
-                  IsExpanded="False" Foreground="{Binding Foreground, ElementName=userControl}" Grid.Column="4" Grid.Row="1" />-->
-        <local:DetailsButton x:Name="btnDetails" DetailsText="Modifiers" Margin="2,0,2,0" Grid.Column="5" Grid.Row="1" IsSelected="False" />
 
     </Grid>
 </UserControl>

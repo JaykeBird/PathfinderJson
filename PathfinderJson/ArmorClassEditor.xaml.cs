@@ -18,12 +18,19 @@ namespace PathfinderJson
             InitializeComponent();
         }
 
+        public void CalculateAcValueChanged(bool newValue)
+        {
+            grdCalculationData.Visibility = newValue ? Visibility.Visible : Visibility.Collapsed;
+        }
+
         public void UpdateAppearance()
         {
             btnDetails.ColorScheme = App.ColorScheme;
+            imgInfo.ColorScheme = App.ColorScheme;
 
             txtModifier.Background = new SolidColorBrush(App.ColorScheme.SecondHighlightColor);
             brdrModifiers.BorderBrush = new SolidColorBrush(App.ColorScheme.SecondaryColor);
+            pathOutline.Stroke = new SolidColorBrush(App.ColorScheme.BorderColor);
         }
 
         public void LoadArmorClass(ArmorClass ac, string modValue)
