@@ -49,6 +49,8 @@
                     <local:ThemedImage ImageName="ThreeDots" ColorScheme="{Binding ColorScheme, ElementName=ild}" Width="16" Height="16" />
                     <flat:MenuButton.Menu>
                         <flat:ContextMenu>
+                            <MenuItem Header="Remove All Selected" x:Name="btnRemoveMultiple" Click="btnRemoveMultiple_Click" />
+                            <Separator />
                             <MenuItem Header="Deselect All" x:Name="btnDeselect" Click="btnDeselect_Click" />
                         </flat:ContextMenu>
                     </flat:MenuButton.Menu>
@@ -59,7 +61,7 @@
                 <local:ThemedImage ImageName="Deselect" ColorScheme="{Binding ElementName=ild, Path=ColorScheme}" Width="16" Height="16" />
             </flat:FlatButton>-->
 
-            <flat:SelectPanel x:Name="selPanel" Grid.Row="3" BorderThickness="0,1,0,0" MultiSelect="False" ColorScheme="{Binding ElementName=ild, Path=ColorScheme}" 
+            <flat:SelectPanel x:Name="selPanel" Grid.Row="3" BorderThickness="0,1,0,0" MultiSelect="True" ColorScheme="{Binding ElementName=ild, Path=ColorScheme}" 
                               UseLighterBorder="True" VerticalScrollBarVisibility="Disabled" >
             </flat:SelectPanel>
         </Grid>
