@@ -24,7 +24,7 @@ namespace PathfinderJson
             txtName.Text = q.Name;
             txtNotes.Text = q.Notes;
             txtLocation.Text = q.Location;
-            txtQuantity.Text = q.Quantity.ToString();
+            txtQuantity.Text = q.Quantity;
             txtWeight.Text = q.Weight;
             txtType.Text = q.Type;
         }
@@ -36,7 +36,7 @@ namespace PathfinderJson
                 Name = GetStringOrNull(txtName.Text),
                 Notes = GetStringOrNull(txtNotes.Text),
                 Location = GetStringOrNull(txtLocation.Text),
-                Quantity = ParseStringAsInt(txtQuantity.Text),
+                Quantity = GetStringOrNull(txtQuantity.Text),
                 Type = GetStringOrNull(txtType.Text),
                 Weight = GetStringOrNull(txtWeight.Text)
             };
