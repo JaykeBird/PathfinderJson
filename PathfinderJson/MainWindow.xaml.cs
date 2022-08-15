@@ -1600,24 +1600,38 @@ namespace PathfinderJson
 
         private void mnuColors_Click(object sender, RoutedEventArgs e)
         {
-            if (App.Settings.HighContrastTheme != NO_HIGH_CONTRAST)
-            {
-                MessageDialog md = new MessageDialog(App.ColorScheme);
-                if (md.ShowDialog("A high-contrast theme is currently being used. Changing the color scheme will turn off the high-contrast theme. Do you want to continue?", null, this, "High Contrast Theme In Use", MessageDialogButtonDisplay.Two,
-                    MessageDialogImage.Warning, MessageDialogResult.Cancel, "Continue", "Cancel") == MessageDialogResult.Cancel)
-                {
-                    return;
-                }
-            }
+            //if (App.Settings.HighContrastTheme != NO_HIGH_CONTRAST)
+            //{
+            //    MessageDialog md = new MessageDialog(App.ColorScheme);
+            //    if (md.ShowDialog("A high-contrast theme is currently being used. Changing the color scheme will turn off the high-contrast theme. Do you want to continue?", null, this, "High Contrast Theme In Use", MessageDialogButtonDisplay.Two,
+            //        MessageDialogImage.Warning, MessageDialogResult.Cancel, "Continue", "Cancel") == MessageDialogResult.Cancel)
+            //    {
+            //        return;
+            //    }
+            //}
 
-            ColorPickerDialog cpd = new ColorPickerDialog(App.ColorScheme, App.ColorScheme.MainColor);
-            cpd.Owner = this;
-            cpd.ShowDialog();
+            //ColorPickerDialog cpd = new ColorPickerDialog(App.ColorScheme, App.ColorScheme.MainColor);
+            //cpd.Owner = this;
+            //cpd.ShowDialog();
 
-            if (cpd.DialogResult)
+            //if (cpd.DialogResult)
+            //{
+            //    App.ColorScheme = new ColorScheme(cpd.SelectedColor);
+            //    App.Settings.ThemeColor = cpd.SelectedColor.GetHexString();
+            //    App.Settings.HighContrastTheme = NO_HIGH_CONTRAST;
+            //    SaveSettings();
+            //    UpdateAppearance();
+            //}
+
+            ChangeTheme.ColorSchemeDialog csd = new ChangeTheme.ColorSchemeDialog();
+            csd.ColorScheme = this.ColorScheme;
+
+            csd.ShowDialog();
+
+            if (csd.DialogResult)
             {
-                App.ColorScheme = new ColorScheme(cpd.SelectedColor);
-                App.Settings.ThemeColor = cpd.SelectedColor.GetHexString();
+                App.ColorScheme = csd.SelectedColorScheme;
+                App.Settings.ThemeColor = csd.SelectedColorScheme.MainColor.GetHexString();
                 App.Settings.HighContrastTheme = NO_HIGH_CONTRAST;
                 SaveSettings();
                 UpdateAppearance();

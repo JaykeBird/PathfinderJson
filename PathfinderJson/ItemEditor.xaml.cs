@@ -77,10 +77,10 @@ namespace PathfinderJson
             = DependencyProperty.Register("Location", typeof(string), typeof(ItemEditor));
 
         [IldLink("Quantity")]
-        public int Quantity { get => (int)GetValue(QuantityProperty); set => SetValue(QuantityProperty, value); }
+        public string Quantity { get => (string)GetValue(QuantityProperty); set => SetValue(QuantityProperty, value); }
 
         public static DependencyProperty QuantityProperty
-            = DependencyProperty.Register("Quantity", typeof(int), typeof(ItemEditor));
+            = DependencyProperty.Register("Quantity", typeof(string), typeof(ItemEditor));
 
         [IldLink("Type")]
         public string ItemType { get => (string)GetValue(ItemTypeProperty); set => SetValue(ItemTypeProperty, value); }
