@@ -206,15 +206,12 @@ namespace PathfinderJson.Ild
                 int? minValue = null;
                 int? maxValue = null;
 
-                bool handleAsInt = false;
-
                 if (attr != null)
                 {
                     if (attr.Ignore) continue;
                     if (attr.Name != null) name = attr.Name;
                     minValue = attr.MinValue;
                     maxValue = attr.MaxValue;
-                    handleAsInt = attr.HandleAsInt;
                 }
 
                 Type pt = property.PropertyType;
@@ -224,10 +221,6 @@ namespace PathfinderJson.Ild
                 if (pt == typeof(string))
                 {
                     ildType = IldType.String;
-                    if (handleAsInt)
-                    {
-                        ildType = IldType.Integer;
-                    }
                 }
                 else if (pt == typeof(bool))
                 {

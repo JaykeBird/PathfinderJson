@@ -19,8 +19,6 @@ namespace PathfinderJson.Ild
 
         public int? MinValue { get; set; } = null;
         public int? MaxValue { get; set; } = null;
-
-        public bool HandleAsInt { get; set; } = false;
     }
 
     [AttributeUsage(AttributeTargets.Property, Inherited = false, AllowMultiple = false)]

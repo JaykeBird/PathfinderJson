@@ -587,7 +587,7 @@ namespace PathfinderJson
         [IldDisplay(Name = "Type")]
         public string? Type { get; set; }
 
-        [IldDisplay(Name = "Quantity", HandleAsInt = true)]
+        [IldDisplay(Name = "Quantity")]
         public string? Quantity { get; set; } = "1";
 
         [IldDisplay(Name = "Weight")]
