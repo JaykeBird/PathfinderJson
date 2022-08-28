@@ -164,6 +164,12 @@ namespace PathfinderJson
                 case "3": // black on white
                     cbbHighContrast.SelectedIndex = 2;
                     break;
+                case "4": // basic light theme
+                    cbbHighContrast.SelectedIndex = 3;
+                    break;
+                case "5": // basic dark theme
+                    cbbHighContrast.SelectedIndex = 4;
+                    break;
                 default:
                     cbbHighContrast.SelectedIndex = 0;
                     break;
@@ -211,6 +217,12 @@ namespace PathfinderJson
                         break;
                     case 2:
                         App.Settings.HighContrastTheme = "3";
+                        break;
+                    case 3:
+                        App.Settings.HighContrastTheme = "4";
+                        break;
+                    case 4:
+                        App.Settings.HighContrastTheme = "5";
                         break;
                     default:
                         App.Settings.HighContrastTheme = "1";

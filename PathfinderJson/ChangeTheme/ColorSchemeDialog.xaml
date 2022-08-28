@@ -6,18 +6,17 @@
         xmlns:local="clr-namespace:PathfinderJson.ChangeTheme" 
         xmlns:flat="clr-namespace:SolidShineUi;assembly=SolidShineUi"
         mc:Ignorable="d"
-        Title="ColorSchemeDialog" Height="700" Width="600" FontSize="12" ResizeMode="NoResize" CaptionDisplayType="Close" >
+        Title="ColorSchemeDialog" Height="560" Width="600" FontSize="12" ResizeMode="NoResize" CaptionDisplayType="Close" >
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="256"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition MinHeight="36"/>
-            <RowDefinition Height="13*"/>
+            <RowDefinition MinHeight="36" Height="Auto"/>
+            <RowDefinition Height="6*"/>
+            <RowDefinition Height="3*"/>
             <RowDefinition Height="4*"/>
-            <RowDefinition Height="4*"/>
-            <RowDefinition Height="8*"/>
             <RowDefinition Height="0"/>
             <RowDefinition Height="45"/>
         </Grid.RowDefinitions>
@@ -26,25 +25,21 @@
         <Border BorderBrush="Black" BorderThickness="1" VerticalAlignment="Top" Margin="5,0" Grid.Row="3" Grid.ColumnSpan="2"/>
         <Border BorderBrush="Black" BorderThickness="1" VerticalAlignment="Top" Margin="5,0" Grid.Row="4" Grid.ColumnSpan="2"/>
         <Border BorderBrush="Black" BorderThickness="1" VerticalAlignment="Top" Margin="5,0" Grid.Row="5" Grid.ColumnSpan="2"/>
-        <Border BorderBrush="Black" BorderThickness="1" VerticalAlignment="Top" Margin="5,0" Grid.Row="6" Grid.ColumnSpan="2"/>
 
         <TextBlock Text="Select the color scheme to use for the user interface:" HorizontalAlignment="Left" Margin="10,10,0,5" VerticalAlignment="Top" Grid.ColumnSpan="2" />
 
         <TextBlock Text="Colored theme" HorizontalAlignment="Left" Margin="10,10,0,5" VerticalAlignment="Top" Grid.Row="1" FontSize="16" />
-        <TextBlock Text="Light theme" HorizontalAlignment="Left" Margin="10,10,0,5" VerticalAlignment="Top" Grid.Row="2" FontSize="16" />
-        <TextBlock Text="Dark theme" HorizontalAlignment="Left" Margin="10,10,0,5" VerticalAlignment="Top" Grid.Row="3" FontSize="16" />
-        <TextBlock Text="High Contrast theme" HorizontalAlignment="Left" Margin="10,10,0,5" VerticalAlignment="Top" Grid.Row="4" FontSize="16" />
-        <TextBlock Text="Custom theme" HorizontalAlignment="Left" Margin="10,10,0,5" VerticalAlignment="Top" Grid.Row="5" FontSize="16" />
+        <TextBlock Text="Basic themes" HorizontalAlignment="Left" Margin="10,10,0,5" VerticalAlignment="Top" Grid.Row="2" FontSize="16" />
+        <TextBlock Text="High Contrast theme" HorizontalAlignment="Left" Margin="10,10,0,5" VerticalAlignment="Top" Grid.Row="3" FontSize="16" />
+        <TextBlock Text="Custom theme" HorizontalAlignment="Left" Margin="10,10,0,5" VerticalAlignment="Top" Grid.Row="4" FontSize="16" />
 
         <TextBlock HorizontalAlignment="Stretch" Margin="10,35,10,5" VerticalAlignment="Top" Grid.Row="1" FontSize="12" TextWrapping="Wrap"
                    Text="Choose any color to build a theme around that color! (Note that super dark or super light colors may give weird results.)" />
         <TextBlock HorizontalAlignment="Stretch" Margin="10,35,10,5" VerticalAlignment="Top" Grid.Row="2" FontSize="12" TextWrapping="Wrap"
-                   Text="Light grays and whites, please!" />
+                   Text="More of your standard grays, whites, and blacks. Good for a simple, easy to use theme." />
         <TextBlock HorizontalAlignment="Stretch" Margin="10,35,10,5" VerticalAlignment="Top" Grid.Row="3" FontSize="12" TextWrapping="Wrap"
-                   Text="Dark grays and blacks, please!" />
+                   Text="Themes to ensure elements stand out from the background. Good for some people needing vision-related assistance." />
         <TextBlock HorizontalAlignment="Stretch" Margin="10,35,10,5" VerticalAlignment="Top" Grid.Row="4" FontSize="12" TextWrapping="Wrap"
-                   Text="Themes to ensure elements stand out from the background. Good for some people with vision-related disabilities." />
-        <TextBlock HorizontalAlignment="Stretch" Margin="10,35,10,5" VerticalAlignment="Top" Grid.Row="5" FontSize="12" TextWrapping="Wrap"
                    Text="Individually tweak each color in the theme to your liking." />
 
         <local:ColorSchemeButton Grid.Column="1" HorizontalAlignment="Right" Margin="0,22,260,0" Grid.Row="1" VerticalAlignment="Top" x:Name="btnPreset1" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" />
@@ -68,28 +63,28 @@
             Title="Use theme from above custom color" ShowTitle="True" ColorScheme="{Binding ColorScheme, ElementName=window}" />
 
         <local:ColorSchemeButton Grid.Column="1" HorizontalAlignment="Right" Margin="0,20,20,0" Grid.Row="2" VerticalAlignment="Top" x:Name="btnLightTheme" 
-                                  Title="Use light theme" ShowTitle="True" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" />
+                                  Title="Use light theme" ShowTitle="True" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" ColorSchemeDataValue="4" />
         <!--<local:ColorChangeButton Grid.Column="1" HorizontalAlignment="Right" Margin="0,20,20,0" Grid.Row="2" VerticalAlignment="Top" x:Name="btnLightAccent" 
                                   Title="Change accent color..." ShowTitle="True" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" DisplayedColor="#A8A8A8" />-->
-        <local:ColorSchemeButton Grid.Column="1" HorizontalAlignment="Right" Margin="0,20,20,0" Grid.Row="3" VerticalAlignment="Top" x:Name="btnDarkTheme"
-                                  Title="Use dark theme" ShowTitle="True" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" />
+        <local:ColorSchemeButton Grid.Column="1" HorizontalAlignment="Right" Margin="0,60,20,0" Grid.Row="2" VerticalAlignment="Top" x:Name="btnDarkTheme"
+                                  Title="Use dark theme" ShowTitle="True" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" ColorSchemeDataValue="5" />
         <!--<local:ColorChangeButton Grid.Column="1" HorizontalAlignment="Right" Margin="0,20,20,0" Grid.Row="3" VerticalAlignment="Top" x:Name="btnDarkAccent"
                                   Title="Change accent color..." ShowTitle="True" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" DisplayedColor="#C8C8C8" />-->
 
-        <local:ColorSchemeButton Grid.Column="1" HorizontalAlignment="Right" Margin="0,15,20,0" Grid.Row="4" VerticalAlignment="Top" x:Name="btnHc1"
+        <local:ColorSchemeButton Grid.Column="1" HorizontalAlignment="Right" Margin="0,15,20,0" Grid.Row="3" VerticalAlignment="Top" x:Name="btnHc1" ColorSchemeDataValue="1"
                                   Title="High Contrast - white on black" ShowTitle="True" MinWidth="210" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" />
-        <local:ColorSchemeButton Grid.Column="1" HorizontalAlignment="Right" Margin="0,55,20,0" Grid.Row="4" VerticalAlignment="Top" x:Name="btnHc2"
+        <local:ColorSchemeButton Grid.Column="1" HorizontalAlignment="Right" Margin="0,55,20,0" Grid.Row="3" VerticalAlignment="Top" x:Name="btnHc2" ColorSchemeDataValue="2"
                                   Title="High Contrast - green on black" ShowTitle="True" MinWidth="210" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" />
-        <local:ColorSchemeButton Grid.Column="1" HorizontalAlignment="Right" Margin="0,95,20,0" Grid.Row="4" VerticalAlignment="Top" x:Name="btnHc3"
+        <local:ColorSchemeButton Grid.Column="1" HorizontalAlignment="Right" Margin="0,95,20,0" Grid.Row="3" VerticalAlignment="Top" x:Name="btnHc3" ColorSchemeDataValue="3"
                                   Title="High Contrast - black on white" ShowTitle="True" MinWidth="210" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" />
-        <local:ColorSchemeButton Grid.Column="1" HorizontalAlignment="Right" Margin="0,15,20,0" Grid.Row="5" VerticalAlignment="Top" x:Name="btnCustomTheme"
+        <local:ColorSchemeButton Grid.Column="1" HorizontalAlignment="Right" Margin="0,15,20,0" Grid.Row="4" VerticalAlignment="Top" x:Name="btnCustomTheme" ColorSchemeDataValue="7"
                                   Title="Use custom theme" ShowTitle="True" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" IsEnabled="False" />
-        <flat:FlatButton Grid.Column="1" HorizontalAlignment="Right" Margin="0,55,20,0" Grid.Row="5" VerticalAlignment="Top"
+        <flat:FlatButton Grid.Column="1" HorizontalAlignment="Right" Margin="0,55,20,0" Grid.Row="4" VerticalAlignment="Top"
                                   ColorScheme="{Binding ElementName=window, Path=ColorScheme}" Content="Change custom theme..." MinHeight="30" IsEnabled="False" />
 
-        <flat:FlatButton Grid.Column="1" Content="OK" HorizontalAlignment="Right" Margin="0,0,100,0" Grid.Row="6" VerticalAlignment="Center" Height="24" MinWidth="70" 
+        <flat:FlatButton Grid.Column="1" Content="OK" HorizontalAlignment="Right" Margin="0,0,100,0" Grid.Row="5" VerticalAlignment="Center" Height="24" MinWidth="70" 
                          x:Name="btnOK" Click="btnOK_Click" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" />
-        <flat:FlatButton Grid.Column="1" Content="Cancel" HorizontalAlignment="Right" Margin="0,0,20,0" Grid.Row="6" VerticalAlignment="Center" Height="24" MinWidth="70" 
+        <flat:FlatButton Grid.Column="1" Content="Cancel" HorizontalAlignment="Right" Margin="0,0,20,0" Grid.Row="5" VerticalAlignment="Center" Height="24" MinWidth="70" 
                          x:Name="btnCancel" Click="btnCancel_Click" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" />
 
     </Grid>

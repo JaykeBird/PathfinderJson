@@ -261,28 +261,31 @@ namespace PathfinderJson
             string appDataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "PathfinderJson");
             string errorLogPath = Path.Combine(appDataPath, "ErrorLogs");
 
-            Exception ex = e.Exception;
-
-            StringBuilder sb = new StringBuilder();
-
-            sb.AppendLine(DateTime.UtcNow.ToString("yyyyMMddTHH:mm:ssZ"));
-            sb.AppendLine("VERSION " + AppVersion.ToString());
-            sb.AppendLine("--------------------------------------");
-            sb.AppendLine(ex.GetType().FullName);
-            sb.AppendLine(ex.Message);
-            sb.AppendLine(ex.ToString());
-
-            if (ex.InnerException != null)
+            if (Directory.Exists(errorLogPath))
             {
-                sb.AppendLine("INNER EXCEPTION:");
-                sb.AppendLine(ex.InnerException.GetType().FullName);
-                sb.AppendLine(ex.InnerException.Message);
-                sb.AppendLine(ex.InnerException.ToString());
+                Exception ex = e.Exception;
+
+                StringBuilder sb = new StringBuilder();
+
+                sb.AppendLine(DateTime.UtcNow.ToString("yyyyMMddTHH:mm:ssZ"));
+                sb.AppendLine("VERSION " + AppVersion.ToString());
+                sb.AppendLine("--------------------------------------");
+                sb.AppendLine(ex.GetType().FullName);
+                sb.AppendLine(ex.Message);
+                sb.AppendLine(ex.ToString());
+
+                if (ex.InnerException != null)
+                {
+                    sb.AppendLine("INNER EXCEPTION:");
+                    sb.AppendLine(ex.InnerException.GetType().FullName);
+                    sb.AppendLine(ex.InnerException.Message);
+                    sb.AppendLine(ex.InnerException.ToString());
+                }
+
+                sb.AppendLine("END FILE");
+
+                await File.WriteAllTextAsync(Path.Combine(errorLogPath, DateTime.UtcNow.ToString("yyyyMMddTHHmmssZ") + ".txt"), sb.ToString(), Encoding.UTF8);
             }
-
-            sb.AppendLine("END FILE");
-
-            await File.WriteAllTextAsync(Path.Combine(errorLogPath, DateTime.UtcNow.ToString("yyyyMMddTHHmmssZ") + ".txt"), sb.ToString(), Encoding.UTF8);
 
             MessageBox.Show("An error has occurred and PathfinderJSON may not be able to continue.\n\n" +
                 "An error log file was created.\n\n" +

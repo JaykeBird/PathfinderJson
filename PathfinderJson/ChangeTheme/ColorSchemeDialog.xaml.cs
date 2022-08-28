@@ -28,6 +28,9 @@ namespace PathfinderJson.ChangeTheme
         private List<ColorSchemeButton> ColorSchemeButtons = new List<ColorSchemeButton>();
 
         public new bool DialogResult { get; set; } = false;
+
+        public int InternalColorSchemeValue { get; private set; } = 0;
+
         #endregion
 
         void LoadColorSchemes()
@@ -82,6 +85,7 @@ namespace PathfinderJson.ChangeTheme
 
             btn.IsSelected = true;
             SelectedColorScheme = cs;
+            InternalColorSchemeValue = btn.ColorSchemeDataValue;
         }
 
         private void btnOK_Click(object sender, RoutedEventArgs e)
