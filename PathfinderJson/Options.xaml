@@ -52,11 +52,13 @@
                 <TextBlock Margin="10,160,20,0" VerticalAlignment="Top" Height="35" TextWrapping="Wrap"
                            Text="High Contrast Mode overrides the color scheme and other settings to display the interface with greatly-contrasting colors. This is good for users with vision impairment or other sight issues." />
                 <flat:CheckBox x:Name="chkHighContrast" Content="Use high contrast mode" Margin="10,200,0,0" VerticalAlignment="Top" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" CheckChanged="chkHighContrast_CheckChanged" />
-                <TextBlock Text="High contrast theme:" Margin="55,232,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" />
-                <ComboBox x:Name="cbbHighContrast" Margin="180,229,0,0" Height="24" Width="180" HorizontalAlignment="Left" VerticalAlignment="Top" >
+                <TextBlock Text="High contrast or basic theme:" Margin="55,232,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" />
+                <ComboBox x:Name="cbbHighContrast" Margin="220,229,0,0" Height="24" Width="180" HorizontalAlignment="Left" VerticalAlignment="Top" >
                     <ComboBoxItem Content="White on black" />
                     <ComboBoxItem Content="Green on black" />
                     <ComboBoxItem Content="Black on white" />
+                    <ComboBoxItem Content="Basic light theme" />
+                    <ComboBoxItem Content="Basic dark theme" />
                 </ComboBox>
                 <TextBlock Text="Toolbar" FontWeight="Bold" Margin="0,265,0,0" VerticalAlignment="Top" />
                 <flat:CheckBox x:Name="chkToolbar" Content="Show toolbar" Margin="10,285,0,0" VerticalAlignment="Top" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" />
