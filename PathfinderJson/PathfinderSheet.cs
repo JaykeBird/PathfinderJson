@@ -475,6 +475,23 @@ namespace PathfinderJson
         public string? OtherModifiers { get; set; }
         public string? SizeModifier { get; set; }
         public string? TempModifier { get; set; }
+
+        public int Calculate(int? externalBase = null, params int[]? modValues)
+        {
+            int totalcount = (externalBase ?? CoreUtils.ParseStringAsInt(Base, 0)) + CoreUtils.ParseStringAsInt(MagicModifier, 0) +
+                CoreUtils.ParseStringAsInt(MiscModifier, 0) + CoreUtils.ParseStringAsInt(SizeModifier, 0) + CoreUtils.ParseStringAsInt(TempModifier, 0);
+
+            if (modValues != null)
+            {
+                foreach (int item in modValues)
+                {
+                    totalcount += item;
+                }
+            }
+
+            Total = totalcount.ToString();
+            return totalcount;
+        }
     }
 
     public class Speed
