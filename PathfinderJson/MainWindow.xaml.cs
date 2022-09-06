@@ -1397,7 +1397,7 @@ namespace PathfinderJson
             }
             else
             {
-                foreach (SelectableItem item in selTabs.GetItemsAsType<SelectableItem>())
+                foreach (SelectableUserControl item in selTabs.Items)
                 {
                     if (item.IsEnabled)
                     {
@@ -1501,7 +1501,7 @@ namespace PathfinderJson
 
         void LoadGeneralTab()
         {
-            selTabs[0].IsSelected = true;
+            selTabs.Items[0].IsSelected = true;
             LoadTab("General");
         }
 
@@ -2919,7 +2919,8 @@ namespace PathfinderJson
                 int tSpellcheck = 0;
                 int tPenalty = 0;
 
-                foreach (AcItemEditor acItem in selAcItem.GetItemsAsType<AcItemEditor>())
+                // TODO: switch over to load items from ILD
+                foreach (AcItemEditor acItem in selAcItem.Items.OfType<AcItemEditor>())
                 {
                     AcItem ai = acItem.GetAcItem();
                     if ((ai.Name ?? "").ToLowerInvariant().Contains("shield") || (ai.Type ?? "").ToLowerInvariant().Contains("shield"))
@@ -3914,7 +3915,7 @@ namespace PathfinderJson
 
         private void btnDeselectAcItem_Click(object sender, EventArgs e)
         {
-            selAcItem.DeselectAll();
+            selAcItem.Items.ClearSelection();
         }
 
 

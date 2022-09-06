@@ -29,7 +29,7 @@ namespace PathfinderJson
 
             SetupTabs();
             LoadTab("General");
-            selTabs[0].IsSelected = true;
+            selTabs.Items[0].IsSelected = true;
 
             LoadSettings();
         }
