@@ -44,14 +44,14 @@
             </Grid>
             <Grid x:Name="tabInterface" Visibility="Collapsed" >
                 <TextBlock Text="Interface Options" FontSize="16" VerticalAlignment="Top" />
-                <TextBlock Text="Color Scheme" FontWeight="Bold" Margin="0,30,0,0" VerticalAlignment="Top" />
+                <TextBlock Text="Colored Theme" FontWeight="Bold" Margin="0,30,0,0" VerticalAlignment="Top" />
                 <flat:FlatButton x:Name="btnChangeColors" Content="Change Colors..." VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10,95,0,0" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" Width="120" Click="btnChangeColors_Click" />
                 <TextBlock Margin="10,55,20,0" VerticalAlignment="Top" Height="35" TextWrapping="Wrap"
                            Text="This is the color used throughout the entire user interface. Try to select a color that isn't too bright or too dark, as they make the interface a bit hard to see or understand." />
-                <TextBlock Text="High Contrast Mode" FontWeight="Bold" Margin="0,135,0,0" VerticalAlignment="Top" />
+                <TextBlock Text="High Contrast Mode / Basic Themes" FontWeight="Bold" Margin="0,135,0,0" VerticalAlignment="Top" />
                 <TextBlock Margin="10,160,20,0" VerticalAlignment="Top" Height="35" TextWrapping="Wrap"
                            Text="High Contrast Mode overrides the color scheme and other settings to display the interface with greatly-contrasting colors. This is good for users with vision impairment or other sight issues." />
-                <flat:CheckBox x:Name="chkHighContrast" Content="Use high contrast mode" Margin="10,200,0,0" VerticalAlignment="Top" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" CheckChanged="chkHighContrast_CheckChanged" />
+                <flat:CheckBox x:Name="chkHighContrast" Content="Use high contrast mode or a basic theme" Margin="10,200,0,0" VerticalAlignment="Top" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" CheckChanged="chkHighContrast_CheckChanged" />
                 <TextBlock Text="High contrast or basic theme:" Margin="55,232,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" />
                 <ComboBox x:Name="cbbHighContrast" Margin="220,229,0,0" Height="24" Width="180" HorizontalAlignment="Left" VerticalAlignment="Top" >
                     <ComboBoxItem Content="White on black" />
