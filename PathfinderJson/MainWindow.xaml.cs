@@ -20,6 +20,7 @@ using static PathfinderJson.CoreUtils;
 using static PathfinderJson.App;
 using System.Windows.Shell;
 using System.ComponentModel;
+using System.Linq;
 
 //using Markdig;
 //using Markdig.Wpf;
@@ -1759,7 +1760,7 @@ namespace PathfinderJson
 
                     txtEditRaw.Visibility = Visibility.Collapsed;
                     mnuEdit.Visibility = Visibility.Collapsed;
-                    mnuEditS.Visibility = Visibility.Visible;
+                    mnuEditS.Visibility = Visibility.Collapsed;
                     colTabs.Width = new GridLength(120, GridUnitType.Auto);
                     colTabs.MinWidth = 120;
                     stkEditToolbar.Visibility = Visibility.Collapsed;
@@ -1781,7 +1782,7 @@ namespace PathfinderJson
 
                     txtEditRaw.Visibility = Visibility.Collapsed;
                     mnuEdit.Visibility = Visibility.Collapsed;
-                    mnuEditS.Visibility = Visibility.Visible;
+                    mnuEditS.Visibility = Visibility.Collapsed;
                     colTabs.Width = new GridLength(120, GridUnitType.Auto);
                     colTabs.MinWidth = 120;
                     stkEditToolbar.Visibility = Visibility.Collapsed;
@@ -4211,8 +4212,8 @@ namespace PathfinderJson
 
         private void mnuCounters_Click(object sender, RoutedEventArgs e)
         {
-            CountersWindow cw = new CountersWindow();
-            cw.Show();
+            //CountersWindow cw = new CountersWindow();
+            //cw.Show();
         }
 
         private void mnuSheetSettings_Click(object sender, RoutedEventArgs e)

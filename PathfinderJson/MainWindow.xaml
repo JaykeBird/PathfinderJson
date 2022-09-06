@@ -93,13 +93,13 @@
                     </MenuItem.Icon>
                 </MenuItem>
             </MenuItem>
-            <MenuItem Header="_Edit" x:Name="mnuEditS" Visibility="Visible">
-                <MenuItem Header="_Undo" x:Name="mnuUndoS" Click="mnuUndoS_Click" >
+            <MenuItem Header="_Edit" x:Name="mnuEditS" Visibility="Collapsed" IsEnabled="False" >
+                <MenuItem Header="_Undo" x:Name="mnuUndoS" Click="mnuUndoS_Click" IsEnabled="False" >
                     <MenuItem.Icon>
                         <Image Source="/PathfinderJson;component/Images/Color/Undo.png" />
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem Header="_Redo" x:Name="mnuRedoS" Click="mnuRedoS_Click" >
+                <MenuItem Header="_Redo" x:Name="mnuRedoS" Click="mnuRedoS_Click" IsEnabled="False" >
                     <MenuItem.Icon>
                         <Image Source="/PathfinderJson;component/Images/Color/Redo.png" />
                     </MenuItem.Icon>
@@ -107,7 +107,7 @@
                 <MenuItem Header="Isolated Undo _Test" x:Name="mnuTestUndo" Click="mnuTestUndo_Click" IsEnabled="False" Visibility="Collapsed" />
                 <MenuItem Header="_Show Undo State" x:Name="mnuShowUndo" Click="mnuShowUndo_Click" IsEnabled="False" Visibility="Collapsed" />
                 <Separator />
-                <MenuItem Header="Insert _JSON..." x:Name="mnuInsertJson" Click="mnuInsertJson_Click" />
+                <MenuItem Header="Insert _JSON..." x:Name="mnuInsertJson" Click="mnuInsertJson_Click" IsEnabled="False" />
             </MenuItem>
             <MenuItem Header="_Edit" x:Name="mnuEdit" Visibility="Collapsed" >
                 <MenuItem Header="_Undo Text Edit" x:Name="mnuUndo" Click="mnuUndo_Click" >
@@ -190,7 +190,7 @@
             </MenuItem>
             <MenuItem Header="_Tools">
                 <MenuItem Header="_Dice Roller" x:Name="mnuDiceRoll" Click="mnuDiceRoll_Click" />
-                <MenuItem Header="_Counters" x:Name="mnuCounters" Click="mnuCounters_Click" />
+                <MenuItem Header="_Counters" x:Name="mnuCounters" Click="mnuCounters_Click" Visibility="Collapsed" IsEnabled="False" />
                 <Separator />
                 <MenuItem Header="_Text Editor Font..." x:Name="mnuEditorFont" Click="mnuEditorFont_Click" />
                 <MenuItem Header="_Options..." x:Name="mnuOptions" Click="mnuOptions_Click">
