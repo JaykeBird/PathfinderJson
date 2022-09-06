@@ -4017,6 +4017,7 @@ namespace PathfinderJson
             {
                 sheetSettings = sse.SheetSettingsList;
                 LoadSheetSettings();
+                SetIsDirty();
             }
         }
 
