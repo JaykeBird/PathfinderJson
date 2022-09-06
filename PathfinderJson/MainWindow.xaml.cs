@@ -1756,7 +1756,7 @@ namespace PathfinderJson
                 grdEditDrop.Visibility = Visibility.Visible;
                 SetAllTabsVisibility(Visibility.Collapsed);
                 UpdateAppearance();
-                foreach (SelectableItem item in selTabs.GetSelectedItemsOfType<SelectableItem>())
+                foreach (SelectableItem item in selTabs.GetSelectedItemsOfType<SelectableItem>().ToList())
                 {
                     item.IsSelected = false;
                 }
