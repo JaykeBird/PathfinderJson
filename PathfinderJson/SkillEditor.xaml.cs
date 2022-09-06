@@ -84,12 +84,12 @@ namespace PathfinderJson
         }
 
         public static DependencyProperty MiscModifierProperty
-            = DependencyProperty.Register("MiscModifier", typeof(string), typeof(SkillEditor),
-            new FrameworkPropertyMetadata(""));
+            = DependencyProperty.Register("MiscModifier", typeof(int), typeof(SkillEditor),
+            new FrameworkPropertyMetadata(0));
 
-        public string MiscModifier
+        public int MiscModifier
         {
-            get => (string)GetValue(MiscModifierProperty);
+            get => (int)GetValue(MiscModifierProperty);
             set => SetValue(MiscModifierProperty, value);
         }
 
@@ -197,7 +197,7 @@ namespace PathfinderJson
         {
             IsTrained = s.ClassSkill;
             SkillRanks = ParseString(s.Ranks);
-            MiscModifier = s.Misc ?? "";
+            MiscModifier = ParseString(s.Misc);
             RacialModifier = ParseString(s.Racial);
             TraitModifier = ParseString(s.Trait);
             Specialization = s.Specialization ?? "";
@@ -311,7 +311,7 @@ namespace PathfinderJson
 
         public void UpdateCalculations()
         {
-            int miscTotal = nudRanks.Value + nudRacial.Value + nudTrait.Value + ParseStringAsInt(nudMisc.Text) + (chkSkill.IsChecked ? 3 : 0);
+            int miscTotal = nudRanks.Value + nudRacial.Value + nudTrait.Value + nudMisc.Value + (chkSkill.IsChecked ? 3 : 0);
             int modifier = ModifierValue;
 
             txtMiscTotal.Text = miscTotal.ToString();
@@ -339,11 +339,6 @@ namespace PathfinderJson
         private void btnInfo_Click(object sender, RoutedEventArgs e)
         {
             CoreUtils.OpenBrowser(InfoUrl);
-        }
-
-        private void nudMisc_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
         }
     }
 }

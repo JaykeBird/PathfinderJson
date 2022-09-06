@@ -98,13 +98,13 @@
                                              Value="{Binding ElementName=control, Path=TraitModifier, Mode=TwoWay}" />
                     </Grid>
                     <Grid x:Name="grdMisc" Margin="0,3" >
-                        <Grid.RowDefinitions>
-                            <RowDefinition MinHeight="30" />
-                            <RowDefinition MinHeight="40" />
-                        </Grid.RowDefinitions>
-                        <TextBlock Text="Misc / Notes" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0,2" />
-                        <TextBox Grid.Row="1" x:Name="nudMisc" Margin="0" TextChanged="nudMisc_TextChanged" HorizontalAlignment="Stretch" TextWrapping="Wrap"
-                                             Text="{Binding ElementName=control, Path=MiscModifier, Mode=TwoWay}" AcceptsReturn="True" MaxWidth="130" />
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition Width="60" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="Misc" VerticalAlignment="Center" />
+                        <flat:IntegerSpinner Grid.Column="1" x:Name="nudMisc" Margin="3,0,0,0" ColorScheme="{Binding ElementName=control, Path=ColorScheme}" ValueChanged="nudRanks_ValueChanged"
+                                             Value="{Binding ElementName=control, Path=MiscModifier, Mode=TwoWay}" />
                     </Grid>
                     <Border BorderBrush="{Binding ElementName=control, Path=ColorScheme.BorderColor, Converter={StaticResource ctb}}" BorderThickness="1" Height="1" Margin="1,5" />
                     <Grid x:Name="grdStat" Margin="0,3" >
