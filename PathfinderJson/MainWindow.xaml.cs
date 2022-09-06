@@ -278,10 +278,10 @@ namespace PathfinderJson
             mnuShowUndo.Visibility = Visibility.Visible;
 #endif
 
-            btnUndoS.IsEnabled = undoStack.CanUndo;
-            mnuUndoS.IsEnabled = undoStack.CanUndo;
-            btnRedoS.IsEnabled = undoStack.CanRedo;
-            mnuRedoS.IsEnabled = undoStack.CanRedo;
+            //btnUndoS.IsEnabled = undoStack.CanUndo;
+            mnuUndoS.IsEnabled = false;
+            //btnRedoS.IsEnabled = undoStack.CanRedo;
+            mnuRedoS.IsEnabled = false;
         }
 
         #region Other Base Functions
@@ -1256,30 +1256,30 @@ namespace PathfinderJson
         void StartUndoTimer(UIElement sender)
         {
             //CreateUndoState();
-            if (undoSetTimer.IsEnabled)
-            {
-                PostUndoStateUpdate("Timer restart");
-                if (sender != lastEditedItem)
-                {
-                    CreateUndoState();
-                    PostUndoStateUpdate("New element state / timer restart");
-                }
+            //if (undoSetTimer.IsEnabled)
+            //{
+            //    PostUndoStateUpdate("Timer restart");
+            //    if (sender != lastEditedItem)
+            //    {
+            //        CreateUndoState();
+            //        PostUndoStateUpdate("New element state / timer restart");
+            //    }
 
-                undoSetTimer.Stop();
-                undoSetTimer.Start();
-            }
-            else
-            {
-                undoSetTimer.Start();
-                PostUndoStateUpdate("Timer start");
-            }
+            //    undoSetTimer.Stop();
+            //    undoSetTimer.Start();
+            //}
+            //else
+            //{
+            //    undoSetTimer.Start();
+            //    PostUndoStateUpdate("Timer start");
+            //}
         }
 
         private void UndoSetTimer_Tick(object? sender, EventArgs e)
         {
-            CreateUndoState();
-            undoSetTimer.IsEnabled = false;
-            PostUndoStateUpdate("Tick new state");
+            //CreateUndoState();
+            //undoSetTimer.IsEnabled = false;
+            //PostUndoStateUpdate("Tick new state");
         }
 
         private void mnuTestUndo_Click(object sender, RoutedEventArgs e)
@@ -1290,60 +1290,60 @@ namespace PathfinderJson
 
         private void CreateUndoState()
         {
-            PathfinderSheet ps = CreatePathfinderSheet();
-            undoStack.StoreState(ps);
-            PostUndoStateUpdate("New state");
+            //PathfinderSheet ps = CreatePathfinderSheet();
+            //undoStack.StoreState(ps);
+            //PostUndoStateUpdate("New state");
 
-            btnUndoS.IsEnabled = undoStack.CanUndo;
-            mnuUndoS.IsEnabled = undoStack.CanUndo;
-            btnRedoS.IsEnabled = undoStack.CanRedo;
-            mnuRedoS.IsEnabled = undoStack.CanRedo;
+            //btnUndoS.IsEnabled = undoStack.CanUndo;
+            //mnuUndoS.IsEnabled = undoStack.CanUndo;
+            //btnRedoS.IsEnabled = undoStack.CanRedo;
+            //mnuRedoS.IsEnabled = undoStack.CanRedo;
         }
 
         private void mnuUndoS_Click(object sender, RoutedEventArgs e)
         {
-            if (undoStack.CanUndo)
-            {
-                CoreLoadPathfinderSheet(undoStack.Undo());
-                PostUndoStateUpdate("Undo done");
-            }
+            //if (undoStack.CanUndo)
+            //{
+            //    CoreLoadPathfinderSheet(undoStack.Undo());
+            //    PostUndoStateUpdate("Undo done");
+            //}
 
-            btnUndoS.IsEnabled = undoStack.CanUndo;
-            mnuUndoS.IsEnabled = undoStack.CanUndo;
-            btnRedoS.IsEnabled = undoStack.CanRedo;
-            mnuRedoS.IsEnabled = undoStack.CanRedo;
+            //btnUndoS.IsEnabled = undoStack.CanUndo;
+            //mnuUndoS.IsEnabled = undoStack.CanUndo;
+            //btnRedoS.IsEnabled = undoStack.CanRedo;
+            //mnuRedoS.IsEnabled = undoStack.CanRedo;
         }
 
         private void mnuRedoS_Click(object sender, RoutedEventArgs e)
         {
-            if (undoStack.CanRedo)
-            {
-                CoreLoadPathfinderSheet(undoStack.Redo());
-                PostUndoStateUpdate("Redo done");
-            }
+            //if (undoStack.CanRedo)
+            //{
+            //    CoreLoadPathfinderSheet(undoStack.Redo());
+            //    PostUndoStateUpdate("Redo done");
+            //}
 
-            btnUndoS.IsEnabled = undoStack.CanUndo;
-            mnuUndoS.IsEnabled = undoStack.CanUndo;
-            btnRedoS.IsEnabled = undoStack.CanRedo;
-            mnuRedoS.IsEnabled = undoStack.CanRedo;
+            //btnUndoS.IsEnabled = undoStack.CanUndo;
+            //mnuUndoS.IsEnabled = undoStack.CanUndo;
+            //btnRedoS.IsEnabled = undoStack.CanRedo;
+            //mnuRedoS.IsEnabled = undoStack.CanRedo;
         }
 
         void PostUndoStateUpdate(string text)
         {
-            if (mnuShowUndo.IsChecked)
-            {
-                brdrUndoState.Visibility = Visibility.Visible;
-                txtUndoState.Text = text;
-            }
-            else
-            {
-                brdrUndoState.Visibility = Visibility.Collapsed;
-            }
+            //if (mnuShowUndo.IsChecked)
+            //{
+            //    brdrUndoState.Visibility = Visibility.Visible;
+            //    txtUndoState.Text = text;
+            //}
+            //else
+            //{
+            //    brdrUndoState.Visibility = Visibility.Collapsed;
+            //}
         }
 
         private void mnuShowUndo_Click(object sender, RoutedEventArgs e)
         {
-            mnuShowUndo.IsChecked = !mnuShowUndo.IsChecked;
+            //mnuShowUndo.IsChecked = !mnuShowUndo.IsChecked;
         }
 
         #endregion
