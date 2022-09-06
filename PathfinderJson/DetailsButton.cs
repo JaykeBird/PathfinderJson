@@ -75,6 +75,8 @@ namespace PathfinderJson
             sp.Children.Add(ti);
             sp.Children.Add(tb);
 
+            base.TransparentBack = true;
+            base.BorderSelectionThickness = new Thickness(1);
             base.Content = sp;
         }
 
