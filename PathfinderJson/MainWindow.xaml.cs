@@ -2700,47 +2700,8 @@ namespace PathfinderJson
                 selSpells.Items.Add(se);
             }
 
-            // Notes tab
-            if (sheetSettings != null)
-            {
-                if (sheetSettings.ContainsKey("notesMarkdown"))
-                {
-                    if ((sheetSettings["notesMarkdown"]?.ToLowerInvariant() ?? "disabled") == "enabled")
-                    {
-                        ShowMarkdownElements();
-                        OpenNotesViewTab();
-                        chkNotesMarkdown.IsChecked = true;
-                    }
-                    else
-                    {
-                        HideMarkdownElements();
-                        chkNotesMarkdown.IsChecked = false;
-                    }
-                }
-                else
-                {
-                    HideMarkdownElements();
-                    chkNotesMarkdown.IsChecked = false;
-                }
-
-                if (sheetSettings.ContainsKey("notesNoSpellCheck"))
-                {
-                    if ((sheetSettings["notesNoSpellCheck"]?.ToLowerInvariant() ?? "disabled") == "enabled")
-                    {
-                        SpellCheck.SetIsEnabled(txtNotes, false);
-                    }
-                    else
-                    {
-                        SpellCheck.SetIsEnabled(txtNotes, true);
-                    }
-                }
-            }
-            else
-            {
-                HideMarkdownElements();
-                chkNotesMarkdown.IsChecked = false;
-                SpellCheck.SetIsEnabled(txtNotes, true);
-            }
+            // Notes tab / Calculations
+            LoadSheetSettings();
 
             txtNotes.Text = sheet.Notes;
             UpdateMarkdownViewerVisuals();
@@ -2763,16 +2724,28 @@ namespace PathfinderJson
         {
             mnuUpdateAc.IsChecked = !mnuUpdateAc.IsChecked;
             edtAc.CalculateAcValueChanged(mnuUpdateAc.IsChecked);
+            if (_sheetLoaded && !_isUpdating)
+            {
+                sheetSettings["calcIncludeAc"] = mnuUpdateAc.IsChecked ? "true" : "false";
+            }
         }
 
         private void mnuAutoUpdate_Click(object sender, RoutedEventArgs e)
         {
             mnuAutoUpdate.IsChecked = !mnuAutoUpdate.IsChecked;
+            if (_sheetLoaded && !_isUpdating)
+            {
+                sheetSettings["calcAutorun"] = mnuAutoUpdate.IsChecked ? "true" : "false";
+            }
         }
 
         private void mnuUpdateTotals_Click(object sender, RoutedEventArgs e)
         {
             mnuUpdateTotals.IsChecked = !mnuUpdateTotals.IsChecked;
+            if (_sheetLoaded && !_isUpdating)
+            {
+                sheetSettings["calcIncludeTotals"] = mnuUpdateTotals.IsChecked ? "true" : "false";
+            }
         }
 
         #endregion
@@ -3920,6 +3893,11 @@ namespace PathfinderJson
             brdrNotesMarkdown.Visibility = Visibility.Collapsed;
 
             txtNotes.BorderThickness = new Thickness(1, 1, 1, 1);
+
+            if (_sheetLoaded && !_isUpdating)
+            {
+                sheetSettings["notesMarkdown"] = "disabled";
+            }
         }
 
         public void ShowMarkdownElements()
@@ -3929,9 +3907,90 @@ namespace PathfinderJson
             brdrNotesMarkdown.Visibility = Visibility.Visible;
 
             txtNotes.BorderThickness = new Thickness(1, 0, 1, 1);
+            
+            if (_sheetLoaded && !_isUpdating)
+            {
+                sheetSettings["notesMarkdown"] = "enabled";
+            }
         }
 
         #endregion
+
+        public void LoadSheetSettings()
+        {
+            if (sheetSettings != null)
+            {
+                if (HasSheetSettingValue("notesMarkdown", "enabled"))
+                {
+                    ShowMarkdownElements();
+                    OpenNotesViewTab();
+                    chkNotesMarkdown.IsChecked = true;
+                }
+                else
+                {
+                    HideMarkdownElements();
+                    chkNotesMarkdown.IsChecked = false;
+                }
+
+                if (HasSheetSettingValue("notesNoSpellCheck", "enabled"))
+                {
+                    SpellCheck.SetIsEnabled(txtNotes, false);
+                }
+                else
+                {
+                    SpellCheck.SetIsEnabled(txtNotes, true);
+                }
+
+                if (HasSheetSettingValue("calcIncludeAc", "false"))
+                {
+                    mnuUpdateAc.IsChecked = false;
+                }
+                else
+                {
+                    mnuUpdateAc.IsChecked = true;
+                }
+
+                if (HasSheetSettingValue("calcIncludeTotals", "false"))
+                {
+                    mnuUpdateTotals.IsChecked = false;
+                }
+                else
+                {
+                    mnuUpdateTotals.IsChecked = true;
+                }
+
+                if (HasSheetSettingValue("calcAutorun", "false"))
+                {
+                    mnuAutoUpdate.IsChecked = false;
+                }
+                else
+                {
+                    mnuAutoUpdate.IsChecked = true;
+                }
+            }
+            else
+            {
+                HideMarkdownElements();
+                chkNotesMarkdown.IsChecked = false;
+                SpellCheck.SetIsEnabled(txtNotes, true);
+
+                mnuUpdateAc.IsChecked = true;
+                mnuUpdateTotals.IsChecked = true;
+                mnuAutoUpdate.IsChecked = true;
+            }
+        }
+
+        /// <summary>
+        /// Check if a certain sheet setting value is stored in this sheet's sheet settings.
+        /// </summary>
+        /// <param name="settingName">The name of the setting value to check.</param>
+        /// <param name="checkValue">The value to check. Only returns true if the setting matches this value.</param>
+        /// <returns>Returns true only if the setting with the specified name has the specified value. In all other situations, returns false.</returns>
+        /// <remarks>To check simply if a setting name exists, use the <c>sheetSettings.ContainsKey()</c> method instead.</remarks>
+        public bool HasSheetSettingValue(string settingName, string? checkValue = null)
+        {
+            return sheetSettings.ContainsKey(settingName) ? sheetSettings[settingName]?.ToLowerInvariant() == checkValue : false;
+        }
 
         private void mnuCounters_Click(object sender, RoutedEventArgs e)
         {
@@ -3951,7 +4010,14 @@ namespace PathfinderJson
             SheetSettings sse = new SheetSettings();
             sse.SheetSettingsList = sheetSettings;
             sse.Owner = this;
+            sse.UpdateUi();
             sse.ShowDialog();
+
+            if (sse.DialogResult)
+            {
+                sheetSettings = sse.SheetSettingsList;
+                LoadSheetSettings();
+            }
         }
 
         private void mnuInsertJson_Click(object sender, RoutedEventArgs e)
