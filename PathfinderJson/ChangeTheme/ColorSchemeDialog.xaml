@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:PathfinderJson.ChangeTheme" 
         xmlns:flat="clr-namespace:SolidShineUi;assembly=SolidShineUi"
         mc:Ignorable="d"
-        Title="ColorSchemeDialog" Height="560" Width="600" FontSize="12" ResizeMode="NoResize" CaptionDisplayType="Close" >
+        Title="Change Color Scheme" Height="560" Width="600" FontSize="12" ResizeMode="NoResize" CaptionDisplayType="Close" >
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="256"/>
