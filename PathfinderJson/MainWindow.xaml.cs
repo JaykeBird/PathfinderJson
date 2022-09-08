@@ -99,6 +99,7 @@ namespace PathfinderJson
         {
             ud = new UserData(false);
             sheetid = "-1";
+            bool isHighContrast = false;
 
             // if true, run SaveSettings at the end of this function, to avoid calling SaveSettings like 5 times at once
             bool updateSettings = false;
@@ -153,12 +154,15 @@ namespace PathfinderJson
                 {
                     case "1":
                         App.ColorScheme = ColorScheme.GetHighContrastScheme(HighContrastOption.WhiteOnBlack);
+                        isHighContrast = true;
                         break;
                     case "2":
                         App.ColorScheme = ColorScheme.GetHighContrastScheme(HighContrastOption.GreenOnBlack);
+                        isHighContrast = true;
                         break;
                     case "3":
                         App.ColorScheme = ColorScheme.GetHighContrastScheme(HighContrastOption.BlackOnWhite);
+                        isHighContrast = true;
                         break;
                     case "4":
                         App.ColorScheme = ColorScheme.CreateLightTheme();
@@ -231,7 +235,7 @@ namespace PathfinderJson
             saveDisplayTimer.Tick += saveDisplayTimer_Tick;
 
             // setup up raw JSON editor
-            if (App.Settings.EditorSyntaxHighlighting && App.Settings.HighContrastTheme == NO_HIGH_CONTRAST)
+            if (App.Settings.EditorSyntaxHighlighting && !isHighContrast)
             {
                 using (Stream? s = System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceStream("PathfinderJson.Json.xshd"))
                 {
@@ -260,6 +264,14 @@ namespace PathfinderJson
 
             txtEditRaw.WordWrap = App.Settings.EditorWordWrap;
             mnuWordWrap.IsChecked = App.Settings.EditorWordWrap;
+
+            edtAc.ShowShieldGlyph = App.Settings.ShowGlyphs && !isHighContrast;
+            eleStr.ShowBannerGlyph = App.Settings.ShowGlyphs && !isHighContrast;
+            eleDex.ShowBannerGlyph = App.Settings.ShowGlyphs && !isHighContrast;
+            eleCon.ShowBannerGlyph = App.Settings.ShowGlyphs && !isHighContrast;
+            eleInt.ShowBannerGlyph = App.Settings.ShowGlyphs && !isHighContrast;
+            eleWis.ShowBannerGlyph = App.Settings.ShowGlyphs && !isHighContrast;
+            eleCha.ShowBannerGlyph = App.Settings.ShowGlyphs && !isHighContrast;
 
             SearchPanel.SearchPanel p = SearchPanel.SearchPanel.Install(txtEditRaw);
             p.FontFamily = SystemFonts.MessageFontFamily; // so it isn't a fixed-width font lol
@@ -333,6 +345,8 @@ namespace PathfinderJson
         {
             bool updateSettings = false;
 
+            bool isHighContrast = false;
+
             if (App.Settings.HighContrastTheme == NO_HIGH_CONTRAST)
             {
                 App.ColorScheme = new ColorScheme(ColorsHelper.CreateFromHex(App.Settings.ThemeColor));
@@ -343,12 +357,15 @@ namespace PathfinderJson
                 {
                     case "1":
                         App.ColorScheme = ColorScheme.GetHighContrastScheme(HighContrastOption.WhiteOnBlack);
+                        isHighContrast = true;
                         break;
                     case "2":
                         App.ColorScheme = ColorScheme.GetHighContrastScheme(HighContrastOption.GreenOnBlack);
+                        isHighContrast = true;
                         break;
                     case "3":
                         App.ColorScheme = ColorScheme.GetHighContrastScheme(HighContrastOption.BlackOnWhite);
+                        isHighContrast = true;
                         break;
                     case "4":
                         App.ColorScheme = ColorScheme.CreateLightTheme();
@@ -405,7 +422,7 @@ namespace PathfinderJson
             }
 
             // setup up raw JSON editor
-            if (App.Settings.EditorSyntaxHighlighting && App.Settings.HighContrastTheme == NO_HIGH_CONTRAST)
+            if (App.Settings.EditorSyntaxHighlighting && !isHighContrast)
             {
                 using (Stream? s = System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceStream("PathfinderJson.Json.xshd"))
                 {
@@ -434,6 +451,14 @@ namespace PathfinderJson
 
             txtEditRaw.WordWrap = App.Settings.EditorWordWrap;
             mnuWordWrap.IsChecked = App.Settings.EditorWordWrap;
+
+            edtAc.ShowShieldGlyph = App.Settings.ShowGlyphs && !isHighContrast;
+            eleStr.ShowBannerGlyph = App.Settings.ShowGlyphs && !isHighContrast;
+            eleDex.ShowBannerGlyph = App.Settings.ShowGlyphs && !isHighContrast;
+            eleCon.ShowBannerGlyph = App.Settings.ShowGlyphs && !isHighContrast;
+            eleInt.ShowBannerGlyph = App.Settings.ShowGlyphs && !isHighContrast;
+            eleWis.ShowBannerGlyph = App.Settings.ShowGlyphs && !isHighContrast;
+            eleCha.ShowBannerGlyph = App.Settings.ShowGlyphs && !isHighContrast;
 
             if (updateSettings)
             {
@@ -1635,6 +1660,41 @@ namespace PathfinderJson
 
                 SaveSettings();
                 UpdateAppearance();
+
+                // change settings if high contrast is changed
+                bool isHighContrast = false;
+                if (csd.InternalColorSchemeValue >= 1 && csd.InternalColorSchemeValue <= 3) isHighContrast = true;
+
+                if (App.Settings.EditorSyntaxHighlighting && !isHighContrast)
+                {
+                    using (Stream? s = System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceStream("PathfinderJson.Json.xshd"))
+                    {
+                        if (s != null)
+                        {
+                            using XmlReader reader = new XmlTextReader(s);
+                            txtEditRaw.SyntaxHighlighting = ICSharpCode.AvalonEdit.Highlighting.Xshd.HighlightingLoader.Load(reader, HighlightingManager.Instance);
+                        }
+                    }
+                }
+                else
+                {
+                    using (Stream? s = System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceStream("PathfinderJson.None.xshd"))
+                    {
+                        if (s != null)
+                        {
+                            using XmlReader reader = new XmlTextReader(s);
+                            txtEditRaw.SyntaxHighlighting = ICSharpCode.AvalonEdit.Highlighting.Xshd.HighlightingLoader.Load(reader, HighlightingManager.Instance);
+                        }
+                    }
+                }
+
+                edtAc.ShowShieldGlyph = App.Settings.ShowGlyphs && !isHighContrast;
+                eleStr.ShowBannerGlyph = App.Settings.ShowGlyphs && !isHighContrast;
+                eleDex.ShowBannerGlyph = App.Settings.ShowGlyphs && !isHighContrast;
+                eleCon.ShowBannerGlyph = App.Settings.ShowGlyphs && !isHighContrast;
+                eleInt.ShowBannerGlyph = App.Settings.ShowGlyphs && !isHighContrast;
+                eleWis.ShowBannerGlyph = App.Settings.ShowGlyphs && !isHighContrast;
+                eleCha.ShowBannerGlyph = App.Settings.ShowGlyphs && !isHighContrast;
             }
         }
 

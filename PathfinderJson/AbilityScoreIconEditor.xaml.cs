@@ -85,5 +85,11 @@ namespace PathfinderJson
             RequestTempEditorDisplay?.Invoke(this, e);
             btnTempAbi.Visibility = Visibility.Collapsed;
         }
+
+        public bool ShowBannerGlyph
+        {
+            get { return glyBanner.Visibility == Visibility.Visible; }
+            set { glyBanner.Visibility = value ? Visibility.Visible : Visibility.Collapsed; }
+        }
     }
 }

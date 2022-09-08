@@ -108,5 +108,8 @@ namespace PathfinderJson
 
         [JsonProperty("autoSave", DefaultValueHandling = DefaultValueHandling.Ignore), DefaultValue(0)]
         public int AutoSave { get; set; } = 0; // feature being added in 1.2
+
+        [JsonProperty("showGlyphs", DefaultValueHandling = DefaultValueHandling.Ignore), DefaultValue(true)]
+        public bool ShowGlyphs { get; set; } = true; // feature added in 1.2.3
     }
 }

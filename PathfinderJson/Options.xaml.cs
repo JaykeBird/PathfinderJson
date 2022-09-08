@@ -179,6 +179,7 @@ namespace PathfinderJson
 
             chkToolbar.IsChecked = s.ShowToolbar;
             chkFilename.IsChecked = s.PathInTitleBar;
+            chkGlyphs.IsChecked = s.ShowGlyphs;
 
             // Text editor options
             LoadEditorFontSettings(s);
@@ -206,6 +207,7 @@ namespace PathfinderJson
             //App.Settings.ThemeColor = uiColor.GetHexString();
             App.Settings.ShowToolbar = chkToolbar.IsChecked;
             App.Settings.PathInTitleBar = chkFilename.IsChecked;
+            App.Settings.ShowGlyphs = chkGlyphs.IsChecked;
 
             int ccdv = btnChangeColors.ColorSchemeDataValue;
             App.Settings.HighContrastTheme = ccdv.ToString();
