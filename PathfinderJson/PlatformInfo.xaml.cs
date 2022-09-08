@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Runtime.Versioning;
 using System.Text;
 using System.Windows;
@@ -25,19 +26,26 @@ namespace PathfinderJson
 
         void LoadInfo()
         {
-            txtPlatform.Text = System.Runtime.InteropServices.RuntimeInformation.OSDescription;
+            txtPlatform.Text = RuntimeInformation.OSDescription;
             txtVersion.Text = Environment.OSVersion.VersionString;
-            txtProcessor.Text = Environment.Is64BitOperatingSystem ? "64-bit" : "32-bit";
+            txtProcessor.Text = RuntimeInformation.ProcessArchitecture switch
+            {
+                Architecture.Arm => "32-bit (Arm)",
+                Architecture.Arm64 => "64-bit (Arm64)",
+                Architecture.X64 => "64-bit (x64, Intel-based)",
+                Architecture.X86 => "32-bit (x86, Intel-based)",
+                _ => RuntimeInformation.ProcessArchitecture.ToString("g")
+            };   
             txtProcessArch.Text = Environment.Is64BitProcess ? "64-bit" : "32-bit";
 
-            if (txtProcessArch.Text != txtProcessor.Text)
-            {
-                txtProcessArch.Text += " (!)";
-            }
+            //if (!txtProcessor.Text.Contains(txtProcessArch.Text))
+            //{
+            //    txtProcessArch.Text += " (!)";
+            //}
 
             // https://weblog.west-wind.com/posts/2018/Apr/12/Getting-the-NET-Core-Runtime-Version-in-a-Running-Application
             txtTarget.Text = Assembly.GetEntryAssembly()?.GetCustomAttribute<TargetFrameworkAttribute>()?.FrameworkName ?? "Unknown";
-            txtRuntime.Text = System.Runtime.InteropServices.RuntimeInformation.FrameworkDescription;
+            txtRuntime.Text = RuntimeInformation.FrameworkDescription;
         }
 
         private void btnClose_Click(object sender, RoutedEventArgs e)
