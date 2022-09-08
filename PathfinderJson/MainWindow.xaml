@@ -268,7 +268,7 @@
         <flat:SelectPanel Grid.Column="0" Grid.Row="2" x:Name="selTabs" MultiSelect="False" BorderThickness="0,0,1,0" />
         <ScrollViewer Grid.Column="1" Grid.Row="2" x:Name="scrSheet" AllowDrop="True" Drop="scrSheet_Drop" >
             <StackPanel x:Name="stkSheet" >
-                <Grid Margin="5,5,5,0" x:Name="grdGeneral" Visibility="Visible" >
+                <Grid Margin="5,5,5,0" x:Name="grdGeneral" >
                     <Grid.RowDefinitions>
                         <RowDefinition Height="25"/>
                         <RowDefinition Height="Auto"/>
@@ -390,7 +390,7 @@
                             </Grid>
 
                             <TextBlock x:Name="lblSpeed" HorizontalAlignment="Left" Margin="10,0,0,0" Text="Speed" VerticalAlignment="Center" Grid.Row="2"/>
-                            <flat:LinkTextBlock x:Name="lnkMovement" Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Right" Text="View Movement on D20PFSRD"
+                            <flat:LinkTextBlock x:Name="lnkMovement" Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Right" Text="View Movement on D20PFSRD" 
                                                 Click="lnkCombat_Click" Tag="https://www.d20pfsrd.com/alignment-description/movement/" Cursor="Hand" Margin="0,0,15,0" />
                             <Grid Margin="10,5" Grid.Row="3" >
                                 <Grid.ColumnDefinitions>
@@ -632,10 +632,9 @@
                         </Grid>
                     </Grid>
                 </Grid>
-                <Grid Margin="5,5,5,0" x:Name="grdSkills" >
+                <Grid Margin="5,5,5,0" x:Name="grdSkills" Visibility="Collapsed" >
                     <Grid.RowDefinitions>
                         <RowDefinition />
-                        <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
                     <Grid Margin="10,0,0,0">
@@ -649,7 +648,7 @@
                             <TextBlock x:Name="lblSkillModifiers" Margin="0,0,10,0" HorizontalAlignment="Left" Text="Conditional Modifiers" VerticalAlignment="Center"/>
                         </Grid>
                     </Grid>
-                    <Grid Margin="10,0,10,0" Grid.Row="1" MaxWidth="900" x:Name="grdSkillHeader" SizeChanged="SkillHeaderGrid_SizeChanged" Visibility="Collapsed" >
+                    <Grid Margin="10,0,10,0" Grid.Row="1" MaxWidth="900" x:Name="grdSkillHeader" SizeChanged="SkillHeaderGrid_SizeChanged" >
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="2*" />
                             <ColumnDefinition Width="170" />

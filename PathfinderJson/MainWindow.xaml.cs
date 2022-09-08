@@ -780,7 +780,7 @@ namespace PathfinderJson
             if (isDirty)
             {
                 MessageDialog md = new MessageDialog(App.ColorScheme);
-                md.ShowDialog("The file has some unsaved changes. Do you want to save them first?", null, this, "Unsaved Changes", MessageDialogButtonDisplay.Three, MessageDialogImage.Question,
+                md.ShowDialog("The file has some unsaved changes. Do you want to save them first?", null, this, "Unsaved Changes", MessageDialogButtonDisplay.Three, MessageDialogImage.Question, 
                     MessageDialogResult.Cancel, "Save", "Cancel", "Discard");
 
                 if (md.DialogResult == MessageDialogResult.OK)
@@ -815,7 +815,7 @@ namespace PathfinderJson
             if (isDirty)
             {
                 MessageDialog md = new MessageDialog(App.ColorScheme);
-                md.ShowDialog("The file has some unsaved changes. Are you sure you want to discard them?", App.ColorScheme, this, "Unsaved Changes", MessageDialogButtonDisplay.Auto,
+                md.ShowDialog("The file has some unsaved changes. Are you sure you want to discard them?", App.ColorScheme, this, "Unsaved Changes", MessageDialogButtonDisplay.Auto, 
                     image: MessageDialogImage.Question, customOkButtonText: "Discard", customCancelButtonText: "Cancel");
 
                 if (md.DialogResult == MessageDialogResult.OK || md.DialogResult == MessageDialogResult.Discard)
@@ -1450,8 +1450,7 @@ namespace PathfinderJson
             foreach (SkillEditor? item in stkSkills.Children)
             {
                 if (item == null) continue;
-                item.ColorScheme = ColorScheme;
-                //item.UpdateAppearance();
+                item.UpdateAppearance();
             }
 
             btnNotesEdit.Background = Color.FromArgb(1, 0, 0, 0).ToBrush();
@@ -2008,7 +2007,7 @@ namespace PathfinderJson
         {
             if (_sheetLoaded)
             {
-
+                
                 sp.Open();
                 if (!(txtEditRaw.TextArea.Selection.IsEmpty || txtEditRaw.TextArea.Selection.IsMultiline))
                     sp.SearchPattern = txtEditRaw.TextArea.Selection.GetText();
@@ -2427,6 +2426,15 @@ namespace PathfinderJson
             }
 
             abilities = sheet.RawAbilities;
+            
+            if (sheet.SheetSettings != null)
+            {
+                sheetSettings = sheet.SheetSettings;
+            }
+            else
+            {
+                sheetSettings = new Dictionary<string, string?>();
+            }
 
             txtStr.Value = sheet.Strength;
             txtDex.Value = sheet.Dexterity;
@@ -2621,15 +2629,13 @@ namespace PathfinderJson
             stkSkills.Children.Clear();
             foreach (SkillEditor item in ses)
             {
-                item.ModifierValue = abilityMods[item.ModifierName];
-                item.UpdateCalculations();
+                item.LoadModifier(abilityMods[item.SkillAbility].ToString());
+                //item.UpdateCalculations();
 
                 item.ContentChanged += editor_ContentChanged;
-                item.ModifierChanged += editor_ModifierChanged;
 
                 stkSkills.Children.Add(item);
-                item.ColorScheme = ColorScheme;
-                //item.UpdateAppearance();
+                item.UpdateAppearance();
             }
 
             if (sheetSettings.ContainsKey("skillModSet"))
@@ -2741,7 +2747,6 @@ namespace PathfinderJson
 
             _isUpdating = false;
         }
-
         #endregion
 
         #region Sync Editors / update sheet / CreatePathfinderSheetAsync
@@ -2876,7 +2881,7 @@ namespace PathfinderJson
 
                     string modifier = "";
 
-                    switch (item.ModifierName)
+                    switch (item.SkillAbility)
                     {
                         case "DEX":
                             modifier = txtDexm.Text;
@@ -2899,11 +2904,11 @@ namespace PathfinderJson
                         default:
                             break;
                     }
-                    item.ModifierValue = int.Parse(modifier);
+                    item.LoadModifier(modifier);
 
                     if (totals)
                     {
-                        item.UpdateCalculations();
+                        await item.UpdateTotals(cts.Token);
                     }
                 }
             }
@@ -3293,7 +3298,7 @@ namespace PathfinderJson
             foreach (SkillEditor? item in stkSkills.Children)
             {
                 if (item == null) continue;
-                skills.Add(item.InternalSkillName, item.GetSkillData());
+                skills.Add(item.SkillInternalName, item.GetSkillData());
             }
 
             if (!string.IsNullOrWhiteSpace(txtSkillModifiers.Text))
@@ -3539,20 +3544,20 @@ namespace PathfinderJson
 
         private void SkillHeaderGrid_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            //if (grdSkillHeader.ActualWidth > SkillEditor.WIDE_STATE_THRESHOLD)
-            //{
-            //    // activate wide state for the header grid
-            //    colSkillModifiers.Width = new GridLength(0);
-            //    colSkillExtra.Width = new GridLength(3, GridUnitType.Star);
-            //    colSkillExtra.MinWidth = 280;
-            //}
-            //else
-            //{
-            //    // disable wide state for the header grid
-            //    colSkillModifiers.Width = new GridLength(85);
-            //    colSkillExtra.Width = new GridLength(0);
-            //    colSkillExtra.MinWidth = 0;
-            //}
+            if (grdSkillHeader.ActualWidth > SkillEditor.WIDE_STATE_THRESHOLD)
+            {
+                // activate wide state for the header grid
+                colSkillModifiers.Width = new GridLength(0);
+                colSkillExtra.Width = new GridLength(3, GridUnitType.Star);
+                colSkillExtra.MinWidth = 280;
+            }
+            else
+            {
+                // disable wide state for the header grid
+                colSkillModifiers.Width = new GridLength(85);
+                colSkillExtra.Width = new GridLength(0);
+                colSkillExtra.MinWidth = 0;
+            }
         }
 
         private void lnkCombat_Click(object sender, RoutedEventArgs e)
@@ -3605,32 +3610,33 @@ namespace PathfinderJson
                 {
                     if (item != null)
                     {
-                        if (skillModSubs.ContainsKey(item.InternalSkillName))
+                        if (skillModSubs.ContainsKey(item.SkillInternalName))
                         {
-                            item.ModifierName = skillModSubs[item.InternalSkillName];
+                            item.SkillAbility = skillModSubs[item.SkillInternalName];
+                            item.LoadModifier(abilityMods[item.SkillAbility].ToString());
                         }
                     }
                 }
             }
         }
 
-        private void editor_ModifierChanged(object? sender, EventArgs e)
-        {
-            // TODO: handle modifier change
-            //throw new NotImplementedException();
-            if (sender is SkillEditor se)
-            {
-                if (se.ModifierName == se.OriginalModifierName)
-                {
-                    skillModSubs.Remove(se.InternalSkillName);
-                }
-                else
-                {
-                    skillModSubs[se.InternalSkillName] = se.ModifierName;
-                }
-                se.ModifierValue = abilityMods[se.ModifierName];
-            }
-        }
+        //private void editor_ModifierChanged(object? sender, EventArgs e)
+        //{
+        //    // TODO: handle modifier change
+        //    //throw new NotImplementedException();
+        //    if (sender is SkillEditor se)
+        //    {
+        //        if (se.ModifierName == se.OriginalModifierName)
+        //        {
+        //            skillModSubs.Remove(se.InternalSkillName);
+        //        }
+        //        else
+        //        {
+        //            skillModSubs[se.InternalSkillName] = se.ModifierName;
+        //        }
+        //        se.ModifierValue = abilityMods[se.ModifierName];
+        //    }
+        //}
 
 
         #endregion
@@ -4235,15 +4241,15 @@ namespace PathfinderJson
                 stkSkills.Children.Clear();
                 foreach (SkillEditor item in ses)
                 {
-                    item.ModifierValue = abilityMods[item.ModifierName];
-                    item.UpdateCalculations();
+                    item.LoadModifier(abilityMods[item.SkillAbility].ToString());
+                    //item.ModifierValue = abilityMods[item.ModifierName];
+                    //item.UpdateCalculations();
 
                     item.ContentChanged += editor_ContentChanged;
-                    item.ModifierChanged += editor_ModifierChanged;
+                    //item.ModifierChanged += editor_ModifierChanged;
 
                     stkSkills.Children.Add(item);
-                    item.ColorScheme = ColorScheme;
-                    //item.UpdateAppearance();
+                    item.UpdateAppearance();
                 }
 
                 if (sheetSettings?.ContainsKey("skillModSet") ?? false)

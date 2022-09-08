@@ -1,11 +1,9 @@
-﻿using SolidShineUi;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using static PathfinderJson.CoreUtils;
@@ -17,247 +15,200 @@ namespace PathfinderJson
     /// </summary>
     public partial class SkillEditor : UserControl
     {
-
         public SkillEditor()
         {
             InitializeComponent();
-            _init = false;
-
-            //UpdateCalculations();
         }
 
-
-        public event EventHandler? ContentChanged;
-        public event EventHandler? ModifierChanged;
-
-        bool _init = true;
-        bool _cbbc = false;
-
-        #region ColorScheme
-
-        public event DependencyPropertyChangedEventHandler? ColorSchemeChanged;
-
-        public static DependencyProperty ColorSchemeProperty
-            = DependencyProperty.Register("ColorScheme", typeof(ColorScheme), typeof(SkillEditor),
-            new FrameworkPropertyMetadata(new ColorScheme(), new PropertyChangedCallback(OnColorSchemeChanged)));
-
-        public static void OnColorSchemeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        public void UpdateAppearance()
         {
-            ColorScheme cs = (e.NewValue as ColorScheme)!;
-
-            if (d is SkillEditor s)
+            btnEdit.ColorScheme = App.ColorScheme;
+            btnInfo.ColorScheme = App.ColorScheme;
+            btnModifiers.ColorScheme = App.ColorScheme;
+            imgEdit.ColorScheme = App.ColorScheme;
+            imgInfo.ColorScheme = App.ColorScheme;
+            chkSkill.ColorScheme = App.ColorScheme;
+            if (App.ColorScheme.IsHighContrast)
             {
-                s.ColorSchemeChanged?.Invoke(d, e);
-                s.ApplyColorScheme(cs);
-            }
-        }
-
-        public ColorScheme ColorScheme
-        {
-            get => (ColorScheme)GetValue(ColorSchemeProperty);
-            set => SetValue(ColorSchemeProperty, value);
-        }
-
-        public void ApplyColorScheme(ColorScheme cs)
-        {
-            if (cs != ColorScheme)
-            {
-                ColorScheme = cs;
-                return;
-            }
-
-            BorderBrush = cs.BorderColor.ToBrush();
-        }
-
-        #endregion
-
-        public string InternalSkillName { get; set; } = "Unnamed";
-
-        public static DependencyProperty SkillRanksProperty
-            = DependencyProperty.Register("SkillRanks", typeof(int), typeof(SkillEditor),
-            new FrameworkPropertyMetadata(0));
-
-        public int SkillRanks
-        {
-            get => (int)GetValue(SkillRanksProperty);
-            set => SetValue(SkillRanksProperty, value);
-        }
-
-        public static DependencyProperty MiscModifierProperty
-            = DependencyProperty.Register("MiscModifier", typeof(string), typeof(SkillEditor),
-            new FrameworkPropertyMetadata(""));
-
-        public string MiscModifier
-        {
-            get => (string)GetValue(MiscModifierProperty);
-            set => SetValue(MiscModifierProperty, value);
-        }
-
-        public static DependencyProperty RacialModifierProperty
-            = DependencyProperty.Register("RacialModifier", typeof(int), typeof(SkillEditor),
-            new FrameworkPropertyMetadata(0));
-
-        public int RacialModifier
-        {
-            get => (int)GetValue(RacialModifierProperty);
-            set => SetValue(RacialModifierProperty, value);
-        }
-
-        public static DependencyProperty TraitModifierProperty
-    = DependencyProperty.Register("TraitModifier", typeof(int), typeof(SkillEditor),
-    new FrameworkPropertyMetadata(0));
-
-        public int TraitModifier
-        {
-            get => (int)GetValue(TraitModifierProperty);
-            set => SetValue(TraitModifierProperty, value);
-        }
-
-        public static DependencyProperty ModifierValueProperty
-            = DependencyProperty.Register("ModifierValue", typeof(int), typeof(SkillEditor),
-            new FrameworkPropertyMetadata(0));
-
-        public int ModifierValue
-        {
-            get => (int)GetValue(ModifierValueProperty);
-            set => SetValue(ModifierValueProperty, value);
-        }
-
-        public static DependencyProperty IsTrainedProperty
-            = DependencyProperty.Register("IsTrained", typeof(bool), typeof(SkillEditor),
-            new FrameworkPropertyMetadata(false));
-
-        public bool IsTrained
-        {
-            get => (bool)GetValue(IsTrainedProperty);
-            set => SetValue(IsTrainedProperty, value);
-        }
-
-        public static DependencyProperty HasSpecializationProperty
-            = DependencyProperty.Register("HasSpecialization", typeof(bool), typeof(SkillEditor),
-            new FrameworkPropertyMetadata(false));
-
-        public bool HasSpecialization
-        {
-            get => (bool)GetValue(HasSpecializationProperty);
-            set => SetValue(HasSpecializationProperty, value);
-        }
-
-        public static DependencyProperty SkillNameProperty
-            = DependencyProperty.Register("SkillName", typeof(string), typeof(SkillEditor),
-            new FrameworkPropertyMetadata("Skill name here"));
-
-        public string SkillName
-        {
-            get => (string)GetValue(SkillNameProperty);
-            set => SetValue(SkillNameProperty, value);
-        }
-
-        public static DependencyProperty SpecializationProperty
-            = DependencyProperty.Register("Specialization", typeof(string), typeof(SkillEditor),
-            new FrameworkPropertyMetadata(""));
-
-        public string Specialization
-        {
-            get => (string)GetValue(SpecializationProperty);
-            set => SetValue(SpecializationProperty, value);
-        }
-
-        public static DependencyProperty ModifierNameProperty
-            = DependencyProperty.Register("ModifierName", typeof(string), typeof(SkillEditor),
-            new FrameworkPropertyMetadata("INT", new PropertyChangedCallback(OnModifierNameChanged)));
-
-        public string ModifierName
-        {
-            get => (string)GetValue(ModifierNameProperty);
-            set => SetValue(ModifierNameProperty, value);
-        }
-
-        public string OriginalModifierName { get; set; } = "";
-
-        public static DependencyProperty InfoUrlProperty
-            = DependencyProperty.Register("InfoUrl", typeof(string), typeof(SkillEditor),
-            new FrameworkPropertyMetadata("https://d20pfsrd.com/skills", new PropertyChangedCallback(OnModifierNameChanged)));
-
-        public string InfoUrl
-        {
-            get => (string)GetValue(InfoUrlProperty);
-            set => SetValue(InfoUrlProperty, value);
-        }
-
-        private static void OnModifierNameChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            if (d is SkillEditor s)
-            {
-                s.ModifierNameChanged();
-            }
-        }
-
-        public void LoadSkillData(Skill s)
-        {
-            IsTrained = s.ClassSkill;
-            SkillRanks = ParseString(s.Ranks);
-            MiscModifier = s.Misc ?? "";
-            RacialModifier = ParseString(s.Racial);
-            TraitModifier = ParseString(s.Trait);
-            Specialization = s.Specialization ?? "";
-
-            UpdateCalculations();
-        }
-
-        private int ParseString(string? str)
-        {
-            if (int.TryParse(str ?? "0", out int i))
-            {
-                return i;
+                txtModifier.BorderBrush = new SolidColorBrush(App.ColorScheme.LightDisabledColor);
+                txtModifier.Background = new SolidColorBrush(SystemColors.ControlColor);
             }
             else
             {
-                return 0;
+                txtModifier.BorderBrush = new SolidColorBrush(SystemColors.ControlDarkColor);
+                txtModifier.Background = new SolidColorBrush(App.ColorScheme.SecondHighlightColor);
             }
+        }
+
+        bool _modifiersOpened = false;
+        bool _wideState = false;
+        public const int WIDE_STATE_THRESHOLD = 610;
+
+        public string SkillName
+        {
+            get
+            {
+                return title;
+            }
+            set
+            {
+                title = value;
+                if (!string.IsNullOrEmpty(specialization))
+                {
+                    txtName.Text = title + " (" + specialization + ")";
+                }
+                else
+                {
+                    txtName.Text = title;
+                }
+            }
+        }
+
+        public string SkillInternalName { get; set; } = "";
+        public string SkillOnlineName { get; set; } = "";
+
+        public string SkillAbility
+        {
+            get
+            {
+                return lblSkillAbility.Text;
+            }
+            set
+            {
+                lblSkillAbility.Text = value;
+            }
+        }
+
+        public bool CanEditTitle
+        {
+            get
+            {
+                return btnEdit.Visibility == Visibility.Visible;
+            }
+            set
+            {
+                btnEdit.Visibility = value ? Visibility.Visible : Visibility.Collapsed;
+                chkSkill.Margin = value ? new Thickness(5, 0, 20, 0) : new Thickness(5, 0, 0, 0);
+            }
+        }
+
+        string title = "";
+        string? specialization = null;
+
+        public void LoadSkillData(Skill skill)
+        {
+            if (skill.ClassSkill) chkSkill.IsChecked = true;
+
+            txtTotal.Text = skill.Total;
+            txtRacial.Text = skill.Racial;
+            txtRanks.Text = skill.Ranks;
+            txtTrait.Text = skill.Trait;
+            txtMisc.Text = skill.Misc;
+
+            if (!string.IsNullOrEmpty(skill.Specialization))
+            {
+                specialization = skill.Specialization;
+                txtName.Text = title + " (" + specialization + ")";
+            }
+            else
+            {
+                txtName.Text = title;
+            }
+
+            ToolTip tt = new ToolTip();
+            tt.Content = "Racial: \"" + txtRacial.Text + "\" Trait: \"" + txtTrait.Text + "\" Misc: \"" + txtMisc.Text + "\"";
+            btnModifiers.ToolTip = tt;
         }
 
         public Skill GetSkillData()
         {
-            return new Skill()
+            Skill s = new Skill
             {
-                Name = InternalSkillName,
-                ClassSkill = IsTrained,
-                Ranks = SkillRanks.ToString(),
-                Misc = MiscModifier.ToString(),
-                Racial = RacialModifier.ToString(),
-                Trait = TraitModifier.ToString(),
-                Total = txtTotal.Text,
-                Specialization = Specialization.Trim('(', ')', ' ', '\t')
+                ClassSkill = chkSkill.IsChecked == true,
+                Misc = GetStringOrNull(txtMisc.Text, true),
+                Racial = GetStringOrNull(txtRacial.Text, true),
+                Ranks = GetStringOrNull(txtRanks.Text, true),
+                Specialization = specialization,
+                Total = GetStringOrNull(txtTotal.Text, true),
+                Trait = GetStringOrNull(txtTrait.Text, true)
             };
+
+            return s;
         }
 
-        protected void ModifierNameChanged()
+        public void LoadModifier(string modifier)
         {
-            if (_cbbc) return;
-
-            cbbStat.SelectedIndex = ModifierName switch
-            {
-                "STR" => 0,
-                "DEX" => 1,
-                "CON" => 2,
-                "INT" => 3,
-                "WIS" => 4,
-                "CHA" => 5,
-                _ => 3,
-            };
+            txtModifier.Text = modifier;
         }
 
-        private void btnSpecialization_Click(object sender, RoutedEventArgs e)
+        public async Task UpdateTotals(CancellationToken ct)
         {
-            StringInputDialog sid = new StringInputDialog(ColorScheme, "Edit Specialzation", "Edit the specialization for the \"" + SkillName + "\" skill.", Specialization.Trim('(', ')', ' ', '\t'));
-            sid.Owner = OwnerWindow;
-            sid.ShowDialog();
+            int total = 0;
 
-            if (sid.DialogResult)
+            string ranks = txtRanks.Text;
+            string misc = txtMisc.Text;
+            string mod = txtModifier.Text;
+            string racial = txtRacial.Text;
+            string trait = txtTrait.Text;
+
+            await Task.Run(() =>
             {
-                Specialization = "(" + sid.Value + ")";
-                ContentChanged?.Invoke(this, EventArgs.Empty);
+                try { total += int.Parse(ranks); } catch (FormatException) { }
+                if (ct.IsCancellationRequested) return;
+                try { total += int.Parse(misc); } catch (FormatException) { }
+                if (ct.IsCancellationRequested) return;
+                try { total += int.Parse(mod); } catch (FormatException) { }
+                if (ct.IsCancellationRequested) return;
+                try { total += int.Parse(racial); } catch (FormatException) { }
+                if (ct.IsCancellationRequested) return;
+                try { total += int.Parse(trait); } catch (FormatException) { }
+            });
+
+            txtTotal.Text = total.ToString();
+        }
+
+        private void btnModifiers_Click(object sender, RoutedEventArgs e)
+        {
+            if (expander.IsExpanded)
+            {
+                expander.IsExpanded = false;
+            }
+            else
+            {
+                expander.IsExpanded = true;
+            }
+        }
+
+        private void Expander_Expanded(object sender, RoutedEventArgs e)
+        {
+            if (!_wideState)
+            {
+                colName.Width = new GridLength(0);
+                colBase.Width = new GridLength(0);
+                colExtra.Width = new GridLength(1, GridUnitType.Star);
+                Background = new SolidColorBrush(App.ColorScheme.LightBackgroundColor);
+
+                ToolTip tt = new ToolTip();
+                tt.Content = SkillName;
+                btnModifiers.ToolTip = tt;
+                _modifiersOpened = true;
+            }
+        }
+
+        private void Expander_Collapsed(object sender, RoutedEventArgs e)
+        {
+            if (!_wideState)
+            {
+                colName.Width = new GridLength(2, GridUnitType.Star);
+                colBase.Width = new GridLength(170);
+                //colModifiers.Width = new GridLength(0);
+                colExtra.Width = new GridLength(0);
+                Background = new SolidColorBrush(Colors.Transparent);
+
+                ToolTip tt = new ToolTip();
+                tt.Content = "Racial: \"" + txtRacial.Text + "\" Trait: \"" + txtTrait.Text + "\" Misc: \"" + txtMisc.Text + "\"";
+                btnModifiers.ToolTip = tt;
+                _modifiersOpened = false;
             }
         }
 
@@ -265,80 +216,100 @@ namespace PathfinderJson
 
         private void btnEdit_Click(object sender, RoutedEventArgs e)
         {
-            popEdit.PlacementTarget = btnEdit;
-            popEdit.Placement = System.Windows.Controls.Primitives.PlacementMode.Bottom;
-
-            popEdit.IsOpen = true;
-            nudRanks.Focus();
-        }
-
-        private void cbbStat_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (_init) return;
-
-            if (cbbStat.SelectedItem is ComboBoxItem cbbi)
+            SolidShineUi.StringInputDialog sid = new SolidShineUi.StringInputDialog(App.ColorScheme, "Edit Skill", "Edit the specialization for this skill.", specialization ?? "");
+            sid.SelectTextOnFocus = true;
+            if (OwnerWindow != null) sid.Owner = OwnerWindow;
+            sid.ShowDialog();
+            if (sid.DialogResult)
             {
-                if (cbbi.Content is string s)
+                specialization = sid.Value;
+                if (!string.IsNullOrEmpty(specialization))
                 {
-                    _cbbc = true;
-                    ModifierName = s;
-                    ModifierChanged?.Invoke(this, EventArgs.Empty);
-                    ContentChanged?.Invoke(this, EventArgs.Empty);
-                    UpdateCalculations();
-                    _cbbc = false;
+                    txtName.Text = title + " (" + specialization + ")";
                 }
+                else
+                {
+                    txtName.Text = title;
+                }
+                ContentChanged?.Invoke(this, e);
             }
         }
 
-        private void popEdit_Opened(object sender, EventArgs e)
+        // event just to update main window's "isDirty" value
+        public event EventHandler? ContentChanged;
+
+        private void textbox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            btnEdit.IsSelected = true;
+            ContentChanged?.Invoke(this, e);
         }
 
-        private void popEdit_Closed(object sender, EventArgs e)
+        private void chkSkill_Checked(object sender, RoutedEventArgs e)
         {
-            btnEdit.IsSelected = false;
+            ContentChanged?.Invoke(this, e);
         }
 
-        private void popEdit_KeyUp(object sender, KeyEventArgs e)
+        private void chkSkill_Unchecked(object sender, RoutedEventArgs e)
         {
-            if (e.Key == Key.Escape)
-            {
-                popEdit.IsOpen = false;
-                btnEdit.Focus();
-            }
-        }
-
-        public void UpdateCalculations()
-        {
-            int miscTotal = nudRanks.Value + nudRacial.Value + nudTrait.Value + ParseStringAsInt(nudMisc.Text) + (chkSkill.IsChecked ? 3 : 0);
-            int modifier = ModifierValue;
-
-            txtMiscTotal.Text = miscTotal.ToString();
-            txtMod.Text = modifier.ToString();
-
-            txtTotal.Text = (miscTotal + modifier).ToString();
-        }
-
-        private void chkSkill_CheckChanged(object sender, RoutedEventArgs e)
-        {
-            if (_init) return;
-
-            UpdateCalculations();
-            ContentChanged?.Invoke(this, EventArgs.Empty);
-        }
-
-        private void nudRanks_ValueChanged(object sender, DependencyPropertyChangedEventArgs e)
-        {
-            if (_init) return;
-
-            UpdateCalculations();
-            ContentChanged?.Invoke(this, EventArgs.Empty);
+            ContentChanged?.Invoke(this, e);
         }
 
         private void btnInfo_Click(object sender, RoutedEventArgs e)
         {
-            CoreUtils.OpenBrowser(InfoUrl);
+            OpenBrowser(SkillOnlineName);
+            //OpenBrowser("https://www.d20pfsrd.com/skills/" + SkillOnlineName);
+        }
+
+        private void userControl_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            if (ActualWidth > WIDE_STATE_THRESHOLD)
+            {
+                _wideState = true;
+
+                colName.Width = new GridLength(2, GridUnitType.Star);
+                colBase.Width = new GridLength(170);
+                Background = new SolidColorBrush(Colors.Transparent);
+
+                colModifiers.Width = new GridLength(0);
+                colModifiers.MinWidth = 0;
+                expander.IsEnabled = false;
+                btnModifiers.IsEnabled = false;
+                colExtra.Width = new GridLength(3, GridUnitType.Star);
+                colExtra.MinWidth = 280;
+            }
+            else
+            {
+                colModifiers.Width = new GridLength(0, GridUnitType.Auto);
+                colModifiers.MinWidth = 85;
+                expander.IsEnabled = true;
+                btnModifiers.IsEnabled = true;
+                colExtra.MinWidth = 0;
+
+                _wideState = false;
+
+                if (_modifiersOpened)
+                {
+                    colName.Width = new GridLength(0);
+                    colBase.Width = new GridLength(0);
+                    colExtra.Width = new GridLength(1, GridUnitType.Star);
+                    Background = new SolidColorBrush(App.ColorScheme.LightBackgroundColor);
+
+                    ToolTip tt = new ToolTip();
+                    tt.Content = SkillName;
+                    btnModifiers.ToolTip = tt;
+                }
+                else
+                {
+                    colName.Width = new GridLength(2, GridUnitType.Star);
+                    colBase.Width = new GridLength(170);
+                    //colModifiers.Width = new GridLength(0);
+                    colExtra.Width = new GridLength(0);
+                    Background = new SolidColorBrush(Colors.Transparent);
+
+                    ToolTip tt = new ToolTip();
+                    tt.Content = "Racial: \"" + txtRacial.Text + "\" Trait: \"" + txtTrait.Text + "\" Misc: \"" + txtMisc.Text + "\"";
+                    btnModifiers.ToolTip = tt;
+                }
+            }
         }
 
         private void nudMisc_TextChanged(object sender, TextChangedEventArgs e)
