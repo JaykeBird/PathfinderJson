@@ -150,30 +150,32 @@ namespace PathfinderJson
             }
 
             // Interface options
-            uiColor = ColorsHelper.CreateFromHex(App.Settings.ThemeColor);
-            chkHighContrast.IsChecked = !(s.HighContrastTheme == App.NO_HIGH_CONTRAST);
-            cbbHighContrast.IsEnabled = chkHighContrast.IsChecked;
-            switch (s.HighContrastTheme)
-            {
-                case "1": // white on black
-                    cbbHighContrast.SelectedIndex = 0;
-                    break;
-                case "2": // green on black
-                    cbbHighContrast.SelectedIndex = 1;
-                    break;
-                case "3": // black on white
-                    cbbHighContrast.SelectedIndex = 2;
-                    break;
-                case "4": // basic light theme
-                    cbbHighContrast.SelectedIndex = 3;
-                    break;
-                case "5": // basic dark theme
-                    cbbHighContrast.SelectedIndex = 4;
-                    break;
-                default:
-                    cbbHighContrast.SelectedIndex = 0;
-                    break;
-            }
+            //uiColor = ColorsHelper.CreateFromHex(App.Settings.ThemeColor);
+            //chkHighContrast.IsChecked = !(s.HighContrastTheme == App.NO_HIGH_CONTRAST);
+            //cbbHighContrast.IsEnabled = chkHighContrast.IsChecked;
+            //switch (s.HighContrastTheme)
+            //{
+            //    case "1": // white on black
+            //        cbbHighContrast.SelectedIndex = 0;
+            //        break;
+            //    case "2": // green on black
+            //        cbbHighContrast.SelectedIndex = 1;
+            //        break;
+            //    case "3": // black on white
+            //        cbbHighContrast.SelectedIndex = 2;
+            //        break;
+            //    case "4": // basic light theme
+            //        cbbHighContrast.SelectedIndex = 3;
+            //        break;
+            //    case "5": // basic dark theme
+            //        cbbHighContrast.SelectedIndex = 4;
+            //        break;
+            //    default:
+            //        cbbHighContrast.SelectedIndex = 0;
+            //        break;
+            //}
+            btnChangeColors.DisplayedColorScheme = App.ColorScheme;
+            btnChangeColors.ColorSchemeDataValue = int.Parse(s.HighContrastTheme);
 
             chkToolbar.IsChecked = s.ShowToolbar;
             chkFilename.IsChecked = s.PathInTitleBar;
@@ -200,39 +202,51 @@ namespace PathfinderJson
             App.Settings.AutoSave = chkAutoSave.IsChecked ? nudAutoSave.Value : 0;
 
             // Interface options
-            App.ColorScheme = new ColorScheme(uiColor);
-            App.Settings.ThemeColor = uiColor.GetHexString();
+            //App.ColorScheme = new ColorScheme(uiColor);
+            //App.Settings.ThemeColor = uiColor.GetHexString();
             App.Settings.ShowToolbar = chkToolbar.IsChecked;
             App.Settings.PathInTitleBar = chkFilename.IsChecked;
 
-            if (chkHighContrast.IsChecked)
+            int ccdv = btnChangeColors.ColorSchemeDataValue;
+            App.Settings.HighContrastTheme = ccdv.ToString();
+            App.ColorScheme = btnChangeColors.DisplayedColorScheme;
+            if (ccdv != 0)
             {
-                switch (cbbHighContrast.SelectedIndex)
-                {
-                    case 0:
-                        App.Settings.HighContrastTheme = "1";
-                        break;
-                    case 1:
-                        App.Settings.HighContrastTheme = "2";
-                        break;
-                    case 2:
-                        App.Settings.HighContrastTheme = "3";
-                        break;
-                    case 3:
-                        App.Settings.HighContrastTheme = "4";
-                        break;
-                    case 4:
-                        App.Settings.HighContrastTheme = "5";
-                        break;
-                    default:
-                        App.Settings.HighContrastTheme = "1";
-                        break;
-                }
+                App.Settings.ThemeColor = uiColor.GetHexString();
             }
             else
             {
-                App.Settings.HighContrastTheme = App.NO_HIGH_CONTRAST;
+                App.Settings.ThemeColor = btnChangeColors.DisplayedColorScheme.MainColor.GetHexString();
             }
+
+            //if (chkHighContrast.IsChecked)
+            //{
+            //    switch (cbbHighContrast.SelectedIndex)
+            //    {
+            //        case 0:
+            //            App.Settings.HighContrastTheme = "1";
+            //            break;
+            //        case 1:
+            //            App.Settings.HighContrastTheme = "2";
+            //            break;
+            //        case 2:
+            //            App.Settings.HighContrastTheme = "3";
+            //            break;
+            //        case 3:
+            //            App.Settings.HighContrastTheme = "4";
+            //            break;
+            //        case 4:
+            //            App.Settings.HighContrastTheme = "5";
+            //            break;
+            //        default:
+            //            App.Settings.HighContrastTheme = "1";
+            //            break;
+            //    }
+            //}
+            //else
+            //{
+            //    App.Settings.HighContrastTheme = App.NO_HIGH_CONTRAST;
+            //}
 
             // Text editor options
             string ff = (txtFont1.FontFamily.Source).Replace(", Consolas", "");
@@ -573,23 +587,33 @@ namespace PathfinderJson
             Close();
         }
 
-        private void chkHighContrast_CheckChanged(object sender, RoutedEventArgs e)
+        //private void chkHighContrast_CheckChanged(object sender, RoutedEventArgs e)
+        //{
+        //    cbbHighContrast.IsEnabled = chkHighContrast.IsChecked;
+        //    chkSyntaxHighlight.IsEnabled = !chkHighContrast.IsChecked;
+        //}
+
+        private void btnChangeColors_Click(object sender, EventArgs e)
         {
-            cbbHighContrast.IsEnabled = chkHighContrast.IsChecked;
-            chkSyntaxHighlight.IsEnabled = !chkHighContrast.IsChecked;
-        }
+            ChangeTheme.ColorSchemeDialog csd = new ChangeTheme.ColorSchemeDialog();
+            csd.ColorScheme = App.ColorScheme;
+            //csd.SelectedColorScheme = btnChangeColors.DisplayedColorScheme;
+            csd.ShowDialog();
 
-        private void btnChangeColors_Click(object sender, RoutedEventArgs e)
-        {
-            ColorPickerDialog cpd = new ColorPickerDialog(App.ColorScheme, App.ColorScheme.MainColor);
-            cpd.Owner = this;
-
-            cpd.ShowDialog();
-
-            if (cpd.DialogResult)
+            if (csd.DialogResult)
             {
-                uiColor = cpd.SelectedColor;
+                btnChangeColors.DisplayedColorScheme = csd.SelectedColorScheme;
+                btnChangeColors.ColorSchemeDataValue = csd.InternalColorSchemeValue;
             }
+            //ColorPickerDialog cpd = new ColorPickerDialog(App.ColorScheme, App.ColorScheme.MainColor);
+            //cpd.Owner = this;
+
+            //cpd.ShowDialog();
+
+            //if (cpd.DialogResult)
+            //{
+            //    uiColor = cpd.SelectedColor;
+            //}
         }
     }
 }

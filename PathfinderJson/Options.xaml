@@ -5,6 +5,7 @@
         xmlns:flat="clr-namespace:SolidShineUi;assembly=SolidShineUi"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PathfinderJson"
+        xmlns:ccs="clr-namespace:PathfinderJson.ChangeTheme"
         mc:Ignorable="d" Title="Pathfinder JSON Options" x:Name="window" BorderBrush="DarkGreen"
         Height="480" Width="700" CaptionDisplayType="Close" ResizeMode="NoResize" FontSize="12" >
     <flat:FlatWindow.Resources>
@@ -23,7 +24,7 @@
         <flat:SelectPanel x:Name="selTabs" Grid.Row="0" Grid.Column="0" BorderThickness="0,0,1,0" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" />
 
         <Grid Grid.Row="0" Grid.Column="1" x:Name="grdHolder" Margin="10,5,0,5" >
-            <Grid x:Name="tabGeneral" >
+            <Grid x:Name="tabGeneral" Visibility="Collapsed" >
                 <TextBlock Text="General Options" FontSize="16" VerticalAlignment="Top" />
                 <TextBlock Text="Check for Updates" FontWeight="Bold" Margin="0,30,0,0" VerticalAlignment="Top" />
                 <flat:FlatButton x:Name="btnUpdateNow" Content="Check for Updates Now" Margin="10,55,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="160" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" Click="btnUpdateNow_Click" />
@@ -42,29 +43,22 @@
             <Grid x:Name="tabSaving" Visibility="Collapsed">
                 <TextBlock Text="Saving Options" FontSize="16" VerticalAlignment="Top" />
             </Grid>
-            <Grid x:Name="tabInterface" Visibility="Collapsed" >
+            <Grid x:Name="tabInterface" Visibility="Visible" >
                 <TextBlock Text="Interface Options" FontSize="16" VerticalAlignment="Top" />
-                <TextBlock Text="Color Scheme" FontWeight="Bold" Margin="0,30,0,0" VerticalAlignment="Top" />
-                <flat:FlatButton x:Name="btnChangeColors" Content="Change Colors..." VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10,95,0,0" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" Width="120" Click="btnChangeColors_Click" />
+                <TextBlock Text="Color Scheme / High Contrast Mode" FontWeight="Bold" Margin="0,30,0,0" VerticalAlignment="Top" />
+                <ccs:ColorSchemeButton x:Name="btnChangeColors" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10,140,0,0" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" 
+                                       Width="135" Click="btnChangeColors_Click" Title="Change theme..." ShowTitle="True" />
                 <TextBlock Margin="10,55,20,0" VerticalAlignment="Top" Height="35" TextWrapping="Wrap"
-                           Text="This is the color used throughout the entire user interface. Try to select a color that isn't too bright or too dark, as they make the interface a bit hard to see or understand." />
-                <TextBlock Text="High Contrast Mode" FontWeight="Bold" Margin="0,135,0,0" VerticalAlignment="Top" />
-                <TextBlock Margin="10,160,20,0" VerticalAlignment="Top" Height="35" TextWrapping="Wrap"
-                           Text="High Contrast Mode overrides the color scheme and other settings to display the interface with greatly-contrasting colors. This is good for users with vision impairment or other sight issues." />
-                <flat:CheckBox x:Name="chkHighContrast" Content="Use high contrast mode" Margin="10,200,0,0" VerticalAlignment="Top" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" CheckChanged="chkHighContrast_CheckChanged" />
-                <TextBlock Text="High contrast or basic theme:" Margin="55,232,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" />
-                <ComboBox x:Name="cbbHighContrast" Margin="220,229,0,0" Height="24" Width="180" HorizontalAlignment="Left" VerticalAlignment="Top" >
-                    <ComboBoxItem Content="White on black" />
-                    <ComboBoxItem Content="Green on black" />
-                    <ComboBoxItem Content="Black on white" />
-                    <ComboBoxItem Content="Basic light theme" />
-                    <ComboBoxItem Content="Basic dark theme" />
-                </ComboBox>
-                <TextBlock Text="Toolbar" FontWeight="Bold" Margin="0,265,0,0" VerticalAlignment="Top" />
-                <flat:CheckBox x:Name="chkToolbar" Content="Show toolbar" Margin="10,285,0,0" VerticalAlignment="Top" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" />
-                <TextBlock Text="Title bar" FontWeight="Bold" Margin="0,325,0,0" VerticalAlignment="Top" />
-                <flat:CheckBox x:Name="chkFilename" Content="Show filename in the titlebar" Margin="10,365,0,0" VerticalAlignment="Top" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" />
-                <TextBlock Text="If unchecked, the character's name is shown in the titlebar." Margin="10,345,0,0" VerticalAlignment="Top" />
+                           Text="This is the scheme/theme used throughout the whole interface. Click the button below to change the color or theme used." />
+                <TextBlock Margin="10,95,20,0" VerticalAlignment="Top" Height="35" TextWrapping="Wrap"
+                           Text="High Contrast Mode, if selected, displays the interface with greatly-contrasting colors, and overrides some other settings." />
+                <TextBlock Text="Glyphs" FontWeight="Bold" Margin="0,180,0,0" VerticalAlignment="Top" />
+                <TextBlock Text="Toolbar" FontWeight="Bold" Margin="0,255,0,0" VerticalAlignment="Top" />
+                <flat:CheckBox x:Name="chkToolbar" Content="Show toolbar" Margin="10,275,0,0" VerticalAlignment="Top" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" />
+                <TextBlock Text="Title bar" FontWeight="Bold" Margin="0,315,0,0" VerticalAlignment="Top" />
+                <flat:CheckBox x:Name="chkFilename" Content="Show filename in the titlebar" Margin="10,355,0,0" VerticalAlignment="Top" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" />
+                <TextBlock Text="If unchecked, the character's name is shown in the titlebar." Margin="10,335,0,0" VerticalAlignment="Top" />
+                <flat:CheckBox x:Name="chkGlyphs" Content="Show glyphs in the background of certain elements" Margin="10,205,0,0" VerticalAlignment="Top" ColorScheme="{Binding ColorScheme, ElementName=window}" />
             </Grid>
             <Grid x:Name="tabJsonEditor" Visibility="Collapsed" >
                 <TextBlock Text="JSON Editor Options" FontSize="16" VerticalAlignment="Top" />
