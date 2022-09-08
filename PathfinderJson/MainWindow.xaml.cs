@@ -3774,7 +3774,7 @@ namespace PathfinderJson
 
         private void btnDeselectSpellLike_Click(object sender, EventArgs e)
         {
-            selSpellLikes.DeselectAll();
+            selSpellLikes.Items.ClearSelection();
         }
 
         #endregion
@@ -3945,7 +3945,7 @@ namespace PathfinderJson
 
         private void btnDeselectSpell_Click(object sender, EventArgs e)
         {
-            selSpells.DeselectAll();
+            selSpells.Items.ClearSelection();
         }
 
         private void expSpells_Expanded(object sender, RoutedEventArgs e)
@@ -4164,7 +4164,7 @@ namespace PathfinderJson
 
         #endregion
 
-        public void LoadSheetSettings()
+        public void LoadSheetSettings(bool reloadSkills = false)
         {
             if (sheetSettings != null)
             {
@@ -4226,6 +4226,31 @@ namespace PathfinderJson
                 mnuUpdateTotals.IsChecked = true;
                 mnuAutoUpdate.IsChecked = true;
             }
+
+            if (reloadSkills)
+            {
+                PathfinderSheet pf = CreatePathfinderSheet();
+                var ses = SkillEditorFactory.CreateEditors(pf, this);
+
+                stkSkills.Children.Clear();
+                foreach (SkillEditor item in ses)
+                {
+                    item.ModifierValue = abilityMods[item.ModifierName];
+                    item.UpdateCalculations();
+
+                    item.ContentChanged += editor_ContentChanged;
+                    item.ModifierChanged += editor_ModifierChanged;
+
+                    stkSkills.Children.Add(item);
+                    item.ColorScheme = ColorScheme;
+                    //item.UpdateAppearance();
+                }
+
+                if (sheetSettings?.ContainsKey("skillModSet") ?? false)
+                {
+                    LoadSkillModSubstitutions(sheetSettings["skillModSet"] ?? "");
+                }
+            }
         }
 
         /// <summary>
@@ -4264,7 +4289,7 @@ namespace PathfinderJson
             if (sse.DialogResult)
             {
                 sheetSettings = sse.SheetSettingsList;
-                LoadSheetSettings();
+                LoadSheetSettings(true);
                 SetIsDirty();
             }
         }
