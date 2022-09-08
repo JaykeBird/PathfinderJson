@@ -37,10 +37,24 @@ namespace PathfinderJson
                         chkSpellcheckAll.IsChecked = (kvp.Value ?? "") != "enabled";
                         break;
                     case "skillList":
-                        if (System.IO.File.Exists(kvp.Value ?? ""))
+                        if ((kvp.Value?.ToLowerInvariant() ?? "standard") == "standard")
+                        {
+                            rdoSkillList.IsChecked = true;
+                            rdoPsionicsList.IsChecked = false;
+                            rdoSelectFile.IsChecked = false;
+                        }
+                        else if ((kvp.Value?.ToLowerInvariant() ?? "standard") == "psionics")
+                        {
+                            rdoSkillList.IsChecked = false;
+                            rdoPsionicsList.IsChecked = true;
+                            rdoSelectFile.IsChecked = false;
+                        }
+                        else if (System.IO.File.Exists(kvp.Value ?? ""))
                         {
                             fileSelect.SelectedFiles[0] = kvp.Value!;
                             rdoSelectFile.IsChecked = true;
+                            rdoSkillList.IsChecked = false;
+                            rdoPsionicsList.IsChecked = false;
                         }
                         else
                         {
@@ -48,6 +62,8 @@ namespace PathfinderJson
                             md.ShowDialog("The file \"" + kvp.Value + "\" could not be found to use as a skill list. Defaulting to standard skill list.", App.ColorScheme, this,
                                 "Skill List File Not Found", buttonDisplay: MessageDialogButtonDisplay.Auto, image: MessageDialogImage.Error);
                             rdoSkillList.IsChecked = true;
+                            rdoPsionicsList.IsChecked = false;
+                            rdoSelectFile.IsChecked = false;
                         }
                         break;
                     default:
@@ -67,10 +83,15 @@ namespace PathfinderJson
         {
             Dictionary<string, string?> newShettings = new Dictionary<string, string?>();
 
-            if (rdoSelectFile.IsChecked.GetValueOrDefault(false) && fileSelect.SelectedFiles.Count > 0)
+            if (rdoPsionicsList.IsChecked.GetValueOrDefault(false))
+            {
+                newShettings["skillList"] = "psionics";
+            }
+            else if (rdoSelectFile.IsChecked.GetValueOrDefault(false) && fileSelect.SelectedFiles.Count > 0)
             {
                 newShettings["skillList"] = fileSelect.SelectedFiles[0];
             }
+            // else standard list, which doesn't need to be specified
 
             if (chkMarkdown.IsChecked)
             {
