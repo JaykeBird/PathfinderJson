@@ -53,12 +53,13 @@
                 <TextBlock Margin="10,95,20,0" VerticalAlignment="Top" Height="35" TextWrapping="Wrap"
                            Text="High Contrast Mode, if selected, displays the interface with greatly-contrasting colors, and overrides some other settings." />
                 <TextBlock Text="Glyphs" FontWeight="Bold" Margin="0,180,0,0" VerticalAlignment="Top" />
-                <TextBlock Text="Toolbar" FontWeight="Bold" Margin="0,255,0,0" VerticalAlignment="Top" />
-                <flat:CheckBox x:Name="chkToolbar" Content="Show toolbar" Margin="10,275,0,0" VerticalAlignment="Top" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" />
-                <TextBlock Text="Title bar" FontWeight="Bold" Margin="0,315,0,0" VerticalAlignment="Top" />
-                <flat:CheckBox x:Name="chkFilename" Content="Show filename in the titlebar" Margin="10,355,0,0" VerticalAlignment="Top" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" />
-                <TextBlock Text="If unchecked, the character's name is shown in the titlebar." Margin="10,335,0,0" VerticalAlignment="Top" />
-                <flat:CheckBox x:Name="chkGlyphs" Content="Show glyphs in the background of certain elements" Margin="10,205,0,0" VerticalAlignment="Top" ColorScheme="{Binding ColorScheme, ElementName=window}" />
+                <TextBlock Text="Toolbar" FontWeight="Bold" Margin="0,260,0,0" VerticalAlignment="Top" />
+                <flat:CheckBox x:Name="chkToolbar" Content="Show toolbar" Margin="10,280,0,0" VerticalAlignment="Top" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" />
+                <TextBlock Text="Title bar" FontWeight="Bold" Margin="0,320,0,0" VerticalAlignment="Top" />
+                <flat:CheckBox x:Name="chkFilename" Content="Show filename in the titlebar" Margin="10,360,0,0" VerticalAlignment="Top" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" />
+                <TextBlock Text="If unchecked, the character's name is shown in the titlebar." Margin="10,340,0,0" VerticalAlignment="Top" />
+                <flat:CheckBox x:Name="chkGlyphs" Content="Show glyphs in the background of certain elements" Margin="10,220,0,0" VerticalAlignment="Top" ColorScheme="{Binding ColorScheme, ElementName=window}" />
+                <TextBlock Text="Glyphs are always hidden while using a High Contrast theme." Margin="10,200,0,0" VerticalAlignment="Top" />
             </Grid>
             <Grid x:Name="tabJsonEditor" Visibility="Collapsed" >
                 <TextBlock Text="JSON Editor Options" FontSize="16" VerticalAlignment="Top" />
