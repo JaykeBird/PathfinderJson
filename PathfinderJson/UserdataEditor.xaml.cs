@@ -19,6 +19,11 @@ namespace PathfinderJson
             ApplyColorScheme(App.ColorScheme);
         }
 
+        private void window_SourceInitialized(object sender, EventArgs e)
+        {
+            DisableMinimizeAction();
+        }
+
         public new bool DialogResult { get; set; } = false;
 
         public void LoadUserData(UserData ud)
@@ -175,5 +180,6 @@ namespace PathfinderJson
             selPhotos.Items.ClearSelection();
         }
         #endregion
+
     }
 }
