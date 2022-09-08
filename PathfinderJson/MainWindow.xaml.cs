@@ -780,7 +780,7 @@ namespace PathfinderJson
             if (isDirty)
             {
                 MessageDialog md = new MessageDialog(App.ColorScheme);
-                md.ShowDialog("The file has some unsaved changes. Do you want to save them first?", null, this, "Unsaved Changes", MessageDialogButtonDisplay.Three, MessageDialogImage.Question, 
+                md.ShowDialog("The file has some unsaved changes. Do you want to save them first?", null, this, "Unsaved Changes", MessageDialogButtonDisplay.Three, MessageDialogImage.Question,
                     MessageDialogResult.Cancel, "Save", "Cancel", "Discard");
 
                 if (md.DialogResult == MessageDialogResult.OK)
@@ -815,7 +815,7 @@ namespace PathfinderJson
             if (isDirty)
             {
                 MessageDialog md = new MessageDialog(App.ColorScheme);
-                md.ShowDialog("The file has some unsaved changes. Are you sure you want to discard them?", App.ColorScheme, this, "Unsaved Changes", MessageDialogButtonDisplay.Auto, 
+                md.ShowDialog("The file has some unsaved changes. Are you sure you want to discard them?", App.ColorScheme, this, "Unsaved Changes", MessageDialogButtonDisplay.Auto,
                     image: MessageDialogImage.Question, customOkButtonText: "Discard", customCancelButtonText: "Cancel");
 
                 if (md.DialogResult == MessageDialogResult.OK || md.DialogResult == MessageDialogResult.Discard)
@@ -2007,7 +2007,7 @@ namespace PathfinderJson
         {
             if (_sheetLoaded)
             {
-                
+
                 sp.Open();
                 if (!(txtEditRaw.TextArea.Selection.IsEmpty || txtEditRaw.TextArea.Selection.IsMultiline))
                     sp.SearchPattern = txtEditRaw.TextArea.Selection.GetText();
@@ -2426,7 +2426,7 @@ namespace PathfinderJson
             }
 
             abilities = sheet.RawAbilities;
-            
+
             if (sheet.SheetSettings != null)
             {
                 sheetSettings = sheet.SheetSettings;
@@ -4134,7 +4134,7 @@ namespace PathfinderJson
                 foreach (var item in vwrNotes.Document.Blocks)
                 {
                     item.Padding = new Thickness(0);
-                    item.Margin = new Thickness(0,1,0,4);
+                    item.Margin = new Thickness(0, 1, 0, 4);
                 }
             }
         }
@@ -4190,7 +4190,7 @@ namespace PathfinderJson
             brdrNotesMarkdown.Visibility = Visibility.Visible;
 
             txtNotes.BorderThickness = new Thickness(1, 0, 1, 1);
-            
+
             if (_sheetLoaded && !_isUpdating)
             {
                 sheetSettings["notesMarkdown"] = "enabled";
@@ -4264,25 +4264,6 @@ namespace PathfinderJson
 
             if (reloadSkills)
             {
-                //LoadSkillModSubstitutions(sheetSettings["skillModSet"] ?? "");
-
-                //PathfinderSheet pf = CreatePathfinderSheet();
-                //var ses = SkillEditorFactory.CreateEditors(pf, this);
-
-                //stkSkills.Children.Clear();
-                //foreach (SkillEditor item in ses)
-                //{
-                //    item.LoadModifier(abilityMods[item.SkillAbility].ToString());
-                //    //item.ModifierValue = abilityMods[item.ModifierName];
-                //    //item.UpdateCalculations();
-
-                //    item.ContentChanged += editor_ContentChanged;
-                //    //item.ModifierChanged += editor_ModifierChanged;
-
-                //    stkSkills.Children.Add(item);
-                //    item.UpdateAppearance();
-                //}
-
                 string? skillListFile = null;
 
                 // check sheet settings first for relevant settings
@@ -4307,15 +4288,45 @@ namespace PathfinderJson
                     _ => SkillList.LoadFile(skillListFile)
                 };
 
+                string skillModSet = "";
+                if (sheetSettings?.ContainsKey("skillModSet") ?? false)
+                {
+                    skillModSet = sheetSettings["skillModSet"] ?? "";
+                }
+
+                skillModSubs.Clear();
+
+                PathfinderSheet pf = CreatePathfinderSheet();
+                var ses = SkillEditorFactory.CreateEditors(pf, this);
+                if (!string.IsNullOrEmpty(skillModSet))
+                {
+                    if (sheetSettings == null) sheetSettings = new Dictionary<string, string?>();
+                    sheetSettings["skillModSet"] = skillModSet;
+                }
+
+                stkSkills.Children.Clear();
+                foreach (SkillEditor item in ses)
+                {
+                    item.LoadModifier(abilityMods[item.SkillAbility].ToString());
+                    //item.ModifierValue = abilityMods[item.ModifierName];
+                    //item.UpdateCalculations();
+
+                    item.ContentChanged += editor_ContentChanged;
+                    //item.ModifierChanged += editor_ModifierChanged;
+
+                    stkSkills.Children.Add(item);
+                    item.UpdateAppearance();
+                }
+
                 if (sheetSettings?.ContainsKey("skillModSet") ?? false)
                 {
                     LoadSkillModSubstitutions(sheetSettings["skillModSet"] ?? "", sl);
                 }
-                else
-                {
-                    // run function anyway to reset skill modifiers
-                    LoadSkillModSubstitutions("", sl);
-                }
+                //else
+                //{
+                //    // run function anyway to reset skill modifiers
+                //    LoadSkillModSubstitutions("", sl);
+                //}
             }
         }
 
