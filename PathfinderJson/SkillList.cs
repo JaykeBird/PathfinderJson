@@ -92,6 +92,11 @@ namespace PathfinderJson
         {
             SkillEntries.Add(sle);
         }
+
+        public SkillListEntry? GetSkillByName(string name)
+        {
+            return SkillEntries.Find(e => e.Name == name);
+        }
     }
 
     public class SkillListEntry

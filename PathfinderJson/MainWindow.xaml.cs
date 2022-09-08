@@ -3583,9 +3583,29 @@ namespace PathfinderJson
 
         #region Skill editors
 
-        public void LoadSkillModSubstitutions(string s)
+        public void LoadSkillModSubstitutions(string s, SkillList? sl = null)
         {
-            if (string.IsNullOrEmpty(s)) return;
+            if (string.IsNullOrEmpty(s))
+            {
+                skillModSubs.Clear();
+                if (sl != null)
+                {
+                    foreach (SkillEditor? item in stkSkills.Children)
+                    {
+                        if (item != null)
+                        {
+                            SkillListEntry? sle = sl.GetSkillByName(item.SkillInternalName);
+                            if (sle != null)
+                            {
+                                item.SkillAbility = sle.Modifier;
+                                item.LoadModifier(abilityMods[item.SkillAbility].ToString());
+                            }
+                        }
+                    }
+                }
+
+                return;
+            }
 
             skillModSubs.Clear();
 
@@ -3614,6 +3634,15 @@ namespace PathfinderJson
                         {
                             item.SkillAbility = skillModSubs[item.SkillInternalName];
                             item.LoadModifier(abilityMods[item.SkillAbility].ToString());
+                        }
+                        else if (sl != null)
+                        {
+                            SkillListEntry? sle = sl.GetSkillByName(item.SkillInternalName);
+                            if (sle != null)
+                            {
+                                item.SkillAbility = sle.Modifier;
+                                item.LoadModifier(abilityMods[item.SkillAbility].ToString());
+                            }
                         }
                     }
                 }
@@ -4235,26 +4264,57 @@ namespace PathfinderJson
 
             if (reloadSkills)
             {
-                PathfinderSheet pf = CreatePathfinderSheet();
-                var ses = SkillEditorFactory.CreateEditors(pf, this);
+                //LoadSkillModSubstitutions(sheetSettings["skillModSet"] ?? "");
 
-                stkSkills.Children.Clear();
-                foreach (SkillEditor item in ses)
+                //PathfinderSheet pf = CreatePathfinderSheet();
+                //var ses = SkillEditorFactory.CreateEditors(pf, this);
+
+                //stkSkills.Children.Clear();
+                //foreach (SkillEditor item in ses)
+                //{
+                //    item.LoadModifier(abilityMods[item.SkillAbility].ToString());
+                //    //item.ModifierValue = abilityMods[item.ModifierName];
+                //    //item.UpdateCalculations();
+
+                //    item.ContentChanged += editor_ContentChanged;
+                //    //item.ModifierChanged += editor_ModifierChanged;
+
+                //    stkSkills.Children.Add(item);
+                //    item.UpdateAppearance();
+                //}
+
+                string? skillListFile = null;
+
+                // check sheet settings first for relevant settings
+                if (sheetSettings != null)
                 {
-                    item.LoadModifier(abilityMods[item.SkillAbility].ToString());
-                    //item.ModifierValue = abilityMods[item.ModifierName];
-                    //item.UpdateCalculations();
+                    // check if a specific skill list file is referenced
+                    if (sheetSettings.ContainsKey("skillList"))
+                    {
+                        string? loc = sheetSettings["skillList"];
 
-                    item.ContentChanged += editor_ContentChanged;
-                    //item.ModifierChanged += editor_ModifierChanged;
-
-                    stkSkills.Children.Add(item);
-                    item.UpdateAppearance();
+                        if (System.IO.File.Exists(loc ?? "") || loc == "standard" || loc == "psionics")
+                        {
+                            skillListFile = loc;
+                        }
+                    }
                 }
+
+                SkillList sl = skillListFile == null ? SkillList.LoadStandardList() : skillListFile switch
+                {
+                    "standard" => SkillList.LoadStandardList(),
+                    "psionics" => SkillList.LoadPsionicsList(),
+                    _ => SkillList.LoadFile(skillListFile)
+                };
 
                 if (sheetSettings?.ContainsKey("skillModSet") ?? false)
                 {
-                    LoadSkillModSubstitutions(sheetSettings["skillModSet"] ?? "");
+                    LoadSkillModSubstitutions(sheetSettings["skillModSet"] ?? "", sl);
+                }
+                else
+                {
+                    // run function anyway to reset skill modifiers
+                    LoadSkillModSubstitutions("", sl);
                 }
             }
         }
