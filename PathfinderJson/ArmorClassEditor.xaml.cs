@@ -112,5 +112,11 @@ namespace PathfinderJson
         {
             ContentChanged?.Invoke(this, e);
         }
+
+        public bool ShowShieldGlyph
+        {
+            get { return glyShield.Visibility == Visibility.Visible; }
+            set { glyShield.Visibility = value ? Visibility.Visible : Visibility.Collapsed; }
+        }
     }
 }
