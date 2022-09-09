@@ -100,7 +100,7 @@ namespace PathfinderJson
                 ud.Emails.Add(new UserData.Email { Value = item.Text });
             }
 
-            foreach (SelectableItem item in selEmails.Items.OfType<SelectableItem>())
+            foreach (SelectableItem item in selPhotos.Items.OfType<SelectableItem>())
             {
                 ud.Photos.Add(new UserData.Photo { Value = item.Text });
             }
@@ -124,6 +124,16 @@ namespace PathfinderJson
                 string filename = ofd.FileName;
                 PathfinderSheet ps = PathfinderSheet.LoadJsonFile(filename);
                 LoadUserData(ps.Player ?? new UserData(true));
+            }
+
+            btnImport.Focus();
+            foreach (SelectableItem item in selEmails.Items.OfType<SelectableItem>())
+            {
+                item.CancelEdit();
+            }
+            foreach (SelectableItem item in selPhotos.Items.OfType<SelectableItem>())
+            {
+                item.CancelEdit();
             }
         }
 
