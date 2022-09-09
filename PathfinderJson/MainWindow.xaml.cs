@@ -3536,6 +3536,7 @@ namespace PathfinderJson
                 catch (NullReferenceException) { imgPlayer.Source = null; }
                 catch (ArgumentOutOfRangeException) { imgPlayer.Source = null; }
                 catch (System.Net.WebException) { imgPlayer.Source = null; }
+                catch (UriFormatException) { imgPlayer.Source = null; }
 
                 SetIsDirty();
                 CreateUndoState();
