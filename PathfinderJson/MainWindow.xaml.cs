@@ -1825,6 +1825,7 @@ namespace PathfinderJson
                 grdEditDrop.Visibility = Visibility.Visible;
                 SetAllTabsVisibility(Visibility.Collapsed);
                 UpdateAppearance();
+                foreach (SelectableItem item in selTabs.Items.SelectedItems.OfType<SelectableItem>().ToList())
                 IEnumerable<SelectableItem> si = selTabs.Items.SelectedItems.OfType<SelectableItem>().ToList();
                 foreach (SelectableItem item in si)
                 {
@@ -2768,7 +2769,6 @@ namespace PathfinderJson
 
             _isUpdating = false;
         }
-
         #endregion
 
         #region Sync Editors / update sheet / CreatePathfinderSheetAsync
@@ -3274,7 +3274,7 @@ namespace PathfinderJson
             //}
 
             sheet.SpellLikeAbilities = new List<Spell>();
-            foreach (SpellEditor item in selSpellLikes.GetItemsAsType<SpellEditor>())
+            foreach (SpellEditor item in selSpellLikes.Items.OfType<SpellEditor>())
             {
                 sheet.SpellLikeAbilities.Add(item.GetSpell());
             }
@@ -3341,7 +3341,7 @@ namespace PathfinderJson
             // spells
 
             List<Spell> allspells = new List<Spell>();
-            foreach (SpellEditor item in selSpells.GetItemsAsType<SpellEditor>())
+            foreach (SpellEditor item in selSpells.Items.OfType<SpellEditor>())
             {
                 allspells.Add(item.GetSpell());
             }
@@ -3674,7 +3674,7 @@ namespace PathfinderJson
             SpellEditor se = new SpellEditor();
             se.ContentChanged += editor_ContentChanged;
             se.ApplyColorScheme(App.ColorScheme);
-            selSpellLikes.AddItem(se);
+            selSpellLikes.Items.Add(se);
 
             expSpellLikes.IsExpanded = true;
             se.BringIntoView();
@@ -3712,7 +3712,7 @@ namespace PathfinderJson
         {
             AcItemEditor ae = new AcItemEditor();
             ae.ContentChanged += editor_ContentChanged;
-            selAcItem.AddItem(ae);
+            selAcItem.Items.Add(ae);
 
             expAcItem.IsExpanded = true;
             ae.BringIntoView();
@@ -3742,7 +3742,7 @@ namespace PathfinderJson
             SpellEditor se = new SpellEditor();
             se.ContentChanged += editor_ContentChanged;
             se.ApplyColorScheme(App.ColorScheme);
-            selSpells.AddItem(se);
+            selSpells.Items.Add(se);
 
             expSpells.IsExpanded = true;
             se.BringIntoView();
@@ -3792,7 +3792,7 @@ namespace PathfinderJson
             allowMarked = mnuSpellFilterM.IsChecked;
             allowUnmarked = mnuSpellFilterUM.IsChecked;
 
-            foreach (SpellEditor item in selSpells.GetItemsAsType<SpellEditor>())
+            foreach (SpellEditor item in selSpells.Items.OfType<SpellEditor>())
             {
                 if (AllowedLevels.Contains(item.Level))
                 {
