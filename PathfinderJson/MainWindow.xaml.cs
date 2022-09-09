@@ -1815,7 +1815,7 @@ namespace PathfinderJson
                 grdEditDrop.Visibility = Visibility.Visible;
                 SetAllTabsVisibility(Visibility.Collapsed);
                 UpdateAppearance();
-                foreach (SelectableItem item in selTabs.GetSelectedItemsOfType<SelectableItem>().ToList())
+                foreach (SelectableItem item in selTabs.Items.SelectedItems.OfType<SelectableItem>().ToList())
                 {
                     item.IsSelected = false;
                 }
@@ -2586,31 +2586,31 @@ namespace PathfinderJson
 
             UpdateInternalBab();
 
-            selMelee.Clear();
+            selMelee.Items.Clear();
             foreach (Weapon item in sheet.MeleeWeapons)
             {
                 WeaponEditor we = new WeaponEditor();
                 we.ContentChanged += editor_ContentChanged;
                 we.LoadWeapon(item);
-                selMelee.AddItem(we);
+                selMelee.Items.Add(we);
             }
 
-            selRanged.Clear();
+            selRanged.Items.Clear();
             foreach (Weapon item in sheet.RangedWeapons)
             {
                 WeaponEditor we = new WeaponEditor();
                 we.ContentChanged += editor_ContentChanged;
                 we.LoadWeapon(item);
-                selRanged.AddItem(we);
+                selRanged.Items.Add(we);
             }
 
-            selAcItem.Clear();
+            selAcItem.Items.Clear();
             foreach (AcItem item in sheet.AC.Items)
             {
                 AcItemEditor ae = new AcItemEditor();
                 ae.ContentChanged += editor_ContentChanged;
                 ae.LoadAcItem(item);
-                selAcItem.AddItem(ae);
+                selAcItem.Items.Add(ae);
             }
 
             AcItem total = sheet.AC.ItemTotals;
@@ -2620,41 +2620,41 @@ namespace PathfinderJson
             txtAcWeight.Text = total.Weight;
 
             // Feats/Abilities tab
-            selFeats.Clear();
+            selFeats.Items.Clear();
             foreach (Feat item in sheet.Feats)
             {
                 FeatEditor fe = new FeatEditor();
                 fe.ContentChanged += editor_ContentChanged;
                 fe.LoadFeat(item);
-                selFeats.AddItem(fe);
+                selFeats.Items.Add(fe);
             }
 
-            selAbilities.Clear();
+            selAbilities.Items.Clear();
             foreach (SpecialAbility item in sheet.SpecialAbilities)
             {
                 AbilityEditor ae = new AbilityEditor();
                 ae.ContentChanged += editor_ContentChanged;
                 ae.LoadAbility(item);
-                selAbilities.AddItem(ae);
+                selAbilities.Items.Add(ae);
             }
 
-            selTraits.Clear();
+            selTraits.Items.Clear();
             foreach (SpecialAbility item in sheet.Traits)
             {
                 AbilityEditor ae = new AbilityEditor();
                 ae.ContentChanged += editor_ContentChanged;
                 ae.LoadAbility(item);
-                selTraits.AddItem(ae);
+                selTraits.Items.Add(ae);
             }
 
-            selSpellLikes.Clear();
+            selSpellLikes.Items.Clear();
             foreach (Spell item in sheet.SpellLikeAbilities)
             {
                 SpellEditor se = new SpellEditor();
                 se.ContentChanged += editor_ContentChanged;
                 se.ApplyColorScheme(App.ColorScheme);
                 se.LoadSpell(item);
-                selSpellLikes.AddItem(se);
+                selSpellLikes.Items.Add(se);
             }
 
             // Equipment tab
@@ -2667,13 +2667,13 @@ namespace PathfinderJson
             txtGemsArt.Text = money.ContainsKey("gems") ? money["gems"] : "";
             txtOtherTreasure.Text = money.ContainsKey("other") ? money["other"] : "";
 
-            selEquipment.Clear();
+            selEquipment.Items.Clear();
             foreach (Equipment item in sheet.Equipment)
             {
                 ItemEditor ie = new ItemEditor();
                 ie.ContentChanged += editor_ContentChanged;
                 ie.LoadEquipment(item);
-                selEquipment.AddItem(ie);
+                selEquipment.Items.Add(ie);
             }
 
             // Skills tab
@@ -2789,14 +2789,14 @@ namespace PathfinderJson
             txtSpellSpecialty.Text = sheet.SpellsSpeciality;
             txtSpellConditionalModifiers.Text = sheet.SpellsConditionalModifiers;
 
-            selSpells.Clear();
+            selSpells.Items.Clear();
             foreach (Spell spell in allSpells)
             {
                 SpellEditor se = new SpellEditor();
                 se.ContentChanged += editor_ContentChanged;
                 se.ApplyColorScheme(App.ColorScheme);
                 se.LoadSpell(spell);
-                selSpells.AddItem(se);
+                selSpells.Items.Add(se);
             }
 
             // Notes tab / Calculations
@@ -3265,7 +3265,7 @@ namespace PathfinderJson
             // ArmorClass saving
             ArmorClass ac = edtAc.GetArmorClass();
 
-            foreach (AcItemEditor itEd in selAcItem.GetItemsAsType<AcItemEditor>())
+            foreach (AcItemEditor itEd in selAcItem.Items.OfType<AcItemEditor>())
             {
                 ac.Items.Add(itEd.GetAcItem());
             }
@@ -3287,38 +3287,38 @@ namespace PathfinderJson
             sheet.Resistances = GetStringOrNull(txtResist.Text);
 
             sheet.MeleeWeapons = new List<Weapon>();
-            foreach (WeaponEditor item in selMelee.GetItemsAsType<WeaponEditor>())
+            foreach (WeaponEditor item in selMelee.Items.OfType<WeaponEditor>())
             {
                 sheet.MeleeWeapons.Add(item.GetWeapon());
             }
 
             sheet.RangedWeapons = new List<Weapon>();
-            foreach (WeaponEditor item in selRanged.GetItemsAsType<WeaponEditor>())
+            foreach (WeaponEditor item in selRanged.Items.OfType<WeaponEditor>())
             {
                 sheet.RangedWeapons.Add(item.GetWeapon());
             }
 
             // feats/abilites
             sheet.Feats = new List<Feat>();
-            foreach (FeatEditor item in selFeats.GetItemsAsType<FeatEditor>())
+            foreach (FeatEditor item in selFeats.Items.OfType<FeatEditor>())
             {
                 sheet.Feats.Add(item.GetFeat());
             }
 
             sheet.SpecialAbilities = new List<SpecialAbility>();
-            foreach (AbilityEditor item in selAbilities.GetItemsAsType<AbilityEditor>())
+            foreach (AbilityEditor item in selAbilities.Items.OfType<AbilityEditor>())
             {
                 sheet.SpecialAbilities.Add(item.GetAbility());
             }
 
             sheet.Traits = new List<SpecialAbility>();
-            foreach (AbilityEditor item in selTraits.GetItemsAsType<AbilityEditor>())
+            foreach (AbilityEditor item in selTraits.Items.OfType<AbilityEditor>())
             {
                 sheet.Traits.Add(item.GetAbility());
             }
 
             sheet.SpellLikeAbilities = new List<Spell>();
-            foreach (SpellEditor item in selSpellLikes.GetItemsAsType<SpellEditor>())
+            foreach (SpellEditor item in selSpellLikes.Items.OfType<SpellEditor>())
             {
                 sheet.SpellLikeAbilities.Add(item.GetSpell());
             }
@@ -3348,7 +3348,7 @@ namespace PathfinderJson
             }
 
             sheet.Equipment = new List<Equipment>();
-            foreach (ItemEditor item in selEquipment.GetItemsAsType<ItemEditor>())
+            foreach (ItemEditor item in selEquipment.Items.OfType<ItemEditor>())
             {
                 sheet.Equipment.Add(item.GetEquipment());
             }
@@ -3385,7 +3385,7 @@ namespace PathfinderJson
             // spells
 
             List<Spell> allspells = new List<Spell>();
-            foreach (SpellEditor item in selSpells.GetItemsAsType<SpellEditor>())
+            foreach (SpellEditor item in selSpells.Items.OfType<SpellEditor>())
             {
                 allspells.Add(item.GetSpell());
             }
@@ -3737,7 +3737,7 @@ namespace PathfinderJson
         {
             FeatEditor fe = new FeatEditor();
             fe.ContentChanged += editor_ContentChanged;
-            selFeats.AddItem(fe);
+            selFeats.Items.Add(fe);
 
             expFeats.IsExpanded = true;
             fe.BringIntoView();
@@ -3754,7 +3754,7 @@ namespace PathfinderJson
 
         private void btnDeselectFeat_Click(object sender, EventArgs e)
         {
-            selFeats.DeselectAll();
+            selFeats.Items.ClearSelection();
         }
 
         private void expFeats_Expanded(object sender, RoutedEventArgs e)
@@ -3772,7 +3772,7 @@ namespace PathfinderJson
         {
             AbilityEditor ae = new AbilityEditor();
             ae.ContentChanged += editor_ContentChanged;
-            selAbilities.AddItem(ae);
+            selAbilities.Items.Add(ae);
 
             expabilities.IsExpanded = true;
             ae.BringIntoView();
@@ -3790,7 +3790,7 @@ namespace PathfinderJson
 
         private void btnDeselectAbility_Click(object sender, EventArgs e)
         {
-            selAbilities.DeselectAll();
+            selAbilities.Items.ClearSelection();
         }
 
         private void expAbilities_Expanded(object sender, RoutedEventArgs e)
@@ -3808,7 +3808,7 @@ namespace PathfinderJson
         {
             AbilityEditor ae = new AbilityEditor();
             ae.ContentChanged += editor_ContentChanged;
-            selTraits.AddItem(ae);
+            selTraits.Items.Add(ae);
 
             expTraits.IsExpanded = true;
             ae.BringIntoView();
@@ -3825,7 +3825,7 @@ namespace PathfinderJson
 
         private void btnDeselectTrait_Click(object sender, EventArgs e)
         {
-            selTraits.DeselectAll();
+            selTraits.Items.ClearSelection();
         }
 
         private void expTraits_Expanded(object sender, RoutedEventArgs e)
@@ -3853,7 +3853,7 @@ namespace PathfinderJson
             SpellEditor se = new SpellEditor();
             se.ContentChanged += editor_ContentChanged;
             se.ApplyColorScheme(App.ColorScheme);
-            selSpellLikes.AddItem(se);
+            selSpellLikes.Items.Add(se);
 
             expSpellLikes.IsExpanded = true;
             se.BringIntoView();
@@ -3891,7 +3891,7 @@ namespace PathfinderJson
         {
             WeaponEditor we = new WeaponEditor();
             we.ContentChanged += editor_ContentChanged;
-            selMelee.AddItem(we);
+            selMelee.Items.Add(we);
 
             expMelee.IsExpanded = true;
             we.BringIntoView();
@@ -3908,7 +3908,7 @@ namespace PathfinderJson
 
         private void BtnDeselectMelee_Click(object sender, EventArgs e)
         {
-            selMelee.DeselectAll();
+            selMelee.Items.ClearSelection();
         }
 
 
@@ -3926,7 +3926,7 @@ namespace PathfinderJson
         {
             WeaponEditor we = new WeaponEditor();
             we.ContentChanged += editor_ContentChanged;
-            selRanged.AddItem(we);
+            selRanged.Items.Add(we);
 
             expRanged.IsExpanded = true;
             we.BringIntoView();
@@ -3943,7 +3943,7 @@ namespace PathfinderJson
 
         private void BtnDeselectRanged_Click(object sender, EventArgs e)
         {
-            selRanged.DeselectAll();
+            selRanged.Items.ClearSelection();
         }
 
         private void expEquipment_Expanded(object sender, RoutedEventArgs e)
@@ -3960,7 +3960,7 @@ namespace PathfinderJson
         {
             ItemEditor ie = new ItemEditor();
             ie.ContentChanged += editor_ContentChanged;
-            selEquipment.AddItem(ie);
+            selEquipment.Items.Add(ie);
 
             expEquipment.IsExpanded = true;
             ie.BringIntoView();
@@ -3977,7 +3977,7 @@ namespace PathfinderJson
 
         private void btnDeselectEquipment_Click(object sender, EventArgs e)
         {
-            selEquipment.DeselectAll();
+            selEquipment.Items.ClearSelection();
         }
 
         private void expAcItem_Expanded(object sender, RoutedEventArgs e)
@@ -3994,7 +3994,7 @@ namespace PathfinderJson
         {
             AcItemEditor ae = new AcItemEditor();
             ae.ContentChanged += editor_ContentChanged;
-            selAcItem.AddItem(ae);
+            selAcItem.Items.Add(ae);
 
             expAcItem.IsExpanded = true;
             ae.BringIntoView();
@@ -4024,7 +4024,7 @@ namespace PathfinderJson
             SpellEditor se = new SpellEditor();
             se.ContentChanged += editor_ContentChanged;
             se.ApplyColorScheme(App.ColorScheme);
-            selSpells.AddItem(se);
+            selSpells.Items.Add(se);
 
             expSpells.IsExpanded = true;
             se.BringIntoView();
@@ -4074,7 +4074,7 @@ namespace PathfinderJson
             allowMarked = mnuSpellFilterM.IsChecked;
             allowUnmarked = mnuSpellFilterUM.IsChecked;
 
-            foreach (SpellEditor item in selSpells.GetItemsAsType<SpellEditor>())
+            foreach (SpellEditor item in selSpells.Items.OfType<SpellEditor>())
             {
                 if (AllowedLevels.Contains(item.Level))
                 {
