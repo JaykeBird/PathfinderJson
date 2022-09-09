@@ -3,6 +3,11 @@
     "PathfinderJson": {
       "commandName": "Project",
       "nativeDebugging": false
+    },
+    "With Command-Line Arg": {
+      "commandName": "Project",
+      "commandLineArgs": "\"D:\\OneDrive\\RPGs\\Character Sheets\\Frederik.json\"",
+      "nativeDebugging": false
     }
   }
 }
