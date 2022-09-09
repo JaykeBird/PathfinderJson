@@ -20,11 +20,11 @@
             <RowDefinition Height="0"/>
             <RowDefinition Height="45"/>
         </Grid.RowDefinitions>
-        <Border BorderBrush="Black" BorderThickness="1" VerticalAlignment="Top" Margin="5,0" Grid.Row="1" Grid.ColumnSpan="2"/>
-        <Border BorderBrush="Black" BorderThickness="1" VerticalAlignment="Top" Margin="5,0" Grid.Row="2" Grid.ColumnSpan="2"/>
-        <Border BorderBrush="Black" BorderThickness="1" VerticalAlignment="Top" Margin="5,0" Grid.Row="3" Grid.ColumnSpan="2"/>
-        <Border BorderBrush="Black" BorderThickness="1" VerticalAlignment="Top" Margin="5,0" Grid.Row="4" Grid.ColumnSpan="2"/>
-        <Border BorderBrush="Black" BorderThickness="1" VerticalAlignment="Top" Margin="5,0" Grid.Row="5" Grid.ColumnSpan="2"/>
+        <Border BorderBrush="Black" BorderThickness="1" Height="1" VerticalAlignment="Top" Margin="5,0" Grid.Row="1" Grid.ColumnSpan="2"/>
+        <Border BorderBrush="Black" BorderThickness="1" Height="1" VerticalAlignment="Top" Margin="5,0" Grid.Row="2" Grid.ColumnSpan="2"/>
+        <Border BorderBrush="Black" BorderThickness="1" Height="1" VerticalAlignment="Top" Margin="5,0" Grid.Row="3" Grid.ColumnSpan="2"/>
+        <Border BorderBrush="Black" BorderThickness="1" Height="1" VerticalAlignment="Top" Margin="5,0" Grid.Row="4" Grid.ColumnSpan="2"/>
+        <Border BorderBrush="Black" BorderThickness="1" Height="1" VerticalAlignment="Top" Margin="5,0" Grid.Row="5" Grid.ColumnSpan="2"/>
 
         <TextBlock Text="Select the color scheme to use for the user interface:" HorizontalAlignment="Left" Margin="10,10,0,5" VerticalAlignment="Top" Grid.ColumnSpan="2" />
 
@@ -42,31 +42,29 @@
         <TextBlock HorizontalAlignment="Stretch" Margin="10,35,10,5" VerticalAlignment="Top" Grid.Row="4" FontSize="12" TextWrapping="Wrap"
                    Text="Individually tweak each color in the theme to your liking." />
 
-        <local:ColorSchemeButton Grid.Column="1" HorizontalAlignment="Right" Margin="0,22,260,0" Grid.Row="1" VerticalAlignment="Top" x:Name="btnPreset1" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" />
-        <local:ColorSchemeButton Grid.Column="1" HorizontalAlignment="Right" Margin="0,22,220,0" Grid.Row="1" VerticalAlignment="Top" x:Name="btnPreset2" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" />
-        <local:ColorSchemeButton Grid.Column="1" HorizontalAlignment="Right" Margin="0,22,180,0" Grid.Row="1" VerticalAlignment="Top" x:Name="btnPreset3" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" />
-        <local:ColorSchemeButton Grid.Column="1" HorizontalAlignment="Right" Margin="0,22,140,0" Grid.Row="1" VerticalAlignment="Top" x:Name="btnPreset4" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" />
-        <local:ColorSchemeButton Grid.Column="1" HorizontalAlignment="Right" Margin="0,22,100,0" Grid.Row="1" VerticalAlignment="Top" x:Name="btnPreset5" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" />
-        <local:ColorSchemeButton Grid.Column="1" HorizontalAlignment="Right" Margin="0,22,60,0" Grid.Row="1" VerticalAlignment="Top" x:Name="btnPreset6" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" />
-        <local:ColorSchemeButton Grid.Column="1" HorizontalAlignment="Right" Margin="0,22,20,0" Grid.Row="1" VerticalAlignment="Top" x:Name="btnPreset7" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" />
-        <local:ColorSchemeButton Grid.Column="1" HorizontalAlignment="Right" Margin="0,60,260,0" Grid.Row="1" VerticalAlignment="Top" x:Name="btnPreset8" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" />
-        <local:ColorSchemeButton Grid.Column="1" HorizontalAlignment="Right" Margin="0,60,220,0" Grid.Row="1" VerticalAlignment="Top" x:Name="btnPreset9" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" />
-        <local:ColorSchemeButton Grid.Column="1" HorizontalAlignment="Right" Margin="0,60,180,0" Grid.Row="1" VerticalAlignment="Top" x:Name="btnPreset10" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" />
-        <local:ColorSchemeButton Grid.Column="1" HorizontalAlignment="Right" Margin="0,60,140,0" Grid.Row="1" VerticalAlignment="Top" x:Name="btnPreset11" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" />
-        <local:ColorSchemeButton Grid.Column="1" HorizontalAlignment="Right" Margin="0,60,100,0" Grid.Row="1" VerticalAlignment="Top" x:Name="btnPreset12" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" />
-        <local:ColorSchemeButton Grid.Column="1" HorizontalAlignment="Right" Margin="0,60,60,0" Grid.Row="1" VerticalAlignment="Top" x:Name="btnPreset13" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" />
-        <local:ColorSchemeButton Grid.Column="1" HorizontalAlignment="Right" Margin="0,60,20,0" Grid.Row="1" VerticalAlignment="Top" x:Name="btnPreset14" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" />
-        <TextBlock Grid.Column="1" HorizontalAlignment="Right" Margin="0,102,20,0" Grid.Row="1" Text="Or select any color you want to create a colored theme:" VerticalAlignment="Top"/>
-        <local:ColorChangeButton Grid.Column="1" HorizontalAlignment="Right" Margin="0,130,20,0" Grid.Row="1" VerticalAlignment="Top" x:Name="btnCustomColored" 
-            Title="Create custom colored theme..." ShowTitle="True" ColorScheme="{Binding ColorScheme, ElementName=window}" DisplayedColor="Orange" Click="btnCustomColored_Click" />
-        <local:ColorSchemeButton Grid.Column="1" HorizontalAlignment="Right" Margin="0,170,20,0" Grid.Row="1" VerticalAlignment="Top" x:Name="btnCustomColorTheme" 
-            Title="Use theme from above custom color" ShowTitle="True" ColorScheme="{Binding ColorScheme, ElementName=window}" />
+        <local:ColorSchemeButton Grid.Column="1" HorizontalAlignment="Right" Margin="0,45,260,0" Grid.Row="1" VerticalAlignment="Top" x:Name="btnPreset1" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" TransparentBack="True"  />
+        <local:ColorSchemeButton Grid.Column="1" HorizontalAlignment="Right" Margin="0,45,220,0" Grid.Row="1" VerticalAlignment="Top" x:Name="btnPreset2" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" TransparentBack="True"  />
+        <local:ColorSchemeButton Grid.Column="1" HorizontalAlignment="Right" Margin="0,45,180,0" Grid.Row="1" VerticalAlignment="Top" x:Name="btnPreset3" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" TransparentBack="True"  />
+        <local:ColorSchemeButton Grid.Column="1" HorizontalAlignment="Right" Margin="0,45,140,0" Grid.Row="1" VerticalAlignment="Top" x:Name="btnPreset4" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" TransparentBack="True"  />
+        <local:ColorSchemeButton Grid.Column="1" HorizontalAlignment="Right" Margin="0,45,100,0" Grid.Row="1" VerticalAlignment="Top" x:Name="btnPreset5" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" TransparentBack="True"  />
+        <local:ColorSchemeButton Grid.Column="1" HorizontalAlignment="Right" Margin="0,45,60,0" Grid.Row="1" VerticalAlignment="Top" x:Name="btnPreset6" ColorScheme="{Binding ElementName=window, Path=ColorScheme}"  TransparentBack="True" />
+        <local:ColorSchemeButton Grid.Column="1" HorizontalAlignment="Right" Margin="0,45,20,0" Grid.Row="1" VerticalAlignment="Top" x:Name="btnPreset7" ColorScheme="{Binding ElementName=window, Path=ColorScheme}"  TransparentBack="True" />
+        <local:ColorSchemeButton Grid.Column="1" HorizontalAlignment="Right" Margin="0,83,260,0" Grid.Row="1" VerticalAlignment="Top" x:Name="btnPreset8" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" TransparentBack="True"  />
+        <local:ColorSchemeButton Grid.Column="1" HorizontalAlignment="Right" Margin="0,83,220,0" Grid.Row="1" VerticalAlignment="Top" x:Name="btnPreset9" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" TransparentBack="True"  />
+        <local:ColorSchemeButton Grid.Column="1" HorizontalAlignment="Right" Margin="0,83,180,0" Grid.Row="1" VerticalAlignment="Top" x:Name="btnPreset10" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" TransparentBack="True"  />
+        <local:ColorSchemeButton Grid.Column="1" HorizontalAlignment="Right" Margin="0,83,140,0" Grid.Row="1" VerticalAlignment="Top" x:Name="btnPreset11" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" TransparentBack="True"  />
+        <local:ColorSchemeButton Grid.Column="1" HorizontalAlignment="Right" Margin="0,83,100,0" Grid.Row="1" VerticalAlignment="Top" x:Name="btnPreset12" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" TransparentBack="True"  />
+        <local:ColorSchemeButton Grid.Column="1" HorizontalAlignment="Right" Margin="0,83,60,0" Grid.Row="1" VerticalAlignment="Top" x:Name="btnPreset13" ColorScheme="{Binding ElementName=window, Path=ColorScheme}"  TransparentBack="True" />
+        <local:ColorSchemeButton Grid.Column="1" HorizontalAlignment="Right" Margin="0,83,20,0" Grid.Row="1" VerticalAlignment="Top" x:Name="btnPreset14" ColorScheme="{Binding ElementName=window, Path=ColorScheme}"  TransparentBack="True" />
+        <TextBlock Grid.Column="1" HorizontalAlignment="Right" Margin="0,130,20,0" Grid.Row="1" Text="Or select any color you want:" VerticalAlignment="Top"/>
+        <local:ColorSchemeButton Grid.Column="1" HorizontalAlignment="Right" Margin="0,155,20,0" Grid.Row="1" VerticalAlignment="Top" x:Name="btnCustomColorTheme" 
+            Title="Select a custom color..." ShowTitle="True" ColorScheme="{Binding ColorScheme, ElementName=window}" Click="btnCustomColored_Click" />
 
-        <local:ColorSchemeButton Grid.Column="1" HorizontalAlignment="Right" Margin="0,20,20,0" Grid.Row="2" VerticalAlignment="Top" x:Name="btnLightTheme" 
+        <local:ColorSchemeButton Grid.Column="1" HorizontalAlignment="Right" Margin="0,15,20,0" Grid.Row="2" VerticalAlignment="Top" x:Name="btnLightTheme" 
                                   Title="Use light theme" ShowTitle="True" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" ColorSchemeDataValue="4" />
         <!--<local:ColorChangeButton Grid.Column="1" HorizontalAlignment="Right" Margin="0,20,20,0" Grid.Row="2" VerticalAlignment="Top" x:Name="btnLightAccent" 
                                   Title="Change accent color..." ShowTitle="True" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" DisplayedColor="#A8A8A8" />-->
-        <local:ColorSchemeButton Grid.Column="1" HorizontalAlignment="Right" Margin="0,60,20,0" Grid.Row="2" VerticalAlignment="Top" x:Name="btnDarkTheme"
+        <local:ColorSchemeButton Grid.Column="1" HorizontalAlignment="Right" Margin="0,55,20,0" Grid.Row="2" VerticalAlignment="Top" x:Name="btnDarkTheme"
                                   Title="Use dark theme" ShowTitle="True" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" ColorSchemeDataValue="5" />
         <!--<local:ColorChangeButton Grid.Column="1" HorizontalAlignment="Right" Margin="0,20,20,0" Grid.Row="3" VerticalAlignment="Top" x:Name="btnDarkAccent"
                                   Title="Change accent color..." ShowTitle="True" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" DisplayedColor="#C8C8C8" />-->
@@ -86,6 +84,7 @@
                          x:Name="btnOK" Click="btnOK_Click" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" />
         <flat:FlatButton Grid.Column="1" Content="Cancel" HorizontalAlignment="Right" Margin="0,0,20,0" Grid.Row="5" VerticalAlignment="Center" Height="24" MinWidth="70" 
                          x:Name="btnCancel" Click="btnCancel_Click" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" />
+        <TextBlock Grid.Column="1" HorizontalAlignment="Right" Margin="0,19,20,0" Grid.Row="1" Text="Select a premade color theme:" VerticalAlignment="Top"/>
 
     </Grid>
 </flat:FlatWindow>

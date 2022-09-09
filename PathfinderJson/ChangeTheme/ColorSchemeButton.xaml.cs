@@ -74,6 +74,11 @@ namespace PathfinderJson.ChangeTheme
             = DependencyProperty.Register("ColorSchemeDataValue", typeof(int), typeof(ColorSchemeButton),
             new FrameworkPropertyMetadata(0));
 
+        public bool TransparentBack { get => (bool)GetValue(TransparentBackProperty); set => SetValue(TransparentBackProperty, value); }
+
+        public static DependencyProperty TransparentBackProperty
+            = DependencyProperty.Register("TransparentBack", typeof(bool), typeof(ColorSchemeButton),
+            new FrameworkPropertyMetadata(false));
 
         public static ColorSchemeButton CreateButtonFromScheme(ColorScheme cs, string? title = null)
         {

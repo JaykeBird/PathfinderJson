@@ -63,7 +63,7 @@ namespace PathfinderJson.ChangeTheme
             btnPreset13.DisplayedColorScheme = new ColorScheme(Colors.DeepSkyBlue);
             btnPreset14.DisplayedColorScheme = new ColorScheme(Colors.LightSteelBlue);
 
-            btnCustomColorTheme.DisplayedColorScheme = new ColorScheme(btnCustomColored.DisplayedColor);
+            btnCustomColorTheme.DisplayedColorScheme = new ColorScheme(Colors.Orange);
 
             btnLightTheme.DisplayedColorScheme = ColorScheme.CreateLightTheme();
             btnDarkTheme.DisplayedColorScheme = ColorScheme.CreateDarkTheme();
@@ -102,14 +102,14 @@ namespace PathfinderJson.ChangeTheme
 
         private void btnCustomColored_Click(object sender, EventArgs e)
         {
-            ColorPickerDialog cpd = new ColorPickerDialog(ColorScheme, btnCustomColored.DisplayedColor);
+            ColorPickerDialog cpd = new ColorPickerDialog(ColorScheme, btnCustomColorTheme.DisplayedColorScheme.MainColor);
             cpd.ShowDialog();
 
             if (cpd.DialogResult)
             {
-                btnCustomColored.DisplayedColor = cpd.SelectedColor;
+                //btnCustomColored.DisplayedColor = cpd.SelectedColor;
                 btnCustomColorTheme.DisplayedColorScheme = new ColorScheme(cpd.SelectedColor);
-                btnCustomColorTheme.PerformClick();
+                //btnCustomColorTheme.PerformClick();
             }
         }
     }
