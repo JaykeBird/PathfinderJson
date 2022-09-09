@@ -9,7 +9,7 @@
         <BooleanToVisibilityConverter x:Key="btv" />
     </UserControl.Resources>
     <flat:FlatButton Padding="0" HorizontalContentAlignment="Center" ColorScheme="{Binding ElementName=control, Path=ColorScheme}"
-                     IsSelected="{Binding ElementName=control, Path=IsSelected, Mode=TwoWay}" x:Name="btn" >
+                     IsSelected="{Binding ElementName=control, Path=IsSelected, Mode=TwoWay}" x:Name="btn" TransparentBack="{Binding ElementName=control, Path=TransparentBack, Mode=TwoWay}" >
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="30" />
