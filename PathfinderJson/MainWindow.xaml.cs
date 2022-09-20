@@ -1825,7 +1825,7 @@ namespace PathfinderJson
                 grdEditDrop.Visibility = Visibility.Visible;
                 SetAllTabsVisibility(Visibility.Collapsed);
                 UpdateAppearance();
-                IEnumerable<SelectableItem> si = selTabs.GetSelectedItemsOfType<SelectableItem>().ToList();
+                IEnumerable<SelectableItem> si = selTabs.Items.SelectedItems.OfType<SelectableItem>().ToList();
                 foreach (SelectableItem item in si)
                 {
                     item.IsSelected = false;
@@ -3227,7 +3227,7 @@ namespace PathfinderJson
             // ArmorClass saving
             ArmorClass ac = edtAc.GetArmorClass();
 
-            foreach (AcItemEditor itEd in selAcItem.GetItemsAsType<AcItemEditor>())
+            foreach (AcItemEditor itEd in selAcItem.Items.OfType<AcItemEditor>())
             {
                 ac.Items.Add(itEd.GetAcItem());
             }

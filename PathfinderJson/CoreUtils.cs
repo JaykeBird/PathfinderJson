@@ -133,6 +133,22 @@ namespace PathfinderJson
         {
             if (mod >= 0) return "+" + mod; else return mod.ToString();
         }
+
+        public static IEnumerable<string> GetStringListFromDictionary(Dictionary<string, string> vals)
+        {
+            foreach (KeyValuePair<string, string> item in vals)
+            {
+                yield return item.Key + "," + item.Value;
+            }
+        }
+
+        //public static IEnumerable<string> GetStringListFromDictionary(Dictionary<string, string?> vals)
+        //{
+        //    foreach (KeyValuePair<string, string?> item in vals)
+        //    {
+        //        yield return item.Key + "," + item.Value ?? "";
+        //    }
+        //}
     }
 }
 #nullable restore

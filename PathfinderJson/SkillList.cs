@@ -93,6 +93,11 @@ namespace PathfinderJson
             SkillEntries.Add(sle);
         }
 
+        public void AddSkill(string name, string modifier, string? infoUrl = null, string? displayName = null, bool hasSpecialization = false)
+        {
+            SkillEntries.Add(new SkillListEntry { Name = name, Modifier = modifier, InfoUrl = infoUrl, DisplayName = displayName, HasSpecialization = hasSpecialization });
+        }
+
         public SkillListEntry? GetSkillByName(string name)
         {
             return SkillEntries.Find(e => e.Name == name);
