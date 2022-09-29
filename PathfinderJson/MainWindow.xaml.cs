@@ -1826,8 +1826,6 @@ namespace PathfinderJson
                 SetAllTabsVisibility(Visibility.Collapsed);
                 UpdateAppearance();
                 foreach (SelectableItem item in selTabs.Items.SelectedItems.OfType<SelectableItem>().ToList())
-                IEnumerable<SelectableItem> si = selTabs.Items.SelectedItems.OfType<SelectableItem>().ToList();
-                foreach (SelectableItem item in si)
                 {
                     item.IsSelected = false;
                 }
