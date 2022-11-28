@@ -13,7 +13,7 @@ using SolidShineUi;
 namespace PathfinderJson
 {
     /// <summary>
-    /// Interaction logic for IntegerSpinner.xaml
+    /// A control where users can enter in a string or an integer. With integers, arrows will appear to allow moving up and down.
     /// </summary>
     public partial class SheetValueEditor : UserControl
     {
@@ -65,10 +65,10 @@ namespace PathfinderJson
             //});
 
             // set up ValidateValue to run whenever these properties are updated (Value, MinValue, MaxValue)
-            DependencyPropertyDescriptor.FromProperty(ValueProperty, typeof(IntegerSpinner)).AddValueChanged(this, PropertyChanged);
-            DependencyPropertyDescriptor.FromProperty(MinValueProperty, typeof(IntegerSpinner)).AddValueChanged(this, PropertyChanged);
-            DependencyPropertyDescriptor.FromProperty(MaxValueProperty, typeof(IntegerSpinner)).AddValueChanged(this, PropertyChanged);
-            //DependencyPropertyDescriptor.FromProperty(RepeatDelayProperty, typeof(IntegerSpinner)).AddValueChanged(this, PropertyChanged);
+            DependencyPropertyDescriptor.FromProperty(ValueProperty, typeof(SheetValueEditor)).AddValueChanged(this, PropertyChanged);
+            DependencyPropertyDescriptor.FromProperty(MinValueProperty, typeof(SheetValueEditor)).AddValueChanged(this, PropertyChanged);
+            DependencyPropertyDescriptor.FromProperty(MaxValueProperty, typeof(SheetValueEditor)).AddValueChanged(this, PropertyChanged);
+            //DependencyPropertyDescriptor.FromProperty(RepeatDelayProperty, typeof(SheetValueEditor)).AddValueChanged(this, PropertyChanged);
 
             InternalValueChanged += SheetValueEditor_InternalValueChanged;
             InternalRepeatDelayChanged += IntegerSpinner_InternalRepeatDelayChanged;
@@ -156,7 +156,7 @@ namespace PathfinderJson
 
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
         public static readonly DependencyProperty ColorSchemeProperty
-            = DependencyProperty.Register("ColorScheme", typeof(ColorScheme), typeof(IntegerSpinner),
+            = DependencyProperty.Register("ColorScheme", typeof(ColorScheme), typeof(SheetValueEditor),
             new FrameworkPropertyMetadata(new ColorScheme(), new PropertyChangedCallback(OnColorSchemeChanged)));
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
 
@@ -262,27 +262,27 @@ namespace PathfinderJson
 
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
         public static readonly DependencyProperty ButtonBackgroundProperty = DependencyProperty.Register(
-            "ButtonBackground", typeof(Brush), typeof(IntegerSpinner),
+            "ButtonBackground", typeof(Brush), typeof(SheetValueEditor),
             new PropertyMetadata(new SolidColorBrush(ColorsHelper.White)));
 
         public static readonly DependencyProperty DisabledBrushProperty = DependencyProperty.Register(
-            "DisabledBrush", typeof(Brush), typeof(IntegerSpinner),
+            "DisabledBrush", typeof(Brush), typeof(SheetValueEditor),
             new PropertyMetadata(new SolidColorBrush(Colors.Gray)));
 
         public static readonly new DependencyProperty BorderBrushProperty = DependencyProperty.Register(
-            "BorderBrush", typeof(Brush), typeof(IntegerSpinner),
+            "BorderBrush", typeof(Brush), typeof(SheetValueEditor),
             new PropertyMetadata(new SolidColorBrush(Colors.Black)));
 
         public static readonly DependencyProperty HighlightBrushProperty = DependencyProperty.Register(
-            "HighlightBrush", typeof(Brush), typeof(IntegerSpinner),
+            "HighlightBrush", typeof(Brush), typeof(SheetValueEditor),
             new PropertyMetadata(new SolidColorBrush(Colors.LightGray)));
 
         public static readonly DependencyProperty ClickBrushProperty = DependencyProperty.Register(
-            "ClickBrush", typeof(Brush), typeof(IntegerSpinner),
+            "ClickBrush", typeof(Brush), typeof(SheetValueEditor),
             new PropertyMetadata(new SolidColorBrush(Colors.Gainsboro)));
 
         public static readonly DependencyProperty BorderDisabledBrushProperty = DependencyProperty.Register(
-            "BorderDisabledBrush", typeof(Brush), typeof(IntegerSpinner),
+            "BorderDisabledBrush", typeof(Brush), typeof(SheetValueEditor),
             new PropertyMetadata(new SolidColorBrush(Colors.DarkGray)));
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
 
@@ -393,7 +393,7 @@ namespace PathfinderJson
 
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
         public static readonly DependencyProperty ValueProperty = DependencyProperty.Register(
-            "Value", typeof(int), typeof(IntegerSpinner),
+            "Value", typeof(int), typeof(SheetValueEditor),
             new FrameworkPropertyMetadata(0, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, new PropertyChangedCallback(OnValueChanged)));
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
 
@@ -422,7 +422,7 @@ namespace PathfinderJson
 
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
         public static readonly DependencyProperty StepProperty = DependencyProperty.Register(
-            "Step", typeof(int), typeof(IntegerSpinner),
+            "Step", typeof(int), typeof(SheetValueEditor),
             new PropertyMetadata(1));
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
 
@@ -442,7 +442,7 @@ namespace PathfinderJson
         
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
         public static readonly DependencyProperty MinValueProperty = DependencyProperty.Register(
-            "MinValue", typeof(int), typeof(IntegerSpinner),
+            "MinValue", typeof(int), typeof(SheetValueEditor),
             new PropertyMetadata(int.MinValue));
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
 
@@ -467,7 +467,7 @@ namespace PathfinderJson
 
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
         public static readonly DependencyProperty MaxValueProperty = DependencyProperty.Register(
-            "MaxValue", typeof(int), typeof(IntegerSpinner),
+            "MaxValue", typeof(int), typeof(SheetValueEditor),
             new PropertyMetadata(int.MaxValue));
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
 
@@ -492,7 +492,7 @@ namespace PathfinderJson
 
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
         public static readonly DependencyProperty RepeatDelayProperty = DependencyProperty.Register(
-            "RepeatDelay", typeof(double), typeof(IntegerSpinner),
+            "RepeatDelay", typeof(double), typeof(SheetValueEditor),
             new PropertyMetadata(300d, new PropertyChangedCallback(OnInternalRepeatDelayChanged)));
 
         /// <summary>
@@ -501,7 +501,7 @@ namespace PathfinderJson
         protected event DependencyPropertyChangedEventHandler InternalRepeatDelayChanged;
 
         public static readonly RoutedEvent RepeatDelayChangedEvent = EventManager.RegisterRoutedEvent(
-            "RepeatDelayChanged", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(IntegerSpinner));
+            "RepeatDelayChanged", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(SheetValueEditor));
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
 
         /// <summary>
@@ -544,7 +544,7 @@ namespace PathfinderJson
 
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
         public static readonly DependencyProperty CornerRadiusProperty = DependencyProperty.Register(
-            "CornerRadius", typeof(CornerRadius), typeof(IntegerSpinner),
+            "CornerRadius", typeof(CornerRadius), typeof(SheetValueEditor),
             new PropertyMetadata(new CornerRadius(0), new PropertyChangedCallback(OnInternalCornerRadiusChanged)));
 
         /// <summary>
@@ -553,7 +553,7 @@ namespace PathfinderJson
         protected event DependencyPropertyChangedEventHandler InternalCornerRadiusChanged;
 
         public static readonly RoutedEvent CornerRadiusChangedEvent = EventManager.RegisterRoutedEvent(
-            "CornerRadiusChanged", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(IntegerSpinner));
+            "CornerRadiusChanged", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(SheetValueEditor));
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
 
         /// <summary>
@@ -598,7 +598,7 @@ namespace PathfinderJson
 
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
         public static readonly DependencyProperty AcceptExpressionsProperty = DependencyProperty.Register(
-            "AcceptExpressions", typeof(bool), typeof(IntegerSpinner),  new PropertyMetadata(true));
+            "AcceptExpressions", typeof(bool), typeof(SheetValueEditor),  new PropertyMetadata(true));
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
 
         /// <summary>
@@ -621,7 +621,7 @@ namespace PathfinderJson
 
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
         public static readonly DependencyProperty ShowArrowsProperty = DependencyProperty.Register(
-            "ShowArrows", typeof(bool), typeof(IntegerSpinner),
+            "ShowArrows", typeof(bool), typeof(SheetValueEditor),
             new PropertyMetadata(true, new PropertyChangedCallback(OnInternalShowArrowsChanged)));
 
         /// <summary>
@@ -630,7 +630,7 @@ namespace PathfinderJson
         protected event DependencyPropertyChangedEventHandler InternalShowArrowsChanged;
 
         public static readonly RoutedEvent ShowArrowsChangedEvent = EventManager.RegisterRoutedEvent(
-            "ShowArrowsChanged", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(IntegerSpinner));
+            "ShowArrowsChanged", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(SheetValueEditor));
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
 
         /// <summary>
