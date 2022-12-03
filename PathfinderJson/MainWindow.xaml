@@ -281,7 +281,7 @@
                         <RowDefinition/>
                         <RowDefinition/>
                         <RowDefinition/>
-                        <RowDefinition Height="150" />
+                        <RowDefinition Height="Auto" MinHeight="150" />
                     </Grid.RowDefinitions>
                     <Grid Margin="10,0,0,0">
                         <TextBlock x:Name="titGeneral" Text="General" FontSize="16" />
@@ -617,12 +617,12 @@
                             </Grid.ColumnDefinitions>
                             <TextBlock x:Name="lblXp" HorizontalAlignment="Left" Text="XP" FontWeight="Bold" Margin="0,2,0,0"/>
                             <TextBlock x:Name="lblExperience" HorizontalAlignment="Left" Margin="0,2,10,0" Text="Experience" Grid.Column="1"/>
-                            <TextBox x:Name="txtXpNl" MinHeight="22" VerticalAlignment="Center" TextChanged="textbox_TextChanged" Grid.Column="4" />
-                            <TextBox x:Name="txtXpTotal" MinHeight="22" TextChanged="textbox_TextChanged" Grid.Column="6"/>
+                            <local:SheetValueEditor x:Name="txtXpNl" MinHeight="22" VerticalAlignment="Center" ValueChanged="nud_ValueChanged" Grid.Column="4" />
+                            <local:SheetValueEditor x:Name="txtXpTotal" MinHeight="22" ValueChanged="nud_ValueChanged" Grid.Column="6"/>
                             <TextBlock x:Name="lblXpTotal" HorizontalAlignment="Left" Margin="15,2,10,0" Text="Total" Grid.Column="5" />
                             <TextBlock x:Name="lblXpNl" HorizontalAlignment="Left" Margin="0,2,10,0" Text="To Next Level" Grid.Column="3" />
                         </Grid>
-                        <Grid Margin="0,10,0,0" Grid.Row="3" VerticalAlignment="Top">
+                        <Grid Margin="0,15,0,0" Grid.Row="3" VerticalAlignment="Top">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto"/>
                                 <ColumnDefinition/>
