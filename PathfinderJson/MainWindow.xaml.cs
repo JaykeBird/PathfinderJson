@@ -2570,8 +2570,8 @@ namespace PathfinderJson
             txtHpNl.Text = sheet.HP.NonLethal;
 
             Dictionary<string, string?> xp = sheet.Xp ?? new Dictionary<string, string?>();
-            txtXpNl.Text = xp.ContainsKey("toNextLevel") ? xp["toNextLevel"] : "";
-            txtXpTotal.Text = xp.ContainsKey("total") ? xp["total"] : "";
+            txtXpNl.ValueString = xp.ContainsKey("toNextLevel") ? xp["toNextLevel"] ?? "" : "";
+            txtXpTotal.ValueString = xp.ContainsKey("total") ? xp["total"] ?? "" : "";
 
             txtLanguages.Text = sheet.Languages;
 
@@ -2660,10 +2660,10 @@ namespace PathfinderJson
             // Equipment tab
             Dictionary<string, string?> money = sheet.Money ?? new Dictionary<string, string?>();
 
-            txtMoneyCp.ValueString = money.ContainsKey("cp") ? money["cp"]! : "0";
-            txtMoneySp.ValueString = money.ContainsKey("sp") ? money["sp"]! : "0";
-            txtMoneyGp.ValueString = money.ContainsKey("gp") ? money["gp"]! : "0";
-            txtMoneyPp.ValueString = money.ContainsKey("pp") ? money["pp"]! : "0";
+            txtMoneyCp.ValueString = money.ContainsKey("cp") ? money["cp"] ?? "0" : "0";
+            txtMoneySp.ValueString = money.ContainsKey("sp") ? money["sp"] ?? "0" : "0";
+            txtMoneyGp.ValueString = money.ContainsKey("gp") ? money["gp"] ?? "0" : "0";
+            txtMoneyPp.ValueString = money.ContainsKey("pp") ? money["pp"] ?? "0" : "0";
             txtGemsArt.Text = money.ContainsKey("gems") ? money["gems"] : "";
             txtOtherTreasure.Text = money.ContainsKey("other") ? money["other"] : "";
 
@@ -3249,14 +3249,14 @@ namespace PathfinderJson
             sheet.Saves = saves;
 
             sheet.HP = new HP();
-            sheet.HP.Total = GetStringOrNull(txtHpTotal.ValueString, false);
-            sheet.HP.Wounds = GetStringOrNull(txtHpWounds.ValueString, false);
+            sheet.HP.Total = GetStringOrNull(txtHpTotal.ValueString, true);
+            sheet.HP.Wounds = GetStringOrNull(txtHpWounds.ValueString, true);
             sheet.HP.NonLethal = GetStringOrNull(txtHpNl.Text, true);
 
             Dictionary<string, string?> xp = new Dictionary<string, string?>
             {
-                { "total", GetStringOrNull(txtXpTotal.Text, true) },
-                { "toNextLevel", GetStringOrNull(txtXpNl.Text, true) }
+                { "total", GetStringOrNull(txtXpTotal.ValueString, true) },
+                { "toNextLevel", GetStringOrNull(txtXpNl.ValueString, true) }
             };
             sheet.Xp = xp;
 
