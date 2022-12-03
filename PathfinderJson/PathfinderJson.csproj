@@ -29,12 +29,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Release-win-arm64\**" />
     <Compile Remove="Release-win-x64\**" />
     <Compile Remove="Release-win-x86\**" />
+    <EmbeddedResource Remove="Release-win-arm64\**" />
     <EmbeddedResource Remove="Release-win-x64\**" />
     <EmbeddedResource Remove="Release-win-x86\**" />
+    <None Remove="Release-win-arm64\**" />
     <None Remove="Release-win-x64\**" />
     <None Remove="Release-win-x86\**" />
+    <Page Remove="Release-win-arm64\**" />
     <Page Remove="Release-win-x64\**" />
     <Page Remove="Release-win-x86\**" />
   </ItemGroup>
@@ -57,7 +61,7 @@
     <PackageReference Include="Markdig" Version="0.22.1" />
     <PackageReference Include="Markdig.Wpf" Version="0.5.0.1" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
-	<PackageReference Include="SolidShineUi" Version="1.9.3" />
+	<PackageReference Include="SolidShineUi" Version="1.9.4" />
   </ItemGroup>
 
   <!--<ItemGroup>
