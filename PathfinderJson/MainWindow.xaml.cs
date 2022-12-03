@@ -2566,8 +2566,8 @@ namespace PathfinderJson
             //if (sheet.Saves.ContainsKey("will")) edtWill.LoadModifier(sheet.Saves["will"], txtWism.Text);
             //else edtWill.LoadModifier(new CompoundModifier(), txtWism.Text);
 
-            txtHpTotal.Text = sheet.HP.Total;
-            txtHpWounds.Text = sheet.HP.Wounds;
+            txtHpTotal.ValueString = sheet.HP.Total ?? "";
+            txtHpWounds.ValueString = sheet.HP.Wounds ?? "";
             txtHpNl.Text = sheet.HP.NonLethal;
 
             Dictionary<string, string?> xp = sheet.Xp ?? new Dictionary<string, string?>();
@@ -2625,10 +2625,10 @@ namespace PathfinderJson
             // Equipment tab
             Dictionary<string, string?> money = sheet.Money ?? new Dictionary<string, string?>();
 
-            txtMoneyCp.Value = ParseStringAsDouble(money.ContainsKey("cp") ? money["cp"] : "0");
-            txtMoneySp.Value = ParseStringAsDouble(money.ContainsKey("sp") ? money["sp"] : "0");
-            txtMoneyGp.Value = ParseStringAsDouble(money.ContainsKey("gp") ? money["gp"] : "0");
-            txtMoneyPp.Value = ParseStringAsDouble(money.ContainsKey("pp") ? money["pp"] : "0");
+            txtMoneyCp.ValueString = money.ContainsKey("cp") ? money["cp"]! : "0";
+            txtMoneySp.ValueString = money.ContainsKey("sp") ? money["sp"]! : "0";
+            txtMoneyGp.ValueString = money.ContainsKey("gp") ? money["gp"]! : "0";
+            txtMoneyPp.ValueString = money.ContainsKey("pp") ? money["pp"]! : "0";
             txtGemsArt.Text = money.ContainsKey("gems") ? money["gems"] : "";
             txtOtherTreasure.Text = money.ContainsKey("other") ? money["other"] : "";
 
@@ -2672,61 +2672,61 @@ namespace PathfinderJson
                 switch (currentLevel)
                 {
                     case 0:
-                        txtSpellsBonus0.Text = item.BonusSpells;
+                        txtSpellsBonus0.ValueString = item.BonusSpells ?? "";
                         txtSpellsDC0.Value = ParseStringAsInt(item.SaveDC);
                         txtSpellsKnown0.Value = ParseStringAsInt(item.TotalKnown);
                         txtSpellsPerDay0.Value = ParseStringAsInt(item.TotalPerDay);
                         break;
                     case 1:
-                        txtSpellsBonus1.Text = item.BonusSpells;
+                        txtSpellsBonus1.ValueString = item.BonusSpells ?? "";
                         txtSpellsDC1.Value = ParseStringAsInt(item.SaveDC);
                         txtSpellsKnown1.Value = ParseStringAsInt(item.TotalKnown);
                         txtSpellsPerDay1.Value = ParseStringAsInt(item.TotalPerDay);
                         break;
                     case 2:
-                        txtSpellsBonus2.Text = item.BonusSpells;
+                        txtSpellsBonus2.ValueString = item.BonusSpells ?? "";
                         txtSpellsDC2.Value = ParseStringAsInt(item.SaveDC);
                         txtSpellsKnown2.Value = ParseStringAsInt(item.TotalKnown);
                         txtSpellsPerDay2.Value = ParseStringAsInt(item.TotalPerDay);
                         break;
                     case 3:
-                        txtSpellsBonus3.Text = item.BonusSpells;
+                        txtSpellsBonus3.ValueString = item.BonusSpells ?? "";
                         txtSpellsDC3.Value = ParseStringAsInt(item.SaveDC);
                         txtSpellsKnown3.Value = ParseStringAsInt(item.TotalKnown);
                         txtSpellsPerDay3.Value = ParseStringAsInt(item.TotalPerDay);
                         break;
                     case 4:
-                        txtSpellsBonus4.Text = item.BonusSpells;
+                        txtSpellsBonus4.ValueString = item.BonusSpells ?? "";
                         txtSpellsDC4.Value = ParseStringAsInt(item.SaveDC);
                         txtSpellsKnown4.Value = ParseStringAsInt(item.TotalKnown);
                         txtSpellsPerDay4.Value = ParseStringAsInt(item.TotalPerDay);
                         break;
                     case 5:
-                        txtSpellsBonus5.Text = item.BonusSpells;
+                        txtSpellsBonus5.ValueString = item.BonusSpells ?? "";
                         txtSpellsDC5.Value = ParseStringAsInt(item.SaveDC);
                         txtSpellsKnown5.Value = ParseStringAsInt(item.TotalKnown);
                         txtSpellsPerDay5.Value = ParseStringAsInt(item.TotalPerDay);
                         break;
                     case 6:
-                        txtSpellsBonus6.Text = item.BonusSpells;
+                        txtSpellsBonus6.ValueString = item.BonusSpells ?? "";
                         txtSpellsDC6.Value = ParseStringAsInt(item.SaveDC);
                         txtSpellsKnown6.Value = ParseStringAsInt(item.TotalKnown);
                         txtSpellsPerDay6.Value = ParseStringAsInt(item.TotalPerDay);
                         break;
                     case 7:
-                        txtSpellsBonus7.Text = item.BonusSpells;
+                        txtSpellsBonus7.ValueString = item.BonusSpells ?? "";
                         txtSpellsDC7.Value = ParseStringAsInt(item.SaveDC);
                         txtSpellsKnown7.Value = ParseStringAsInt(item.TotalKnown);
                         txtSpellsPerDay7.Value = ParseStringAsInt(item.TotalPerDay);
                         break;
                     case 8:
-                        txtSpellsBonus8.Text = item.BonusSpells;
+                        txtSpellsBonus8.ValueString = item.BonusSpells ?? "";
                         txtSpellsDC8.Value = ParseStringAsInt(item.SaveDC);
                         txtSpellsKnown8.Value = ParseStringAsInt(item.TotalKnown);
                         txtSpellsPerDay8.Value = ParseStringAsInt(item.TotalPerDay);
                         break;
                     case 9:
-                        txtSpellsBonus9.Text = item.BonusSpells;
+                        txtSpellsBonus9.ValueString = item.BonusSpells ?? "";
                         txtSpellsDC9.Value = ParseStringAsInt(item.SaveDC);
                         txtSpellsKnown9.Value = ParseStringAsInt(item.TotalKnown);
                         txtSpellsPerDay9.Value = ParseStringAsInt(item.TotalPerDay);
@@ -3209,8 +3209,8 @@ namespace PathfinderJson
             sheet.Saves = saves;
 
             sheet.HP = new HP();
-            sheet.HP.Total = GetStringOrNull(txtHpTotal.Text, true);
-            sheet.HP.Wounds = GetStringOrNull(txtHpWounds.Text, true);
+            sheet.HP.Total = GetStringOrNull(txtHpTotal.ValueString, false);
+            sheet.HP.Wounds = GetStringOrNull(txtHpWounds.ValueString, false);
             sheet.HP.NonLethal = GetStringOrNull(txtHpNl.Text, true);
 
             Dictionary<string, string?> xp = new Dictionary<string, string?>
@@ -4449,5 +4449,6 @@ namespace PathfinderJson
         }
 
         #endregion
+
     }
 }

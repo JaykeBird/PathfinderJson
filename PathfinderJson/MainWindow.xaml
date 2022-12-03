@@ -599,8 +599,8 @@
                             </Grid.ColumnDefinitions>
                             <TextBlock x:Name="lblHP" HorizontalAlignment="Left" Text="HP" FontWeight="Bold" Margin="0,2,0,0"/>
                             <TextBlock x:Name="lblHealth" Margin="0,2,10,0" Text="Hit Points" Grid.Column="1" />
-                            <TextBox x:Name="txtHpWounds" MinHeight="22" VerticalAlignment="Center" TextChanged="textbox_TextChanged" Grid.Column="4" />
-                            <TextBox x:Name="txtHpTotal" MinHeight="22" TextChanged="textbox_TextChanged" Grid.Column="6"/>
+                            <local:SheetValueEditor x:Name="txtHpWounds" MinHeight="22" VerticalAlignment="Center" ValueChanged="nud_TextChanged" Grid.Column="4" ColorScheme="{Binding ElementName=window,Path=ColorScheme}" />
+                            <local:SheetValueEditor x:Name="txtHpTotal" MinHeight="22" ValueChanged="nud_TextChanged" Grid.Column="6" ColorScheme="{Binding ElementName=window,Path=ColorScheme}" />
                             <TextBlock x:Name="lblHpTotal" HorizontalAlignment="Left" Margin="15,0,10,0" Text="Total" VerticalAlignment="Center" Grid.Column="5" />
                             <TextBlock x:Name="lblHpWounds" Text="Wounds/Current" Margin="0,2,10,0" HorizontalAlignment="Left" Grid.Column="3" />
                             <TextBlock x:Name="lblHpSlash" HorizontalAlignment="Left" Margin="5,0,0,0" Text="/" FontWeight="Bold" VerticalAlignment="Center" Grid.Column="5" />
@@ -848,16 +848,16 @@
                         <flat:IntegerSpinner x:Name="txtSpellsPerDay7" MinHeight="23" Margin="8,2" VerticalAlignment="Top" ValueChanged="nud_TextChanged" AcceptExpressions="True" ColorScheme="{Binding ColorScheme, ElementName=window}" Grid.Column="3" Grid.Row="8"/>
                         <flat:IntegerSpinner x:Name="txtSpellsPerDay8" MinHeight="23" Margin="8,2" VerticalAlignment="Top" ValueChanged="nud_TextChanged" AcceptExpressions="True" ColorScheme="{Binding ColorScheme, ElementName=window}" Grid.Column="3" Grid.Row="9"/>
                         <flat:IntegerSpinner x:Name="txtSpellsPerDay9" MinHeight="23" Margin="8,2" VerticalAlignment="Top" ValueChanged="nud_TextChanged" AcceptExpressions="True" ColorScheme="{Binding ColorScheme, ElementName=window}" Grid.Column="3" Grid.Row="10"/>
-                        <TextBox x:Name="txtSpellsBonus0"  MinHeight="23" Margin="8,2" VerticalAlignment="Top" TextChanged="textbox_TextChanged" Grid.Column="4" Grid.Row="1" />
-                        <TextBox x:Name="txtSpellsBonus1"  MinHeight="23" Margin="8,2" VerticalAlignment="Top" TextChanged="textbox_TextChanged" Grid.Column="4" Grid.Row="2"/>
-                        <TextBox x:Name="txtSpellsBonus2"  MinHeight="23" Margin="8,2" VerticalAlignment="Top" TextChanged="textbox_TextChanged" Grid.Column="4" Grid.Row="3"/>
-                        <TextBox x:Name="txtSpellsBonus3"  MinHeight="23" Margin="8,2" VerticalAlignment="Top" TextChanged="textbox_TextChanged" Grid.Column="4" Grid.Row="4"/>
-                        <TextBox x:Name="txtSpellsBonus4"  MinHeight="23" Margin="8,2" VerticalAlignment="Top" TextChanged="textbox_TextChanged" Grid.Column="4" Grid.Row="5"/>
-                        <TextBox x:Name="txtSpellsBonus5"  MinHeight="23" Margin="8,2" VerticalAlignment="Top" TextChanged="textbox_TextChanged" Grid.Column="4" Grid.Row="6"/>
-                        <TextBox x:Name="txtSpellsBonus6"  MinHeight="23" Margin="8,2" VerticalAlignment="Top" TextChanged="textbox_TextChanged" Grid.Column="4" Grid.Row="7"/>
-                        <TextBox x:Name="txtSpellsBonus7"  MinHeight="23" Margin="8,2" VerticalAlignment="Top" TextChanged="textbox_TextChanged" Grid.Column="4" Grid.Row="8"/>
-                        <TextBox x:Name="txtSpellsBonus8"  MinHeight="23" Margin="8,2" VerticalAlignment="Top" TextChanged="textbox_TextChanged" Grid.Column="4" Grid.Row="9"/>
-                        <TextBox x:Name="txtSpellsBonus9"  MinHeight="23" Margin="8,2" VerticalAlignment="Center" TextChanged="textbox_TextChanged" Grid.Column="4" Grid.Row="10"/>
+                        <local:SheetValueEditor x:Name="txtSpellsBonus0"  MinHeight="23" Margin="8,2" VerticalAlignment="Top" ValueChanged="nud_TextChanged" ColorScheme="{Binding ColorScheme, ElementName=window}" Grid.Column="4" Grid.Row="1" />
+                        <local:SheetValueEditor x:Name="txtSpellsBonus1"  MinHeight="23" Margin="8,2" VerticalAlignment="Top" ValueChanged="nud_TextChanged" ColorScheme="{Binding ColorScheme, ElementName=window}" Grid.Column="4" Grid.Row="2"/>
+                        <local:SheetValueEditor x:Name="txtSpellsBonus2"  MinHeight="23" Margin="8,2" VerticalAlignment="Top" ValueChanged="nud_TextChanged" ColorScheme="{Binding ColorScheme, ElementName=window}" Grid.Column="4" Grid.Row="3"/>
+                        <local:SheetValueEditor x:Name="txtSpellsBonus3"  MinHeight="23" Margin="8,2" VerticalAlignment="Top" ValueChanged="nud_TextChanged" ColorScheme="{Binding ColorScheme, ElementName=window}" Grid.Column="4" Grid.Row="4"/>
+                        <local:SheetValueEditor x:Name="txtSpellsBonus4"  MinHeight="23" Margin="8,2" VerticalAlignment="Top" ValueChanged="nud_TextChanged" ColorScheme="{Binding ColorScheme, ElementName=window}" Grid.Column="4" Grid.Row="5"/>
+                        <local:SheetValueEditor x:Name="txtSpellsBonus5"  MinHeight="23" Margin="8,2" VerticalAlignment="Top" ValueChanged="nud_TextChanged" ColorScheme="{Binding ColorScheme, ElementName=window}" Grid.Column="4" Grid.Row="6"/>
+                        <local:SheetValueEditor x:Name="txtSpellsBonus6"  MinHeight="23" Margin="8,2" VerticalAlignment="Top" ValueChanged="nud_TextChanged" ColorScheme="{Binding ColorScheme, ElementName=window}" Grid.Column="4" Grid.Row="7"/>
+                        <local:SheetValueEditor x:Name="txtSpellsBonus7"  MinHeight="23" Margin="8,2" VerticalAlignment="Top" ValueChanged="nud_TextChanged" ColorScheme="{Binding ColorScheme, ElementName=window}" Grid.Column="4" Grid.Row="8"/>
+                        <local:SheetValueEditor x:Name="txtSpellsBonus8"  MinHeight="23" Margin="8,2" VerticalAlignment="Top" ValueChanged="nud_TextChanged" ColorScheme="{Binding ColorScheme, ElementName=window}" Grid.Column="4" Grid.Row="9"/>
+                        <local:SheetValueEditor x:Name="txtSpellsBonus9"  MinHeight="23" Margin="8,2" VerticalAlignment="Top" ValueChanged="nud_TextChanged" ColorScheme="{Binding ColorScheme, ElementName=window}" Grid.Column="4" Grid.Row="10"/>
                         <TextBlock x:Name="lblSpellCol1" HorizontalAlignment="Center" Text="# Known" VerticalAlignment="Top" Grid.Column="1"/>
                         <TextBlock x:Name="lblSpellCol2" HorizontalAlignment="Center" Text="Save DC" VerticalAlignment="Top" Grid.Column="2"/>
                         <TextBlock x:Name="lblSpellCol3" HorizontalAlignment="Center" Text="# Per Day" VerticalAlignment="Top" Grid.Column="3"/>
@@ -1028,10 +1028,10 @@
                             <ColumnDefinition Width="10" />
                             <ColumnDefinition Width="Auto" MinWidth="80" />
                         </Grid.ColumnDefinitions>
-                        <flat:DoubleSpinner x:Name="txtMoneyPp" HorizontalAlignment="Stretch" MinHeight="23" MaxWidth="1200" VerticalAlignment="Center" ValueChanged="nud_TextChanged" ColorScheme="{Binding ColorScheme, ElementName=window}" AcceptExpressions="True" Step="1" Decimals="3" Grid.Column="3"/>
-                        <flat:DoubleSpinner x:Name="txtMoneyGp" HorizontalAlignment="Stretch" MinHeight="23" MaxWidth="1200" VerticalAlignment="Center" ValueChanged="nud_TextChanged" ColorScheme="{Binding ColorScheme, ElementName=window}" AcceptExpressions="True" Step="1" Decimals="3" Grid.Column="3" Grid.Row="1"/>
-                        <flat:DoubleSpinner x:Name="txtMoneySp" HorizontalAlignment="Stretch" MinHeight="23" MaxWidth="1200" VerticalAlignment="Center" ValueChanged="nud_TextChanged" ColorScheme="{Binding ColorScheme, ElementName=window}" AcceptExpressions="True" Step="1" Decimals="3" Grid.Column="3" Grid.Row="2"/>
-                        <flat:DoubleSpinner x:Name="txtMoneyCp" HorizontalAlignment="Stretch" MinHeight="23" MaxWidth="1200" VerticalAlignment="Center" ValueChanged="nud_TextChanged" ColorScheme="{Binding ColorScheme, ElementName=window}" AcceptExpressions="True" Step="1" Decimals="3" Grid.Column="3" Grid.Row="3"/>
+                        <local:SheetValueEditor x:Name="txtMoneyPp" HorizontalAlignment="Stretch" MinHeight="23" MaxWidth="1200" VerticalAlignment="Center" ValueChanged="nud_TextChanged" ColorScheme="{Binding ColorScheme, ElementName=window}" Grid.Column="3"/>
+                        <local:SheetValueEditor x:Name="txtMoneyGp" HorizontalAlignment="Stretch" MinHeight="23" MaxWidth="1200" VerticalAlignment="Center" ValueChanged="nud_TextChanged" ColorScheme="{Binding ColorScheme, ElementName=window}" Grid.Column="3" Grid.Row="1"/>
+                        <local:SheetValueEditor x:Name="txtMoneySp" HorizontalAlignment="Stretch" MinHeight="23" MaxWidth="1200" VerticalAlignment="Center" ValueChanged="nud_TextChanged" ColorScheme="{Binding ColorScheme, ElementName=window}" Grid.Column="3" Grid.Row="2"/>
+                        <local:SheetValueEditor x:Name="txtMoneyCp" HorizontalAlignment="Stretch" MinHeight="23" MaxWidth="1200" VerticalAlignment="Center" ValueChanged="nud_TextChanged" ColorScheme="{Binding ColorScheme, ElementName=window}" Grid.Column="3" Grid.Row="3"/>
                         <TextBlock x:Name="lblMoneyPp" HorizontalAlignment="Left" Text="PP" FontWeight="Bold" VerticalAlignment="Center"/>
                         <TextBlock x:Name="lblMoneyGp" HorizontalAlignment="Left" Text="GP" FontWeight="Bold" VerticalAlignment="Center" Grid.Row="1"/>
                         <TextBlock x:Name="lblMoneySp" HorizontalAlignment="Left" Text="SP" FontWeight="Bold" VerticalAlignment="Center" Grid.Row="2"/>
