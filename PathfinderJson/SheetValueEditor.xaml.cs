@@ -22,6 +22,7 @@ namespace PathfinderJson
 
         bool _updateBox = true; // set if the text box's text should be changed when the value is changed
         bool _raiseChangedEvent = true; // set if the ValueChanged event should be raised
+        bool _isValueInt = false; // set if the Value is actually an integer or not
 
         #endregion
 
@@ -74,6 +75,7 @@ namespace PathfinderJson
             InternalRepeatDelayChanged += IntegerSpinner_InternalRepeatDelayChanged;
             InternalCornerRadiusChanged += SheetValueEditor_InternalCornerRadiusChanged;
             InternalShowArrowsChanged += SheetValueEditor_InternalShowArrowsChanged;
+            InternalValueStringChanged += SheetValueEditor_InternalValueChanged;
 
             PropertyChanged += (x, y) => ValidateValue();
 
@@ -94,13 +96,13 @@ namespace PathfinderJson
 
         private void SheetValueEditor_InternalValueChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            int value = Value;
+            int? value = Value;
 
             if (advanceTimer == null || btnDown == null || btnUp == null)
             {
 
             }
-            else if (!advanceTimer.Enabled)
+            else if (!advanceTimer.Enabled && Value != null)
             {
                 if (value < MinValue)
                 {
@@ -393,17 +395,17 @@ namespace PathfinderJson
 
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
         public static readonly DependencyProperty ValueProperty = DependencyProperty.Register(
-            "Value", typeof(int), typeof(SheetValueEditor),
+            "Value", typeof(int?), typeof(SheetValueEditor),
             new FrameworkPropertyMetadata(0, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, new PropertyChangedCallback(OnValueChanged)));
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
 
         /// <summary>
-        /// Get or set the value of the spinner.
+        /// Get or set the value of the spinner. If the value is currently not an integer, this will be null and <see cref="ValueString"/> should be used instead.
         /// </summary>
         [Category("Common")]
-        public int Value
+        public int? Value
         {
-            get => (int)GetValue(ValueProperty);
+            get => (int?)GetValue(ValueProperty);
             set => SetValue(ValueProperty, value);
         }
 
@@ -412,7 +414,65 @@ namespace PathfinderJson
             //int value = (d as IntegerSpinner).Value;
             if (d is SheetValueEditor s)
             {
+                s.SetIfValueIsInt(true);
                 s.InternalValueChanged?.Invoke(s, e);
+            }
+        }
+
+        #endregion
+
+        #region ValueStringProperty
+
+        /// <summary>
+        /// Internal event for handling a property changed. Please view the event that is not prefixed as "Internal".
+        /// </summary>
+        protected event DependencyPropertyChangedEventHandler InternalValueStringChanged;
+
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+        public static readonly DependencyProperty ValueStringProperty = DependencyProperty.Register(
+            "ValueString", typeof(string), typeof(SheetValueEditor),
+            new FrameworkPropertyMetadata("0", FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, new PropertyChangedCallback(OnValueStringChanged)));
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
+
+        /// <summary>
+        /// Get or set the value of the spinner, as a string. This will include both integer and non-integer values.
+        /// </summary>
+        [Category("Common")]
+        public string ValueString
+        {
+            get => (string)GetValue(ValueStringProperty);
+            set => SetValue(ValueStringProperty, value);
+        }
+
+        private static void OnValueStringChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            //int ValueString = (d as IntegerSpinner).ValueString;
+            if (d is SheetValueEditor s)
+            {
+                if (int.TryParse((string)e.NewValue, System.Globalization.NumberStyles.Integer, null, out _))
+                {
+                    // straight up an integer
+                    s.Value = int.Parse((string)e.NewValue, System.Globalization.NumberStyles.Integer);
+                    s.SetIfValueIsInt(true);
+                    s.ShowArrows = true;
+                }
+                else
+                {
+                    s.SetIfValueIsInt(false);
+                    s.Value = null;
+                    s.ShowArrows = false;
+                }
+                s.InternalValueStringChanged?.Invoke(s, e);
+            }
+        }
+
+        bool _updatingString = false;
+
+        void SetIfValueIsInt(bool value)
+        {
+            if (!_updatingString)
+            {
+                _isValueInt = value;
             }
         }
 
@@ -433,13 +493,13 @@ namespace PathfinderJson
         public int Step
         {
             get => (int)GetValue(StepProperty);
-            set => SetValue(StepProperty, value);
+            set => SetValue(StepProperty, ValueString);
         }
 
         #endregion
 
         #region MinValueProperty
-        
+
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
         public static readonly DependencyProperty MinValueProperty = DependencyProperty.Register(
             "MinValue", typeof(int), typeof(SheetValueEditor),
@@ -598,7 +658,7 @@ namespace PathfinderJson
 
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
         public static readonly DependencyProperty AcceptExpressionsProperty = DependencyProperty.Register(
-            "AcceptExpressions", typeof(bool), typeof(SheetValueEditor),  new PropertyMetadata(true));
+            "AcceptExpressions", typeof(bool), typeof(SheetValueEditor), new PropertyMetadata(true));
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
 
         /// <summary>
@@ -612,7 +672,7 @@ namespace PathfinderJson
         public bool AcceptExpressions
         {
             get => (bool)GetValue(AcceptExpressionsProperty);
-            set =>  SetValue(AcceptExpressionsProperty, value);
+            set => SetValue(AcceptExpressionsProperty, value);
         }
 
         #endregion
@@ -653,6 +713,8 @@ namespace PathfinderJson
         private void SheetValueEditor_InternalShowArrowsChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             colArrows.Width = ShowArrows ? new GridLength(20) : new GridLength(0);
+            btnDown.Focusable = ShowArrows;
+            btnUp.Focusable = ShowArrows;
             RoutedEventArgs re = new RoutedEventArgs(ShowArrowsChangedEvent);
             RaiseEvent(re);
         }
@@ -678,7 +740,7 @@ namespace PathfinderJson
             if (MaxValue < MinValue) MaxValue = MinValue;
             if (Value < MinValue) Value = MinValue;
             if (Value > MaxValue) Value = MaxValue;
-            
+
             UpdateUI();
             ValueValidated?.Invoke(this, EventArgs.Empty);
         }
@@ -694,7 +756,7 @@ namespace PathfinderJson
 
                 advanceTimer.Stop();
             }
-            else
+            else if (_isValueInt)
             {
                 if (Value == MinValue)
                 {
@@ -735,12 +797,22 @@ namespace PathfinderJson
                 }
             }
 
+            UpdateDisplay();
 
-            if (txtValue.Text != Value.ToString())
+        }
+
+        void UpdateDisplay()
+        {
+            if (_isValueInt && _updateBox && ValueString != Value.ToString())
             {
-                if (_updateBox) txtValue.Text = Value.ToString();
+                _updatingString = true;
+                ValueString = Value.ToString() ?? "";
+                txtValue.Text = ValueString;
             }
-
+            else if (txtValue.Text != ValueString && _updateBox)
+            {
+                txtValue.Text = ValueString;
+            }
         }
 
         #region Textbox
@@ -753,10 +825,16 @@ namespace PathfinderJson
             }
 
             _updateBox = false;
+
+            ValueString = txtValue.Text;
+
             if (int.TryParse(txtValue.Text, System.Globalization.NumberStyles.Integer, null, out _))
             {
                 // straight up an integer
                 Value = int.Parse(txtValue.Text, System.Globalization.NumberStyles.Integer);
+                ValueString = Value.ToString() ?? "";
+                _isValueInt = true;
+                ShowArrows = true;
             }
             else if (AcceptExpressions && ArithmeticParser.IsValidString(txtValue.Text))
             {
@@ -764,19 +842,31 @@ namespace PathfinderJson
                 try
                 {
                     Value = (int)Math.Round(ArithmeticParser.Evaluate(txtValue.Text), MidpointRounding.AwayFromZero);
+                    ValueString = Value.ToString() ?? "";
+                    _isValueInt = true;
+                    ShowArrows = true;
                 }
                 catch (FormatException)
                 {
                     // fallback to string value
+                    _isValueInt = false;
+                    Value = null;
+                    ShowArrows = false;
                 }
                 catch (ArgumentOutOfRangeException)
                 {
                     // fallback to string value
+                    _isValueInt = false;
+                    Value = null;
+                    ShowArrows = false;
                 }
             }
             else
             {
                 // this is a string value
+                _isValueInt = false;
+                Value = null;
+                ShowArrows = false;
             }
 
             _updateBox = true;
@@ -784,6 +874,7 @@ namespace PathfinderJson
 
         private void txtValue_LostFocus(object sender, RoutedEventArgs e)
         {
+            ValueString = txtValue.Text;
             ValidateValue();
         }
 
@@ -791,6 +882,7 @@ namespace PathfinderJson
         {
             if (e.Key == Key.Enter || e.Key == Key.Space)
             {
+                ValueString = txtValue.Text;
                 ValidateValue();
                 e.Handled = true;
             }
@@ -817,8 +909,11 @@ namespace PathfinderJson
                 else
                 {
                     keyDownTimer.Stop();
-                    if (Value >= MinValue) Value -= Step;
-                    else Value = MinValue;
+                    if (Value != null)
+                    {
+                        if (Value >= MinValue) Value -= Step;
+                        else Value = MinValue;
+                    }
                     //UpdateUI();
                 }
             }
@@ -831,8 +926,11 @@ namespace PathfinderJson
                 else
                 {
                     keyDownTimer.Stop();
-                    if (Value <= MaxValue) Value += Step;
-                    else Value = MaxValue;
+                    if (Value != null)
+                    {
+                        if (Value <= MaxValue) Value += Step;
+                        else Value = MaxValue;
+                    }
                     //UpdateUI();
                 }
             }
@@ -851,6 +949,8 @@ namespace PathfinderJson
         Timer keyDownTimer = new Timer(300);
         Timer advanceTimer = new Timer(50);
         bool advanceStepUp = false;
+
+        #region Arrow Buttons
 
         private void btnUp_MouseDown(object sender, MouseButtonEventArgs e)
         {
@@ -872,6 +972,8 @@ namespace PathfinderJson
                 keyDownTimer.Stop();
                 if (Value <= MaxValue) Value += Step;
                 else Value = MaxValue;
+                _isValueInt = true;
+                ValueString = Value.ToString() ?? "";
                 UpdateUI();
             }
         }
@@ -896,9 +998,43 @@ namespace PathfinderJson
                 keyDownTimer.Stop();
                 if (Value >= MinValue) Value -= Step;
                 else Value = MinValue;
+                _isValueInt = true;
+                ValueString = Value.ToString() ?? "";
                 UpdateUI();
             }
         }
+
+        private void btnUp_MouseEnter(object sender, MouseEventArgs e)
+        {
+            btnUp.Background = HighlightBrush;
+        }
+
+        private void btnUp_MouseLeave(object sender, MouseEventArgs e)
+        {
+            btnUp.Background = ButtonBackground;
+            if (advanceStepUp)
+            {
+                advanceTimer.Stop();
+            }
+            UpdateUI();
+        }
+
+        private void btnDown_MouseEnter(object sender, MouseEventArgs e)
+        {
+            btnDown.Background = HighlightBrush;
+        }
+
+        private void btnDown_MouseLeave(object sender, MouseEventArgs e)
+        {
+            btnDown.Background = ButtonBackground;
+            if (!advanceStepUp)
+            {
+                advanceTimer.Stop();
+            }
+            UpdateUI();
+        }
+
+        #endregion
 
 #if NETCOREAPP
         private void KeyDownTimer_Elapsed(object? sender, ElapsedEventArgs e)
@@ -938,30 +1074,6 @@ namespace PathfinderJson
             {
                 advanceTimer.Stop();
             }
-        }
-
-        private void btnUp_MouseEnter(object sender, MouseEventArgs e)
-        {
-            btnUp.Background = HighlightBrush;
-        }
-
-        private void btnUp_MouseLeave(object sender, MouseEventArgs e)
-        {
-            btnUp.Background = ButtonBackground;
-            if (advanceStepUp) advanceTimer.Stop();
-            UpdateUI();
-        }
-
-        private void btnDown_MouseEnter(object sender, MouseEventArgs e)
-        {
-            btnDown.Background = HighlightBrush;
-        }
-
-        private void btnDown_MouseLeave(object sender, MouseEventArgs e)
-        {
-            btnDown.Background = ButtonBackground;
-            if (!advanceStepUp) advanceTimer.Stop();
-            UpdateUI();
         }
 
         private void BaseSpinner_IsEnabledChanged(object sender, DependencyPropertyChangedEventArgs e)
