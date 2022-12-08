@@ -60,7 +60,7 @@
     <PackageReference Include="AvalonEdit" Version="6.1.3.50" />
     <PackageReference Include="Markdig" Version="0.22.1" />
     <PackageReference Include="Markdig.Wpf" Version="0.5.0.1" />
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
 	<PackageReference Include="SolidShineUi" Version="1.9.2" />
   </ItemGroup>
 
