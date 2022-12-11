@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -125,6 +122,14 @@ namespace PathfinderJson
 
         public void UpdateAppearance()
         {
+            btnDetails.ColorScheme = App.ColorScheme;
+
+            txtTotal.ColorScheme = App.ColorScheme;
+            txtBase.ColorScheme = App.ColorScheme;
+            txtMagic.ColorScheme = App.ColorScheme;
+            txtMisc.ColorScheme = App.ColorScheme;
+            txtSize.ColorScheme = App.ColorScheme;
+
             SolidColorBrush shc = new SolidColorBrush(App.ColorScheme.SecondHighlightColor);
 
             txtModifier.Background = shc;
@@ -151,20 +156,22 @@ namespace PathfinderJson
 
         public void LoadModifier(CompoundModifier cm, string modValue, string modValue2 = "", string baseValue = "")
         {
-            txtTotal.Text = cm.Total == null ? "0" : cm.Total;
-            txtMagic.Text = cm.MagicModifier;
-            txtMisc.Text = cm.MiscModifier;
+            txtTotal.ValueString = cm.Total ?? "0";
+            txtMagic.ValueString = cm.MagicModifier ?? "0";
+            txtMisc.ValueString = cm.MiscModifier ?? "0";
+            txtSize.ValueString = cm.SizeModifier ?? "0";
+
             txtOther.Text = cm.OtherModifiers;
-            txtSize.Text = cm.SizeModifier;
             txtModifier.Text = modValue;
+            txtTemp.Text = cm.TempModifier;
 
             if (!editBase)
             {
-                txtBase.Text = baseValue;
+                txtBase.ValueString = baseValue;
             }
             else
             {
-                txtBase.Text = cm.Base;
+                txtBase.ValueString = cm.Base ?? "0";
             }
 
             if (string.IsNullOrEmpty(modValue2))
@@ -188,7 +195,7 @@ namespace PathfinderJson
 
             if (!editBase)
             {
-                txtBase.Text = baseValue;
+                txtBase.ValueString = baseValue;
             }
 
             if (string.IsNullOrEmpty(modValue2))
@@ -205,60 +212,35 @@ namespace PathfinderJson
             }
         }
 
-        public async Task UpdateTotal(CancellationToken ct)
+        public void UpdateTotal()
         {
             int total = 0;
 
-            string magic = txtMagic.Text;
-            string misc = txtMisc.Text;
-            string size = txtSize.Text;
-            string mod = txtModifier.Text;
-            string mod2 = txtModifier2.Text;
-            string bas = txtBase.Text;
+            total += txtMagic.Value ?? 0;
+            total += txtMisc.Value ?? 0;
+            total += txtSize.Value ?? 0;
+            total += txtBase.Value ?? 0;
 
-            await Task.Run(() =>
-            {
-                try { total += int.Parse(magic); } catch (FormatException) { }
-                if (ct.IsCancellationRequested) return;
-                try { total += int.Parse(misc); } catch (FormatException) { }
-                if (ct.IsCancellationRequested) return;
-                try { total += int.Parse(size); } catch (FormatException) { }
-                if (ct.IsCancellationRequested) return;
-                try { total += int.Parse(mod); } catch (FormatException) { }
-                if (ct.IsCancellationRequested) return;
-                try { total += int.Parse(mod2); } catch (FormatException) { }
-                if (ct.IsCancellationRequested) return;
-                try { total += int.Parse(bas); } catch (FormatException) { }
-            });
+            try { total += int.Parse(txtModifier.Text); } catch (FormatException) { }
+            try { total += int.Parse(txtModifier2.Text); } catch (FormatException) { }
 
             if (ShowPlusTen) total += 10;
 
-            txtTotal.Text = total.ToString();
+            txtTotal.Value = total;
         }
 
         public CompoundModifier GetModifier()
         {
             CompoundModifier cm = new CompoundModifier();
-            cm.Total = GetStringOrNull(txtTotal.Text, true);
-            cm.Base = GetStringOrNull(editBase ? txtBase.Text : "0", true);
-            cm.MagicModifier = GetStringOrNull(txtMagic.Text, true);
-            cm.MiscModifier = GetStringOrNull(txtMisc.Text, true);
+            cm.Total = GetStringOrNull(txtTotal.ValueString, true);
+            cm.Base = GetStringOrNull(editBase ? txtBase.ValueString : "0", true);
+            cm.MagicModifier = GetStringOrNull(txtMagic.ValueString, true);
+            cm.MiscModifier = GetStringOrNull(txtMisc.ValueString, true);
             cm.OtherModifiers = GetStringOrNull(txtOther.Text, true);
-            cm.SizeModifier = GetStringOrNull(txtSize.Text, true);
+            cm.SizeModifier = GetStringOrNull(txtSize.ValueString, true);
+            cm.TempModifier = GetStringOrNull(txtTemp.Text, true);
 
             return cm;
-        }
-
-        private void ExpModifiers_Collapsed(object sender, RoutedEventArgs e)
-        {
-            rowExtra.Height = new GridLength(0);
-            rowExtra.MinHeight = 0;
-        }
-
-        private void ExpModifiers_Expanded(object sender, RoutedEventArgs e)
-        {
-            rowExtra.Height = new GridLength(95, GridUnitType.Auto);
-            rowExtra.MinHeight = 95;
         }
 
         // event just to update main window's "isDirty" value
@@ -267,6 +249,11 @@ namespace PathfinderJson
         private void textbox_TextChanged(object sender, TextChangedEventArgs e)
         {
             ContentChanged?.Invoke(this, e);
+        }
+
+        private void textbox_ValueChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            ContentChanged?.Invoke(this, EventArgs.Empty);
         }
     }
 }
