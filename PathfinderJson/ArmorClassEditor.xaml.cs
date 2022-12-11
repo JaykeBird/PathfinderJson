@@ -31,19 +31,29 @@ namespace PathfinderJson
             txtModifier.Background = new SolidColorBrush(App.ColorScheme.SecondHighlightColor);
             brdrModifiers.BorderBrush = new SolidColorBrush(App.ColorScheme.SecondaryColor);
             pathOutline.Stroke = new SolidColorBrush(App.ColorScheme.BorderColor);
+
+            txtTotal.ColorScheme = App.ColorScheme;
+            txtTouch.ColorScheme = App.ColorScheme;
+            txtFlat.ColorScheme = App.ColorScheme;
+
+            txtArmor.ColorScheme = App.ColorScheme;
+            txtNatural.ColorScheme = App.ColorScheme;
+            txtSize.ColorScheme = App.ColorScheme;
+            txtDeflection.ColorScheme = App.ColorScheme;
+            txtShield.ColorScheme = App.ColorScheme;
         }
 
         public void LoadArmorClass(ArmorClass ac, string modValue)
         {
-            txtTotal.Text = ac.Total;
-            txtTouch.Text = ac.Touch;
-            txtFlat.Text = ac.FlatFooted;
+            txtTotal.ValueString = ac.Total;
+            txtTouch.ValueString = ac.Touch;
+            txtFlat.ValueString = ac.FlatFooted;
 
-            txtArmor.Text = ac.ArmorBonus;
-            txtNatural.Text = ac.NaturalArmor;
-            txtSize.Text = ac.SizeModifier;
-            txtDeflection.Text = ac.Deflection;
-            txtShield.Text = ac.ShieldBonus;
+            txtArmor.ValueString = ac.ArmorBonus ?? "0";
+            txtNatural.ValueString = ac.NaturalArmor ?? "0";
+            txtSize.ValueString = ac.SizeModifier ?? "0";
+            txtDeflection.ValueString = ac.Deflection ?? "0";
+            txtShield.ValueString = ac.ShieldBonus ?? "0";
 
             txtModifier.Text = modValue;
 
@@ -55,17 +65,17 @@ namespace PathfinderJson
         {
             ArmorClass ac = new ArmorClass()
             {
-                ArmorBonus = GetStringOrNull(txtArmor.Text, true),
-                NaturalArmor = GetStringOrNull(txtNatural.Text, true),
-                Deflection = GetStringOrNull(txtDeflection.Text, true),
+                ArmorBonus = GetStringOrNull(txtArmor.ValueString, true),
+                NaturalArmor = GetStringOrNull(txtNatural.ValueString, true),
+                Deflection = GetStringOrNull(txtDeflection.ValueString, true),
                 MiscModifier = GetStringOrNull(txtMisc.Text, true),
                 OtherModifiers = GetStringOrNull(txtOther.Text, true),
-                ShieldBonus = GetStringOrNull(txtShield.Text, true),
-                SizeModifier = GetStringOrNull(txtSize.Text, true),
+                ShieldBonus = GetStringOrNull(txtShield.ValueString, true),
+                SizeModifier = GetStringOrNull(txtSize.ValueString, true),
 
-                FlatFooted = txtFlat.Text,
-                Total = txtTotal.Text,
-                Touch = txtTouch.Text
+                FlatFooted = txtFlat.ValueString,
+                Total = txtTotal.ValueString,
+                Touch = txtTouch.ValueString
             };
 
             return ac;
@@ -78,31 +88,31 @@ namespace PathfinderJson
 
         public void UpdateAcItemBonuses(string shield, string armor)
         {
-            txtShield.Text = shield;
-            txtArmor.Text = armor;
+            txtShield.ValueString = shield;
+            txtArmor.ValueString = armor;
         }
 
         public void UpdateTotal()
         {
             int total = 0;
-            try { total += int.Parse(txtDeflection.Text); } catch (FormatException) { }
-            try { total += int.Parse(txtArmor.Text); } catch (FormatException) { }
-            try { total += int.Parse(txtSize.Text); } catch (FormatException) { }
+            total += txtDeflection.Value ?? 0;
+            total += txtArmor.Value ?? 0;
+            total += txtSize.Value ?? 0;
             try { total += int.Parse(txtModifier.Text); } catch (FormatException) { }
-            try { total += int.Parse(txtNatural.Text); } catch (FormatException) { }
-            try { total += int.Parse(txtShield.Text); } catch (FormatException) { }
+            total += txtNatural.Value ?? 0;
+            total += txtShield.Value ?? 0;
 
             total += 10;
 
             int flat = total;
             try { flat -= int.Parse(txtModifier.Text); } catch (FormatException) { }
             int touch = total;
-            try { touch -= int.Parse(txtArmor.Text); } catch (FormatException) { }
-            try { touch -= int.Parse(txtShield.Text); } catch (FormatException) { }
+            touch -= txtArmor.Value ?? 0;
+            touch -= txtShield.Value ?? 0;
 
-            txtTotal.Text = total.ToString();
-            txtFlat.Text = flat.ToString();
-            txtTouch.Text = touch.ToString();
+            txtTotal.Value = total;
+            txtFlat.Value = flat;
+            txtTouch.Value = touch;
         }
 
         // event just to update main window's "isDirty" value
@@ -117,6 +127,11 @@ namespace PathfinderJson
         {
             get { return glyShield.Visibility == Visibility.Visible; }
             set { glyShield.Visibility = value ? Visibility.Visible : Visibility.Collapsed; }
+        }
+
+        private void textbox_ValueChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            ContentChanged?.Invoke(this, EventArgs.Empty);
         }
     }
 }

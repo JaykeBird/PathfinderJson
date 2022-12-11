@@ -3015,14 +3015,14 @@ namespace PathfinderJson
 
             if (totals)
             {
-                await edtFort.UpdateTotal(cts.Token);
-                await edtReflex.UpdateTotal(cts.Token);
-                await edtWill.UpdateTotal(cts.Token);
+                edtFort.UpdateTotal();
+                edtReflex.UpdateTotal();
+                edtWill.UpdateTotal();
 
                 edtAc.UpdateTotal();
-                await edtInit.UpdateTotal(cts.Token);
-                await edtCmb.UpdateTotal(cts.Token);
-                await edtCmd.UpdateTotal(cts.Token);
+                edtInit.UpdateTotal();
+                edtCmb.UpdateTotal();
+                edtCmd.UpdateTotal();
             }
 
             if (currentView == RAWJSON_VIEW)
