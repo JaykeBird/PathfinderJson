@@ -86,7 +86,7 @@ namespace PathfinderJson
             }
             else
             {
-                if (cs.BackgroundColor == Colors.Black)
+                if (cs.BackgroundColor == Colors.Black || cs.ForegroundColor == Colors.White)
                 {
                     _theme = ImageColor.White;
                 }
