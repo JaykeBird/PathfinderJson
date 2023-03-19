@@ -32,7 +32,7 @@ namespace PathfinderJson
 
         private void LinkTextBlock2_Click(object sender, RoutedEventArgs e)
         {
-            OpenBrowser("https://twitter.com/JaykeBird/");
+            OpenBrowser("https://jaykebird.com/");
         }
 
         private void LinkTextBlock3_Click(object sender, RoutedEventArgs e)
