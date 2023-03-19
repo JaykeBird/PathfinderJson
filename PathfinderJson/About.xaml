@@ -32,7 +32,7 @@
                 </Grid.ColumnDefinitions>
 
                 <TextBlock HorizontalAlignment="Left" Text="Developed by Jayke R. Huempfner" VerticalAlignment="Center" Margin="0,3"/>
-                <flat:LinkTextBlock HorizontalAlignment="Left" Text="twitter.com/jaykebird" VerticalAlignment="Center" Click="LinkTextBlock2_Click" Cursor="Hand" Grid.Column="1" />
+                <flat:LinkTextBlock HorizontalAlignment="Left" Text="jaykebird.com" VerticalAlignment="Center" Click="LinkTextBlock2_Click" Cursor="Hand" Grid.Column="1" />
                 <TextBlock x:Name="lblVersion" HorizontalAlignment="Left" Text="Version -.-.-" VerticalAlignment="Center" Grid.Row="1" Margin="0,3"/>
                 <TextBlock HorizontalAlignment="Left" Text="Open-source under MIT License" VerticalAlignment="Center" Grid.Row="2" Margin="0,3"/>
                 <flat:LinkTextBlock HorizontalAlignment="Stretch" Text="github.com/jaykebird/pathfinderjson" VerticalAlignment="Center" Click="LinkTextBlock5_Click" Cursor="Hand" Grid.Column="1" Grid.Row="2" />
@@ -45,8 +45,8 @@
             <TextBlock Margin="15,4,10,26" TextWrapping="Wrap" Grid.Row="4">
                 <Run>This program uses trademarks and/or copyrights owned by Paizo Inc., which are used under Paizo's Community Use Policy. We are expressly prohibited from charging you to use or access this content.</Run>
                 <Run> This program is not published, endorsed, or specifically approved by Paizo Inc. For more information about Paizo's Community Use Policy, please visit</Run>
-                <Hyperlink RequestNavigate="Hyperlink_RequestNavigate" NavigateUri="https://paizo.com/communityuse" TextDecorations="" >paizo.com/communityuse</Hyperlink><Run>. For more information about Paizo Inc. and Paizo products, please visit</Run> 
-                <Hyperlink RequestNavigate="Hyperlink_RequestNavigate" NavigateUri="https://paizo.com/" TextDecorations="" >paizo.com</Hyperlink><Run>.</Run>
+                <Hyperlink RequestNavigate="Hyperlink_RequestNavigate" NavigateUri="https://paizo.com/communityuse" TextDecorations="None" >paizo.com/communityuse</Hyperlink><Run>. For more information about Paizo Inc. and Paizo products, please visit</Run> 
+                <Hyperlink RequestNavigate="Hyperlink_RequestNavigate" NavigateUri="https://paizo.com/" TextDecorations="None" >paizo.com</Hyperlink><Run>.</Run>
             </TextBlock>
 
             <flat:FlatButton x:Name="btnPlatformInfo" ColorScheme="{Binding ColorScheme, ElementName=window}" Content="Platform Info" Margin="10,0,0,10" VerticalAlignment="Bottom" Click="BtnPlatformInfo_Click" HorizontalAlignment="Left" MinWidth="95" Grid.Row="5" />
