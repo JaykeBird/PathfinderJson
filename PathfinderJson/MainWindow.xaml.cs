@@ -955,7 +955,7 @@ namespace PathfinderJson
             };
             mi.ToolTip = tt;
             mi.Tag = filename;
-            mi.Click += miRecentFile_Click;
+            mi.Click += MainRecentFileClick;
             mi.ContextMenuOpening += miRecentContext_Opening;
             mnuRecent.Items.Insert(0, mi);
 
@@ -1011,6 +1011,13 @@ namespace PathfinderJson
                     cm.ApplyColorScheme(App.ColorScheme);
                 }
             }
+        }
+
+        private void MainRecentFileClick(object sender, RoutedEventArgs e)
+        {
+            if (App.Settings.DisplayRecentActionsAsSubmenu) return;
+
+            miRecentFile_Click(sender, e);
         }
 
         private void miRecentFile_Click(object sender, RoutedEventArgs e)
