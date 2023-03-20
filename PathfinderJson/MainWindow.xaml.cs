@@ -1139,8 +1139,8 @@ namespace PathfinderJson
         bool AskClearRecentList()
         {
             MessageDialog md = new MessageDialog(App.ColorScheme);
-            md.ShowDialog("Are you sure you want to remove all files from the Recent Files list?", App.ColorScheme, this, "Clear Recent Files List", MessageDialogButtonDisplay.Two, MessageDialogImage.Question, MessageDialogResult.Cancel,
-                "Yes", "Cancel");
+            md.ShowDialog("Are you sure you want to remove all files from the Recent Files list?", App.ColorScheme, this, "Clear Recent Files List", MessageDialogButtonDisplay.Two, 
+                MessageDialogImage.Question, MessageDialogResult.Cancel, "Yes", "Cancel");
 
             if (md.DialogResult == MessageDialogResult.OK)
             {
@@ -4274,6 +4274,7 @@ namespace PathfinderJson
 
         #endregion
 
+        #region Sheet Settings
         public void LoadSheetSettings(bool reloadSkills = false)
         {
             if (sheetSettings != null)
@@ -4417,12 +4418,6 @@ namespace PathfinderJson
             return sheetSettings.ContainsKey(settingName) ? sheetSettings[settingName]?.ToLowerInvariant() == checkValue : false;
         }
 
-        private void mnuCounters_Click(object sender, RoutedEventArgs e)
-        {
-            //CountersWindow cw = new CountersWindow();
-            //cw.Show();
-        }
-
         private void mnuSheetSettings_Click(object sender, RoutedEventArgs e)
         {
             if (!_sheetLoaded)
@@ -4444,6 +4439,13 @@ namespace PathfinderJson
                 LoadSheetSettings(true);
                 SetIsDirty();
             }
+        }
+        #endregion
+
+        private void mnuCounters_Click(object sender, RoutedEventArgs e)
+        {
+            //CountersWindow cw = new CountersWindow();
+            //cw.Show();
         }
 
         private void mnuInsertJson_Click(object sender, RoutedEventArgs e)
