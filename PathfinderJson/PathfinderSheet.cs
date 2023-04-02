@@ -495,19 +495,19 @@ namespace PathfinderJson
 
         public int Calculate(int? externalBase = null, params int[]? modValues)
         {
-            int totalcount = (externalBase ?? CoreUtils.ParseStringAsInt(Base, 0)) + CoreUtils.ParseStringAsInt(MagicModifier, 0) +
+            int totalCount = (externalBase ?? CoreUtils.ParseStringAsInt(Base, 0)) + CoreUtils.ParseStringAsInt(MagicModifier, 0) +
                 CoreUtils.ParseStringAsInt(MiscModifier, 0) + CoreUtils.ParseStringAsInt(SizeModifier, 0) + CoreUtils.ParseStringAsInt(TempModifier, 0);
 
             if (modValues != null)
             {
                 foreach (int item in modValues)
                 {
-                    totalcount += item;
+                    totalCount += item;
                 }
             }
 
-            Total = totalcount.ToString();
-            return totalcount;
+            Total = totalCount.ToString();
+            return totalCount;
         }
     }
 
