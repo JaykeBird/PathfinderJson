@@ -16,9 +16,6 @@ namespace PathfinderJson
     /// </summary>
     public partial class Options : FlatWindow
     {
-        /// <summary>Path to the AppData folder where settings are stored</summary>
-        string appDataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "PathfinderJson");
-
         // temp settings
         bool clearRecentList = false;
         Color uiColor = App.ColorScheme.MainColor;
@@ -282,7 +279,7 @@ namespace PathfinderJson
             // finally, save the settings to a file
             try
             {
-                App.Settings.Save(Path.Combine(appDataPath, "settings.json"));
+                App.Settings.Save(Path.Combine(SettingsIo.SettingsDirectory, "settings.json"));
             }
             catch (UnauthorizedAccessException)
             {
@@ -552,12 +549,12 @@ namespace PathfinderJson
 
         private void btnCrashLogs_Click(object sender, RoutedEventArgs e)
         {
-            if (!Directory.Exists(Path.Combine(appDataPath, "ErrorLogs")))
+            if (!Directory.Exists(SettingsIo.ErrorLogDirectory))
             {
-                Directory.CreateDirectory(Path.Combine(appDataPath, "ErrorLogs"));
+                Directory.CreateDirectory(SettingsIo.ErrorLogDirectory);
             }
 
-            Process.Start("explorer.exe", Path.Combine(appDataPath, "ErrorLogs"));
+            Process.Start("explorer.exe", SettingsIo.ErrorLogDirectory);
         }
 
         private void btnFeedback_Click(object sender, RoutedEventArgs e)
