@@ -33,8 +33,6 @@ namespace PathfinderJson
     /// </summary>
     public partial class MainWindow : FlatWindow
     {
-        /// <summary>Path to the AppData folder where settings are stored</summary>
-        string appDataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "PathfinderJson");
         /// <summary>The path to the currently open file (if a file is loaded but this is empty, this means it is a new unsaved file)</summary>
         string filePath = "";
         /// <summary>Get or set if a file is currently open</summary>
@@ -70,8 +68,8 @@ namespace PathfinderJson
         /// <summary>The timer for displaying the "Saved" text in the top.</summary>
         DispatcherTimer saveDisplayTimer = new DispatcherTimer();
 
-        /// <summary>set if the Notes tab is in Edit mode (true) or View mode (false) (if Markdown support is disabled, it is always in Edit mode)</summary>
-        bool notesEdit = false;
+        // /// <summary>set if the Notes tab is in Edit mode (true) or View mode (false) (if Markdown support is disabled, it is always in Edit mode)</summary>
+        //bool notesEdit = false;
 
         // functions for handling undo/redo
         // these aren't actually used for anything at the current time as I've not properly introduced undo/redo yet
@@ -128,11 +126,11 @@ namespace PathfinderJson
             ksh = new KeyboardShortcutHandler(this);
             mr = RoutedEventKeyAction.CreateListFromMenu(menu);
 
-            if (File.Exists(Path.Combine(appDataPath, "keyboard.xml")))
+            if (File.Exists(Path.Combine(SettingsIo.SettingsDirectory, "keyboard.xml")))
             {
                 try
                 {
-                    ksh.LoadShortcutsFromFile(Path.Combine(appDataPath, "keyboard.xml"), mr);
+                    ksh.LoadShortcutsFromFile(Path.Combine(SettingsIo.SettingsDirectory, "keyboard.xml"), mr);
                 }
                 catch (ArgumentException)
                 {
@@ -322,7 +320,7 @@ namespace PathfinderJson
 
             try
             {
-                App.Settings.Save(Path.Combine(appDataPath, "settings.json"));
+                App.Settings.Save(Path.Combine(SettingsIo.SettingsDirectory, "settings.json"));
             }
             catch (UnauthorizedAccessException)
             {
@@ -3932,7 +3930,7 @@ namespace PathfinderJson
 
         public void OpenNotesEditTab()
         {
-            notesEdit = true;
+            //notesEdit = true;
 
             vwrNotes.Visibility = Visibility.Collapsed;
             txtNotes.Visibility = Visibility.Visible;
@@ -3946,7 +3944,7 @@ namespace PathfinderJson
 
         public void OpenNotesViewTab()
         {
-            notesEdit = false;
+            //notesEdit = false;
 
             vwrNotes.Visibility = Visibility.Visible;
             txtNotes.Visibility = Visibility.Collapsed;

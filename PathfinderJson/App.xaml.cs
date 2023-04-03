@@ -12,6 +12,7 @@ using System.IO;
 using System.Windows.Media.Imaging;
 using System.Text;
 using System.Windows.Shell;
+using System.Runtime.InteropServices;
 
 namespace PathfinderJson
 {
@@ -22,73 +23,7 @@ namespace PathfinderJson
     {
         public App()
         {
-            string appDataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "PathfinderJson");
 
-            Directory.CreateDirectory(Path.Combine(appDataPath, "Optimization"));
-            Directory.CreateDirectory(Path.Combine(appDataPath, "ErrorLogs"));
-
-            if (Directory.Exists(appDataPath))
-            {
-                try
-                {
-                    Settings = Settings.LoadSettings(Path.Combine(appDataPath, "settings.json"));
-                }
-                catch (UnauthorizedAccessException)
-                {
-                    MessageBox.Show("The settings file for PathfinderJson could not be found or accessed. PathfinderJson will continue with default settings. Please check the permissions for your AppData folder.",
-                        "Settings Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                    Settings = new Settings();
-                }
-                catch (System.Security.SecurityException)
-                {
-                    MessageBox.Show("The settings file for PathfinderJson could not be found or accessed. PathfinderJson will continue with default settings. Please check the permissions for your AppData folder.",
-                        "Settings Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                    Settings = new Settings();
-                }
-                catch (IOException)
-                {
-                    MessageBox.Show("The settings file for PathfinderJson could not be found or accessed. PathfinderJson will continue with default settings. Please check the permissions for your AppData folder.",
-                        "Settings Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                    Settings = new Settings();
-                }
-            }
-            else
-            {
-                try
-                {
-                    Directory.CreateDirectory(appDataPath);
-                    Directory.CreateDirectory(Path.Combine(appDataPath, "Optimization"));
-                    Directory.CreateDirectory(Path.Combine(appDataPath, "ErrorLogs"));
-                    Settings.Save(Path.Combine(appDataPath, "settings.json"));
-                }
-                catch (UnauthorizedAccessException)
-                {
-                    MessageBox.Show("The settings file could not be created for PathfinderJson. Please check the permissions for your AppData folder.",
-                        "Settings Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                }
-                catch (System.Security.SecurityException)
-                {
-                    MessageBox.Show("The settings file could not be created for PathfinderJson. Please check the permissions for your AppData folder.",
-                        "Settings Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                }
-                catch (IOException)
-                {
-                    MessageBox.Show("The settings file could not be created for PathfinderJson. Please check the permissions for your AppData folder.",
-                        "Settings Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                }
-            }
-
-            if (Settings.UseStartupOptimization)
-            {
-                // more info: https://docs.microsoft.com/en-us/dotnet/api/system.runtime.profileoptimization?view=netcore-3.1
-                ProfileOptimization.SetProfileRoot(Path.Combine(appDataPath, "Optimization"));
-                ProfileOptimization.StartProfile("Startup.profile");
-            }
-
-            Newtonsoft.Json.JsonConvert.DefaultSettings = () => new Newtonsoft.Json.JsonSerializerSettings {
-                DefaultValueHandling = Newtonsoft.Json.DefaultValueHandling.Ignore,
-                NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore
-            };
         }
 
         public static ColorScheme ColorScheme { get; set; } = new ColorScheme(Colors.Peru);
@@ -96,7 +31,9 @@ namespace PathfinderJson
         public static Settings Settings { get; set; } = new Settings();
 
         #region Constants
-        public static Version AppVersion = new Version("1.2.3");
+        public static Version AppVersion { get; } = new Version("1.2.3");
+        public const string VersionString = "102030";
+        public const int VersionInt = 1_02_03_0;
 
         public const string NO_HIGH_CONTRAST = "0";
 
@@ -164,7 +101,52 @@ namespace PathfinderJson
 
         private void Application_Startup(object sender, StartupEventArgs e)
         {
-            string appDataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "PathfinderJson");
+            SettingsIo.SetupBaseDirectories(); // this does not create the actual settings directory, that is done a few lines later
+
+            string? settingsDir = SettingsIo.FindLatestSettings();
+            if (settingsDir == null || (SettingsIo.IsPortable && Directory.Exists(SettingsIo.SettingsDirectory)))
+            {
+                // settingsDir is null if no old settings directories could be found, so we'll just default to the standard directory
+                // otherwise, if this is a Portable app and the portable settings app already exists, just use the standard directory
+                settingsDir = SettingsIo.SettingsDirectory;
+            }
+
+            // now the actual settings directory is created (could not be created prior to FindLatestSettings to prevent a false positive)
+            Directory.CreateDirectory(SettingsIo.SettingsDirectory);
+
+            if (settingsDir != SettingsIo.SettingsDirectory)
+            {
+                // settings stored in old directory, ask user to update
+                var result = MessageBox.Show("Settings for a previous version of PathfinderJson was located. Do you want to transfer these settings to this version?",
+                                 "Old Settings Found", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes);
+
+                if (result == MessageBoxResult.Yes)
+                {
+                    // transfer from old to new
+                    foreach (string sff in Directory.GetFiles(settingsDir))
+                    {
+                        // TODO: add try-catch statements
+                        File.Copy(sff, Path.Combine(SettingsIo.SettingsDirectory, Path.GetFileName(sff)), true);
+                    }
+                }
+            } // otherwise, settings is in the standard location
+
+            string settingsFileName = Path.Combine(SettingsIo.SettingsDirectory, "settings.json");
+
+            Settings = SettingsIo.LoadSettingsJson<Settings>(settingsFileName);
+
+            if (Settings.UseStartupOptimization)
+            {
+                // more info: https://docs.microsoft.com/en-us/dotnet/api/system.runtime.profileoptimization?view=netcore-3.1
+                ProfileOptimization.SetProfileRoot(Path.Combine(SettingsIo.AppDataDirectory, "Optimization"));
+                ProfileOptimization.StartProfile(VersionInt + "_Startup.profile");
+            }
+
+            Newtonsoft.Json.JsonConvert.DefaultSettings = () => new Newtonsoft.Json.JsonSerializerSettings
+            {
+                DefaultValueHandling = Newtonsoft.Json.DefaultValueHandling.Ignore,
+                NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore
+            };
 
             string file = "";
 
@@ -229,7 +211,7 @@ namespace PathfinderJson
 
                     try
                     {
-                        Settings.Save(Path.Combine(appDataPath, "settings.json"));
+                        Settings.Save(Path.Combine(SettingsIo.SettingsDirectory, "settings.json"));
                     }
                     catch (UnauthorizedAccessException)
                     {
@@ -258,10 +240,10 @@ namespace PathfinderJson
         private async void Application_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
         {
             // save this to the crash logs
-            string appDataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "PathfinderJson");
-            string errorLogPath = Path.Combine(appDataPath, "ErrorLogs");
+            //string appDataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "PathfinderJson");
+            //string errorLogPath = Path.Combine(appDataPath, "ErrorLogs");
 
-            if (Directory.Exists(errorLogPath))
+            if (Directory.Exists(SettingsIo.ErrorLogDirectory))
             {
                 Exception ex = e.Exception;
 
@@ -284,7 +266,7 @@ namespace PathfinderJson
 
                 sb.AppendLine("END FILE");
 
-                await File.WriteAllTextAsync(Path.Combine(errorLogPath, DateTime.UtcNow.ToString("yyyyMMddTHHmmssZ") + ".txt"), sb.ToString(), Encoding.UTF8);
+                await File.WriteAllTextAsync(Path.Combine(SettingsIo.ErrorLogDirectory, DateTime.UtcNow.ToString("yyyyMMddTHHmmssZ") + ".txt"), sb.ToString(), Encoding.UTF8);
             }
 
             MessageBox.Show("An error has occurred and PathfinderJSON may not be able to continue.\n\n" +
