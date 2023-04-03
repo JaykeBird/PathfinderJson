@@ -438,18 +438,21 @@ namespace PathfinderJson
                 {
                     UpdateDisplay uw = new UpdateDisplay(ud);
                     uw.Owner = this;
+                    uw.WindowStartupLocation = WindowStartupLocation.CenterOwner;
                     uw.ShowDialog();
                 }
                 else
                 {
                     MessageDialog md = new MessageDialog(App.ColorScheme);
-                    md.ShowDialog("There are no updates available. You're on the latest release!", App.ColorScheme, this, "Check for Updates", MessageDialogButtonDisplay.Auto, image: MessageDialogImage.Hand);
+                    md.ShowDialog("There are no updates available. You're on the latest release!", App.ColorScheme, this, "Check for Updates", 
+                        MessageDialogButtonDisplay.Auto, image: MessageDialogImage.Hand);
                 }
             }
             catch (System.Net.WebException)
             {
                 MessageDialog md = new MessageDialog(App.ColorScheme);
-                md.ShowDialog("Could not check for updates. Make sure you're connected to the Internet.", App.ColorScheme, this, "Check for Updates", MessageDialogButtonDisplay.Auto, image: MessageDialogImage.Error);
+                md.ShowDialog("Could not check for updates. Make sure you're connected to the Internet.", App.ColorScheme, this, "Check for Updates", 
+                    MessageDialogButtonDisplay.Auto, image: MessageDialogImage.Error);
             }
         }
 
@@ -464,8 +467,8 @@ namespace PathfinderJson
             bool AskClearRecentList()
             {
                 MessageDialog md = new MessageDialog(App.ColorScheme);
-                md.ShowDialog("Are you sure you want to remove all files from the Recent Files list?", App.ColorScheme, this, "Clear Recent Files List", MessageDialogButtonDisplay.Two, MessageDialogImage.Question, MessageDialogResult.Cancel,
-                    "Yes", "Cancel");
+                md.ShowDialog("Are you sure you want to remove all files from the Recent Files list?", App.ColorScheme, this, "Clear Recent Files List", 
+                    MessageDialogButtonDisplay.Two, MessageDialogImage.Question, MessageDialogResult.Cancel, "Yes", "Cancel");
 
                 if (md.DialogResult == MessageDialogResult.OK)
                 {
@@ -490,6 +493,8 @@ namespace PathfinderJson
             {
                 ShowDecorations = false,
                 ColorScheme = App.ColorScheme,
+                Owner = this,
+                WindowStartupLocation = WindowStartupLocation.CenterOwner,
 
                 SelectedFontFamily = txtFont1.FontFamily,
                 SelectedFontSize = txtFont1.FontSize,
@@ -569,6 +574,7 @@ namespace PathfinderJson
         {
             PlatformInfo pi = new PlatformInfo();
             pi.Owner = this;
+            pi.WindowStartupLocation = WindowStartupLocation.CenterOwner;
             pi.ShowDialog();
         }
 

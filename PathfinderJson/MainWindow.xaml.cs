@@ -614,6 +614,7 @@ namespace PathfinderJson
 
             NewSheet ns = new NewSheet();
             ns.Owner = this;
+            ns.WindowStartupLocation = WindowStartupLocation.CenterOwner;
             ns.ShowDialog();
 
             if (ns.DialogResult)
@@ -1644,7 +1645,8 @@ namespace PathfinderJson
         {
             ChangeTheme.ColorSchemeDialog csd = new ChangeTheme.ColorSchemeDialog();
             csd.ColorScheme = this.ColorScheme;
-
+            csd.Owner = this;
+            csd.WindowStartupLocation = WindowStartupLocation.CenterOwner;
             csd.ShowDialog();
 
             if (csd.DialogResult)
@@ -1912,6 +1914,7 @@ namespace PathfinderJson
                 drw = new DiceRollerWindow();
                 drw.ColorScheme = App.ColorScheme;
                 drw.Closed += DiceRollerWindow_Closed;
+                //drw.Owner = this;
                 drw.Show();
             }
 
@@ -1938,6 +1941,9 @@ namespace PathfinderJson
             fds.SelectedFontStyle = txtEditRaw.FontStyle;
             fds.SelectedFontWeight = txtEditRaw.FontWeight;
 
+            fds.Owner = this;
+            fds.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+
             fds.ShowDialog();
 
             if (fds.DialogResult)
@@ -1946,9 +1952,9 @@ namespace PathfinderJson
                 txtEditRaw.FontSize = fds.SelectedFontSize;
                 txtEditRaw.FontStyle = fds.SelectedFontStyle;
                 txtEditRaw.FontWeight = fds.SelectedFontWeight;
-            }
 
-            SaveSettings(true);
+                SaveSettings(true);
+            }
         }
 
 
@@ -1956,6 +1962,7 @@ namespace PathfinderJson
         {
             Options o = new Options();
             o.Owner = this;
+            o.WindowStartupLocation = WindowStartupLocation.CenterOwner;
             o.ColorScheme = App.ColorScheme;
 
             o.ShowDialog();
@@ -2015,6 +2022,7 @@ namespace PathfinderJson
         {
             About a = new About();
             a.Owner = this;
+            a.WindowStartupLocation = WindowStartupLocation.CenterOwner;
             a.ShowDialog();
         }
 
@@ -3500,6 +3508,7 @@ namespace PathfinderJson
             UserdataEditor ude = new UserdataEditor();
             ude.LoadUserData(ud);
             ude.Owner = this;
+            ude.WindowStartupLocation = WindowStartupLocation.CenterOwner;
 
             ude.ShowDialog();
             if (ude.DialogResult)
@@ -4107,6 +4116,7 @@ namespace PathfinderJson
             SheetSettings sse = new SheetSettings();
             sse.SheetSettingsList = sheetSettings;
             sse.Owner = this;
+            sse.WindowStartupLocation = WindowStartupLocation.CenterOwner;
             sse.UpdateUi();
             sse.ShowDialog();
 
@@ -4145,6 +4155,7 @@ namespace PathfinderJson
 
             InsertJson ij = new InsertJson();
             ij.Owner = this;
+            ij.WindowStartupLocation = WindowStartupLocation.CenterOwner;
             ij.ShowDialog();
 
             if (ij.DialogResult)

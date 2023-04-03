@@ -139,6 +139,8 @@ namespace PathfinderJson
             // TO BE ADDED
             AddSettingValueWindow asv = new AddSettingValueWindow();
             asv.ColorScheme = ColorScheme;
+            asv.Owner = this;
+            asv.WindowStartupLocation = WindowStartupLocation.CenterOwner;
             asv.ShowDialog();
 
             if (asv.DialogResult)
@@ -160,6 +162,8 @@ namespace PathfinderJson
             {
                 StringInputDialog sid = new StringInputDialog(App.ColorScheme, "Set Setting Value", "Set the value for the setting \"" + kvp.Key + "\":", kvp.Value ?? "");
                 sid.SelectTextOnFocus = true;
+                sid.Owner = this;
+                sid.WindowStartupLocation = WindowStartupLocation.CenterOwner;
                 sid.ShowDialog();
 
                 if (sid.DialogResult)
