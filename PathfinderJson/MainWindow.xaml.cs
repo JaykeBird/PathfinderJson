@@ -1761,6 +1761,13 @@ namespace PathfinderJson
                     mnuScroll.IsChecked = true;
                     mnuRawJson.IsChecked = false;
 
+                    mnuQTabs.IsChecked = false;
+                    mnuQScroll.IsChecked = true;
+                    mnuQRawJson.IsChecked = false;
+
+                    imgQView.ImageName = "ContinuousScroll";
+                    txtQViewName.Text = "Scroll View";
+
                     if (_isEditorDirty && updateSheet)
                     {
                         // update sheet from editor
@@ -1783,6 +1790,13 @@ namespace PathfinderJson
                     mnuScroll.IsChecked = false;
                     mnuRawJson.IsChecked = false;
 
+                    mnuQTabs.IsChecked = true;
+                    mnuQScroll.IsChecked = false;
+                    mnuQRawJson.IsChecked = false;
+
+                    imgQView.ImageName = "TabView";
+                    txtQViewName.Text = "Tabbed View";
+
                     if (_isEditorDirty && updateSheet)
                     {
                         // update sheet from editor
@@ -1801,6 +1815,13 @@ namespace PathfinderJson
                     mnuTabs.IsChecked = false;
                     mnuScroll.IsChecked = false;
                     mnuRawJson.IsChecked = true;
+
+                    mnuQTabs.IsChecked = false;
+                    mnuQScroll.IsChecked = false;
+                    mnuQRawJson.IsChecked = true;
+
+                    imgQView.ImageName = "TextFile";
+                    txtQViewName.Text = "Raw JSON View";
 
                     if (_isTabsDirty && updateSheet)
                     {
