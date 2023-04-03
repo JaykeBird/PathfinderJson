@@ -36,7 +36,7 @@
     </flat:FlatWindow.TopRightElement>
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto" MinWidth="120" x:Name="colTabs"/>
+            <ColumnDefinition Width="Auto" MinWidth="120" x:Name="colTabs" />
             <ColumnDefinition Width="1*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
@@ -181,6 +181,7 @@
                     </MenuItem.Icon>
                 </MenuItem>
                 <Separator />
+                <MenuItem Header="S_how Side Tabs" x:Name="mnuTabBar" Click="mnuTabBar_Click" IsEnabled="False" IsChecked="True" />
                 <MenuItem Header="Show T_oolbar" x:Name="mnuToolbar" Click="mnuToolbar_Click" />
                 <MenuItem Header="Color _Scheme..." x:Name="mnuColors" Click="mnuColors_Click">
                     <MenuItem.Icon>
@@ -274,7 +275,7 @@
             <flat:MenuButton.Content>
                 <StackPanel Orientation="Horizontal">
                     <local:ThemedImage Width="16" Height="16" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" ImageName="TabView" x:Name="imgQView" />
-                    <TextBlock Margin="2,0" Text="Tabbed View" x:Name="txtQViewName" />
+                    <TextBlock Margin="3,0,0,0" Text="Tabbed View" x:Name="txtQViewName" />
                 </StackPanel>
             </flat:MenuButton.Content>
             <flat:MenuButton.Menu>

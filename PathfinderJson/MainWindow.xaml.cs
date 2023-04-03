@@ -1760,9 +1760,8 @@ namespace PathfinderJson
 
                     txtEditRaw.Visibility = Visibility.Collapsed;
                     mnuEdit.Visibility = Visibility.Collapsed;
-                    mnuEditS.Visibility = Visibility.Visible;
-                    colTabs.Width = new GridLength(120, GridUnitType.Auto);
-                    colTabs.MinWidth = 120;
+                    mnuEditS.Visibility = Visibility.Collapsed;
+                    if (mnuTabBar.IsChecked) ShowTabsBar(); else HideTabsBar();
                     stkEditToolbar.Visibility = Visibility.Collapsed;
                     stkSheetEditToolbar.Visibility = Visibility.Visible;
                     if (sp != null) if (!sp.IsClosed) sp.Close();
@@ -1778,6 +1777,8 @@ namespace PathfinderJson
                     imgQView.ImageName = "ContinuousScroll";
                     txtQViewName.Text = "Scroll View";
 
+                    mnuTabBar.IsEnabled = true;
+
                     if (_isEditorDirty && updateSheet)
                     {
                         // update sheet from editor
@@ -1789,9 +1790,8 @@ namespace PathfinderJson
 
                     txtEditRaw.Visibility = Visibility.Collapsed;
                     mnuEdit.Visibility = Visibility.Collapsed;
-                    mnuEditS.Visibility = Visibility.Visible;
-                    colTabs.Width = new GridLength(120, GridUnitType.Auto);
-                    colTabs.MinWidth = 120;
+                    mnuEditS.Visibility = Visibility.Collapsed;
+                    ShowTabsBar();
                     stkEditToolbar.Visibility = Visibility.Collapsed;
                     stkSheetEditToolbar.Visibility = Visibility.Visible;
                     if (sp != null) if (!sp.IsClosed) sp.Close();
@@ -1807,6 +1807,8 @@ namespace PathfinderJson
                     imgQView.ImageName = "TabView";
                     txtQViewName.Text = "Tabbed View";
 
+                    mnuTabBar.IsEnabled = false;
+
                     if (_isEditorDirty && updateSheet)
                     {
                         // update sheet from editor
@@ -1817,8 +1819,7 @@ namespace PathfinderJson
                     txtEditRaw.Visibility = Visibility.Visible;
                     mnuEdit.Visibility = Visibility.Visible;
                     mnuEditS.Visibility = Visibility.Collapsed;
-                    colTabs.Width = new GridLength(0);
-                    colTabs.MinWidth = 0;
+                    HideTabsBar();
                     stkEditToolbar.Visibility = Visibility.Visible;
                     stkSheetEditToolbar.Visibility = Visibility.Collapsed;
 
@@ -1829,6 +1830,8 @@ namespace PathfinderJson
                     mnuQTabs.IsChecked = false;
                     mnuQScroll.IsChecked = false;
                     mnuQRawJson.IsChecked = true;
+
+                    mnuTabBar.IsEnabled = false;
 
                     imgQView.ImageName = "TextFile";
                     txtQViewName.Text = "Raw JSON View";
@@ -1861,7 +1864,7 @@ namespace PathfinderJson
             else
             {
                 lblNoSheet.Visibility = Visibility.Collapsed;
-                selTabs.IsEnabled = true;
+                //selTabs.IsEnabled = true;
                 txtEditRaw.IsEnabled = true;
                 grdEditDrop.Visibility = Visibility.Collapsed;
                 if (lblNoSheet.Visibility != v)
@@ -1869,6 +1872,29 @@ namespace PathfinderJson
                     UpdateAppearance();
                 }
             }
+        }
+
+        void HideTabsBar()
+        {
+            colTabs.Width = new GridLength(0);
+            colTabs.MinWidth = 0;
+            mnuTabBar.IsChecked = false;
+
+            selTabs.IsEnabled = false;
+            mnuQView.IsEnabled = false;
+        }
+
+        void ShowTabsBar()
+        {
+            colTabs.Width = new GridLength(120, GridUnitType.Auto);
+            colTabs.MinWidth = 120;
+            mnuTabBar.IsChecked = true;
+
+            if (_sheetLoaded)
+            {
+                selTabs.IsEnabled = true;
+            }
+            mnuQView.IsEnabled = true;
         }
 
         private void mnuScroll_Click(object sender, RoutedEventArgs e)
@@ -1884,6 +1910,17 @@ namespace PathfinderJson
         private void mnuRawJson_Click(object sender, RoutedEventArgs e)
         {
             ChangeView(RAWJSON_VIEW, true, !_sheetLoaded);
+        }
+        private void mnuTabBar_Click(object sender, RoutedEventArgs e)
+        {
+            if (currentView == CONTINUOUS_VIEW && colTabs.MinWidth > 0)
+            {
+                HideTabsBar();
+            }
+            else
+            {
+                ShowTabsBar();
+            }
         }
 
         private void mnuToolbar_Click(object sender, RoutedEventArgs e)
