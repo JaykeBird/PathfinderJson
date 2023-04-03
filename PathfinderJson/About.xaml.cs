@@ -59,6 +59,7 @@ namespace PathfinderJson
         {
             ThirdPartyCredits tpc = new ThirdPartyCredits();
             tpc.Owner = this;
+            tpc.WindowStartupLocation = WindowStartupLocation.CenterOwner;
             tpc.ShowDialog();
         }
 
@@ -71,6 +72,7 @@ namespace PathfinderJson
         {
             PlatformInfo pi = new PlatformInfo();
             pi.Owner = this;
+            pi.WindowStartupLocation = WindowStartupLocation.CenterOwner;
             pi.ShowDialog();
         }
     }
