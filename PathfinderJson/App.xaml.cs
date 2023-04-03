@@ -117,7 +117,8 @@ namespace PathfinderJson
             if (settingsDir != SettingsIo.SettingsDirectory)
             {
                 // settings stored in old directory, ask user to update
-                var result = MessageBox.Show("Settings for a previous version of PathfinderJson was located. Do you want to transfer these settings to this version?",
+                string pStr = SettingsIo.IsPortable ? " (or non-portable)" : "";
+                var result = MessageBox.Show("Settings for a previous" + pStr + " version of PathfinderJson was located. Do you want to transfer these settings to this version?",
                                  "Old Settings Found", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes);
 
                 if (result == MessageBoxResult.Yes)
@@ -163,12 +164,14 @@ namespace PathfinderJson
                 if (Settings.HighContrastTheme == NO_HIGH_CONTRAST)
                 {
                     ColorScheme ncs;
-                    MessageDialog md = new MessageDialog();
-                    md.Message = "It appears that you have Windows High Contrast mode activated. Did you want to activate High Contrast mode in PathfinderJSON as well?";
-                    md.OkButtonText = "Yes";
-                    md.CancelButtonText = "No";
-                    md.Image = MessageDialogImage.Question;
-                    md.Title = "PathfinderJSON - High Contrast Mode";
+                    MessageDialog md = new MessageDialog
+                    {
+                        Message = "It appears that you have Windows High Contrast mode activated. Did you want to activate High Contrast mode in PathfinderJSON as well?",
+                        OkButtonText = "Yes",
+                        CancelButtonText = "No",
+                        Image = MessageDialogImage.Question,
+                        Title = "PathfinderJSON - High Contrast Mode"
+                    };
 
                     // check the control color
                     if (SystemColors.ControlColor == Colors.Black)
