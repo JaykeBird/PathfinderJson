@@ -46,6 +46,7 @@ namespace PathfinderJson
             // https://weblog.west-wind.com/posts/2018/Apr/12/Getting-the-NET-Core-Runtime-Version-in-a-Running-Application
             txtTarget.Text = Assembly.GetEntryAssembly()?.GetCustomAttribute<TargetFrameworkAttribute>()?.FrameworkName ?? "Unknown";
             txtRuntime.Text = RuntimeInformation.FrameworkDescription;
+            txtRelease.Text = SettingsIo.IsPortable ? "Portable" : "Installed";
         }
 
         private void btnClose_Click(object sender, RoutedEventArgs e)
