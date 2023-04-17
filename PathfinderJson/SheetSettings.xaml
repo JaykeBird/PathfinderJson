@@ -10,7 +10,7 @@
     <flat:FlatWindow.Resources>
         <flat:ColorToBrushConverter x:Key="ctb" />
     </flat:FlatWindow.Resources>
-    <Grid>
+    <Grid UseLayoutRounding="True">
         <Grid.RowDefinitions>
             <RowDefinition Height="50" />
             <RowDefinition Height="Auto" />
