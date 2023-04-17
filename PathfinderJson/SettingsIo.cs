@@ -54,6 +54,8 @@ namespace PathfinderJson
         private const string appName = "PathfinderJson";
         private const string appSettingsName = "pathfinderJson";
 
+        private const string Settings_Redirect_Filename = "settings_redir.txt";
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static string LocateAppDataFolder()
         {
@@ -138,8 +140,7 @@ namespace PathfinderJson
                     using StreamReader file = File.OpenText(settingsFileName);
                     JsonSerializer serializer = new JsonSerializer();
 
-                    T? ss = (T?)serializer.Deserialize(file, typeof(T));
-                    if (ss == null) ss = new T();
+                    T? ss = (T?)serializer.Deserialize(file, typeof(T)) ?? new T();
                     return ss;
                 }
                 catch (UnauthorizedAccessException)
@@ -168,7 +169,7 @@ namespace PathfinderJson
                 catch (FileNotFoundException)
                 {
                     // somehow the file got deleted???
-                    T sn = new T();
+                    T sn = new();
                     using StreamWriter file = new StreamWriter(settingsFileName, false, new UTF8Encoding(false));
                     JsonSerializer serializer = new JsonSerializer();
                     serializer.Serialize(file, sn);
@@ -184,7 +185,7 @@ namespace PathfinderJson
             else
             {
                 // there is no settings file here, let's just build a new one
-                T settings = new T();
+                T settings = new();
                 try
                 {
                     using StreamWriter file = new StreamWriter(settingsFileName, false, new UTF8Encoding(false));
@@ -245,8 +246,7 @@ namespace PathfinderJson
                 {
                     using StreamReader file = File.OpenText(settingsFileName);
 
-                    T? ss = (T?)serializer.Deserialize(XmlReader.Create(settingsFileName));
-                    if (ss == null) ss = new T();
+                    T? ss = (T?)serializer.Deserialize(XmlReader.Create(settingsFileName)) ?? new T();
                     return ss;
                 }
                 catch (UnauthorizedAccessException)
@@ -275,7 +275,7 @@ namespace PathfinderJson
                 catch (FileNotFoundException)
                 {
                     // somehow the file got deleted???
-                    T sn = new T();
+                    T sn = new();
                     using StreamWriter file = new StreamWriter(settingsFileName, false, new UTF8Encoding(false));
                     serializer.Serialize(file, sn);
                     return sn;
@@ -290,7 +290,7 @@ namespace PathfinderJson
             else
             {
                 // there is no settings file here, let's just build a new one
-                T settings = new T();
+                T settings = new();
                 try
                 {
                     using StreamWriter file = new StreamWriter(settingsFileName, false, new UTF8Encoding(false));
@@ -327,7 +327,7 @@ namespace PathfinderJson
         /// </remarks>
         /// <returns>The folder that stores user settings (either this app version's folder or the folder from next-closest previous version), 
         /// or <c>null</c> if no folder could be found.</returns>
-        public static string? FindLatestSettings()
+        public static (string? dirPath, bool canRequestUpgrade) FindLatestSettings()
         {
             // first, some setup
             string AppDataFolder = LocateAppDataFolder();
@@ -339,8 +339,18 @@ namespace PathfinderJson
                 string currentDir = Path.Combine(mainSettingsDir, App.VersionString);
                 if (Directory.Exists(currentDir))
                 {
+                    if (File.Exists(Path.Combine(currentDir, Settings_Redirect_Filename)))
+                    {
+                        // settings has been redirected to another directory
+                        string newDir = File.ReadAllText(Path.Combine(currentDir, Settings_Redirect_Filename), Encoding.UTF8);
+                        if (Directory.Exists(newDir))
+                        {
+                            return (newDir, false);
+                        }
+                    }
+
                     // current directory is here, let's load in from this directory
-                    return Path.Combine(mainSettingsDir, App.VersionString);
+                    return (Path.Combine(mainSettingsDir, App.VersionString), false);
                 }
                 else
                 {
@@ -349,14 +359,7 @@ namespace PathfinderJson
                     string[] dirList = Directory.GetDirectories(mainSettingsDir);
                     IEnumerable<int> names = dirList.Select(s =>
                     {
-                        if (int.TryParse(s, out var nn))
-                        {
-                            return nn;
-                        }
-                        else
-                        {
-                            return -1;
-                        }
+                        return int.TryParse(s, out var nn) ? nn : -1;
                     });
 
                     // get the largest version number that's still less than this one
@@ -365,33 +368,48 @@ namespace PathfinderJson
                     {
                         int res = names.Where(i => { return i <= App.VersionInt; }).Max();
 
-                        if (res < 0)
+                        if (res > 0)
                         {
+                            // first, let's check for the settings redirect file
+                            if (File.Exists(Path.Combine(mainSettingsDir, res.ToString(), Settings_Redirect_Filename)))
+                            {
+                                // settings has been redirected to another directory
+                                string newDir = File.ReadAllText(Path.Combine(mainSettingsDir, res.ToString(), Settings_Redirect_Filename), Encoding.UTF8);
+                                if (Directory.Exists(newDir))
+                                {
+                                    // let's also write to the current directory and put the settings redirect file there
+                                    string currentnDir = Path.Combine(mainSettingsDir, App.VersionString);
+                                    Directory.CreateDirectory(currentnDir);
+                                    File.WriteAllText(Path.Combine(currentnDir, Settings_Redirect_Filename), newDir, Encoding.UTF8);
+                                    return (newDir, false);
+                                }
+                            }
+
                             // check if this folder has any files (that could in theory be read from)
                             if (Directory.GetFiles(Path.Combine(mainSettingsDir, res.ToString())).Any())
                             {
                                 // if so, then let's return this folder (so that the user can be asked if they want to upgrade)
-                                return Path.Combine(mainSettingsDir, res.ToString());
+                                return (Path.Combine(mainSettingsDir, res.ToString()), true);
                             }
                             else
                             {
                                 // I could in theory check any other lower folders, but that's a lot of code to write for what will be a fairly unlikely scenario
                                 // instead, let's just return null and then cause a new settings file to be created
-                                return null;
+                                return (null, false);
                             }
                         }
                         else
                         {
                             // if res is -1, then there are no folders that have an integer-only name
                             // just return nothing
-                            return null;
+                            return (null, false);
                         }
                     }
                     catch (InvalidOperationException)
                     {
                         // there are no folders that are less than the current version
                         // there may be folders that are lower than the 
-                        return null;
+                        return (null, false);
                     }
                 }
             }
@@ -404,12 +422,12 @@ namespace PathfinderJson
                     Directory.Exists(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), appName)))
                 {
                     // old version of settings is stored here, probably
-                    return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), appName);
+                    return (Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), appName), true);
                 }
                 else
                 {
                     // settings is not anywhere, time to start from scratch
-                    return null;
+                    return (null, false);
                 }
             }
         }
