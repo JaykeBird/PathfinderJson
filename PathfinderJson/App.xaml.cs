@@ -103,7 +103,7 @@ namespace PathfinderJson
         {
             SettingsIo.SetupBaseDirectories(); // this does not create the actual settings directory, that is done a few lines later
 
-            string? settingsDir = SettingsIo.FindLatestSettings();
+            (string? settingsDir, bool canUpdate) = SettingsIo.FindLatestSettings();
             if (settingsDir == null || (SettingsIo.IsPortable && Directory.Exists(SettingsIo.SettingsDirectory)))
             {
                 // settingsDir is null if no old settings directories could be found, so we'll just default to the standard directory
@@ -114,11 +114,11 @@ namespace PathfinderJson
             // now the actual settings directory is created (could not be created prior to FindLatestSettings to prevent a false positive)
             Directory.CreateDirectory(SettingsIo.SettingsDirectory);
 
-            if (settingsDir != SettingsIo.SettingsDirectory)
+            if (canUpdate)
             {
                 // settings stored in old directory, ask user to update
-                string pStr = SettingsIo.IsPortable ? " (or non-portable)" : "";
-                var result = MessageBox.Show("Settings for a previous" + pStr + " version of PathfinderJson was located. Do you want to transfer these settings to this version?",
+                string pStr = SettingsIo.IsPortable ? "(or non-portable) " : "";
+                var result = MessageBox.Show($"Settings for a previous {pStr}version of PathfinderJson was located. Do you want to transfer these settings to this version?",
                                  "Old Settings Found", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes);
 
                 if (result == MessageBoxResult.Yes)
