@@ -101,40 +101,17 @@ namespace PathfinderJson
 
         private void Application_Startup(object sender, StartupEventArgs e)
         {
-            SettingsIo.SetupBaseDirectories(); // this does not create the actual settings directory, that is done a few lines later
-
-            (string? settingsDir, bool canUpdate) = SettingsIo.FindLatestSettings();
-            if (settingsDir == null || (SettingsIo.IsPortable && Directory.Exists(SettingsIo.SettingsDirectory)))
+            // let's put this right at the top before any JSON deserialization occurs
+            Newtonsoft.Json.JsonConvert.DefaultSettings = () => new Newtonsoft.Json.JsonSerializerSettings
             {
-                // settingsDir is null if no old settings directories could be found, so we'll just default to the standard directory
-                // otherwise, if this is a Portable app and the portable settings app already exists, just use the standard directory
-                settingsDir = SettingsIo.SettingsDirectory;
-            }
+                DefaultValueHandling = Newtonsoft.Json.DefaultValueHandling.Ignore,
+                NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore
+            };
 
-            // now the actual settings directory is created (could not be created prior to FindLatestSettings to prevent a false positive)
-            Directory.CreateDirectory(SettingsIo.SettingsDirectory);
-
-            if (canUpdate)
-            {
-                // settings stored in old directory, ask user to update
-                string pStr = SettingsIo.IsPortable ? "(or non-portable) " : "";
-                var result = MessageBox.Show($"Settings for a previous {pStr}version of PathfinderJson was located. Do you want to transfer these settings to this version?",
-                                 "Old Settings Found", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes);
-
-                if (result == MessageBoxResult.Yes)
-                {
-                    // transfer from old to new
-                    foreach (string sff in Directory.GetFiles(settingsDir))
-                    {
-                        // TODO: add try-catch statements
-                        File.Copy(sff, Path.Combine(SettingsIo.SettingsDirectory, Path.GetFileName(sff)), true);
-                    }
-                }
-            } // otherwise, settings is in the standard location
-
-            string settingsFileName = Path.Combine(SettingsIo.SettingsDirectory, "settings.json");
-
-            Settings = SettingsIo.LoadSettingsJson<Settings>(settingsFileName);
+            string settingsFileName = "settings.json";
+            string settingsFilePath = Path.Combine(SettingsIo.SettingsDirectory, settingsFileName);
+            // this one method does a lot of work behind the scenes to set up everything lol
+            Settings = SettingsIo.PrepareSettingsJson<Settings>();
 
             if (Settings.UseStartupOptimization)
             {
@@ -142,12 +119,6 @@ namespace PathfinderJson
                 ProfileOptimization.SetProfileRoot(Path.Combine(SettingsIo.AppDataDirectory, "Optimization"));
                 ProfileOptimization.StartProfile(VersionInt + "_Startup.profile");
             }
-
-            Newtonsoft.Json.JsonConvert.DefaultSettings = () => new Newtonsoft.Json.JsonSerializerSettings
-            {
-                DefaultValueHandling = Newtonsoft.Json.DefaultValueHandling.Ignore,
-                NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore
-            };
 
             string file = "";
 
@@ -161,6 +132,7 @@ namespace PathfinderJson
 
             if (SystemParameters.HighContrast)
             {
+                // if the system is in High Contrast, let's ask the user if they want PathfinderJson in High Contrast mode
                 if (Settings.HighContrastTheme == NO_HIGH_CONTRAST)
                 {
                     ColorScheme ncs;
@@ -212,25 +184,7 @@ namespace PathfinderJson
                         }
                     }
 
-                    try
-                    {
-                        Settings.Save(Path.Combine(SettingsIo.SettingsDirectory, "settings.json"));
-                    }
-                    catch (UnauthorizedAccessException)
-                    {
-                        MessageBox.Show("The settings file for PathfinderJson could not be saved. Please check the permissions for your AppData folder.",
-                            "Settings Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                    }
-                    catch (System.Security.SecurityException)
-                    {
-                        MessageBox.Show("The settings file for PathfinderJson could not be saved. Please check the permissions for your AppData folder.",
-                            "Settings Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                    }
-                    catch (IOException)
-                    {
-                        MessageBox.Show("The settings file for PathfinderJson could not be saved. Please check the permissions for your AppData folder.",
-                            "Settings Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                    }
+                    SettingsIo.SaveSettingsJson(Settings);
                 }
             }
 

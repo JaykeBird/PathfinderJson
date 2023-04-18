@@ -11,46 +11,46 @@ namespace PathfinderJson
     public class Settings
     {
 
-        public static Settings LoadSettings(string filename)
-        {
-            try
-            {
-                using StreamReader file = File.OpenText(filename);
-                JsonSerializer serializer = new JsonSerializer();
+        //public static Settings LoadSettings(string filename)
+        //{
+        //    try
+        //    {
+        //        using StreamReader file = File.OpenText(filename);
+        //        JsonSerializer serializer = new JsonSerializer();
 
-                Settings? ss = (Settings?)serializer.Deserialize(file, typeof(Settings));
-                if (ss == null) ss = new Settings();
-                return ss;
-            }
-            catch (JsonReaderException)
-            {
-                MessageBox.Show("The settings file for PathfinderJson was corrupted. PathfinderJson will continue with default settings.",
-                    "Settings Error", MessageBoxButton.OK, MessageBoxImage.Warning);
-                Settings sn = new Settings();
-                sn.Save(filename); // exception handling not needed for these as calling function handles exceptions
-                return sn;
-            }
-            catch (FileNotFoundException)
-            {
-                Settings sn = new Settings();
-                sn.Save(filename); // exception handling not needed for these as calling function handles exceptions
-                return sn;
-            }
-        }
+        //        Settings? ss = (Settings?)serializer.Deserialize(file, typeof(Settings));
+        //        if (ss == null) ss = new Settings();
+        //        return ss;
+        //    }
+        //    catch (JsonReaderException)
+        //    {
+        //        MessageBox.Show("The settings file for PathfinderJson was corrupted. PathfinderJson will continue with default settings.",
+        //            "Settings Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+        //        Settings sn = new Settings();
+        //        sn.Save(filename); // exception handling not needed for these as calling function handles exceptions
+        //        return sn;
+        //    }
+        //    catch (FileNotFoundException)
+        //    {
+        //        Settings sn = new Settings();
+        //        sn.Save(filename); // exception handling not needed for these as calling function handles exceptions
+        //        return sn;
+        //    }
+        //}
 
-        public void Save(string filename)
-        {
-            DirectoryInfo? di = Directory.GetParent(filename);
+        //public void Save(string filename)
+        //{
+        //    DirectoryInfo? di = Directory.GetParent(filename);
 
-            if (di != null && !di.Exists)
-            {
-                di.Create();
-            }
+        //    if (di != null && !di.Exists)
+        //    {
+        //        di.Create();
+        //    }
 
-            using StreamWriter file = new StreamWriter(filename, false, new UTF8Encoding(false));
-            JsonSerializer serializer = new JsonSerializer();
-            serializer.Serialize(file, this);
-        }
+        //    using StreamWriter file = new StreamWriter(filename, false, new UTF8Encoding(false));
+        //    JsonSerializer serializer = new JsonSerializer();
+        //    serializer.Serialize(file, this);
+        //}
 
         [JsonProperty("themeColor")]
         public string ThemeColor { get; set; } = "CD853F";
