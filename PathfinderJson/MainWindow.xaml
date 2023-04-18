@@ -759,7 +759,7 @@
                     <flat:FlatButton ColorScheme="{Binding ColorScheme, ElementName=window}" Width="20" Height="24" HorizontalAlignment="Right" Margin="0,0,6,0" Grid.Row="8" Padding="0" TransparentBack="True" ToolTip="Deselect All" x:Name="btnDeselectMelee" Click="BtnDeselectMelee_Click" >
                         <local:ThemedImage ImageName="Deselect" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" Width="16" Height="16" />
                     </flat:FlatButton>
-                    <flat:SelectPanel ColorScheme="{Binding ColorScheme, ElementName=window}" x:Name="selMelee" BorderThickness="1" UseLighterBorder="True" MinHeight="3" Grid.Row="9" MultiSelect="True" />
+                    <flat:SelectPanel ColorScheme="{Binding ColorScheme, ElementName=window}" x:Name="selMelee" BorderThickness="1" UseLighterBorder="True" MinHeight="3" Grid.Row="9" MultiSelect="True" AllowParentScrolling="True" />
 
                     <TextBlock x:Name="lblRanged" HorizontalAlignment="Left" Margin="15,12,0,0" Grid.Row="10" Text="Ranged Weapons" FontWeight="SemiBold" VerticalAlignment="Top"/>
                     <Expander VerticalAlignment="Center" Margin="120,0,0,0" HorizontalAlignment="Left" Grid.Row="10" x:Name="expRanged" Header="Show/Hide List" IsExpanded="True" Expanded="ExpRanged_Expanded" Collapsed="ExpRanged_Collapsed" Foreground="{Binding Foreground, ElementName=window}" />
@@ -772,7 +772,7 @@
                     <flat:FlatButton ColorScheme="{Binding ColorScheme, ElementName=window}" Width="20" Height="24" HorizontalAlignment="Right" Margin="0,0,6,0" Grid.Row="10" Padding="0" TransparentBack="True" ToolTip="Deselect All" x:Name="btnDeselectRanged" Click="BtnDeselectRanged_Click" >
                         <local:ThemedImage ImageName="Deselect" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" Width="16" Height="16" />
                     </flat:FlatButton>
-                    <flat:SelectPanel ColorScheme="{Binding ColorScheme, ElementName=window}" x:Name="selRanged" BorderThickness="1" UseLighterBorder="True" MinHeight="3" Grid.Row="11" MultiSelect="True" />
+                    <flat:SelectPanel ColorScheme="{Binding ColorScheme, ElementName=window}" x:Name="selRanged" BorderThickness="1" UseLighterBorder="True" MinHeight="3" Grid.Row="11" MultiSelect="True" AllowParentScrolling="True" />
 
                     <TextBlock x:Name="lblAcItems" HorizontalAlignment="Left" Margin="15,0,0,0" Grid.Row="12" Text="Armor/Shields" FontWeight="SemiBold" VerticalAlignment="Center"/>
                     <Expander VerticalAlignment="Center" Margin="120,0,0,0" HorizontalAlignment="Left" Grid.Row="12" x:Name="expAcItem" Header="Show/Hide List" IsExpanded="True" Expanded="expAcItem_Expanded" Collapsed="expAcItem_Collapsed" Foreground="{Binding Foreground, ElementName=window}" />
@@ -785,7 +785,7 @@
                     <flat:FlatButton ColorScheme="{Binding ColorScheme, ElementName=window}" Width="20" Height="24" HorizontalAlignment="Right" Margin="0,8,6,8" Grid.Row="12" Padding="0" TransparentBack="True" ToolTip="Deselect All" x:Name="btnDeselectAcItem" Click="btnDeselectAcItem_Click" >
                         <local:ThemedImage ImageName="Deselect" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" Width="16" Height="16" />
                     </flat:FlatButton>
-                    <flat:SelectPanel ColorScheme="{Binding ColorScheme, ElementName=window}" x:Name="selAcItem" BorderThickness="1" UseLighterBorder="True" MinHeight="3" Grid.Row="13" MultiSelect="True" />
+                    <flat:SelectPanel ColorScheme="{Binding ColorScheme, ElementName=window}" x:Name="selAcItem" BorderThickness="1" UseLighterBorder="True" MinHeight="3" Grid.Row="13" MultiSelect="True" AllowParentScrolling="True" />
                     <Grid HorizontalAlignment="Stretch" Margin="15,10,0,0" Grid.Row="14" VerticalAlignment="Top">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"/>
@@ -968,7 +968,7 @@
                     <flat:FlatButton ColorScheme="{Binding ColorScheme, ElementName=window}" Width="20" Height="24" HorizontalAlignment="Right" Margin="0,8,6,8" Grid.Row="4" Padding="0" TransparentBack="True" ToolTip="Deselect All" x:Name="btnDeselectSpell" Click="btnDeselectSpell_Click" >
                         <local:ThemedImage ImageName="Deselect" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" Width="16" Height="16" />
                     </flat:FlatButton>
-                    <flat:SelectPanel ColorScheme="{Binding ColorScheme, ElementName=window}" x:Name="selSpells" BorderThickness="1" UseLighterBorder="True" MinHeight="3" Grid.Row="5" MultiSelect="True" />
+                    <flat:SelectPanel ColorScheme="{Binding ColorScheme, ElementName=window}" x:Name="selSpells" BorderThickness="1" UseLighterBorder="True" MinHeight="3" Grid.Row="5" MultiSelect="True" AllowParentScrolling="True" />
                 </Grid>
                 <Grid Margin="5,5,5,0" x:Name="grdFeats" Visibility="Collapsed" >
                     <Grid.RowDefinitions>
@@ -1004,7 +1004,7 @@
                     <flat:FlatButton ColorScheme="{Binding ColorScheme, ElementName=window}" Width="20" Height="24" HorizontalAlignment="Right" Margin="0,0,6,0" Grid.Row="1" Padding="0" TransparentBack="True" ToolTip="Deselect All" x:Name="btnDeselectFeat" Click="btnDeselectFeat_Click" >
                         <local:ThemedImage ImageName="Deselect" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" Width="16" Height="16" />
                     </flat:FlatButton>
-                    <flat:SelectPanel ColorScheme="{Binding ColorScheme, ElementName=window}" x:Name="selFeats" BorderThickness="1" UseLighterBorder="True" MinHeight="3" Grid.Row="2" MultiSelect="True" />
+                    <flat:SelectPanel ColorScheme="{Binding ColorScheme, ElementName=window}" x:Name="selFeats" BorderThickness="1" UseLighterBorder="True" MinHeight="3" Grid.Row="2" MultiSelect="True" AllowParentScrolling="True" />
 
                     <TextBlock x:Name="lblAbilities" HorizontalAlignment="Left" Margin="15,12,0,0" Grid.Row="3" Text="Special Abilities" FontWeight="SemiBold" VerticalAlignment="Top"/>
                     <Expander VerticalAlignment="Center" Margin="120,0,0,0" HorizontalAlignment="Left" Grid.Row="3" x:Name="expabilities" Header="Show/Hide List" IsExpanded="True" Expanded="expAbilities_Expanded" Collapsed="expAbilities_Collapsed" Foreground="{Binding Foreground, ElementName=window}" />
@@ -1030,7 +1030,7 @@
                     <flat:FlatButton ColorScheme="{Binding ColorScheme, ElementName=window}" Width="20" Height="24" HorizontalAlignment="Right" Margin="0,0,6,0" Grid.Row="5" Padding="0" TransparentBack="True" ToolTip="Deselect All" x:Name="btnDeselectTrait" Click="btnDeselectTrait_Click" >
                         <local:ThemedImage ImageName="Deselect" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" Width="16" Height="16" />
                     </flat:FlatButton>
-                    <flat:SelectPanel ColorScheme="{Binding ColorScheme, ElementName=window}" x:Name="selTraits" BorderThickness="1" UseLighterBorder="True" MinHeight="3" Grid.Row="6" MultiSelect="True" />
+                    <flat:SelectPanel ColorScheme="{Binding ColorScheme, ElementName=window}" x:Name="selTraits" BorderThickness="1" UseLighterBorder="True" MinHeight="3" Grid.Row="6" MultiSelect="True" AllowParentScrolling="True" />
 
                     <TextBlock x:Name="lblSpellLikes" HorizontalAlignment="Left" Margin="15,12,0,0" Grid.Row="7" Text="Spell-like Abilities" FontWeight="SemiBold" VerticalAlignment="Top"/>
                     <Expander VerticalAlignment="Center" Margin="120,0,0,0" HorizontalAlignment="Left" Grid.Row="7" x:Name="expSpellLikes" Header="Show/Hide List" IsExpanded="True" Expanded="expSpellLikes_Expanded" Collapsed="expSpellLikes_Collapsed" Foreground="{Binding Foreground, ElementName=window}" />
@@ -1043,7 +1043,7 @@
                     <flat:FlatButton ColorScheme="{Binding ColorScheme, ElementName=window}" Width="20" Height="24" HorizontalAlignment="Right" Margin="0,0,6,0" Grid.Row="7" Padding="0" TransparentBack="True" ToolTip="Deselect All" x:Name="btnDeselectSpellLike" Click="btnDeselectSpellLike_Click" >
                         <local:ThemedImage ImageName="Deselect" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" Width="16" Height="16" />
                     </flat:FlatButton>
-                    <flat:SelectPanel ColorScheme="{Binding ColorScheme, ElementName=window}" x:Name="selSpellLikes" BorderThickness="1" UseLighterBorder="True" MinHeight="3" Grid.Row="8" MultiSelect="True" />
+                    <flat:SelectPanel ColorScheme="{Binding ColorScheme, ElementName=window}" x:Name="selSpellLikes" BorderThickness="1" UseLighterBorder="True" MinHeight="3" Grid.Row="8" MultiSelect="True" AllowParentScrolling="True" />
                 </Grid>
                 <Grid Margin="5,5,5,0" x:Name="grdItems" >
                     <Grid.RowDefinitions>
@@ -1122,7 +1122,7 @@
                     <flat:FlatButton ColorScheme="{Binding ColorScheme, ElementName=window}" Width="20" Height="24" HorizontalAlignment="Right" Margin="0,8,6,8" Grid.Row="4" Padding="0" TransparentBack="True" ToolTip="Deselect All" x:Name="btnDeselectEquipment" Click="btnDeselectEquipment_Click" >
                         <local:ThemedImage ImageName="Deselect" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" Width="16" Height="16" />
                     </flat:FlatButton>
-                    <flat:SelectPanel ColorScheme="{Binding ColorScheme, ElementName=window}" x:Name="selEquipment" BorderThickness="1" UseLighterBorder="True" MinHeight="3" Grid.Row="5" MultiSelect="True" />
+                    <flat:SelectPanel ColorScheme="{Binding ColorScheme, ElementName=window}" x:Name="selEquipment" BorderThickness="1" UseLighterBorder="True" MinHeight="3" Grid.Row="5" MultiSelect="True" AllowParentScrolling="True" />
                 </Grid>
                 <Grid Margin="5,5,5,0" x:Name="grdNotes">
                     <TextBlock x:Name="titNotes" Text="Notes" FontSize="16" Margin="10,0,0,0" VerticalAlignment="Top" />
