@@ -12,7 +12,7 @@ using static PathfinderJson.CoreUtils;
 namespace PathfinderJson
 {
     /// <summary>
-    /// Interaction logic for Options.xaml
+    /// A modal dialog that allows the end user to select and change options for PathfinderJson.
     /// </summary>
     public partial class Options : FlatWindow
     {
@@ -185,6 +185,22 @@ namespace PathfinderJson
             chkLineNumbers.IsChecked = s.EditorLineNumbers;
             chkWordWrap.IsChecked = s.EditorWordWrap;
 
+            if (chkLineNumbers.IsChecked)
+            {
+                // <ColumnDefinition x:Name="colNum" Width="Auto" MinWidth="10" />
+                // <ColumnDefinition x: Name = "colBuff" Width = "2" />
+
+                colNum.Width = new GridLength(0, GridUnitType.Auto);
+                colNum.MinWidth = 10;
+                colBuff.Width = new GridLength(2);
+            }
+            else
+            {
+                colNum.Width = new GridLength(0, GridUnitType.Pixel);
+                colNum.MinWidth = 0;
+                colBuff.Width = new GridLength(0);
+            }
+
             // Advanced options
             chkUseOptimization.IsChecked = s.UseStartupOptimization;
         }
@@ -277,25 +293,7 @@ namespace PathfinderJson
 
             // ----------------------------------------
             // finally, save the settings to a file
-            try
-            {
-                App.Settings.Save(Path.Combine(SettingsIo.SettingsDirectory, "settings.json"));
-            }
-            catch (UnauthorizedAccessException)
-            {
-                MessageBox.Show("The settings file for PathfinderJson could not be saved. Please check the permissions for your AppData folder.",
-                    "Settings Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-            catch (System.Security.SecurityException)
-            {
-                MessageBox.Show("The settings file for PathfinderJson could not be saved. Please check the permissions for your AppData folder.",
-                    "Settings Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-            catch (IOException)
-            {
-                MessageBox.Show("The settings file for PathfinderJson could not be saved. Please check the permissions for your AppData folder.",
-                    "Settings Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
+            SettingsIo.SaveSettingsJson(App.Settings);
         }
 
         void LoadEditorFontSettings(Settings s)

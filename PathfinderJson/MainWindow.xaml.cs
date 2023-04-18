@@ -316,25 +316,7 @@ namespace PathfinderJson
                 SaveEditorFontSettings();
             }
 
-            try
-            {
-                App.Settings.Save(Path.Combine(SettingsIo.SettingsDirectory, "settings.json"));
-            }
-            catch (UnauthorizedAccessException)
-            {
-                MessageBox.Show("The settings file for PathfinderJson could not be saved. Please check the permissions for your AppData folder.",
-                    "Settings Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-            catch (System.Security.SecurityException)
-            {
-                MessageBox.Show("The settings file for PathfinderJson could not be saved. Please check the permissions for your AppData folder.",
-                    "Settings Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-            catch (IOException)
-            {
-                MessageBox.Show("The settings file for PathfinderJson could not be saved. Please check the permissions for your AppData folder.",
-                    "Settings Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
+            SettingsIo.SaveSettingsJson(App.Settings);
         }
 
         void ReloadSettings()
