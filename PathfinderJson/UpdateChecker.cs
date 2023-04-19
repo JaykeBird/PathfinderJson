@@ -4,6 +4,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using System.Net;
+using System.Net.Http;
+using System.Net.Http.Json;
 
 namespace PathfinderJson
 {
@@ -13,13 +15,13 @@ namespace PathfinderJson
 
         public static async Task<UpdateData> CheckForUpdatesAsync()
         {
-            WebClient wc = new WebClient();
-            wc.Encoding = new UTF8Encoding();
-            // Github's API only responds if there's a user agent present. I'm currently using a Chrome user agent
-            wc.Headers.Add(HttpRequestHeader.UserAgent, "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.114 Safari/537.36 PathfinderJson/" + App.AppVersion.ToString());
-            string s = await wc.DownloadStringTaskAsync("https://api.github.com/repos/JaykeBird/PathfinderJson/releases/latest");
+            HttpClient wc = new HttpClient();
+            // Github's API only responds if there's a user agent present. I'm currently using a Chrome user agent (the actual user agent doesn't really matter, just the fact that it's present)
+            wc.DefaultRequestHeaders.UserAgent.ParseAdd("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36 PathfinderJson/" + App.AppVersion.ToString());
+            var t = await wc.GetFromJsonAsync<GitHubReleaseData?>("https://api.github.com/repos/JaykeBird/PathfinderJson/releases/latest");
 
-            var t = JsonConvert.DeserializeObject<GitHubReleaseData>(s);
+            //string s = await wc.DownloadStringTaskAsync("https://api.github.com/repos/JaykeBird/PathfinderJson/releases/latest");
+            //var t = JsonConvert.DeserializeObject<GitHubReleaseData>(s);
 
             // no longer need the WebClient
             wc.Dispose();
