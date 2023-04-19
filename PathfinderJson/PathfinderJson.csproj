@@ -61,7 +61,6 @@
     <PackageReference Include="Markdig" Version="0.22.1" />
     <PackageReference Include="Markdig.Wpf" Version="0.5.0.1" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-	<PackageReference Include="SolidShineUi" Version="1.9.5" />
   </ItemGroup>
 
   <!--<ItemGroup>
@@ -80,6 +79,12 @@
     <EmbeddedResource Include="None.xshd" />
     <EmbeddedResource Include="SkillList\pathfinder-psionics.json" />
     <EmbeddedResource Include="SkillList\pathfinder.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="SolidShineUi">
+      <HintPath>..\Ssui\SolidShineUi.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
   <!-- Uncomment these lines if using PublishReadyToRun -->
