@@ -162,6 +162,7 @@ namespace PathfinderJson
         public int Dexterity { get; set; }
         [JsonIgnore]
         public int Wisdom { get; set; }
+
         /// <summary>Used to determine if the abilities structure in JSON was present or not</summary>
         [JsonIgnore]
         public bool AbilitiesPresent { get; set; }

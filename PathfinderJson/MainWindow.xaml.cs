@@ -3245,11 +3245,11 @@ namespace PathfinderJson
 
             // temp abilities
             if (grdTempStr.Visibility == Visibility.Visible) abilities["tempStr"] = grdTempStr.Value.ToString();
-            if (grdTempDex.Visibility == Visibility.Visible) abilities["tempDex"] = grdTempStr.Value.ToString();
-            if (grdTempCha.Visibility == Visibility.Visible) abilities["tempCha"] = grdTempStr.Value.ToString();
-            if (grdTempCon.Visibility == Visibility.Visible) abilities["tempCon"] = grdTempStr.Value.ToString();
-            if (grdTempInt.Visibility == Visibility.Visible) abilities["tempInt"] = grdTempStr.Value.ToString();
-            if (grdTempWis.Visibility == Visibility.Visible) abilities["tempWis"] = grdTempStr.Value.ToString();
+            if (grdTempDex.Visibility == Visibility.Visible) abilities["tempDex"] = grdTempDex.Value.ToString();
+            if (grdTempCha.Visibility == Visibility.Visible) abilities["tempCha"] = grdTempCha.Value.ToString();
+            if (grdTempCon.Visibility == Visibility.Visible) abilities["tempCon"] = grdTempCon.Value.ToString();
+            if (grdTempInt.Visibility == Visibility.Visible) abilities["tempInt"] = grdTempInt.Value.ToString();
+            if (grdTempWis.Visibility == Visibility.Visible) abilities["tempWis"] = grdTempWis.Value.ToString();
 
             // also set the actual ability values, to fix bugs with the undo stack
             sheet.Strength = txtStr.Value;
