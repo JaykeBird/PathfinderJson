@@ -88,6 +88,7 @@ namespace PathfinderJson
 
             return AppDataFolder;
         }
+
         /// <summary>
         /// This method sets up all of the main directories, and also initializes the <see cref="SettingsDirectory"/> variable. This does NOT create the SettingsDirectory.
         /// </summary>
@@ -132,6 +133,10 @@ namespace PathfinderJson
             }
         }
 
+        /// <summary>
+        /// This sets the value <see cref="SettingsDirectory"/>, by reading the standard settings directory and resolving the redirect file if needed.
+        /// </summary>
+        /// <param name="appDataFolder">The path to the JaykeBird programs AppData folder.</param>
         static void SetSettingsDirectoryVariable(string appDataFolder)
         {
             // in comparison to FindLatestSettings(), this locates the directory that settings should be placed in
@@ -521,9 +526,9 @@ namespace PathfinderJson
                                     {
                                         // let's also use the current version's settings in this folder too
                                         // (so, we'll write a new settings redirect file)
-                                        string currentnDir = Path.Combine(mainSettingsDir, App.VersionString);
+                                        string currentnDir = Path.Combine(mainSettingsDir, App.VersionString); // this is the standard settings directory
                                         Directory.CreateDirectory(currentnDir);
-                                        File.WriteAllText(Path.Combine(currentnDir, Settings_Redirect_Filename), newDir, UTF8Encoding);
+                                        File.WriteAllText(Path.Combine(currentnDir, Settings_Redirect_Filename), newDir, UTF8Encoding); // writing redirect file
                                         return (newDir, false);
                                     }
                                 }
