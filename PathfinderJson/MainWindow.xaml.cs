@@ -3323,7 +3323,7 @@ namespace PathfinderJson
             //    sheet.SpecialAbilities.Add(item.GetAbility());
             //}
 
-            sheet.Traits = selAbilities.GetItems<SpecialAbility>();
+            sheet.Traits = selTraits.GetItems<SpecialAbility>();
             //sheet.Traits = new List<SpecialAbility>();
             //foreach (AbilityEditor item in selTraits.GetItemsAsType<AbilityEditor>())
             //{
