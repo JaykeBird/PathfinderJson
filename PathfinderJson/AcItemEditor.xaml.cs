@@ -23,7 +23,7 @@ namespace PathfinderJson
             txtBonus.Text = a.Bonus;
             txtPenalty.Text = a.ArmorCheckPenalty;
             txtSpellFailure.Text = a.SpellFailure;
-            txtWeight.Text = a.Weight;
+            txtWeight.ValueString = a.Weight ?? "";
             txtName.Text = a.Name;
             txtNotes.Text = a.Properties;
             txtType.Text = a.Type;
@@ -38,7 +38,7 @@ namespace PathfinderJson
                 SpellFailure = GetStringOrNull(txtSpellFailure.Text),
                 Name = GetStringOrNull(txtName.Text),
                 Properties = GetStringOrNull(txtNotes.Text),
-                Weight = GetStringOrNull(txtWeight.Text),
+                Weight = GetStringOrNull(txtWeight.ValueString),
                 Type = GetStringOrNull(txtType.Text)
             };
 
@@ -71,6 +71,11 @@ namespace PathfinderJson
         public event EventHandler? ContentChanged;
 
         private void textbox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            ContentChanged?.Invoke(this, e);
+        }
+
+        private void txtWeight_ValueChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             ContentChanged?.Invoke(this, e);
         }
