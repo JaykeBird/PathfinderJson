@@ -77,7 +77,7 @@ namespace PathfinderJson
 
         private void txtWeight_ValueChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            ContentChanged?.Invoke(this, e);
+            ContentChanged?.Invoke(this, EventArgs.Empty);
         }
     }
 }
