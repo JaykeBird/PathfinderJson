@@ -379,7 +379,7 @@ namespace PathfinderJson
         }
     }
 
-    public class Skill
+    public class Skill : IEquatable<Skill>
     {
 
         public bool ClassSkill { get; set; } = false;
@@ -407,6 +407,40 @@ namespace PathfinderJson
             Trait = "0";
             Misc = "0";
             Specialization = s;
+        }
+
+        public override string ToString()
+        {
+            return (Name ?? "0") + " " + (Total ?? "0") + " " + (Specialization == null ? "" : Specialization + " ")
+                + "(" + (Ranks ?? "0") + " + " + (Racial ?? "0") + " + " + (Trait ?? "0") + (Misc ?? "0") + ")";
+        }
+
+        public bool Equals(Skill? other)
+        {
+            return other is not null
+                    && other.Name == Name && other.Ranks == Ranks && other.Total == Total && other.Racial == Racial &&
+                    other.Trait == Trait && other.Misc == Misc && other.Specialization == Specialization && other.ClassSkill == ClassSkill;
+        }
+
+        public override bool Equals(object? obj)
+        {
+            return obj is CompoundModifier f ? Equals(f) : false;
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Name?.GetHashCode() ?? 0, Ranks?.GetHashCode() ?? 0, Total?.GetHashCode() ?? 0, Racial?.GetHashCode() ?? 0,
+                Trait?.GetHashCode() ?? 0, Misc?.GetHashCode() ?? 0, Specialization?.GetHashCode() ?? 0, ClassSkill.GetHashCode());
+        }
+
+        public static bool operator ==(Skill? left, Skill? right)
+        {
+            return left is null ? right is null : left.Equals(right);
+        }
+
+        public static bool operator !=(Skill? left, Skill? right)
+        {
+            return left is null ? right is not null : !left.Equals(right);
         }
     }
 
@@ -453,7 +487,7 @@ namespace PathfinderJson
         }
     }
 
-    public class Feat
+    public class Feat : IEquatable<Feat>
     {
         [IldDisplay(Name = "Name")]
         public string Name { get; set; } = "";
@@ -469,9 +503,41 @@ namespace PathfinderJson
 
         [IldDisplay(Name = "Subschool")]
         public string? Subschool { get; set; }
+
+        public override string ToString()
+        {
+            return Name + (Type == null ? "" : "(" + Type + ")");
+        }
+
+        public bool Equals(Feat? other)
+        {
+            return other is not null
+                    && other.Name == Name && other.Type == Type && other.School == School && other.Subschool == Subschool
+                    && other.Notes == Notes;
+        }
+
+        public override bool Equals(object? obj)
+        {
+            return obj is Feat f ? Equals(f) : false;
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Name.GetHashCode(), Type?.GetHashCode() ?? 0, Notes?.GetHashCode() ?? 0, School?.GetHashCode() ?? 0, Subschool?.GetHashCode() ?? 0);
+        }
+        
+        public static bool operator ==(Feat? left, Feat? right)
+        {
+            return left is null ? right is null : left.Equals(right);
+        }
+
+        public static bool operator !=(Feat? left, Feat? right)
+        {
+            return left is null ? right is not null : !left.Equals(right);
+        }
     }
 
-    public class CompoundModifier
+    public class CompoundModifier : IEquatable<CompoundModifier>
     {
         [IldDisplay(Name = "Base")]
         public string? Base { get; set; }
@@ -510,9 +576,43 @@ namespace PathfinderJson
             Total = totalCount.ToString();
             return totalCount;
         }
+
+        public override string ToString()
+        {
+            return (Total ?? "0") + "(" + (Base ?? "0") + " + " + (MagicModifier ?? "0") + " + " + (MiscModifier ?? "0")
+                + " + " + (OtherModifiers ?? "0") + " + " + (SizeModifier ?? "0") + " + " + (TempModifier ?? "0") + ")";
+        }
+
+        public bool Equals(CompoundModifier? other)
+        {
+            return other is not null
+                    && other.Total == Total && other.Base == Base && other.MagicModifier == MagicModifier && other.MiscModifier == MiscModifier && 
+                    other.OtherModifiers == OtherModifiers && other.SizeModifier == SizeModifier && other.TempModifier == TempModifier;
+        }
+
+        public override bool Equals(object? obj)
+        {
+            return obj is CompoundModifier f ? Equals(f) : false;
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Total?.GetHashCode() ?? 0, Base?.GetHashCode() ?? 0, MagicModifier?.GetHashCode() ?? 0, 
+                MiscModifier?.GetHashCode() ?? 0, OtherModifiers?.GetHashCode() ?? 0, SizeModifier?.GetHashCode() ?? 0, TempModifier?.GetHashCode() ?? 0);
+        }
+
+        public static bool operator ==(CompoundModifier? left, CompoundModifier? right)
+        {
+            return left is null ? right is null : left.Equals(right);
+        }
+
+        public static bool operator !=(CompoundModifier? left, CompoundModifier? right)
+        {
+            return left is null ? right is not null : !left.Equals(right);
+        }
     }
 
-    public class Speed
+    public class Speed : IEquatable<Speed>
     {
         public string? Base { get; set; }
         public string? WithArmor { get; set; }
@@ -520,8 +620,42 @@ namespace PathfinderJson
         public string? Swim { get; set; }
         public string? Climb { get; set; }
         public string? Burrow { get; set; }
+
         [JsonProperty("tempModifiers")]
         public string? TempModifier { get; set; }
+
+        public override string ToString()
+        {
+            return "SPEED: " + (Base ?? "undefined") + (TempModifier == null ? "" : " (" + TempModifier + ")");
+        }
+
+        public bool Equals(Speed? other)
+        {
+            return other is not null
+                    && other.Base == Base && other.WithArmor == WithArmor && other.Fly == Fly && other.Swim == Swim &&
+                    other.Climb == Climb && other.Burrow == Burrow && other.TempModifier == TempModifier;
+        }
+
+        public override bool Equals(object? obj)
+        {
+            return obj is Speed f ? Equals(f) : false;
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Base?.GetHashCode() ?? 0, WithArmor?.GetHashCode() ?? 0, Fly?.GetHashCode() ?? 0,
+                Swim?.GetHashCode() ?? 0, Climb?.GetHashCode() ?? 0, Burrow?.GetHashCode() ?? 0, TempModifier?.GetHashCode() ?? 0);
+        }
+
+        public static bool operator ==(Speed? left, Speed? right)
+        {
+            return left is null ? right is null : left.Equals(right);
+        }
+
+        public static bool operator !=(Speed? left, Speed? right)
+        {
+            return left is null ? right is not null : !left.Equals(right);
+        }
     }
 
     public class ArmorClass
@@ -543,7 +677,7 @@ namespace PathfinderJson
         public AcItem ItemTotals { get; set; } = new AcItem();
     }
 
-    public class Weapon
+    public class Weapon : IEquatable<Weapon>
     {
         [JsonProperty("weapon"), IldDisplay(Name = "Name")]
         public string Name { get; set; } = "";
@@ -568,9 +702,42 @@ namespace PathfinderJson
 
         [IldDisplay(Name = "Ammunition")]
         public string? Ammunition { get; set; }
+
+        public override string ToString()
+        {
+            return string.IsNullOrEmpty(Name) ? "unnamed weapon" : Name;
+        }
+
+        public bool Equals(Weapon? other)
+        {
+            return other is not null
+                    && other.Name == Name && other.Damage == Damage && other.CriticalRange == CriticalRange && other.Type == Type
+                    && other.AttackBonus == AttackBonus && other.Notes == Notes && other.Range == Range && other.Ammunition == Ammunition;
+        }
+
+        public override bool Equals(object? obj)
+        {
+            return obj is Weapon f ? Equals(f) : false;
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Name?.GetHashCode() ?? 0, Damage?.GetHashCode() ?? 0, CriticalRange?.GetHashCode() ?? 0, Type?.GetHashCode() ?? 0,
+                    AttackBonus?.GetHashCode() ?? 0, Notes?.GetHashCode() ?? 0, Range?.GetHashCode() ?? 0, Ammunition?.GetHashCode() ?? 0);
+        }
+
+        public static bool operator ==(Weapon? left, Weapon? right)
+        {
+            return left is null ? right is null : left.Equals(right);
+        }
+
+        public static bool operator !=(Weapon? left, Weapon? right)
+        {
+            return left is null ? right is not null : !left.Equals(right);
+        }
     }
 
-    public class AcItem
+    public class AcItem : IEquatable<AcItem>
     {
         [IldDisplay(Name = "Name")]
         public string? Name { get; set; } = "";
@@ -592,9 +759,42 @@ namespace PathfinderJson
 
         [IldDisplay(Name = "Properties")]
         public string? Properties { get; set; } = "";
+
+        public override string ToString()
+        {
+            return string.IsNullOrEmpty(Name) ? "unnamed" : Name;
+        }
+
+        public bool Equals(AcItem? other)
+        {
+            return other is not null
+                    && other.Name == Name && other.Bonus == Bonus && other.Type == Type && other.ArmorCheckPenalty == ArmorCheckPenalty
+                    && other.SpellFailure == SpellFailure && other.Weight == Weight && other.Properties == Properties;
+        }
+
+        public override bool Equals(object? obj)
+        {
+            return obj is AcItem f ? Equals(f) : false;
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Name?.GetHashCode() ?? 0, Bonus?.GetHashCode() ?? 0, Type?.GetHashCode() ?? 0, ArmorCheckPenalty?.GetHashCode() ?? 0,
+                    SpellFailure?.GetHashCode() ?? 0, Weight?.GetHashCode() ?? 0, Properties?.GetHashCode() ?? 0);
+        }
+
+        public static bool operator ==(AcItem? left, AcItem? right)
+        {
+            return left is null ? right is null : left.Equals(right);
+        }
+
+        public static bool operator !=(AcItem? left, AcItem? right)
+        {
+            return left is null ? right is not null : !left.Equals(right);
+        }
     }
 
-    public class Equipment
+    public class Equipment : IEquatable<Equipment>
     {
         [IldDisplay(Name = "Name")]
         public string? Name { get; set; }
@@ -614,15 +814,47 @@ namespace PathfinderJson
         [IldDisplay(Name = "Notes")]
         public string? Notes { get; set; }
 
-
         [IldDisplay(Name = "Equippable")]
         public bool Equippable { get; set; } = false;
 
         [IldDisplay(Name = "Equipped")]
         public bool Equipped { get; set; } = false;
+
+        public override string ToString()
+        {
+            return (Name ?? "unnamed item") + (Quantity == null ? "" : " (" + Quantity + ")") + (Equipped ? " (equipped)" : "");
+        }
+
+        public bool Equals(Equipment? other)
+        {
+            return other is not null
+                    && other.Name == Name && other.Location == Location && other.Type == Type && other.Quantity == Quantity &&
+                    other.Weight == Weight && other.Notes == Notes && other.Equippable == Equippable && other.Equipped == Equipped;
+        }
+
+        public override bool Equals(object? obj)
+        {
+            return obj is Equipment f ? Equals(f) : false;
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Name?.GetHashCode() ?? 0, Location?.GetHashCode() ?? 0, Type?.GetHashCode() ?? 0,
+                Quantity?.GetHashCode() ?? 0, Weight?.GetHashCode() ?? 0, Notes?.GetHashCode() ?? 0, Equippable.GetHashCode(), Equipped.GetHashCode());
+        }
+
+        public static bool operator ==(Equipment? left, Equipment? right)
+        {
+            return left is null ? right is null : left.Equals(right);
+        }
+
+        public static bool operator !=(Equipment? left, Equipment? right)
+        {
+            return left is null ? right is not null : !left.Equals(right);
+        }
     }
 
-    public class SpecialAbility
+    public class SpecialAbility : IEquatable<SpecialAbility>
     {
 
         [IldDisplay(Name = "Name")]
@@ -633,6 +865,37 @@ namespace PathfinderJson
 
         [IldDisplay(Name = "Notes")]
         public string? Notes { get; set; }
+
+        public override string ToString()
+        {
+            return string.IsNullOrEmpty(Name) ? "unnamed" : Name;
+        }
+
+        public bool Equals(SpecialAbility? other)
+        {
+            return other is not null
+                    && other.Name == Name && other.Type == Type && other.Notes == Notes;
+        }
+
+        public override bool Equals(object? obj)
+        {
+            return obj is SpecialAbility f ? Equals(f) : false;
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Name?.GetHashCode() ?? 0, Type?.GetHashCode() ?? 0, Notes?.GetHashCode() ?? 0);
+        }
+
+        public static bool operator ==(SpecialAbility? left, SpecialAbility? right)
+        {
+            return left is null ? right is null : left.Equals(right);
+        }
+
+        public static bool operator !=(SpecialAbility? left, SpecialAbility? right)
+        {
+            return left is null ? right is not null : !left.Equals(right);
+        }
     }
 
     public class HP
@@ -654,7 +917,7 @@ namespace PathfinderJson
         public List<Spell>? Spells { get; set; }
     }
 
-    public class Spell
+    public class Spell : IEquatable<Spell>
     {
         public int Level { get; set; } = 0;
         public int Prepared { get; set; } = 0;
@@ -664,6 +927,44 @@ namespace PathfinderJson
         public string Subschool { get; set; } = "";
         public string Notes { get; set; } = "";
         public bool AtWill { get; set; } = false;
+
+        /// <summary>
+        /// Get or set if this spell is being specially marked by the player. Marked spells may be spells that are "prepared" or
+        /// that have other certain purposes; its purpose is intentionally vague, to allow players to use it for whatever purpose they want.
+        /// </summary>
         public bool Marked { get; set; } = false;
+
+        public override string ToString()
+        {
+            return (string.IsNullOrEmpty(Name) ? "unnamed spell" : Name) + " " + Level;
+        }
+
+        public bool Equals(Spell? other)
+        {
+            return other is not null
+                    && other.Level == Level && other.Prepared == Prepared && other.Cast == Cast && other.Name == Name && other.School == School
+                    && other.Subschool == Subschool && other.Notes == Notes && other.AtWill == AtWill && other.Marked == Marked;
+        }
+
+        public override bool Equals(object? obj)
+        {
+            return obj is Spell f ? Equals(f) : false;
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Level.GetHashCode(), Prepared.GetHashCode(), Cast.GetHashCode(), Name.GetHashCode(), School.GetHashCode(),
+                Subschool.GetHashCode(), Notes.GetHashCode(), AtWill.GetHashCode());
+        }
+
+        public static bool operator ==(Spell? left, Spell? right)
+        {
+            return left is null ? right is null : left.Equals(right);
+        }
+
+        public static bool operator !=(Spell? left, Spell? right)
+        {
+            return left is null ? right is not null : !left.Equals(right);
+        }
     }
 }

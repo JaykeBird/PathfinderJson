@@ -67,8 +67,7 @@ namespace PathfinderJson
         {
             get
             {
-                if (SkipCurrentStateOnUndo && !isUndoing) return undoList.Count > 1;
-                else return undoList.Count > 0;
+                return SkipCurrentStateOnUndo && !isUndoing ? undoList.Count > 1 : undoList.Count > 0;
             }
         }
 
@@ -79,8 +78,7 @@ namespace PathfinderJson
         {
             get
             {
-                if (SkipCurrentStateOnUndo && !isRedoing) return redoList.Count > 1;
-                else return redoList.Count > 0;
+                return SkipCurrentStateOnUndo && !isRedoing ? redoList.Count > 1 : redoList.Count > 0;
             }
         }
 
@@ -129,6 +127,9 @@ namespace PathfinderJson
             }
         }
 
+        /// <summary>
+        /// Clear the undo and redo list. This removes all earlier and later states, only leaving what is current.
+        /// </summary>
         public void Clear()
         {
             undoList.Clear();
@@ -137,11 +138,24 @@ namespace PathfinderJson
 
         public bool SkipCurrentStateOnUndo { get; set; } = true;
 
+        /// <summary>
+        /// Get the undo state of item <typeparamref name="T"/> prior to the current state.
+        /// </summary>
+        /// <returns>A copy of the object in the state prior to the current state.</returns>
+        /// <remarks>Use <see cref="CanUndo"/> to check if there are undo states available.</remarks>
+        /// <exception cref="InvalidOperationException">There are no undo states available.</exception>
         public T Undo()
         {
             return Undo(true);
         }
 
+        /// <summary>
+        /// Get the undo state of item <typeparamref name="T"/> prior to the current state.
+        /// </summary>
+        /// <param name="skipCurrentState">set if the current state should be skipped when getting an undo state; if false, the current state may be returned</param>
+        /// <returns>A copy of the object in the state prior to the current state.</returns>
+        /// <remarks>Use <see cref="CanUndo"/> to check if there are undo states available.</remarks>
+        /// <exception cref="InvalidOperationException">There are no undo states available.</exception>
         public T Undo(bool skipCurrentState)
         {
             if (undoList.Count > 0)
