@@ -5,8 +5,6 @@ using System.Runtime.InteropServices;
 
 namespace PathfinderJson
 {
-#nullable enable
-
     public static class CoreUtils
     {
 
@@ -21,11 +19,6 @@ namespace PathfinderJson
             // This is best-effort only, but should work most of the time.
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
-                //// See https://stackoverflow.com/a/6040946/44360 for why this is required
-                //url = System.Text.RegularExpressions.Regex.Replace(url, @"(\\*)" + "\"", @"$1$1\" + "\"");
-                //url = System.Text.RegularExpressions.Regex.Replace(url, @"(\\+)$", @"$1$1");
-                //Process.Start(new ProcessStartInfo("cmd", $"/c start \"\" \"{url}\"") { CreateNoWindow = true });
-                //return true;
                 Process.Start(new ProcessStartInfo(url) { UseShellExecute = true });
                 return true;
             }
@@ -63,21 +56,7 @@ namespace PathfinderJson
 
         public static int ParseStringAsInt(string? value)
         {
-            if (string.IsNullOrEmpty(value))
-            {
-                return 0;
-            }
-            else
-            {
-                if (int.TryParse(value, out int r))
-                {
-                    return r;
-                }
-                else
-                {
-                    return 0;
-                }
-            }
+            return ParseStringAsInt(value, 0);
         }
 
         public static int ParseStringAsInt(string? value, int defaultValue)
@@ -88,33 +67,48 @@ namespace PathfinderJson
             }
             else
             {
-                if (int.TryParse(value, out int r))
-                {
-                    return r;
-                }
-                else
-                {
-                    return defaultValue;
-                }
+                return int.TryParse(value, out int r) ? r : defaultValue;
+            }
+        }
+
+        public static int? ParseStringAsIntNullable(string? value)
+        {
+            if (string.IsNullOrEmpty(value))
+            {
+                return null;
+            }
+            else
+            {
+                return int.TryParse(value, out int r) ? r : null;
             }
         }
 
         public static double ParseStringAsDouble(string? value)
         {
+            return ParseStringAsDouble(value, 0);
+        }
+
+        public static double ParseStringAsDouble(string? value, double defaultValue)
+        {
             if (string.IsNullOrEmpty(value))
             {
-                return 0;
+                return defaultValue;
             }
             else
             {
-                if (double.TryParse(value, out double r))
-                {
-                    return r;
-                }
-                else
-                {
-                    return 0;
-                }
+                return double.TryParse(value, out double r) ? r : defaultValue;
+            }
+        }
+
+        public static double? ParseStringAsDoubleNullable(string? value)
+        {
+            if (string.IsNullOrEmpty(value))
+            {
+                return null;
+            }
+            else
+            {
+                return double.TryParse(value, out double r) ? r : null;
             }
         }
 
@@ -151,4 +145,3 @@ namespace PathfinderJson
         //}
     }
 }
-#nullable restore

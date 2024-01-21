@@ -8,6 +8,7 @@ using System.Windows.Controls;
 using System.Linq;
 using System.Reflection;
 using System.Collections.ObjectModel;
+using System.Security.Cryptography;
 
 namespace PathfinderJson.Ild
 {
@@ -107,14 +108,9 @@ namespace PathfinderJson.Ild
             }
             set
             {
-                if (SELECTABLE_ITEM_TYPE.IsAssignableFrom(value))
-                {
-                    displayElement = value;
-                }
-                else
-                {
-                    throw new ArgumentException("Entered type must derive from the SelectableListItem type.");
-                }
+                displayElement = SELECTABLE_ITEM_TYPE.IsAssignableFrom(value)
+                    ? value
+                    : throw new ArgumentException("Entered type must derive from the SelectableListItem type.");
             }
         }
 
@@ -157,6 +153,7 @@ namespace PathfinderJson.Ild
         {
             if (typeof(T) != SheetClassType) throw new ArgumentException("Passed in generic data type does not match SheetClassType");
             if (propertyNames.Count == 0) throw new InvalidOperationException("SheetClassType has no properties, or was not set.");
+
             List<T> items = new List<T>();
 
             foreach (SelectableListItem item in selPanel.Items)
@@ -182,18 +179,12 @@ namespace PathfinderJson.Ild
             return items;
         }
 
-        //private List<string> ListProperties<T>(T item)
-        //{
-        //    Type type = typeof(T);
-        //    return ListProperties(type);
-        //}
-
         /// <summary>
         /// Generate a list of property info from a source type. The IldDisplayAttribute is handled here.
         /// </summary>
         /// <param name="type">The source type to load.</param>
         /// <returns>A list of property info.</returns>
-        private List<IldPropertyInfo> ListProperties(Type type)
+        public List<IldPropertyInfo> ListProperties(Type type)
         {
             List<IldPropertyInfo> props = new List<IldPropertyInfo>();
 
@@ -236,6 +227,7 @@ namespace PathfinderJson.Ild
                 }
                 else
                 {
+                    // just skip properties that we don't support
                     continue;
                     //throw new NotSupportedException("This property uses a type that isn't supported by the ItemListDisplay.");
                 }
@@ -250,10 +242,10 @@ namespace PathfinderJson.Ild
         }
 
         /// <summary>
-        /// Generate the dictionary of properties from the <c>SheetClassType</c>, alongside the value of these properties from a source item.
+        /// Generate the dictionary of properties from the specified type, alongside the value of these properties from a source item.
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="item"></param>
+        /// <typeparam name="T">the type of the object to load properties and values from (this should match <see cref="SheetClassType"/>)</typeparam>
+        /// <param name="item">the object to load properties and values from</param>
         /// <returns></returns>
         private Dictionary<IldPropertyInfo, object> GetAllPropertyValues<T>(T item)
         {
@@ -323,22 +315,22 @@ namespace PathfinderJson.Ild
                     case IldType.String:
                         MenuItem msi1 = new MenuItem();
                         msi1.Header = "Contains...";
-                        msi1.Click += (s, e) => { StringFilterAction(STRING_CONTAINS, item, mi, mcf); };
+                        msi1.Click += (s, e) => StringFilterAction(FilterType.STRING_CONTAINS, item, mi, mcf);
                         mi.Items.Add(msi1);
 
                         MenuItem msi2 = new MenuItem();
                         msi2.Header = "Does Not Contain...";
-                        msi2.Click += (s, e) => { StringFilterAction(STRING_NOT_CONTAINS, item, mi, mcf); };
+                        msi2.Click += (s, e) => StringFilterAction(FilterType.STRING_NOT_CONTAINS, item, mi, mcf);
                         mi.Items.Add(msi2);
 
                         MenuItem msi3 = new MenuItem();
                         msi3.Header = "Starts With...";
-                        msi3.Click += (s, e) => { StringFilterAction(STRING_STARTS_WITH, item, mi, mcf); };
+                        msi3.Click += (s, e) => StringFilterAction(FilterType.STRING_STARTS_WITH, item, mi, mcf);
                         mi.Items.Add(msi3);
 
                         MenuItem msi4 = new MenuItem();
                         msi4.Header = "Matches (Exactly)...";
-                        msi4.Click += (s, e) => { StringFilterAction(STRING_MATCHES, item, mi, mcf); };
+                        msi4.Click += (s, e) => StringFilterAction(FilterType.STRING_MATCHES, item, mi, mcf);
                         mi.Items.Add(msi4);
                         break;
                     case IldType.Integer:
@@ -350,10 +342,12 @@ namespace PathfinderJson.Ild
                     case IldType.Boolean:
                         MenuItem mbi1 = new MenuItem();
                         mbi1.Header = "True (Checked)";
+                        mbi1.Click += (s, e) => ApplyBooleanTrueFilter(item, mi, mcf);
                         mi.Items.Add(mbi1);
 
                         MenuItem mbi2 = new MenuItem();
                         mbi2.Header = "False (Unchecked)";
+                        mbi2.Click += (s, e) => ApplyBooleanFalseFilter(item, mi, mcf);
                         mi.Items.Add(mbi2);
                         break;
                     default:
@@ -367,6 +361,7 @@ namespace PathfinderJson.Ild
                 mi.Items.Add(new Separator());
 
                 mcf.IsEnabled = false;
+                mcf.Click += (s, e) => ClearFilter(item, mi, mcf);
                 mi.Items.Add(mcf);
 
                 //MenuItem smi = new MenuItem();
@@ -400,6 +395,7 @@ namespace PathfinderJson.Ild
                         for (int i = min; i <= max; i++)
                         {
                             MenuItem mni = new MenuItem();
+                            mni.Click += (s, e) => ApplyIntegerMatchesFilter(item, i, mi, cancelItem);
                             mni.Header = i.ToString();
                             mi.Items.Add(mni);
                         }
@@ -407,44 +403,58 @@ namespace PathfinderJson.Ild
                     else
                     {
                         MenuItem mni1 = new MenuItem();
+                        mni1.Click += (s, e) => NumberFilterAction(FilterType.NUMBER_EQUALS, item, mi, cancelItem);
                         mni1.Header = "Equals...";
                         mi.Items.Add(mni1);
                     }
 
                     mi.Items.Add(new Separator());
-
-                    MenuItem mni2 = new MenuItem();
-                    mni2.Header = "Is Between...";
-                    mi.Items.Add(mni2);
-
-                    MenuItem mni3 = new MenuItem();
-                    mni3.Header = "Is Not Between...";
-                    mi.Items.Add(mni3);
                 }
                 else
                 {
-                    MenuItem mni4 = new MenuItem();
-                    mni4.Header = "Equals...";
-                    mi.Items.Add(mni4);
-
-                    MenuItem mni5 = new MenuItem();
-                    mni5.Header = "Is Between...";
-                    mi.Items.Add(mni5);
-
-                    MenuItem mni6 = new MenuItem();
-                    mni6.Header = "Is Not Between...";
-                    mi.Items.Add(mni6);
+                    MenuItem mni3 = new MenuItem();
+                    mni3.Click += (s, e) => NumberFilterAction(FilterType.NUMBER_EQUALS, item, mi, cancelItem);
+                    mni3.Header = "Equals...";
+                    mi.Items.Add(mni3);
                 }
+
+                MenuItem mni5 = new MenuItem();
+                mni5.Click += (s, e) => NumberFilterAction(FilterType.NUMBER_BETWEEN, item, mi, cancelItem);
+                mni5.Header = "Is Between...";
+                mi.Items.Add(mni5);
+
+                MenuItem mni6 = new MenuItem();
+                mni6.Click += (s, e) => NumberFilterAction(FilterType.NUMBER_NOT_BETWEEN, item, mi, cancelItem);
+                mni6.Header = "Is Not Between...";
+                mi.Items.Add(mni6);
             }
         }
 
         #region Filter menu options
+
+        public void ApplyFilter(string propertyName, FilterType filterType, string filterValue)
+        {
+            IldPropertyInfo? prop = propertyNames.FirstOrDefault((p) => p.Name == propertyName);
+            if (prop == null) return;
+            ApplyFilter(prop, filterType, filterValue);
+        }
+
+        public void ApplyFilter(IldPropertyInfo property, FilterType filterType, string filterValue)
+        {
+            property.Filter = new IldPropertyFilter(filterType, filterValue);
+            ApplyFilters();
+        }
 
         public void ClearAllFilters()
         {
             foreach (SelectableUserControl item in selPanel.Items)
             {
                 item.Visibility = Visibility.Visible;
+            }
+
+            foreach (IldPropertyInfo prop in propertyNames)
+            {
+                prop.Filter = null;
             }
 
             foreach (object? o in btnFilter.Menu!.Items)
@@ -456,30 +466,27 @@ namespace PathfinderJson.Ild
             }
         }
 
-        private const int STRING_CONTAINS = 0;
-        private const int STRING_NOT_CONTAINS = 1;
-        private const int STRING_STARTS_WITH = 2;
-        private const int STRING_MATCHES = 3;
-
-        public void StringFilterAction(int action, IldPropertyInfo property, MenuItem baseItem, MenuItem cancelItem)
+        private void StringFilterAction(FilterType action, IldPropertyInfo property, MenuItem baseItem, MenuItem cancelItem)
         {
-            string filterVal = "";
-
             StringInputDialog sid = new StringInputDialog();
             sid.Title = "Enter String Filter";
-            sid.Description = action switch
+            sid.Description = (int)action switch
             {
-                0 => "Match items that contain the value entered here:",
-                1 => "Match items that do not contain the value entered here:",
-                2 => "Match items that start with the value entered here:",
-                3 => "Match items that exactly match the value entered here:",
+                0 => "Match items that contain this value:",
+                1 => "Match items that do not contain this value:",
+                2 => "Match items that start with this value:",
+                3 => "Match items that exactly match this value:",
                 _ => "Enter the value to filter by:"
             };
 
             sid.ShowDialog();
             if (sid.DialogResult)
             {
-                filterVal = sid.Value;
+                property.Filter = new IldPropertyFilter(action, sid.Value);
+                baseItem.IsChecked = true;
+                cancelItem.IsEnabled = true;
+
+                ApplyFilters();
             }
             else
             {
@@ -487,7 +494,113 @@ namespace PathfinderJson.Ild
             }
         }
 
+        private void ApplyBooleanTrueFilter(IldPropertyInfo property, MenuItem baseItem, MenuItem cancelItem)
+        {
+            property.Filter = new IldPropertyFilter(FilterType.BOOLEAN_TRUE, "TRUE");
+            baseItem.IsChecked = true;
+            cancelItem.IsEnabled = true;
+
+            ApplyFilters();
+        }
+
+        private void ApplyBooleanFalseFilter(IldPropertyInfo property, MenuItem baseItem, MenuItem cancelItem)
+        {
+            property.Filter = new IldPropertyFilter(FilterType.BOOLEAN_FALSE, "FALSE");
+            baseItem.IsChecked = true;
+            cancelItem.IsEnabled = true;
+
+            ApplyFilters();
+        }
+
+        private void NumberFilterAction(FilterType action, IldPropertyInfo property, MenuItem baseItem, MenuItem cancelItem)
+        {
+            NumberInputDialog sid = new NumberInputDialog();
+            sid.Title = "Enter Number Filter";
+            sid.Description = action switch
+            {
+                FilterType.NUMBER_EQUALS => "Match items that have this exact number for " + property.DisplayName + ":",
+                FilterType.NUMBER_BETWEEN => "Match items that are between these values for " + property.DisplayName + ":",
+                FilterType.NUMBER_NOT_BETWEEN => "Match items that are not between these values for " + property.DisplayName + ":",
+                _ => "Enter the value to filter by:"
+            };
+
+            if (property.IldType == IldType.Integer)
+            {
+                sid.Decimals = 0;
+            }
+            else
+            {
+                sid.Decimals = 3;
+            }
+
+            if (property.MinValue != null) sid.MinValue = (double)property.MinValue;
+            if (property.MaxValue != null) sid.MaxValue = (double)property.MaxValue;
+
+            if (action == FilterType.NUMBER_EQUALS)
+            {
+                sid.ShowDialog();
+                if (sid.DialogResult)
+                {
+                    property.Filter = new IldPropertyFilter(action, sid.Value.ToString());
+                    baseItem.IsChecked = true;
+                    cancelItem.IsEnabled = true;
+
+                    ApplyFilters();
+                }
+                else
+                {
+                    return;
+                }
+            }
+            else
+            {
+                sid.DisplayBetweenControls = true;
+                sid.ShowDialog();
+                if (sid.DialogResult)
+                {
+                    property.Filter = new IldPropertyFilter(action, sid.BetweenMinimum.ToString() + "-" + sid.BetweenMaximum.ToString());
+                    baseItem.IsChecked = true;
+                    cancelItem.IsEnabled = true;
+
+                    ApplyFilters();
+                }
+                else
+                {
+                    return;
+                }
+            }
+        }
+
+        private void ApplyIntegerMatchesFilter(IldPropertyInfo property, int match, MenuItem baseItem, MenuItem cancelItem)
+        {
+            property.Filter = new IldPropertyFilter(FilterType.NUMBER_EQUALS, match.ToString());
+            baseItem.IsChecked = true;
+            cancelItem.IsEnabled = true;
+
+            ApplyFilters();
+        }
+
+        private void ClearFilter(IldPropertyInfo property, MenuItem baseItem, MenuItem cancelItem)
+        {
+            property.Filter = null;
+            baseItem.IsChecked = false;
+            cancelItem.IsEnabled = false;
+        }
+
         #endregion
+
+        void ApplyFilters()
+        {
+            foreach (SelectableListItem item in selPanel.Items.Cast<SelectableListItem>())
+            {
+                item.Visibility = Visibility.Visible;
+
+                if (!propertyNames.All((p) => item.PropertyPassesFilter(p)))
+                {
+                    item.Visibility = Visibility.Collapsed;
+                }
+            }
+        }
 
         //void Sort(IldPropertyInfo? sortProp)
         //{

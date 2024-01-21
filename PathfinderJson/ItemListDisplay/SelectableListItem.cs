@@ -64,6 +64,11 @@ namespace PathfinderJson.Ild
             return null;
         }
 
+        public bool PropertyPassesFilter(IldPropertyInfo property)
+        {
+            return property.Filter == null || property.CompareToFilter(GetPropertyValue(property));
+        }
+
         public abstract Dictionary<string, object> GetAllProperties();
 
         private protected static Dictionary<string, object> GetAllPropertiesInternal(SelectableListItem baseObject)
