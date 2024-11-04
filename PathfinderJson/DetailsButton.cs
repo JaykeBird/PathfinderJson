@@ -27,7 +27,7 @@ namespace PathfinderJson
             init = false;
         }
 
-        private void detailsButton_IsSelectedChanged(object sender, System.Windows.DependencyPropertyChangedEventArgs e)
+        private void detailsButton_IsSelectedChanged(object sender, ItemSelectionChangedEventArgs e)
         {
             if (init) return;
 
