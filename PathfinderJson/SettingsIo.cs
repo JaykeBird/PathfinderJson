@@ -21,13 +21,22 @@ namespace PathfinderJson
     {
         // note that this class includes some PathfinderJson-specific code and scenarios. Review the code when adapting for use in another program
 
+        private const string appName = "PathfinderJson";
+        private const string appComponentName = "pathfinderJson";
+        private const int version = 1_02_03_0;
+
         #region Read-only Properties / Constants
+
         /// <summary>
         /// Get if this program is running as a portable program.
-        /// A portable program isn't installed on a user's computer (and thus can be transferred between devices), and so settings should be stored alongside the program's executable.
+        /// A portable program isn't installed on a user's computer (and thus can be transferred between devices), and so settings 
+        /// should be stored alongside the program's executable.
         /// </summary>
         public static bool IsPortable { get; } = true;
 
+        /// <summary>
+        /// Get if this program can be run as a portable version. If <c>false</c>, then <see cref="IsPortable"/> should always be <c>false</c>.
+        /// </summary>
         private const bool CanBePortable = true;
 
         /// <summary>
@@ -40,53 +49,91 @@ namespace PathfinderJson
         public static string SettingsDirectory { get; private set; } = "";
 
         /// <summary>
-        /// Get the directory for storing any data or working files, that the application uses for performing its functions.
+        /// The base JaykeBird application data directory, which all other directories should be stored within.
         /// </summary>
         /// <remarks>
-        /// These files should not be user settings, and should instead be files or things that the application creates, manages, and deletes throughout the course of its lifecycle.
-        /// More permanently stored things can be present here as well, but note that this directory could be cleared out at any time between executions.
+        /// Data should not be stored in this directory itself, but instead in appropriate subdirectories for this application.
+        /// Use the other properties (such as <see cref="AppCacheDirectory"/> and <see cref="SettingsDirectory"/>) for locating the folders
+        /// to store data within.
+        /// </remarks>
+        public static string BaseAppDataDirectory { get; private set; } = "";
+
+        /// <summary>
+        /// Get the directory for storing working files and data for the application.
+        /// This directory is not managed by Qhuill cache management.
+        /// </summary>
+        /// <remarks>
+        /// This folder should not store user settings, but instead store files and data for the application to perform its current
+        /// tasks as a working space. This can also be used for storing long-term data, but data that is meant to be cached and shared
+        /// should instead be stored in the <see cref="AppCacheDirectory"/> so that the cache can be managed by Qhuill.
         /// This directory is shared between all versions of the program, and note that multiple versions could be running at the same time.
         /// </remarks>
         public static string AppDataDirectory { get; private set; } = "";
 
         /// <summary>
+        /// Get the directory for storing data that can be referred to by the application over multiple runs/instances.
+        /// This directory is managed by Qhuill cache management.
+        /// </summary>
+        /// <remarks>
+        /// This folder should store files and data that can be easily referenced by the program during this instance or in future
+        /// instances, especially to avoid future extra work needing to be done.
+        /// While this is meant as semi-permanent storage, this folder can be emptied out at any time if the user directs Qhuill
+        /// to clear the cache.
+        /// This directory is shared between all versions of the program, and note that multiple versions could be running at the same time.
+        /// </remarks>
+        public static string AppCacheDirectory { get; private set; } = "";
+
+        /// <summary>
         /// Get the directory that error logs should be stored in. Error logs are helpful for explaining the program's status at the time that it crashed.
         /// </summary>
+        /// <remarks>
+        /// This directory is shared by all JaykeBird programs, so any files added to this directory should also include the name of the program.
+        /// </remarks>
         public static string ErrorLogDirectory { get; private set; } = "";
+
+        /// <summary>
+        /// Get the name of this program, by the Qhuill component that it is packaged in.
+        /// </summary>
+        public static string ComponentName { get; } = appComponentName;
+
+        /// <summary>
+        /// Get the version number for this particular version of this component.
+        /// </summary>
+        public static int Version { get; } = version;
 
         private static Encoding UTF8Encoding = new UTF8Encoding(false);
 
-        private const string appName = "PathfinderJson";
-        private const string appSettingsName = "pathfinderJson";
-
         private const string Settings_Redirect_Filename = "settings_redir";
-        private const string Settings_RedirPin_Filename = "pin_version";
         #endregion
 
         #region Directory Setup
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static string LocateAppDataFolder()
+        private static void LocateAppDataFolder()
         {
-            string AppDataFolder = "";
+            string dataFolder = "";
 
-            AppDataFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "JaykeBird");
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                dataFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "JaykeBird");
+            }
+            else
+            {
+                // check the Home environment variable
+                string? homeDir = Environment.GetEnvironmentVariable("HOME");
+                if (homeDir != null)
+                {
+                    dataFolder = Path.Combine(homeDir, ".local", "jaykebird");
+                }
+                else
+                {
+                    // if it is null, well... we tried
+                    // let's assume a standard location
+                    dataFolder = "~/.local/jaykebird";
+                }
+            }
 
-            //if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-            //{
-            //    AppDataFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "JaykeBird");
-            //}
-            //else
-            //{
-            //    // check the Home environment variable
-            //    string? homeDir = Environment.GetEnvironmentVariable("HOME");
-            //    if (homeDir != null) // if it is null, then... well, we tried
-            //    {
-            //        AppDataFolder = Path.Combine(homeDir, ".jaykebird");
-            //    }
-            //}
-
-            return AppDataFolder;
+            BaseAppDataDirectory = dataFolder;
         }
 
         /// <summary>
@@ -94,56 +141,46 @@ namespace PathfinderJson
         /// </summary>
         public static void SetupBaseDirectories()
         {
-            string jaykeBirdAppData = LocateAppDataFolder();
+            LocateAppDataFolder();
 
-            if (!string.IsNullOrEmpty(jaykeBirdAppData))
+            // creating the AppData folder and its subfolders
+            if (!string.IsNullOrEmpty(BaseAppDataDirectory))
             {
-                Directory.CreateDirectory(jaykeBirdAppData);
-                AppDataDirectory = Directory.CreateDirectory(Path.Combine(jaykeBirdAppData, appName)).FullName;
-                Directory.CreateDirectory(Path.Combine(jaykeBirdAppData, appName, "Optimization"));
-                Directory.CreateDirectory(Path.Combine(jaykeBirdAppData, appName, "ErrorLogs"));
+                Directory.CreateDirectory(BaseAppDataDirectory);
+                AppDataDirectory = Directory.CreateDirectory(Path.Combine(BaseAppDataDirectory, appName)).FullName;
+                AppCacheDirectory = Directory.CreateDirectory(Path.Combine(BaseAppDataDirectory, "cache", appName)).FullName;
+                ErrorLogDirectory = Directory.CreateDirectory(Path.Combine(BaseAppDataDirectory, "errorLogs")).FullName;
+
+                // PathfinderJson-specific
+                Directory.CreateDirectory(Path.Combine(AppCacheDirectory, "Optimization"));
             }
 
-            if (IsPortable && CanBePortable)
+            if (CanBePortable && IsPortable)
             {
-                string? filename = Process.GetCurrentProcess().MainModule?.FileName;
-                if (filename == null)
-                {
-                    Directory.CreateDirectory(Path.Combine(jaykeBirdAppData, "Settings", appSettingsName));
-                    Directory.CreateDirectory(Path.Combine(jaykeBirdAppData, appName));
-
-                    // don't create the directory for this version yet, as a detection method occurs later
-                    SetSettingsDirectoryVariable(jaykeBirdAppData);
-                    //SettingsDirectory = Path.Combine(jaykeBirdAppData, "Settings", appSettingsName, App.VersionString); //Directory.CreateDirectory().FullName;
-                }
-                else
-                {
-                    string parentPath = Directory.GetParent(filename)?.FullName ?? filename.Replace(".exe", "");
-                    SettingsDirectory = Path.Combine(parentPath, "Settings");
-                }
+                string localFolder = AppContext.BaseDirectory;
+                SettingsDirectory = Path.Combine(localFolder, appComponentName + "-settings");
             }
             else
             {
-                Directory.CreateDirectory(Path.Combine(jaykeBirdAppData, "Settings", appSettingsName));
-                Directory.CreateDirectory(Path.Combine(jaykeBirdAppData, appName));
-
-                // don't create the directory for this version yet, as a detection method occurs later
-                SetSettingsDirectoryVariable(jaykeBirdAppData);
-                //SettingsDirectory = Path.Combine(AppDataFolder, "Settings", appSettingsName, App.VersionString); // Directory.CreateDirectory().FullName;
+                Directory.CreateDirectory(Path.Combine(BaseAppDataDirectory, "settings", appComponentName));
+                SetSettingsDirectoryVariable();
             }
         }
 
         /// <summary>
         /// This sets the value <see cref="SettingsDirectory"/>, by reading the standard settings directory and resolving the redirect file if needed.
         /// </summary>
-        /// <param name="appDataFolder">The path to the JaykeBird programs AppData folder.</param>
-        static void SetSettingsDirectoryVariable(string appDataFolder)
+        /// <remarks>
+        /// For portable versions (<see cref="IsPortable"/> is <c>true</c>), this should not be used,
+        /// as portable versions will have the directory stored in the same folder as the program.
+        /// </remarks>
+        static void SetSettingsDirectoryVariable()
         {
-            // in comparison to FindLatestSettings(), this locates the directory that settings should be placed in
+            // this locates the directory that settings should be placed in (for non-portable versions),
             // which will either be 1) the default directory in AppData, or 2) the directory listed in the redirect file
 
             // so first, let's check the directory and then go from there
-            string settingsDir = Path.Combine(appDataFolder, "Settings", appSettingsName, App.VersionString);
+            string settingsDir = Path.Combine(BaseAppDataDirectory, "settings", appComponentName, App.VersionString);
             if (Directory.Exists(settingsDir))
             {
                 // okay, so the directory is already here... does that mean settings are here, or a redirect file?
@@ -158,18 +195,20 @@ namespace PathfinderJson
                     }
                     else
                     {
+                        // the directory listed in the redirect file doesn't exist, let's just use this folder
                         SettingsDirectory = settingsDir;
                     }
                 }
                 else
                 {
+                    // no redirect file, so it's just here in the default folder
                     SettingsDirectory = settingsDir;
                 }
             }
             else
             {
                 // okay, no redirect file or anything at all (since the directory doesn't exist yet)
-                // so let's return the default directory
+                // so let's use the default directory
                 SettingsDirectory = settingsDir;
             }
         }
@@ -463,10 +502,17 @@ namespace PathfinderJson
         public static (string? dirPath, bool canRequestUpgrade) LocateLatestSettingsDirectory()
         {
             // first, some setup
-            string AppDataFolder = LocateAppDataFolder();
-            string mainSettingsDir = Path.Combine(AppDataFolder, "Settings", appSettingsName); // this is the directory settings should be stored in
+            string mainSettingsDir = Path.Combine(BaseAppDataDirectory, "Settings", appComponentName); // this is the directory settings should be stored in
 
-            if (Directory.Exists(mainSettingsDir) && Directory.GetDirectories(mainSettingsDir).Any()) // check if main settings directory exists (and make sure it has subdirectories)
+            // if we're using the portable version, then we'll pull the portable directory first
+            if (IsPortable && Directory.Exists(Path.Combine(AppContext.BaseDirectory, "Settings")))
+            {
+                // we found the portable settings directory
+                // no need to do an upgrade
+                return (Path.Combine(AppContext.BaseDirectory, "Settings"), false);
+            }
+            // otherwise, let's look for the main settings directory
+            else if (Directory.Exists(mainSettingsDir) && Directory.EnumerateDirectories(mainSettingsDir).Any()) // check if main settings directory exists (and make sure it has subdirectories)
             {
                 // okay, cool... does the settings directory for this version exist?
                 string currentDir = Path.Combine(mainSettingsDir, App.VersionString);
@@ -515,22 +561,12 @@ namespace PathfinderJson
                                 string newDir = File.ReadAllText(Path.Combine(mainSettingsDir, res.ToString(), Settings_Redirect_Filename), UTF8Encoding).Trim();
                                 if (Directory.Exists(newDir))
                                 {
-                                    // is there a pin file to go along with the settings redirect file?
-                                    if (File.Exists(Path.Combine(mainSettingsDir, res.ToString(), Settings_RedirPin_Filename)))
-                                    {
-                                        // this folder is to be only used for that version
-                                        // so we'll upgrade from this folder and then just use this version's standard settings directory
-                                        return (newDir, true);
-                                    }
-                                    else
-                                    {
-                                        // let's also use the current version's settings in this folder too
-                                        // (so, we'll write a new settings redirect file)
-                                        string currentnDir = Path.Combine(mainSettingsDir, App.VersionString); // this is the standard settings directory
-                                        Directory.CreateDirectory(currentnDir);
-                                        File.WriteAllText(Path.Combine(currentnDir, Settings_Redirect_Filename), newDir, UTF8Encoding); // writing redirect file
-                                        return (newDir, false);
-                                    }
+                                    // let's also use the current version's settings in this folder too
+                                    // (so, we'll write a new settings redirect file)
+                                    string currentnDir = Path.Combine(mainSettingsDir, App.VersionString); // this is the standard settings directory
+                                    Directory.CreateDirectory(currentnDir);
+                                    File.WriteAllText(Path.Combine(currentnDir, Settings_Redirect_Filename), newDir, UTF8Encoding); // writing redirect file
+                                    return (newDir, false);
                                 }
                             }
 
