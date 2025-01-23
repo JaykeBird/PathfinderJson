@@ -90,6 +90,7 @@ namespace PathfinderJson
                 btnChangeColor.Background = brdrEllipse.Background;
                 btnChangeColor.HighlightBrush = brdrEllipse.Background;
                 btnChangeColor.ClickBrush = brdrEllipse.Background;
+                txtChangeColor.Visibility = Visibility.Visible;
 
                 txtTitle.Visibility = Visibility.Visible;
                 txtTitle.Text = lblTitle.Text;
@@ -163,6 +164,7 @@ namespace PathfinderJson
         {
             nudInput.Visibility = Visibility.Collapsed;
             btnChangeColor.Visibility = Visibility.Collapsed;
+            txtChangeColor.Visibility = Visibility.Collapsed;
             txtTitle.Visibility = Visibility.Collapsed;
 
             btnDecrease.Visibility = Visibility.Visible;
