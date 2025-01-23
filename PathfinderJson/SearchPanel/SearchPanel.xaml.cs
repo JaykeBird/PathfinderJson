@@ -37,6 +37,9 @@ namespace PathfinderJson.SearchPanel
     /// <summary>
     /// Provides search functionality for AvalonEdit. It is displayed in the top-right corner of the TextArea.
     /// </summary>
+    /// <remarks>
+    /// This is modified from the original control created for SharpDevelop/AvalonEdit, to add on support for theming via Solid Shine UI.
+    /// </remarks>
     public class SearchPanel : Control
     {
         TextArea? textArea;
@@ -202,8 +205,9 @@ namespace PathfinderJson.SearchPanel
         /// <remarks>This is a convenience wrapper.</remarks>
         public static SearchPanel Install(TextEditor editor)
         {
-            if (editor == null)
-                throw new ArgumentNullException("editor");
+            ArgumentNullException.ThrowIfNull(editor);
+            //if (editor == null)
+            //    throw new ArgumentNullException(nameof(editor));
             return Install(editor.TextArea);
         }
 
@@ -212,8 +216,9 @@ namespace PathfinderJson.SearchPanel
         /// </summary>
         public static SearchPanel Install(TextArea textArea)
         {
-            if (textArea == null)
-                throw new ArgumentNullException("textArea");
+            ArgumentNullException.ThrowIfNull(textArea);
+            //if (textArea == null)
+            //    throw new ArgumentNullException(nameof(textArea));
             SearchPanel panel = new SearchPanel();
             panel.AttachInternal(textArea);
             panel.handler = new SearchInputHandler(textArea, panel);

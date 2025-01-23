@@ -107,7 +107,7 @@ namespace PathfinderJson.SearchPanel
 			return TextUtilities.GetNextCaretPosition(document, offset - 1, LogicalDirection.Forward, CaretPositioningMode.WordBorder) == offset;
 		}
 
-		public ISearchResult FindNext(ITextSource document, int offset, int length)
+		public ISearchResult? FindNext(ITextSource document, int offset, int length)
 		{
 			return FindAll(document, offset, length).FirstOrDefault();
 		}
