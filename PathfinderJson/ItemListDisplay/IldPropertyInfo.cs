@@ -13,18 +13,41 @@ namespace PathfinderJson.Ild
             if (displayName != null) DisplayName = displayName; else DisplayName = name;
         }
 
+        /// <summary>
+        /// The internal name of this property
+        /// </summary>
         public string Name { get; set; }
 
+        /// <summary>
+        /// The name of this property, meant for displaying in UI
+        /// </summary>
         public string DisplayName { get; set; }
 
+        /// <summary>
+        /// The data type of this property
+        /// </summary>
         public IldType IldType { get; set; }
 
+        /// <summary>
+        /// The minimum value that is allowed for this property (only applies if <see cref="IldType"/> is <see cref="IldType.Integer"/> or <see cref="IldType.Double"/>)
+        /// </summary>
         public int? MinValue { get; set; }
 
+        /// <summary>
+        /// The maximum value that is allowed for this property (only applies if <see cref="IldType"/> is <see cref="IldType.Integer"/> or <see cref="IldType.Double"/>)
+        /// </summary>
         public int? MaxValue { get; set; }
 
+        /// <summary>
+        /// The filter to apply upon this property, to only display elements where its values passes this property's filter. Set to <c>null</c> to not have a filter.
+        /// </summary>
         public IldPropertyFilter? Filter { get; set; } = null;
 
+        /// <summary>
+        /// Compare a value to this property's filter, and check if passes the filter.
+        /// </summary>
+        /// <param name="value">The value to check against the filter</param>
+        /// <returns><c>true</c> if the <paramref name="value"/> passes, or <c>false</c> if it does not</returns>
         public bool CompareToFilter(object? value)
         {
             if (Filter == null) return true;
