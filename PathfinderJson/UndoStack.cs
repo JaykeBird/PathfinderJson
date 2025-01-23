@@ -127,6 +127,30 @@ namespace PathfinderJson
             }
         }
 
+        public T? TryPeekUndo()
+        {
+            if (undoList.Count > 0)
+            {
+                return undoList[^1];
+            }
+            else
+            {
+                return default;
+            }
+        }
+
+        public T? TryPeekRedo()
+        {
+            if (redoList.Count > 0)
+            {
+                return redoList[^1];
+            }
+            else
+            {
+                return default;
+            }
+        }
+
         /// <summary>
         /// Clear the undo and redo list. This removes all earlier and later states, only leaving what is current.
         /// </summary>

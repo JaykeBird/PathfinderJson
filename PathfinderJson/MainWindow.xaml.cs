@@ -21,6 +21,7 @@ using static PathfinderJson.App;
 using System.Windows.Shell;
 using System.ComponentModel;
 using System.Linq;
+using System.Windows.Data;
 
 //using Markdig;
 //using Markdig.Wpf;
@@ -72,10 +73,10 @@ namespace PathfinderJson
         //bool notesEdit = false;
 
         // functions for handling undo/redo
-        // these aren't actually used for anything at the current time as I've not properly introduced undo/redo yet
         UndoStack<PathfinderSheet> undoStack = new UndoStack<PathfinderSheet>();
         UIElement? lastEditedItem = null;
         DispatcherTimer undoSetTimer = new DispatcherTimer();
+        string lastUndoChangeData = "";
 
         // these are stored here as the program doesn't display these values to the user directly
         UserData ud;
@@ -284,10 +285,10 @@ namespace PathfinderJson
             }
 
 #if DEBUG
-            //mnuTestUndo.IsEnabled = true;
-            //mnuTestUndo.Visibility = Visibility.Visible;
             mnuShowUndo.IsEnabled = true;
             mnuShowUndo.Visibility = Visibility.Visible;
+            mnuExploreUndo.IsEnabled = true;
+            mnuExploreUndo.Visibility = Visibility.Visible;
 #endif
 
             btnUndoS.IsEnabled = undoStack.CanUndo;
@@ -1301,20 +1302,23 @@ namespace PathfinderJson
         {
             CreateUndoState();
             undoSetTimer.IsEnabled = false;
-            PostUndoStateUpdate("Tick new state");
-        }
-
-        private void mnuTestUndo_Click(object sender, RoutedEventArgs e)
-        {
-            UndoStackTest ust = new UndoStackTest();
-            ust.Show();
+            PostUndoStateUpdate("Tick, new state");
         }
 
         private void CreateUndoState()
         {
+            PathfinderSheet? opfs = undoStack.TryPeekUndo();
             PathfinderSheet ps = CreatePathfinderSheet();
             undoStack.StoreState(ps);
             PostUndoStateUpdate("New state");
+            if (mnuShowUndo.IsChecked && opfs != null)
+            {
+                CompareResult cr = Compare.CompareObjects(opfs, ps);
+                if (cr.Success == CompareSuccessValue.Success)
+                {
+                    lastUndoChangeData = string.Join(',', cr.DifferingProperties);
+                }
+            }
 
             btnUndoS.IsEnabled = undoStack.CanUndo;
             mnuUndoS.IsEnabled = undoStack.CanUndo;
@@ -1328,6 +1332,7 @@ namespace PathfinderJson
             {
                 CoreLoadPathfinderSheet(undoStack.Undo());
                 PostUndoStateUpdate("Undo done");
+                lastUndoChangeData = "";
             }
 
             btnUndoS.IsEnabled = undoStack.CanUndo;
@@ -1342,6 +1347,7 @@ namespace PathfinderJson
             {
                 CoreLoadPathfinderSheet(undoStack.Redo());
                 PostUndoStateUpdate("Redo done");
+                lastUndoChangeData = "";
             }
 
             btnUndoS.IsEnabled = undoStack.CanUndo;
@@ -1355,7 +1361,14 @@ namespace PathfinderJson
             if (mnuShowUndo.IsChecked)
             {
                 brdrUndoState.Visibility = Visibility.Visible;
-                txtUndoState.Text = text;
+                if (string.IsNullOrEmpty(lastUndoChangeData))
+                {
+                    txtUndoState.Text = text;
+                }
+                else
+                {
+                    txtUndoState.Text = text + " - " + lastUndoChangeData;
+                }
             }
             else
             {
@@ -1366,6 +1379,19 @@ namespace PathfinderJson
         private void mnuShowUndo_Click(object sender, RoutedEventArgs e)
         {
             mnuShowUndo.IsChecked = !mnuShowUndo.IsChecked;
+        }
+
+        private void mnuExploreUndo_Click(object sender, RoutedEventArgs e)
+        {
+            UndoStackTest ust = new UndoStackTest();
+            ust.SetBinding(ColorSchemeProperty, new Binding("ColorScheme") { Source = this });
+            ust.MainWindow = this;
+            ust.Show();
+        }
+
+        internal UndoStack<PathfinderSheet> GetUndoStack()
+        {
+            return undoStack;
         }
 
         #endregion
@@ -1742,7 +1768,7 @@ namespace PathfinderJson
 
                     txtEditRaw.Visibility = Visibility.Collapsed;
                     mnuEdit.Visibility = Visibility.Collapsed;
-                    mnuEditS.Visibility = Visibility.Collapsed;
+                    mnuEditS.Visibility = Visibility.Visible;
                     if (mnuTabBar.IsChecked) ShowTabsBar(); else HideTabsBar();
                     stkEditToolbar.Visibility = Visibility.Collapsed;
                     stkSheetEditToolbar.Visibility = Visibility.Visible;
@@ -1772,7 +1798,7 @@ namespace PathfinderJson
 
                     txtEditRaw.Visibility = Visibility.Collapsed;
                     mnuEdit.Visibility = Visibility.Collapsed;
-                    mnuEditS.Visibility = Visibility.Collapsed;
+                    mnuEditS.Visibility = Visibility.Visible;
                     ShowTabsBar();
                     stkEditToolbar.Visibility = Visibility.Collapsed;
                     stkSheetEditToolbar.Visibility = Visibility.Visible;
@@ -3483,7 +3509,7 @@ namespace PathfinderJson
             if (!_isUpdating)
             {
                 SetIsDirty();
-                CreateUndoState();
+                StartUndoTimer(sender as UIElement ?? new CompoundEditor());
             }
         }
 
@@ -3499,7 +3525,7 @@ namespace PathfinderJson
                 txtWism.Text = CalculateModifier(txtWis.Value);
 
                 SetIsDirty();
-                CreateUndoState();
+                StartUndoTimer(sender as UIElement ?? new IntegerSpinner());
 
                 if (mnuAutoUpdate.IsChecked)
                 {
@@ -3520,7 +3546,7 @@ namespace PathfinderJson
                 txtWism.Text = CalculateModifier(eleWis.Value);
 
                 SetIsDirty();
-                CreateUndoState();
+                StartUndoTimer(sender as UIElement ?? new IntegerSpinner());
 
                 if (mnuAutoUpdate.IsChecked)
                 {

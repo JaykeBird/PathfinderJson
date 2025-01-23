@@ -107,8 +107,8 @@
                         <Image Source="/PathfinderJson;component/Images/Color/Redo.png" />
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem Header="Isolated Undo _Test" x:Name="mnuTestUndo" Click="mnuTestUndo_Click" IsEnabled="False" Visibility="Collapsed" />
-                <MenuItem Header="_Show Undo State" x:Name="mnuShowUndo" Click="mnuShowUndo_Click" IsEnabled="False" Visibility="Collapsed" />
+                <MenuItem Header="_Debug Undo State" x:Name="mnuShowUndo" Click="mnuShowUndo_Click" IsEnabled="False" Visibility="Collapsed" />
+                <MenuItem Header="_Explore Undo History" x:Name="mnuExploreUndo" Click="mnuExploreUndo_Click" IsEnabled="False" Visibility="Collapsed" />
                 <Separator />
                 <MenuItem Header="Insert _JSON..." x:Name="mnuInsertJson" Click="mnuInsertJson_Click" />
             </MenuItem>

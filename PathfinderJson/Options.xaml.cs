@@ -565,9 +565,6 @@ namespace PathfinderJson
             OpenBrowser("https://github.com/JaykeBird/PathfinderJson/issues/new/choose");
         }
 
-
-        #endregion
-
         private void btnPlatformInfo_Click(object sender, RoutedEventArgs e)
         {
             PlatformInfo pi = new PlatformInfo();
@@ -575,6 +572,8 @@ namespace PathfinderJson
             pi.WindowStartupLocation = WindowStartupLocation.CenterOwner;
             pi.ShowDialog();
         }
+
+        #endregion
 
         public new bool DialogResult { get; set; } = false;
 
