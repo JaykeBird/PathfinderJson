@@ -685,6 +685,9 @@ namespace PathfinderJson
 
         #region Core file operations
 
+        /// <summary>
+        /// Prompt the user to create a new file.
+        /// </summary>
         async Task NewFile()
         {
             NewSheet ns = new NewSheet();
@@ -714,6 +717,10 @@ namespace PathfinderJson
             }
         }
 
+        /// <summary>
+        /// Save the file to a particular file location.
+        /// </summary>
+        /// <param name="file">The path to save the file to.</param>
         void SaveFile(string file)
         {
             if (CheckCalculating()) return;
@@ -737,7 +744,8 @@ namespace PathfinderJson
                 if (!validJson)
                 {
                     MessageDialog md = new MessageDialog(App.ColorScheme);
-                    md.ShowDialog("The file's text doesn't seem to be valid JSON. Saving the file as it is may result in lost data or the file not being openable with this program in the future. Do you want to continue?",
+                    md.ShowDialog(
+                        "The file's text doesn't seem to be valid JSON. Saving the file as it is may result in lost data or the file not being openable with this program in the future. Do you want to continue?",
                         null, this, "Invalid JSON Detected", MessageDialogButtonDisplay.Auto, image: MessageDialogImage.Warning, customOkButtonText: "Save anyway", customCancelButtonText: "Cancel");
 
                     if (md.DialogResult == MessageDialogResult.Cancel)
@@ -765,6 +773,10 @@ namespace PathfinderJson
             saveDisplayTimer.Start();
         }
 
+        /// <summary>
+        /// Prompt the user to select where to save the file to, and then save the file.
+        /// </summary>
+        /// <returns><c>true</c> if the file was saved, <c>false</c> if the operation was cancelled</returns>
         bool SaveAsFile()
         {
             if (!_sheetLoaded)
@@ -792,6 +804,9 @@ namespace PathfinderJson
             }
         }
 
+        /// <summary>
+        /// Close the currently open file, leaving nothing open.
+        /// </summary>
         void CloseFile()
         {
             if (!SaveDirtyChanges() || CheckCalculating())
@@ -812,12 +827,17 @@ namespace PathfinderJson
             ChangeView(App.Settings.StartView, false, true, false);
         }
 
+        /// <summary>
+        /// Check if the program is currently updating calculations. If so, it displays a message to the user.
+        /// </summary>
+        /// <returns><c>true</c> if currently updating calculations; <c>false</c> otherwise</returns>
         bool CheckCalculating()
         {
             if (_isCalculating)
             {
                 MessageDialog md = new MessageDialog();
-                md.ShowDialog("Cannot perform this function while the sheet is calculating. Please try again in just a moment.", App.ColorScheme, this, "Currently Calculating", MessageDialogButtonDisplay.Auto, image: MessageDialogImage.Error);
+                md.ShowDialog("Cannot perform this function while the sheet is calculating. Please try again in just a moment.", App.ColorScheme, this, "Currently Calculating", 
+                    MessageDialogButtonDisplay.Auto, image: MessageDialogImage.Error);
                 return true;
             }
             else
@@ -826,6 +846,13 @@ namespace PathfinderJson
             }
         }
 
+        /// <summary>
+        /// Prompts the user to save the currently open file, if there are any unsaved changes.
+        /// </summary>
+        /// <remarks>
+        /// If this returns <c>false</c>, then you should cancel whatever operation was about to occur, so the user can instead continue with what they were about to do.
+        /// </remarks>
+        /// <returns><c>true</c> if the user saved or discarded the changes; <c>false</c> if the user cancelled the operation</returns>
         bool SaveDirtyChanges()
         {
             // if there's no sheet loaded, then there should be no dirty changes to save
@@ -867,6 +894,13 @@ namespace PathfinderJson
             }
         }
 
+        /// <summary>
+        /// Prompts the user if they want to discard their unsaved changes, if there are any.
+        /// </summary>
+        /// <remarks>
+        /// If this returns <c>false</c>, then you should cancel whatever operation was about to occur, so the user can instead continue with what they were about to do.
+        /// </remarks>
+        /// <returns><c>true</c> if the user discarded the changes; <c>false</c> if the user cancelled the operation</returns>
         bool AskDiscard()
         {
             if (isDirty)
@@ -892,6 +926,14 @@ namespace PathfinderJson
             }
         }
 
+        /// <summary>
+        /// Run the update checker to see if there is an update available for this program.
+        /// </summary>
+        /// <param name="dialogIfNone">Display a dialog to the user informing of the results, even if there are no updates</param>
+        /// <remarks>
+        /// A dialog will always be displayed to the user if there is an update available.
+        /// <paramref name="dialogIfNone"/> is only for if there are no updates available, if a dialog should be displayed in that case or not.
+        /// </remarks>
         async Task CheckForUpdates(bool dialogIfNone = true)
         {
             try
