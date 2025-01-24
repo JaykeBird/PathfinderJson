@@ -34,6 +34,8 @@ namespace PathfinderJson
     /// </summary>
     public partial class MainWindow : FlatWindow
     {
+        #region Variables
+
         /// <summary>The path to the currently open file (if a file is loaded but this is empty, this means it is a new unsaved file)</summary>
         string filePath = "";
         /// <summary>Get or set if a file is currently open</summary>
@@ -91,6 +93,8 @@ namespace PathfinderJson
         // keyboard/method data
         KeyActionList mr = new KeyActionList();
         KeyboardShortcutHandler ksh;
+
+        #endregion
 
         #region Constructor/ window events/ basic functions
 
@@ -586,102 +590,7 @@ namespace PathfinderJson
 
         #endregion
 
-        #region File Menu
-
-        private async void mnuNew_Click(object sender, RoutedEventArgs e)
-        {
-            if (!SaveDirtyChanges() || CheckCalculating())
-            {
-                return;
-            }
-
-            await NewFile();
-        }
-
-        private void mnuNewWindow_Click(object sender, RoutedEventArgs e)
-        {
-            string? filename = Process.GetCurrentProcess().MainModule?.FileName;
-            if (filename == null)
-            {
-                MessageBox.Show("Cannot open another instance automatically.");
-                return;
-            }
-
-            Process.Start(filename);
-        }
-
-        private void mnuOpen_Click(object sender, RoutedEventArgs e)
-        {
-            if (!SaveDirtyChanges() || CheckCalculating())
-            {
-                return;
-            }
-
-            Microsoft.Win32.OpenFileDialog ofd = new Microsoft.Win32.OpenFileDialog();
-            ofd.Title = "Open JSON";
-            ofd.Filter = "JSON Sheet|*.json|All Files|*.*";
-
-            if (ofd.ShowDialog() ?? false == true)
-            {
-                LoadFile(ofd.FileName);
-            }
-        }
-
-        private void mnuSave_Click(object sender, RoutedEventArgs e)
-        {
-            if (string.IsNullOrEmpty(filePath))
-            {
-                SaveAsFile();
-            }
-            else
-            {
-                SaveFile(filePath);
-            }
-        }
-
-        private void mnuSaveAs_Click(object sender, RoutedEventArgs e)
-        {
-            SaveAsFile();
-        }
-
-        private void mnuRevert_Click(object sender, RoutedEventArgs e)
-        {
-            if (!string.IsNullOrEmpty(filePath))
-            {
-                if (AskDiscard())
-                {
-                    LoadFile(filePath, false);
-                }
-            }
-        }
-
-        private void mnuIndent_Click(object sender, RoutedEventArgs e)
-        {
-            if (mnuIndent.IsChecked)
-            {
-                mnuIndent.IsChecked = false;
-                App.Settings.IndentJsonData = false;
-            }
-            else
-            {
-                mnuIndent.IsChecked = true;
-                App.Settings.IndentJsonData = true;
-            }
-
-            SaveSettings();
-        }
-
-        private void btnClose_Click(object sender, RoutedEventArgs e)
-        {
-            CloseFile();
-        }
-
-        private void btnExit_Click(object sender, RoutedEventArgs e)
-        {
-            Close();
-        }
-
-        #endregion
+        #region File operations
 
         #region Core file operations
 
@@ -1318,1100 +1227,6 @@ namespace PathfinderJson
 
         #endregion
 
-        #region Undo/Redo
-
-        // relevant variables are declared at the top of the class
-
-        void StartUndoTimer(UIElement sender)
-        {
-            if (sender != lastEditedItem)
-            {
-                CreateUndoState();
-                PostUndoStateUpdate("New element state / timer restart");
-
-                undoSetTimer.Stop();
-                undoSetTimer.Start();
-            }
-            else
-            {
-                //CreateUndoState();
-                if (undoSetTimer.IsEnabled)
-                {
-                    PostUndoStateUpdate("Timer restart");
-
-                    undoSetTimer.Stop();
-                    undoSetTimer.Start();
-                }
-                else
-                {
-                    undoSetTimer.Start();
-                    PostUndoStateUpdate("Timer start");
-                }
-            }
-        }
-
-        private void UndoSetTimer_Tick(object? sender, EventArgs e)
-        {
-            CreateUndoState();
-            undoSetTimer.IsEnabled = false;
-            PostUndoStateUpdate("Tick, new state");
-        }
-
-        private void CreateUndoState()
-        {
-            PathfinderSheet? opfs = undoStack.TryPeekUndo();
-            PathfinderSheet ps = CreatePathfinderSheet();
-            undoStack.StoreState(ps);
-            PostUndoStateUpdate("New state");
-            if (mnuShowUndo.IsChecked && opfs != null)
-            {
-                CompareResult cr = Compare.CompareObjects(opfs, ps);
-                if (cr.Success == CompareSuccessValue.Success)
-                {
-                    lastUndoChangeData = string.Join(',', cr.DifferingProperties);
-                }
-            }
-
-            btnUndoS.IsEnabled = undoStack.CanUndo;
-            mnuUndoS.IsEnabled = undoStack.CanUndo;
-            btnRedoS.IsEnabled = undoStack.CanRedo;
-            mnuRedoS.IsEnabled = undoStack.CanRedo;
-        }
-
-        private void mnuUndoS_Click(object sender, RoutedEventArgs e)
-        {
-            if (undoStack.CanUndo)
-            {
-                CoreLoadPathfinderSheet(undoStack.Undo());
-                PostUndoStateUpdate("Undo done");
-                lastUndoChangeData = "";
-            }
-
-            btnUndoS.IsEnabled = undoStack.CanUndo;
-            mnuUndoS.IsEnabled = undoStack.CanUndo;
-            btnRedoS.IsEnabled = undoStack.CanRedo;
-            mnuRedoS.IsEnabled = undoStack.CanRedo;
-        }
-
-        private void mnuRedoS_Click(object sender, RoutedEventArgs e)
-        {
-            if (undoStack.CanRedo)
-            {
-                CoreLoadPathfinderSheet(undoStack.Redo());
-                PostUndoStateUpdate("Redo done");
-                lastUndoChangeData = "";
-            }
-
-            btnUndoS.IsEnabled = undoStack.CanUndo;
-            mnuUndoS.IsEnabled = undoStack.CanUndo;
-            btnRedoS.IsEnabled = undoStack.CanRedo;
-            mnuRedoS.IsEnabled = undoStack.CanRedo;
-        }
-
-        void PostUndoStateUpdate(string text)
-        {
-            if (mnuShowUndo.IsChecked)
-            {
-                brdrUndoState.Visibility = Visibility.Visible;
-                if (string.IsNullOrEmpty(lastUndoChangeData))
-                {
-                    txtUndoState.Text = text;
-                }
-                else
-                {
-                    txtUndoState.Text = text + " - " + lastUndoChangeData;
-                }
-            }
-            else
-            {
-                brdrUndoState.Visibility = Visibility.Collapsed;
-            }
-        }
-
-        private void mnuShowUndo_Click(object sender, RoutedEventArgs e)
-        {
-            mnuShowUndo.IsChecked = !mnuShowUndo.IsChecked;
-        }
-
-        private void mnuExploreUndo_Click(object sender, RoutedEventArgs e)
-        {
-            UndoStackTest ust = new UndoStackTest();
-            ust.SetBinding(ColorSchemeProperty, new Binding("ColorScheme") { Source = this });
-            ust.MainWindow = this;
-            ust.Show();
-        }
-
-        internal UndoStack<PathfinderSheet> GetUndoStack()
-        {
-            return undoStack;
-        }
-
-        #endregion
-
-        #region Tab bar / visuals / appearance
-
-        void UpdateAppearance()
-        {
-            ApplyColorScheme(App.ColorScheme);
-            menu.ApplyColorScheme(App.ColorScheme);
-            toolbar.Background = App.ColorScheme.MainColor.ToBrush();
-            if (sp != null) sp.ColorScheme = App.ColorScheme;
-
-            if (App.ColorScheme.IsHighContrast)
-            {
-                menu.Background = App.ColorScheme.BackgroundColor.ToBrush();
-                toolbar.Background = App.ColorScheme.BackgroundColor.ToBrush();
-            }
-
-            selTabs.ApplyColorScheme(App.ColorScheme);
-
-            // quick fix until I make a better system post-1.0
-            if (App.ColorScheme.IsHighContrast)
-            {
-                //foreach (SelectableItem item in selTabs.GetItemsAsType<SelectableItem>())
-                //{
-                //    item.ApplyColorScheme(App.ColorScheme);
-                //    //if (selTabs.IsEnabled)
-                //    //{
-                //    //    item.ApplyColorScheme(App.ColorScheme);
-                //    //}
-                //    //else
-                //    //{
-                //    //    item.Foreground = App.ColorScheme.ForegroundColor.ToBrush();
-                //    //}
-                //}
-
-                txtStrm.BorderBrush = new SolidColorBrush(App.ColorScheme.LightDisabledColor);
-                txtDexm.BorderBrush = new SolidColorBrush(App.ColorScheme.LightDisabledColor);
-                txtCham.BorderBrush = new SolidColorBrush(App.ColorScheme.LightDisabledColor);
-                txtConm.BorderBrush = new SolidColorBrush(App.ColorScheme.LightDisabledColor);
-                txtIntm.BorderBrush = new SolidColorBrush(App.ColorScheme.LightDisabledColor);
-                txtWism.BorderBrush = new SolidColorBrush(App.ColorScheme.LightDisabledColor);
-
-                txtStrm.Background = new SolidColorBrush(SystemColors.ControlColor);
-                txtDexm.Background = new SolidColorBrush(SystemColors.ControlColor);
-                txtCham.Background = new SolidColorBrush(SystemColors.ControlColor);
-                txtConm.Background = new SolidColorBrush(SystemColors.ControlColor);
-                txtIntm.Background = new SolidColorBrush(SystemColors.ControlColor);
-                txtWism.Background = new SolidColorBrush(SystemColors.ControlColor);
-            }
-            else
-            {
-                foreach (SelectableUserControl item in selTabs.Items)
-                {
-                    if (item.IsEnabled)
-                    {
-                        item.ApplyColorScheme(App.ColorScheme);
-                    }
-                    else
-                    {
-                        item.Foreground = App.ColorScheme.DarkDisabledColor.ToBrush();
-                    }
-                }
-
-                txtStrm.BorderBrush = new SolidColorBrush(SystemColors.ControlDarkColor);
-                txtDexm.BorderBrush = new SolidColorBrush(SystemColors.ControlDarkColor);
-                txtCham.BorderBrush = new SolidColorBrush(SystemColors.ControlDarkColor);
-                txtConm.BorderBrush = new SolidColorBrush(SystemColors.ControlDarkColor);
-                txtIntm.BorderBrush = new SolidColorBrush(SystemColors.ControlDarkColor);
-                txtWism.BorderBrush = new SolidColorBrush(SystemColors.ControlDarkColor);
-
-                txtStrm.Background = App.ColorScheme.SecondHighlightColor.ToBrush();
-                txtDexm.Background = App.ColorScheme.SecondHighlightColor.ToBrush();
-                txtCham.Background = App.ColorScheme.SecondHighlightColor.ToBrush();
-                txtConm.Background = App.ColorScheme.SecondHighlightColor.ToBrush();
-                txtIntm.Background = App.ColorScheme.SecondHighlightColor.ToBrush();
-                txtWism.Background = App.ColorScheme.SecondHighlightColor.ToBrush();
-            }
-
-            brdrCalculating.Background = App.ColorScheme.SecondaryColor.ToBrush();
-            brdrCalculating.BorderBrush = App.ColorScheme.HighlightColor.ToBrush();
-
-            (txtEditRaw.ContextMenu as SolidShineUi.ContextMenu)!.ApplyColorScheme(App.ColorScheme);
-
-            expUser.Background = App.ColorScheme.LightBackgroundColor.ToBrush();
-            expUser.BorderBrush = App.ColorScheme.ThirdHighlightColor.ToBrush();
-            expUser.BorderThickness = new Thickness(1);
-
-            expPhysical.Background = App.ColorScheme.LightBackgroundColor.ToBrush();
-            expPhysical.BorderBrush = App.ColorScheme.ThirdHighlightColor.ToBrush();
-            expPhysical.BorderThickness = new Thickness(1);
-
-            edtFort.UpdateAppearance();
-            edtReflex.UpdateAppearance();
-            edtWill.UpdateAppearance();
-
-            edtCmb.UpdateAppearance();
-            edtCmd.UpdateAppearance();
-            edtInit.UpdateAppearance();
-
-            edtAc.UpdateAppearance();
-
-            foreach (SkillEditor? item in stkSkills.Children)
-            {
-                if (item == null) continue;
-                item.ColorScheme = ColorScheme;
-                //item.UpdateAppearance();
-            }
-
-            btnNotesEdit.Background = Color.FromArgb(1, 0, 0, 0).ToBrush();
-            btnNotesView.Background = Color.FromArgb(1, 0, 0, 0).ToBrush();
-
-            //foreach (SpellEditor item in selSpells.GetItemsAsType<SpellEditor>())
-            //{
-            //    item.ApplyColorScheme(App.ColorScheme);
-            //}
-        }
-
-        void SetupTabs()
-        {
-            selTabs.Items.Add(CreateTab("General"));
-            selTabs.Items.Add(CreateTab("Skills"));
-            selTabs.Items.Add(CreateTab("Combat"));
-            selTabs.Items.Add(CreateTab("Spells"));
-            selTabs.Items.Add(CreateTab("Feats/Abilities"));
-            selTabs.Items.Add(CreateTab("Items"));
-            selTabs.Items.Add(CreateTab("Notes"));
-
-            SetAllTabsVisibility(Visibility.Collapsed);
-        }
-
-        SelectableItem CreateTab(string name, ImageSource? image = null)
-        {
-            SelectableItem si = new SelectableItem
-            {
-                Height = 36,
-                Text = name,
-                Indent = 6
-            };
-
-            if (image == null)
-            {
-                si.ShowImage = false;
-            }
-            else
-            {
-                si.ImageSource = image;
-                si.ShowImage = true;
-            }
-
-            si.Click += tabItem_Click;
-            return si;
-        }
-
-        void LoadGeneralTab()
-        {
-            selTabs.Items[0].IsSelected = true;
-            LoadTab("General");
-        }
-
-        void LoadTab(string text)
-        {
-            if (currentView == TABS_VIEW)
-            {
-                SetAllTabsVisibility(Visibility.Collapsed);
-
-                //txtLoc.Text = text;
-                switch (text)
-                {
-                    case "General":
-                        grdGeneral.Visibility = Visibility.Visible;
-                        break;
-                    case "Skills":
-                        grdSkills.Visibility = Visibility.Visible;
-                        break;
-                    case "Combat":
-                        grdCombat.Visibility = Visibility.Visible;
-                        break;
-                    case "Spells":
-                        grdSpells.Visibility = Visibility.Visible;
-                        break;
-                    case "Feats/Abilities":
-                        grdFeats.Visibility = Visibility.Visible;
-                        break;
-                    case "Items":
-                        grdItems.Visibility = Visibility.Visible;
-                        break;
-                    case "Notes":
-                        grdNotes.Visibility = Visibility.Visible;
-                        break;
-                    default:
-                        break;
-                }
-                scrSheet.ScrollToVerticalOffset(0);
-            }
-            else
-            {
-                SetAllTabsVisibility();
-                //txtLoc.Text = "All Tabs";
-
-                TextBlock control = titGeneral;
-
-                switch (text)
-                {
-                    case "General":
-                        control = titGeneral;
-                        break;
-                    case "Skills":
-                        control = titSkills;
-                        break;
-                    case "Combat":
-                        control = titCombat;
-                        break;
-                    case "Spells":
-                        control = titSpells;
-                        break;
-                    case "Feats/Abilities":
-                        control = titFeats;
-                        break;
-                    case "Items":
-                        control = titItems;
-                        break;
-                    case "Notes":
-                        control = titNotes;
-                        break;
-                    default:
-                        break;
-                }
-
-                Point relativeLocation = control.TranslatePoint(new Point(0, 0), stkSheet);
-                scrSheet.ScrollToVerticalOffset(relativeLocation.Y - 5);
-            }
-        }
-
-        private void tabItem_Click(object? sender, EventArgs e)
-        {
-            if (sender == null) return;
-            SelectableItem si = (SelectableItem)sender;
-
-            if (si.CanSelect)
-            {
-                LoadTab(si.Text);
-            }
-        }
-
-        void SetAllTabsVisibility(Visibility visibility = Visibility.Visible)
-        {
-            grdGeneral.Visibility = visibility;
-            grdSkills.Visibility = visibility;
-            grdCombat.Visibility = visibility;
-            grdSpells.Visibility = visibility;
-            grdFeats.Visibility = visibility;
-            grdItems.Visibility = visibility;
-            grdNotes.Visibility = visibility;
-        }
-
-        private void mnuColors_Click(object sender, RoutedEventArgs e)
-        {
-            ChangeTheme.ColorSchemeDialog csd = new ChangeTheme.ColorSchemeDialog();
-            csd.ColorScheme = this.ColorScheme;
-            csd.Owner = this;
-            csd.WindowStartupLocation = WindowStartupLocation.CenterOwner;
-            csd.ShowDialog();
-
-            if (csd.DialogResult)
-            {
-                App.ColorScheme = csd.SelectedColorScheme;
-
-                if (csd.InternalColorSchemeValue != 0)
-                {
-                    ColorScheme cs = csd.SelectedColorScheme;
-
-                    App.Settings.HighContrastTheme = csd.InternalColorSchemeValue.ToString();
-                }
-                else
-                {
-                    App.Settings.ThemeColor = csd.SelectedColorScheme.MainColor.GetHexString();
-                    App.Settings.HighContrastTheme = NO_HIGH_CONTRAST;
-                }
-
-                SaveSettings();
-                UpdateAppearance();
-
-                // change settings if high contrast is changed
-                bool isHighContrast = false;
-                if (csd.InternalColorSchemeValue >= 1 && csd.InternalColorSchemeValue <= 3) isHighContrast = true;
-
-                if (App.Settings.EditorSyntaxHighlighting && !isHighContrast)
-                {
-                    using (Stream? s = System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceStream("PathfinderJson.Json.xshd"))
-                    {
-                        if (s != null)
-                        {
-                            using XmlReader reader = new XmlTextReader(s);
-                            txtEditRaw.SyntaxHighlighting = ICSharpCode.AvalonEdit.Highlighting.Xshd.HighlightingLoader.Load(reader, HighlightingManager.Instance);
-                        }
-                    }
-                }
-                else
-                {
-                    using (Stream? s = System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceStream("PathfinderJson.None.xshd"))
-                    {
-                        if (s != null)
-                        {
-                            using XmlReader reader = new XmlTextReader(s);
-                            txtEditRaw.SyntaxHighlighting = ICSharpCode.AvalonEdit.Highlighting.Xshd.HighlightingLoader.Load(reader, HighlightingManager.Instance);
-                        }
-                    }
-                }
-
-                edtAc.ShowShieldGlyph = App.Settings.ShowGlyphs && !isHighContrast;
-                eleStr.ShowBannerGlyph = App.Settings.ShowGlyphs && !isHighContrast;
-                eleDex.ShowBannerGlyph = App.Settings.ShowGlyphs && !isHighContrast;
-                eleCon.ShowBannerGlyph = App.Settings.ShowGlyphs && !isHighContrast;
-                eleInt.ShowBannerGlyph = App.Settings.ShowGlyphs && !isHighContrast;
-                eleWis.ShowBannerGlyph = App.Settings.ShowGlyphs && !isHighContrast;
-                eleCha.ShowBannerGlyph = App.Settings.ShowGlyphs && !isHighContrast;
-            }
-        }
-
-        void ShowHideToolbar(bool show)
-        {
-            if (show)
-            {
-                rowToolbar.Height = new GridLength(1, GridUnitType.Auto);
-                rowToolbar.MinHeight = 28;
-                toolbar.IsEnabled = true;
-                mnuToolbar.IsChecked = true;
-            }
-            else
-            {
-                rowToolbar.Height = new GridLength(0);
-                rowToolbar.MinHeight = 0;
-                toolbar.IsEnabled = false;
-                mnuToolbar.IsChecked = false;
-            }
-        }
-
-        #endregion
-
-        #region View options
-
-        void ChangeView(string view, bool updateSheet = true, bool displayEmptyMessage = false, bool saveSettings = true)
-        {
-            view = view.ToLowerInvariant();
-
-            // weed out unintended "view" strings
-            if (view != CONTINUOUS_VIEW && view != TABS_VIEW && view != RAWJSON_VIEW)
-            {
-                //await ChangeView(TABS_VIEW, updateSheet, displayEmptyMessage, saveSettings);
-                return;
-            }
-
-            if (!_sheetLoaded) // don't update sheet if there is no sheet lol
-            {
-                updateSheet = false;
-            }
-
-            // update back-end settings before actually changing views
-            currentView = view;
-
-            if (saveSettings)
-            {
-                App.Settings.StartView = view;
-                SaveSettings();
-            }
-
-            switch (view)
-            {
-                case CONTINUOUS_VIEW:
-                    SetAllTabsVisibility();
-                    LoadGeneralTab();
-
-                    txtEditRaw.Visibility = Visibility.Collapsed;
-                    mnuEdit.Visibility = Visibility.Collapsed;
-                    mnuEditS.Visibility = Visibility.Visible;
-                    if (mnuTabBar.IsChecked) ShowTabsBar(); else HideTabsBar();
-                    stkEditToolbar.Visibility = Visibility.Collapsed;
-                    stkSheetEditToolbar.Visibility = Visibility.Visible;
-                    if (sp != null) if (!sp.IsClosed) sp.Close();
-
-                    mnuTabs.IsChecked = false;
-                    mnuScroll.IsChecked = true;
-                    mnuRawJson.IsChecked = false;
-
-                    mnuQTabs.IsChecked = false;
-                    mnuQScroll.IsChecked = true;
-                    mnuQRawJson.IsChecked = false;
-
-                    imgQView.ImageName = "ContinuousScroll";
-                    txtQViewName.Text = "Scroll View";
-
-                    mnuTabBar.IsEnabled = true;
-
-                    if (_isEditorDirty && updateSheet)
-                    {
-                        // update sheet from editor
-                        SyncSheetFromEditor();
-                    }
-                    break;
-                case TABS_VIEW:
-                    LoadGeneralTab();
-
-                    txtEditRaw.Visibility = Visibility.Collapsed;
-                    mnuEdit.Visibility = Visibility.Collapsed;
-                    mnuEditS.Visibility = Visibility.Visible;
-                    ShowTabsBar();
-                    stkEditToolbar.Visibility = Visibility.Collapsed;
-                    stkSheetEditToolbar.Visibility = Visibility.Visible;
-                    if (sp != null) if (!sp.IsClosed) sp.Close();
-
-                    mnuTabs.IsChecked = true;
-                    mnuScroll.IsChecked = false;
-                    mnuRawJson.IsChecked = false;
-
-                    mnuQTabs.IsChecked = true;
-                    mnuQScroll.IsChecked = false;
-                    mnuQRawJson.IsChecked = false;
-
-                    imgQView.ImageName = "TabView";
-                    txtQViewName.Text = "Tabbed View";
-
-                    mnuTabBar.IsEnabled = false;
-
-                    if (_isEditorDirty && updateSheet)
-                    {
-                        // update sheet from editor
-                        SyncSheetFromEditor();
-                    }
-                    break;
-                case RAWJSON_VIEW:
-                    txtEditRaw.Visibility = Visibility.Visible;
-                    mnuEdit.Visibility = Visibility.Visible;
-                    mnuEditS.Visibility = Visibility.Collapsed;
-                    HideTabsBar();
-                    stkEditToolbar.Visibility = Visibility.Visible;
-                    stkSheetEditToolbar.Visibility = Visibility.Collapsed;
-
-                    mnuTabs.IsChecked = false;
-                    mnuScroll.IsChecked = false;
-                    mnuRawJson.IsChecked = true;
-
-                    mnuQTabs.IsChecked = false;
-                    mnuQScroll.IsChecked = false;
-                    mnuQRawJson.IsChecked = true;
-
-                    mnuTabBar.IsEnabled = false;
-
-                    imgQView.ImageName = "TextFile";
-                    txtQViewName.Text = "Raw JSON View";
-
-                    if (_isTabsDirty && updateSheet)
-                    {
-                        SyncEditorFromSheet();
-                    }
-                    break;
-                default:
-                    ChangeView(TABS_VIEW, updateSheet, true, saveSettings);
-                    break;
-            }
-
-            Visibility v = lblNoSheet.Visibility;
-
-            if (displayEmptyMessage)
-            {
-                lblNoSheet.Visibility = Visibility.Visible;
-                selTabs.IsEnabled = false;
-                txtEditRaw.IsEnabled = false;
-                grdEditDrop.Visibility = Visibility.Visible;
-                SetAllTabsVisibility(Visibility.Collapsed);
-                UpdateAppearance();
-                foreach (SelectableItem item in selTabs.Items.SelectedItems.OfType<SelectableItem>().ToList())
-                {
-                    item.IsSelected = false;
-                }
-            }
-            else
-            {
-                lblNoSheet.Visibility = Visibility.Collapsed;
-                //selTabs.IsEnabled = true;
-                txtEditRaw.IsEnabled = true;
-                grdEditDrop.Visibility = Visibility.Collapsed;
-                if (lblNoSheet.Visibility != v)
-                {
-                    UpdateAppearance();
-                }
-            }
-        }
-
-        void HideTabsBar()
-        {
-            colTabs.Width = new GridLength(0);
-            colTabs.MinWidth = 0;
-            mnuTabBar.IsChecked = false;
-
-            selTabs.IsEnabled = false;
-            mnuQView.IsEnabled = false;
-        }
-
-        void ShowTabsBar()
-        {
-            colTabs.Width = new GridLength(120, GridUnitType.Auto);
-            colTabs.MinWidth = 120;
-            mnuTabBar.IsChecked = true;
-
-            if (_sheetLoaded)
-            {
-                selTabs.IsEnabled = true;
-            }
-            mnuQView.IsEnabled = true;
-        }
-
-        private void mnuScroll_Click(object sender, RoutedEventArgs e)
-        {
-            ChangeView(CONTINUOUS_VIEW, true, !_sheetLoaded);
-        }
-
-        private void mnuTabs_Click(object sender, RoutedEventArgs e)
-        {
-            ChangeView(TABS_VIEW, true, !_sheetLoaded);
-        }
-
-        private void mnuRawJson_Click(object sender, RoutedEventArgs e)
-        {
-            ChangeView(RAWJSON_VIEW, true, !_sheetLoaded);
-        }
-        private void mnuTabBar_Click(object sender, RoutedEventArgs e)
-        {
-            if (currentView == CONTINUOUS_VIEW && colTabs.MinWidth > 0)
-            {
-                HideTabsBar();
-            }
-            else
-            {
-                ShowTabsBar();
-            }
-        }
-
-        private void mnuToolbar_Click(object sender, RoutedEventArgs e)
-        {
-            if (rowToolbar.Height == new GridLength(0))
-            {
-                ShowHideToolbar(true);
-            }
-            else
-            {
-                ShowHideToolbar(false);
-            }
-
-            App.Settings.ShowToolbar = toolbar.IsEnabled;
-            SaveSettings();
-        }
-
-        private void mnuFilename_Click(object sender, RoutedEventArgs e)
-        {
-            if (mnuFilename.IsChecked)
-            {
-                mnuFilename.IsChecked = false;
-            }
-            else
-            {
-                mnuFilename.IsChecked = true;
-            }
-
-            App.Settings.PathInTitleBar = mnuFilename.IsChecked;
-            SaveSettings();
-            UpdateTitlebar();
-        }
-
-        #endregion
-
-        #region Tools menu
-
-        DiceRollerWindow? drw = null;
-
-        private void mnuDiceRoll_Click(object sender, RoutedEventArgs e)
-        {
-            if (drw != null)
-            {
-                drw.Show();
-                drw.Focus();
-            }
-            else
-            {
-                drw = new DiceRollerWindow();
-                drw.ColorScheme = App.ColorScheme;
-                drw.Closed += DiceRollerWindow_Closed;
-                //drw.Owner = this;
-                drw.Show();
-            }
-
-
-        }
-
-        private void DiceRollerWindow_Closed(object? sender, EventArgs e)
-        {
-            if (drw != null)
-            {
-                drw.Closed -= DiceRollerWindow_Closed;
-                drw = null;
-            }
-        }
-
-        private void mnuEditorFont_Click(object sender, RoutedEventArgs e)
-        {
-            FontSelectDialog fds = new FontSelectDialog();
-            fds.ShowDecorations = false;
-            fds.ColorScheme = App.ColorScheme;
-
-            fds.SelectedFontFamily = txtEditRaw.FontFamily;
-            fds.SelectedFontSize = txtEditRaw.FontSize;
-            fds.SelectedFontStyle = txtEditRaw.FontStyle;
-            fds.SelectedFontWeight = txtEditRaw.FontWeight;
-
-            fds.Owner = this;
-            fds.WindowStartupLocation = WindowStartupLocation.CenterOwner;
-
-            fds.ShowDialog();
-
-            if (fds.DialogResult)
-            {
-                txtEditRaw.FontFamily = fds.SelectedFontFamily;
-                txtEditRaw.FontSize = fds.SelectedFontSize;
-                txtEditRaw.FontStyle = fds.SelectedFontStyle;
-                txtEditRaw.FontWeight = fds.SelectedFontWeight;
-
-                SaveSettings(true);
-            }
-        }
-
-
-        private void mnuOptions_Click(object sender, RoutedEventArgs e)
-        {
-            Options o = new Options();
-            o.Owner = this;
-            o.WindowStartupLocation = WindowStartupLocation.CenterOwner;
-            o.ColorScheme = App.ColorScheme;
-
-            o.ShowDialog();
-
-            if (o.DialogResult)
-            {
-                ReloadSettings();
-            }
-        }
-
-        #endregion
-
-        #region Help menu
-
-        private void mnuGithub_Click(object sender, RoutedEventArgs e)
-        {
-            OpenBrowser("https://github.com/JaykeBird/PathfinderJson/");
-        }
-
-        private void mnuFeedback_Click(object sender, RoutedEventArgs e)
-        {
-            OpenBrowser("https://github.com/JaykeBird/PathfinderJson/issues/new/choose");
-        }
-
-        private void mnuKeyboard_Click(object sender, RoutedEventArgs e)
-        {
-            OpenBrowser("https://github.com/JaykeBird/PathfinderJson/wiki/Keyboard-Shortcuts");
-        }
-
-        private void mnuMarkdown_Click(object sender, RoutedEventArgs e)
-        {
-            OpenBrowser("https://commonmark.org/help/");
-        }
-
-        private void mnuAutoCheck_Click(object sender, RoutedEventArgs e)
-        {
-            if (mnuAutoCheck.IsChecked)
-            {
-                mnuAutoCheck.IsChecked = false;
-                App.Settings.UpdateAutoCheck = false;
-            }
-            else
-            {
-                mnuAutoCheck.IsChecked = true;
-                App.Settings.UpdateAutoCheck = false;
-            }
-
-            SaveSettings();
-        }
-
-        private async void mnuCheckUpdates_Click(object sender, RoutedEventArgs e)
-        {
-            await CheckForUpdates();
-        }
-
-        private void mnuAbout_Click(object sender, RoutedEventArgs e)
-        {
-            About a = new About();
-            a.Owner = this;
-            a.WindowStartupLocation = WindowStartupLocation.CenterOwner;
-            a.ShowDialog();
-        }
-
-        #endregion
-
-        #region JSON Editor
-
-        private void mnuUndo_Click(object sender, RoutedEventArgs e)
-        {
-            txtEditRaw.Undo();
-        }
-
-        private void mnuRedo_Click(object sender, RoutedEventArgs e)
-        {
-            txtEditRaw.Redo();
-        }
-
-        private void mnuCopy_Click(object sender, RoutedEventArgs e)
-        {
-            txtEditRaw.Copy();
-        }
-
-        private void mnuCut_Click(object sender, RoutedEventArgs e)
-        {
-            txtEditRaw.Cut();
-        }
-
-        private void mnuPaste_Click(object sender, RoutedEventArgs e)
-        {
-            if (_sheetLoaded)
-            {
-                txtEditRaw.Paste();
-            }
-        }
-
-        private void mnuSelectAll_Click(object sender, RoutedEventArgs e)
-        {
-            txtEditRaw.SelectAll();
-        }
-
-        private void mnuDelete_Click(object sender, RoutedEventArgs e)
-        {
-            txtEditRaw.Delete();
-        }
-
-        private void mnuWordWrap_Click(object sender, RoutedEventArgs e)
-        {
-            if (mnuWordWrap.IsChecked)
-            {
-                mnuWordWrap.IsChecked = false;
-                txtEditRaw.WordWrap = false;
-                App.Settings.EditorWordWrap = false;
-            }
-            else
-            {
-                mnuWordWrap.IsChecked = true;
-                txtEditRaw.WordWrap = true;
-                App.Settings.EditorWordWrap = true;
-            }
-
-            SaveSettings();
-        }
-
-        private void mnuFind_Click(object sender, RoutedEventArgs e)
-        {
-            if (_sheetLoaded)
-            {
-
-                sp.Open();
-                if (!(txtEditRaw.TextArea.Selection.IsEmpty || txtEditRaw.TextArea.Selection.IsMultiline))
-                    sp.SearchPattern = txtEditRaw.TextArea.Selection.GetText();
-                Dispatcher.CurrentDispatcher.BeginInvoke(DispatcherPriority.Input, (Action)delegate { sp.Reactivate(); });
-            }
-        }
-
-        private void txtEditRaw_TextChanged(object sender, EventArgs e)
-        {
-            if (!_isUpdating)
-            {
-                _isEditorDirty = true;
-                SetIsDirty(true, false);
-            }
-        }
-
-        private void txtEditRaw_Drop(object sender, DragEventArgs e)
-        {
-            if (e.Data.GetDataPresent(DataFormats.FileDrop))
-            {
-                string[] files = (string[])e.Data.GetData(DataFormats.FileDrop)!;
-
-                if (!SaveDirtyChanges() || CheckCalculating())
-                {
-                    return;
-                }
-
-                LoadFile(files[0]);
-            }
-        }
-
-        void SetSyntaxHighlighting(bool value)
-        {
-            if (value)
-            {
-                using (Stream? s = System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceStream("PathfinderJson.Json.xshd"))
-                {
-                    if (s != null)
-                    {
-                        using XmlReader reader = new XmlTextReader(s);
-                        txtEditRaw.SyntaxHighlighting = ICSharpCode.AvalonEdit.Highlighting.Xshd.HighlightingLoader.Load(reader, HighlightingManager.Instance);
-                    }
-                }
-            }
-            else
-            {
-                using (Stream? s = System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceStream("PathfinderJson.None.xshd"))
-                {
-                    if (s != null)
-                    {
-                        using XmlReader reader = new XmlTextReader(s);
-                        txtEditRaw.SyntaxHighlighting = ICSharpCode.AvalonEdit.Highlighting.Xshd.HighlightingLoader.Load(reader, HighlightingManager.Instance);
-                    }
-                }
-            }
-
-            App.Settings.EditorSyntaxHighlighting = value;
-            SaveSettings();
-        }
-
-        #region Font Settings
-        void LoadEditorFontSettings()
-        {
-            string family = App.Settings.EditorFontFamily;
-            string size = App.Settings.EditorFontSize;
-            string style = App.Settings.EditorFontStyle;
-            string weight = App.Settings.EditorFontWeight.Replace("w", "").Replace(".", "");
-
-            // sanitizing user input
-            if (string.IsNullOrEmpty(family))
-            {
-                family = "Consolas";
-            }
-            if (string.IsNullOrEmpty(size))
-            {
-                size = "12";
-            }
-            if (string.IsNullOrEmpty(style))
-            {
-                style = "Normal";
-            }
-            if (string.IsNullOrEmpty(weight))
-            {
-                weight = "400";
-            }
-
-            if (style == "None")
-            {
-                style = "Normal";
-            }
-
-            // check if weight is an integer value or not; if not, try to convert it
-            if (!int.TryParse(weight, out _))
-            {
-                // converter of common fontweight values
-                // taken from https://docs.microsoft.com/en-us/dotnet/api/system.windows.fontweights
-                if (weight.ToLowerInvariant() == "thin")
-                {
-                    weight = "100";
-                }
-                else if (weight.ToLowerInvariant() == "extralight" || weight.ToLowerInvariant() == "ultralight")
-                {
-                    weight = "200";
-                }
-                else if (weight.ToLowerInvariant() == "light")
-                {
-                    weight = "300";
-                }
-                else if (weight.ToLowerInvariant() == "normal" || weight.ToLowerInvariant() == "regular")
-                {
-                    weight = "400";
-                }
-                else if (weight.ToLowerInvariant() == "medium")
-                {
-                    weight = "500";
-                }
-                else if (weight.ToLowerInvariant() == "demibold" || weight.ToLowerInvariant() == "semibold")
-                {
-                    weight = "600";
-                }
-                else if (weight.ToLowerInvariant() == "bold")
-                {
-                    weight = "700";
-                }
-                else if (weight.ToLowerInvariant() == "extrabold" || weight.ToLowerInvariant() == "ultrabold")
-                {
-                    weight = "800";
-                }
-                else if (weight.ToLowerInvariant() == "black" || weight.ToLowerInvariant() == "heavy")
-                {
-                    weight = "900";
-                }
-                else if (weight.ToLowerInvariant() == "extrablack" || weight.ToLowerInvariant() == "ultrablack")
-                {
-                    weight = "950";
-                }
-                else
-                {
-                    // don't know what the heck they put in there, but it's not a font weight; set it to normal
-                    weight = "400";
-                }
-            }
-
-            FontFamily ff = new FontFamily(family + ", Consolas"); // use Consolas as fallback in case that font doesn't exist or the font doesn't contain proper glyphs
-
-            double dsz = 12;
-
-            try
-            {
-                dsz = double.Parse(size.Replace("p", "").Replace("d", "").Replace("x", "").Replace("t", ""));
-            }
-            catch (FormatException) { } // if "size" is a string that isn't actually a double, just keep it as 12
-
-            FontStyle fs = FontStyles.Normal;
-            try
-            {
-                fs = (FontStyle?)new FontStyleConverter().ConvertFromInvariantString(style) ?? FontStyles.Normal;
-            }
-            catch (NotSupportedException) { } // if "style" is a string that isn't actually a FontStyle, just keep it as normal
-            catch (FormatException) { }
-
-            int w = int.Parse(weight);
-            if (w > 999)
-            {
-                w = 999;
-            }
-            else if (w < 1)
-            {
-                w = 1;
-            }
-            FontWeight fw = FontWeight.FromOpenTypeWeight(w);
-
-            txtEditRaw.FontFamily = ff;
-            txtEditRaw.FontSize = dsz;
-            txtEditRaw.FontStyle = fs;
-            txtEditRaw.FontWeight = fw;
-        }
-
-        void SaveEditorFontSettings()
-        {
-            string ff = (txtEditRaw.FontFamily.Source).Replace(", Consolas", "");
-
-            App.Settings.EditorFontFamily = ff;
-            App.Settings.EditorFontSize = txtEditRaw.FontSize.ToString();
-
-            // because the ToString() method for FontStyle uses CurrentCulture rather than InvariantCulture, I need to convert it to string myself.
-            if (txtEditRaw.FontStyle == FontStyles.Italic)
-            {
-                App.Settings.EditorFontStyle = "Italic";
-            }
-            else if (txtEditRaw.FontStyle == FontStyles.Oblique)
-            {
-                App.Settings.EditorFontStyle = "Oblique";
-            }
-            else
-            {
-                App.Settings.EditorFontStyle = "Normal";
-            }
-        }
-        #endregion
-
-        #endregion
-
         #region Load File
         void LoadFile(string filename, bool addToRecent = true)
         {
@@ -2910,332 +1725,107 @@ namespace PathfinderJson
         }
         #endregion
 
-        #region Sync Editors / update sheet / CreatePathfinderSheetAsync
+        #region Sheet settings
 
-        #region Update UI (Calculate menu)
-
-        private async void mnuUpdate_Click(object sender, RoutedEventArgs e)
+        public void LoadSheetSettings(bool reloadSkills = false)
         {
-            await UpdateCalculations(true, mnuUpdateTotals.IsChecked, mnuUpdateAc.IsChecked);
-        }
-
-        private void mnuUpdateAc_Click(object sender, RoutedEventArgs e)
-        {
-            mnuUpdateAc.IsChecked = !mnuUpdateAc.IsChecked;
-            edtAc.CalculateAcValueChanged(mnuUpdateAc.IsChecked);
-            if (_sheetLoaded && !_isUpdating)
+            if (sheetSettings != null)
             {
-                sheetSettings["calcIncludeAc"] = mnuUpdateAc.IsChecked ? "true" : "false";
-            }
-        }
-
-        private void mnuAutoUpdate_Click(object sender, RoutedEventArgs e)
-        {
-            mnuAutoUpdate.IsChecked = !mnuAutoUpdate.IsChecked;
-            if (_sheetLoaded && !_isUpdating)
-            {
-                sheetSettings["calcAutorun"] = mnuAutoUpdate.IsChecked ? "true" : "false";
-            }
-        }
-
-        private void mnuUpdateTotals_Click(object sender, RoutedEventArgs e)
-        {
-            mnuUpdateTotals.IsChecked = !mnuUpdateTotals.IsChecked;
-            if (_sheetLoaded && !_isUpdating)
-            {
-                sheetSettings["calcIncludeTotals"] = mnuUpdateTotals.IsChecked ? "true" : "false";
-            }
-        }
-
-        #endregion
-
-        void UpdateInternalBab()
-        {
-            string bab = txtBab.Text;
-            string buffer = "";
-
-            if (string.IsNullOrEmpty(bab))
-            {
-                babCalc = 0;
-                return;
-            }
-
-            foreach (char c in bab)
-            {
-                if (char.IsDigit(c) || c == '+' || c == '-')
+                if (HasSheetSettingValue("notesMarkdown", "enabled"))
                 {
-                    buffer += c;
+                    ShowMarkdownElements();
+                    OpenNotesViewTab();
+                    chkNotesMarkdown.IsChecked = true;
                 }
                 else
                 {
-                    break;
-                }
-            }
-
-            bool res = int.TryParse(buffer, out int value);
-
-            if (res)
-            {
-                babCalc = value;
-            }
-            else
-            {
-                babCalc = 0;
-            }
-        }
-
-        async Task UpdateCalculations(bool skills = true, bool totals = true, bool ac = true)
-        {
-            if (!_sheetLoaded)
-            {
-                MessageDialog md = new MessageDialog(App.ColorScheme);
-                md.ShowDialog("Cannot run calculations when no sheet is opened.", App.ColorScheme, this, "Update Calculations", MessageDialogButtonDisplay.Auto, image: MessageDialogImage.Error);
-                return;
-            }
-
-            if (_isCalculating)
-            {
-                return;
-            }
-
-            _isUpdating = true;
-
-            if (currentView == RAWJSON_VIEW && _isEditorDirty)
-            {
-                SyncSheetFromEditor();
-            }
-
-            _isCalculating = true;
-            brdrCalculating.Visibility = Visibility.Visible;
-
-            UpdateInternalBab();
-
-            if (grdAbilityIcon.Visibility == Visibility.Visible)
-            {
-                ApplyIconValuesToTable();
-            }
-
-            txtStrm.Text = CalculateModifier(txtStr.Value);
-            txtDexm.Text = CalculateModifier(txtDex.Value);
-            txtCham.Text = CalculateModifier(txtCha.Value);
-            txtConm.Text = CalculateModifier(txtCon.Value);
-            txtIntm.Text = CalculateModifier(txtInt.Value);
-            txtWism.Text = CalculateModifier(txtWis.Value);
-
-            edtFort.UpdateCoreModifier(txtConm.Text);
-            edtReflex.UpdateCoreModifier(txtDexm.Text);
-            edtWill.UpdateCoreModifier(txtWism.Text);
-
-            edtAc.UpdateCoreModifier(txtDexm.Text);
-            edtInit.UpdateCoreModifier(txtDexm.Text);
-            edtCmb.UpdateCoreModifier(txtStrm.Text, "", babCalc.ToString());
-            edtCmd.UpdateCoreModifier(txtStrm.Text, txtDexm.Text, babCalc.ToString());
-
-            if (skills)
-            {
-                foreach (SkillEditor? item in stkSkills.Children)
-                {
-                    if (item == null)
-                    {
-                        continue;
-                    }
-
-                    string modifier = "";
-
-                    switch (item.ModifierName)
-                    {
-                        case "DEX":
-                            modifier = txtDexm.Text;
-                            break;
-                        case "INT":
-                            modifier = txtIntm.Text;
-                            break;
-                        case "CHA":
-                            modifier = txtCham.Text;
-                            break;
-                        case "STR":
-                            modifier = txtStrm.Text;
-                            break;
-                        case "WIS":
-                            modifier = txtWism.Text;
-                            break;
-                        case "CON":
-                            modifier = txtConm.Text;
-                            break;
-                        default:
-                            break;
-                    }
-                    item.ModifierValue = int.Parse(modifier);
-
-                    if (totals)
-                    {
-                        item.UpdateCalculations();
-                    }
-                }
-            }
-
-            if (ac)
-            {
-                // special calculations for AC items
-                int acShield = 0;
-                int acArmor = 0;
-
-                int tWeight = 0;
-                int tBonus = 0;
-                int tSpellcheck = 0;
-                int tPenalty = 0;
-
-                // TODO: switch over to load items from ILD
-                foreach (AcItemEditor acItem in selAcItem.Items.OfType<AcItemEditor>())
-                {
-                    AcItem ai = acItem.GetAcItem();
-                    if ((ai.Name ?? "").ToLowerInvariant().Contains("shield") || (ai.Type ?? "").ToLowerInvariant().Contains("shield"))
-                    {
-                        // this is a shield
-                        acShield += ParseStringAsInt(ai.Bonus);
-                    }
-                    else
-                    {
-                        // probably not a shield? consider it armor
-                        acArmor += ParseStringAsInt(ai.Bonus);
-                    }
-
-                    tBonus += ParseStringAsInt(ai.Bonus);
-                    tSpellcheck += ParseStringAsInt((ai.SpellFailure ?? "").Replace("%", ""));
-                    tPenalty += ParseStringAsInt(ai.ArmorCheckPenalty);
-                    tWeight += ParseStringAsInt(ai.Weight);
+                    HideMarkdownElements();
+                    chkNotesMarkdown.IsChecked = false;
                 }
 
-                txtAcBonus.Text = tBonus.ToString();
-                txtAcPenalty.Text = tPenalty.ToString();
-                txtAcSpellFailure.Text = tSpellcheck.ToString() + "%";
-                txtAcWeight.Text = tWeight.ToString();
-
-                edtAc.UpdateAcItemBonuses(acShield.ToString(), acArmor.ToString());
-            }
-
-            if (totals)
-            {
-                edtFort.UpdateTotal();
-                edtReflex.UpdateTotal();
-                edtWill.UpdateTotal();
-
-                edtAc.UpdateTotal();
-                edtInit.UpdateTotal();
-                edtCmb.UpdateTotal();
-                edtCmd.UpdateTotal();
-            }
-
-            if (currentView == RAWJSON_VIEW)
-            {
-                SyncEditorFromSheet();
-            }
-
-            _isCalculating = false;
-            brdrCalculating.Visibility = Visibility.Collapsed;
-
-            _isUpdating = false;
-
-            SetIsDirty();
-        }
-
-        #region Sync
-
-        /// <summary>
-        /// Update the sheet views from data in the text editor. Also sets the editor as no longer dirty (out-of-sync), as long as the editor has valid JSON.
-        /// </summary>
-        /// <returns></returns>
-        void SyncSheetFromEditor()
-        {
-            if (!string.IsNullOrEmpty(txtEditRaw.Text))
-            {
-                // if no file is loaded, we don't want to write empty data into the raw JSON editor
-                if (!_sheetLoaded)
+                if (HasSheetSettingValue("notesNoSpellCheck", "enabled"))
                 {
-                    return;
+                    SpellCheck.SetIsEnabled(txtNotes, false);
+                }
+                else
+                {
+                    SpellCheck.SetIsEnabled(txtNotes, true);
                 }
 
-                try
+                if (HasSheetSettingValue("calcIncludeAc", "false"))
                 {
-                    PathfinderSheet ps = PathfinderSheet.LoadJsonText(txtEditRaw.Text);
-                    LoadPathfinderSheet(ps);
-                    fileTitle = ps.Name;
-                    _isEditorDirty = false;
-                    if (fileTitle != displayedTitle) UpdateTitlebar();
+                    mnuUpdateAc.IsChecked = false;
                 }
-                catch (Newtonsoft.Json.JsonReaderException)
+                else
                 {
-                    _isEditorDirty = false;
-                    _isTabsDirty = true;
-                    SetIsDirty(true, false);
+                    mnuUpdateAc.IsChecked = true;
                 }
-                catch (FormatException)
-                {
-                    _isEditorDirty = false;
-                    _isTabsDirty = true;
-                    SetIsDirty(true, false);
 
-                    MessageDialog md = new MessageDialog(App.ColorScheme);
-                    md.Message = "This JSON file doesn't seem to look like it's a character sheet at all. " +
-                        "It may be good to open the Raw JSON view to check that the file matches what you're expecting.\n\n" +
-                        "PathfinderJSON will continue, but if you save any changes, any non-character sheet data may be deleted.";
-                    md.Title = "File Check Warning";
-                    md.Owner = this;
-                    md.Image = MessageDialogImage.Hand;
-                    md.ShowDialog();
-                }
-                catch (Newtonsoft.Json.JsonSerializationException)
+                if (HasSheetSettingValue("calcIncludeTotals", "false"))
                 {
-                    _isEditorDirty = false;
-                    _isTabsDirty = true;
-                    SetIsDirty(true, false);
+                    mnuUpdateTotals.IsChecked = false;
+                }
+                else
+                {
+                    mnuUpdateTotals.IsChecked = true;
+                }
 
-                    MessageDialog md = new MessageDialog(App.ColorScheme);
-                    md.Message = "This JSON file doesn't seem to look like it's a character sheet at all. " +
-                        "It may be good to open the Raw JSON view to check that the file matches what you're expecting.\n\n" +
-                        "PathfinderJSON will continue, but if you save any changes, any non-character sheet data may be deleted.";
-                    md.Title = "File Check Warning";
-                    md.Owner = this;
-                    md.Image = MessageDialogImage.Hand;
-                    md.ShowDialog();
+                if (HasSheetSettingValue("calcAutorun", "false"))
+                {
+                    mnuAutoUpdate.IsChecked = false;
+                }
+                else
+                {
+                    mnuAutoUpdate.IsChecked = true;
                 }
             }
             else
             {
-                _isEditorDirty = false;
-                _isTabsDirty = true;
-                SetIsDirty(true, false);
+                HideMarkdownElements();
+                chkNotesMarkdown.IsChecked = false;
+                SpellCheck.SetIsEnabled(txtNotes, true);
+
+                mnuUpdateAc.IsChecked = true;
+                mnuUpdateTotals.IsChecked = true;
+                mnuAutoUpdate.IsChecked = true;
+            }
+
+            if (reloadSkills)
+            {
+                PathfinderSheet pf = CreatePathfinderSheet();
+                var ses = SkillEditorFactory.CreateEditors(pf, this);
+
+                stkSkills.Children.Clear();
+                foreach (SkillEditor item in ses)
+                {
+                    item.ModifierValue = abilityMods[item.ModifierName];
+                    item.UpdateCalculations();
+
+                    item.ContentChanged += editor_ContentChanged;
+                    item.ModifierChanged += editor_ModifierChanged;
+
+                    stkSkills.Children.Add(item);
+                    item.ColorScheme = ColorScheme;
+                    //item.UpdateAppearance();
+                }
+
+                if (sheetSettings?.ContainsKey("skillModSet") ?? false)
+                {
+                    LoadSkillModSubstitutions(sheetSettings["skillModSet"] ?? "");
+                }
             }
         }
 
         /// <summary>
-        /// Update the editor view from data in the sheet views. Also sets the sheet as no longer dirty (out-of-sync).
+        /// Check if a certain sheet setting value is stored in this sheet's sheet settings.
         /// </summary>
-        /// <returns></returns>
-        void SyncEditorFromSheet()
+        /// <param name="settingName">The name of the setting value to check.</param>
+        /// <param name="checkValue">The value to check. Only returns true if the setting matches this value.</param>
+        /// <returns>Returns true only if the setting with the specified name has the specified value. In all other situations, returns false.</returns>
+        /// <remarks>To check simply if a setting name exists, use the <c>sheetSettings.ContainsKey()</c> method instead.</remarks>
+        public bool HasSheetSettingValue(string settingName, string? checkValue = null)
         {
-            // if no file is loaded, we don't want to write empty data into the raw JSON editor
-            if (!_sheetLoaded)
-            {
-                return;
-            }
-
-            PathfinderSheet ps = CreatePathfinderSheet();
-            txtEditRaw.Text = ps.SaveJsonText(App.Settings.IndentJsonData);
-            _isTabsDirty = false;
-        }
-
-        // these two menu commands are hidden
-        // hopefully, we shouldn't be needing these commands at all, as the program should automatically do the syncing as needed
-        // but we'll have to see if any bugs come up
-        private void mnuRefresh_Click(object sender, RoutedEventArgs e)
-        {
-            SyncSheetFromEditor();
-        }
-
-        private void mnuRefreshEditor_Click(object sender, RoutedEventArgs e)
-        {
-            SyncEditorFromSheet();
+            return sheetSettings.ContainsKey(settingName) ? sheetSettings[settingName]?.ToLowerInvariant() == checkValue : false;
         }
 
         #endregion
@@ -3521,6 +2111,1670 @@ namespace PathfinderJson
 
         #endregion
 
+        #region Undo/Redo
+
+        // relevant variables are declared at the top of the class
+
+        void StartUndoTimer(UIElement sender)
+        {
+            if (sender != lastEditedItem)
+            {
+                CreateUndoState();
+                PostUndoStateUpdate("New element state / timer restart");
+
+                undoSetTimer.Stop();
+                undoSetTimer.Start();
+            }
+            else
+            {
+                //CreateUndoState();
+                if (undoSetTimer.IsEnabled)
+                {
+                    PostUndoStateUpdate("Timer restart");
+
+                    undoSetTimer.Stop();
+                    undoSetTimer.Start();
+                }
+                else
+                {
+                    undoSetTimer.Start();
+                    PostUndoStateUpdate("Timer start");
+                }
+            }
+        }
+
+        private void UndoSetTimer_Tick(object? sender, EventArgs e)
+        {
+            CreateUndoState();
+            undoSetTimer.IsEnabled = false;
+            PostUndoStateUpdate("Tick, new state");
+        }
+
+        private void CreateUndoState()
+        {
+            PathfinderSheet? opfs = undoStack.TryPeekUndo();
+            PathfinderSheet ps = CreatePathfinderSheet();
+            undoStack.StoreState(ps);
+            PostUndoStateUpdate("New state");
+            if (mnuShowUndo.IsChecked && opfs != null)
+            {
+                CompareResult cr = Compare.CompareObjects(opfs, ps);
+                if (cr.Success == CompareSuccessValue.Success)
+                {
+                    lastUndoChangeData = string.Join(',', cr.DifferingProperties);
+                }
+            }
+
+            btnUndoS.IsEnabled = undoStack.CanUndo;
+            mnuUndoS.IsEnabled = undoStack.CanUndo;
+            btnRedoS.IsEnabled = undoStack.CanRedo;
+            mnuRedoS.IsEnabled = undoStack.CanRedo;
+        }
+
+        private void mnuUndoS_Click(object sender, RoutedEventArgs e)
+        {
+            if (undoStack.CanUndo)
+            {
+                CoreLoadPathfinderSheet(undoStack.Undo());
+                PostUndoStateUpdate("Undo done");
+                lastUndoChangeData = "";
+            }
+
+            btnUndoS.IsEnabled = undoStack.CanUndo;
+            mnuUndoS.IsEnabled = undoStack.CanUndo;
+            btnRedoS.IsEnabled = undoStack.CanRedo;
+            mnuRedoS.IsEnabled = undoStack.CanRedo;
+        }
+
+        private void mnuRedoS_Click(object sender, RoutedEventArgs e)
+        {
+            if (undoStack.CanRedo)
+            {
+                CoreLoadPathfinderSheet(undoStack.Redo());
+                PostUndoStateUpdate("Redo done");
+                lastUndoChangeData = "";
+            }
+
+            btnUndoS.IsEnabled = undoStack.CanUndo;
+            mnuUndoS.IsEnabled = undoStack.CanUndo;
+            btnRedoS.IsEnabled = undoStack.CanRedo;
+            mnuRedoS.IsEnabled = undoStack.CanRedo;
+        }
+
+        void PostUndoStateUpdate(string text)
+        {
+            if (mnuShowUndo.IsChecked)
+            {
+                brdrUndoState.Visibility = Visibility.Visible;
+                if (string.IsNullOrEmpty(lastUndoChangeData))
+                {
+                    txtUndoState.Text = text;
+                }
+                else
+                {
+                    txtUndoState.Text = text + " - " + lastUndoChangeData;
+                }
+            }
+            else
+            {
+                brdrUndoState.Visibility = Visibility.Collapsed;
+            }
+        }
+
+        private void mnuShowUndo_Click(object sender, RoutedEventArgs e)
+        {
+            mnuShowUndo.IsChecked = !mnuShowUndo.IsChecked;
+        }
+
+        private void mnuExploreUndo_Click(object sender, RoutedEventArgs e)
+        {
+            UndoStackTest ust = new UndoStackTest();
+            ust.SetBinding(ColorSchemeProperty, new Binding("ColorScheme") { Source = this });
+            ust.MainWindow = this;
+            ust.Show();
+        }
+
+        internal UndoStack<PathfinderSheet> GetUndoStack()
+        {
+            return undoStack;
+        }
+
+        #endregion
+
+        #region View options
+
+        void UpdateAppearance()
+        {
+            ApplyColorScheme(App.ColorScheme);
+            menu.ApplyColorScheme(App.ColorScheme);
+            toolbar.Background = App.ColorScheme.MainColor.ToBrush();
+            if (sp != null) sp.ColorScheme = App.ColorScheme;
+
+            if (App.ColorScheme.IsHighContrast)
+            {
+                menu.Background = App.ColorScheme.BackgroundColor.ToBrush();
+                toolbar.Background = App.ColorScheme.BackgroundColor.ToBrush();
+            }
+
+            selTabs.ApplyColorScheme(App.ColorScheme);
+
+            // quick fix until I make a better system post-1.0
+            if (App.ColorScheme.IsHighContrast)
+            {
+                //foreach (SelectableItem item in selTabs.GetItemsAsType<SelectableItem>())
+                //{
+                //    item.ApplyColorScheme(App.ColorScheme);
+                //    //if (selTabs.IsEnabled)
+                //    //{
+                //    //    item.ApplyColorScheme(App.ColorScheme);
+                //    //}
+                //    //else
+                //    //{
+                //    //    item.Foreground = App.ColorScheme.ForegroundColor.ToBrush();
+                //    //}
+                //}
+
+                txtStrm.BorderBrush = new SolidColorBrush(App.ColorScheme.LightDisabledColor);
+                txtDexm.BorderBrush = new SolidColorBrush(App.ColorScheme.LightDisabledColor);
+                txtCham.BorderBrush = new SolidColorBrush(App.ColorScheme.LightDisabledColor);
+                txtConm.BorderBrush = new SolidColorBrush(App.ColorScheme.LightDisabledColor);
+                txtIntm.BorderBrush = new SolidColorBrush(App.ColorScheme.LightDisabledColor);
+                txtWism.BorderBrush = new SolidColorBrush(App.ColorScheme.LightDisabledColor);
+
+                txtStrm.Background = new SolidColorBrush(SystemColors.ControlColor);
+                txtDexm.Background = new SolidColorBrush(SystemColors.ControlColor);
+                txtCham.Background = new SolidColorBrush(SystemColors.ControlColor);
+                txtConm.Background = new SolidColorBrush(SystemColors.ControlColor);
+                txtIntm.Background = new SolidColorBrush(SystemColors.ControlColor);
+                txtWism.Background = new SolidColorBrush(SystemColors.ControlColor);
+            }
+            else
+            {
+                foreach (SelectableUserControl item in selTabs.Items)
+                {
+                    if (item.IsEnabled)
+                    {
+                        item.ApplyColorScheme(App.ColorScheme);
+                    }
+                    else
+                    {
+                        item.Foreground = App.ColorScheme.DarkDisabledColor.ToBrush();
+                    }
+                }
+
+                txtStrm.BorderBrush = new SolidColorBrush(SystemColors.ControlDarkColor);
+                txtDexm.BorderBrush = new SolidColorBrush(SystemColors.ControlDarkColor);
+                txtCham.BorderBrush = new SolidColorBrush(SystemColors.ControlDarkColor);
+                txtConm.BorderBrush = new SolidColorBrush(SystemColors.ControlDarkColor);
+                txtIntm.BorderBrush = new SolidColorBrush(SystemColors.ControlDarkColor);
+                txtWism.BorderBrush = new SolidColorBrush(SystemColors.ControlDarkColor);
+
+                txtStrm.Background = App.ColorScheme.SecondHighlightColor.ToBrush();
+                txtDexm.Background = App.ColorScheme.SecondHighlightColor.ToBrush();
+                txtCham.Background = App.ColorScheme.SecondHighlightColor.ToBrush();
+                txtConm.Background = App.ColorScheme.SecondHighlightColor.ToBrush();
+                txtIntm.Background = App.ColorScheme.SecondHighlightColor.ToBrush();
+                txtWism.Background = App.ColorScheme.SecondHighlightColor.ToBrush();
+            }
+
+            brdrCalculating.Background = App.ColorScheme.SecondaryColor.ToBrush();
+            brdrCalculating.BorderBrush = App.ColorScheme.HighlightColor.ToBrush();
+
+            (txtEditRaw.ContextMenu as SolidShineUi.ContextMenu)!.ApplyColorScheme(App.ColorScheme);
+
+            expUser.Background = App.ColorScheme.LightBackgroundColor.ToBrush();
+            expUser.BorderBrush = App.ColorScheme.ThirdHighlightColor.ToBrush();
+            expUser.BorderThickness = new Thickness(1);
+
+            expPhysical.Background = App.ColorScheme.LightBackgroundColor.ToBrush();
+            expPhysical.BorderBrush = App.ColorScheme.ThirdHighlightColor.ToBrush();
+            expPhysical.BorderThickness = new Thickness(1);
+
+            edtFort.UpdateAppearance();
+            edtReflex.UpdateAppearance();
+            edtWill.UpdateAppearance();
+
+            edtCmb.UpdateAppearance();
+            edtCmd.UpdateAppearance();
+            edtInit.UpdateAppearance();
+
+            edtAc.UpdateAppearance();
+
+            foreach (SkillEditor? item in stkSkills.Children)
+            {
+                if (item == null) continue;
+                item.ColorScheme = ColorScheme;
+                //item.UpdateAppearance();
+            }
+
+            btnNotesEdit.Background = Color.FromArgb(1, 0, 0, 0).ToBrush();
+            btnNotesView.Background = Color.FromArgb(1, 0, 0, 0).ToBrush();
+
+            //foreach (SpellEditor item in selSpells.GetItemsAsType<SpellEditor>())
+            //{
+            //    item.ApplyColorScheme(App.ColorScheme);
+            //}
+        }
+
+        #region Tab bar
+
+        void SetupTabs()
+        {
+            selTabs.Items.Add(CreateTab("General"));
+            selTabs.Items.Add(CreateTab("Skills"));
+            selTabs.Items.Add(CreateTab("Combat"));
+            selTabs.Items.Add(CreateTab("Spells"));
+            selTabs.Items.Add(CreateTab("Feats/Abilities"));
+            selTabs.Items.Add(CreateTab("Items"));
+            selTabs.Items.Add(CreateTab("Notes"));
+
+            SetAllTabsVisibility(Visibility.Collapsed);
+        }
+
+        SelectableItem CreateTab(string name, ImageSource? image = null)
+        {
+            SelectableItem si = new SelectableItem
+            {
+                Height = 36,
+                Text = name,
+                Indent = 6
+            };
+
+            if (image == null)
+            {
+                si.ShowImage = false;
+            }
+            else
+            {
+                si.ImageSource = image;
+                si.ShowImage = true;
+            }
+
+            si.Click += tabItem_Click;
+            return si;
+        }
+
+        void LoadGeneralTab()
+        {
+            selTabs.Items[0].IsSelected = true;
+            LoadTab("General");
+        }
+
+        void LoadTab(string text)
+        {
+            if (currentView == TABS_VIEW)
+            {
+                SetAllTabsVisibility(Visibility.Collapsed);
+
+                //txtLoc.Text = text;
+                switch (text)
+                {
+                    case "General":
+                        grdGeneral.Visibility = Visibility.Visible;
+                        break;
+                    case "Skills":
+                        grdSkills.Visibility = Visibility.Visible;
+                        break;
+                    case "Combat":
+                        grdCombat.Visibility = Visibility.Visible;
+                        break;
+                    case "Spells":
+                        grdSpells.Visibility = Visibility.Visible;
+                        break;
+                    case "Feats/Abilities":
+                        grdFeats.Visibility = Visibility.Visible;
+                        break;
+                    case "Items":
+                        grdItems.Visibility = Visibility.Visible;
+                        break;
+                    case "Notes":
+                        grdNotes.Visibility = Visibility.Visible;
+                        break;
+                    default:
+                        break;
+                }
+                scrSheet.ScrollToVerticalOffset(0);
+            }
+            else
+            {
+                SetAllTabsVisibility();
+                //txtLoc.Text = "All Tabs";
+
+                TextBlock control = titGeneral;
+
+                switch (text)
+                {
+                    case "General":
+                        control = titGeneral;
+                        break;
+                    case "Skills":
+                        control = titSkills;
+                        break;
+                    case "Combat":
+                        control = titCombat;
+                        break;
+                    case "Spells":
+                        control = titSpells;
+                        break;
+                    case "Feats/Abilities":
+                        control = titFeats;
+                        break;
+                    case "Items":
+                        control = titItems;
+                        break;
+                    case "Notes":
+                        control = titNotes;
+                        break;
+                    default:
+                        break;
+                }
+
+                Point relativeLocation = control.TranslatePoint(new Point(0, 0), stkSheet);
+                scrSheet.ScrollToVerticalOffset(relativeLocation.Y - 5);
+            }
+        }
+
+        private void tabItem_Click(object? sender, EventArgs e)
+        {
+            if (sender == null) return;
+            SelectableItem si = (SelectableItem)sender;
+
+            if (si.CanSelect)
+            {
+                LoadTab(si.Text);
+            }
+        }
+
+        void SetAllTabsVisibility(Visibility visibility = Visibility.Visible)
+        {
+            grdGeneral.Visibility = visibility;
+            grdSkills.Visibility = visibility;
+            grdCombat.Visibility = visibility;
+            grdSpells.Visibility = visibility;
+            grdFeats.Visibility = visibility;
+            grdItems.Visibility = visibility;
+            grdNotes.Visibility = visibility;
+        }
+
+        void HideTabsBar()
+        {
+            colTabs.Width = new GridLength(0);
+            colTabs.MinWidth = 0;
+            mnuTabBar.IsChecked = false;
+
+            selTabs.IsEnabled = false;
+            mnuQView.IsEnabled = false;
+        }
+
+        void ShowTabsBar()
+        {
+            colTabs.Width = new GridLength(120, GridUnitType.Auto);
+            colTabs.MinWidth = 120;
+            mnuTabBar.IsChecked = true;
+
+            if (_sheetLoaded)
+            {
+                selTabs.IsEnabled = true;
+            }
+            mnuQView.IsEnabled = true;
+        }
+
+        #endregion
+
+        void ChangeView(string view, bool updateSheet = true, bool displayEmptyMessage = false, bool saveSettings = true)
+        {
+            view = view.ToLowerInvariant();
+
+            // weed out unintended "view" strings
+            if (view != CONTINUOUS_VIEW && view != TABS_VIEW && view != RAWJSON_VIEW)
+            {
+                //await ChangeView(TABS_VIEW, updateSheet, displayEmptyMessage, saveSettings);
+                return;
+            }
+
+            if (!_sheetLoaded) // don't update sheet if there is no sheet lol
+            {
+                updateSheet = false;
+            }
+
+            // update back-end settings before actually changing views
+            currentView = view;
+
+            if (saveSettings)
+            {
+                App.Settings.StartView = view;
+                SaveSettings();
+            }
+
+            switch (view)
+            {
+                case CONTINUOUS_VIEW:
+                    SetAllTabsVisibility();
+                    LoadGeneralTab();
+
+                    txtEditRaw.Visibility = Visibility.Collapsed;
+                    mnuEdit.Visibility = Visibility.Collapsed;
+                    mnuEditS.Visibility = Visibility.Visible;
+                    if (mnuTabBar.IsChecked) ShowTabsBar(); else HideTabsBar();
+                    stkEditToolbar.Visibility = Visibility.Collapsed;
+                    stkSheetEditToolbar.Visibility = Visibility.Visible;
+                    if (sp != null) if (!sp.IsClosed) sp.Close();
+
+                    mnuTabs.IsChecked = false;
+                    mnuScroll.IsChecked = true;
+                    mnuRawJson.IsChecked = false;
+
+                    mnuQTabs.IsChecked = false;
+                    mnuQScroll.IsChecked = true;
+                    mnuQRawJson.IsChecked = false;
+
+                    imgQView.ImageName = "ContinuousScroll";
+                    txtQViewName.Text = "Scroll View";
+
+                    mnuTabBar.IsEnabled = true;
+
+                    if (_isEditorDirty && updateSheet)
+                    {
+                        // update sheet from editor
+                        SyncSheetFromEditor();
+                    }
+                    break;
+                case TABS_VIEW:
+                    LoadGeneralTab();
+
+                    txtEditRaw.Visibility = Visibility.Collapsed;
+                    mnuEdit.Visibility = Visibility.Collapsed;
+                    mnuEditS.Visibility = Visibility.Visible;
+                    ShowTabsBar();
+                    stkEditToolbar.Visibility = Visibility.Collapsed;
+                    stkSheetEditToolbar.Visibility = Visibility.Visible;
+                    if (sp != null) if (!sp.IsClosed) sp.Close();
+
+                    mnuTabs.IsChecked = true;
+                    mnuScroll.IsChecked = false;
+                    mnuRawJson.IsChecked = false;
+
+                    mnuQTabs.IsChecked = true;
+                    mnuQScroll.IsChecked = false;
+                    mnuQRawJson.IsChecked = false;
+
+                    imgQView.ImageName = "TabView";
+                    txtQViewName.Text = "Tabbed View";
+
+                    mnuTabBar.IsEnabled = false;
+
+                    if (_isEditorDirty && updateSheet)
+                    {
+                        // update sheet from editor
+                        SyncSheetFromEditor();
+                    }
+                    break;
+                case RAWJSON_VIEW:
+                    txtEditRaw.Visibility = Visibility.Visible;
+                    mnuEdit.Visibility = Visibility.Visible;
+                    mnuEditS.Visibility = Visibility.Collapsed;
+                    HideTabsBar();
+                    stkEditToolbar.Visibility = Visibility.Visible;
+                    stkSheetEditToolbar.Visibility = Visibility.Collapsed;
+
+                    mnuTabs.IsChecked = false;
+                    mnuScroll.IsChecked = false;
+                    mnuRawJson.IsChecked = true;
+
+                    mnuQTabs.IsChecked = false;
+                    mnuQScroll.IsChecked = false;
+                    mnuQRawJson.IsChecked = true;
+
+                    mnuTabBar.IsEnabled = false;
+
+                    imgQView.ImageName = "TextFile";
+                    txtQViewName.Text = "Raw JSON View";
+
+                    if (_isTabsDirty && updateSheet)
+                    {
+                        SyncEditorFromSheet();
+                    }
+                    break;
+                default:
+                    ChangeView(TABS_VIEW, updateSheet, true, saveSettings);
+                    break;
+            }
+
+            Visibility v = lblNoSheet.Visibility;
+
+            if (displayEmptyMessage)
+            {
+                lblNoSheet.Visibility = Visibility.Visible;
+                selTabs.IsEnabled = false;
+                txtEditRaw.IsEnabled = false;
+                grdEditDrop.Visibility = Visibility.Visible;
+                SetAllTabsVisibility(Visibility.Collapsed);
+                UpdateAppearance();
+                foreach (SelectableItem item in selTabs.Items.SelectedItems.OfType<SelectableItem>().ToList())
+                {
+                    item.IsSelected = false;
+                }
+            }
+            else
+            {
+                lblNoSheet.Visibility = Visibility.Collapsed;
+                //selTabs.IsEnabled = true;
+                txtEditRaw.IsEnabled = true;
+                grdEditDrop.Visibility = Visibility.Collapsed;
+                if (lblNoSheet.Visibility != v)
+                {
+                    UpdateAppearance();
+                }
+            }
+        }
+
+        void ShowHideToolbar(bool show)
+        {
+            if (show)
+            {
+                rowToolbar.Height = new GridLength(1, GridUnitType.Auto);
+                rowToolbar.MinHeight = 28;
+                toolbar.IsEnabled = true;
+                mnuToolbar.IsChecked = true;
+            }
+            else
+            {
+                rowToolbar.Height = new GridLength(0);
+                rowToolbar.MinHeight = 0;
+                toolbar.IsEnabled = false;
+                mnuToolbar.IsChecked = false;
+            }
+        }
+
+        #endregion
+
+        #region Menu bar
+
+        #region File Menu
+
+        private async void mnuNew_Click(object sender, RoutedEventArgs e)
+        {
+            if (!SaveDirtyChanges() || CheckCalculating())
+            {
+                return;
+            }
+
+            await NewFile();
+        }
+
+        private void mnuNewWindow_Click(object sender, RoutedEventArgs e)
+        {
+            string? filename = Process.GetCurrentProcess().MainModule?.FileName;
+            if (filename == null)
+            {
+                MessageBox.Show("Cannot open another instance automatically.");
+                return;
+            }
+
+            Process.Start(filename);
+        }
+
+        private void mnuOpen_Click(object sender, RoutedEventArgs e)
+        {
+            if (!SaveDirtyChanges() || CheckCalculating())
+            {
+                return;
+            }
+
+            Microsoft.Win32.OpenFileDialog ofd = new Microsoft.Win32.OpenFileDialog();
+            ofd.Title = "Open JSON";
+            ofd.Filter = "JSON Sheet|*.json|All Files|*.*";
+
+            if (ofd.ShowDialog() ?? false == true)
+            {
+                LoadFile(ofd.FileName);
+            }
+        }
+
+        private void mnuSave_Click(object sender, RoutedEventArgs e)
+        {
+            if (string.IsNullOrEmpty(filePath))
+            {
+                SaveAsFile();
+            }
+            else
+            {
+                SaveFile(filePath);
+            }
+        }
+
+        private void mnuSaveAs_Click(object sender, RoutedEventArgs e)
+        {
+            SaveAsFile();
+        }
+
+        private void mnuRevert_Click(object sender, RoutedEventArgs e)
+        {
+            if (!string.IsNullOrEmpty(filePath))
+            {
+                if (AskDiscard())
+                {
+                    LoadFile(filePath, false);
+                }
+            }
+        }
+
+        private void mnuIndent_Click(object sender, RoutedEventArgs e)
+        {
+            if (mnuIndent.IsChecked)
+            {
+                mnuIndent.IsChecked = false;
+                App.Settings.IndentJsonData = false;
+            }
+            else
+            {
+                mnuIndent.IsChecked = true;
+                App.Settings.IndentJsonData = true;
+            }
+
+            SaveSettings();
+        }
+
+        private void mnuSheetSettings_Click(object sender, RoutedEventArgs e)
+        {
+            if (!_sheetLoaded)
+            {
+                MessageDialog md = new MessageDialog(App.ColorScheme);
+                md.ShowDialog("No sheet is currently open.", null, this, "No Sheet Open", MessageDialogButtonDisplay.Auto, image: MessageDialogImage.Error);
+                return;
+            }
+
+            SheetSettings sse = new SheetSettings();
+            sse.SheetSettingsList = sheetSettings;
+            sse.Owner = this;
+            sse.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+            sse.UpdateUi();
+            sse.ShowDialog();
+
+            if (sse.DialogResult)
+            {
+                sheetSettings = sse.SheetSettingsList;
+                LoadSheetSettings(true);
+                SetIsDirty();
+            }
+        }
+
+        private void btnClose_Click(object sender, RoutedEventArgs e)
+        {
+            CloseFile();
+        }
+
+        private void btnExit_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
+
+        #endregion
+
+        #region Update UI (Calculate menu)
+
+        private async void mnuUpdate_Click(object sender, RoutedEventArgs e)
+        {
+            await UpdateCalculations(true, mnuUpdateTotals.IsChecked, mnuUpdateAc.IsChecked);
+        }
+
+        private void mnuUpdateAc_Click(object sender, RoutedEventArgs e)
+        {
+            mnuUpdateAc.IsChecked = !mnuUpdateAc.IsChecked;
+            edtAc.CalculateAcValueChanged(mnuUpdateAc.IsChecked);
+            if (_sheetLoaded && !_isUpdating)
+            {
+                sheetSettings["calcIncludeAc"] = mnuUpdateAc.IsChecked ? "true" : "false";
+            }
+        }
+
+        private void mnuAutoUpdate_Click(object sender, RoutedEventArgs e)
+        {
+            mnuAutoUpdate.IsChecked = !mnuAutoUpdate.IsChecked;
+            if (_sheetLoaded && !_isUpdating)
+            {
+                sheetSettings["calcAutorun"] = mnuAutoUpdate.IsChecked ? "true" : "false";
+            }
+        }
+
+        private void mnuUpdateTotals_Click(object sender, RoutedEventArgs e)
+        {
+            mnuUpdateTotals.IsChecked = !mnuUpdateTotals.IsChecked;
+            if (_sheetLoaded && !_isUpdating)
+            {
+                sheetSettings["calcIncludeTotals"] = mnuUpdateTotals.IsChecked ? "true" : "false";
+            }
+        }
+
+        #endregion
+
+        #region View menu
+
+        private void mnuScroll_Click(object sender, RoutedEventArgs e)
+        {
+            ChangeView(CONTINUOUS_VIEW, true, !_sheetLoaded);
+        }
+
+        private void mnuTabs_Click(object sender, RoutedEventArgs e)
+        {
+            ChangeView(TABS_VIEW, true, !_sheetLoaded);
+        }
+
+        private void mnuRawJson_Click(object sender, RoutedEventArgs e)
+        {
+            ChangeView(RAWJSON_VIEW, true, !_sheetLoaded);
+        }
+        private void mnuTabBar_Click(object sender, RoutedEventArgs e)
+        {
+            if (currentView == CONTINUOUS_VIEW && colTabs.MinWidth > 0)
+            {
+                HideTabsBar();
+            }
+            else
+            {
+                ShowTabsBar();
+            }
+        }
+
+        private void mnuToolbar_Click(object sender, RoutedEventArgs e)
+        {
+            if (rowToolbar.Height == new GridLength(0))
+            {
+                ShowHideToolbar(true);
+            }
+            else
+            {
+                ShowHideToolbar(false);
+            }
+
+            App.Settings.ShowToolbar = toolbar.IsEnabled;
+            SaveSettings();
+        }
+
+        private void mnuFilename_Click(object sender, RoutedEventArgs e)
+        {
+            if (mnuFilename.IsChecked)
+            {
+                mnuFilename.IsChecked = false;
+            }
+            else
+            {
+                mnuFilename.IsChecked = true;
+            }
+
+            App.Settings.PathInTitleBar = mnuFilename.IsChecked;
+            SaveSettings();
+            UpdateTitlebar();
+        }
+
+
+        private void mnuColors_Click(object sender, RoutedEventArgs e)
+        {
+            ChangeTheme.ColorSchemeDialog csd = new ChangeTheme.ColorSchemeDialog();
+            csd.ColorScheme = this.ColorScheme;
+            csd.Owner = this;
+            csd.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+            csd.ShowDialog();
+
+            if (csd.DialogResult)
+            {
+                App.ColorScheme = csd.SelectedColorScheme;
+
+                if (csd.InternalColorSchemeValue != 0)
+                {
+                    ColorScheme cs = csd.SelectedColorScheme;
+
+                    App.Settings.HighContrastTheme = csd.InternalColorSchemeValue.ToString();
+                }
+                else
+                {
+                    App.Settings.ThemeColor = csd.SelectedColorScheme.MainColor.GetHexString();
+                    App.Settings.HighContrastTheme = NO_HIGH_CONTRAST;
+                }
+
+                SaveSettings();
+                UpdateAppearance();
+
+                // change settings if high contrast is changed
+                bool isHighContrast = false;
+                if (csd.InternalColorSchemeValue >= 1 && csd.InternalColorSchemeValue <= 3) isHighContrast = true;
+
+                if (App.Settings.EditorSyntaxHighlighting && !isHighContrast)
+                {
+                    using (Stream? s = System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceStream("PathfinderJson.Json.xshd"))
+                    {
+                        if (s != null)
+                        {
+                            using XmlReader reader = new XmlTextReader(s);
+                            txtEditRaw.SyntaxHighlighting = ICSharpCode.AvalonEdit.Highlighting.Xshd.HighlightingLoader.Load(reader, HighlightingManager.Instance);
+                        }
+                    }
+                }
+                else
+                {
+                    using (Stream? s = System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceStream("PathfinderJson.None.xshd"))
+                    {
+                        if (s != null)
+                        {
+                            using XmlReader reader = new XmlTextReader(s);
+                            txtEditRaw.SyntaxHighlighting = ICSharpCode.AvalonEdit.Highlighting.Xshd.HighlightingLoader.Load(reader, HighlightingManager.Instance);
+                        }
+                    }
+                }
+
+                edtAc.ShowShieldGlyph = App.Settings.ShowGlyphs && !isHighContrast;
+                eleStr.ShowBannerGlyph = App.Settings.ShowGlyphs && !isHighContrast;
+                eleDex.ShowBannerGlyph = App.Settings.ShowGlyphs && !isHighContrast;
+                eleCon.ShowBannerGlyph = App.Settings.ShowGlyphs && !isHighContrast;
+                eleInt.ShowBannerGlyph = App.Settings.ShowGlyphs && !isHighContrast;
+                eleWis.ShowBannerGlyph = App.Settings.ShowGlyphs && !isHighContrast;
+                eleCha.ShowBannerGlyph = App.Settings.ShowGlyphs && !isHighContrast;
+            }
+        }
+
+        #endregion
+
+        #region Tools menu / Insert JSON
+
+        DiceRollerWindow? drw = null;
+
+        private void mnuCounters_Click(object sender, RoutedEventArgs e)
+        {
+            CountersWindow cw = new CountersWindow();
+            cw.Show();
+        }
+
+        private void mnuDiceRoll_Click(object sender, RoutedEventArgs e)
+        {
+            if (drw != null)
+            {
+                drw.Show();
+                drw.Focus();
+            }
+            else
+            {
+                drw = new DiceRollerWindow();
+                drw.ColorScheme = App.ColorScheme;
+                drw.Closed += DiceRollerWindow_Closed;
+                //drw.Owner = this;
+                drw.Show();
+            }
+
+
+        }
+
+        private void DiceRollerWindow_Closed(object? sender, EventArgs e)
+        {
+            if (drw != null)
+            {
+                drw.Closed -= DiceRollerWindow_Closed;
+                drw = null;
+            }
+        }
+
+        private void mnuEditorFont_Click(object sender, RoutedEventArgs e)
+        {
+            FontSelectDialog fds = new FontSelectDialog();
+            fds.ShowDecorations = false;
+            fds.ColorScheme = App.ColorScheme;
+
+            fds.SelectedFontFamily = txtEditRaw.FontFamily;
+            fds.SelectedFontSize = txtEditRaw.FontSize;
+            fds.SelectedFontStyle = txtEditRaw.FontStyle;
+            fds.SelectedFontWeight = txtEditRaw.FontWeight;
+
+            fds.Owner = this;
+            fds.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+
+            fds.ShowDialog();
+
+            if (fds.DialogResult)
+            {
+                txtEditRaw.FontFamily = fds.SelectedFontFamily;
+                txtEditRaw.FontSize = fds.SelectedFontSize;
+                txtEditRaw.FontStyle = fds.SelectedFontStyle;
+                txtEditRaw.FontWeight = fds.SelectedFontWeight;
+
+                SaveSettings(true);
+            }
+        }
+
+
+        private void mnuOptions_Click(object sender, RoutedEventArgs e)
+        {
+            Options o = new Options();
+            o.Owner = this;
+            o.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+            o.ColorScheme = App.ColorScheme;
+
+            o.ShowDialog();
+
+            if (o.DialogResult)
+            {
+                ReloadSettings();
+            }
+        }
+
+        private void mnuInsertJson_Click(object sender, RoutedEventArgs e)
+        {
+            if (!_sheetLoaded)
+            {
+                MessageDialog md = new MessageDialog(App.ColorScheme);
+                md.ShowDialog("No sheet is currently open.", null, this, "No Sheet Open", MessageDialogButtonDisplay.Auto, image: MessageDialogImage.Error);
+                return;
+            }
+
+            if (currentView == RAWJSON_VIEW)
+            {
+                string jsonText = txtEditRaw.Text;
+
+                try
+                {
+                    Newtonsoft.Json.Linq.JObject jo = Newtonsoft.Json.Linq.JObject.Parse(jsonText);
+                }
+                catch (Newtonsoft.Json.JsonReaderException)
+                {
+                    MessageDialog md = new MessageDialog(App.ColorScheme);
+                    md.ShowDialog("The sheet currently does not appear to be valid JSON. Please fix or undo any JSON errors and try again.", null, this, "Invalid Sheet JSON", MessageDialogButtonDisplay.Auto, image: MessageDialogImage.Error);
+                    return;
+                }
+            }
+
+            InsertJson ij = new InsertJson();
+            ij.Owner = this;
+            ij.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+            ij.ShowDialog();
+
+            if (ij.DialogResult)
+            {
+                string newJson = ij.InsertedJson;
+
+                // check if the inserted JSON starts with enclosing braces (to build the root JSON element). if it does not, add it in
+                // in the future, I may go back and make this disable-able via an advanced setting in case this ends up messing up something for someone
+                if (!newJson.StartsWith("{") && !newJson.EndsWith("}"))
+                {
+                    newJson = "{" + newJson + "}";
+                }
+
+                if (currentView == RAWJSON_VIEW)
+                {
+                    string jsonText = txtEditRaw.Text;
+
+                    Newtonsoft.Json.Linq.JObject jo = Newtonsoft.Json.Linq.JObject.Parse(jsonText);
+                    Newtonsoft.Json.Linq.JObject jn;
+
+                    try
+                    {
+                        jn = Newtonsoft.Json.Linq.JObject.Parse(newJson);
+                    }
+                    catch (Newtonsoft.Json.JsonReaderException)
+                    {
+                        MessageDialog md = new MessageDialog(App.ColorScheme);
+                        md.ShowDialog("The JSON to be inserted does not appear to be valid. No merging will occur.", null, this, "Invalid JSON to Insert", MessageDialogButtonDisplay.Auto, image: MessageDialogImage.Error);
+                        return;
+                    }
+
+                    jo.Merge(jn, new Newtonsoft.Json.Linq.JsonMergeSettings()
+                    {
+                        PropertyNameComparison = StringComparison.InvariantCulture,
+                        MergeArrayHandling = Newtonsoft.Json.Linq.MergeArrayHandling.Merge,
+                        MergeNullValueHandling = Newtonsoft.Json.Linq.MergeNullValueHandling.Merge
+                    });
+
+                    txtEditRaw.Text = jo.ToString();
+                }
+                else
+                {
+                    Newtonsoft.Json.Linq.JObject jo = Newtonsoft.Json.Linq.JObject.Parse(CreatePathfinderSheet().SaveJsonText(false, "", false));
+                    Newtonsoft.Json.Linq.JObject jn;
+
+                    try
+                    {
+                        jn = Newtonsoft.Json.Linq.JObject.Parse(newJson);
+                    }
+                    catch (Newtonsoft.Json.JsonReaderException)
+                    {
+                        MessageDialog md = new MessageDialog(App.ColorScheme);
+                        md.ShowDialog("The JSON to be inserted does not appear to be valid. No merging will occur.", null, this, "Invalid JSON to Insert", MessageDialogButtonDisplay.Auto, image: MessageDialogImage.Error);
+                        return;
+                    }
+
+                    jo.Merge(jn, new Newtonsoft.Json.Linq.JsonMergeSettings()
+                    {
+                        PropertyNameComparison = StringComparison.InvariantCulture,
+                        MergeArrayHandling = Newtonsoft.Json.Linq.MergeArrayHandling.Merge,
+                        MergeNullValueHandling = Newtonsoft.Json.Linq.MergeNullValueHandling.Merge
+                    });
+
+                    LoadPathfinderSheet(PathfinderSheet.LoadJsonText(jo.ToString()));
+                }
+            }
+        }
+
+        #endregion
+
+        #region Help menu
+
+        private void mnuGithub_Click(object sender, RoutedEventArgs e)
+        {
+            OpenBrowser("https://github.com/JaykeBird/PathfinderJson/");
+        }
+
+        private void mnuFeedback_Click(object sender, RoutedEventArgs e)
+        {
+            OpenBrowser("https://github.com/JaykeBird/PathfinderJson/issues/new/choose");
+        }
+
+        private void mnuKeyboard_Click(object sender, RoutedEventArgs e)
+        {
+            OpenBrowser("https://github.com/JaykeBird/PathfinderJson/wiki/Keyboard-Shortcuts");
+        }
+
+        private void mnuMarkdown_Click(object sender, RoutedEventArgs e)
+        {
+            OpenBrowser("https://commonmark.org/help/");
+        }
+
+        private void mnuAutoCheck_Click(object sender, RoutedEventArgs e)
+        {
+            if (mnuAutoCheck.IsChecked)
+            {
+                mnuAutoCheck.IsChecked = false;
+                App.Settings.UpdateAutoCheck = false;
+            }
+            else
+            {
+                mnuAutoCheck.IsChecked = true;
+                App.Settings.UpdateAutoCheck = false;
+            }
+
+            SaveSettings();
+        }
+
+        private async void mnuCheckUpdates_Click(object sender, RoutedEventArgs e)
+        {
+            await CheckForUpdates();
+        }
+
+        private void mnuAbout_Click(object sender, RoutedEventArgs e)
+        {
+            About a = new About();
+            a.Owner = this;
+            a.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+            a.ShowDialog();
+        }
+
+        #endregion
+
+        #endregion
+
+        #region JSON Editor
+
+        #region Edit commands
+
+        private void mnuUndo_Click(object sender, RoutedEventArgs e)
+        {
+            txtEditRaw.Undo();
+        }
+
+        private void mnuRedo_Click(object sender, RoutedEventArgs e)
+        {
+            txtEditRaw.Redo();
+        }
+
+        private void mnuCopy_Click(object sender, RoutedEventArgs e)
+        {
+            txtEditRaw.Copy();
+        }
+
+        private void mnuCut_Click(object sender, RoutedEventArgs e)
+        {
+            txtEditRaw.Cut();
+        }
+
+        private void mnuPaste_Click(object sender, RoutedEventArgs e)
+        {
+            if (_sheetLoaded)
+            {
+                txtEditRaw.Paste();
+            }
+        }
+
+        private void mnuSelectAll_Click(object sender, RoutedEventArgs e)
+        {
+            txtEditRaw.SelectAll();
+        }
+
+        private void mnuDelete_Click(object sender, RoutedEventArgs e)
+        {
+            txtEditRaw.Delete();
+        }
+
+        private void mnuWordWrap_Click(object sender, RoutedEventArgs e)
+        {
+            if (mnuWordWrap.IsChecked)
+            {
+                mnuWordWrap.IsChecked = false;
+                txtEditRaw.WordWrap = false;
+                App.Settings.EditorWordWrap = false;
+            }
+            else
+            {
+                mnuWordWrap.IsChecked = true;
+                txtEditRaw.WordWrap = true;
+                App.Settings.EditorWordWrap = true;
+            }
+
+            SaveSettings();
+        }
+
+        private void mnuFind_Click(object sender, RoutedEventArgs e)
+        {
+            if (_sheetLoaded)
+            {
+
+                sp.Open();
+                if (!(txtEditRaw.TextArea.Selection.IsEmpty || txtEditRaw.TextArea.Selection.IsMultiline))
+                    sp.SearchPattern = txtEditRaw.TextArea.Selection.GetText();
+                Dispatcher.CurrentDispatcher.BeginInvoke(DispatcherPriority.Input, (Action)delegate { sp.Reactivate(); });
+            }
+        }
+
+        #endregion
+
+        private void txtEditRaw_TextChanged(object sender, EventArgs e)
+        {
+            if (!_isUpdating)
+            {
+                _isEditorDirty = true;
+                SetIsDirty(true, false);
+            }
+        }
+
+        private void txtEditRaw_Drop(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                string[] files = (string[])e.Data.GetData(DataFormats.FileDrop)!;
+
+                if (!SaveDirtyChanges() || CheckCalculating())
+                {
+                    return;
+                }
+
+                LoadFile(files[0]);
+            }
+        }
+
+        void SetSyntaxHighlighting(bool value)
+        {
+            if (value)
+            {
+                using (Stream? s = System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceStream("PathfinderJson.Json.xshd"))
+                {
+                    if (s != null)
+                    {
+                        using XmlReader reader = new XmlTextReader(s);
+                        txtEditRaw.SyntaxHighlighting = ICSharpCode.AvalonEdit.Highlighting.Xshd.HighlightingLoader.Load(reader, HighlightingManager.Instance);
+                    }
+                }
+            }
+            else
+            {
+                using (Stream? s = System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceStream("PathfinderJson.None.xshd"))
+                {
+                    if (s != null)
+                    {
+                        using XmlReader reader = new XmlTextReader(s);
+                        txtEditRaw.SyntaxHighlighting = ICSharpCode.AvalonEdit.Highlighting.Xshd.HighlightingLoader.Load(reader, HighlightingManager.Instance);
+                    }
+                }
+            }
+
+            App.Settings.EditorSyntaxHighlighting = value;
+            SaveSettings();
+        }
+
+        #region Font Settings
+        void LoadEditorFontSettings()
+        {
+            string family = App.Settings.EditorFontFamily;
+            string size = App.Settings.EditorFontSize;
+            string style = App.Settings.EditorFontStyle;
+            string weight = App.Settings.EditorFontWeight.Replace("w", "").Replace(".", "");
+
+            // sanitizing user input
+            if (string.IsNullOrEmpty(family))
+            {
+                family = "Consolas";
+            }
+            if (string.IsNullOrEmpty(size))
+            {
+                size = "12";
+            }
+            if (string.IsNullOrEmpty(style))
+            {
+                style = "Normal";
+            }
+            if (string.IsNullOrEmpty(weight))
+            {
+                weight = "400";
+            }
+
+            if (style == "None")
+            {
+                style = "Normal";
+            }
+
+            // check if weight is an integer value or not; if not, try to convert it
+            if (!int.TryParse(weight, out _))
+            {
+                // converter of common fontweight values
+                // taken from https://docs.microsoft.com/en-us/dotnet/api/system.windows.fontweights
+                if (weight.ToLowerInvariant() == "thin")
+                {
+                    weight = "100";
+                }
+                else if (weight.ToLowerInvariant() == "extralight" || weight.ToLowerInvariant() == "ultralight")
+                {
+                    weight = "200";
+                }
+                else if (weight.ToLowerInvariant() == "light")
+                {
+                    weight = "300";
+                }
+                else if (weight.ToLowerInvariant() == "normal" || weight.ToLowerInvariant() == "regular")
+                {
+                    weight = "400";
+                }
+                else if (weight.ToLowerInvariant() == "medium")
+                {
+                    weight = "500";
+                }
+                else if (weight.ToLowerInvariant() == "demibold" || weight.ToLowerInvariant() == "semibold")
+                {
+                    weight = "600";
+                }
+                else if (weight.ToLowerInvariant() == "bold")
+                {
+                    weight = "700";
+                }
+                else if (weight.ToLowerInvariant() == "extrabold" || weight.ToLowerInvariant() == "ultrabold")
+                {
+                    weight = "800";
+                }
+                else if (weight.ToLowerInvariant() == "black" || weight.ToLowerInvariant() == "heavy")
+                {
+                    weight = "900";
+                }
+                else if (weight.ToLowerInvariant() == "extrablack" || weight.ToLowerInvariant() == "ultrablack")
+                {
+                    weight = "950";
+                }
+                else
+                {
+                    // don't know what the heck they put in there, but it's not a font weight; set it to normal
+                    weight = "400";
+                }
+            }
+
+            FontFamily ff = new FontFamily(family + ", Consolas"); // use Consolas as fallback in case that font doesn't exist or the font doesn't contain proper glyphs
+
+            double dsz = 12;
+
+            try
+            {
+                dsz = double.Parse(size.Replace("p", "").Replace("d", "").Replace("x", "").Replace("t", ""));
+            }
+            catch (FormatException) { } // if "size" is a string that isn't actually a double, just keep it as 12
+
+            FontStyle fs = FontStyles.Normal;
+            try
+            {
+                fs = (FontStyle?)new FontStyleConverter().ConvertFromInvariantString(style) ?? FontStyles.Normal;
+            }
+            catch (NotSupportedException) { } // if "style" is a string that isn't actually a FontStyle, just keep it as normal
+            catch (FormatException) { }
+
+            int w = int.Parse(weight);
+            if (w > 999)
+            {
+                w = 999;
+            }
+            else if (w < 1)
+            {
+                w = 1;
+            }
+            FontWeight fw = FontWeight.FromOpenTypeWeight(w);
+
+            txtEditRaw.FontFamily = ff;
+            txtEditRaw.FontSize = dsz;
+            txtEditRaw.FontStyle = fs;
+            txtEditRaw.FontWeight = fw;
+        }
+
+        void SaveEditorFontSettings()
+        {
+            string ff = (txtEditRaw.FontFamily.Source).Replace(", Consolas", "");
+
+            App.Settings.EditorFontFamily = ff;
+            App.Settings.EditorFontSize = txtEditRaw.FontSize.ToString();
+
+            // because the ToString() method for FontStyle uses CurrentCulture rather than InvariantCulture, I need to convert it to string myself.
+            if (txtEditRaw.FontStyle == FontStyles.Italic)
+            {
+                App.Settings.EditorFontStyle = "Italic";
+            }
+            else if (txtEditRaw.FontStyle == FontStyles.Oblique)
+            {
+                App.Settings.EditorFontStyle = "Oblique";
+            }
+            else
+            {
+                App.Settings.EditorFontStyle = "Normal";
+            }
+        }
+        #endregion
+
+        #region Sync
+
+        /// <summary>
+        /// Update the sheet views from data in the text editor. Also sets the editor as no longer dirty (out-of-sync), as long as the editor has valid JSON.
+        /// </summary>
+        /// <returns></returns>
+        void SyncSheetFromEditor()
+        {
+            if (!string.IsNullOrEmpty(txtEditRaw.Text))
+            {
+                // if no file is loaded, we don't want to write empty data into the raw JSON editor
+                if (!_sheetLoaded)
+                {
+                    return;
+                }
+
+                try
+                {
+                    PathfinderSheet ps = PathfinderSheet.LoadJsonText(txtEditRaw.Text);
+                    LoadPathfinderSheet(ps);
+                    fileTitle = ps.Name;
+                    _isEditorDirty = false;
+                    if (fileTitle != displayedTitle) UpdateTitlebar();
+                }
+                catch (Newtonsoft.Json.JsonReaderException)
+                {
+                    _isEditorDirty = false;
+                    _isTabsDirty = true;
+                    SetIsDirty(true, false);
+                }
+                catch (FormatException)
+                {
+                    _isEditorDirty = false;
+                    _isTabsDirty = true;
+                    SetIsDirty(true, false);
+
+                    MessageDialog md = new MessageDialog(App.ColorScheme);
+                    md.Message = "This JSON file doesn't seem to look like it's a character sheet at all. " +
+                        "It may be good to open the Raw JSON view to check that the file matches what you're expecting.\n\n" +
+                        "PathfinderJSON will continue, but if you save any changes, any non-character sheet data may be deleted.";
+                    md.Title = "File Check Warning";
+                    md.Owner = this;
+                    md.Image = MessageDialogImage.Hand;
+                    md.ShowDialog();
+                }
+                catch (Newtonsoft.Json.JsonSerializationException)
+                {
+                    _isEditorDirty = false;
+                    _isTabsDirty = true;
+                    SetIsDirty(true, false);
+
+                    MessageDialog md = new MessageDialog(App.ColorScheme);
+                    md.Message = "This JSON file doesn't seem to look like it's a character sheet at all. " +
+                        "It may be good to open the Raw JSON view to check that the file matches what you're expecting.\n\n" +
+                        "PathfinderJSON will continue, but if you save any changes, any non-character sheet data may be deleted.";
+                    md.Title = "File Check Warning";
+                    md.Owner = this;
+                    md.Image = MessageDialogImage.Hand;
+                    md.ShowDialog();
+                }
+            }
+            else
+            {
+                _isEditorDirty = false;
+                _isTabsDirty = true;
+                SetIsDirty(true, false);
+            }
+        }
+
+        /// <summary>
+        /// Update the editor view from data in the sheet views. Also sets the sheet as no longer dirty (out-of-sync).
+        /// </summary>
+        /// <returns></returns>
+        void SyncEditorFromSheet()
+        {
+            // if no file is loaded, we don't want to write empty data into the raw JSON editor
+            if (!_sheetLoaded)
+            {
+                return;
+            }
+
+            PathfinderSheet ps = CreatePathfinderSheet();
+            txtEditRaw.Text = ps.SaveJsonText(App.Settings.IndentJsonData);
+            _isTabsDirty = false;
+        }
+
+        // these two menu commands are hidden
+        // hopefully, we shouldn't be needing these commands at all, as the program should automatically do the syncing as needed
+        // but we'll have to see if any bugs come up
+        private void mnuRefresh_Click(object sender, RoutedEventArgs e)
+        {
+            SyncSheetFromEditor();
+        }
+
+        private void mnuRefreshEditor_Click(object sender, RoutedEventArgs e)
+        {
+            SyncEditorFromSheet();
+        }
+
+        #endregion
+
+        #endregion
+
+        #region Update calculations
+
+        void UpdateInternalBab()
+        {
+            string bab = txtBab.Text;
+            string buffer = "";
+
+            if (string.IsNullOrEmpty(bab))
+            {
+                babCalc = 0;
+                return;
+            }
+
+            foreach (char c in bab)
+            {
+                if (char.IsDigit(c) || c == '+' || c == '-')
+                {
+                    buffer += c;
+                }
+                else
+                {
+                    break;
+                }
+            }
+
+            bool res = int.TryParse(buffer, out int value);
+
+            if (res)
+            {
+                babCalc = value;
+            }
+            else
+            {
+                babCalc = 0;
+            }
+        }
+
+        async Task UpdateCalculations(bool skills = true, bool totals = true, bool ac = true)
+        {
+            if (!_sheetLoaded)
+            {
+                MessageDialog md = new MessageDialog(App.ColorScheme);
+                md.ShowDialog("Cannot run calculations when no sheet is opened.", App.ColorScheme, this, "Update Calculations", MessageDialogButtonDisplay.Auto, image: MessageDialogImage.Error);
+                return;
+            }
+
+            if (_isCalculating)
+            {
+                return;
+            }
+
+            _isUpdating = true;
+
+            if (currentView == RAWJSON_VIEW && _isEditorDirty)
+            {
+                SyncSheetFromEditor();
+            }
+
+            _isCalculating = true;
+            brdrCalculating.Visibility = Visibility.Visible;
+
+            UpdateInternalBab();
+
+            if (grdAbilityIcon.Visibility == Visibility.Visible)
+            {
+                ApplyIconValuesToTable();
+            }
+
+            txtStrm.Text = CalculateModifier(txtStr.Value);
+            txtDexm.Text = CalculateModifier(txtDex.Value);
+            txtCham.Text = CalculateModifier(txtCha.Value);
+            txtConm.Text = CalculateModifier(txtCon.Value);
+            txtIntm.Text = CalculateModifier(txtInt.Value);
+            txtWism.Text = CalculateModifier(txtWis.Value);
+
+            edtFort.UpdateCoreModifier(txtConm.Text);
+            edtReflex.UpdateCoreModifier(txtDexm.Text);
+            edtWill.UpdateCoreModifier(txtWism.Text);
+
+            edtAc.UpdateCoreModifier(txtDexm.Text);
+            edtInit.UpdateCoreModifier(txtDexm.Text);
+            edtCmb.UpdateCoreModifier(txtStrm.Text, "", babCalc.ToString());
+            edtCmd.UpdateCoreModifier(txtStrm.Text, txtDexm.Text, babCalc.ToString());
+
+            if (skills)
+            {
+                foreach (SkillEditor? item in stkSkills.Children)
+                {
+                    if (item == null)
+                    {
+                        continue;
+                    }
+
+                    string modifier = "";
+
+                    switch (item.ModifierName)
+                    {
+                        case "DEX":
+                            modifier = txtDexm.Text;
+                            break;
+                        case "INT":
+                            modifier = txtIntm.Text;
+                            break;
+                        case "CHA":
+                            modifier = txtCham.Text;
+                            break;
+                        case "STR":
+                            modifier = txtStrm.Text;
+                            break;
+                        case "WIS":
+                            modifier = txtWism.Text;
+                            break;
+                        case "CON":
+                            modifier = txtConm.Text;
+                            break;
+                        default:
+                            break;
+                    }
+                    item.ModifierValue = int.Parse(modifier);
+
+                    if (totals)
+                    {
+                        item.UpdateCalculations();
+                    }
+                }
+            }
+
+            if (ac)
+            {
+                // special calculations for AC items
+                int acShield = 0;
+                int acArmor = 0;
+
+                int tWeight = 0;
+                int tBonus = 0;
+                int tSpellcheck = 0;
+                int tPenalty = 0;
+
+                // TODO: switch over to load items from ILD
+                foreach (AcItemEditor acItem in selAcItem.Items.OfType<AcItemEditor>())
+                {
+                    AcItem ai = acItem.GetAcItem();
+                    if ((ai.Name ?? "").ToLowerInvariant().Contains("shield") || (ai.Type ?? "").ToLowerInvariant().Contains("shield"))
+                    {
+                        // this is a shield
+                        acShield += ParseStringAsInt(ai.Bonus);
+                    }
+                    else
+                    {
+                        // probably not a shield? consider it armor
+                        acArmor += ParseStringAsInt(ai.Bonus);
+                    }
+
+                    tBonus += ParseStringAsInt(ai.Bonus);
+                    tSpellcheck += ParseStringAsInt((ai.SpellFailure ?? "").Replace("%", ""));
+                    tPenalty += ParseStringAsInt(ai.ArmorCheckPenalty);
+                    tWeight += ParseStringAsInt(ai.Weight);
+                }
+
+                txtAcBonus.Text = tBonus.ToString();
+                txtAcPenalty.Text = tPenalty.ToString();
+                txtAcSpellFailure.Text = tSpellcheck.ToString() + "%";
+                txtAcWeight.Text = tWeight.ToString();
+
+                edtAc.UpdateAcItemBonuses(acShield.ToString(), acArmor.ToString());
+            }
+
+            if (totals)
+            {
+                edtFort.UpdateTotal();
+                edtReflex.UpdateTotal();
+                edtWill.UpdateTotal();
+
+                edtAc.UpdateTotal();
+                edtInit.UpdateTotal();
+                edtCmb.UpdateTotal();
+                edtCmd.UpdateTotal();
+            }
+
+            if (currentView == RAWJSON_VIEW)
+            {
+                SyncEditorFromSheet();
+            }
+
+            _isCalculating = false;
+            brdrCalculating.Visibility = Visibility.Collapsed;
+
+            _isUpdating = false;
+
+            SetIsDirty();
+        }
+
+        #endregion
+
+        #region Sheet editors
+
         #region General sheet event handlers
 
         private void scrSheet_Drop(object sender, DragEventArgs e)
@@ -3735,6 +3989,255 @@ namespace PathfinderJson
             {
                 Debugger.Log(0, null, "Sender is not a FrameworkElement. It is " + sender.GetType().FullName);
             }
+        }
+
+        #endregion
+
+        #region Ability score editors / views
+
+        #region Temporary editors
+        private void btnTempStr_Click(object sender, RoutedEventArgs e)
+        {
+            grdTempStr.Visibility = Visibility.Visible;
+            btnTempStr.Visibility = Visibility.Collapsed;
+            SetIsDirty();
+        }
+
+        private void btnTempDex_Click(object sender, RoutedEventArgs e)
+        {
+            grdTempDex.Visibility = Visibility.Visible;
+            btnTempDex.Visibility = Visibility.Collapsed;
+            SetIsDirty();
+        }
+
+        private void btnTempCon_Click(object sender, RoutedEventArgs e)
+        {
+            grdTempCon.Visibility = Visibility.Visible;
+            btnTempCon.Visibility = Visibility.Collapsed;
+            SetIsDirty();
+        }
+
+        private void btnTempInt_Click(object sender, RoutedEventArgs e)
+        {
+            grdTempInt.Visibility = Visibility.Visible;
+            btnTempInt.Visibility = Visibility.Collapsed;
+            SetIsDirty();
+        }
+
+        private void btnTempWis_Click(object sender, RoutedEventArgs e)
+        {
+            grdTempWis.Visibility = Visibility.Visible;
+            btnTempWis.Visibility = Visibility.Collapsed;
+            SetIsDirty();
+        }
+
+        private void btnTempCha_Click(object sender, RoutedEventArgs e)
+        {
+            grdTempCha.Visibility = Visibility.Visible;
+            btnTempCha.Visibility = Visibility.Collapsed;
+            SetIsDirty();
+        }
+
+        private void grdTempStr_CloseRequested(object sender, EventArgs e)
+        {
+            grdTempStr.Visibility = Visibility.Collapsed;
+            btnTempStr.Visibility = Visibility.Visible;
+            stkTempStr.Visibility = Visibility.Collapsed;
+            eleStr.ShowTempButton();
+            SetIsDirty();
+        }
+
+        private void grdTempDex_CloseRequested(object sender, EventArgs e)
+        {
+            grdTempDex.Visibility = Visibility.Collapsed;
+            btnTempDex.Visibility = Visibility.Visible;
+            stkTempDex.Visibility = Visibility.Collapsed;
+            eleDex.ShowTempButton();
+            SetIsDirty();
+        }
+
+        private void grdTempCon_CloseRequested(object sender, EventArgs e)
+        {
+            grdTempCon.Visibility = Visibility.Collapsed;
+            btnTempCon.Visibility = Visibility.Visible;
+            stkTempCon.Visibility = Visibility.Collapsed;
+            eleCon.ShowTempButton();
+            SetIsDirty();
+        }
+
+        private void grdTempInt_CloseRequested(object sender, EventArgs e)
+        {
+            grdTempInt.Visibility = Visibility.Collapsed;
+            btnTempInt.Visibility = Visibility.Visible;
+            stkTempInt.Visibility = Visibility.Collapsed;
+            eleInt.ShowTempButton();
+            SetIsDirty();
+        }
+
+        private void grdTempWis_CloseRequested(object sender, EventArgs e)
+        {
+            grdTempWis.Visibility = Visibility.Collapsed;
+            btnTempWis.Visibility = Visibility.Visible;
+            stkTempWis.Visibility = Visibility.Collapsed;
+            eleWis.ShowTempButton();
+            SetIsDirty();
+        }
+
+        private void grdTempCha_CloseRequested(object sender, EventArgs e)
+        {
+            grdTempCha.Visibility = Visibility.Collapsed;
+            btnTempCha.Visibility = Visibility.Visible;
+            stkTempCha.Visibility = Visibility.Collapsed;
+            eleCha.ShowTempButton();
+            SetIsDirty();
+        }
+
+        private void eleStr_RequestTempEditorDisplay(object sender, EventArgs e)
+        {
+            stkTempStr.Visibility = Visibility.Visible;
+            SetIsDirty();
+        }
+
+        private void eleDex_RequestTempEditorDisplay(object sender, EventArgs e)
+        {
+            stkTempDex.Visibility = Visibility.Visible;
+            SetIsDirty();
+        }
+
+        private void eleCon_RequestTempEditorDisplay(object sender, EventArgs e)
+        {
+            stkTempCon.Visibility = Visibility.Visible;
+            SetIsDirty();
+        }
+
+        private void eleInt_RequestTempEditorDisplay(object sender, EventArgs e)
+        {
+            stkTempInt.Visibility = Visibility.Visible;
+            SetIsDirty();
+        }
+
+        private void eleWis_RequestTempEditorDisplay(object sender, EventArgs e)
+        {
+            stkTempWis.Visibility = Visibility.Visible;
+            SetIsDirty();
+        }
+
+        private void eleCha_RequestTempEditorDisplay(object sender, EventArgs e)
+        {
+            stkTempCha.Visibility = Visibility.Visible;
+            SetIsDirty();
+        }
+
+        #endregion
+
+        private void btnAbilitiesInfo_Click(object sender, RoutedEventArgs e)
+        {
+            OpenBrowser("https://www.d20pfsrd.com/basics-ability-scores/ability-scores/");
+        }
+
+        void ApplyIconValuesToTable()
+        {
+            txtWis.Value = eleWis.Value;
+            txtCha.Value = eleCha.Value;
+            txtInt.Value = eleInt.Value;
+            txtStr.Value = eleStr.Value;
+            txtCon.Value = eleCon.Value;
+            txtDex.Value = eleDex.Value;
+
+            // TODO: add in temp values if the temp editors in icon view are present
+        }
+
+        void SetAbilityScoreView(int view, bool init = false)
+        {
+            bool updOld = _isUpdating;
+            switch (view)
+            {
+                case ABILITY_ICON_VIEW:
+                    // convert from table view to icon view
+                    mnuAbilityView2.IsChecked = true;
+                    mnuAbilityView1.IsChecked = false;
+                    mnuAbilityView.Content = "Icon view";
+
+                    grdAbilityList.Visibility = Visibility.Collapsed;
+                    grdAbilityIcon.Visibility = Visibility.Visible;
+
+                    if (!init)
+                    {
+                        _isUpdating = true;
+                        eleWis.Value = txtWis.Value;
+                        eleCha.Value = txtCha.Value;
+                        eleInt.Value = txtInt.Value;
+                        eleStr.Value = txtStr.Value;
+                        eleCon.Value = txtCon.Value;
+                        eleDex.Value = txtDex.Value;
+
+                        if (grdTempCha.Visibility == Visibility.Visible) { stkTempCha.Visibility = Visibility.Visible; eleCha.HideTempButton(); } else { eleCha.ShowTempButton(); }
+                        if (grdTempCon.Visibility == Visibility.Visible) { stkTempCon.Visibility = Visibility.Visible; eleCon.HideTempButton(); } else { eleCon.ShowTempButton(); }
+                        if (grdTempDex.Visibility == Visibility.Visible) { stkTempDex.Visibility = Visibility.Visible; eleDex.HideTempButton(); } else { eleDex.ShowTempButton(); }
+                        if (grdTempInt.Visibility == Visibility.Visible) { stkTempInt.Visibility = Visibility.Visible; eleInt.HideTempButton(); } else { eleInt.ShowTempButton(); }
+                        if (grdTempStr.Visibility == Visibility.Visible) { stkTempStr.Visibility = Visibility.Visible; eleStr.HideTempButton(); } else { eleStr.ShowTempButton(); }
+                        if (grdTempWis.Visibility == Visibility.Visible) { stkTempWis.Visibility = Visibility.Visible; eleWis.HideTempButton(); } else { eleWis.ShowTempButton(); }
+
+                        eleTempCha.Value = grdTempCha.Value;
+                        eleTempCon.Value = grdTempCon.Value;
+                        eleTempDex.Value = grdTempDex.Value;
+                        eleTempInt.Value = grdTempInt.Value;
+                        eleTempStr.Value = grdTempStr.Value;
+                        eleTempWis.Value = grdTempWis.Value;
+
+                        _isUpdating = updOld;
+                    }
+
+                    break;
+                case ABILITY_TABLE_VIEW:
+                    // convert from icon view to table view
+                    mnuAbilityView2.IsChecked = false;
+                    mnuAbilityView1.IsChecked = true;
+                    mnuAbilityView.Content = "Table view";
+
+                    grdAbilityList.Visibility = Visibility.Visible;
+                    grdAbilityIcon.Visibility = Visibility.Collapsed;
+
+                    if (!init)
+                    {
+                        _isUpdating = true;
+                        txtWis.Value = eleWis.Value;
+                        txtCha.Value = eleCha.Value;
+                        txtInt.Value = eleInt.Value;
+                        txtStr.Value = eleStr.Value;
+                        txtCon.Value = eleCon.Value;
+                        txtDex.Value = eleDex.Value;
+
+                        if (stkTempCha.Visibility == Visibility.Visible) grdTempCha.Visibility = Visibility.Visible;
+                        if (stkTempCon.Visibility == Visibility.Visible) grdTempCon.Visibility = Visibility.Visible;
+                        if (stkTempDex.Visibility == Visibility.Visible) grdTempDex.Visibility = Visibility.Visible;
+                        if (stkTempInt.Visibility == Visibility.Visible) grdTempInt.Visibility = Visibility.Visible;
+                        if (stkTempStr.Visibility == Visibility.Visible) grdTempStr.Visibility = Visibility.Visible;
+                        if (stkTempWis.Visibility == Visibility.Visible) grdTempWis.Visibility = Visibility.Visible;
+
+                        grdTempCha.Value = eleTempCha.Value;
+                        grdTempCon.Value = eleTempCon.Value;
+                        grdTempDex.Value = eleTempDex.Value;
+                        grdTempInt.Value = eleTempInt.Value;
+                        grdTempStr.Value = eleTempStr.Value;
+                        grdTempWis.Value = eleTempWis.Value;
+
+                        _isUpdating = updOld;
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private void mnuAbilityView1_Click(object sender, RoutedEventArgs e)
+        {
+            SetAbilityScoreView(ABILITY_TABLE_VIEW);
+        }
+
+        private void mnuAbilityView2_Click(object sender, RoutedEventArgs e)
+        {
+            SetAbilityScoreView(ABILITY_ICON_VIEW);
         }
 
         #endregion
@@ -4118,480 +4621,6 @@ namespace PathfinderJson
         }
 
         #endregion
-
-        public void LoadSheetSettings(bool reloadSkills = false)
-        {
-            if (sheetSettings != null)
-            {
-                if (HasSheetSettingValue("notesMarkdown", "enabled"))
-                {
-                    ShowMarkdownElements();
-                    OpenNotesViewTab();
-                    chkNotesMarkdown.IsChecked = true;
-                }
-                else
-                {
-                    HideMarkdownElements();
-                    chkNotesMarkdown.IsChecked = false;
-                }
-
-                if (HasSheetSettingValue("notesNoSpellCheck", "enabled"))
-                {
-                    SpellCheck.SetIsEnabled(txtNotes, false);
-                }
-                else
-                {
-                    SpellCheck.SetIsEnabled(txtNotes, true);
-                }
-
-                if (HasSheetSettingValue("calcIncludeAc", "false"))
-                {
-                    mnuUpdateAc.IsChecked = false;
-                }
-                else
-                {
-                    mnuUpdateAc.IsChecked = true;
-                }
-
-                if (HasSheetSettingValue("calcIncludeTotals", "false"))
-                {
-                    mnuUpdateTotals.IsChecked = false;
-                }
-                else
-                {
-                    mnuUpdateTotals.IsChecked = true;
-                }
-
-                if (HasSheetSettingValue("calcAutorun", "false"))
-                {
-                    mnuAutoUpdate.IsChecked = false;
-                }
-                else
-                {
-                    mnuAutoUpdate.IsChecked = true;
-                }
-            }
-            else
-            {
-                HideMarkdownElements();
-                chkNotesMarkdown.IsChecked = false;
-                SpellCheck.SetIsEnabled(txtNotes, true);
-
-                mnuUpdateAc.IsChecked = true;
-                mnuUpdateTotals.IsChecked = true;
-                mnuAutoUpdate.IsChecked = true;
-            }
-
-            if (reloadSkills)
-            {
-                PathfinderSheet pf = CreatePathfinderSheet();
-                var ses = SkillEditorFactory.CreateEditors(pf, this);
-
-                stkSkills.Children.Clear();
-                foreach (SkillEditor item in ses)
-                {
-                    item.ModifierValue = abilityMods[item.ModifierName];
-                    item.UpdateCalculations();
-
-                    item.ContentChanged += editor_ContentChanged;
-                    item.ModifierChanged += editor_ModifierChanged;
-
-                    stkSkills.Children.Add(item);
-                    item.ColorScheme = ColorScheme;
-                    //item.UpdateAppearance();
-                }
-
-                if (sheetSettings?.ContainsKey("skillModSet") ?? false)
-                {
-                    LoadSkillModSubstitutions(sheetSettings["skillModSet"] ?? "");
-                }
-            }
-        }
-
-        /// <summary>
-        /// Check if a certain sheet setting value is stored in this sheet's sheet settings.
-        /// </summary>
-        /// <param name="settingName">The name of the setting value to check.</param>
-        /// <param name="checkValue">The value to check. Only returns true if the setting matches this value.</param>
-        /// <returns>Returns true only if the setting with the specified name has the specified value. In all other situations, returns false.</returns>
-        /// <remarks>To check simply if a setting name exists, use the <c>sheetSettings.ContainsKey()</c> method instead.</remarks>
-        public bool HasSheetSettingValue(string settingName, string? checkValue = null)
-        {
-            return sheetSettings.ContainsKey(settingName) ? sheetSettings[settingName]?.ToLowerInvariant() == checkValue : false;
-        }
-
-        private void mnuCounters_Click(object sender, RoutedEventArgs e)
-        {
-            CountersWindow cw = new CountersWindow();
-            cw.Show();
-        }
-
-        private void mnuSheetSettings_Click(object sender, RoutedEventArgs e)
-        {
-            if (!_sheetLoaded)
-            {
-                MessageDialog md = new MessageDialog(App.ColorScheme);
-                md.ShowDialog("No sheet is currently open.", null, this, "No Sheet Open", MessageDialogButtonDisplay.Auto, image: MessageDialogImage.Error);
-                return;
-            }
-
-            SheetSettings sse = new SheetSettings();
-            sse.SheetSettingsList = sheetSettings;
-            sse.Owner = this;
-            sse.WindowStartupLocation = WindowStartupLocation.CenterOwner;
-            sse.UpdateUi();
-            sse.ShowDialog();
-
-            if (sse.DialogResult)
-            {
-                sheetSettings = sse.SheetSettingsList;
-                LoadSheetSettings(true);
-                SetIsDirty();
-            }
-        }
-
-        private void mnuInsertJson_Click(object sender, RoutedEventArgs e)
-        {
-            if (!_sheetLoaded)
-            {
-                MessageDialog md = new MessageDialog(App.ColorScheme);
-                md.ShowDialog("No sheet is currently open.", null, this, "No Sheet Open", MessageDialogButtonDisplay.Auto, image: MessageDialogImage.Error);
-                return;
-            }
-
-            if (currentView == RAWJSON_VIEW)
-            {
-                string jsonText = txtEditRaw.Text;
-
-                try
-                {
-                    Newtonsoft.Json.Linq.JObject jo = Newtonsoft.Json.Linq.JObject.Parse(jsonText);
-                }
-                catch (Newtonsoft.Json.JsonReaderException)
-                {
-                    MessageDialog md = new MessageDialog(App.ColorScheme);
-                    md.ShowDialog("The sheet currently does not appear to be valid JSON. Please fix or undo any JSON errors and try again.", null, this, "Invalid Sheet JSON", MessageDialogButtonDisplay.Auto, image: MessageDialogImage.Error);
-                    return;
-                }
-            }
-
-            InsertJson ij = new InsertJson();
-            ij.Owner = this;
-            ij.WindowStartupLocation = WindowStartupLocation.CenterOwner;
-            ij.ShowDialog();
-
-            if (ij.DialogResult)
-            {
-                string newJson = ij.InsertedJson;
-
-                // check if the inserted JSON starts with enclosing braces (to build the root JSON element). if it does not, add it in
-                // in the future, I may go back and make this disable-able via an advanced setting in case this ends up messing up something for someone
-                if (!newJson.StartsWith("{") && !newJson.EndsWith("}"))
-                {
-                    newJson = "{" + newJson + "}";
-                }
-
-                if (currentView == RAWJSON_VIEW)
-                {
-                    string jsonText = txtEditRaw.Text;
-
-                    Newtonsoft.Json.Linq.JObject jo = Newtonsoft.Json.Linq.JObject.Parse(jsonText);
-                    Newtonsoft.Json.Linq.JObject jn;
-
-                    try
-                    {
-                        jn = Newtonsoft.Json.Linq.JObject.Parse(newJson);
-                    }
-                    catch (Newtonsoft.Json.JsonReaderException)
-                    {
-                        MessageDialog md = new MessageDialog(App.ColorScheme);
-                        md.ShowDialog("The JSON to be inserted does not appear to be valid. No merging will occur.", null, this, "Invalid JSON to Insert", MessageDialogButtonDisplay.Auto, image: MessageDialogImage.Error);
-                        return;
-                    }
-
-                    jo.Merge(jn, new Newtonsoft.Json.Linq.JsonMergeSettings()
-                    {
-                        PropertyNameComparison = StringComparison.InvariantCulture,
-                        MergeArrayHandling = Newtonsoft.Json.Linq.MergeArrayHandling.Merge,
-                        MergeNullValueHandling = Newtonsoft.Json.Linq.MergeNullValueHandling.Merge
-                    });
-
-                    txtEditRaw.Text = jo.ToString();
-                }
-                else
-                {
-                    Newtonsoft.Json.Linq.JObject jo = Newtonsoft.Json.Linq.JObject.Parse(CreatePathfinderSheet().SaveJsonText(false, "", false));
-                    Newtonsoft.Json.Linq.JObject jn;
-
-                    try
-                    {
-                        jn = Newtonsoft.Json.Linq.JObject.Parse(newJson);
-                    }
-                    catch (Newtonsoft.Json.JsonReaderException)
-                    {
-                        MessageDialog md = new MessageDialog(App.ColorScheme);
-                        md.ShowDialog("The JSON to be inserted does not appear to be valid. No merging will occur.", null, this, "Invalid JSON to Insert", MessageDialogButtonDisplay.Auto, image: MessageDialogImage.Error);
-                        return;
-                    }
-
-                    jo.Merge(jn, new Newtonsoft.Json.Linq.JsonMergeSettings()
-                    {
-                        PropertyNameComparison = StringComparison.InvariantCulture,
-                        MergeArrayHandling = Newtonsoft.Json.Linq.MergeArrayHandling.Merge,
-                        MergeNullValueHandling = Newtonsoft.Json.Linq.MergeNullValueHandling.Merge
-                    });
-
-                    LoadPathfinderSheet(PathfinderSheet.LoadJsonText(jo.ToString()));
-                }
-            }
-        }
-
-        #region Ability score editors / views
-
-        #region Temporary editors
-        private void btnTempStr_Click(object sender, RoutedEventArgs e)
-        {
-            grdTempStr.Visibility = Visibility.Visible;
-            btnTempStr.Visibility = Visibility.Collapsed;
-            SetIsDirty();
-        }
-
-        private void btnTempDex_Click(object sender, RoutedEventArgs e)
-        {
-            grdTempDex.Visibility = Visibility.Visible;
-            btnTempDex.Visibility = Visibility.Collapsed;
-            SetIsDirty();
-        }
-
-        private void btnTempCon_Click(object sender, RoutedEventArgs e)
-        {
-            grdTempCon.Visibility = Visibility.Visible;
-            btnTempCon.Visibility = Visibility.Collapsed;
-            SetIsDirty();
-        }
-
-        private void btnTempInt_Click(object sender, RoutedEventArgs e)
-        {
-            grdTempInt.Visibility = Visibility.Visible;
-            btnTempInt.Visibility = Visibility.Collapsed;
-            SetIsDirty();
-        }
-
-        private void btnTempWis_Click(object sender, RoutedEventArgs e)
-        {
-            grdTempWis.Visibility = Visibility.Visible;
-            btnTempWis.Visibility = Visibility.Collapsed;
-            SetIsDirty();
-        }
-
-        private void btnTempCha_Click(object sender, RoutedEventArgs e)
-        {
-            grdTempCha.Visibility = Visibility.Visible;
-            btnTempCha.Visibility = Visibility.Collapsed;
-            SetIsDirty();
-        }
-
-        private void grdTempStr_CloseRequested(object sender, EventArgs e)
-        {
-            grdTempStr.Visibility = Visibility.Collapsed;
-            btnTempStr.Visibility = Visibility.Visible;
-            stkTempStr.Visibility = Visibility.Collapsed;
-            eleStr.ShowTempButton();
-            SetIsDirty();
-        }
-
-        private void grdTempDex_CloseRequested(object sender, EventArgs e)
-        {
-            grdTempDex.Visibility = Visibility.Collapsed;
-            btnTempDex.Visibility = Visibility.Visible;
-            stkTempDex.Visibility = Visibility.Collapsed;
-            eleDex.ShowTempButton();
-            SetIsDirty();
-        }
-
-        private void grdTempCon_CloseRequested(object sender, EventArgs e)
-        {
-            grdTempCon.Visibility = Visibility.Collapsed;
-            btnTempCon.Visibility = Visibility.Visible;
-            stkTempCon.Visibility = Visibility.Collapsed;
-            eleCon.ShowTempButton();
-            SetIsDirty();
-        }
-
-        private void grdTempInt_CloseRequested(object sender, EventArgs e)
-        {
-            grdTempInt.Visibility = Visibility.Collapsed;
-            btnTempInt.Visibility = Visibility.Visible;
-            stkTempInt.Visibility = Visibility.Collapsed;
-            eleInt.ShowTempButton();
-            SetIsDirty();
-        }
-
-        private void grdTempWis_CloseRequested(object sender, EventArgs e)
-        {
-            grdTempWis.Visibility = Visibility.Collapsed;
-            btnTempWis.Visibility = Visibility.Visible;
-            stkTempWis.Visibility = Visibility.Collapsed;
-            eleWis.ShowTempButton();
-            SetIsDirty();
-        }
-
-        private void grdTempCha_CloseRequested(object sender, EventArgs e)
-        {
-            grdTempCha.Visibility = Visibility.Collapsed;
-            btnTempCha.Visibility = Visibility.Visible;
-            stkTempCha.Visibility = Visibility.Collapsed;
-            eleCha.ShowTempButton();
-            SetIsDirty();
-        }
-
-        private void eleStr_RequestTempEditorDisplay(object sender, EventArgs e)
-        {
-            stkTempStr.Visibility = Visibility.Visible;
-            SetIsDirty();
-        }
-
-        private void eleDex_RequestTempEditorDisplay(object sender, EventArgs e)
-        {
-            stkTempDex.Visibility = Visibility.Visible;
-            SetIsDirty();
-        }
-
-        private void eleCon_RequestTempEditorDisplay(object sender, EventArgs e)
-        {
-            stkTempCon.Visibility = Visibility.Visible;
-            SetIsDirty();
-        }
-
-        private void eleInt_RequestTempEditorDisplay(object sender, EventArgs e)
-        {
-            stkTempInt.Visibility = Visibility.Visible;
-            SetIsDirty();
-        }
-
-        private void eleWis_RequestTempEditorDisplay(object sender, EventArgs e)
-        {
-            stkTempWis.Visibility = Visibility.Visible;
-            SetIsDirty();
-        }
-
-        private void eleCha_RequestTempEditorDisplay(object sender, EventArgs e)
-        {
-            stkTempCha.Visibility = Visibility.Visible;
-            SetIsDirty();
-        }
-
-        #endregion
-
-        private void btnAbilitiesInfo_Click(object sender, RoutedEventArgs e)
-        {
-            OpenBrowser("https://www.d20pfsrd.com/basics-ability-scores/ability-scores/");
-        }
-
-        void ApplyIconValuesToTable()
-        {
-            txtWis.Value = eleWis.Value;
-            txtCha.Value = eleCha.Value;
-            txtInt.Value = eleInt.Value;
-            txtStr.Value = eleStr.Value;
-            txtCon.Value = eleCon.Value;
-            txtDex.Value = eleDex.Value;
-
-            // TODO: add in temp values if the temp editors in icon view are present
-        }
-
-        void SetAbilityScoreView(int view, bool init = false)
-        {
-            bool updOld = _isUpdating;
-            switch (view)
-            {
-                case ABILITY_ICON_VIEW:
-                    // convert from table view to icon view
-                    mnuAbilityView2.IsChecked = true;
-                    mnuAbilityView1.IsChecked = false;
-                    mnuAbilityView.Content = "Icon view";
-
-                    grdAbilityList.Visibility = Visibility.Collapsed;
-                    grdAbilityIcon.Visibility = Visibility.Visible;
-
-                    if (!init)
-                    {
-                        _isUpdating = true;
-                        eleWis.Value = txtWis.Value;
-                        eleCha.Value = txtCha.Value;
-                        eleInt.Value = txtInt.Value;
-                        eleStr.Value = txtStr.Value;
-                        eleCon.Value = txtCon.Value;
-                        eleDex.Value = txtDex.Value;
-
-                        if (grdTempCha.Visibility == Visibility.Visible) { stkTempCha.Visibility = Visibility.Visible; eleCha.HideTempButton(); } else { eleCha.ShowTempButton(); }
-                        if (grdTempCon.Visibility == Visibility.Visible) { stkTempCon.Visibility = Visibility.Visible; eleCon.HideTempButton(); } else { eleCon.ShowTempButton(); }
-                        if (grdTempDex.Visibility == Visibility.Visible) { stkTempDex.Visibility = Visibility.Visible; eleDex.HideTempButton(); } else { eleDex.ShowTempButton(); }
-                        if (grdTempInt.Visibility == Visibility.Visible) { stkTempInt.Visibility = Visibility.Visible; eleInt.HideTempButton(); } else { eleInt.ShowTempButton(); }
-                        if (grdTempStr.Visibility == Visibility.Visible) { stkTempStr.Visibility = Visibility.Visible; eleStr.HideTempButton(); } else { eleStr.ShowTempButton(); }
-                        if (grdTempWis.Visibility == Visibility.Visible) { stkTempWis.Visibility = Visibility.Visible; eleWis.HideTempButton(); } else { eleWis.ShowTempButton(); }
-
-                        eleTempCha.Value = grdTempCha.Value;
-                        eleTempCon.Value = grdTempCon.Value;
-                        eleTempDex.Value = grdTempDex.Value;
-                        eleTempInt.Value = grdTempInt.Value;
-                        eleTempStr.Value = grdTempStr.Value;
-                        eleTempWis.Value = grdTempWis.Value;
-
-                        _isUpdating = updOld;
-                    }
-
-                    break;
-                case ABILITY_TABLE_VIEW:
-                    // convert from icon view to table view
-                    mnuAbilityView2.IsChecked = false;
-                    mnuAbilityView1.IsChecked = true;
-                    mnuAbilityView.Content = "Table view";
-
-                    grdAbilityList.Visibility = Visibility.Visible;
-                    grdAbilityIcon.Visibility = Visibility.Collapsed;
-
-                    if (!init)
-                    {
-                        _isUpdating = true;
-                        txtWis.Value = eleWis.Value;
-                        txtCha.Value = eleCha.Value;
-                        txtInt.Value = eleInt.Value;
-                        txtStr.Value = eleStr.Value;
-                        txtCon.Value = eleCon.Value;
-                        txtDex.Value = eleDex.Value;
-
-                        if (stkTempCha.Visibility == Visibility.Visible) grdTempCha.Visibility = Visibility.Visible;
-                        if (stkTempCon.Visibility == Visibility.Visible) grdTempCon.Visibility = Visibility.Visible;
-                        if (stkTempDex.Visibility == Visibility.Visible) grdTempDex.Visibility = Visibility.Visible;
-                        if (stkTempInt.Visibility == Visibility.Visible) grdTempInt.Visibility = Visibility.Visible;
-                        if (stkTempStr.Visibility == Visibility.Visible) grdTempStr.Visibility = Visibility.Visible;
-                        if (stkTempWis.Visibility == Visibility.Visible) grdTempWis.Visibility = Visibility.Visible;
-
-                        grdTempCha.Value = eleTempCha.Value;
-                        grdTempCon.Value = eleTempCon.Value;
-                        grdTempDex.Value = eleTempDex.Value;
-                        grdTempInt.Value = eleTempInt.Value;
-                        grdTempStr.Value = eleTempStr.Value;
-                        grdTempWis.Value = eleTempWis.Value;
-
-                        _isUpdating = updOld;
-                    }
-                    break;
-                default:
-                    break;
-            }
-        }
-
-        private void mnuAbilityView1_Click(object sender, RoutedEventArgs e)
-        {
-            SetAbilityScoreView(ABILITY_TABLE_VIEW);
-        }
-
-        private void mnuAbilityView2_Click(object sender, RoutedEventArgs e)
-        {
-            SetAbilityScoreView(ABILITY_ICON_VIEW);
-        }
 
         #endregion
 
