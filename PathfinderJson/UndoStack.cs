@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
 
 namespace PathfinderJson
@@ -263,5 +264,14 @@ namespace PathfinderJson
             }
         }
 
+        public ReadOnlyCollection<T> UndoItems
+        {
+            get { return undoList.AsReadOnly(); }
+        }
+
+        public ReadOnlyCollection<T> RedoItems
+        {
+            get { return redoList.AsReadOnly(); }
+        }
     }
 }

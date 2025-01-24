@@ -2394,6 +2394,7 @@ namespace PathfinderJson
                 _isTabsDirty = false;
 
                 UpdateTitlebar();
+                undoStack.Clear();
 
                 _isUpdating = true;
                 txtEditRaw.Load(filename);
@@ -2505,6 +2506,9 @@ namespace PathfinderJson
             // let's actually load the sheet now!
 
             CoreLoadPathfinderSheet(sheet);
+
+            // let's also create an undo state here, so that users can come back to this state from later
+            CreateUndoState();
 
             // this is a check to determine if this JSON file looks like a character sheet file or not
             // the program will happily open and work with the file, but if the user saves the file the existing data in the file will be deleted

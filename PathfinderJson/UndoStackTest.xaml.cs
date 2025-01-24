@@ -1,6 +1,8 @@
 ﻿using SolidShineUi;
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using System.Windows;
 using System.Windows.Data;
 
@@ -101,15 +103,117 @@ namespace PathfinderJson
 
         private void btnReload_Click(object sender, RoutedEventArgs e)
         {
-
+            LoadUndoStack();
         }
 
         void LoadUndoStack()
         {
             if (MainWindow == null) return;
 
+            selRedo.Items.Clear();
+            selUndo.Items.Clear();
 
+            UndoStack<PathfinderSheet> undoStack = MainWindow.GetUndoStack();
+
+            PathfinderSheet? previous = null;
+            int count = 0;
+
+            // list out the UndoItems
+            foreach (PathfinderSheet item in undoStack.UndoItems)
+            {
+                SelectableItem si = new SelectableItem("Undo " + count);
+
+                if (previous != null)
+                {
+                    // compare item to previous
+                    CompareResult cr = Compare.CompareObjects(previous, item);
+                    if (cr.Success == CompareSuccessValue.Success)
+                    {
+                        StringBuilder sb = new StringBuilder();
+                        List<string> props = cr.DifferingProperties;
+                        foreach (string prop in props)
+                        {
+                            sb.AppendLine(prop + ": " + GetPropertyValueAsString(previous, prop) + ", " + GetPropertyValueAsString(item, prop));
+                        }
+
+                        si.RightText = sb.ToString();
+                        si.Height = double.NaN;
+                    }
+                }
+                else
+                {
+                    si.RightText = "(new)";
+                }
+
+                selUndo.Items.Add(si);
+
+                previous = item;
+                count++;
+            }
+
+            previous = null;
+            count = 0;
+
+            // list out the RedoItems
+            foreach (PathfinderSheet item in undoStack.RedoItems)
+            {
+                SelectableItem si = new SelectableItem("Redo " + count);
+
+                if (previous != null)
+                {
+                    // compare item to previous
+                    CompareResult cr = Compare.CompareObjects(previous, item);
+                    if (cr.Success == CompareSuccessValue.Success)
+                    {
+                        StringBuilder sb = new StringBuilder();
+                        List<string> props = cr.DifferingProperties;
+                        foreach (string prop in props)
+                        {
+                            sb.AppendLine(prop + ": " + GetPropertyValueAsString(previous, prop) + ", " + GetPropertyValueAsString(item, prop));
+                        }
+
+                        si.RightText = sb.ToString();
+                        si.Height = double.NaN;
+                    }
+                }
+                else
+                {
+                    si.RightText = "(new)";
+                }
+
+                selRedo.Items.Add(si);
+
+                previous = item;
+                count++;
+            }
         }
 
+        string GetPropertyValueAsString<T>(T item, string propertyName)
+        {
+            Type tt = typeof(T);
+            var prop = tt.GetProperty(propertyName);
+            if (prop == null)
+            {
+                return "(does not exist)";
+            }
+            else
+            {
+                object? val = prop.GetValue(item, null);
+
+                if (val is ICollection il)
+                {
+                    List<string> colStrs = new List<string>();
+                    foreach (var colItem in il)
+                    {
+                        colStrs.Add(colItem?.ToString() ?? "(null)");
+                    }
+                    return string.Join(",", colStrs);
+                }
+                else
+                {
+                    return val?.ToString() ?? "(null)";
+                }
+            }
+        }
     }
 }

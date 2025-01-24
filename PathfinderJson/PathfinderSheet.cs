@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Serialization;
@@ -905,7 +906,7 @@ namespace PathfinderJson
         public string? NonLethal { get; set; }
     }
 
-    public class SpellLevel
+    public class SpellLevel : IEquatable<SpellLevel>
     {
         public string? TotalPerDay { get; set; }
         [JsonProperty("dc")]
@@ -915,6 +916,54 @@ namespace PathfinderJson
 
         [JsonProperty("slotted")]
         public List<Spell>? Spells { get; set; }
+
+        public bool Equals(SpellLevel? other)
+        {
+            bool equalsSoFar = other is not null
+                    && other.TotalPerDay == TotalPerDay && other.SaveDC == SaveDC && other.TotalKnown == TotalKnown && other.BonusSpells == BonusSpells;
+
+            if (other?.Spells == null && this.Spells == null)
+            {
+                return equalsSoFar && true;
+            }
+            else if (other?.Spells != null && this.Spells == null)
+            {
+                return false;
+            }
+            else if (other?.Spells == null && this.Spells != null)
+            {
+                return false;
+            }
+            else
+            {
+                return equalsSoFar && this.Spells!.SequenceEqual(other?.Spells ?? new List<Spell>());
+            }
+        }
+
+        public override string ToString()
+        {
+            return (TotalPerDay ?? "0") + "+" + BonusSpells + ", DC " + SaveDC + ", " + (Spells?.Count ?? 0) + " spells";
+        }
+
+        public override bool Equals(object? obj)
+        {
+            return obj is SpellLevel sl && Equals(sl);
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(TotalPerDay, TotalKnown, BonusSpells, SaveDC, Spells?.Count ?? 0);
+        }
+
+        public static bool operator ==(SpellLevel? left, SpellLevel? right)
+        {
+            return left is null ? right is null : left.Equals(right);
+        }
+
+        public static bool operator !=(SpellLevel? left, SpellLevel? right)
+        {
+            return left is null ? right is not null : !left.Equals(right);
+        }
     }
 
     public class Spell : IEquatable<Spell>
