@@ -563,6 +563,7 @@ namespace PathfinderJson
         private void window_Activated(object sender, EventArgs e)
         {
             menu.Foreground = App.ColorScheme.ForegroundColor.ToBrush();
+            pnlEleSearch.Opacity = 1.0;
         }
 
         private void window_Deactivated(object sender, EventArgs e)
@@ -571,9 +572,10 @@ namespace PathfinderJson
             {
                 menu.Foreground = ColorsHelper.CreateFromHex("#404040").ToBrush();
             }
+            pnlEleSearch.Opacity = 0.9;
         }
 
-        private void window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        private void window_Closing(object sender, CancelEventArgs e)
         {
             if (!SaveDirtyChanges() || CheckCalculating())
             {
@@ -584,6 +586,14 @@ namespace PathfinderJson
         private void window_Closed(object sender, EventArgs e)
         {
             Application.Current.Shutdown(0);
+        }
+
+        private void window_ColorSchemeChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            if (e.NewValue is ColorScheme cs)
+            {
+                pnlBkgd.Background = cs.MainColor.ToBrush();
+            }
         }
 
         #endregion
@@ -1743,41 +1753,13 @@ namespace PathfinderJson
                     chkNotesMarkdown.IsChecked = false;
                 }
 
-                if (HasSheetSettingValue("notesNoSpellCheck", "enabled"))
-                {
-                    SpellCheck.SetIsEnabled(txtNotes, false);
-                }
-                else
-                {
-                    SpellCheck.SetIsEnabled(txtNotes, true);
-                }
+                SpellCheck.SetIsEnabled(txtNotes, !HasSheetSettingValue("notesNoSpellCheck", "enabled"));
 
-                if (HasSheetSettingValue("calcIncludeAc", "false"))
-                {
-                    mnuUpdateAc.IsChecked = false;
-                }
-                else
-                {
-                    mnuUpdateAc.IsChecked = true;
-                }
+                mnuUpdateAc.IsChecked = !HasSheetSettingValue("calcIncludeAc", "false");
 
-                if (HasSheetSettingValue("calcIncludeTotals", "false"))
-                {
-                    mnuUpdateTotals.IsChecked = false;
-                }
-                else
-                {
-                    mnuUpdateTotals.IsChecked = true;
-                }
+                mnuUpdateTotals.IsChecked = !HasSheetSettingValue("calcIncludeTotals", "false");
 
-                if (HasSheetSettingValue("calcAutorun", "false"))
-                {
-                    mnuAutoUpdate.IsChecked = false;
-                }
-                else
-                {
-                    mnuAutoUpdate.IsChecked = true;
-                }
+                mnuAutoUpdate.IsChecked = !HasSheetSettingValue("calcAutorun", "false");
             }
             else
             {
@@ -2241,7 +2223,7 @@ namespace PathfinderJson
 
         #endregion
 
-        #region View options
+        #region View / Appearance
 
         void UpdateAppearance()
         {
@@ -2558,6 +2540,7 @@ namespace PathfinderJson
                     if (mnuTabBar.IsChecked) ShowTabsBar(); else HideTabsBar();
                     stkEditToolbar.Visibility = Visibility.Collapsed;
                     stkSheetEditToolbar.Visibility = Visibility.Visible;
+                    pnlEleSearch.Visibility = Visibility.Visible;
                     if (sp != null) if (!sp.IsClosed) sp.Close();
 
                     mnuTabs.IsChecked = false;
@@ -2588,6 +2571,7 @@ namespace PathfinderJson
                     ShowTabsBar();
                     stkEditToolbar.Visibility = Visibility.Collapsed;
                     stkSheetEditToolbar.Visibility = Visibility.Visible;
+                    pnlEleSearch.Visibility = Visibility.Visible;
                     if (sp != null) if (!sp.IsClosed) sp.Close();
 
                     mnuTabs.IsChecked = true;
@@ -2616,6 +2600,7 @@ namespace PathfinderJson
                     HideTabsBar();
                     stkEditToolbar.Visibility = Visibility.Visible;
                     stkSheetEditToolbar.Visibility = Visibility.Collapsed;
+                    pnlEleSearch.Visibility = Visibility.Collapsed;
 
                     mnuTabs.IsChecked = false;
                     mnuScroll.IsChecked = false;
@@ -2999,8 +2984,6 @@ namespace PathfinderJson
                 //drw.Owner = this;
                 drw.Show();
             }
-
-
         }
 
         private void DiceRollerWindow_Closed(object? sender, EventArgs e)

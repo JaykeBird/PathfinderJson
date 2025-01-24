@@ -10,7 +10,7 @@
         xmlns:md="clr-namespace:Markdig.Wpf;assembly=Markdig.Wpf"
         mc:Ignorable="d" x:Name="window"
         Title="Pathfinder JSON" Height="785" Width="550" MinWidth="550" MinHeight="450" ExcludeTopRightElementFromChrome="False"
-        Loaded="window_Loaded" Closing="window_Closing" Closed="window_Closed" Activated="window_Activated" Deactivated="window_Deactivated" >
+        Loaded="window_Loaded" Closing="window_Closing" Closed="window_Closed" Activated="window_Activated" Deactivated="window_Deactivated" ColorSchemeChanged="window_ColorSchemeChanged" >
     <flat:FlatWindow.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -37,15 +37,18 @@
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" MinWidth="120" x:Name="colTabs" />
-            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="5*"/>
+            <ColumnDefinition Width="3*" MaxWidth="128" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="24"/>
             <RowDefinition x:Name="rowToolbar" Height="0"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <flat:Menu Grid.Row="0" x:Name="menu" IsMainMenu="True" Grid.ColumnSpan="2" >
+        <DockPanel Grid.RowSpan="2" Grid.ColumnSpan="3" x:Name="pnlBkgd" />
+
+        <flat:Menu x:Name="menu" IsMainMenu="True" Grid.ColumnSpan="3" VerticalAlignment="Center" >
             <MenuItem Header="_File">
                 <MenuItem Header="_New Character..." x:Name="mnuNew" Click="mnuNew_Click">
                     <MenuItem.Icon>
@@ -218,8 +221,12 @@
                 </MenuItem>
             </MenuItem>
         </flat:Menu>
+        <DockPanel Grid.Column="2" Margin="0,0,4,0" x:Name="pnlEleSearch" >
+            <Image Width="16" DockPanel.Dock="Left" VerticalAlignment="Center" Height="16" Source="/PathfinderJson;component/Images/Color/Find.png" Margin="0,0,2,0" />
+            <TextBox x:Name="txtEleSearch" VerticalContentAlignment="Center" ToolTip="Element search" />
+        </DockPanel>
 
-        <Border Grid.Row="1" Grid.ColumnSpan="2" x:Name="toolbar" IsEnabled="False" >
+        <Border Grid.Row="1" Grid.ColumnSpan="3" x:Name="toolbar" IsEnabled="False" >
             <StackPanel Orientation="Horizontal" Margin="3,0,0,0" x:Name="stkToolbar" UseLayoutRounding="True" >
                 <flat:FlatButton TransparentBack="True" x:Name="btnNew" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" Click="mnuNew_Click" Margin="0,2" Padding="3,2" ToolTip="New Character" >
                     <local:ThemedImage ImageName="NewFile" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" Width="16" Height="16" />
@@ -268,9 +275,9 @@
         </Border>
 
         <flat:SelectPanel Grid.Column="0" Grid.Row="2" x:Name="selTabs" MultiSelect="False" BorderThickness="0,0,1,0" />
-        <Border Grid.Column="0" Grid.Row="2" x:Name="brdrQView" VerticalAlignment="Bottom" Margin="6,32" Height="1" BorderThickness="1"
+        <Border Grid.Column="0" Grid.Row="2" x:Name="brdrQView" VerticalAlignment="Top" Margin="6,712,6,0" Height="1" BorderThickness="1"
                 BorderBrush="{Binding ElementName=window, Path=BorderBrush}" />
-        <flat:MenuButton Grid.Column="0" Grid.Row="2" x:Name="mnuQView" VerticalAlignment="Bottom" Margin="3,5" TransparentBack="True" Padding="2,3"
+        <flat:MenuButton Grid.Column="0" Grid.Row="2" x:Name="mnuQView" VerticalAlignment="Top" Margin="3,716,3,0" TransparentBack="True" Padding="2,3"
                           ColorScheme="{Binding ElementName=window, Path=ColorScheme}" KeepMenuArrowOnRight="True" HorizontalContentAlignment="Left" >
             <flat:MenuButton.Content>
                 <StackPanel Orientation="Horizontal">
@@ -298,7 +305,7 @@
                 </flat:ContextMenu>
             </flat:MenuButton.Menu>
         </flat:MenuButton>
-        <ScrollViewer Grid.Column="1" Grid.Row="2" x:Name="scrSheet" AllowDrop="True" Drop="scrSheet_Drop" >
+        <ScrollViewer Grid.Column="1" Grid.Row="2" x:Name="scrSheet" AllowDrop="True" Drop="scrSheet_Drop" Grid.ColumnSpan="2" >
             <StackPanel x:Name="stkSheet" >
                 <Grid Margin="5,5,5,0" x:Name="grdGeneral" Visibility="Collapsed" >
                     <Grid.RowDefinitions>
@@ -1122,7 +1129,7 @@
 
         </ScrollViewer>
 
-        <edit:TextEditor Grid.Row="2" Grid.Column="1" FontFamily="Consolas" FontSize="12" x:Name="txtEditRaw" ShowLineNumbers="True" WordWrap="True" Visibility="Collapsed" TextChanged="txtEditRaw_TextChanged" AllowDrop="True" Drop="txtEditRaw_Drop" Background="White" Foreground="Black" >
+        <edit:TextEditor Grid.Row="2" Grid.Column="1" FontFamily="Consolas" FontSize="12" x:Name="txtEditRaw" ShowLineNumbers="True" WordWrap="True" Visibility="Collapsed" TextChanged="txtEditRaw_TextChanged" AllowDrop="True" Drop="txtEditRaw_Drop" Background="White" Foreground="Black" Grid.ColumnSpan="2" >
             <edit:TextEditor.ContextMenu>
                 <flat:ContextMenu FontFamily="Segoe UI">
                     <MenuItem Header="_Copy" Click="mnuCopy_Click">
@@ -1157,9 +1164,10 @@
             </edit:TextEditor.ContextMenu>
         </edit:TextEditor>
 
-        <Grid x:Name="grdEditDrop" Grid.Row="2" Grid.Column="1" Background="#01000000" Visibility="Collapsed" AllowDrop="True" Drop="txtEditRaw_Drop" />
+        <Grid x:Name="grdEditDrop" Grid.Row="2" Grid.Column="1" Background="#01000000" Visibility="Collapsed" AllowDrop="True" Drop="txtEditRaw_Drop" Grid.ColumnSpan="2" />
 
-        <TextBlock x:Name="lblNoSheet" Grid.Column="1" HorizontalAlignment="Center" Grid.Row="2" TextWrapping="Wrap" VerticalAlignment="Center" TextAlignment="Center" Visibility="Collapsed" AllowDrop="True" Drop="txtEditRaw_Drop" >
+        <TextBlock x:Name="lblNoSheet" Grid.Column="1" HorizontalAlignment="Center" Grid.Row="2" Grid.ColumnSpan="2" TextWrapping="Wrap" VerticalAlignment="Center" TextAlignment="Center" 
+                   Visibility="Collapsed" AllowDrop="True" Drop="txtEditRaw_Drop" >
             <Run Text="No sheet loaded" /><LineBreak /><Run FontSize="4" /><LineBreak/>
             <Run Text="Drop a file here, or use the File menu to create or open a sheet."  />
         </TextBlock>

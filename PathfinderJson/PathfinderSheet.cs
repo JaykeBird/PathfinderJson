@@ -19,7 +19,6 @@ namespace PathfinderJson
     {
         public static PathfinderSheet LoadJsonFile(string filename)
         {
-
             string csc = "";
 
             using (StreamReader file = File.OpenText(filename))
@@ -130,6 +129,7 @@ namespace PathfinderJson
         public string? Languages { get; set; }
 
         [JsonProperty("user", Order = -5)]
+        [Compare.DoNotCompare]
         public UserData? Player { get; set; }// = new UserData(false);
 
         [JsonProperty(Order = 49, DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
