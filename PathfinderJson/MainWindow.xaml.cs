@@ -595,30 +595,7 @@ namespace PathfinderJson
                 return;
             }
 
-            NewSheet ns = new NewSheet();
-            ns.Owner = this;
-            ns.WindowStartupLocation = WindowStartupLocation.CenterOwner;
-            ns.ShowDialog();
-
-            if (ns.DialogResult)
-            {
-                PathfinderSheet ps = ns.Sheet;
-
-                filePath = ns.FileLocation;
-                fileTitle = ps.Name;
-                _sheetLoaded = true;
-
-                isDirty = false;
-                _isEditorDirty = false;
-                _isTabsDirty = false;
-
-                UpdateTitlebar();
-
-                txtEditRaw.Text = ps.SaveJsonText(App.Settings.IndentJsonData);
-                ChangeView(App.Settings.StartView, false, false);
-                LoadPathfinderSheet(ps);
-                await UpdateCalculations();
-            }
+            await NewFile();
         }
 
         private void mnuNewWindow_Click(object sender, RoutedEventArgs e)
@@ -665,6 +642,76 @@ namespace PathfinderJson
         private void mnuSaveAs_Click(object sender, RoutedEventArgs e)
         {
             SaveAsFile();
+        }
+
+        private void mnuRevert_Click(object sender, RoutedEventArgs e)
+        {
+            if (!string.IsNullOrEmpty(filePath))
+            {
+                if (AskDiscard())
+                {
+                    LoadFile(filePath, false);
+                }
+            }
+        }
+
+        private void mnuIndent_Click(object sender, RoutedEventArgs e)
+        {
+            if (mnuIndent.IsChecked)
+            {
+                mnuIndent.IsChecked = false;
+                App.Settings.IndentJsonData = false;
+            }
+            else
+            {
+                mnuIndent.IsChecked = true;
+                App.Settings.IndentJsonData = true;
+            }
+
+            SaveSettings();
+        }
+
+        private void btnClose_Click(object sender, RoutedEventArgs e)
+        {
+            CloseFile();
+        }
+
+        private void btnExit_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
+
+        #endregion
+
+        #region Core file operations
+
+        async Task NewFile()
+        {
+            NewSheet ns = new NewSheet();
+            ns.Owner = this;
+            ns.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+            ns.ShowDialog();
+
+            if (ns.DialogResult)
+            {
+                PathfinderSheet ps = ns.Sheet;
+
+                filePath = ns.FileLocation;
+                fileTitle = ps.Name;
+                _sheetLoaded = true;
+
+                isDirty = false;
+                _isEditorDirty = false;
+                _isTabsDirty = false;
+
+                UpdateTitlebar();
+                undoStack.Clear();
+
+                txtEditRaw.Text = ps.SaveJsonText(App.Settings.IndentJsonData);
+                ChangeView(App.Settings.StartView, false, false);
+                LoadPathfinderSheet(ps);
+                await UpdateCalculations();
+            }
         }
 
         void SaveFile(string file)
@@ -873,43 +920,6 @@ namespace PathfinderJson
                     md.ShowDialog("Could not check for updates. Make sure you're connected to the Internet.", App.ColorScheme, this, "Check for Updates", MessageDialogButtonDisplay.Auto, image: MessageDialogImage.Error);
                 }
             }
-        }
-
-        private void mnuRevert_Click(object sender, RoutedEventArgs e)
-        {
-            if (!string.IsNullOrEmpty(filePath))
-            {
-                if (AskDiscard())
-                {
-                    LoadFile(filePath, false);
-                }
-            }
-        }
-
-        private void mnuIndent_Click(object sender, RoutedEventArgs e)
-        {
-            if (mnuIndent.IsChecked)
-            {
-                mnuIndent.IsChecked = false;
-                App.Settings.IndentJsonData = false;
-            }
-            else
-            {
-                mnuIndent.IsChecked = true;
-                App.Settings.IndentJsonData = true;
-            }
-
-            SaveSettings();
-        }
-
-        private void btnClose_Click(object sender, RoutedEventArgs e)
-        {
-            CloseFile();
-        }
-
-        private void btnExit_Click(object sender, RoutedEventArgs e)
-        {
-            Close();
         }
 
         #endregion
