@@ -1,0 +1,329 @@
+﻿<UserControl x:Class="PathfinderJson.PersonDisplay"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:PathfinderJson"
+             xmlns:flat="clr-namespace:SolidShineUi;assembly=SolidShineUi"
+             mc:Ignorable="d" 
+             MinHeight="500" d:DesignWidth="600">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="240"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <Path Grid.Column="1" Fill="LightGray" Stroke="DarkGray" StrokeThickness="1" x:Name="person" VerticalAlignment="Top" Height="425"
+              Data="M 120,300 L 70,400 L 70,420 H 30 V 410 L 50,400 L 70,280 L 70,150 L 50,250 C 65,280 15,280 30,250 L 50,115 L 100,110 V 100 C 60,80 70,25 120,25 
+              C 170,25 180,80 140,100 V 110 L 190,115 L 210,250 C 225,280 175,280 190,250 L 170,150 L 170,280 L 190,400 L 210,410 V 420 H 170 L 170,400 L 120,300" />
+        <Grid Grid.Column="1">
+            <flat:FlatButton CornerRadius="8" Height="16" Width="16" MinHeight="16" Margin="0,20,0,0" VerticalAlignment="Top" HorizontalAlignment="Center" HighlightBrush="#44444444" ClickBrush="#55555555" 
+                             ToolTip="Head/Crown" Background="SkyBlue" />
+            <flat:FlatButton CornerRadius="8" Height="16" Width="16" MinHeight="16" Margin="0,40,0,0" VerticalAlignment="Top" HorizontalAlignment="Center" HighlightBrush="#44444444" ClickBrush="#55555555" 
+                             ToolTip="Headband/Forehead" Background="OliveDrab" />
+            <flat:FlatButton CornerRadius="8" Height="16" Width="16" MinHeight="16" Margin="0,60,0,0" VerticalAlignment="Top" HorizontalAlignment="Center" HighlightBrush="#44444444" ClickBrush="#55555555"
+                             ToolTip="Eyes/Face" Background="Moccasin" />
+            <flat:FlatButton CornerRadius="8" Height="16" Width="16" MinHeight="16" Margin="0,95,0,0" VerticalAlignment="Top" HorizontalAlignment="Center" HighlightBrush="#44444444" ClickBrush="#55555555"
+                             ToolTip="Neck" Background="HotPink" />
+            <flat:FlatButton CornerRadius="8" Height="16" Width="16" MinHeight="16" Margin="155,105,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" HighlightBrush="#44444444" ClickBrush="#55555555"
+                             ToolTip="Shoulders" Background="MediumPurple" />
+            <flat:FlatButton CornerRadius="8" Height="16" Width="16" MinHeight="16" Margin="0,140,0,0" VerticalAlignment="Top" HorizontalAlignment="Center" HighlightBrush="#44444444" ClickBrush="#55555555"
+                             ToolTip="Chest" Background="OrangeRed" />
+            <flat:FlatButton CornerRadius="8" Height="16" Width="16" MinHeight="16" Margin="100,190,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" HighlightBrush="#44444444" ClickBrush="#55555555"
+                             ToolTip="Body" Background="MediumSeaGreen" />
+            <flat:FlatButton CornerRadius="8" Height="16" Width="16" MinHeight="16" Margin="125,190,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" HighlightBrush="#44444444" ClickBrush="#55555555"
+                             ToolTip="Armor" Background="Gold" />
+            <flat:FlatButton CornerRadius="8" Height="16" Width="16" MinHeight="16" Margin="190,240,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" HighlightBrush="#44444444" ClickBrush="#55555555"
+                             ToolTip="Wrist" Background="LightCoral" />
+            <flat:FlatButton CornerRadius="8" Height="16" Width="16" MinHeight="16" Margin="195,260,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" HighlightBrush="#44444444" ClickBrush="#55555555"
+                             ToolTip="Rings/Fingers" Background="CornflowerBlue" />
+            <flat:FlatButton CornerRadius="8" Height="16" Width="16" MinHeight="16" Margin="30,250,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" HighlightBrush="#44444444" ClickBrush="#55555555"
+                             ToolTip="Hand (Gloves)" Background="GreenYellow" />
+            <flat:FlatButton CornerRadius="8" Height="16" Width="16" MinHeight="16" Margin="0,265,0,0" VerticalAlignment="Top" HorizontalAlignment="Center" HighlightBrush="#44444444" ClickBrush="#55555555"
+                             ToolTip="Belt" Background="SlateGray" />
+            <flat:FlatButton CornerRadius="8" Height="16" Width="16" MinHeight="16" Margin="50,400,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" HighlightBrush="#44444444" ClickBrush="#55555555"
+                             ToolTip="Foot" Background="ForestGreen" />
+        </Grid>
+
+        <StackPanel Orientation="Vertical" Grid.Column="0" x:Name="stkLeft">
+            <Border Margin="5" BorderBrush="Black" BorderThickness="1" CornerRadius="3" >
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="24" />
+                        <RowDefinition Height="1*" MinHeight="30" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="24" />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Border Margin="4" BorderBrush="Gray" BorderThickness="1" Background="SkyBlue" />
+                    <TextBlock Grid.Column="1" Margin="2"  FontSize="14" Text="Head/Crown" VerticalAlignment="Center" />
+                    <StackPanel Grid.Column="1" Grid.Row="1" Margin="0,2,0,5">
+                        <TextBlock Text="Item 1" />
+                        <TextBlock Text="Item 2" />
+                    </StackPanel>
+                </Grid>
+            </Border>
+            <Border Margin="5" BorderBrush="Black" BorderThickness="1" CornerRadius="3" >
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="24" />
+                        <RowDefinition Height="1*" MinHeight="30" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="24" />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Border Margin="4" BorderBrush="Gray" BorderThickness="1" Background="Moccasin" />
+                    <TextBlock Grid.Column="1" Margin="2"  FontSize="14" Text="Face/Eyes" VerticalAlignment="Center" />
+                    <StackPanel Grid.Column="1" Grid.Row="1" Margin="0,2,0,5">
+                        <TextBlock Text="Item 1" />
+                    </StackPanel>
+                </Grid>
+            </Border>
+            <Border Margin="5" BorderBrush="Black" BorderThickness="1" CornerRadius="3" >
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="24" />
+                        <RowDefinition Height="1*" MinHeight="30" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="24" />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Border Margin="4" BorderBrush="Gray" BorderThickness="1" Background="OrangeRed" />
+                    <TextBlock Grid.Column="1" Margin="2"  FontSize="14" Text="Chest" VerticalAlignment="Center" />
+                    <StackPanel Grid.Column="1" Grid.Row="1" Margin="0,2,0,5">
+                        <!--<TextBlock Text="Item 1" />-->
+                    </StackPanel>
+                </Grid>
+            </Border>
+            <Border Margin="5" BorderBrush="Black" BorderThickness="1" CornerRadius="3" >
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="24" />
+                        <RowDefinition Height="1*" MinHeight="30" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="24" />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Border Margin="4" BorderBrush="Gray" BorderThickness="1" Background="MediumSeaGreen" />
+                    <TextBlock Grid.Column="1" Margin="2"  FontSize="14" Text="Body" VerticalAlignment="Center" />
+                    <StackPanel Grid.Column="1" Grid.Row="1" Margin="0,2,0,5">
+                        <!--<TextBlock Text="Item 1" />-->
+                    </StackPanel>
+                </Grid>
+            </Border>
+            <Border Margin="5" BorderBrush="Black" BorderThickness="1" CornerRadius="3" >
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="24" />
+                        <RowDefinition Height="1*" MinHeight="30" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="24" />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Border Margin="4" BorderBrush="Gray" BorderThickness="1" Background="Gold" />
+                    <TextBlock Grid.Column="1" Margin="2"  FontSize="14" Text="Armor" VerticalAlignment="Center" />
+                    <StackPanel Grid.Column="1" Grid.Row="1" Margin="0,2,0,5">
+                        <!--<TextBlock Text="Item 1" />-->
+                    </StackPanel>
+                </Grid>
+            </Border>
+            <Border Margin="5" BorderBrush="Black" BorderThickness="1" CornerRadius="3" >
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="24" />
+                        <RowDefinition Height="1*" MinHeight="30" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="24" />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Border Margin="4" BorderBrush="Gray" BorderThickness="1" Background="GreenYellow" />
+                    <TextBlock Grid.Column="1" Margin="2"  FontSize="14" Text="Hand/Glove" VerticalAlignment="Center" />
+                    <StackPanel Grid.Column="1" Grid.Row="1" Margin="0,2,0,5">
+                        <!--<TextBlock Text="Item 1" />-->
+                    </StackPanel>
+                </Grid>
+            </Border>
+            <Border Margin="5" BorderBrush="Black" BorderThickness="1" CornerRadius="3" >
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="24" />
+                        <RowDefinition Height="1*" MinHeight="30" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="24" />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Border Margin="4" BorderBrush="Gray" BorderThickness="1" Background="ForestGreen" />
+                    <TextBlock Grid.Column="1" Margin="2"  FontSize="14" Text="Foot" VerticalAlignment="Center" />
+                    <StackPanel Grid.Column="1" Grid.Row="1" Margin="0,2,0,5">
+                        <!--<TextBlock Text="Item 1" />-->
+                    </StackPanel>
+                </Grid>
+            </Border>
+        </StackPanel>
+        <StackPanel Orientation="Vertical" Grid.Column="2" x:Name="stkRight">
+            <Border Margin="5" BorderBrush="Black" BorderThickness="1" CornerRadius="3" >
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="24" />
+                        <RowDefinition Height="1*" MinHeight="30" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="24" />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Border Margin="4" BorderBrush="Gray" BorderThickness="1" Background="OliveDrab" />
+                    <TextBlock Grid.Column="1" Margin="2"  FontSize="14" Text="Headband" VerticalAlignment="Center" />
+                    <StackPanel Grid.Column="1" Grid.Row="1" Margin="0,2,0,5">
+                        <!--<TextBlock Text="Item 1" />-->
+                    </StackPanel>
+                </Grid>
+            </Border>
+            <Border Margin="5" BorderBrush="Black" BorderThickness="1" CornerRadius="3" >
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="24" />
+                        <RowDefinition Height="1*" MinHeight="30" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="24" />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Border Margin="4" BorderBrush="Gray" BorderThickness="1" Background="HotPink" />
+                    <TextBlock Grid.Column="1" Margin="2"  FontSize="14" Text="Neck" VerticalAlignment="Center" />
+                    <StackPanel Grid.Column="1" Grid.Row="1" Margin="0,2,0,5">
+                        <TextBlock Text="Item 1" />
+                    </StackPanel>
+                </Grid>
+            </Border>
+            <Border Margin="5" BorderBrush="Black" BorderThickness="1" CornerRadius="3" >
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="24" />
+                        <RowDefinition Height="1*" MinHeight="30" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="24" />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Border Margin="4" BorderBrush="Gray" BorderThickness="1" Background="MediumPurple" />
+                    <TextBlock Grid.Column="1" Margin="2"  FontSize="14" Text="Shoulder" VerticalAlignment="Center" />
+                    <StackPanel Grid.Column="1" Grid.Row="1" Margin="0,2,0,5">
+                        <!--<TextBlock Text="Item 1" />-->
+                    </StackPanel>
+                </Grid>
+            </Border>
+            <Border Margin="5" BorderBrush="Black" BorderThickness="1" CornerRadius="3" >
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="24" />
+                        <RowDefinition Height="1*" MinHeight="30" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="24" />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Border Margin="4" BorderBrush="Gray" BorderThickness="1" Background="LightCoral" />
+                    <TextBlock Grid.Column="1" Margin="2"  FontSize="14" Text="Wrist" VerticalAlignment="Center" />
+                    <StackPanel Grid.Column="1" Grid.Row="1" Margin="0,2,0,5">
+                        <!--<TextBlock Text="Item 1" />-->
+                    </StackPanel>
+                </Grid>
+            </Border>
+            <Border Margin="5" BorderBrush="Black" BorderThickness="1" CornerRadius="3" >
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="24" />
+                        <RowDefinition Height="1*" MinHeight="30" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="24" />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Border Margin="4" BorderBrush="Gray" BorderThickness="1" Background="CornflowerBlue" />
+                    <TextBlock Grid.Column="1" Margin="2"  FontSize="14" Text="Rings" VerticalAlignment="Center" />
+                    <StackPanel Grid.Column="1" Grid.Row="1" Margin="0,2,0,5">
+                        <TextBlock Text="Item 1" />
+                    </StackPanel>
+                </Grid>
+            </Border>
+            <Border Margin="5" BorderBrush="Black" BorderThickness="1" CornerRadius="3" >
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="24" />
+                        <RowDefinition Height="1*" MinHeight="30" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="24" />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Border Margin="4" BorderBrush="Gray" BorderThickness="1" Background="SlateGray" />
+                    <TextBlock Grid.Column="1" Margin="2"  FontSize="14" Text="Belt" VerticalAlignment="Center" />
+                    <StackPanel Grid.Column="1" Grid.Row="1" Margin="0,2,0,5">
+                        <TextBlock Text="Item 1" />
+                    </StackPanel>
+                </Grid>
+            </Border>
+        </StackPanel>
+        <Grid Grid.Row="1" Grid.ColumnSpan="3" Margin="0,10,0,0" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="1*" />
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Orientation="Vertical" Grid.Column="1" x:Name="stkInHand">
+                <Border Margin="5" BorderBrush="Black" BorderThickness="1" CornerRadius="3" >
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="24" />
+                            <RowDefinition Height="1*" MinHeight="30" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="24" />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <Border Margin="4" BorderBrush="Gray" BorderThickness="1" Background="LightGray" />
+                        <TextBlock Grid.Column="1" Margin="2"  FontSize="14" Text="Holding" VerticalAlignment="Center" />
+                        <StackPanel Grid.Column="1" Grid.Row="1" Margin="0,2,0,5">
+                            <TextBlock Text="Item 1" />
+                            <TextBlock Text="Item 2" />
+                        </StackPanel>
+                    </Grid>
+                </Border>
+            </StackPanel>
+            <StackPanel Orientation="Vertical" Grid.Column="2" x:Name="stkStored">
+                <Border Margin="5" BorderBrush="Black" BorderThickness="1" CornerRadius="3" >
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="24" />
+                            <RowDefinition Height="1*" MinHeight="30" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="24" />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <Border Margin="4" BorderBrush="Gray" BorderThickness="1" Background="LightGray" />
+                        <TextBlock Grid.Column="1" Margin="2"  FontSize="14" Text="In bag" VerticalAlignment="Center" />
+                        <StackPanel Grid.Column="1" Grid.Row="1" Margin="0,2,0,5">
+                            <TextBlock Text="Item 1" />
+                            <TextBlock Text="Item 2" />
+                        </StackPanel>
+                    </Grid>
+                </Border>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</UserControl>
