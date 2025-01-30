@@ -1,0 +1,28 @@
+﻿<UserControl x:Class="PathfinderJson.PersonSlotItemList" x:Name="control"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:PathfinderJson"
+             xmlns:flat="clr-namespace:SolidShineUi;assembly=SolidShineUi"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800" Margin="5" >
+    <UserControl.Resources>
+        <flat:ColorToBrushConverter x:Key="ctb" />
+    </UserControl.Resources>
+    <Border BorderBrush="Black" BorderThickness="1" CornerRadius="3" >
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="24" />
+                <RowDefinition Height="1*" MinHeight="30" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="24" />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Border Margin="4" BorderBrush="Gray" BorderThickness="1" Background="{Binding ElementName=control, Path=SlotColor, Converter={StaticResource ctb}, FallbackValue=White}" />
+            <TextBlock Grid.Column="1" Margin="2"  FontSize="14" Text="{Binding ElementName=control, Path=Title, FallbackValue='No Name'}" VerticalAlignment="Center" />
+            <flat:SelectPanel Grid.Column="1" Grid.Row="1" x:Name="selItems" Margin="0,2,0,5" Background="Transparent" BorderThickness="0" ItemsSource="{Binding ElementName=control, Path=Equipment}" />
+        </Grid>
+    </Border>
+</UserControl>
