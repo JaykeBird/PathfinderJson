@@ -11,6 +11,8 @@ using System.Xml.Serialization;
 using System.Text;
 using System.Xml;
 using System.Runtime.CompilerServices;
+using System.Security;
+using System.Diagnostics.CodeAnalysis;
 
 namespace PathfinderJson
 {
@@ -155,63 +157,52 @@ namespace PathfinderJson
                 Directory.CreateDirectory(Path.Combine(AppCacheDirectory, "Optimization"));
             }
 
-            if (CanBePortable && IsPortable)
-            {
-                string localFolder = AppContext.BaseDirectory;
-                SettingsDirectory = Path.Combine(localFolder, appComponentName + "-settings");
-            }
-            else
+            if (!IsPortable)
             {
                 Directory.CreateDirectory(Path.Combine(BaseAppDataDirectory, "settings", appComponentName));
-                SetSettingsDirectoryVariable();
             }
+
+            SettingsDirectory = GetSettingsFolder();
         }
 
         /// <summary>
-        /// This sets the value <see cref="SettingsDirectory"/>, by reading the standard settings directory and resolving the redirect file if needed.
+        /// Get the path for the folder that settings should be stored in.
         /// </summary>
-        /// <remarks>
-        /// For portable versions (<see cref="IsPortable"/> is <c>true</c>), this should not be used,
-        /// as portable versions will have the directory stored in the same folder as the program.
-        /// </remarks>
-        static void SetSettingsDirectoryVariable()
+        public static string GetSettingsFolder()
         {
-            // this locates the directory that settings should be placed in (for non-portable versions),
-            // which will either be 1) the default directory in AppData, or 2) the directory listed in the redirect file
+            string mainSettingsDir = Path.Combine(BaseAppDataDirectory, "Settings", appComponentName);
 
-            // so first, let's check the directory and then go from there
-            string settingsDir = Path.Combine(BaseAppDataDirectory, "settings", appComponentName, App.VersionString);
-            if (Directory.Exists(settingsDir))
+            if (CanBePortable && IsPortable)
             {
-                // okay, so the directory is already here... does that mean settings are here, or a redirect file?
-
-                if (File.Exists(Path.Combine(settingsDir, Settings_Redirect_Filename)))
-                {
-                    // let's read from the redirect file
-                    string newDir = File.ReadAllText(Path.Combine(settingsDir, Settings_Redirect_Filename), UTF8Encoding).Trim();
-                    if (Directory.Exists(newDir))
-                    {
-                        SettingsDirectory = newDir;
-                    }
-                    else
-                    {
-                        // the directory listed in the redirect file doesn't exist, let's just use this folder
-                        SettingsDirectory = settingsDir;
-                    }
-                }
-                else
-                {
-                    // no redirect file, so it's just here in the default folder
-                    SettingsDirectory = settingsDir;
-                }
+                return Path.Combine(AppContext.BaseDirectory, appComponentName + "-settings");
             }
             else
             {
-                // okay, no redirect file or anything at all (since the directory doesn't exist yet)
-                // so let's use the default directory
-                SettingsDirectory = settingsDir;
+                string currentDir = Path.Combine(mainSettingsDir, App.VersionString);
+
+                // okay, is there a redirect file?
+                if (File.Exists(Path.Combine(currentDir, Settings_Redirect_Filename)))
+                {
+                    // settings has been redirected to another directory
+                    try
+                    {
+                        string newDir = File.ReadAllText(Path.Combine(currentDir, Settings_Redirect_Filename), UTF8Encoding);
+                        if (IsValidPath(newDir))
+                        {
+                            return newDir;
+                        }
+                    }
+                    catch (IOException) { }
+                    catch (ArgumentException) { }
+                    catch (UnauthorizedAccessException) { }
+                    catch (NotSupportedException) { }
+                }
+
+                // current directory is here, let's load in from this directory
+                return currentDir;
             }
         }
+
         #endregion
 
         #region Deserialization
@@ -483,6 +474,18 @@ namespace PathfinderJson
         #endregion
 
         #region Locate Settings
+
+        /// <summary>
+        /// Get if a particular path string is actually a valid directory or file path.
+        /// </summary>
+        /// <param name="path">the path string to check</param>
+        /// <returns><c>true</c> if a valid path, <c>false</c> if this path contains invalid characters or is just whitespace</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static bool IsValidPath([NotNullWhen(true)] string? path)
+        {
+            return !(string.IsNullOrWhiteSpace(path) || path.Any(c => Path.GetInvalidPathChars().Contains(c)));
+        }
+
         /// <summary>
         /// Locate the directory that stores the latest app settings that can be found. Ideally, this should be this version's main settings folder (<see cref="SettingsDirectory"/>),
         /// but otherwise this will attempt to find a folder from a previous version of this program.
@@ -496,20 +499,20 @@ namespace PathfinderJson
         /// (If there is not an upgrade path, that means that either the current folder is the one being used, so no upgrade needed, or no folder could be found at all.)
         /// </remarks>
         /// <returns>
-        /// The folder where current or older user settings have been found (or <c>null</c> if no folder could be found).
+        /// The folder where the most recent user settings have been found (or <c>null</c> if no folder could be found).
         /// Also returns if there is an upgrade path available that the user should be asked about.
         /// </returns>
-        public static (string? dirPath, bool canRequestUpgrade) LocateLatestSettingsDirectory()
+        public static (string? dirPath, bool canRequestUpgrade) LocateLatestSettings()
         {
             // first, some setup
             string mainSettingsDir = Path.Combine(BaseAppDataDirectory, "Settings", appComponentName); // this is the directory settings should be stored in
 
             // if we're using the portable version, then we'll pull the portable directory first
-            if (IsPortable && Directory.Exists(Path.Combine(AppContext.BaseDirectory, "Settings")))
+            if (IsPortable && Directory.Exists(Path.Combine(AppContext.BaseDirectory, appComponentName + "-settings")))
             {
                 // we found the portable settings directory
                 // no need to do an upgrade
-                return (Path.Combine(AppContext.BaseDirectory, "Settings"), false);
+                return (Path.Combine(AppContext.BaseDirectory, appComponentName + "-settings"), false);
             }
             // otherwise, let's look for the main settings directory
             else if (Directory.Exists(mainSettingsDir) && Directory.EnumerateDirectories(mainSettingsDir).Any()) // check if main settings directory exists (and make sure it has subdirectories)
@@ -522,11 +525,18 @@ namespace PathfinderJson
                     if (File.Exists(Path.Combine(currentDir, Settings_Redirect_Filename)))
                     {
                         // settings has been redirected to another directory
-                        string newDir = File.ReadAllText(Path.Combine(currentDir, Settings_Redirect_Filename), UTF8Encoding);
-                        if (Directory.Exists(newDir))
+                        try
                         {
-                            return (newDir, false);
+                            string newDir = File.ReadAllText(Path.Combine(currentDir, Settings_Redirect_Filename), UTF8Encoding);
+                            if (Directory.Exists(newDir))
+                            {
+                                return (newDir, false);
+                            }
                         }
+                        catch (IOException) { }
+                        catch (ArgumentException) { }
+                        catch (UnauthorizedAccessException) { }
+                        catch (NotSupportedException) { }
                     }
 
                     // current directory is here, let's load in from this directory
@@ -561,12 +571,8 @@ namespace PathfinderJson
                                 string newDir = File.ReadAllText(Path.Combine(mainSettingsDir, res.ToString(), Settings_Redirect_Filename), UTF8Encoding).Trim();
                                 if (Directory.Exists(newDir))
                                 {
-                                    // let's also use the current version's settings in this folder too
-                                    // (so, we'll write a new settings redirect file)
-                                    string currentnDir = Path.Combine(mainSettingsDir, App.VersionString); // this is the standard settings directory
-                                    Directory.CreateDirectory(currentnDir);
-                                    File.WriteAllText(Path.Combine(currentnDir, Settings_Redirect_Filename), newDir, UTF8Encoding); // writing redirect file
-                                    return (newDir, false);
+                                    // so we'll return that redirected directory
+                                    return (newDir, true);
                                 }
                             }
 
@@ -579,8 +585,8 @@ namespace PathfinderJson
                             }
                             else
                             {
-                                // I could in theory check any other lower folders, but that's a lot of code to write for what will be a fairly unlikely scenario
-                                // instead, let's just return null and then cause a new settings file to be created
+                                // I could in theory check for any other folders, but that's a lot of code to write for what will be a fairly unlikely scenario
+                                // instead, let's just return null and go from there
                                 return (null, false);
                             }
                         }
@@ -594,8 +600,8 @@ namespace PathfinderJson
                     catch (InvalidOperationException)
                     {
                         // there are no folders that are less than the current version
-                        // there may be folders that are lower than the
-                        // ... than the what? why didn't I finish writing that comment?
+                        // there may be folders that are greater than the current version, but I'm not going to look for those
+                        // let's just return null and go from there
                         return (null, false);
                     }
                 }
@@ -624,20 +630,20 @@ namespace PathfinderJson
 
         static void SetupSettingsBase()
         {
-            SetupBaseDirectories(); // this does not create the actual settings directory, that is done a few lines later
+            SetupBaseDirectories(); // this does not create the actual settings directory, but does set where it should be
 
-            (string? settingsDir, bool canUpdate) = LocateLatestSettingsDirectory();
-            if (settingsDir == null || (IsPortable && CanBePortable && Directory.Exists(SettingsDirectory)))
+            if (Directory.Exists(SettingsDirectory))
             {
-                // settingsDir is null if no old settings directories could be found, so we'll just default to the standard directory
-                // otherwise, if this is a Portable app and the portable settings app already exists, just use the standard directory
-                settingsDir = SettingsDirectory;
+                // if the directory we need already exists, no point in asking about it
+                return;
             }
 
-            // now the actual settings directory is created (could not be created prior to FindLatestSettings to prevent a false positive)
+            (string? oldDir, bool canUpdate) = LocateLatestSettings();
+
+            // now the actual settings directory is created (could not be created prior to LocateLatestSettings to prevent a false positive)
             Directory.CreateDirectory(SettingsDirectory);
 
-            if (canUpdate)
+            if (canUpdate && oldDir != null)
             {
                 // settings stored in old directory, ask user to update
                 string pStr = IsPortable ? "(or non-portable) " : "";
@@ -647,10 +653,15 @@ namespace PathfinderJson
                 if (result == MessageBoxResult.Yes)
                 {
                     // transfer from old to new
-                    foreach (string sff in Directory.GetFiles(settingsDir))
+                    foreach (string sff in Directory.GetFiles(oldDir))
                     {
-                        // TODO: add try-catch statements
-                        File.Copy(sff, Path.Combine(SettingsDirectory, Path.GetFileName(sff)), true);
+                        try
+                        {
+                            File.Copy(sff, Path.Combine(SettingsDirectory, Path.GetFileName(sff)), true);
+                        }
+                        catch (IOException) { }
+                        catch (SecurityException) { }
+                        catch (UnauthorizedAccessException) { }
                     }
                 }
             } // otherwise, settings is in the standard location
