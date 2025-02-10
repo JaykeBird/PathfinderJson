@@ -305,6 +305,7 @@
                 </flat:ContextMenu>
             </flat:MenuButton.Menu>
         </flat:MenuButton>
+
         <ScrollViewer Grid.Column="1" Grid.Row="2" x:Name="scrSheet" AllowDrop="True" Drop="scrSheet_Drop" Grid.ColumnSpan="2" >
             <StackPanel x:Name="stkSheet" >
                 <Grid Margin="5,5,5,0" x:Name="grdGeneral" Visibility="Collapsed" >
@@ -704,7 +705,7 @@
 
                     </StackPanel>
                 </Grid>
-                <Grid Margin="5,5,5,0" x:Name="grdCombat" >
+                <Grid Margin="5,5,5,0" x:Name="grdCombat" Visibility="Collapsed" >
                     <Grid.RowDefinitions>
                         <RowDefinition Height="25"/>
                         <RowDefinition Height="26*"/>
@@ -802,7 +803,7 @@
                         </Grid>
                     </Grid>
                 </Grid>
-                <Grid Margin="5,5,5,0" x:Name="grdSpells" >
+                <Grid Margin="5,5,5,0" x:Name="grdSpells" Visibility="Collapsed" >
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto"/>
@@ -1037,6 +1038,7 @@
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="30"/>
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
                     <Grid Margin="10,0,0,0" >
@@ -1065,6 +1067,8 @@
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="10" />
                             <ColumnDefinition Width="Auto" MinWidth="80" />
+                            <ColumnDefinition Width="60"/>
+                            <ColumnDefinition Width="60"/>
                         </Grid.ColumnDefinitions>
                         <local:SheetValueEditor x:Name="txtMoneyPp" HorizontalAlignment="Stretch" MinHeight="23" MaxWidth="1200" VerticalAlignment="Center" ValueChanged="nud_TextChanged" ColorScheme="{Binding ColorScheme, ElementName=window}" Grid.Column="3"/>
                         <local:SheetValueEditor x:Name="txtMoneyGp" HorizontalAlignment="Stretch" MinHeight="23" MaxWidth="1200" VerticalAlignment="Center" ValueChanged="nud_TextChanged" ColorScheme="{Binding ColorScheme, ElementName=window}" Grid.Column="3" Grid.Row="1"/>
@@ -1106,8 +1110,32 @@
                         <local:ThemedImage ImageName="Deselect" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" Width="16" Height="16" />
                     </flat:FlatButton>-->
                     <!--<flat:SelectPanel ColorScheme="{Binding ColorScheme, ElementName=window}" x:Name="selEquipment" BorderThickness="1" UseLighterBorder="True" MinHeight="3" Grid.Row="5" MultiSelect="True" />-->
-                    <ild:ItemListDisplay ColorScheme="{Binding ColorScheme, ElementName=window}" x:Name="selEquipment" BorderThickness="1" MinHeight="3" Grid.Row="4" Title="Equipment/Gear"
-                                         DisplayElementType="{x:Type local:ItemEditor}" SheetClassType="{x:Type local:Equipment}" Margin="0,5" ContentChanged="editor_ContentChanged" />
+                    <Grid x:Name="grdItemsHeader" Grid.Row="4" Margin="0,6,0,0" >
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="24" />
+                            <ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Text="Equipment/Gear" FontWeight="Bold" Grid.Column="0" Margin="3,0,8,0" VerticalAlignment="Center" />
+                        <flat:FlatButton x:Name="btnEquipmentInfo" ToolTip="More info about Ability Scores" Click="btnAbilitiesInfo_Click" Height="24" Padding="0"
+                                         ColorScheme="{Binding ElementName=window,Path=ColorScheme}" Grid.Column="1" Width="24" TransparentBack="True" >
+                            <local:ThemedImage ImageName="Info" ColorScheme="{Binding ElementName=window, Path=ColorScheme}" Height="16" />
+                        </flat:FlatButton>
+                        <flat:MenuButton x:Name="mnuEquipmentView" Content="List view" Grid.Column="3" KeepMenuArrowOnRight="True" Height="24"
+                                         ColorScheme="{Binding ElementName=window, Path=ColorScheme}" TransparentBack="True" >
+                            <flat:MenuButton.Menu>
+                                <flat:ContextMenu>
+                                    <MenuItem Header="List view" x:Name="mnuEquipmentView1" Click="mnuEquipmentView1_Click" IsChecked="True" />
+                                    <MenuItem Header="Person view" x:Name="mnuEquipmentView2" Click="mnuEquipmentView2_Click" />
+                                </flat:ContextMenu>
+                            </flat:MenuButton.Menu>
+                        </flat:MenuButton>
+                    </Grid>
+                    <ild:ItemListDisplay ColorScheme="{Binding ColorScheme, ElementName=window}" x:Name="selEquipment" BorderThickness="1" MinHeight="3" Grid.Row="5" Title=""
+                                         DisplayElementType="{x:Type local:ItemEditor}" SheetClassType="{x:Type local:Equipment}" Margin="0,0,0,5" ContentChanged="editor_ContentChanged" />
+                    <local:PersonDisplay ColorScheme="{Binding ColorScheme, ElementName=window}" x:Name="selPerson" Grid.Row="5" Visibility="Collapsed" />
                 </Grid>
                 <Grid Margin="5,5,5,0" x:Name="grdNotes">
                     <TextBlock x:Name="titNotes" Text="Notes" FontSize="16" Margin="10,0,0,0" VerticalAlignment="Top" />

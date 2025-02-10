@@ -22,7 +22,8 @@
             </Grid.ColumnDefinitions>
             <Border Margin="4" BorderBrush="Gray" BorderThickness="1" Background="{Binding ElementName=control, Path=SlotColor, Converter={StaticResource ctb}, FallbackValue=White}" />
             <TextBlock Grid.Column="1" Margin="2"  FontSize="14" Text="{Binding ElementName=control, Path=Title, FallbackValue='No Name'}" VerticalAlignment="Center" />
-            <flat:SelectPanel Grid.Column="1" Grid.Row="1" x:Name="selItems" Margin="0,2,0,5" Background="Transparent" BorderThickness="0" ItemsSource="{Binding ElementName=control, Path=Equipment}" />
+            <flat:SelectPanel Grid.Column="1" Grid.Row="1" x:Name="selItems" Margin="0,2,0,5" Background="Transparent" AllowParentScrolling="True"
+                              BorderThickness="0" ItemsSource="{Binding ElementName=control, Path=EquipmentEditors}" />
         </Grid>
     </Border>
 </UserControl>

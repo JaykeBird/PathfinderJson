@@ -4135,7 +4135,7 @@ namespace PathfinderJson
             bool updOld = _isUpdating;
             switch (view)
             {
-                case ABILITY_ICON_VIEW:
+                case ICON_SPECIAL_VIEW:
                     // convert from table view to icon view
                     mnuAbilityView2.IsChecked = true;
                     mnuAbilityView1.IsChecked = false;
@@ -4172,7 +4172,7 @@ namespace PathfinderJson
                     }
 
                     break;
-                case ABILITY_TABLE_VIEW:
+                case TABLE_LIST_VIEW:
                     // convert from icon view to table view
                     mnuAbilityView2.IsChecked = false;
                     mnuAbilityView1.IsChecked = true;
@@ -4215,12 +4215,12 @@ namespace PathfinderJson
 
         private void mnuAbilityView1_Click(object sender, RoutedEventArgs e)
         {
-            SetAbilityScoreView(ABILITY_TABLE_VIEW);
+            SetAbilityScoreView(TABLE_LIST_VIEW);
         }
 
         private void mnuAbilityView2_Click(object sender, RoutedEventArgs e)
         {
-            SetAbilityScoreView(ABILITY_ICON_VIEW);
+            SetAbilityScoreView(ICON_SPECIAL_VIEW);
         }
 
         #endregion
@@ -4607,5 +4607,46 @@ namespace PathfinderJson
 
         #endregion
 
+        void SetEquipmentView(int view, bool init = false)
+        {
+            bool updOld = _isUpdating;
+            switch (view)
+            {
+                // TODO: make sure correct view has the latest info
+
+                case ICON_SPECIAL_VIEW:
+                    // convert from table view to icon view
+                    mnuEquipmentView2.IsChecked = true;
+                    mnuEquipmentView1.IsChecked = false;
+                    mnuEquipmentView.Content = "Person view";
+
+                    selEquipment.Visibility = Visibility.Collapsed;
+                    selPerson.Visibility = Visibility.Visible;
+
+                    break;
+                case TABLE_LIST_VIEW:
+                    // convert from icon view to table view
+                    mnuEquipmentView2.IsChecked = false;
+                    mnuEquipmentView1.IsChecked = true;
+                    mnuEquipmentView.Content = "List view";
+
+                    selEquipment.Visibility = Visibility.Visible;
+                    selPerson.Visibility = Visibility.Collapsed;
+
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private void mnuEquipmentView1_Click(object sender, RoutedEventArgs e)
+        {
+            SetEquipmentView(TABLE_LIST_VIEW);
+        }
+
+        private void mnuEquipmentView2_Click(object sender, RoutedEventArgs e)
+        {
+            SetEquipmentView(ICON_SPECIAL_VIEW);
+        }
     }
 }

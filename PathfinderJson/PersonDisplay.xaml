@@ -6,11 +6,11 @@
              xmlns:local="clr-namespace:PathfinderJson"
              xmlns:flat="clr-namespace:SolidShineUi;assembly=SolidShineUi"
              mc:Ignorable="d" 
-             MinHeight="500" d:DesignWidth="600">
+             MinHeight="500" MinWidth="400" d:DesignWidth="530" SizeChanged="UserControl_SizeChanged" >
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="1*"/>
-            <ColumnDefinition Width="240"/>
+            <ColumnDefinition Width="1*" x:Name="colLeft" />
+            <ColumnDefinition Width="200" x:Name="colPerson" />
             <ColumnDefinition Width="1*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
@@ -18,10 +18,14 @@
             <RowDefinition />
         </Grid.RowDefinitions>
 
-        <Path Grid.Column="1" Fill="LightGray" Stroke="DarkGray" StrokeThickness="1" x:Name="person" VerticalAlignment="Top" Height="425"
-              Data="M 120,300 L 70,400 L 70,420 H 30 V 410 L 50,400 L 70,280 L 70,150 L 50,250 C 65,280 15,280 30,250 L 50,115 L 100,110 V 100 C 60,80 70,25 120,25 
-              C 170,25 180,80 140,100 V 110 L 190,115 L 210,250 C 225,280 175,280 190,250 L 170,150 L 170,280 L 190,400 L 210,410 V 420 H 170 L 170,400 L 120,300" />
-        <Grid Grid.Column="1">
+        <Path Grid.Column="1" Fill="LightGray" Stroke="DarkGray" StrokeThickness="1" x:Name="person" VerticalAlignment="Top" Height="425" Margin="0"
+              Data="M 100,300 L 50,400 L 50,420 H 10 V 410 L 30,400 L 50,280 L 50,150 L 30,250 C 45,280 -5,280 10,250 L 30,115 L 80,110 V 100 C 40,80 50,25 100,25 
+              C 150,25 160,80 120,100 V 110 L 170,115 L 190,250 C 205,280 155,280 170,250 L 150,150 L 150,280 L 170,400 L 190,410 V 420 H 150 L 150,400 L 100,300" RenderTransformOrigin="0.5,0.5" >
+            <Path.RenderTransform>
+                <ScaleTransform ScaleX="0.9"/>
+            </Path.RenderTransform>
+        </Path>
+        <Grid Grid.Column="1" x:Name="personButtonGrid" Margin="0" >
             <flat:FlatButton CornerRadius="8" Height="16" Width="16" MinHeight="16" Margin="0,20,0,0" VerticalAlignment="Top" HorizontalAlignment="Center" HighlightBrush="#44444444" ClickBrush="#55555555" 
                              ToolTip="Head/Crown" Background="SkyBlue" />
             <flat:FlatButton CornerRadius="8" Height="16" Width="16" MinHeight="16" Margin="0,40,0,0" VerticalAlignment="Top" HorizontalAlignment="Center" HighlightBrush="#44444444" ClickBrush="#55555555" 
@@ -30,42 +34,44 @@
                              ToolTip="Eyes/Face" Background="Moccasin" />
             <flat:FlatButton CornerRadius="8" Height="16" Width="16" MinHeight="16" Margin="0,95,0,0" VerticalAlignment="Top" HorizontalAlignment="Center" HighlightBrush="#44444444" ClickBrush="#55555555"
                              ToolTip="Neck" Background="HotPink" />
-            <flat:FlatButton CornerRadius="8" Height="16" Width="16" MinHeight="16" Margin="155,105,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" HighlightBrush="#44444444" ClickBrush="#55555555"
+            <flat:FlatButton CornerRadius="8" Height="16" Width="16" MinHeight="16" Margin="135,105,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" HighlightBrush="#44444444" ClickBrush="#55555555"
                              ToolTip="Shoulders" Background="MediumPurple" />
             <flat:FlatButton CornerRadius="8" Height="16" Width="16" MinHeight="16" Margin="0,140,0,0" VerticalAlignment="Top" HorizontalAlignment="Center" HighlightBrush="#44444444" ClickBrush="#55555555"
                              ToolTip="Chest" Background="OrangeRed" />
-            <flat:FlatButton CornerRadius="8" Height="16" Width="16" MinHeight="16" Margin="100,190,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" HighlightBrush="#44444444" ClickBrush="#55555555"
-                             ToolTip="Body" Background="MediumSeaGreen" />
-            <flat:FlatButton CornerRadius="8" Height="16" Width="16" MinHeight="16" Margin="125,190,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" HighlightBrush="#44444444" ClickBrush="#55555555"
-                             ToolTip="Armor" Background="Gold" />
-            <flat:FlatButton CornerRadius="8" Height="16" Width="16" MinHeight="16" Margin="190,240,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" HighlightBrush="#44444444" ClickBrush="#55555555"
+            <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" VerticalAlignment="Top" Margin="0,180,0,0">
+                <flat:FlatButton CornerRadius="8" Height="16" Width="16" MinHeight="16" HighlightBrush="#44444444" ClickBrush="#55555555"
+                    ToolTip="Body" Background="MediumSeaGreen" Margin="3" />
+                <flat:FlatButton CornerRadius="8" Height="16" Width="16" MinHeight="16" HighlightBrush="#44444444" ClickBrush="#55555555"
+                    ToolTip="Armor" Background="Gold" Margin="3" />
+            </StackPanel>
+            <flat:FlatButton CornerRadius="8" Height="16" Width="16" MinHeight="16" Margin="165,240,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" HighlightBrush="#44444444" ClickBrush="#55555555"
                              ToolTip="Wrist" Background="LightCoral" />
-            <flat:FlatButton CornerRadius="8" Height="16" Width="16" MinHeight="16" Margin="195,260,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" HighlightBrush="#44444444" ClickBrush="#55555555"
+            <flat:FlatButton CornerRadius="8" Height="16" Width="16" MinHeight="16" Margin="165,260,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" HighlightBrush="#44444444" ClickBrush="#55555555"
                              ToolTip="Rings/Fingers" Background="CornflowerBlue" />
-            <flat:FlatButton CornerRadius="8" Height="16" Width="16" MinHeight="16" Margin="30,250,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" HighlightBrush="#44444444" ClickBrush="#55555555"
+            <flat:FlatButton CornerRadius="8" Height="16" Width="16" MinHeight="16" Margin="20,250,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" HighlightBrush="#44444444" ClickBrush="#55555555"
                              ToolTip="Hand (Gloves)" Background="GreenYellow" />
             <flat:FlatButton CornerRadius="8" Height="16" Width="16" MinHeight="16" Margin="0,265,0,0" VerticalAlignment="Top" HorizontalAlignment="Center" HighlightBrush="#44444444" ClickBrush="#55555555"
                              ToolTip="Belt" Background="SlateGray" />
-            <flat:FlatButton CornerRadius="8" Height="16" Width="16" MinHeight="16" Margin="50,400,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" HighlightBrush="#44444444" ClickBrush="#55555555"
+            <flat:FlatButton CornerRadius="8" Height="16" Width="16" MinHeight="16" Margin="35,400,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" HighlightBrush="#44444444" ClickBrush="#55555555"
                              ToolTip="Foot" Background="ForestGreen" />
         </Grid>
 
         <StackPanel Orientation="Vertical" Grid.Column="0" x:Name="stkLeft">
-            <local:PersonSlotItemList Title="Head/Crown" SlotColor="SkyBlue" />
-            <local:PersonSlotItemList Title="Face/Eyes" SlotColor="Moccasin" />
-            <local:PersonSlotItemList Title="Chest" SlotColor="OrangeRed" />
-            <local:PersonSlotItemList Title="Body" SlotColor="MediumSeaGreen" />
-            <local:PersonSlotItemList Title="Armor" SlotColor="Gold" />
-            <local:PersonSlotItemList Title="Hand/Glove" SlotColor="GreenYellow" />
-            <local:PersonSlotItemList Title="Foot" SlotColor="ForestGreen" />
+            <local:PersonSlotItemList Title="Head/Crown" SlotColor="SkyBlue" x:Name="stkHead" />
+            <local:PersonSlotItemList Title="Face/Eyes" SlotColor="Moccasin" x:Name="stkEyes" />
+            <local:PersonSlotItemList Title="Chest" SlotColor="OrangeRed" x:Name="stkChest" />
+            <local:PersonSlotItemList Title="Body" SlotColor="MediumSeaGreen" x:Name="stkBody" />
+            <local:PersonSlotItemList Title="Armor" SlotColor="Gold" x:Name="stkArmor" />
+            <local:PersonSlotItemList Title="Hand/Glove" SlotColor="GreenYellow" x:Name="stkHand" />
+            <local:PersonSlotItemList Title="Foot" SlotColor="ForestGreen" x:Name="stkFoot" />
         </StackPanel>
         <StackPanel Orientation="Vertical" Grid.Column="2" x:Name="stkRight">
-            <local:PersonSlotItemList Title="Headband" SlotColor="OliveDrab" />
-            <local:PersonSlotItemList Title="Neck" SlotColor="HotPink" />
-            <local:PersonSlotItemList Title="Shoulder" SlotColor="MediumPurple" />
-            <local:PersonSlotItemList Title="Wrist" SlotColor="LightCoral" />
-            <local:PersonSlotItemList Title="Rings" SlotColor="CornflowerBlue" />
-            <local:PersonSlotItemList Title="Belt" SlotColor="SlateGray" />
+            <local:PersonSlotItemList Title="Headband" SlotColor="OliveDrab" x:Name="stkHeadband" />
+            <local:PersonSlotItemList Title="Neck" SlotColor="HotPink" x:Name="stkNeck" />
+            <local:PersonSlotItemList Title="Shoulder" SlotColor="MediumPurple" x:Name="stkShoulder" />
+            <local:PersonSlotItemList Title="Wrist" SlotColor="LightCoral" x:Name="stkWrist" />
+            <local:PersonSlotItemList Title="Rings" SlotColor="CornflowerBlue" x:Name="stkRings" />
+            <local:PersonSlotItemList Title="Belt" SlotColor="SlateGray" x:Name="stkBelt" />
         </StackPanel>
         <Grid Grid.Row="1" Grid.ColumnSpan="3" Margin="0,10,0,0" >
             <Grid.ColumnDefinitions>
