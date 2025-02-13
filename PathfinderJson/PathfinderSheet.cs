@@ -546,19 +546,19 @@ namespace PathfinderJson
         [IldDisplay(Name = "Total")]
         public string? Total { get; set; }
 
-        [IldDisplay(Name = "MagicModifier")]
+        [IldDisplay(Name = "Magic Modifier")]
         public string? MagicModifier { get; set; }
 
-        [IldDisplay(Name = "MiscModifier")]
+        [IldDisplay(Name = "Misc Modifier")]
         public string? MiscModifier { get; set; }
 
-        [IldDisplay(Name = "OtherModifiers")]
+        [IldDisplay(Name = "Other Modifiers")]
         public string? OtherModifiers { get; set; }
 
-        [IldDisplay(Name = "SizeModifier")]
+        [IldDisplay(Name = "Size Modifier")]
         public string? SizeModifier { get; set; }
 
-        [IldDisplay(Name = "TempModifier")]
+        [IldDisplay(Name = "Temporary Modifiers")]
         public string? TempModifier { get; set; }
 
         public int Calculate(int? externalBase = null, params int[]? modValues)
