@@ -7,8 +7,6 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Linq;
 using System.Reflection;
-using System.Collections.ObjectModel;
-using System.Security.Cryptography;
 
 namespace PathfinderJson.Ild
 {
@@ -62,6 +60,9 @@ namespace PathfinderJson.Ild
 
         #endregion
 
+        /// <summary>
+        /// Get or set the title displayed at the top of the ItemListDisplay's UI.
+        /// </summary>
         public string Title
         {
             get => txtTitle.Text;
@@ -115,10 +116,13 @@ namespace PathfinderJson.Ild
         }
 
         /// <summary>
-        /// Generate a list of UI elements, each one corresponding to the element in the source item enumerable. Make sure the <c>SheetClassType</c> and <c>DisplayElementType</c> properties are already set.
+        /// Generate a list of UI elements, each one corresponding to the element in the source item enumerable. 
+        /// Make sure the <c>SheetClassType</c> and <c>DisplayElementType</c> properties are already set.
         /// </summary>
         /// <typeparam name="T">The type of the source item.</typeparam>
         /// <param name="items">The list/enumerable of source items to load.</param>
+        /// <exception cref="ArgumentException"><typeparamref name="T"/> is not the same as <see cref="SheetClassType"/></exception>
+        /// <exception cref="InvalidOperationException"></exception>
         public void LoadList<T>(IEnumerable<T> items)
         {
             if (typeof(T) != SheetClassType)
@@ -149,28 +153,33 @@ namespace PathfinderJson.Ild
             }
         }
 
-        public List<T> GetItems<T>()
+        /// <summary>
+        /// Generate a list of items from the UI elements currently in this ItemListDisplay (in other words, going from UI back to the data classes). 
+        /// <typeparamref name="T"/> must be the same type as <see cref="SheetClassType"/>.
+        /// </summary>
+        /// <typeparam name="T">MUST be the same type as <see cref="SheetClassType"/></typeparam>
+        /// <returns></returns>
+        /// <exception cref="ArgumentException">Thrown if <typeparamref name="T"/> is not the same as <see cref="SheetClassType"/></exception>
+        /// <exception cref="InvalidOperationException">Thrown if <see cref="SheetClassType"/> is not valid (i.e. has no properties, or was not set)</exception>
+        /// <exception cref="TargetException">The type <typeparamref name="T"/> cannot be created via reflection</exception>
+        public List<T> GetItems<T>() where T : new()
         {
             if (typeof(T) != SheetClassType) throw new ArgumentException("Passed in generic data type does not match SheetClassType");
             if (propertyNames.Count == 0) throw new InvalidOperationException("SheetClassType has no properties, or was not set.");
 
-            List<T> items = new List<T>();
+            List<T> items = new();
 
-            foreach (SelectableListItem item in selPanel.Items)
+            foreach (SelectableListItem item in selPanel.Items.OfType<SelectableListItem>())
             {
                 //Dictionary<string, object> propVals = item.GetAllProperties();
 
-                var newBase = Activator.CreateInstance(typeof(T));
-                if (newBase == null) throw new ArgumentNullException(nameof(T), "Passed in generic data type cannot be created via reflection");
+                var newBase = Activator.CreateInstance(typeof(T))
+                    /* if newBase == null */ ?? throw new TargetException("Passed in generic data type cannot be created via reflection");
                 Type tt = typeof(T);
                 foreach (IldPropertyInfo property in propertyNames)
                 {
                     PropertyInfo? pi = tt.GetProperty(property.Name);
-
-                    if (pi != null)
-                    {
-                        pi.SetValue(newBase, item.GetPropertyValue(property));
-                    }
+                    pi?.SetValue(newBase, item.GetPropertyValue(property));
                 }
 
                 items.Add((T)newBase);
@@ -180,17 +189,17 @@ namespace PathfinderJson.Ild
         }
 
         /// <summary>
-        /// Generate a list of property info from a source type. The IldDisplayAttribute is handled here.
+        /// Generate a list of <see cref="IldPropertyInfo"/> items from a class type, 
+        /// which is done by reading properties via reflection and checking the <see cref="IldDisplayAttribute"/>.
         /// </summary>
-        /// <param name="type">The source type to load.</param>
-        /// <returns>A list of property info.</returns>
-        public List<IldPropertyInfo> ListProperties(Type type)
+        /// <param name="type">The class type to load.</param>
+        /// <returns>A list of <see cref="IldPropertyInfo"/> items for each property that was recognized.</returns>
+        public static List<IldPropertyInfo> ListProperties(Type type)
         {
             List<IldPropertyInfo> props = new List<IldPropertyInfo>();
 
             foreach (PropertyInfo property in type.GetProperties(BindingFlags.Public | BindingFlags.Instance))
             {
-
                 string name = property.Name;
                 var attr = property.GetCustomAttribute<IldDisplayAttribute>();
 
@@ -199,7 +208,9 @@ namespace PathfinderJson.Ild
 
                 if (attr != null)
                 {
+                    // we will skip properties that are marked to ignore
                     if (attr.Ignore) continue;
+
                     if (attr.Name != null) name = attr.Name;
                     minValue = attr.MinValue;
                     maxValue = attr.MaxValue;
@@ -232,7 +243,7 @@ namespace PathfinderJson.Ild
                     //throw new NotSupportedException("This property uses a type that isn't supported by the ItemListDisplay.");
                 }
 
-                IldPropertyInfo prop = new IldPropertyInfo(property.Name, ildType, name);
+                IldPropertyInfo prop = new(property.Name, ildType, name);
                 prop.MinValue = minValue;
                 prop.MaxValue = maxValue;
                 props.Add(prop);
@@ -249,7 +260,7 @@ namespace PathfinderJson.Ild
         /// <returns></returns>
         private Dictionary<IldPropertyInfo, object> GetAllPropertyValues<T>(T item)
         {
-            Dictionary<IldPropertyInfo, object> props = new Dictionary<IldPropertyInfo, object>();
+            Dictionary<IldPropertyInfo, object> props = new();
             Type type = typeof(T);
 
             foreach (IldPropertyInfo prop in propertyNames)
@@ -303,35 +314,22 @@ namespace PathfinderJson.Ild
 
             foreach (var item in propertyNames)
             {
-                MenuItem mi = new MenuItem();
+                MenuItem mi = new();
                 mi.Header = item.DisplayName;
                 mi.Tag = item;
 
-                MenuItem mcf = new MenuItem();
+                MenuItem mcf = new();
                 mcf.Header = "Clear Filter";
+                mcf.Click += (s, e) => ClearFilter(item, mi, mcf);
+                mcf.IsEnabled = false;
 
                 switch (item.IldType)
                 {
                     case IldType.String:
-                        MenuItem msi1 = new MenuItem();
-                        msi1.Header = "Contains...";
-                        msi1.Click += (s, e) => StringFilterAction(FilterType.STRING_CONTAINS, item, mi, mcf);
-                        mi.Items.Add(msi1);
-
-                        MenuItem msi2 = new MenuItem();
-                        msi2.Header = "Does Not Contain...";
-                        msi2.Click += (s, e) => StringFilterAction(FilterType.STRING_NOT_CONTAINS, item, mi, mcf);
-                        mi.Items.Add(msi2);
-
-                        MenuItem msi3 = new MenuItem();
-                        msi3.Header = "Starts With...";
-                        msi3.Click += (s, e) => StringFilterAction(FilterType.STRING_STARTS_WITH, item, mi, mcf);
-                        mi.Items.Add(msi3);
-
-                        MenuItem msi4 = new MenuItem();
-                        msi4.Header = "Matches (Exactly)...";
-                        msi4.Click += (s, e) => StringFilterAction(FilterType.STRING_MATCHES, item, mi, mcf);
-                        mi.Items.Add(msi4);
+                        mi.Items.Add(CreateMenuItem("Contains...", (s, e) => StringFilterAction(FilterType.STRING_CONTAINS, item, mi, mcf)));
+                        mi.Items.Add(CreateMenuItem("Does Not Contain...", (s, e) => StringFilterAction(FilterType.STRING_NOT_CONTAINS, item, mi, mcf)));
+                        mi.Items.Add(CreateMenuItem("Starts With...", (s, e) => StringFilterAction(FilterType.STRING_STARTS_WITH, item, mi, mcf)));
+                        mi.Items.Add(CreateMenuItem("Matches Exactly...", (s, e) => StringFilterAction(FilterType.STRING_MATCHES, item, mi, mcf)));
                         break;
                     case IldType.Integer:
                         ListNumberMenuItems(item, mi, mcf);
@@ -340,15 +338,8 @@ namespace PathfinderJson.Ild
                         ListNumberMenuItems(item, mi, mcf);
                         break;
                     case IldType.Boolean:
-                        MenuItem mbi1 = new MenuItem();
-                        mbi1.Header = "True (Checked)";
-                        mbi1.Click += (s, e) => ApplyBooleanTrueFilter(item, mi, mcf);
-                        mi.Items.Add(mbi1);
-
-                        MenuItem mbi2 = new MenuItem();
-                        mbi2.Header = "False (Unchecked)";
-                        mbi2.Click += (s, e) => ApplyBooleanFalseFilter(item, mi, mcf);
-                        mi.Items.Add(mbi2);
+                        mi.Items.Add(CreateMenuItem("True (Checked)", (s, e) => ApplyBooleanTrueFilter(item, mi, mcf)));
+                        mi.Items.Add(CreateMenuItem("False (Unchecked)", (s, e) => ApplyBooleanFalseFilter(item, mi, mcf)));
                         break;
                     default:
                         MenuItem mdi1 = new MenuItem();
@@ -359,9 +350,6 @@ namespace PathfinderJson.Ild
                 }
 
                 mi.Items.Add(new Separator());
-
-                mcf.IsEnabled = false;
-                mcf.Click += (s, e) => ClearFilter(item, mi, mcf);
                 mi.Items.Add(mcf);
 
                 //MenuItem smi = new MenuItem();
@@ -372,7 +360,8 @@ namespace PathfinderJson.Ild
                 //btnSort.Items.Add(smi);
 
                 cm.Items.Add(mi);
-            }
+
+            } // foreach (var item in propertyNames)
 
             cm.Items.Add(new Separator());
 
@@ -382,6 +371,14 @@ namespace PathfinderJson.Ild
             cm.Items.Add(mcli);
 
             btnFilter.Menu = cm;
+
+            MenuItem CreateMenuItem(string title, RoutedEventHandler clickHandler)
+            {
+                MenuItem mi = new();
+                mi.Header = title;
+                mi.Click += clickHandler;
+                return mi;
+            }
 
             void ListNumberMenuItems(IldPropertyInfo item, MenuItem mi, MenuItem cancelItem)
             {
@@ -394,17 +391,13 @@ namespace PathfinderJson.Ild
                     {
                         for (int i = min; i <= max; i++)
                         {
-                            MenuItem mni = new MenuItem();
-                            mni.Click += (s, e) => ApplyIntegerMatchesFilter(item, i, mi, cancelItem);
-                            mni.Header = i.ToString();
+                            MenuItem mni = CreateMenuItem(i.ToString(), (s, e) => ApplyIntegerMatchesFilter(item, i, mi, cancelItem));
                             mi.Items.Add(mni);
                         }
                     }
                     else
                     {
-                        MenuItem mni1 = new MenuItem();
-                        mni1.Click += (s, e) => NumberFilterAction(FilterType.NUMBER_EQUALS, item, mi, cancelItem);
-                        mni1.Header = "Equals...";
+                        MenuItem mni1 = CreateMenuItem("Equals...", (s, e) => NumberFilterAction(FilterType.NUMBER_EQUALS, item, mi, cancelItem));
                         mi.Items.Add(mni1);
                     }
 
@@ -412,20 +405,14 @@ namespace PathfinderJson.Ild
                 }
                 else
                 {
-                    MenuItem mni3 = new MenuItem();
-                    mni3.Click += (s, e) => NumberFilterAction(FilterType.NUMBER_EQUALS, item, mi, cancelItem);
-                    mni3.Header = "Equals...";
+                    MenuItem mni3 = CreateMenuItem("Equals..." ,(s, e) => NumberFilterAction(FilterType.NUMBER_EQUALS, item, mi, cancelItem));
                     mi.Items.Add(mni3);
                 }
 
-                MenuItem mni5 = new MenuItem();
-                mni5.Click += (s, e) => NumberFilterAction(FilterType.NUMBER_BETWEEN, item, mi, cancelItem);
-                mni5.Header = "Is Between...";
+                MenuItem mni5 = CreateMenuItem("Is Between...", (s, e) => NumberFilterAction(FilterType.NUMBER_BETWEEN, item, mi, cancelItem));
                 mi.Items.Add(mni5);
 
-                MenuItem mni6 = new MenuItem();
-                mni6.Click += (s, e) => NumberFilterAction(FilterType.NUMBER_NOT_BETWEEN, item, mi, cancelItem);
-                mni6.Header = "Is Not Between...";
+                MenuItem mni6 = CreateMenuItem("Is Not Between...", (s, e) => NumberFilterAction(FilterType.NUMBER_NOT_BETWEEN, item, mi, cancelItem));
                 mi.Items.Add(mni6);
             }
         }
@@ -472,10 +459,10 @@ namespace PathfinderJson.Ild
             sid.Title = "Enter String Filter";
             sid.Description = (int)action switch
             {
-                0 => "Match items that contain this value:",
-                1 => "Match items that do not contain this value:",
-                2 => "Match items that start with this value:",
-                3 => "Match items that exactly match this value:",
+                0 => "Show items where " + property.DisplayName + " contains:",
+                1 => "Show items where " + property.DisplayName + " does not contain:",
+                2 => "Show items where " + property.DisplayName + " starts with:",
+                3 => "Show items where " + property.DisplayName + " exactly matches:",
                 _ => "Enter the value to filter by:"
             };
 
@@ -518,20 +505,13 @@ namespace PathfinderJson.Ild
             sid.Title = "Enter Number Filter";
             sid.Description = action switch
             {
-                FilterType.NUMBER_EQUALS => "Match items that have this exact number for " + property.DisplayName + ":",
-                FilterType.NUMBER_BETWEEN => "Match items that are between these values for " + property.DisplayName + ":",
-                FilterType.NUMBER_NOT_BETWEEN => "Match items that are not between these values for " + property.DisplayName + ":",
+                FilterType.NUMBER_EQUALS => "Show items where " + property.DisplayName + " is exactly:",
+                FilterType.NUMBER_BETWEEN => "Show items where " + property.DisplayName + " is between:",
+                FilterType.NUMBER_NOT_BETWEEN => "Show items where " + property.DisplayName + " is no between:",
                 _ => "Enter the value to filter by:"
             };
 
-            if (property.IldType == IldType.Integer)
-            {
-                sid.Decimals = 0;
-            }
-            else
-            {
-                sid.Decimals = 3;
-            }
+            sid.Decimals = property.IldType == IldType.Integer ? 0 : 3; // if an integer, let's not get decimal numbers involved
 
             if (property.MinValue != null) sid.MinValue = (double)property.MinValue;
             if (property.MaxValue != null) sid.MaxValue = (double)property.MaxValue;
@@ -602,28 +582,8 @@ namespace PathfinderJson.Ild
             }
         }
 
-        //void Sort(IldPropertyInfo? sortProp)
-        //{
-        //    return;
-        //}
 
-        private void btnAdd_Click(object sender, RoutedEventArgs e)
-        {
-            if (DisplayElementType == null) return;
-
-            var newItem = Activator.CreateInstance(DisplayElementType);
-
-            SelectableListItem sli = (SelectableListItem)newItem!;
-
-            sli.RequestDelete += sli_RequestDelete;
-            sli.RequestMoveDown += sli_RequestMoveDown;
-            sli.RequestMoveUp += sli_RequestMoveUp;
-            sli.ContentChanged += sli_ContentChanged;
-
-            selPanel.Items.Add(sli);
-
-            ContentChanged?.Invoke(this, EventArgs.Empty);
-        }
+        #region Item Event Handlers
 
         private void sli_ContentChanged(object? sender, EventArgs e)
         {
@@ -662,6 +622,28 @@ namespace PathfinderJson.Ild
             }
         }
 
+        #endregion
+
+        #region Toolbar / Menu
+
+        private void btnAdd_Click(object sender, RoutedEventArgs e)
+        {
+            if (DisplayElementType == null) return;
+
+            var newItem = Activator.CreateInstance(DisplayElementType);
+
+            SelectableListItem sli = (SelectableListItem)newItem!;
+
+            sli.RequestDelete += sli_RequestDelete;
+            sli.RequestMoveDown += sli_RequestMoveDown;
+            sli.RequestMoveUp += sli_RequestMoveUp;
+            sli.ContentChanged += sli_ContentChanged;
+
+            selPanel.Items.Add(sli);
+
+            ContentChanged?.Invoke(this, EventArgs.Empty);
+        }
+
         private void btnDeselect_Click(object sender, RoutedEventArgs e)
         {
             selPanel.Items.ClearSelection();
@@ -695,14 +677,35 @@ namespace PathfinderJson.Ild
             }
         }
 
-        private void btnSearch_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
         private void btnRemoveMultiple_Click(object sender, RoutedEventArgs e)
         {
             selPanel.RemoveSelectedItems();
         }
+
+
+        private void txtSearch_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (!string.IsNullOrWhiteSpace(txtSearch.Text))
+            {
+                foreach (SelectableListItem item in selPanel.Items.Cast<SelectableListItem>())
+                {
+                    item.Visibility = Visibility.Visible;
+
+                    if (!propertyNames.All((p) => item.MatchesSearchTerm(p, txtSearch.Text)))
+                    {
+                        item.Visibility = Visibility.Collapsed;
+                    }
+                }
+            }
+            else
+            {
+                foreach (SelectableListItem item in selPanel.Items.Cast<SelectableListItem>())
+                {
+                    item.Visibility = Visibility.Visible;
+                }
+            }
+        }
+
+        #endregion
     }
 }

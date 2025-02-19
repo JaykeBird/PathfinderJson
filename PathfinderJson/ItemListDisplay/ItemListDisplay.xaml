@@ -33,7 +33,7 @@
             </flat:FlatButton>
             <StackPanel HorizontalAlignment="Right" Margin="0,4,10,4" Orientation="Horizontal" Grid.Row="1">
                 <local:ThemedImage ImageName="Find" ColorScheme="{Binding ElementName=ild, Path=ColorScheme}" Width="16" Height="16" />
-                <TextBox Height="24" VerticalContentAlignment="Center" Width="90" Margin="3,0,5,0" />
+                <TextBox Height="24" VerticalContentAlignment="Center" Width="90" Margin="3,0,5,0" x:Name="txtSearch" TextChanged="txtSearch_TextChanged" />
                 <flat:MenuButton x:Name="btnFilter" ColorScheme="{Binding ColorScheme, ElementName=ild}" FontSize="12" TransparentBack="True" Height="24" >
                     <StackPanel Orientation="Horizontal">
                         <local:ThemedImage ImageName="Filter" ColorScheme="{Binding ColorScheme, ElementName=ild}" Width="16" Height="16" />

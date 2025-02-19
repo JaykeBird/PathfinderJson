@@ -64,6 +64,11 @@ namespace PathfinderJson.Ild
             return null;
         }
 
+        public bool MatchesSearchTerm(IldPropertyInfo property, string searchTerm)
+        {
+            return property.CompareToSearch(GetPropertyValue(property), searchTerm);
+        }
+
         public bool PropertyPassesFilter(IldPropertyInfo property)
         {
             return property.Filter == null || property.CompareToFilter(GetPropertyValue(property));
