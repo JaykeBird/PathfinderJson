@@ -904,6 +904,11 @@ namespace PathfinderJson
         public string? Total { get; set; } = "0";
         public string? Wounds { get; set; } = "0";
         public string? NonLethal { get; set; }
+
+        public override string ToString()
+        {
+            return "HP: " + (Wounds ?? "(null)") + " / " + (Total ?? "(null)") + ", Nonlethal: " + (NonLethal ?? "(null)");
+        }
     }
 
     public class SpellLevel : IEquatable<SpellLevel>
