@@ -275,9 +275,9 @@
         </Border>
 
         <flat:SelectPanel Grid.Column="0" Grid.Row="2" x:Name="selTabs" MultiSelect="False" BorderThickness="0,0,1,0" />
-        <Border Grid.Column="0" Grid.Row="2" x:Name="brdrQView" VerticalAlignment="Top" Margin="6,712,6,0" Height="1" BorderThickness="1"
+        <Border Grid.Column="0" Grid.Row="2" x:Name="brdrQView" VerticalAlignment="Bottom" Margin="6,0,6,32" Height="1" BorderThickness="1"
                 BorderBrush="{Binding ElementName=window, Path=BorderBrush}" />
-        <flat:MenuButton Grid.Column="0" Grid.Row="2" x:Name="mnuQView" VerticalAlignment="Top" Margin="3,716,3,0" TransparentBack="True" Padding="2,3"
+        <flat:MenuButton Grid.Column="0" Grid.Row="2" x:Name="mnuQView" VerticalAlignment="Bottom" Margin="3,0,3,5" TransparentBack="True" Padding="2,3"
                           ColorScheme="{Binding ElementName=window, Path=ColorScheme}" KeepMenuArrowOnRight="True" HorizontalContentAlignment="Left" >
             <flat:MenuButton.Content>
                 <StackPanel Orientation="Horizontal">

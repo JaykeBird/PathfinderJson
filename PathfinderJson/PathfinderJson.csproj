@@ -57,11 +57,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="AvalonEdit" Version="6.3.0.90" />
+    <PackageReference Include="AvalonEdit" Version="6.3.1.120" />
     <PackageReference Include="Markdig" Version="0.22.1" />
     <PackageReference Include="Markdig.Wpf" Version="0.5.0.1" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-	<PackageReference Include="SolidShineUi" Version="1.9.8" />
+	<PackageReference Include="SolidShineUi" Version="1.9.9" />
   </ItemGroup>
 
   <!--<ItemGroup>
