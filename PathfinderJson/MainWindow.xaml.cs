@@ -1610,7 +1610,7 @@ namespace PathfinderJson
                 item.ModifierValue = abilityMods[item.ModifierName];
                 item.UpdateCalculations();
 
-                item.ContentChanged += editor_ContentChanged;
+                item.ContentChanged += skillEditor_ContentChanged;
                 item.ModifierChanged += editor_ModifierChanged;
 
                 stkSkills.Children.Add(item);
@@ -1622,6 +1622,10 @@ namespace PathfinderJson
             {
                 LoadSkillModSubstitutions(sheetSettings["skillModSet"] ?? "");
             }
+
+            UpdateSkillPointTotalCount();
+
+            nudSkillPoints.ValueString = sheet.SkillPointsPerLevel;
 
             // Spells tab
             int currentLevel = 0;
@@ -1783,13 +1787,15 @@ namespace PathfinderJson
                     item.ModifierValue = abilityMods[item.ModifierName];
                     item.UpdateCalculations();
 
-                    item.ContentChanged += editor_ContentChanged;
+                    item.ContentChanged += skillEditor_ContentChanged;
                     item.ModifierChanged += editor_ModifierChanged;
 
                     stkSkills.Children.Add(item);
                     item.ColorScheme = ColorScheme;
                     //item.UpdateAppearance();
                 }
+
+                UpdateSkillPointTotalCount();
 
                 if (sheetSettings?.ContainsKey("skillModSet") ?? false)
                 {
@@ -2048,6 +2054,8 @@ namespace PathfinderJson
                     yield return item.Key + "," + item.Value;
                 }
             }
+
+            sheet.SkillPointsPerLevel = nudSkillPoints.ValueString;
 
             // spells
 
@@ -3786,6 +3794,7 @@ namespace PathfinderJson
             lastEditedItem = sender as UIElement;
         }
 
+#pragma warning disable IDE0051
         private void nud_TextChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             if (!_isUpdating)
@@ -3796,6 +3805,7 @@ namespace PathfinderJson
 
             lastEditedItem = sender as UIElement;
         }
+#pragma warning restore IDE0051
 
         private void editor_ContentChanged(object? sender, EventArgs e)
         {
@@ -4263,9 +4273,19 @@ namespace PathfinderJson
             }
         }
 
+        private void skillEditor_ContentChanged(object? sender, EventArgs e)
+        {
+            if (!_isUpdating)
+            {
+                SetIsDirty();
+                StartUndoTimer(sender as UIElement ?? new CompoundEditor());
+                // recount the skill point updates
+                UpdateSkillPointTotalCount();
+            }
+        }
+
         private void editor_ModifierChanged(object? sender, EventArgs e)
         {
-            // TODO: handle modifier change
             //throw new NotImplementedException();
             if (sender is SkillEditor se)
             {
@@ -4281,6 +4301,20 @@ namespace PathfinderJson
             }
         }
 
+        void UpdateSkillPointTotalCount()
+        {
+            int ranksTotal = 0;
+
+            foreach (SkillEditor? item in stkSkills.Children)
+            {
+                if (item != null)
+                {
+                    ranksTotal += item.SkillRanks;
+                }
+            }
+
+            txtTotalSkillPoints.Text = ranksTotal.ToString();
+        }
 
         #endregion
 
@@ -4441,6 +4475,52 @@ namespace PathfinderJson
             }
         }
 
+
+        #endregion
+
+        #region Equipment / Items
+
+        void SetEquipmentView(int view, bool init = false)
+        {
+            bool updOld = _isUpdating;
+            switch (view)
+            {
+                // TODO: make sure correct view has the latest info
+
+                case ICON_SPECIAL_VIEW:
+                    // convert from table view to icon view
+                    mnuEquipmentView2.IsChecked = true;
+                    mnuEquipmentView1.IsChecked = false;
+                    mnuEquipmentView.Content = "Person view";
+
+                    selEquipment.Visibility = Visibility.Collapsed;
+                    selPerson.Visibility = Visibility.Visible;
+
+                    break;
+                case TABLE_LIST_VIEW:
+                    // convert from icon view to table view
+                    mnuEquipmentView2.IsChecked = false;
+                    mnuEquipmentView1.IsChecked = true;
+                    mnuEquipmentView.Content = "List view";
+
+                    selEquipment.Visibility = Visibility.Visible;
+                    selPerson.Visibility = Visibility.Collapsed;
+
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private void mnuEquipmentView1_Click(object sender, RoutedEventArgs e)
+        {
+            SetEquipmentView(TABLE_LIST_VIEW);
+        }
+
+        private void mnuEquipmentView2_Click(object sender, RoutedEventArgs e)
+        {
+            SetEquipmentView(ICON_SPECIAL_VIEW);
+        }
 
         #endregion
 
@@ -4606,47 +4686,5 @@ namespace PathfinderJson
         #endregion
 
         #endregion
-
-        void SetEquipmentView(int view, bool init = false)
-        {
-            bool updOld = _isUpdating;
-            switch (view)
-            {
-                // TODO: make sure correct view has the latest info
-
-                case ICON_SPECIAL_VIEW:
-                    // convert from table view to icon view
-                    mnuEquipmentView2.IsChecked = true;
-                    mnuEquipmentView1.IsChecked = false;
-                    mnuEquipmentView.Content = "Person view";
-
-                    selEquipment.Visibility = Visibility.Collapsed;
-                    selPerson.Visibility = Visibility.Visible;
-
-                    break;
-                case TABLE_LIST_VIEW:
-                    // convert from icon view to table view
-                    mnuEquipmentView2.IsChecked = false;
-                    mnuEquipmentView1.IsChecked = true;
-                    mnuEquipmentView.Content = "List view";
-
-                    selEquipment.Visibility = Visibility.Visible;
-                    selPerson.Visibility = Visibility.Collapsed;
-
-                    break;
-                default:
-                    break;
-            }
-        }
-
-        private void mnuEquipmentView1_Click(object sender, RoutedEventArgs e)
-        {
-            SetEquipmentView(TABLE_LIST_VIEW);
-        }
-
-        private void mnuEquipmentView2_Click(object sender, RoutedEventArgs e)
-        {
-            SetEquipmentView(ICON_SPECIAL_VIEW);
-        }
     }
 }

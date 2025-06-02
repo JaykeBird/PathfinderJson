@@ -215,6 +215,7 @@ namespace PathfinderJson
         public Dictionary<string, Skill> Skills { get; set; } = new Dictionary<string, Skill>();
         [JsonIgnore]
         public string? SkillConditionalModifiers { get; set; }
+        public string SkillPointsPerLevel { get; set; } = "0";
 
         public HP HP { get; set; } = new HP();
 

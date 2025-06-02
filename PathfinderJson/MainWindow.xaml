@@ -672,9 +672,10 @@
                         </Grid>
                     </Grid>
                 </Grid>
-                <Grid Margin="5,5,5,0" x:Name="grdSkills" Visibility="Collapsed" >
+                <Grid Margin="5,5,5,0" x:Name="grdSkills" Visibility="Visible" >
                     <Grid.RowDefinitions>
                         <RowDefinition />
+                        <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
@@ -687,6 +688,22 @@
                             </Grid.ColumnDefinitions>
                             <TextBox x:Name="txtSkillModifiers" Height="23" VerticalAlignment="Center" TextChanged="textbox_TextChanged" Grid.Column="1" />
                             <TextBlock x:Name="lblSkillModifiers" Margin="0,0,10,0" HorizontalAlignment="Left" Text="Conditional Modifiers" VerticalAlignment="Center"/>
+                        </Grid>
+                    </Grid>
+                    <Grid Margin="10,0,0,0" Grid.Row="1">
+                        <Grid Margin="10,0,10,0" VerticalAlignment="Top">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="60"/>
+                                <ColumnDefinition Width="10"/>
+                                <ColumnDefinition Width="1*"/>
+                                <ColumnDefinition Width="30"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock x:Name="lblSkillPoints" Margin="0,0,10,0" HorizontalAlignment="Left" Text="Skill Points per Level" VerticalAlignment="Center"/>
+                            <local:SheetValueEditor x:Name="nudSkillPoints" Height="23" VerticalAlignment="Center" ValueChanged="nud_TextChanged" Grid.Column="1"
+                                                    ColorScheme="{Binding ElementName=window, Path=ColorScheme}" />
+                            <TextBlock x:Name="lblTotalSkillPoints" HorizontalAlignment="Right" Text="Total Skill Points:" VerticalAlignment="Center" Grid.Column="3" />
+                            <TextBlock x:Name="txtTotalSkillPoints" HorizontalAlignment="Center" Text="0" VerticalAlignment="Center" Grid.Column="4" />
                         </Grid>
                     </Grid>
                     <Grid Margin="10,0,10,0" Grid.Row="1" MaxWidth="900" x:Name="grdSkillHeader" SizeChanged="SkillHeaderGrid_SizeChanged" Visibility="Collapsed" >
