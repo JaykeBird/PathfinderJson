@@ -236,6 +236,10 @@ namespace PathfinderJson.Ild
                 {
                     ildType = IldType.Double;
                 }
+                else if (pt.IsEnum)
+                {
+                    ildType = IldType.Enum;
+                }
                 else
                 {
                     // just skip properties that we don't support
@@ -243,7 +247,7 @@ namespace PathfinderJson.Ild
                     //throw new NotSupportedException("This property uses a type that isn't supported by the ItemListDisplay.");
                 }
 
-                IldPropertyInfo prop = new(property.Name, ildType, name);
+                IldPropertyInfo prop = new(property.Name, ildType, pt, name);
                 prop.MinValue = minValue;
                 prop.MaxValue = maxValue;
                 props.Add(prop);
@@ -296,6 +300,9 @@ namespace PathfinderJson.Ild
                         case IldType.Boolean:
                             val = false;
                             break;
+                        case IldType.Enum:
+                            val = Enum.Parse(property.PropertyType, Enum.GetNames(property.PropertyType)[0]);
+                            break;
                         default:
                             val = "";
                             break;
@@ -341,6 +348,9 @@ namespace PathfinderJson.Ild
                         mi.Items.Add(CreateMenuItem("True (Checked)", (s, e) => ApplyBooleanTrueFilter(item, mi, mcf)));
                         mi.Items.Add(CreateMenuItem("False (Unchecked)", (s, e) => ApplyBooleanFalseFilter(item, mi, mcf)));
                         break;
+                    case IldType.Enum:
+                        ListEnumOptions(item, mi, mcf);
+                        break;
                     default:
                         MenuItem mdi1 = new MenuItem();
                         mdi1.Header = "Data type not supported for filtering";
@@ -382,12 +392,12 @@ namespace PathfinderJson.Ild
 
             void ListNumberMenuItems(IldPropertyInfo item, MenuItem mi, MenuItem cancelItem)
             {
-                if (item.MinValue != null && item.MaxValue != null)
+                if (item.MinValue != null && item.MaxValue != null && item.IldType == IldType.Integer)
                 {
                     int min = item.MinValue.Value;
                     int max = item.MaxValue.Value;
 
-                    if (max - min < 10 && max - min > 0)
+                    if (max - min < 10 && max - min > 0) // only generate a menu item list if there's 10 or less valid numbers
                     {
                         for (int i = min; i <= max; i++)
                         {
@@ -414,6 +424,22 @@ namespace PathfinderJson.Ild
 
                 MenuItem mni6 = CreateMenuItem("Is Not Between...", (s, e) => NumberFilterAction(FilterType.NUMBER_NOT_BETWEEN, item, mi, cancelItem));
                 mi.Items.Add(mni6);
+            }
+
+            void ListEnumOptions(IldPropertyInfo item, MenuItem mi, MenuItem cancelItem)
+            {
+                Type actualEnumType = item.ActualPropertyType;
+                string[] values = Enum.GetNames(actualEnumType);
+
+                foreach (string val in values)
+                {
+                    MenuItem mni = CreateMenuItem(val, (s, e) => ApplyEnumMatchesFilter(item, val, mi, cancelItem));
+                    mi.Items.Add(mni);
+                }
+
+                mi.Items.Add(new Separator());
+                // not sure if I'll actually need/want this menu item, but for now, I'll keep it here
+                mi.Items.Add(CreateMenuItem("Matches...", (s, e) => StringFilterAction(FilterType.ENUM_MATCHES, item, mi, cancelItem)));
             }
         }
 
@@ -457,14 +483,24 @@ namespace PathfinderJson.Ild
         {
             StringInputDialog sid = new StringInputDialog();
             sid.Title = "Enter String Filter";
-            sid.Description = (int)action switch
+            sid.Description = action switch
             {
-                0 => "Show items where " + property.DisplayName + " contains:",
-                1 => "Show items where " + property.DisplayName + " does not contain:",
-                2 => "Show items where " + property.DisplayName + " starts with:",
-                3 => "Show items where " + property.DisplayName + " exactly matches:",
+                FilterType.STRING_CONTAINS => "Show items where " + property.DisplayName + " contains:",
+                FilterType.STRING_NOT_CONTAINS => "Show items where " + property.DisplayName + " does not contain:",
+                FilterType.STRING_STARTS_WITH => "Show items where " + property.DisplayName + " starts with:",
+                FilterType.STRING_MATCHES => "Show items where " + property.DisplayName + " exactly matches:",
+                FilterType.ENUM_MATCHES => "Show items where " + property.DisplayName + " exactly matches:",
                 _ => "Enter the value to filter by:"
             };
+
+            if (action == FilterType.ENUM_MATCHES)
+            {
+                sid.ValidationFunction = (s) =>
+                {
+                    return property.ActualPropertyType.IsEnum && Enum.TryParse(property.ActualPropertyType, s, true, out _);
+                };
+                sid.ValidationFailureString = "Not a valid value for " + property.DisplayName;
+            }
 
             sid.ShowDialog();
             if (sid.DialogResult)
@@ -554,6 +590,15 @@ namespace PathfinderJson.Ild
         private void ApplyIntegerMatchesFilter(IldPropertyInfo property, int match, MenuItem baseItem, MenuItem cancelItem)
         {
             property.Filter = new IldPropertyFilter(FilterType.NUMBER_EQUALS, match.ToString());
+            baseItem.IsChecked = true;
+            cancelItem.IsEnabled = true;
+
+            ApplyFilters();
+        }
+
+        private void ApplyEnumMatchesFilter(IldPropertyInfo property, string match, MenuItem baseItem, MenuItem cancelItem)
+        {
+            property.Filter = new IldPropertyFilter(FilterType.ENUM_MATCHES, match);
             baseItem.IsChecked = true;
             cancelItem.IsEnabled = true;
 

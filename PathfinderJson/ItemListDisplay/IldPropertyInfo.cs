@@ -1,11 +1,15 @@
-﻿namespace PathfinderJson.Ild;
+﻿using System;
+using System.Windows.Navigation;
+
+namespace PathfinderJson.Ild;
 
 public class IldPropertyInfo
 {
-    public IldPropertyInfo(string name, IldType type, string? displayName = null)
+    public IldPropertyInfo(string name, IldType type, Type actualType, string? displayName = null)
     {
         Name = name;
         IldType = type;
+        ActualPropertyType = actualType;
         if (displayName != null) DisplayName = displayName; else DisplayName = name;
     }
 
@@ -39,23 +43,31 @@ public class IldPropertyInfo
     /// </summary>
     public IldPropertyFilter? Filter { get; set; } = null;
 
+    /// <summary>
+    /// Get or set the actual type of the property.
+    /// </summary>
+    public Type ActualPropertyType { get; set; }
+
+    /// <summary>
+    /// Compare an instance's value of this property against a particular search term string, and see if it matches.
+    /// </summary>
+    /// <param name="value">the value of this property in a particular instance</param>
+    /// <param name="searchTerm">the search term to compare the value against</param>
+    /// <returns><c>true</c> if the term matches and the result should be returned, or <c>false</c> if the term does not match the value</returns>
+    /// <remarks>Boolean values do not support searches, so will always return "true"</remarks>
     public bool CompareToSearch(object? value, string searchTerm)
     {
         if (string.IsNullOrWhiteSpace(searchTerm)) return true;
 
-        switch (IldType)
+        return IldType switch
         {
-            case IldType.String:
-                return value is string s && s.Contains(searchTerm);
-            case IldType.Integer:
-                return value is int i && i.ToString().Contains(searchTerm);
-            case IldType.Double:
-                return value is double d && d.ToString().Contains(searchTerm);
-            case IldType.Boolean:
-                return true; // we won't search/filter by boolean
-            default:
-                return true;
-        }
+            IldType.String => value is string s && s.Contains(searchTerm),
+            IldType.Integer => value is int i && i.ToString().Contains(searchTerm),
+            IldType.Double => value is double d && d.ToString().Contains(searchTerm),
+            IldType.Boolean => true, // we won't search/filter by boolean
+            IldType.Enum => Enum.Parse(ActualPropertyType, searchTerm) == value,
+            _ => true,
+        };
     }
 
     /// <summary>
@@ -73,26 +85,14 @@ public class IldPropertyInfo
             case IldType.String:
                 if (value is string s)
                 {
-                    if (ft == FilterType.STRING_CONTAINS)
+                    return ft switch
                     {
-                        return s.Contains(Filter.Value);
-                    }
-                    else if (ft == FilterType.STRING_MATCHES)
-                    {
-                        return s == Filter.Value;
-                    }
-                    else if (ft == FilterType.STRING_STARTS_WITH)
-                    {
-                        return s.StartsWith(Filter.Value);
-                    }
-                    else if (ft == FilterType.STRING_NOT_CONTAINS)
-                    {
-                        return !s.Contains(Filter.Value);
-                    }
-                    else
-                    {
-                        return true;
-                    }
+                        FilterType.STRING_CONTAINS => s.Contains(Filter.Value),
+                        FilterType.STRING_MATCHES => s == Filter.Value,
+                        FilterType.STRING_STARTS_WITH => s.StartsWith(Filter.Value),
+                        FilterType.STRING_NOT_CONTAINS => !s.Contains(Filter.Value),
+                        _ => true // wrong filter type applied here
+                    };
                 }
                 break;
             case IldType.Integer:
@@ -154,26 +154,29 @@ public class IldPropertyInfo
             case IldType.Boolean:
                 if (value is bool b)
                 {
-                    if (ft == FilterType.BOOLEAN_FALSE)
+                    return ft switch
                     {
-                        return b == false;
-                    }
-                    else if (ft == FilterType.BOOLEAN_TRUE)
+                        FilterType.BOOLEAN_FALSE => b == false,
+                        FilterType.BOOLEAN_TRUE => b == true,
+                        _ => true // wrong filter type applied here
+                    };
+                }
+                break;
+            case IldType.Enum:
+                if (value != null)
+                {
+                    return ft switch
                     {
-                        return b == true;
-                    }
-                    else
-                    {
-                        // wrong filter type applied here
-                        return true;
-                    }
+                        FilterType.ENUM_MATCHES => value.Equals(Filter.ValueAsEnum(ActualPropertyType)),
+                        _ => true
+                    };
                 }
                 break;
             default:
                 break;
         }
 
-        // this is a type that ILD doesn't support, just return true
+        // this is a type that ILD doesn't support (or the actual type doesn't match the ILD's type), just return true
         return true;
     }
 
@@ -236,6 +239,11 @@ public class IldPropertyFilter
 
         return (val0, val1);
     }
+
+    public object ValueAsEnum(Type enumType)
+    {
+        return Enum.Parse(enumType, Value, true);
+    }
 }
 
 public enum FilterType
@@ -248,7 +256,8 @@ public enum FilterType
     BOOLEAN_FALSE = 5,
     NUMBER_EQUALS = 6,
     NUMBER_BETWEEN = 7,
-    NUMBER_NOT_BETWEEN = 8
+    NUMBER_NOT_BETWEEN = 8,
+    ENUM_MATCHES = 9
 }
 
 public enum IldType
@@ -256,5 +265,6 @@ public enum IldType
     String = 0,
     Integer = 1,
     Double = 2,
-    Boolean = 3
+    Boolean = 3,
+    Enum = 4
 }
