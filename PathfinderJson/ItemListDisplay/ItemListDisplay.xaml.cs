@@ -81,6 +81,7 @@ namespace PathfinderJson.Ild
                 if (value != null)
                 {
                     propertyNames = ListProperties(value);
+                    LoadSortMenu();
                     LoadFilterMenu();
                 }
                 else
@@ -313,6 +314,34 @@ namespace PathfinderJson.Ild
             }
 
             return props;
+        }
+
+        private void LoadSortMenu()
+        {
+            var cm = new SolidShineUi.ContextMenu();
+
+            foreach (var item in propertyNames)
+            {
+                MenuItem mi = new();
+                mi.Header = item.DisplayName;
+                mi.Tag = item;
+
+                cm.Items.Add(mi);
+            }
+
+            cm.Items.Add(new Separator());
+
+            MenuItem msd1 = new MenuItem();
+            msd1.Header = "Ascending";
+            msd1.Click += (s, e) => { };
+            cm.Items.Add(msd1);
+
+            MenuItem msd2 = new MenuItem();
+            msd2.Header = "Descending";
+            msd2.Click += (s, e) => { };
+            cm.Items.Add(msd2);
+
+            btnSort.Menu = cm;
         }
 
         private void LoadFilterMenu()

@@ -34,10 +34,16 @@
             <StackPanel HorizontalAlignment="Right" Margin="0,4,10,4" Orientation="Horizontal" Grid.Row="1">
                 <local:ThemedImage ImageName="Find" ColorScheme="{Binding ElementName=ild, Path=ColorScheme}" Width="16" Height="16" />
                 <TextBox Height="24" VerticalContentAlignment="Center" Width="90" Margin="3,0,5,0" x:Name="txtSearch" TextChanged="txtSearch_TextChanged" />
-                <flat:MenuButton x:Name="btnFilter" ColorScheme="{Binding ColorScheme, ElementName=ild}" FontSize="12" TransparentBack="True" Height="24" >
-                    <StackPanel Orientation="Horizontal">
+                <flat:MenuButton x:Name="btnSort" ColorScheme="{Binding ColorScheme, ElementName=ild}" FontSize="12" TransparentBack="True" Height="24" Padding="0" >
+                    <StackPanel Orientation="Horizontal" Margin="3,0,1,0" >
+                        <local:ThemedImage ImageName="Sort" ColorScheme="{Binding ColorScheme, ElementName=ild}" Width="16" Height="16" />
+                        <TextBlock Text="Sort" Margin="3,0,0,0" />
+                    </StackPanel>
+                </flat:MenuButton>
+                <flat:MenuButton x:Name="btnFilter" ColorScheme="{Binding ColorScheme, ElementName=ild}" FontSize="12" TransparentBack="True" Height="24" Padding="0" >
+                    <StackPanel Orientation="Horizontal" Margin="3,0,1,0" >
                         <local:ThemedImage ImageName="Filter" ColorScheme="{Binding ColorScheme, ElementName=ild}" Width="16" Height="16" />
-                        <TextBlock Text="Filter" Margin="3,0" />
+                        <TextBlock Text="Filter" Margin="3,0,0,0" />
                     </StackPanel>
                 </flat:MenuButton>
                 <flat:MenuButton x:Name="btnMore" ColorScheme="{Binding ColorScheme, ElementName=ild}" FontSize="12" TransparentBack="True" Height="24" ShowMenuArrow="False" Margin="3,0,0,0" >
@@ -46,7 +52,11 @@
                         <flat:ContextMenu>
                             <MenuItem Header="Remove All Selected" x:Name="btnRemoveMultiple" Click="btnRemoveMultiple_Click" />
                             <Separator />
-                            <MenuItem Header="Deselect All" x:Name="btnDeselect" Click="btnDeselect_Click" />
+                            <MenuItem Header="Deselect All" x:Name="btnDeselect" Click="btnDeselect_Click">
+                                <MenuItem.Icon>
+                                    <local:ThemedImage ImageName="Deselect" ColorScheme="{Binding ColorScheme, ElementName=ild}" Width="16" Height="16" />
+                                </MenuItem.Icon>
+                            </MenuItem>
                         </flat:ContextMenu>
                     </flat:MenuButton.Menu>
                 </flat:MenuButton>
