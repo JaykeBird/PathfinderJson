@@ -473,6 +473,50 @@ namespace PathfinderJson
 
         #endregion
 
+        #region File Interaction
+
+        /// <summary>
+        /// Check if this particular file exists in the settings directory.
+        /// </summary>
+        /// <param name="file">The file to check for.</param>
+        /// <returns><c>true</c> if the file exists (and there is permission to enumerate the file), <c>false</c> otherwise.</returns>
+        public static bool HasFile(string file)
+        {
+            return File.Exists(Path.Combine(SettingsDirectory, file));
+        }
+
+        /// <summary>
+        /// Open a FileStream for a file in the settings directory, for reading and writing.
+        /// </summary>
+        /// <param name="file">The name of the file to open within the settings directory</param>
+        /// <param name="mode">The method to use for opening this file</param>
+        /// <param name="shareMode">Set how other programs/processes can access this file while it is open</param>
+        /// <returns></returns>
+        /// <remarks>You can use <see cref="HasFile(string)"/> to check if the file exists first.</remarks>
+        /// <exception cref="ArgumentException">Thrown if <paramref name="file"/> is not valid</exception>
+        /// <exception cref="IOException">Thrown if the FileStream could not be created for some reason; check the exception message</exception>
+        /// <exception cref="FileNotFoundException">Thrown if the file does not exist and <paramref name="mode"/> is not set to create the file</exception>
+        /// <exception cref="UnauthorizedAccessException">Thrown if the file does exist and <paramref name="mode"/> is set to create a file</exception>
+        /// <exception cref="SecurityException">Thrown if there is not authorization to access this file.</exception>
+        public static FileStream OpenFile(string file, FileMode mode, FileShare shareMode = FileShare.Read)
+        {
+            if (!IsValidPath(file)) throw new ArgumentException("File is not a valid filename", nameof(file));
+            return new FileStream(Path.Combine(SettingsDirectory, file), mode, FileAccess.ReadWrite, shareMode);
+        }
+
+        /// <summary>
+        /// Get the full path of a file within the settings directory.
+        /// </summary>
+        /// <param name="file">The name of the file.</param>
+        /// <remarks>This does not check if the file exists or if <paramref name="file"/> is a valid path.</remarks>
+        /// <returns>The full path of the file.</returns>
+        public static string GetFilePath(string file)
+        {
+            return Path.Combine(SettingsDirectory, file);
+        }
+
+        #endregion
+
         #region Locate Settings
 
         /// <summary>
@@ -665,6 +709,15 @@ namespace PathfinderJson
                     }
                 }
             } // otherwise, settings is in the standard location
+        }
+
+        /// <summary>
+        /// Set up the settings infrastructure and directories, including scanning older versions' directories if current settings cannot be found.
+        /// </summary>
+        /// <remarks>If settings are located in an earlier version's directory and can be upgraded, the user will be asked if they want to upgrade.</remarks>
+        public static void PrepareSettings()
+        {
+            SetupSettingsBase();
         }
 
         /// <summary>
