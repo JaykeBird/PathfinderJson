@@ -672,7 +672,7 @@
                         </Grid>
                     </Grid>
                 </Grid>
-                <Grid Margin="5,5,5,0" x:Name="grdSkills" Visibility="Visible" >
+                <Grid Margin="5,5,5,0" x:Name="grdSkills" Visibility="Collapsed" >
                     <Grid.RowDefinitions>
                         <RowDefinition />
                         <RowDefinition Height="Auto"/>
@@ -820,7 +820,7 @@
                         </Grid>
                     </Grid>
                 </Grid>
-                <Grid Margin="5,5,5,0" x:Name="grdSpells" Visibility="Collapsed" >
+                <Grid Margin="5,5,5,0" x:Name="grdSpells" Visibility="Visible" >
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto"/>
