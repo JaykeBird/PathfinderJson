@@ -1,5 +1,6 @@
 # PathfinderJson
 ![Logo](Icon96.png?raw=true "Logo")
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FJaykeBird%2FPathfinderJson.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2FJaykeBird%2FPathfinderJson?ref=badge_shield)
 
 A sheet reader/writer for Pathfinder JSON character sheets from Mottokrosh's website
 
@@ -57,3 +58,5 @@ Do note that the UI library and icon set that PathfinderJson uses are not yet re
 This program complies with the [Paizo Community Use Policy](https://paizo.com/community/communityuse). More detail can be found on the Paizo website or in the Help > About window.
 
 For more info about the third-party libraries used in this project, open the Help > About > Third-Party Credits window.
+
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FJaykeBird%2FPathfinderJson.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2FJaykeBird%2FPathfinderJson?ref=badge_large)
