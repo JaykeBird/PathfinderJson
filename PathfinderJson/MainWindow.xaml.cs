@@ -1625,7 +1625,7 @@ namespace PathfinderJson
 
             UpdateSkillPointTotalCount();
 
-            nudSkillPoints.ValueString = sheet.SkillPointsPerLevel;
+            nudSkillPoints.ValueString = sheetSettings["skillPointsPerLevel"] ?? "";
 
             // Spells tab
             int currentLevel = 0;
@@ -1794,6 +1794,8 @@ namespace PathfinderJson
                     item.ColorScheme = ColorScheme;
                     //item.UpdateAppearance();
                 }
+
+                nudSkillPoints.ValueString = sheetSettings?["skillPointsPerLevel"] ?? "";
 
                 UpdateSkillPointTotalCount();
 
@@ -2055,7 +2057,7 @@ namespace PathfinderJson
                 }
             }
 
-            sheet.SkillPointsPerLevel = nudSkillPoints.ValueString;
+            sheetSettings["skillPointsPerLevel"] = nudSkillPoints.ValueString;
 
             // spells
 
