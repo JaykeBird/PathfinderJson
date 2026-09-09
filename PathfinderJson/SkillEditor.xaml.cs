@@ -6,6 +6,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using SolidShineUi;
 using static PathfinderJson.CoreUtils;
 
 namespace PathfinderJson
@@ -20,14 +21,23 @@ namespace PathfinderJson
             InitializeComponent();
         }
 
+        public ColorScheme ColorScheme { get => (ColorScheme)GetValue(ColorSchemeProperty); set => SetValue(ColorSchemeProperty, value); }
+
+        /// <summary>The backing dependency property for <see cref="ColorScheme"/>. See the related property for details.</summary>
+        public static readonly DependencyProperty ColorSchemeProperty
+            = DependencyProperty.Register(nameof(ColorScheme), typeof(ColorScheme), typeof(SkillEditor),
+            new FrameworkPropertyMetadata(new ColorScheme()));
+
+
         public void UpdateAppearance()
         {
-            btnEdit.ColorScheme = App.ColorScheme;
-            btnInfo.ColorScheme = App.ColorScheme;
-            btnModifiers.ColorScheme = App.ColorScheme;
-            imgEdit.ColorScheme = App.ColorScheme;
-            imgInfo.ColorScheme = App.ColorScheme;
-            chkSkill.ColorScheme = App.ColorScheme;
+            ColorScheme = App.ColorScheme;
+            //btnEdit.ColorScheme = App.ColorScheme;
+            //btnInfo.ColorScheme = App.ColorScheme;
+            //btnModifiers.ColorScheme = App.ColorScheme;
+            //imgEdit.ColorScheme = App.ColorScheme;
+            //imgInfo.ColorScheme = App.ColorScheme;
+            //chkSkill.ColorScheme = App.ColorScheme;
             if (App.ColorScheme.IsHighContrast)
             {
                 txtModifier.BorderBrush = new SolidColorBrush(App.ColorScheme.LightDisabledColor);
@@ -99,10 +109,10 @@ namespace PathfinderJson
         {
             if (skill.ClassSkill) chkSkill.IsChecked = true;
 
-            txtTotal.Text = skill.Total;
-            txtRacial.Text = skill.Racial;
-            txtRanks.Text = skill.Ranks;
-            txtTrait.Text = skill.Trait;
+            txtTotal.ValueString = skill.Total ?? "";
+            txtRacial.ValueString = skill.Racial ?? "";
+            txtRanks.ValueString = skill.Ranks ?? "";
+            txtTrait.ValueString = skill.Trait ?? "";
             txtMisc.Text = skill.Misc;
 
             if (!string.IsNullOrEmpty(skill.Specialization))
@@ -116,7 +126,7 @@ namespace PathfinderJson
             }
 
             ToolTip tt = new ToolTip();
-            tt.Content = "Racial: \"" + txtRacial.Text + "\" Trait: \"" + txtTrait.Text + "\" Misc: \"" + txtMisc.Text + "\"";
+            tt.Content = "Racial: \"" + txtRacial.ValueString + "\" Trait: \"" + txtTrait.ValueString + "\" Misc: \"" + txtMisc.Text + "\"";
             btnModifiers.ToolTip = tt;
         }
 
@@ -126,11 +136,11 @@ namespace PathfinderJson
             {
                 ClassSkill = chkSkill.IsChecked == true,
                 Misc = GetStringOrNull(txtMisc.Text, true),
-                Racial = GetStringOrNull(txtRacial.Text, true),
-                Ranks = GetStringOrNull(txtRanks.Text, true),
+                Racial = GetStringOrNull(txtRacial.ValueString, true),
+                Ranks = GetStringOrNull(txtRanks.ValueString, true),
                 Specialization = specialization,
-                Total = GetStringOrNull(txtTotal.Text, true),
-                Trait = GetStringOrNull(txtTrait.Text, true)
+                Total = GetStringOrNull(txtTotal.ValueString, true),
+                Trait = GetStringOrNull(txtTrait.ValueString, true)
             };
 
             return s;
@@ -141,30 +151,28 @@ namespace PathfinderJson
             txtModifier.Text = modifier;
         }
 
-        public async Task UpdateTotals(CancellationToken ct)
+        public async Task UpdateTotals(CancellationToken ct, int modifier)
         {
             int total = 0;
 
-            string ranks = txtRanks.Text;
+            int ranks = txtRanks.Value ?? 0;
             string misc = txtMisc.Text;
-            string mod = txtModifier.Text;
-            string racial = txtRacial.Text;
-            string trait = txtTrait.Text;
+            int racial = txtRacial.Value ?? 0;
+            int trait = txtTrait.Value ?? 0;
 
             await Task.Run(() =>
             {
-                try { total += int.Parse(ranks); } catch (FormatException) { }
+                total += ranks;
+                total += modifier;
                 if (ct.IsCancellationRequested) return;
                 try { total += int.Parse(misc); } catch (FormatException) { }
                 if (ct.IsCancellationRequested) return;
-                try { total += int.Parse(mod); } catch (FormatException) { }
+                total += racial;
                 if (ct.IsCancellationRequested) return;
-                try { total += int.Parse(racial); } catch (FormatException) { }
-                if (ct.IsCancellationRequested) return;
-                try { total += int.Parse(trait); } catch (FormatException) { }
+                total += trait;
             });
 
-            txtTotal.Text = total.ToString();
+            txtTotal.Value = total;
         }
 
         private void btnModifiers_Click(object sender, RoutedEventArgs e)
@@ -200,13 +208,13 @@ namespace PathfinderJson
             if (!_wideState)
             {
                 colName.Width = new GridLength(2, GridUnitType.Star);
-                colBase.Width = new GridLength(170);
+                colBase.Width = new GridLength(172);
                 //colModifiers.Width = new GridLength(0);
                 colExtra.Width = new GridLength(0);
                 Background = new SolidColorBrush(Colors.Transparent);
 
                 ToolTip tt = new ToolTip();
-                tt.Content = "Racial: \"" + txtRacial.Text + "\" Trait: \"" + txtTrait.Text + "\" Misc: \"" + txtMisc.Text + "\"";
+                tt.Content = "Racial: \"" + txtRacial.ValueString + "\" Trait: \"" + txtTrait.ValueString + "\" Misc: \"" + txtMisc.Text + "\"";
                 btnModifiers.ToolTip = tt;
                 _modifiersOpened = false;
             }
@@ -248,9 +256,9 @@ namespace PathfinderJson
             ContentChanged?.Invoke(this, e);
         }
 
-        private void chkSkill_Unchecked(object sender, RoutedEventArgs e)
+        private void valueEditor_ValueChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            ContentChanged?.Invoke(this, e);
+            ContentChanged?.Invoke(this, EventArgs.Empty);
         }
 
         private void btnInfo_Click(object sender, RoutedEventArgs e)
@@ -266,7 +274,7 @@ namespace PathfinderJson
                 _wideState = true;
 
                 colName.Width = new GridLength(2, GridUnitType.Star);
-                colBase.Width = new GridLength(170);
+                colBase.Width = new GridLength(172);
                 Background = new SolidColorBrush(Colors.Transparent);
 
                 colModifiers.Width = new GridLength(0);
@@ -300,13 +308,13 @@ namespace PathfinderJson
                 else
                 {
                     colName.Width = new GridLength(2, GridUnitType.Star);
-                    colBase.Width = new GridLength(170);
+                    colBase.Width = new GridLength(172);
                     //colModifiers.Width = new GridLength(0);
                     colExtra.Width = new GridLength(0);
                     Background = new SolidColorBrush(Colors.Transparent);
 
                     ToolTip tt = new ToolTip();
-                    tt.Content = "Racial: \"" + txtRacial.Text + "\" Trait: \"" + txtTrait.Text + "\" Misc: \"" + txtMisc.Text + "\"";
+                    tt.Content = "Racial: \"" + txtRacial.ValueString + "\" Trait: \"" + txtTrait.ValueString + "\" Misc: \"" + txtMisc.Text + "\"";
                     btnModifiers.ToolTip = tt;
                 }
             }
@@ -316,5 +324,6 @@ namespace PathfinderJson
         {
 
         }
+
     }
 }

@@ -2973,12 +2973,19 @@ namespace PathfinderJson
                 ApplyIconValuesToTable();
             }
 
-            txtStrm.Text = CalculateModifier(txtStr.Value);
-            txtDexm.Text = CalculateModifier(txtDex.Value);
-            txtCham.Text = CalculateModifier(txtCha.Value);
-            txtConm.Text = CalculateModifier(txtCon.Value);
-            txtIntm.Text = CalculateModifier(txtInt.Value);
-            txtWism.Text = CalculateModifier(txtWis.Value);
+            int strMod = CalculateModifierInt(txtStr.Value);
+            int dexMod = CalculateModifierInt(txtDex.Value);
+            int chaMod = CalculateModifierInt(txtCha.Value);
+            int conMod = CalculateModifierInt(txtCon.Value);
+            int intMod = CalculateModifierInt(txtInt.Value);
+            int wisMod = CalculateModifierInt(txtWis.Value);
+
+            txtStrm.Text = DisplayModifier(strMod);
+            txtDexm.Text = DisplayModifier(dexMod);
+            txtCham.Text = DisplayModifier(chaMod);
+            txtConm.Text = DisplayModifier(conMod);
+            txtIntm.Text = DisplayModifier(intMod);
+            txtWism.Text = DisplayModifier(wisMod);
 
             edtFort.UpdateCoreModifier(txtConm.Text);
             edtReflex.UpdateCoreModifier(txtDexm.Text);
@@ -2998,36 +3005,22 @@ namespace PathfinderJson
                         continue;
                     }
 
-                    string modifier = "";
-
-                    switch (item.SkillAbility)
+                    int modifier = item.SkillAbility switch
                     {
-                        case "DEX":
-                            modifier = txtDexm.Text;
-                            break;
-                        case "INT":
-                            modifier = txtIntm.Text;
-                            break;
-                        case "CHA":
-                            modifier = txtCham.Text;
-                            break;
-                        case "STR":
-                            modifier = txtStrm.Text;
-                            break;
-                        case "WIS":
-                            modifier = txtWism.Text;
-                            break;
-                        case "CON":
-                            modifier = txtConm.Text;
-                            break;
-                        default:
-                            break;
-                    }
-                    item.LoadModifier(modifier);
+                        "DEX" => dexMod,
+                        "INT" => intMod,
+                        "CHA" => chaMod,
+                        "STR" => strMod,
+                        "WIS" => wisMod,
+                        "CON" => conMod,
+                        _ => 0
+                    };
+
+                    item.LoadModifier(modifier.ToString());
 
                     if (totals)
                     {
-                        await item.UpdateTotals(cts.Token);
+                        await item.UpdateTotals(cts.Token, modifier);
                     }
                 }
             }

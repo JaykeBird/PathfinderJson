@@ -682,7 +682,7 @@
                     <Grid Margin="10,0,10,0" Grid.Row="1" MaxWidth="900" x:Name="grdSkillHeader" SizeChanged="SkillHeaderGrid_SizeChanged" >
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="2*" />
-                            <ColumnDefinition Width="170" />
+                            <ColumnDefinition Width="172" />
                             <ColumnDefinition Width="85" x:Name="colSkillModifiers" />
                             <ColumnDefinition Width="0" MinWidth="0" x:Name="colSkillExtra" />
                         </Grid.ColumnDefinitions>
