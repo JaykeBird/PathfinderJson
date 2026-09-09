@@ -559,6 +559,9 @@ namespace PathfinderJson
         public string? Quantity { get; set; }
         public string? Weight { get; set; }
         public string? Notes { get; set; }
+
+        // included for PathfinderJson 1.3 forwards compatibility
+        public string? BodyLocation { get; set; }
     }
 
     public class SpecialAbility
@@ -598,5 +601,8 @@ namespace PathfinderJson
         public string Notes { get; set; } = "";
         public bool AtWill { get; set; } = false;
         public bool Marked { get; set; } = false;
+        
+        // included for Pathfinder 1.3 forwards compatibility
+        public string Color { get; set; } = "";
     }
 }
