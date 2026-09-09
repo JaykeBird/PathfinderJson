@@ -449,18 +449,45 @@ namespace PathfinderJson
             //int ValueString = (d as IntegerSpinner).ValueString;
             if (d is SheetValueEditor s)
             {
-                if (int.TryParse((string)e.NewValue, System.Globalization.NumberStyles.Integer, null, out _))
+                if (e.NewValue is string str)
                 {
-                    // straight up an integer
-                    s.Value = int.Parse((string)e.NewValue, System.Globalization.NumberStyles.Integer);
-                    s.SetIfValueIsInt(true);
-                    s.ShowArrows = true;
-                }
-                else
-                {
-                    s.SetIfValueIsInt(false);
-                    s.Value = null;
-                    s.ShowArrows = false;
+                    if (int.TryParse(str, System.Globalization.NumberStyles.Integer, null, out _))
+                    {
+                        // straight up an integer
+                        s.Value = int.Parse(str, System.Globalization.NumberStyles.Integer);
+                        s.SetIfValueIsInt(true);
+                        s.ShowArrows = true;
+                    }
+                    else if (s.AcceptExpressions && ArithmeticParser.IsValidString(str))
+                    {
+                        // arithmetic expression
+                        try
+                        {
+                            s.Value = (int)Math.Round(ArithmeticParser.Evaluate(str), MidpointRounding.AwayFromZero);
+                            s.SetIfValueIsInt(true);
+                            s.ShowArrows = true;
+                        }
+                        catch (FormatException)
+                        {
+                            // fallback to string value
+                            s.SetIfValueIsInt(false);
+                            s.Value = null;
+                            s.ShowArrows = false;
+                        }
+                        catch (ArgumentOutOfRangeException)
+                        {
+                            // fallback to string value
+                            s.SetIfValueIsInt(false);
+                            s.Value = null;
+                            s.ShowArrows = false;
+                        }
+                    }
+                    else
+                    {
+                        s.SetIfValueIsInt(false);
+                        s.Value = null;
+                        s.ShowArrows = false;
+                    }
                 }
                 s.InternalValueStringChanged?.Invoke(s, e);
             }
@@ -801,8 +828,14 @@ namespace PathfinderJson
 
         }
 
+        bool _updateDisplayAction = false;
+
         void UpdateDisplay()
         {
+            if (_updateDisplayAction) return;
+
+            _updateDisplayAction = true;
+
             if (_isValueInt && _updateBox && ValueString != Value.ToString())
             {
                 _updatingString = true;
@@ -813,6 +846,8 @@ namespace PathfinderJson
             {
                 txtValue.Text = ValueString;
             }
+
+            _updateDisplayAction = false;
         }
 
         #region Textbox
