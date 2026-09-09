@@ -5,8 +5,6 @@ using System.Runtime.InteropServices;
 
 namespace PathfinderJson
 {
-#nullable enable
-
     public static class CoreUtils
     {
 
@@ -63,21 +61,7 @@ namespace PathfinderJson
 
         public static int ParseStringAsInt(string? value)
         {
-            if (string.IsNullOrEmpty(value))
-            {
-                return 0;
-            }
-            else
-            {
-                if (int.TryParse(value, out int r))
-                {
-                    return r;
-                }
-                else
-                {
-                    return 0;
-                }
-            }
+            return ParseStringAsInt(value, 0);
         }
 
         public static int ParseStringAsInt(string? value, int defaultValue)
@@ -88,11 +72,11 @@ namespace PathfinderJson
             }
             else
             {
-                if (int.TryParse(value, out int r))
+                try
                 {
-                    return r;
+                    return int.Parse(value);
                 }
-                else
+                catch (FormatException)
                 {
                     return defaultValue;
                 }
@@ -135,4 +119,3 @@ namespace PathfinderJson
         }
     }
 }
-#nullable restore
