@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
-using PathfinderJson;
+using System.Windows.Data;
+using System.Windows.Media;
+using System.Windows.Shapes;
 using SolidShineUi;
 
 namespace PathfinderJson
@@ -11,15 +13,19 @@ namespace PathfinderJson
     {
 
         TextBlock tb = new TextBlock();
-        ThemedImage ti = new ThemedImage();
+        Border ti = new Border();
+        Path p = new Path();
 
-        bool init = true;
+        static readonly Geometry closedPath = Geometry.Parse("F1 M 1.22334,10L 7,5L 1.5,0L 0,1.6667L 4,5L 0,8.3333L 1.5,10 Z");
+        static readonly Geometry openPath = Geometry.Parse("F1 M 10,1.22334L 5,7L 0,1.5L 1.6667,0L 5,4L 8.3333,0L 10,1.5 Z");
+
+        bool init = false;
 
         public DetailsButton()
         {
-            SelectOnClick = true;
+            init = true;
 
-            ColorSchemeChanged += detailsButton_ColorSchemeChanged;
+            SelectOnClick = true;
             IsSelectedChanged += detailsButton_IsSelectedChanged;
 
             SetupUI();
@@ -33,26 +39,26 @@ namespace PathfinderJson
 
             if (IsSelected)
             {
-                ti.ImageName = "UpArrow";
+                //ti.ImageName = "UpArrow";
+                p.Data = openPath;
             }
             else
             {
-                ti.ImageName = "DownArrow";
+                //ti.ImageName = "DownArrow";
+                p.Data = closedPath;
             }
         }
 
-        private void detailsButton_ColorSchemeChanged(object sender, System.Windows.DependencyPropertyChangedEventArgs e)
-        {
-            if (init) return;
+        /// <summary>
+        /// The text to display within the button.
+        /// </summary>
+        public string DetailsText { get => (string)GetValue(DetailsTextProperty); set => SetValue(DetailsTextProperty, value); }
 
-            ti.ColorScheme = ColorScheme;
-        }
+        /// <summary>The backing dependency property for <see cref="DetailsText"/>. See the related property for details.</summary>
+        public static readonly DependencyProperty DetailsTextProperty
+            = DependencyProperty.Register(nameof(DetailsText), typeof(string), typeof(DetailsButton),
+            new FrameworkPropertyMetadata("Details"));
 
-        public string DetailsText
-        {
-            get => tb.Text;
-            set => tb.Text = value;
-        }
 
         void SetupUI()
         {
@@ -64,12 +70,19 @@ namespace PathfinderJson
 
             IsSelected = false;
 
-            ti.ImageName = "DownArrow";
-            ti.ColorScheme = ColorScheme;
+            //ti.ImageName = "DownArrow";
+            //ti.ColorScheme = ColorScheme;
             ti.Width = 16;
             ti.Height = 16;
 
-            tb.Text = "Details";
+            p.SetBinding(Shape.FillProperty, new Binding("Foreground") { Source = this });
+            p.Data = closedPath;
+            p.VerticalAlignment = VerticalAlignment.Center;
+            p.HorizontalAlignment = HorizontalAlignment.Center;
+
+            ti.Child = p;
+
+            tb.SetBinding(TextBlock.TextProperty, new Binding(nameof(DetailsText)) { Source = this });
             tb.Margin = new Thickness(3, 0, 3, 0);
 
             sp.Children.Add(ti);
