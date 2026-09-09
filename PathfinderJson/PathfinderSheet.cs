@@ -287,6 +287,16 @@ namespace PathfinderJson
                 Strength = 0;
                 Dexterity = 0;
                 Constitution = 0;
+
+                RawAbilities = new Dictionary<string, string>()
+                {
+                    {"wis", "0" },
+                    {"int", "0" },
+                    {"cha", "0" },
+                    {"str", "0" },
+                    {"dex", "0" },
+                    {"con", "0" },
+                };
                 AbilitiesPresent = false;
             }
 
