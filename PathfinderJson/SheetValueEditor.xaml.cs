@@ -944,9 +944,11 @@ namespace PathfinderJson
                 else
                 {
                     keyDownTimer.Stop();
-                    if (Value != null)
+
+                    int? val = Value ?? (string.IsNullOrEmpty(ValueString) ? 0 : null);
+                    if (val != null)
                     {
-                        if (Value >= MinValue) Value -= Step;
+                        if (val >= MinValue) Value = val - Step;
                         else Value = MinValue;
                     }
                     //UpdateUI();
@@ -961,9 +963,11 @@ namespace PathfinderJson
                 else
                 {
                     keyDownTimer.Stop();
-                    if (Value != null)
+
+                    int? val = Value ?? (string.IsNullOrEmpty(ValueString) ? 0 : null);
+                    if (val != null)
                     {
-                        if (Value <= MaxValue) Value += Step;
+                        if (val <= MaxValue) Value = val + Step;
                         else Value = MaxValue;
                     }
                     //UpdateUI();
@@ -1091,15 +1095,19 @@ namespace PathfinderJson
             {
                 Dispatcher.Invoke(() =>
                 {
-                    if (advanceStepUp)
+                    int? val = Value ?? (string.IsNullOrEmpty(ValueString) ? 0 : null);
+                    if (val != null)
                     {
-                        if (Value < MaxValue) Value += Step;
-                        else Value = MaxValue;
-                    }
-                    else
-                    {
-                        if (Value > MinValue) Value -= Step;
-                        else Value = MinValue;
+                        if (advanceStepUp)
+                        {
+                            if (val < MaxValue) Value = val + Step;
+                            else Value = MaxValue;
+                        }
+                        else
+                        {
+                            if (val > MinValue) Value = val - Step;
+                            else Value = MinValue;
+                        }
                     }
 
                     UpdateUI();
