@@ -223,7 +223,9 @@ namespace PathfinderJson
 
                 sb.AppendLine("END FILE");
 
-                await File.WriteAllTextAsync(Path.Combine(SettingsIo.ErrorLogDirectory, DateTime.UtcNow.ToString("yyyyMMddTHHmmssZ") + ".txt"), sb.ToString(), Encoding.UTF8);
+                await File.WriteAllTextAsync(Path.Combine(SettingsIo.ErrorLogDirectory, 
+                    SettingsIo.ComponentName + "-" + DateTime.UtcNow.ToString("yyyyMMddTHHmmssZ") + ".txt"), 
+                    sb.ToString(), Encoding.UTF8);
             }
 
             MessageBox.Show("An error has occurred and PathfinderJSON may not be able to continue.\n\n" +
