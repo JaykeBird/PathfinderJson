@@ -109,7 +109,7 @@ namespace PathfinderJson.SearchPanel
 
 		public ISearchResult? FindNext(ITextSource document, int offset, int length)
 		{
-			return FindAll(document, offset, length).FirstOrDefault();
+			return FindAll(document, offset, length).FirstOrDefault()!;
 		}
 
 		public bool Equals(ISearchStrategy? other)
