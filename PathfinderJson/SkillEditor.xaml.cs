@@ -77,15 +77,20 @@ namespace PathfinderJson
             = DependencyProperty.Register("SkillRanks", typeof(int), typeof(SkillEditor),
             new FrameworkPropertyMetadata(0));
 
-        public int SkillRanks
+        public string SkillRanks
         {
-            get => (int)GetValue(SkillRanksProperty);
+            get => (string)GetValue(SkillRanksProperty);
             set => SetValue(SkillRanksProperty, value);
         }
 
         public static DependencyProperty MiscModifierProperty
             = DependencyProperty.Register("MiscModifier", typeof(string), typeof(SkillEditor),
             new FrameworkPropertyMetadata(""));
+
+        public int SkillRanksValue
+        {
+            get => nudRanks.Value ?? 0;
+        }
 
         public string MiscModifier
         {
@@ -97,19 +102,19 @@ namespace PathfinderJson
             = DependencyProperty.Register("RacialModifier", typeof(int), typeof(SkillEditor),
             new FrameworkPropertyMetadata(0));
 
-        public int RacialModifier
+        public string RacialModifier
         {
-            get => (int)GetValue(RacialModifierProperty);
+            get => (string)GetValue(RacialModifierProperty);
             set => SetValue(RacialModifierProperty, value);
         }
 
         public static DependencyProperty TraitModifierProperty
-    = DependencyProperty.Register("TraitModifier", typeof(int), typeof(SkillEditor),
-    new FrameworkPropertyMetadata(0));
+            = DependencyProperty.Register("TraitModifier", typeof(int), typeof(SkillEditor),
+            new FrameworkPropertyMetadata(0));
 
-        public int TraitModifier
+        public string TraitModifier
         {
-            get => (int)GetValue(TraitModifierProperty);
+            get => (string)GetValue(TraitModifierProperty);
             set => SetValue(TraitModifierProperty, value);
         }
 
@@ -196,10 +201,10 @@ namespace PathfinderJson
         public void LoadSkillData(Skill s)
         {
             IsTrained = s.ClassSkill;
-            SkillRanks = ParseString(s.Ranks);
+            SkillRanks = s.Ranks ?? "0"; // ParseString(s.Ranks);
             MiscModifier = s.Misc ?? "";
-            RacialModifier = ParseString(s.Racial);
-            TraitModifier = ParseString(s.Trait);
+            RacialModifier = s.Racial ?? "0"; // ParseString(s.Racial);
+            TraitModifier = s.Trait ?? "0"; // ParseString(s.Trait);
             Specialization = s.Specialization ?? "";
 
             UpdateCalculations();
@@ -223,10 +228,10 @@ namespace PathfinderJson
             {
                 Name = InternalSkillName,
                 ClassSkill = IsTrained,
-                Ranks = SkillRanks.ToString(),
-                Misc = MiscModifier.ToString(),
-                Racial = RacialModifier.ToString(),
-                Trait = TraitModifier.ToString(),
+                Ranks = GetStringOrNull(SkillRanks, true),
+                Misc = GetStringOrNull(MiscModifier, true),
+                Racial = GetStringOrNull(RacialModifier, true),
+                Trait = GetStringOrNull(TraitModifier, true),
                 Total = txtTotal.Text,
                 Specialization = Specialization.Trim('(', ')', ' ', '\t')
             };
@@ -311,7 +316,8 @@ namespace PathfinderJson
 
         public void UpdateCalculations()
         {
-            int miscTotal = nudRanks.Value + nudRacial.Value + nudTrait.Value + ParseStringAsInt(nudMisc.Text) + (chkSkill.IsChecked ? 3 : 0);
+            int miscTotal = (nudRanks.Value ?? 0) + (nudRacial.Value ?? 0) + (nudTrait.Value ?? 0) + 
+                ParseStringAsInt(nudMisc.Text) + (chkSkill.IsChecked ? 3 : 0);
             int modifier = ModifierValue;
 
             txtMiscTotal.Text = miscTotal.ToString();

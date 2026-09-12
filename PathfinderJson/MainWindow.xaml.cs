@@ -1,27 +1,27 @@
-﻿using ICSharpCode.AvalonEdit.Highlighting;
-using ICSharpCode.AvalonEdit.Search;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Shell;
 using System.Windows.Threading;
 using System.Xml;
+using ICSharpCode.AvalonEdit.Highlighting;
+using ICSharpCode.AvalonEdit.Search;
 using SolidShineUi;
 using SolidShineUi.KeyboardShortcuts;
 
-using static PathfinderJson.CoreUtils;
 using static PathfinderJson.App;
-using System.Windows.Shell;
-using System.ComponentModel;
-using System.Linq;
-using System.Windows.Data;
+using static PathfinderJson.CoreUtils;
 
 //using Markdig;
 //using Markdig.Wpf;
@@ -1618,14 +1618,7 @@ namespace PathfinderJson
                 //item.UpdateAppearance();
             }
 
-            if (sheetSettings.ContainsKey("skillModSet"))
-            {
-                LoadSkillModSubstitutions(sheetSettings["skillModSet"] ?? "");
-            }
-
-            UpdateSkillPointTotalCount();
-
-            nudSkillPoints.ValueString = sheetSettings["skillPointsPerLevel"] ?? "";
+            CalculateSkillRelatedValues();
 
             // Spells tab
             int currentLevel = 0;
@@ -1795,14 +1788,7 @@ namespace PathfinderJson
                     //item.UpdateAppearance();
                 }
 
-                nudSkillPoints.ValueString = sheetSettings?["skillPointsPerLevel"] ?? "";
-
-                UpdateSkillPointTotalCount();
-
-                if (sheetSettings?.ContainsKey("skillModSet") ?? false)
-                {
-                    LoadSkillModSubstitutions(sheetSettings["skillModSet"] ?? "");
-                }
+                CalculateSkillRelatedValues();
             }
         }
 
@@ -2057,7 +2043,11 @@ namespace PathfinderJson
                 }
             }
 
-            sheetSettings["skillPointsPerLevel"] = nudSkillPoints.ValueString;
+            string skillPoints = nudSkillPoints.ValueString;
+            if (!string.IsNullOrEmpty(skillPoints))
+            {
+                sheetSettings["skillPointsPerLevel"] = skillPoints;
+            }
 
             // spells
 
@@ -4239,7 +4229,7 @@ namespace PathfinderJson
 
         #region Skill editors
 
-        public void LoadSkillModSubstitutions(string s)
+        public void LoadSkillModSubstitutions(string? s)
         {
             if (string.IsNullOrEmpty(s)) return;
 
@@ -4303,6 +4293,21 @@ namespace PathfinderJson
             }
         }
 
+        void CalculateSkillRelatedValues()
+        {
+            if (sheetSettings.TryGetValue("skillModSet", out string? skillMods))
+            {
+                LoadSkillModSubstitutions(skillMods);
+            }
+
+            if (sheetSettings.TryGetValue("skillPointsPerLevel", out string? skillPoints))
+            {
+                nudSkillPoints.ValueString = skillPoints ?? "";
+            }
+
+            UpdateSkillPointTotalCount();
+        }
+
         void UpdateSkillPointTotalCount()
         {
             int ranksTotal = 0;
@@ -4311,7 +4316,7 @@ namespace PathfinderJson
             {
                 if (item != null)
                 {
-                    ranksTotal += item.SkillRanks;
+                    ranksTotal += item.SkillRanksValue;
                 }
             }
 

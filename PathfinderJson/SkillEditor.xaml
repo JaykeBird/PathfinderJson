@@ -76,8 +76,8 @@
                             <ColumnDefinition Width="60" />
                         </Grid.ColumnDefinitions>
                         <TextBlock Text="Ranks" VerticalAlignment="Center" />
-                        <flat:IntegerSpinner Grid.Column="1" x:Name="nudRanks" Margin="3,0,0,0" MinValue="0" ColorScheme="{Binding ElementName=control, Path=ColorScheme}" ValueChanged="nudRanks_ValueChanged"
-                                             Value="{Binding ElementName=control, Path=SkillRanks, Mode=TwoWay}" />
+                        <local:SheetValueEditor Grid.Column="1" x:Name="nudRanks" Margin="3,0,0,0" MinValue="0" ColorScheme="{Binding ElementName=control, Path=ColorScheme}" ValueChanged="nudRanks_ValueChanged"
+                                             ValueString="{Binding ElementName=control, Path=SkillRanks, Mode=TwoWay}" />
                     </Grid>
                     <Grid x:Name="grdRacial" Margin="0,3" >
                         <Grid.ColumnDefinitions>
@@ -85,8 +85,8 @@
                             <ColumnDefinition Width="60" />
                         </Grid.ColumnDefinitions>
                         <TextBlock Text="Racial" VerticalAlignment="Center" />
-                        <flat:IntegerSpinner Grid.Column="1" x:Name="nudRacial" Margin="3,0,0,0" ColorScheme="{Binding ElementName=control, Path=ColorScheme}" ValueChanged="nudRanks_ValueChanged"
-                                             Value="{Binding ElementName=control, Path=RacialModifier, Mode=TwoWay}" />
+                        <local:SheetValueEditor Grid.Column="1" x:Name="nudRacial" Margin="3,0,0,0" ColorScheme="{Binding ElementName=control, Path=ColorScheme}" ValueChanged="nudRanks_ValueChanged"
+                                             ValueString="{Binding ElementName=control, Path=RacialModifier, Mode=TwoWay}" />
                     </Grid>
                     <Grid x:Name="grdTrait" Margin="0,3" >
                         <Grid.ColumnDefinitions>
@@ -94,8 +94,8 @@
                             <ColumnDefinition Width="60" />
                         </Grid.ColumnDefinitions>
                         <TextBlock Text="Trait" VerticalAlignment="Center" />
-                        <flat:IntegerSpinner Grid.Column="1" x:Name="nudTrait" Margin="3,0,0,0" ColorScheme="{Binding ElementName=control, Path=ColorScheme}" ValueChanged="nudRanks_ValueChanged"
-                                             Value="{Binding ElementName=control, Path=TraitModifier, Mode=TwoWay}" />
+                        <local:SheetValueEditor Grid.Column="1" x:Name="nudTrait" Margin="3,0,0,0" ColorScheme="{Binding ElementName=control, Path=ColorScheme}" ValueChanged="nudRanks_ValueChanged"
+                                             ValueString="{Binding ElementName=control, Path=TraitModifier, Mode=TwoWay}" />
                     </Grid>
                     <Grid x:Name="grdMisc" Margin="0,3" >
                         <Grid.RowDefinitions>

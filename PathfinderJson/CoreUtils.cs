@@ -46,12 +46,7 @@ namespace PathfinderJson
 
         public static string GetStringOrNull(string? value, string defaultValue, bool zeroAsNull = false)
         {
-            if (zeroAsNull)
-            {
-                if (value == "0") value = null;
-            }
-
-            return string.IsNullOrEmpty(value) ? defaultValue : value;
+            return GetStringOrNull(value, zeroAsNull) ?? defaultValue;
         }
 
         public static int ParseStringAsInt(string? value)
@@ -61,14 +56,7 @@ namespace PathfinderJson
 
         public static int ParseStringAsInt(string? value, int defaultValue)
         {
-            if (string.IsNullOrEmpty(value))
-            {
-                return defaultValue;
-            }
-            else
-            {
-                return int.TryParse(value, out int r) ? r : defaultValue;
-            }
+            return ParseStringAsIntNullable(value) ?? defaultValue;
         }
 
         public static int? ParseStringAsIntNullable(string? value)
@@ -90,14 +78,7 @@ namespace PathfinderJson
 
         public static double ParseStringAsDouble(string? value, double defaultValue)
         {
-            if (string.IsNullOrEmpty(value))
-            {
-                return defaultValue;
-            }
-            else
-            {
-                return double.TryParse(value, out double r) ? r : defaultValue;
-            }
+            return ParseStringAsDoubleNullable(value) ?? defaultValue;
         }
 
         public static double? ParseStringAsDoubleNullable(string? value)
