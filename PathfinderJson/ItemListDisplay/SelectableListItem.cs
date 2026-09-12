@@ -7,6 +7,11 @@ using System.Reflection;
 
 namespace PathfinderJson.Ild
 {
+
+    /// <summary>
+    /// A control that can be put in a <see cref="ItemListDisplay"/>, used for editing an item in said list.
+    /// Make sure to override the abstract functions.
+    /// </summary>
     public abstract class SelectableListItem : SelectableUserControl
     {
 

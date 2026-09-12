@@ -30,11 +30,13 @@ namespace PathfinderJson
             btnMoveUp.ApplyColorScheme(cs);
             btnRemove.ApplyColorScheme(cs);
             btnAddCast.ApplyColorScheme(cs);
+            btnReset.ApplyColorScheme(cs);
 
             imgMoveDown.ApplyColorScheme(cs);
             imgMoveUp.ApplyColorScheme(cs);
             imgRemove.ApplyColorScheme(cs);
             imgAdd.ApplyColorScheme(cs);
+            imgReset.ApplyColorScheme(cs);
         }
 
         public void LoadSpell(Spell s)
@@ -180,6 +182,21 @@ namespace PathfinderJson
         private void btnRemove_Click(object sender, RoutedEventArgs e)
         {
             DoRequestDelete();
+        }
+
+        private void btnReset_Click(object sender, RoutedEventArgs e)
+        {
+            ResetCastingAmount();
+        }
+
+        private void btnAddCast_Click(object sender, RoutedEventArgs e)
+        {
+            nudCast.Value++;
+        }
+
+        public void ResetCastingAmount()
+        {
+            nudCast.Value = 0;
         }
     }
 }

@@ -30,8 +30,10 @@
                      Text="{Binding Path=SpellName, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:SpellEditor}}}" />
             <StackPanel Grid.Column="2" Orientation="Horizontal" Margin="2,0" >
                 <TextBlock Text="Cast" VerticalAlignment="Center" />
-                <TextBlock Text="0 / 0" VerticalAlignment="Center" Margin="4,0" />
-                <flat:FlatButton Width="26" TransparentBack="True" x:Name="btnAddCast" HorizontalContentAlignment="Center" Padding="0,2" >
+                <TextBlock VerticalAlignment="Center" Margin="4,0" Text="{Binding ElementName=nudCast, Path=Value}" />
+                <TextBlock Text="/" VerticalAlignment="Center" />
+                <TextBlock VerticalAlignment="Center" Margin="4,0" Text="{Binding ElementName=nudPrepared, Path=Value}" />
+                <flat:FlatButton Width="26" TransparentBack="True" x:Name="btnAddCast" HorizontalContentAlignment="Center" Padding="0,2" Margin="3,0,0,0" Click="btnAddCast_Click" >
                     <local:ThemedImage x:Name="imgAdd" ImageName="Add" Width="16" />
                 </flat:FlatButton>
             </StackPanel>
@@ -76,6 +78,9 @@
                 <flat:IntegerSpinner x:Name="nudCast" MinValue="0" MaxValue="100" Height="23" ValueChanged="nudLevel_ValueChanged" Width="60" />
                 <TextBlock Text="/" VerticalAlignment="Center" Margin="2,0" />
                 <flat:IntegerSpinner x:Name="nudPrepared" MinValue="0" MaxValue="100" Height="23" ValueChanged="nudLevel_ValueChanged" Width="60" />
+                <flat:FlatButton Grid.Column="5" ToolTip="Reset" Width="26" HorizontalContentAlignment="Center" Padding="0,2" Margin="4,0,0,0" x:Name="btnReset" Click="btnReset_Click" TransparentBack="True" >
+                    <local:ThemedImage x:Name="imgReset" ImageName="Reload" Width="16" />
+                </flat:FlatButton>
             </StackPanel>
         </Grid>
     </Grid>
