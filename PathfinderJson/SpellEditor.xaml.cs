@@ -42,16 +42,16 @@ namespace PathfinderJson
         public void LoadSpell(Spell s)
         {
             SpellName = s.Name;
-            txtNotes.Text = s.Notes;
-            txtSchool.Text = s.School;
-            txtSubschool.Text = s.Subschool;
+            Notes = s.Notes;
+            School = s.School;
+            Subschool = s.Subschool;
 
-            chkAtWill.IsChecked = s.AtWill;
-            chkMarked.IsChecked = s.Marked;
+            AtWill = s.AtWill;
+            Marked = s.Marked;
 
             Level = s.Level;
-            nudCast.Value = s.Cast;
-            nudPrepared.Value = s.Prepared;
+            Cast = s.Cast;
+            Prepared = s.Prepared;
         }
 
         public Spell GetSpell()
@@ -59,15 +59,15 @@ namespace PathfinderJson
             Spell s = new Spell
             {
                 Name = SpellName,
-                Notes = txtNotes.Text,
-                School = txtSchool.Text,
-                Subschool = txtSubschool.Text,
-                AtWill = chkAtWill.IsChecked,
-                Marked = chkMarked.IsChecked,
+                Notes = Notes,
+                School = School,
+                Subschool = Subschool,
+                AtWill = AtWill,
+                Marked = Marked,
                 Level = Level,
                 //Level = nudLevel.Value,
-                Cast = nudCast.Value,
-                Prepared = nudPrepared.Value,
+                Cast = Cast,
+                Prepared = Prepared,
             };
 
             return s;
@@ -89,7 +89,7 @@ namespace PathfinderJson
         public string SpellName { get => (string)GetValue(SpellNameProperty); set => SetValue(SpellNameProperty, value); }
 
         /// <summary>The backing dependency property for <see cref="SpellName"/>. See the related property for details.</summary>
-        public static DependencyProperty SpellNameProperty
+        public static readonly DependencyProperty SpellNameProperty
             = DependencyProperty.Register(nameof(SpellName), typeof(string), typeof(SpellEditor),
             new FrameworkPropertyMetadata("", OnSpellNameChanged));
 
@@ -112,7 +112,7 @@ namespace PathfinderJson
         public int Level { get => (int)GetValue(LevelProperty); set => SetValue(LevelProperty, value); }
 
         /// <summary>The backing dependency property for <see cref="Level"/>. See the related property for details.</summary>
-        public static DependencyProperty LevelProperty
+        public static readonly DependencyProperty LevelProperty
             = DependencyProperty.Register(nameof(Level), typeof(int), typeof(SpellEditor),
             new FrameworkPropertyMetadata(0, OnLevelChanged));
 
@@ -130,11 +130,62 @@ namespace PathfinderJson
             }
         }
 
-        public bool Marked
-        {
-            get => chkMarked.IsChecked;
-            set => chkMarked.IsChecked = value;
-        }
+        [IldLink(baseName: "Marked")]
+        public bool Marked { get => (bool)GetValue(MarkedProperty); set => SetValue(MarkedProperty, value); }
+
+        /// <summary>The backing dependency property for <see cref="Marked"/>. See the related property for details.</summary>
+        public static readonly DependencyProperty MarkedProperty
+            = DependencyProperty.Register(nameof(Marked), typeof(bool), typeof(SpellEditor),
+            new FrameworkPropertyMetadata(false));
+
+        [IldLink("AtWill")]
+        public bool AtWill { get => (bool)GetValue(AtWillProperty); set => SetValue(AtWillProperty, value); }
+
+        /// <summary>The backing dependency property for <see cref="AtWill"/>. See the related property for details.</summary>
+        public static readonly DependencyProperty AtWillProperty
+            = DependencyProperty.Register(nameof(AtWill), typeof(bool), typeof(SpellEditor),
+            new FrameworkPropertyMetadata(false));
+
+        [IldLink(baseName: "Cast")]
+        public int Cast { get => (int)GetValue(CastProperty); set => SetValue(CastProperty, value); }
+
+        /// <summary>The backing dependency property for <see cref="Cast"/>. See the related property for details.</summary>
+        public static readonly DependencyProperty CastProperty
+            = DependencyProperty.Register(nameof(Cast), typeof(int), typeof(SpellEditor),
+            new FrameworkPropertyMetadata(0));
+
+        [IldLink("Prepared")]
+        public int Prepared { get => (int)GetValue(PreparedProperty); set => SetValue(PreparedProperty, value); }
+
+        /// <summary>The backing dependency property for <see cref="Prepared"/>. See the related property for details.</summary>
+        public static readonly DependencyProperty PreparedProperty
+            = DependencyProperty.Register(nameof(Prepared), typeof(int), typeof(SpellEditor),
+            new FrameworkPropertyMetadata(0));
+
+        [IldLink("School")]
+        public string School { get => (string)GetValue(SchoolProperty); set => SetValue(SchoolProperty, value); }
+
+        /// <summary>The backing dependency property for <see cref="School"/>. See the related property for details.</summary>
+        public static readonly DependencyProperty SchoolProperty
+            = DependencyProperty.Register(nameof(School), typeof(string), typeof(SpellEditor),
+            new FrameworkPropertyMetadata(""));
+
+        [IldLink("Subschool")]
+        public string Subschool { get => (string)GetValue(SubschoolProperty); set => SetValue(SubschoolProperty, value); }
+
+        /// <summary>The backing dependency property for <see cref="Subschool"/>. See the related property for details.</summary>
+        public static DependencyProperty SubschoolProperty
+            = DependencyProperty.Register(nameof(Subschool), typeof(string), typeof(SpellEditor),
+            new FrameworkPropertyMetadata(""));
+
+        [IldLink("Notes")]
+        public string Notes { get => (string)GetValue(NotesProperty); set => SetValue(NotesProperty, value); }
+
+        /// <summary>The backing dependency property for <see cref="Notes"/>. See the related property for details.</summary>
+        public static DependencyProperty NotesProperty
+            = DependencyProperty.Register(nameof(Notes), typeof(string), typeof(SpellEditor),
+            new FrameworkPropertyMetadata(""));
+
 
         // event just to update main window's "isDirty" value
         //public event EventHandler? ContentChanged;
