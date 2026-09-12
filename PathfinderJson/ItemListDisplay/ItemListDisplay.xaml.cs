@@ -521,6 +521,7 @@ namespace PathfinderJson.Ild
                 FilterType.ENUM_MATCHES => "Show items where " + property.DisplayName + " exactly matches:",
                 _ => "Enter the value to filter by:"
             };
+            sid.ColorScheme = this.ColorScheme;
 
             if (action == FilterType.ENUM_MATCHES)
             {
@@ -576,6 +577,7 @@ namespace PathfinderJson.Ild
                 _ => "Enter the value to filter by:"
             };
 
+            sid.ColorScheme = this.ColorScheme;
             sid.Decimals = property.IldType == IldType.Integer ? 0 : 3; // if an integer, let's not get decimal numbers involved
 
             if (property.MinValue != null) sid.MinValue = (double)property.MinValue;

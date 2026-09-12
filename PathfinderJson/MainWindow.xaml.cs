@@ -1712,15 +1712,7 @@ namespace PathfinderJson
             txtSpellSpecialty.Text = sheet.SpellsSpeciality;
             txtSpellConditionalModifiers.Text = sheet.SpellsConditionalModifiers;
 
-            selSpells.Items.Clear();
-            foreach (Spell spell in allSpells)
-            {
-                SpellEditor se = new SpellEditor();
-                se.ContentChanged += editor_ContentChanged;
-                se.ApplyColorScheme(App.ColorScheme);
-                se.LoadSpell(spell);
-                selSpells.Items.Add(se);
-            }
+            selSpells.LoadList(allSpells);
 
             // Notes tab / Calculations
             LoadSheetSettings();
@@ -2052,10 +2044,7 @@ namespace PathfinderJson
             // spells
 
             List<Spell> allspells = new List<Spell>();
-            foreach (SpellEditor item in selSpells.Items.OfType<SpellEditor>())
-            {
-                allspells.Add(item.GetSpell());
-            }
+            allspells = selSpells.GetItems<Spell>();
 
             sheet.Spells = new List<SpellLevel>(10);
             for (int i = 0; i < 10; i++)
@@ -4398,88 +4387,6 @@ namespace PathfinderJson
         private void btnDeselectAcItem_Click(object sender, EventArgs e)
         {
             selAcItem.Items.ClearSelection();
-        }
-
-
-        #endregion
-
-        #region Spell list editors
-
-        private void btnAddSpell_Click(object sender, EventArgs e)
-        {
-            SpellEditor se = new SpellEditor();
-            se.ContentChanged += editor_ContentChanged;
-            se.ApplyColorScheme(App.ColorScheme);
-            selSpells.Items.Add(se);
-
-            expSpells.IsExpanded = true;
-            se.BringIntoView();
-            se.IsSelected = true;
-
-            SetIsDirty();
-        }
-
-        private void btnDeleteSpell_Click(object sender, EventArgs e)
-        {
-            selSpells.RemoveSelectedItems();
-            SetIsDirty();
-        }
-
-        private void btnDeselectSpell_Click(object sender, EventArgs e)
-        {
-            selSpells.Items.ClearSelection();
-        }
-
-        private void expSpells_Expanded(object sender, RoutedEventArgs e)
-        {
-            if (selSpells != null) selSpells.Visibility = Visibility.Visible;
-        }
-
-        private void expSpells_Collapsed(object sender, RoutedEventArgs e)
-        {
-            if (selSpells != null) selSpells.Visibility = Visibility.Collapsed;
-        }
-
-        private void mnuSpellFilter_Click(object sender, RoutedEventArgs e)
-        {
-            List<int> AllowedLevels = new List<int>();
-            bool allowMarked = true;
-            bool allowUnmarked = true;
-
-            if (mnuSpellFilter0.IsChecked) AllowedLevels.Add(0);
-            if (mnuSpellFilter1.IsChecked) AllowedLevels.Add(1);
-            if (mnuSpellFilter2.IsChecked) AllowedLevels.Add(2);
-            if (mnuSpellFilter3.IsChecked) AllowedLevels.Add(3);
-            if (mnuSpellFilter4.IsChecked) AllowedLevels.Add(4);
-            if (mnuSpellFilter5.IsChecked) AllowedLevels.Add(5);
-            if (mnuSpellFilter6.IsChecked) AllowedLevels.Add(6);
-            if (mnuSpellFilter7.IsChecked) AllowedLevels.Add(7);
-            if (mnuSpellFilter8.IsChecked) AllowedLevels.Add(8);
-            if (mnuSpellFilter9.IsChecked) AllowedLevels.Add(9);
-
-            allowMarked = mnuSpellFilterM.IsChecked;
-            allowUnmarked = mnuSpellFilterUM.IsChecked;
-
-            foreach (SpellEditor item in selSpells.Items.OfType<SpellEditor>())
-            {
-                if (AllowedLevels.Contains(item.Level))
-                {
-                    if (item.Marked && allowMarked || !item.Marked && allowUnmarked)
-                    {
-                        item.Visibility = Visibility.Visible;
-                    }
-                    else
-                    {
-                        item.Visibility = Visibility.Collapsed;
-                        item.IsSelected = false; // don't have hidden items be selected
-                    }
-                }
-                else
-                {
-                    item.Visibility = Visibility.Collapsed;
-                    item.IsSelected = false; // don't have hidden items be selected
-                }
-            }
         }
 
 
