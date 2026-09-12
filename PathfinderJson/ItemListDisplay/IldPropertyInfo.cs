@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Navigation;
+using System.Windows.Xps.Serialization;
 
 namespace PathfinderJson.Ild;
 
@@ -49,25 +50,42 @@ public class IldPropertyInfo
     public Type ActualPropertyType { get; set; }
 
     /// <summary>
+    /// Get or set if this property can be searched.
+    /// </summary>
+    public bool Searchable { get; set; } = false;
+
+    /// <summary>
     /// Compare an instance's value of this property against a particular search term string, and see if it matches.
     /// </summary>
     /// <param name="value">the value of this property in a particular instance</param>
     /// <param name="searchTerm">the search term to compare the value against</param>
-    /// <returns><c>true</c> if the term matches and the result should be returned, or <c>false</c> if the term does not match the value</returns>
-    /// <remarks>Boolean values do not support searches, so will always return "true"</remarks>
-    public bool CompareToSearch(object? value, string searchTerm)
+    /// <returns>
+    /// <c>true</c> if the term matches and the result should be returned, or <c>false</c> if the term does not match the value;
+    /// this also always returns <c>true</c> if the property isn't marked as <see cref="Searchable"/> or the property is a boolean value
+    /// </returns>
+    public bool? CompareToSearch(object? value, string searchTerm)
     {
+        if (!Searchable) return null;
+
         if (string.IsNullOrWhiteSpace(searchTerm)) return true;
 
         return IldType switch
         {
-            IldType.String => value is string s && s.Contains(searchTerm),
+            IldType.String => value is string s && CompareString(s, searchTerm),
             IldType.Integer => value is int i && i.ToString().Contains(searchTerm),
             IldType.Double => value is double d && d.ToString().Contains(searchTerm),
             IldType.Boolean => true, // we won't search/filter by boolean
             IldType.Enum => Enum.Parse(ActualPropertyType, searchTerm) == value,
             _ => true,
         };
+    }
+
+    bool CompareString(string value, string searchTerm)
+    {
+        return value.Contains(searchTerm, StringComparison.InvariantCultureIgnoreCase);
+
+        // if the value is empty, then we'll just say it's good and return (actually never mind)
+        // return string.IsNullOrEmpty(value) ? true : value.Contains(searchTerm, StringComparison.InvariantCultureIgnoreCase);
     }
 
     /// <summary>

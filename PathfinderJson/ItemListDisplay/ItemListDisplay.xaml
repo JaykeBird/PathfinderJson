@@ -52,9 +52,10 @@
                         <flat:ContextMenu>
                             <MenuItem Header="Remove All Selected" x:Name="btnRemoveMultiple" Click="btnRemoveMultiple_Click" />
                             <Separator />
+                            <MenuItem Header="Select All Displayed" x:Name="btnSelectDisplayed" Click="btnSelectDisplayed_Click" />
                             <MenuItem Header="Deselect All" x:Name="btnDeselect" Click="btnDeselect_Click">
                                 <MenuItem.Icon>
-                                    <local:ThemedImage ImageName="Deselect" ColorScheme="{Binding ColorScheme, ElementName=ild}" Width="16" Height="16" />
+                                    <local:ThemedImage ImageName="Deselect" ColorTheme="Color" Width="16" Height="16" />
                                 </MenuItem.Icon>
                             </MenuItem>
                         </flat:ContextMenu>

@@ -29,12 +29,12 @@ namespace PathfinderJson.Ild
         /// <summary>
         /// The minimum value that is allowed for numeric properties.
         /// </summary>
-        public int? MinValue { get; set; } = null;
+        public int MinValue { get; set; } = int.MinValue;
 
         /// <summary>
         /// The maximum value that is allowed for numeric properties.
         /// </summary>
-        public int? MaxValue { get; set; } = null;
+        public int MaxValue { get; set; } = int.MaxValue;
 
         /// <summary>
         /// Set if this property should be searched against if a search term is entered into the ItemListDisplay.

@@ -69,7 +69,25 @@ namespace PathfinderJson.Ild
             return null;
         }
 
-        public bool MatchesSearchTerm(IldPropertyInfo property, string searchTerm)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="searchTerm"></param>
+        /// <returns></returns>
+        public bool SearchProperties(IEnumerable<IldPropertyInfo> properties, string? searchTerm)
+        {
+            // if the search term is empty, let's not do a search
+            if (string.IsNullOrEmpty(searchTerm)) return true;
+
+            foreach (IldPropertyInfo item in properties)
+            {
+                if (MatchesSearchTerm(item, searchTerm) == true) return true;
+            }
+
+            return false;
+        }
+
+        public bool? MatchesSearchTerm(IldPropertyInfo property, string searchTerm)
         {
             return property.CompareToSearch(GetPropertyValue(property), searchTerm);
         }

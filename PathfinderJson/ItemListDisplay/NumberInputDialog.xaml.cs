@@ -20,7 +20,7 @@ namespace PathfinderJson.Ild
         #region Constructors / Window Loaded
 
         /// <summary>
-        /// Create a StringInputDialog with nothing preset.
+        /// Create a NumberInputDialog with nothing preset.
         /// </summary>
         public NumberInputDialog()
         {
@@ -29,7 +29,7 @@ namespace PathfinderJson.Ild
         }
 
         /// <summary>
-        /// Create a StringInputDialog with a color scheme.
+        /// Create a NumberInputDialog with a color scheme.
         /// </summary>
         /// <param name="cs">The color scheme to use for the window.</param>
         public NumberInputDialog(ColorScheme cs)
@@ -138,8 +138,8 @@ namespace PathfinderJson.Ild
         /// <summary>
         /// A dependency property backing the related property. See <see cref="Description"/> for details.
         /// </summary>
-        public static DependencyProperty DescriptionProperty
-            = DependencyProperty.Register("Description", typeof(string), typeof(StringInputDialog),
+        public static readonly DependencyProperty DescriptionProperty
+            = DependencyProperty.Register("Description", typeof(string), typeof(NumberInputDialog),
             new FrameworkPropertyMetadata("Enter a value:"));
 
         /// <summary>
@@ -155,8 +155,8 @@ namespace PathfinderJson.Ild
         /// <summary>
         /// A dependency property backing the related property. Please see <see cref="EnterKeyConfirms"/> for details.
         /// </summary>
-        public static DependencyProperty EnterKeyConfirmsProperty
-            = DependencyProperty.Register("EnterKeyConfirms", typeof(bool), typeof(StringInputDialog),
+        public static readonly DependencyProperty EnterKeyConfirmsProperty
+            = DependencyProperty.Register("EnterKeyConfirms", typeof(bool), typeof(NumberInputDialog),
             new FrameworkPropertyMetadata(true));
 
         /// <summary>
@@ -167,8 +167,8 @@ namespace PathfinderJson.Ild
         /// <summary>
         /// A dependency property backing the related property. Please see <see cref="EscapeKeyCancels"/> for details.
         /// </summary>
-        public static DependencyProperty EscapeKeyCancelsProperty
-            = DependencyProperty.Register("EscapeKeyCancels", typeof(bool), typeof(StringInputDialog),
+        public static readonly DependencyProperty EscapeKeyCancelsProperty
+            = DependencyProperty.Register("EscapeKeyCancels", typeof(bool), typeof(NumberInputDialog),
             new FrameworkPropertyMetadata(true));
 
         /// <summary>
@@ -179,8 +179,8 @@ namespace PathfinderJson.Ild
         /// <summary>
         /// A dependency proeprty backing the related property. Please see <see cref="SelectTextOnFocus"/> for details.
         /// </summary>
-        public static DependencyProperty SelectTextOnFocusProperty
-            = DependencyProperty.Register("SelectTextOnFocus", typeof(bool), typeof(StringInputDialog),
+        public static readonly DependencyProperty SelectTextOnFocusProperty
+            = DependencyProperty.Register("SelectTextOnFocus", typeof(bool), typeof(NumberInputDialog),
             new FrameworkPropertyMetadata(true));
 
 
@@ -208,8 +208,8 @@ namespace PathfinderJson.Ild
         /// <summary>
         /// A dependency property backing the related property. See <see cref="ValidationSuccessString"/> for details.
         /// </summary>
-        public static DependencyProperty ValidationSuccessStringProperty
-            = DependencyProperty.Register("ValidationSuccessString", typeof(string), typeof(StringInputDialog),
+        public static readonly DependencyProperty ValidationSuccessStringProperty
+            = DependencyProperty.Register("ValidationSuccessString", typeof(string), typeof(NumberInputDialog),
             new FrameworkPropertyMetadata(""));
 
         /// <summary>
@@ -220,8 +220,8 @@ namespace PathfinderJson.Ild
         /// <summary>
         /// A dependency property backing the related property. See <see cref="ValidationFailureString"/> for details.
         /// </summary>
-        public static DependencyProperty ValidationFailureStringProperty
-            = DependencyProperty.Register("ValidationFailureString", typeof(string), typeof(StringInputDialog),
+        public static readonly DependencyProperty ValidationFailureStringProperty
+            = DependencyProperty.Register("ValidationFailureString", typeof(string), typeof(NumberInputDialog),
             new FrameworkPropertyMetadata("Input is not valid"));
 
         void CheckValidation()

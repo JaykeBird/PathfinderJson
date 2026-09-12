@@ -1,12 +1,13 @@
-﻿using PathfinderJson.Ild;
-using SolidShineUi;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
+using System.Security.Cryptography;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Linq;
-using System.Reflection;
+using PathfinderJson.Ild;
+using SolidShineUi;
 
 namespace PathfinderJson.Ild
 {
@@ -26,7 +27,7 @@ namespace PathfinderJson.Ild
 
         public event DependencyPropertyChangedEventHandler? ColorSchemeChanged;
 
-        public static DependencyProperty ColorSchemeProperty
+        public static readonly DependencyProperty ColorSchemeProperty
             = DependencyProperty.Register("ColorScheme", typeof(ColorScheme), typeof(ItemListDisplay),
             new FrameworkPropertyMetadata(new ColorScheme(), new PropertyChangedCallback(OnColorSchemeChanged)));
 
@@ -80,13 +81,13 @@ namespace PathfinderJson.Ild
                 sheetType = value;
                 if (value != null)
                 {
-                    propertyNames = ListProperties(value);
+                    propertyDataList = ListProperties(value);
                     LoadSortMenu();
                     LoadFilterMenu();
                 }
                 else
                 {
-                    propertyNames.Clear();
+                    propertyDataList.Clear();
                     btnFilter.Menu = null;
                 }
             }
@@ -97,7 +98,7 @@ namespace PathfinderJson.Ild
 
         private static Type SELECTABLE_ITEM_TYPE = typeof(SelectableListItem);
 
-        private List<IldPropertyInfo> propertyNames = new List<IldPropertyInfo>();
+        private List<IldPropertyInfo> propertyDataList = new List<IldPropertyInfo>();
 
         /// <summary>
         /// Get or set the type of the UI element that is used to display the source item <c>SheetClassType</c>. This type must inherit from <see cref="SelectableListItem"/>.
@@ -166,7 +167,7 @@ namespace PathfinderJson.Ild
         public List<T> GetItems<T>() where T : new()
         {
             if (typeof(T) != SheetClassType) throw new ArgumentException("Passed in generic data type does not match SheetClassType");
-            if (propertyNames.Count == 0) throw new InvalidOperationException("SheetClassType has no properties, or was not set.");
+            if (propertyDataList.Count == 0) throw new InvalidOperationException("SheetClassType has no properties, or was not set.");
 
             List<T> items = new();
 
@@ -177,7 +178,7 @@ namespace PathfinderJson.Ild
                 var newBase = Activator.CreateInstance(typeof(T))
                     /* if newBase == null */ ?? throw new TargetException("Passed in generic data type cannot be created via reflection");
                 Type tt = typeof(T);
-                foreach (IldPropertyInfo property in propertyNames)
+                foreach (IldPropertyInfo property in propertyDataList)
                 {
                     PropertyInfo? pi = tt.GetProperty(property.Name);
                     pi?.SetValue(newBase, item.GetPropertyValue(property));
@@ -187,6 +188,14 @@ namespace PathfinderJson.Ild
             }
 
             return items;
+        }
+
+        /// <summary>
+        /// Get the editor controls currently present within this ILD.
+        /// </summary>
+        public IEnumerable<SelectableListItem> GetEditors()
+        {
+            return selPanel.Items.OfType<SelectableListItem>();
         }
 
         /// <summary>
@@ -206,6 +215,7 @@ namespace PathfinderJson.Ild
 
                 int? minValue = null;
                 int? maxValue = null;
+                bool searchable = false;
 
                 if (attr != null)
                 {
@@ -213,8 +223,9 @@ namespace PathfinderJson.Ild
                     if (attr.Ignore) continue;
 
                     if (attr.Name != null) name = attr.Name;
-                    minValue = attr.MinValue;
-                    maxValue = attr.MaxValue;
+                    minValue = attr.MinValue == int.MinValue ? null : attr.MinValue;
+                    maxValue = attr.MaxValue == int.MaxValue ? null : attr.MaxValue;
+                    searchable = attr.Searchable;
                 }
 
                 Type pt = property.PropertyType;
@@ -251,6 +262,7 @@ namespace PathfinderJson.Ild
                 IldPropertyInfo prop = new(property.Name, ildType, pt, name);
                 prop.MinValue = minValue;
                 prop.MaxValue = maxValue;
+                prop.Searchable = searchable;
                 props.Add(prop);
             }
 
@@ -268,7 +280,7 @@ namespace PathfinderJson.Ild
             Dictionary<IldPropertyInfo, object> props = new();
             Type type = typeof(T);
 
-            foreach (IldPropertyInfo prop in propertyNames)
+            foreach (IldPropertyInfo prop in propertyDataList)
             {
                 PropertyInfo? property = type.GetProperty(prop.Name);
 
@@ -316,15 +328,21 @@ namespace PathfinderJson.Ild
             return props;
         }
 
+        #region Sort menu
+
+        bool sortAscending = true;
+        IldPropertyInfo? sortingProperty = null;
+
         private void LoadSortMenu()
         {
             var cm = new SolidShineUi.ContextMenu();
 
-            foreach (var item in propertyNames)
+            foreach (var item in propertyDataList)
             {
                 MenuItem mi = new();
                 mi.Header = item.DisplayName;
                 mi.Tag = item;
+                mi.Click += (s, e) => { ApplySort(item); };
 
                 cm.Items.Add(mi);
             }
@@ -333,22 +351,53 @@ namespace PathfinderJson.Ild
 
             MenuItem msd1 = new MenuItem();
             msd1.Header = "Ascending";
-            msd1.Click += (s, e) => { };
+            msd1.IsChecked = true;
             cm.Items.Add(msd1);
 
             MenuItem msd2 = new MenuItem();
             msd2.Header = "Descending";
-            msd2.Click += (s, e) => { };
             cm.Items.Add(msd2);
+
+            msd1.Click += (s, e) => { sortAscending = true;  ReapplySort(); msd1.IsChecked = true; msd2.IsChecked = false; };
+            msd2.Click += (s, e) => { sortAscending = false; ReapplySort(); msd1.IsChecked = false; msd2.IsChecked = true; };
 
             btnSort.Menu = cm;
         }
+
+        void ApplySort(IldPropertyInfo property)
+        {
+            sortingProperty = property;
+
+            List<SelectableListItem> tempItems = new List<SelectableListItem>(GetEditors().ToList());
+            IOrderedEnumerable<SelectableListItem> sortedItems = sortAscending
+                ? tempItems.OrderBy(e => e.GetPropertyValue(sortingProperty))
+                : tempItems.OrderByDescending(e => e.GetPropertyValue(sortingProperty));
+
+            selPanel.Items.Clear();
+
+            foreach (var item in sortedItems)
+            {
+                selPanel.Items.Add(item);
+            }
+
+            // reapply filters after we're done
+            ApplyFilters();
+        }
+
+        void ReapplySort()
+        {
+            if (sortingProperty != null) { ApplySort(sortingProperty); }
+        }
+
+        #endregion
+
+        #region Filter Menu / Actions
 
         private void LoadFilterMenu()
         {
             var cm = new SolidShineUi.ContextMenu();
 
-            foreach (var item in propertyNames)
+            foreach (var item in propertyDataList)
             {
                 MenuItem mi = new();
                 mi.Header = item.DisplayName;
@@ -356,6 +405,7 @@ namespace PathfinderJson.Ild
 
                 MenuItem mcf = new();
                 mcf.Header = "Clear Filter";
+                mcf.FontWeight = FontWeights.Normal;
                 mcf.Click += (s, e) => ClearFilter(item, mi, mcf);
                 mcf.IsEnabled = false;
 
@@ -415,6 +465,7 @@ namespace PathfinderJson.Ild
             {
                 MenuItem mi = new();
                 mi.Header = title;
+                mi.FontWeight = FontWeights.Normal;
                 mi.Click += clickHandler;
                 return mi;
             }
@@ -430,7 +481,8 @@ namespace PathfinderJson.Ild
                     {
                         for (int i = min; i <= max; i++)
                         {
-                            MenuItem mni = CreateMenuItem(i.ToString(), (s, e) => ApplyIntegerMatchesFilter(item, i, mi, cancelItem));
+                            int newI = i;
+                            MenuItem mni = CreateMenuItem(i.ToString(), (s, e) => ApplyIntegerMatchesFilter(item, newI, mi, cancelItem));
                             mi.Items.Add(mni);
                         }
                     }
@@ -474,16 +526,20 @@ namespace PathfinderJson.Ild
 
         #region Filter menu options
 
-        public void ApplyFilter(string propertyName, FilterType filterType, string filterValue)
+        public void ApplyFilter(string propertyName, FilterType filterType, string filterValue, MenuItem baseItem, MenuItem cancelItem)
         {
-            IldPropertyInfo? prop = propertyNames.FirstOrDefault((p) => p.Name == propertyName);
+            IldPropertyInfo? prop = propertyDataList.FirstOrDefault((p) => p.Name == propertyName);
             if (prop == null) return;
-            ApplyFilter(prop, filterType, filterValue);
+            ApplyFilter(prop, filterType, filterValue, baseItem, cancelItem);
         }
 
-        public void ApplyFilter(IldPropertyInfo property, FilterType filterType, string filterValue)
+        public void ApplyFilter(IldPropertyInfo property, FilterType filterType, string filterValue, MenuItem baseItem, MenuItem cancelItem)
         {
             property.Filter = new IldPropertyFilter(filterType, filterValue);
+            baseItem.IsChecked = true;
+            baseItem.FontWeight = FontWeights.Bold;
+            cancelItem.IsEnabled = true;
+
             ApplyFilters();
         }
 
@@ -494,7 +550,7 @@ namespace PathfinderJson.Ild
                 item.Visibility = Visibility.Visible;
             }
 
-            foreach (IldPropertyInfo prop in propertyNames)
+            foreach (IldPropertyInfo prop in propertyDataList)
             {
                 prop.Filter = null;
             }
@@ -503,6 +559,7 @@ namespace PathfinderJson.Ild
             {
                 if (o is MenuItem mi)
                 {
+                    mi.FontWeight = FontWeights.Normal;
                     mi.IsChecked = false;
                 }
             }
@@ -535,11 +592,7 @@ namespace PathfinderJson.Ild
             sid.ShowDialog();
             if (sid.DialogResult)
             {
-                property.Filter = new IldPropertyFilter(action, sid.Value);
-                baseItem.IsChecked = true;
-                cancelItem.IsEnabled = true;
-
-                ApplyFilters();
+                ApplyFilter(property, action, sid.Value, baseItem, cancelItem);
             }
             else
             {
@@ -549,20 +602,12 @@ namespace PathfinderJson.Ild
 
         private void ApplyBooleanTrueFilter(IldPropertyInfo property, MenuItem baseItem, MenuItem cancelItem)
         {
-            property.Filter = new IldPropertyFilter(FilterType.BOOLEAN_TRUE, "TRUE");
-            baseItem.IsChecked = true;
-            cancelItem.IsEnabled = true;
-
-            ApplyFilters();
+            ApplyFilter(property, FilterType.BOOLEAN_TRUE, "TRUE", baseItem, cancelItem);
         }
 
         private void ApplyBooleanFalseFilter(IldPropertyInfo property, MenuItem baseItem, MenuItem cancelItem)
         {
-            property.Filter = new IldPropertyFilter(FilterType.BOOLEAN_FALSE, "FALSE");
-            baseItem.IsChecked = true;
-            cancelItem.IsEnabled = true;
-
-            ApplyFilters();
+            ApplyFilter(property, FilterType.BOOLEAN_FALSE, "FALSE", baseItem, cancelItem);
         }
 
         private void NumberFilterAction(FilterType action, IldPropertyInfo property, MenuItem baseItem, MenuItem cancelItem)
@@ -588,11 +633,7 @@ namespace PathfinderJson.Ild
                 sid.ShowDialog();
                 if (sid.DialogResult)
                 {
-                    property.Filter = new IldPropertyFilter(action, sid.Value.ToString());
-                    baseItem.IsChecked = true;
-                    cancelItem.IsEnabled = true;
-
-                    ApplyFilters();
+                    ApplyFilter(property, action, sid.Value.ToString(), baseItem, cancelItem);
                 }
                 else
                 {
@@ -605,11 +646,7 @@ namespace PathfinderJson.Ild
                 sid.ShowDialog();
                 if (sid.DialogResult)
                 {
-                    property.Filter = new IldPropertyFilter(action, sid.BetweenMinimum.ToString() + "-" + sid.BetweenMaximum.ToString());
-                    baseItem.IsChecked = true;
-                    cancelItem.IsEnabled = true;
-
-                    ApplyFilters();
+                    ApplyFilter(property, action, sid.BetweenMinimum.ToString() + "-" + sid.BetweenMaximum.ToString(), baseItem, cancelItem);
                 }
                 else
                 {
@@ -620,44 +657,44 @@ namespace PathfinderJson.Ild
 
         private void ApplyIntegerMatchesFilter(IldPropertyInfo property, int match, MenuItem baseItem, MenuItem cancelItem)
         {
-            property.Filter = new IldPropertyFilter(FilterType.NUMBER_EQUALS, match.ToString());
-            baseItem.IsChecked = true;
-            cancelItem.IsEnabled = true;
-
-            ApplyFilters();
+            ApplyFilter(property, FilterType.NUMBER_EQUALS, match.ToString(), baseItem, cancelItem);
         }
 
         private void ApplyEnumMatchesFilter(IldPropertyInfo property, string match, MenuItem baseItem, MenuItem cancelItem)
         {
-            property.Filter = new IldPropertyFilter(FilterType.ENUM_MATCHES, match);
-            baseItem.IsChecked = true;
-            cancelItem.IsEnabled = true;
-
-            ApplyFilters();
+            ApplyFilter(property, FilterType.ENUM_MATCHES, match, baseItem, cancelItem);
         }
 
         private void ClearFilter(IldPropertyInfo property, MenuItem baseItem, MenuItem cancelItem)
         {
             property.Filter = null;
             baseItem.IsChecked = false;
+            baseItem.FontWeight = FontWeights.Normal;
             cancelItem.IsEnabled = false;
+
+            ApplyFilters();
         }
 
         #endregion
 
+        /// <summary>
+        /// Show or hide editors based on the currently active filters and the search term in txtSearch.
+        /// </summary>
         void ApplyFilters()
         {
             foreach (SelectableListItem item in selPanel.Items.Cast<SelectableListItem>())
             {
                 item.Visibility = Visibility.Visible;
 
-                if (!propertyNames.All((p) => item.PropertyPassesFilter(p)))
+                // search and filter
+                if (!item.SearchProperties(propertyDataList, txtSearch.Text) || !propertyDataList.All((p) => item.PropertyPassesFilter(p)))
                 {
                     item.Visibility = Visibility.Collapsed;
                 }
             }
         }
 
+        #endregion
 
         #region Item Event Handlers
 
@@ -761,27 +798,17 @@ namespace PathfinderJson.Ild
 
         private void txtSearch_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (!string.IsNullOrWhiteSpace(txtSearch.Text))
-            {
-                foreach (SelectableListItem item in selPanel.Items.Cast<SelectableListItem>())
-                {
-                    item.Visibility = Visibility.Visible;
-
-                    if (!propertyNames.All((p) => item.MatchesSearchTerm(p, txtSearch.Text)))
-                    {
-                        item.Visibility = Visibility.Collapsed;
-                    }
-                }
-            }
-            else
-            {
-                foreach (SelectableListItem item in selPanel.Items.Cast<SelectableListItem>())
-                {
-                    item.Visibility = Visibility.Visible;
-                }
-            }
+            ApplyFilters();
         }
 
         #endregion
+
+        private void btnSelectDisplayed_Click(object sender, RoutedEventArgs e)
+        {
+            foreach (var item in selPanel.Items.OfType<SelectableUserControl>().Where(item => item.Visibility == Visibility.Visible))
+            {
+                selPanel.Items.AddToSelection(item);
+            }
+        }
     }
 }
