@@ -26,9 +26,9 @@
                 <ColumnDefinition Width="26" />
             </Grid.ColumnDefinitions>
             <flat:CheckBox x:Name="chkMarked" HorizontalAlignment="Left" VerticalAlignment="Top" MinWidth="50" Content="0th"
-                           IsChecked="{Binding Path=Marked, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:SpellEditor}}}" />
+                           IsChecked="{Binding Path=Marked, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:SpellEditor}}, Mode=TwoWay}" />
             <TextBox x:Name="txtName" Height="24" Grid.Column="1" VerticalContentAlignment="Center" TextChanged="textbox_TextChanged" Margin="5,0" 
-                     Text="{Binding Path=SpellName, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:SpellEditor}}}" />
+                     Text="{Binding Path=SpellName, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:SpellEditor}}, Mode=TwoWay}" />
             <StackPanel Grid.Column="2" Orientation="Horizontal" Margin="2,0" >
                 <TextBlock Text="Cast" VerticalAlignment="Center" />
                 <TextBlock VerticalAlignment="Center" Margin="4,0" Text="{Binding Path=Cast, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:SpellEditor}}, FallbackValue='0', TargetNullValue='0'}" />
@@ -65,30 +65,31 @@
             </Grid.RowDefinitions>
             <TextBlock Text="School" HorizontalAlignment="Left"  VerticalAlignment="Center" Grid.Row="2" />
             <TextBox x:Name="txtSchool" Height="23" Margin="45,0,9,0" VerticalAlignment="Center" TextChanged="textbox_TextChanged" Grid.Row="2"
-                                     Text="{Binding School, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:SpellEditor}}}" />
+                                     Text="{Binding School, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:SpellEditor}}, Mode=TwoWay}" />
             <TextBlock Text="Subschool" Margin="4,0,0,0" HorizontalAlignment="Left"  VerticalAlignment="Center" Grid.Column="1" Grid.Row="2" />
             <TextBox x:Name="txtSubschool" Height="23" Margin="64,0,0,0" VerticalAlignment="Center" TextChanged="textbox_TextChanged" Grid.Column="1" Grid.Row="2"
-                                     Text="{Binding Subschool, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:SpellEditor}}}" />
+                                     Text="{Binding Subschool, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:SpellEditor}}, Mode=TwoWay}" />
             <TextBlock Text="Notes" Margin="0,7,0,0" HorizontalAlignment="Left"  VerticalAlignment="Top" Grid.Row="3" />
             <TextBox x:Name="txtNotes" Margin="45,5,0,0" AcceptsReturn="True" AcceptsTab="True" TextWrapping="Wrap" MinHeight="45" TextChanged="textbox_TextChanged" Grid.Row="3" Grid.ColumnSpan="2" 
-                                     Text="{Binding Notes, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:SpellEditor}}}" />
+                                     Text="{Binding Notes, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:SpellEditor}}, Mode=TwoWay}" />
             <flat:CheckBox x:Name="chkAtWill" Content="At Will" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="1"
-                           IsChecked="{Binding Path=AtWill, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:SpellEditor}}}"/>
+                           IsChecked="{Binding Path=AtWill, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:SpellEditor}}, Mode=TwoWay}"/>
             <flat:LinkTextBlock x:Name="lblSearch" Text="Search this spell on d20PFSRD" HorizontalAlignment="Right" VerticalAlignment="Center" Click="lblSearch_Click" Grid.Row="4" Grid.Column="1"/>
             <TextBlock Text="Level" Margin="0,4,0,0" HorizontalAlignment="Left"  VerticalAlignment="Top" />
             <flat:IntegerSpinner x:Name="nudLevel" MinValue="0" MaxValue="9" Height="23" Margin="45,0,0,0" VerticalAlignment="Top" ValueChanged="nudLevel_ValueChanged"
-                             HorizontalAlignment="Left" Width="60" Value="{Binding Level, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:SpellEditor}}}" />
+                             HorizontalAlignment="Left" Width="60" Value="{Binding Level, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:SpellEditor}}, Mode=TwoWay}" />
             <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" VerticalAlignment="Top" Grid.ColumnSpan="2">
                 <TextBlock Text="# Cast/Prepared" VerticalAlignment="Center" Margin="0,0,7,0" />
                 <flat:IntegerSpinner x:Name="nudCast" MinValue="0" MaxValue="100" Height="23" ValueChanged="nudLevel_ValueChanged" Width="60" 
-                                     Value="{Binding Cast, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:SpellEditor}}}" />
+                                     Value="{Binding Cast, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:SpellEditor}}, Mode=TwoWay}" />
                 <TextBlock Text="/" VerticalAlignment="Center" Margin="2,0" />
                 <flat:IntegerSpinner x:Name="nudPrepared" MinValue="0" MaxValue="100" Height="23" ValueChanged="nudLevel_ValueChanged" Width="60" 
-                                     Value="{Binding Prepared, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:SpellEditor}}}" />
+                                     Value="{Binding Prepared, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:SpellEditor}}, Mode=TwoWay}" />
                 <flat:FlatButton Grid.Column="5" ToolTip="Reset" Width="26" HorizontalContentAlignment="Center" Padding="0,2" Margin="4,0,0,0" x:Name="btnReset" Click="btnReset_Click" TransparentBack="True" >
                     <local:ThemedImage x:Name="imgReset" ImageName="Reload" Width="16" />
                 </flat:FlatButton>
             </StackPanel>
+            <TextBlock Text="{Binding AtWill, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:SpellEditor}}, FallbackValue='False'}" Margin="0,6,9,6" Grid.Row="1" HorizontalAlignment="Right" Width="32" />
         </Grid>
     </Grid>
 </ild:SelectableListItem>
