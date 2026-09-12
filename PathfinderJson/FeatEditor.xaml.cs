@@ -59,31 +59,31 @@ namespace PathfinderJson
         [IldLink("Name")]
         public string FeatName { get => (string)GetValue(FeatNameProperty); set => SetValue(FeatNameProperty, value); }
 
-        public static DependencyProperty FeatNameProperty
+        public static readonly DependencyProperty FeatNameProperty
             = DependencyProperty.Register("FeatName", typeof(string), typeof(FeatEditor));
 
         [IldLink("Notes")]
         public string Notes { get => (string)GetValue(NotesProperty); set => SetValue(NotesProperty, value); }
 
-        public static DependencyProperty NotesProperty
+        public static readonly DependencyProperty NotesProperty
             = DependencyProperty.Register("Notes", typeof(string), typeof(FeatEditor));
 
         [IldLink("School")]
         public string School { get => (string)GetValue(SchoolProperty); set => SetValue(SchoolProperty, value); }
 
-        public static DependencyProperty SchoolProperty
+        public static readonly DependencyProperty SchoolProperty
             = DependencyProperty.Register("School", typeof(string), typeof(FeatEditor));
 
         [IldLink("Subschool")]
         public string Subschool { get => (string)GetValue(SubschoolProperty); set => SetValue(SubschoolProperty, value); }
 
-        public static DependencyProperty SubschoolProperty
+        public static readonly DependencyProperty SubschoolProperty
             = DependencyProperty.Register("Subschool", typeof(string), typeof(FeatEditor));
 
         [IldLink("Type")]
         public string FeatType { get => (string)GetValue(FeatTypeProperty); set => SetValue(FeatTypeProperty, value); }
 
-        public static DependencyProperty FeatTypeProperty
+        public static readonly DependencyProperty FeatTypeProperty
             = DependencyProperty.Register("FeatType", typeof(string), typeof(FeatEditor));
 
         // event just to update main window's "isDirty" value

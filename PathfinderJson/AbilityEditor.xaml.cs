@@ -53,19 +53,19 @@ namespace PathfinderJson
         [IldLink("Name")]
         public string ItemName { get => (string)GetValue(ItemNameProperty); set => SetValue(ItemNameProperty, value); }
 
-        public static DependencyProperty ItemNameProperty
+        public static readonly DependencyProperty ItemNameProperty
             = DependencyProperty.Register("ItemName", typeof(string), typeof(AbilityEditor));
 
         [IldLink("Notes")]
         public string Notes { get => (string)GetValue(NotesProperty); set => SetValue(NotesProperty, value); }
 
-        public static DependencyProperty NotesProperty
+        public static readonly DependencyProperty NotesProperty
             = DependencyProperty.Register("Notes", typeof(string), typeof(AbilityEditor));
 
         [IldLink("Type")]
         public string ItemType { get => (string)GetValue(ItemTypeProperty); set => SetValue(ItemTypeProperty, value); }
 
-        public static DependencyProperty ItemTypeProperty
+        public static readonly DependencyProperty ItemTypeProperty
             = DependencyProperty.Register("ItemType", typeof(string), typeof(AbilityEditor));
         #endregion
 

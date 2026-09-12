@@ -22,17 +22,17 @@ namespace PathfinderJson
         #region Dependency Properties
         public string Title { get => (string)GetValue(TitleProperty); set => SetValue(TitleProperty, value); }
 
-        public static DependencyProperty TitleProperty
+        public static readonly DependencyProperty TitleProperty
             = DependencyProperty.Register("Title", typeof(string), typeof(AbilityScoreIconEditor));
 
         public string Abbreviation { get => (string)GetValue(AbbreviationProperty); set => SetValue(AbbreviationProperty, value); }
 
-        public static DependencyProperty AbbreviationProperty
+        public static readonly DependencyProperty AbbreviationProperty
             = DependencyProperty.Register("Abbreviation", typeof(string), typeof(AbilityScoreIconEditor));
 
         public int Value { get => (int)GetValue(ValueProperty); set => SetValue(ValueProperty, value); }
 
-        public static DependencyProperty ValueProperty
+        public static readonly DependencyProperty ValueProperty
             = DependencyProperty.Register("Value", typeof(int), typeof(AbilityScoreIconEditor),
             new PropertyMetadata(10, new PropertyChangedCallback(OnValueChanged)));
 
@@ -42,11 +42,11 @@ namespace PathfinderJson
             = DependencyProperty.RegisterReadOnly("Modifier", typeof(int), typeof(AbilityScoreIconEditor),
             new PropertyMetadata(0));
 
-        public static DependencyProperty ModifierProperty = ModifierPropertyKey!.DependencyProperty;
+        public static readonly DependencyProperty ModifierProperty = ModifierPropertyKey!.DependencyProperty;
 
         public ColorScheme ColorScheme { get => (ColorScheme)GetValue(ColorSchemeProperty); set => SetValue(ColorSchemeProperty, value); }
 
-        public static DependencyProperty ColorSchemeProperty
+        public static readonly DependencyProperty ColorSchemeProperty
             = DependencyProperty.Register("ColorScheme", typeof(ColorScheme), typeof(AbilityScoreIconEditor),
                 new PropertyMetadata(new ColorScheme()));
 

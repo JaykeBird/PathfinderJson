@@ -48,35 +48,35 @@ namespace PathfinderJson.ChangeTheme
 
         public ColorScheme ColorScheme { get => (ColorScheme)GetValue(ColorSchemeProperty); set => SetValue(ColorSchemeProperty, value); }
 
-        public static DependencyProperty ColorSchemeProperty
+        public static readonly DependencyProperty ColorSchemeProperty
             = DependencyProperty.Register("ColorScheme", typeof(ColorScheme), typeof(ColorSchemeButton));
 
         public string Title { get => (string)GetValue(TitleProperty); set => SetValue(TitleProperty, value); }
 
-        public static DependencyProperty TitleProperty
+        public static readonly DependencyProperty TitleProperty
             = DependencyProperty.Register("Title", typeof(string), typeof(ColorSchemeButton));
 
         public bool ShowTitle { get => (bool)GetValue(ShowTitleProperty); set => SetValue(ShowTitleProperty, value); }
 
-        public static DependencyProperty ShowTitleProperty
+        public static readonly DependencyProperty ShowTitleProperty
             = DependencyProperty.Register("ShowTitle", typeof(bool), typeof(ColorSchemeButton),
             new FrameworkPropertyMetadata(false));
 
         public bool IsSelected { get => (bool)GetValue(IsSelectedProperty); set => SetValue(IsSelectedProperty, value); }
 
-        public static DependencyProperty IsSelectedProperty
+        public static readonly DependencyProperty IsSelectedProperty
             = DependencyProperty.Register("IsSelected", typeof(bool), typeof(ColorSchemeButton),
             new FrameworkPropertyMetadata(false));
 
         public int ColorSchemeDataValue { get => (int)GetValue(ColorSchemeDataValueProperty); set => SetValue(ColorSchemeDataValueProperty, value); }
 
-        public static DependencyProperty ColorSchemeDataValueProperty
+        public static readonly DependencyProperty ColorSchemeDataValueProperty
             = DependencyProperty.Register("ColorSchemeDataValue", typeof(int), typeof(ColorSchemeButton),
             new FrameworkPropertyMetadata(0));
 
         public bool TransparentBack { get => (bool)GetValue(TransparentBackProperty); set => SetValue(TransparentBackProperty, value); }
 
-        public static DependencyProperty TransparentBackProperty
+        public static readonly DependencyProperty TransparentBackProperty
             = DependencyProperty.Register("TransparentBack", typeof(bool), typeof(ColorSchemeButton),
             new FrameworkPropertyMetadata(false));
 

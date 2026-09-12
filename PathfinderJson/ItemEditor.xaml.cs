@@ -61,49 +61,49 @@ namespace PathfinderJson
         [IldLink("Name")]
         public string ItemName { get => (string)GetValue(ItemNameProperty); set => SetValue(ItemNameProperty, value); }
 
-        public static DependencyProperty ItemNameProperty
+        public static readonly DependencyProperty ItemNameProperty
             = DependencyProperty.Register("ItemName", typeof(string), typeof(ItemEditor));
 
         [IldLink("Notes")]
         public string Notes { get => (string)GetValue(NotesProperty); set => SetValue(NotesProperty, value); }
 
-        public static DependencyProperty NotesProperty
+        public static readonly DependencyProperty NotesProperty
             = DependencyProperty.Register("Notes", typeof(string), typeof(ItemEditor));
 
         [IldLink("Location")]
         public string Location { get => (string)GetValue(LocationProperty); set => SetValue(LocationProperty, value); }
 
-        public static DependencyProperty LocationProperty
+        public static readonly DependencyProperty LocationProperty
             = DependencyProperty.Register("Location", typeof(string), typeof(ItemEditor));
 
         [IldLink("Quantity")]
         public string Quantity { get => (string)GetValue(QuantityProperty); set => SetValue(QuantityProperty, value); }
 
-        public static DependencyProperty QuantityProperty
+        public static readonly DependencyProperty QuantityProperty
             = DependencyProperty.Register("Quantity", typeof(string), typeof(ItemEditor));
 
         [IldLink("Type")]
         public string ItemType { get => (string)GetValue(ItemTypeProperty); set => SetValue(ItemTypeProperty, value); }
 
-        public static DependencyProperty ItemTypeProperty
+        public static readonly DependencyProperty ItemTypeProperty
             = DependencyProperty.Register("ItemType", typeof(string), typeof(ItemEditor));
 
         [IldLink("Weight")]
         public string Weight { get => (string)GetValue(WeightProperty); set => SetValue(WeightProperty, value); }
 
-        public static DependencyProperty WeightProperty
+        public static readonly DependencyProperty WeightProperty
             = DependencyProperty.Register("Weight", typeof(string), typeof(ItemEditor));
 
         [IldLink("Equippable")]
         public bool Equippable { get => (bool)GetValue(EquippableProperty); set => SetValue(EquippableProperty, value); }
 
-        public static DependencyProperty EquippableProperty
+        public static readonly DependencyProperty EquippableProperty
             = DependencyProperty.Register("Equippable", typeof(bool), typeof(ItemEditor));
 
         [IldLink("Equipped")]
         public bool Equipped { get => (bool)GetValue(EquippedProperty); set => SetValue(EquippedProperty, value); }
 
-        public static DependencyProperty EquippedProperty
+        public static readonly DependencyProperty EquippedProperty
             = DependencyProperty.Register("Equipped", typeof(bool), typeof(ItemEditor));
 
         #endregion

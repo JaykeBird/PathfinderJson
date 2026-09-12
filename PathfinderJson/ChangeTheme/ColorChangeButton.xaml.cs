@@ -25,22 +25,22 @@ namespace PathfinderJson.ChangeTheme
 
         public Color DisplayedColor { get => (Color)GetValue(DisplayedColorProperty); set => SetValue(DisplayedColorProperty, value); }
 
-        public static DependencyProperty DisplayedColorProperty
+        public static readonly DependencyProperty DisplayedColorProperty
             = DependencyProperty.Register("DisplayedColor", typeof(Color), typeof(ColorChangeButton));
 
         public ColorScheme ColorScheme { get => (ColorScheme)GetValue(ColorSchemeProperty); set => SetValue(ColorSchemeProperty, value); }
 
-        public static DependencyProperty ColorSchemeProperty
+        public static readonly DependencyProperty ColorSchemeProperty
             = DependencyProperty.Register("ColorScheme", typeof(ColorScheme), typeof(ColorChangeButton));
 
         public string Title { get => (string)GetValue(TitleProperty); set => SetValue(TitleProperty, value); }
 
-        public static DependencyProperty TitleProperty
+        public static readonly DependencyProperty TitleProperty
             = DependencyProperty.Register("Title", typeof(string), typeof(ColorChangeButton));
 
         public bool ShowTitle { get => (bool)GetValue(ShowTitleProperty); set => SetValue(ShowTitleProperty, value); }
 
-        public static DependencyProperty ShowTitleProperty
+        public static readonly DependencyProperty ShowTitleProperty
             = DependencyProperty.Register("ShowTitle", typeof(bool), typeof(ColorChangeButton),
             new FrameworkPropertyMetadata(false));
 

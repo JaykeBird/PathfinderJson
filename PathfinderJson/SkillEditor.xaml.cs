@@ -37,7 +37,7 @@ namespace PathfinderJson
 
         public event DependencyPropertyChangedEventHandler? ColorSchemeChanged;
 
-        public static DependencyProperty ColorSchemeProperty
+        public static readonly DependencyProperty ColorSchemeProperty
             = DependencyProperty.Register("ColorScheme", typeof(ColorScheme), typeof(SkillEditor),
             new FrameworkPropertyMetadata(new ColorScheme(), new PropertyChangedCallback(OnColorSchemeChanged)));
 
@@ -73,7 +73,7 @@ namespace PathfinderJson
 
         public string InternalSkillName { get; set; } = "Unnamed";
 
-        public static DependencyProperty SkillRanksProperty
+        public static readonly DependencyProperty SkillRanksProperty
             = DependencyProperty.Register("SkillRanks", typeof(string), typeof(SkillEditor),
             new FrameworkPropertyMetadata(""));
 
@@ -83,7 +83,7 @@ namespace PathfinderJson
             set => SetValue(SkillRanksProperty, value);
         }
 
-        public static DependencyProperty MiscModifierProperty
+        public static readonly DependencyProperty MiscModifierProperty
             = DependencyProperty.Register("MiscModifier", typeof(string), typeof(SkillEditor),
             new FrameworkPropertyMetadata(""));
 
@@ -98,7 +98,7 @@ namespace PathfinderJson
             set => SetValue(MiscModifierProperty, value);
         }
 
-        public static DependencyProperty RacialModifierProperty
+        public static readonly DependencyProperty RacialModifierProperty
             = DependencyProperty.Register("RacialModifier", typeof(string), typeof(SkillEditor),
             new FrameworkPropertyMetadata(""));
 
@@ -108,7 +108,7 @@ namespace PathfinderJson
             set => SetValue(RacialModifierProperty, value);
         }
 
-        public static DependencyProperty TraitModifierProperty
+        public static readonly DependencyProperty TraitModifierProperty
             = DependencyProperty.Register("TraitModifier", typeof(string), typeof(SkillEditor),
             new FrameworkPropertyMetadata(""));
 
@@ -118,7 +118,7 @@ namespace PathfinderJson
             set => SetValue(TraitModifierProperty, value);
         }
 
-        public static DependencyProperty ModifierValueProperty
+        public static readonly DependencyProperty ModifierValueProperty
             = DependencyProperty.Register("ModifierValue", typeof(int), typeof(SkillEditor),
             new FrameworkPropertyMetadata(0));
 
@@ -128,7 +128,7 @@ namespace PathfinderJson
             set => SetValue(ModifierValueProperty, value);
         }
 
-        public static DependencyProperty IsTrainedProperty
+        public static readonly DependencyProperty IsTrainedProperty
             = DependencyProperty.Register("IsTrained", typeof(bool), typeof(SkillEditor),
             new FrameworkPropertyMetadata(false));
 
@@ -138,7 +138,7 @@ namespace PathfinderJson
             set => SetValue(IsTrainedProperty, value);
         }
 
-        public static DependencyProperty HasSpecializationProperty
+        public static readonly DependencyProperty HasSpecializationProperty
             = DependencyProperty.Register("HasSpecialization", typeof(bool), typeof(SkillEditor),
             new FrameworkPropertyMetadata(false));
 
@@ -148,7 +148,7 @@ namespace PathfinderJson
             set => SetValue(HasSpecializationProperty, value);
         }
 
-        public static DependencyProperty SkillNameProperty
+        public static readonly DependencyProperty SkillNameProperty
             = DependencyProperty.Register("SkillName", typeof(string), typeof(SkillEditor),
             new FrameworkPropertyMetadata("Skill name here"));
 
@@ -158,7 +158,7 @@ namespace PathfinderJson
             set => SetValue(SkillNameProperty, value);
         }
 
-        public static DependencyProperty SpecializationProperty
+        public static readonly DependencyProperty SpecializationProperty
             = DependencyProperty.Register("Specialization", typeof(string), typeof(SkillEditor),
             new FrameworkPropertyMetadata(""));
 
@@ -168,7 +168,7 @@ namespace PathfinderJson
             set => SetValue(SpecializationProperty, value);
         }
 
-        public static DependencyProperty ModifierNameProperty
+        public static readonly DependencyProperty ModifierNameProperty
             = DependencyProperty.Register("ModifierName", typeof(string), typeof(SkillEditor),
             new FrameworkPropertyMetadata("INT", new PropertyChangedCallback(OnModifierNameChanged)));
 
@@ -180,7 +180,7 @@ namespace PathfinderJson
 
         public string OriginalModifierName { get; set; } = "";
 
-        public static DependencyProperty InfoUrlProperty
+        public static readonly DependencyProperty InfoUrlProperty
             = DependencyProperty.Register("InfoUrl", typeof(string), typeof(SkillEditor),
             new FrameworkPropertyMetadata("https://d20pfsrd.com/skills", new PropertyChangedCallback(OnModifierNameChanged)));
 

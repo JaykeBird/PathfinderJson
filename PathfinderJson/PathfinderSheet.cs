@@ -500,19 +500,19 @@ namespace PathfinderJson
 
     public class Feat : IEquatable<Feat>
     {
-        [IldDisplay(Name = "Name")]
+        [IldDisplay(Searchable = true)]
         public string Name { get; set; } = "";
 
-        [IldDisplay(Name = "Type")]
+        [IldDisplay(Searchable = true)]
         public string? Type { get; set; }
 
-        [IldDisplay(Name = "Notes")]
+        [IldDisplay(Searchable = true)]
         public string? Notes { get; set; }
 
-        [IldDisplay(Name = "School")]
+        [IldDisplay(Searchable = true)]
         public string? School { get; set; }
 
-        [IldDisplay(Name = "Subschool")]
+        [IldDisplay(Searchable = true)]
         public string? Subschool { get; set; }
 
         public override string ToString()
@@ -690,28 +690,28 @@ namespace PathfinderJson
 
     public class Weapon : IEquatable<Weapon>
     {
-        [JsonProperty("weapon"), IldDisplay(Name = "Name")]
+        [JsonProperty("weapon")]
+        [IldDisplay(Searchable = true)]
         public string Name { get; set; } = "";
 
-        [IldDisplay(Name = "Damage")]
+        [IldDisplay(Searchable = true)]
         public string? Damage { get; set; }
 
-        [JsonProperty("critical"), IldDisplay(Name = "Critical")]
+        [JsonProperty("critical")]
         public string? CriticalRange { get; set; }
 
-        [IldDisplay(Name = "Type")]
+        [IldDisplay(Searchable = true)]
         public string? Type { get; set; }
 
-        [IldDisplay(Name = "AttackBonus")]
         public string? AttackBonus { get; set; }
 
-        [IldDisplay(Name = "Notes")]
+        [IldDisplay(Searchable = true)]
         public string? Notes { get; set; }
 
-        [IldDisplay(Name = "Range")]
+        [IldDisplay(Searchable = true)]
         public string? Range { get; set; }
 
-        [IldDisplay(Name = "Ammunition")]
+        [IldDisplay(Searchable = true)]
         public string? Ammunition { get; set; }
 
         public override string ToString()
@@ -750,25 +750,22 @@ namespace PathfinderJson
 
     public class AcItem : IEquatable<AcItem>
     {
-        [IldDisplay(Name = "Name")]
+        [IldDisplay(Searchable = true)]
         public string? Name { get; set; } = "";
 
-        [IldDisplay(Name = "Bonus")]
         public string? Bonus { get; set; } = "";
 
-        [IldDisplay(Name = "Type")]
+        [IldDisplay(Searchable = true)]
         public string? Type { get; set; } = "";
 
-        [IldDisplay(Name = "ArmorCheckPenalty")]
         public string? ArmorCheckPenalty { get; set; } = "";
 
-        [IldDisplay(Name = "SpellFailure")]
         public string? SpellFailure { get; set; } = "";
 
-        [IldDisplay(Name = "Weight")]
+        [IldDisplay(Searchable = true)]
         public string? Weight { get; set; } = "";
 
-        [IldDisplay(Name = "Properties")]
+        [IldDisplay(Searchable = true)]
         public string? Properties { get; set; } = "";
 
         public override string ToString()
@@ -807,28 +804,25 @@ namespace PathfinderJson
 
     public class Equipment : IEquatable<Equipment>
     {
-        [IldDisplay(Name = "Name")]
+        [IldDisplay(Searchable = true)]
         public string? Name { get; set; }
 
-        [IldDisplay(Name = "Location")]
+        [IldDisplay(Searchable = true)]
         public string? Location { get; set; }
 
-        [IldDisplay(Name = "Type")]
+        [IldDisplay(Searchable = true)]
         public string? Type { get; set; }
 
-        [IldDisplay(Name = "Quantity")]
         public string? Quantity { get; set; } = "1";
 
-        [IldDisplay(Name = "Weight")]
+        [IldDisplay(Searchable = true)]
         public string? Weight { get; set; }
 
-        [IldDisplay(Name = "Notes")]
+        [IldDisplay(Searchable = true)]
         public string? Notes { get; set; }
 
-        [IldDisplay(Name = "Equippable")]
         public bool Equippable { get; set; } = false;
 
-        [IldDisplay(Name = "Equipped")]
         public bool Equipped { get; set; } = false;
 
         public override string ToString()
@@ -868,13 +862,13 @@ namespace PathfinderJson
     public class SpecialAbility : IEquatable<SpecialAbility>
     {
 
-        [IldDisplay(Name = "Name")]
+        [IldDisplay(Searchable = true)]
         public string Name { get; set; } = "";
 
-        [IldDisplay(Name = "Type")]
+        [IldDisplay(Searchable = true)]
         public string? Type { get; set; }
 
-        [IldDisplay(Name = "Notes")]
+        [IldDisplay(Searchable = true)]
         public string? Notes { get; set; }
 
         public override string ToString()
@@ -983,13 +977,23 @@ namespace PathfinderJson
 
     public class Spell : IEquatable<Spell>
     {
+        [IldDisplay(MaxValue = 9, MinValue = 0)]
         public int Level { get; set; } = 0;
         public int Prepared { get; set; } = 0;
         public int Cast { get; set; } = 0;
+
+        [IldDisplay(Searchable = true)]
         public string Name { get; set; } = "";
+
+        [IldDisplay(Searchable = true)]
         public string School { get; set; } = "";
+
+        [IldDisplay(Searchable = true)]
         public string Subschool { get; set; } = "";
+
+        [IldDisplay(Searchable = true)]
         public string Notes { get; set; } = "";
+        [IldDisplay(Name = "At Will")]
         public bool AtWill { get; set; } = false;
 
         /// <summary>

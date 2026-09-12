@@ -26,7 +26,7 @@ namespace PathfinderJson
         public Color SlotColor { get => (Color)GetValue(SlotColorProperty); set => SetValue(SlotColorProperty, value); }
 
         /// <summary>The backing dependency property for <see cref="SlotColor"/>. See the related property for details.</summary>
-        public static DependencyProperty SlotColorProperty
+        public static readonly DependencyProperty SlotColorProperty
             = DependencyProperty.Register(nameof(SlotColor), typeof(Color), typeof(PersonSlotItemList),
             new FrameworkPropertyMetadata(Colors.White));
 
@@ -36,7 +36,7 @@ namespace PathfinderJson
         public string Title { get => (string)GetValue(SlotTitleProperty); set => SetValue(SlotTitleProperty, value); }
 
         /// <summary>The backing dependency property for <see cref="Title"/>. See the related property for details.</summary>
-        public static DependencyProperty SlotTitleProperty
+        public static readonly DependencyProperty SlotTitleProperty
             = DependencyProperty.Register(nameof(Title), typeof(string), typeof(PersonSlotItemList),
             new FrameworkPropertyMetadata("None"));
 
@@ -46,7 +46,7 @@ namespace PathfinderJson
         public SelectableCollection<SmallItemDisplay> EquipmentEditors { get => (SelectableCollection<SmallItemDisplay>)GetValue(EquipmentEditorsProperty); set => SetValue(EquipmentEditorsProperty, value); }
 
         /// <summary>The backing dependency property for <see cref="EquipmentEditors"/>. See the related property for details.</summary>
-        public static DependencyProperty EquipmentEditorsProperty
+        public static readonly DependencyProperty EquipmentEditorsProperty
             = DependencyProperty.Register(nameof(EquipmentEditors), typeof(SelectableCollection<SmallItemDisplay>), typeof(PersonSlotItemList),
             new FrameworkPropertyMetadata(new SelectableCollection<SmallItemDisplay>()));
 

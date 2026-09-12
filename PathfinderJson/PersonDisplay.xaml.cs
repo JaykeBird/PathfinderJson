@@ -22,7 +22,7 @@ namespace PathfinderJson
         public ColorScheme ColorScheme { get => (ColorScheme)GetValue(ColorSchemeProperty); set => SetValue(ColorSchemeProperty, value); }
 
         /// <summary>The backing dependency property for <see cref="ColorScheme"/>. See the related property for details.</summary>
-        public static DependencyProperty ColorSchemeProperty
+        public static readonly DependencyProperty ColorSchemeProperty
             = DependencyProperty.Register(nameof(ColorScheme), typeof(ColorScheme), typeof(PersonDisplay),
             new FrameworkPropertyMetadata(new ColorScheme()));
 

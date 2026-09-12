@@ -101,49 +101,49 @@ namespace PathfinderJson
         [IldLink("Name")]
         public string WeaponName { get => (string)GetValue(WeaponNameProperty); set => SetValue(WeaponNameProperty, value); }
 
-        public static DependencyProperty WeaponNameProperty
+        public static readonly DependencyProperty WeaponNameProperty
             = DependencyProperty.Register("WeaponName", typeof(string), typeof(WeaponEditor));
 
         [IldLink("AttackBonus")]
         public string AttackBonus { get => (string)GetValue(AttackBonusProperty); set => SetValue(AttackBonusProperty, value); }
 
-        public static DependencyProperty AttackBonusProperty
+        public static readonly DependencyProperty AttackBonusProperty
             = DependencyProperty.Register("AttackBonus", typeof(string), typeof(WeaponEditor));
 
         [IldLink("CriticalRange")]
         public string CriticalRange { get => (string)GetValue(CriticalRangeProperty); set => SetValue(CriticalRangeProperty, value); }
 
-        public static DependencyProperty CriticalRangeProperty
+        public static readonly DependencyProperty CriticalRangeProperty
             = DependencyProperty.Register("CriticalRange", typeof(string), typeof(WeaponEditor));
 
         [IldLink("Damage")]
         public string Damage { get => (string)GetValue(DamageProperty); set => SetValue(DamageProperty, value); }
 
-        public static DependencyProperty DamageProperty
+        public static readonly DependencyProperty DamageProperty
             = DependencyProperty.Register("Damage", typeof(string), typeof(WeaponEditor));
 
         [IldLink("Notes")]
         public string Notes { get => (string)GetValue(NotesProperty); set => SetValue(NotesProperty, value); }
 
-        public static DependencyProperty NotesProperty
+        public static readonly DependencyProperty NotesProperty
             = DependencyProperty.Register("Notes", typeof(string), typeof(WeaponEditor));
 
         [IldLink("Range")]
         public string Range { get => (string)GetValue(RangeProperty); set => SetValue(RangeProperty, value); }
 
-        public static DependencyProperty RangeProperty
+        public static readonly DependencyProperty RangeProperty
             = DependencyProperty.Register("Range", typeof(string), typeof(WeaponEditor));
 
         [IldLink("Ammunition")]
         public string Ammunition { get => (string)GetValue(AmmunitionProperty); set => SetValue(AmmunitionProperty, value); }
 
-        public static DependencyProperty AmmunitionProperty
+        public static readonly DependencyProperty AmmunitionProperty
             = DependencyProperty.Register("Ammunition", typeof(string), typeof(WeaponEditor));
 
         [IldLink("Type")]
         public string WeaponType { get => (string)GetValue(WeaponTypeProperty); set => SetValue(WeaponTypeProperty, value); }
 
-        public static DependencyProperty WeaponTypeProperty
+        public static readonly DependencyProperty WeaponTypeProperty
             = DependencyProperty.Register("WeaponType", typeof(string), typeof(WeaponEditor));
 
         #endregion

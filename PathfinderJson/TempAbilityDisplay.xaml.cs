@@ -19,7 +19,7 @@ namespace PathfinderJson
 
         public event DependencyPropertyChangedEventHandler? ColorSchemeChanged;
 
-        public static DependencyProperty ColorSchemeProperty
+        public static readonly DependencyProperty ColorSchemeProperty
             = DependencyProperty.Register("ColorScheme", typeof(ColorScheme), typeof(TempAbilityDisplay),
             new FrameworkPropertyMetadata(new ColorScheme(), new PropertyChangedCallback(OnColorSchemeChanged)));
 
