@@ -74,8 +74,8 @@ namespace PathfinderJson
         public string InternalSkillName { get; set; } = "Unnamed";
 
         public static DependencyProperty SkillRanksProperty
-            = DependencyProperty.Register("SkillRanks", typeof(int), typeof(SkillEditor),
-            new FrameworkPropertyMetadata(0));
+            = DependencyProperty.Register("SkillRanks", typeof(string), typeof(SkillEditor),
+            new FrameworkPropertyMetadata(""));
 
         public string SkillRanks
         {
@@ -99,8 +99,8 @@ namespace PathfinderJson
         }
 
         public static DependencyProperty RacialModifierProperty
-            = DependencyProperty.Register("RacialModifier", typeof(int), typeof(SkillEditor),
-            new FrameworkPropertyMetadata(0));
+            = DependencyProperty.Register("RacialModifier", typeof(string), typeof(SkillEditor),
+            new FrameworkPropertyMetadata(""));
 
         public string RacialModifier
         {
@@ -109,8 +109,8 @@ namespace PathfinderJson
         }
 
         public static DependencyProperty TraitModifierProperty
-            = DependencyProperty.Register("TraitModifier", typeof(int), typeof(SkillEditor),
-            new FrameworkPropertyMetadata(0));
+            = DependencyProperty.Register("TraitModifier", typeof(string), typeof(SkillEditor),
+            new FrameworkPropertyMetadata(""));
 
         public string TraitModifier
         {
