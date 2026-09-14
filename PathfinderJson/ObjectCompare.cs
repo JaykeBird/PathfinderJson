@@ -23,9 +23,11 @@ namespace PathfinderJson
         /// <returns>A <see cref="CompareResult"/> object with results of the comparison, including a list of inequal properties/fields</returns>
         /// <remarks>
         /// This uses reflection to compare the two objects, by sequentially checking and comparing each property and field.
-        /// Note that this is made for comparing two objects that have properties. This will not work with
-        /// many value types, enums, and IEnumerable objects - inputting those will return a
-        /// <see cref="CompareResult"/> object with the result of <see cref="CompareSuccessValue.NotSupported"/>.<para/>
+        /// Note that this is made for comparing two objects that have properties.
+        /// This will not work with IEnumerable types, as it does not compare the actual contents of the enumerables; to prevent misinterpretation,
+        /// this method will return a <see cref="CompareResult"/> object with the result of <see cref="CompareSuccessValue.NotSupported"/>.
+        /// Use <see cref="CompareEnumerables{T}(IEnumerable{T}, IEnumerable{T}, bool)"/> to instead compare the values of two IEnumerable objects.
+        /// <para/>
         /// Indexer properties (i.e. properties like <c>this[int index]</c>) will not be compared.
         /// Properties with the <see cref="DoNotCompareAttribute"/> attribute will also not be compared.<para/>
         /// If comparing two objects and one or both are <c>null</c>, the resulting <see cref="CompareResult"/> object will have a result of
@@ -44,13 +46,20 @@ namespace PathfinderJson
         /// <typeparam name="T">The type of the objects to compare.</typeparam>
         /// <param name="a">The first object</param>
         /// <param name="b">The second object</param>
-        /// <param name="equalityComparers">a collection of equality comparer objects to use for comparing two objects of various types</param>
-        /// <param name="includePrivateValues">whether private properties, fields, and others will be compared</param>
+        /// <param name="equalityComparers">
+        /// a collection of equality comparer objects to use for comparing two objects of various types
+        /// <para/>
+        /// the equality providers put in here should implement the non-generic <see cref="IEqualityComparer"/> or inherit <see cref="EqualityComparer{T}"/>
+        /// </param>
+        /// <param name="includePrivateValues">whether private properties and fields of <typeparamref name="T"/> will be compared</param>
         /// <returns>A <see cref="CompareResult"/> object with results of the comparison, including a list of inequal properties/values</returns>
         /// <remarks>
         /// This uses reflection to compare the two objects, by sequentially checking and comparing each property and field.
-        /// Note that this is made for comparing two objects that have properties. This will not work with enums and IEnumerable objects
-        /// - inputting those will return a <see cref="CompareResult"/> object with the result <see cref="CompareSuccessValue.NotSupported"/>.<para/>
+        /// Note that this is made for comparing two objects that have properties.
+        /// This will not work with IEnumerable types, as it does not compare the actual contents of the enumerables; to prevent misinterpretation,
+        /// this method will return a <see cref="CompareResult"/> object with the result of <see cref="CompareSuccessValue.NotSupported"/>.
+        /// Use <see cref="CompareEnumerables{T}(IEnumerable{T}, IEnumerable{T}, bool)"/> to instead compare the values of two IEnumerable objects.
+        /// <para/>
         /// Indexer properties (i.e. properties like <c>this[int index]</c>) will not be compared.
         /// Properties with the <see cref="DoNotCompareAttribute"/> attribute will also not be compared.<para/>
         /// If comparing two objects and one or both are <c>null</c>, the resulting <see cref="CompareResult"/> object will have a result
@@ -72,8 +81,7 @@ namespace PathfinderJson
                 // notably, though, enums are not covered in this, and so will fail out later
             }
 
-            // check for null
-            if (a == null && b == null)
+            if (a == null && b == null) // check for null
             {
                 return new CompareResult(CompareSuccessValue.NullObject, true);
             }
@@ -81,9 +89,7 @@ namespace PathfinderJson
             {
                 return new CompareResult(CompareSuccessValue.NullObject);
             }
-
-            // check if it is a string
-            if (a is string)
+            else if (a is string) // check if it is a string
             {
                 return new CompareResult((a as string) == (b as string));
             }
@@ -94,9 +100,26 @@ namespace PathfinderJson
 
             // okay, let's open up the type
             Type t = typeof(T);
-            if (t.IsPrimitive || t.IsEnum) // quick check for other invalid types that I can't work with
+            if (t.IsPrimitive) // quick check for other invalid types that I can't work with
             {
                 return new CompareResult(CompareSuccessValue.NotSupported);
+            }
+            else if (t.IsEnum)
+            {
+                // for Enums, I'll just compare their decimal value; if they both return the same value, it's the same.
+                // This helps prevent the issues of two enum values with the same underlying number but different names
+                // appearing as different. It also should work with flags, or enum number values that weren't defined.
+                string aVal = Enum.Format(t, a, "d");
+                string bVal = Enum.Format(t, b, "d");
+                return new CompareResult(aVal == bVal);
+            }
+            else if (GetEqualityComparerForType(equalityComparers, t) is IEqualityComparer comparer)
+            {
+                Console.WriteLine("> Has equality comparer");
+                if (comparer.Equals(a, b)) // use the provided equality comparer - if both are equal, then we are done here
+                {
+                    return new CompareResult(true);
+                }
             }
 
             // let's store a few things that I'll refer back to later
@@ -140,6 +163,18 @@ namespace PathfinderJson
                     Console.WriteLine(">   > null and... not null");
                     // one is null, one is not
                     differingProperties.Add(prop.Name);
+                    continue;
+                }
+
+                if (GetEqualityComparerForType(equalityComparers, propType) is IEqualityComparer propComparer)
+                {
+                    Console.WriteLine(">   > Has equality comparer");
+                    if (!propComparer.Equals(objA, objB))
+                    {
+                        Console.WriteLine(">   >   > Differs");
+                        differingProperties.Add(prop.Name);
+                    }
+                    else Console.WriteLine(">   >   > Same");
                     continue;
                 }
 
@@ -189,9 +224,9 @@ namespace PathfinderJson
                     // ... it attempts to compare them as Object class items, rather than getting specific
                     // so instead let's use reflection to call this current function
                     MethodInfo mi = typeof(Compare).GetMethods().Where(m => m.Name == nameof(CompareObjects))
-                        .Where(m => m.GetParameters().Length == 2).First();
+                        .First(m => m.GetParameters().Length == 4);
                     mi = mi.MakeGenericMethod(prop.PropertyType);
-                    object? result = mi.Invoke(null, new object?[] { objA, objB });
+                    object? result = mi.Invoke(null, new object?[] { objA, objB, equalityComparers, false });
                     if (result is CompareResult cr && cr.Equal == false)
                     {
                         differingProperties.Add(prop.Name);
@@ -200,7 +235,7 @@ namespace PathfinderJson
                 }
             }
 
-            return new CompareResult(differingProperties);
+            return new CompareResult(differingProperties); 
         }
 
         /// <summary>
@@ -292,6 +327,15 @@ namespace PathfinderJson
                     return false;
                 }
             }
+        }
+
+        private static IEqualityComparer? GetEqualityComparerForType(IEqualityComparer[] comparers, Type desiredType)
+        {
+            return comparers.FirstOrDefault((c) =>
+            { 
+                Type cType = c.GetType();
+                return cType.IsGenericType && cType.GenericTypeArguments[0] == desiredType;
+            });
         }
 
         /// <summary>
